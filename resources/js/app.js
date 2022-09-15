@@ -129,7 +129,7 @@ $(document).ready(() => {
 			updateClientProjects(form, client_id);
 		}
 	}
-	$('[data-toggle="tooltip"]').tooltip();
+	$("[data-toggle=\'tooltip\']").tooltip();
 
 	$(".status-close").on("click", function() {
 		let wrapper = $(this).closest(".alert");
@@ -244,7 +244,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			applicationJobRounds: document.getElementById("action_type") ?
 				JSON.parse(
 					document.getElementById("action_type").dataset
-					.applicationJobRounds
+						.applicationJobRounds
 				) : {},
 			selectedNextRound: "",
 			nextRoundName: "",
@@ -268,7 +268,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 				).innerText = `Evaluation\u00A0\u00A0•\u00A0\u00A0${roundName}`;
 
 				$("#page_hr_applicant_edit #application_evaluation_body").html(
-					'<div class="my-4 fz-18 text-center">Loading...</div>'
+					"<div class='my-4 fz-18 text-center'>Loading...</div>"
 				);
 				if (!this.showEvaluationFrame) {
 					axios
@@ -292,45 +292,45 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			},
 			takeAction: function() {
 				switch (this.selectedAction) {
-					case "round":
-						if (!this.selectedActionOption) {
-							this.selectedActionOption = document.querySelector(
-								"#action_type option:checked"
-							);
-						}
-						this.selectedNextRound =
-							this.selectedActionOption.dataset.nextRoundId;
-						this.nextRoundName =
-							this.selectedActionOption.innerText;
-						loadTemplateMail("confirm", (res) => {
-							$("#confirmMailToApplicantSubject").val(
+				case "round":
+					if (!this.selectedActionOption) {
+						this.selectedActionOption = document.querySelector(
+							"#action_type option:checked"
+						);
+					}
+					this.selectedNextRound =
+						this.selectedActionOption.dataset.nextRoundId;
+					this.nextRoundName =
+						this.selectedActionOption.innerText;
+					loadTemplateMail("confirm", (res) => {
+						$("#confirmMailToApplicantSubject").val(
 								res.subject
-							);
-							tinymce
-								.get("confirmMailToApplicantBody")
-								.setContent(res.body, { format: "html" });
-						});
-						if (
-							this.nextRoundName.trim() ==
-							"Move to Team Interaction Round"
-						) {
-							$("#sendmailform").removeClass("d-none");
-						} else {
-							$(".next-scheduled-person-container").removeClass(
-								"d-none"
-							);
-							$("#sendmailform").addClass("d-none");
-						}
-						$("#round_confirm").modal("show");
-						break;
-					case "send-for-approval":
-						$("#send_for_approval").modal("show");
-						break;
-					case "approve":
-						$("#approve_application").modal("show");
-						break;
-					case "onboard":
-						$("#onboard_applicant").modal("show");
+						);
+						tinymce
+							.get("confirmMailToApplicantBody")
+							.setContent(res.body, { format: "html" });
+					});
+					if(
+						this.nextRoundName.trim() ==
+						"Move to Team Interaction Round"
+					){
+						$("#sendmailform").removeClass("d-none");
+					}else {
+						$(".next-scheduled-person-container").removeClass(
+							"d-none"
+						);
+						$("#sendmailform").addClass("d-none");
+					}
+					$("#round_confirm").modal("show");
+					break;
+				case "send-for-approval":
+					$("#send_for_approval").modal("show");
+					break;
+				case "approve":
+					$("#approve_application").modal("show");
+					break;
+				case "onboard":
+					$("#onboard_applicant").modal("show");
 				}
 			},
 			rejectApplication: function() {
@@ -383,7 +383,7 @@ if (document.getElementById("client_form")) {
 				.preSelectStatus ?
 				parseInt(
 					document.getElementById("is_active").dataset
-					.preSelectStatus
+						.preSelectStatus
 				) : 1,
 			newEmailName: "",
 			newEmailId: "",
@@ -454,7 +454,7 @@ $("#page_hr_applicant_edit .applicant-round-form").on(
 			}
 		}
 
-		form.find('[name="action"]').val(selectedAction); // setting name="action" input inside form to "reject"
+		form.find("[name='action']").val(selectedAction); // setting name="action" input inside form to "reject"
 		button.prop("disabled", "disabled").addClass("disabled"); // making button disabled
 		form.submit(); // submitting the form
 	}
@@ -493,7 +493,7 @@ function getProjectList(projects) {
 	let html = "";
 	for (var index = 0; index < projects.length; index++) {
 		let project = projects[index];
-		html += '<option value="' + project.id + '">';
+		html += "<option value=' + project.id + '>";
 		html += project.name;
 		html += "</option>";
 	}
@@ -780,7 +780,7 @@ if (document.getElementById("books_listing")) {
 				);
 				categories.forEach(
 					(category) =>
-					(this.categoryInputs[category.id].checked = true)
+						(this.categoryInputs[category.id].checked = true)
 				);
 			},
 
@@ -822,7 +822,7 @@ if (document.getElementById("books_listing")) {
 					await this.bookCategories.push(response.data.category);
 					this.newCategory = "";
 					let allCheckboxes = document.querySelectorAll(
-						'#update_category_modal input[type="checkbox"]'
+						"#update_category_modal input[type='checkbox']"
 					);
 					let lastCheckbox = allCheckboxes[allCheckboxes.length - 1];
 					this.categoryInputs[lastCheckbox.value] = lastCheckbox;
@@ -875,7 +875,7 @@ if (document.getElementById("books_listing")) {
 				"#update_category_modal"
 			);
 			let allCategoryInputs = categoryInputContainer.querySelectorAll(
-				'input[type="checkbox"]'
+				"input[type='checkbox']"
 			);
 			allCategoryInputs.forEach(
 				(checkbox) => (this.categoryInputs[checkbox.value] = checkbox)
@@ -892,7 +892,7 @@ if (document.getElementById("books_category")) {
 				.categories ?
 				JSON.parse(
 					document.getElementById("category_container").dataset
-					.categories
+						.categories
 				) : [],
 			categoryNameToChange: [],
 			indexRoute: document.getElementById("category_container").dataset
@@ -973,31 +973,31 @@ if (document.getElementById("show_book_info")) {
 			route: document.getElementById("show_book_info").dataset
 				.markBookRoute ?
 				document.getElementById("show_book_info").dataset
-				.markBookRoute : "",
+					.markBookRoute : "",
 			borrowBookRoute: document.getElementById("show_book_info").dataset
 				.borrowBookRoute ?
 				document.getElementById("show_book_info").dataset
-				.borrowBookRoute : "",
+					.borrowBookRoute : "",
 			bookAMonthStoreRoute: document.getElementById("show_book_info")
 				.dataset.bookAMonthStoreRoute ?
 				document.getElementById("show_book_info").dataset
-				.bookAMonthStoreRoute : "",
+					.bookAMonthStoreRoute : "",
 			bookAMonthDestroyRoute: document.getElementById("show_book_info")
 				.dataset.bookAMonthDestroyRoute ?
 				document.getElementById("show_book_info").dataset
-				.bookAMonthDestroyRoute : "",
+					.bookAMonthDestroyRoute : "",
 			addToWishlistRoute: document.getElementById("show_book_info")
 				.dataset.addToWishlistRoute ?
 				document.getElementById("show_book_info").dataset
-				.addToWishlistRoute : "",
+					.addToWishlistRoute : "",
 			removeFromWishlistRoute: document.getElementById("show_book_info")
 				.dataset.removeFromWishlistRoute ?
 				document.getElementById("show_book_info").dataset
-				.removeFromWishlistRoute : "",
+					.removeFromWishlistRoute : "",
 			putBackBookRoute: document.getElementById("show_book_info").dataset
 				.putBackBookRoute ?
 				document.getElementById("show_book_info").dataset
-				.putBackBookRoute : "",
+					.putBackBookRoute : "",
 			isRead: document.getElementById("show_book_info").dataset.isRead ?
 				true : false,
 			isBorrowed: document.getElementById("show_book_info").dataset
@@ -1145,13 +1145,13 @@ if (document.getElementById("roles_permission_table")) {
 				.roles ?
 				JSON.parse(
 					document.getElementById("roles_permission_table").dataset
-					.roles
+						.roles
 				) : [],
 			permissions: document.getElementById("roles_permission_table")
 				.dataset.permissions ?
 				JSON.parse(
 					document.getElementById("roles_permission_table").dataset
-					.permissions
+						.permissions
 				) : [],
 			updateRoute: document.getElementById("roles_permission_table").dataset
 				.updateRoute || "",
@@ -1167,7 +1167,7 @@ if (document.getElementById("roles_permission_table")) {
 				);
 				permissions.forEach(
 					(permission) =>
-					(this.permissionInputs[permission.id].checked = true)
+						(this.permissionInputs[permission.id].checked = true)
 				);
 			},
 			updatePermissions: function() {
@@ -1205,7 +1205,7 @@ if (document.getElementById("roles_permission_table")) {
 				"#update_role_permissions_modal"
 			);
 			let allPermissionInputs = permissionInputContainer.querySelectorAll(
-				'input[type="checkbox"]'
+				"input[type='checkbox']"
 			);
 			allPermissionInputs.forEach(
 				(checkbox) => (this.permissionInputs[checkbox.value] = checkbox)
@@ -1293,7 +1293,7 @@ if (document.getElementById("user_roles_table")) {
 				"#update_user_roles_modal"
 			);
 			let allRoleInputs = roleInputContainer.querySelectorAll(
-				'input[type="checkbox"]'
+				"input[type='checkbox']"
 			);
 			allRoleInputs.forEach(
 				(checkbox) => (this.roleInputs[checkbox.value] = checkbox)
@@ -1433,7 +1433,7 @@ function loadTemplateMail(status, successCallback) {
 function saveFollowUp() {
 	var form = $(this).closest("form");
 	if ($("#followUpAndReject").is(":checked")) {
-		var followUpComments = form.find('[name="comments"]').val();
+		var followUpComments = form.find("[name='comments']").val();
 		$(document).find("#followUpCommentForReject").val(followUpComments);
 		$(this).closest(".modal").modal("hide");
 		$(document).find("#rejectApplication").trigger("click");
@@ -1477,7 +1477,7 @@ function barChart() {
 				afterBody: function(context) {
 					console.log(context);
 					return `Verified Applications: ${cData.afterBody[context[0].index]
-						}`;
+					}`;
 				},
 			},
 			displayColors: false,
@@ -1727,7 +1727,7 @@ $(function() {
 		let reasonCheckboxInput = $(this);
 		let reasonCommentInput = reasonCheckboxInput
 			.closest(".rejection-reason-block")
-			.find('input[type="text"]');
+			.find("input[type='text']");
 		if (reasonCheckboxInput.is(":checked")) {
 			reasonCommentInput.show().focus();
 		} else {
