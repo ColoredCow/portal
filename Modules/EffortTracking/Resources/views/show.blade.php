@@ -67,6 +67,7 @@
         @endif
         </div>
     </div>
+    @if($totalMonths === 0)
     <div class="project-resource-effort-tracking-container container mt-4 pb-10">
         <div class="card">
             <div class="card-header">
@@ -79,8 +80,8 @@
                         <strong>Last refreshed at:</strong>{{ (Carbon\Carbon::parse($project->last_updated_at)->setTimezone('Asia/Kolkata')->format(' Y-M-d , D h:i:s A')) }}
                         </div > 
                         <div class="fz-14 float-right">
-                        <strong>Timeline:</strong>{{ $startDate->format('dS M') }}
-                        -{{ $endDate->format('dS M') }}
+                        <strong>Timeline:</strong>{{ (Carbon\Carbon::parse($project->client->month_start_date)->format('dS M')) }}
+                        -{{ (Carbon\Carbon::parse($project->client->month_end_date)->format('dS M')) }}
                         </div>
                     </h4>
                 </div>
@@ -114,25 +115,18 @@
                     </thead>
                     <tbody>
                         @foreach ($project->getTeamMembers as $teamMember)
-                        @php
-                            $currentExpectedEffortTillToday = $teamMember->getExpectedEffortTillTodayAttribute($startDate, $endDate);
-                            $currentActualEffort = $teamMember->getCurrentActualEffortAttribute($startDate);
-                            $velocity = $teamMember->getVelocityAttribute($startDate, $endDate);
-                            $currentExpectedEffort = $teamMember->getCurrentExpectedEffortAttribute($startDate, $endDate);
-                            $fte = $teamMember->getFteAttribute($startDate, $endDate);
-                        @endphp
                             <tr>
                                 <th scope="row" id="user-name<?php echo $teamMember->user->id; ?>">{{ $teamMember->user->name }}</th>
                                 <td
-                                    class="{{ $currentActualEffort >= $currentExpectedEffortTillToday ? 'text-success' : ($currentActualEffort < $currentExpectedEffortTillToday ? 'text-danger' : '') }}">
-                                    {{ $currentActualEffort }}</td>
-                                <td>{{ $currentExpectedEffort }}</td>
-                                <td>{{ $currentExpectedEffortTillToday }}</td>
-                                <td>{{ $currentExpectedEffortTillToday - $currentActualEffort }}
+                                    class="{{ $teamMember->current_actual_effort >= $teamMember->expected_effort_till_today ? 'text-success' : ($teamMember->current_actual_effort < $teamMember->current_expected_effort ? 'text-danger' : '') }}">
+                                    {{ $teamMember->current_actual_effort }}</td>
+                                <td>{{ $teamMember->current_expected_effort }}</td>
+                                <td>{{ $teamMember->expected_effort_till_today }}</td>
+                                <td>{{ $teamMember->expected_effort_till_today - $teamMember->current_actual_effort }}
                                 </td>
-                                <td class="{{ $velocity >= 1 ? 'text-success' : 'text-danger' }}">
-                                    {{ $velocity }}</td>
-                                <td>{{ $fte }}</td>
+                                <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">
+                                    {{ $teamMember->velocity }}</td>
+                                <td>{{ $teamMember->fte }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -140,6 +134,7 @@
             </div>
         </div>
     </div>
+    @endif
 </div>
 
 @endsection
