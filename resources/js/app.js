@@ -245,8 +245,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
                 JSON.parse(
                     document.getElementById("action_type").dataset
                     .applicationJobRounds
-                ) :
-                {},
+                ) : {},
             selectedNextRound: "",
             nextRoundName: "",
             selectedAction: "round",
@@ -385,13 +384,10 @@ if (document.getElementById("client_form")) {
                 parseInt(
                     document.getElementById("is_active").dataset
                     .preSelectStatus
-                ) :
-                1,
+                ) : 1,
             newEmailName: "",
             newEmailId: "",
-            clientEmails: document.getElementById("emails").value == "" ?
-                [] :
-                document.getElementById("emails").value.split(","),
+            clientEmails: document.getElementById("emails").value == "" ? [] : document.getElementById("emails").value.split(","),
         },
         methods: {
             toggleActive: function() {
@@ -757,14 +753,12 @@ if (document.getElementById("books_listing")) {
             books: document.getElementById("books_table").dataset.books ?
                 JSON.parse(
                     document.getElementById("books_table").dataset.books
-                ) :
-                {},
+                ) : {},
             bookCategories: document.getElementById("books_table").dataset
                 .categories ?
                 JSON.parse(
                     document.getElementById("books_table").dataset.categories
-                ) :
-                [],
+                ) : [],
             updateRoute: document.getElementById("books_table").dataset.indexRoute || "",
             categoryIndexRoute: document.getElementById("books_table").dataset
                 .categoryIndexRoute || "",
@@ -772,8 +766,7 @@ if (document.getElementById("books_listing")) {
             currentBookIndex: 0,
             newCategory: "",
             searchKey: document.getElementById("search_input") ?
-                document.getElementById("search_input").dataset.value :
-                "",
+                document.getElementById("search_input").dataset.value : "",
         },
         methods: {
             updateCategoryMode: function(index) {
@@ -900,8 +893,7 @@ if (document.getElementById("books_category")) {
                 JSON.parse(
                     document.getElementById("category_container").dataset
                     .categories
-                ) :
-                [],
+                ) : [],
             categoryNameToChange: [],
             indexRoute: document.getElementById("category_container").dataset
                 .indexRoute || "",
@@ -977,65 +969,51 @@ if (document.getElementById("show_book_info")) {
         el: "#show_book_info",
         data: {
             book: document.getElementById("show_book_info").dataset.book ?
-                document.getElementById("show_book_info").dataset.book :
-                [],
+                document.getElementById("show_book_info").dataset.book : [],
             route: document.getElementById("show_book_info").dataset
                 .markBookRoute ?
                 document.getElementById("show_book_info").dataset
-                .markBookRoute :
-                "",
+                .markBookRoute : "",
             borrowBookRoute: document.getElementById("show_book_info").dataset
                 .borrowBookRoute ?
                 document.getElementById("show_book_info").dataset
-                .borrowBookRoute :
-                "",
+                .borrowBookRoute : "",
             bookAMonthStoreRoute: document.getElementById("show_book_info")
                 .dataset.bookAMonthStoreRoute ?
                 document.getElementById("show_book_info").dataset
-                .bookAMonthStoreRoute :
-                "",
+                .bookAMonthStoreRoute : "",
             bookAMonthDestroyRoute: document.getElementById("show_book_info")
                 .dataset.bookAMonthDestroyRoute ?
                 document.getElementById("show_book_info").dataset
-                .bookAMonthDestroyRoute :
-                "",
+                .bookAMonthDestroyRoute : "",
             addToWishlistRoute: document.getElementById("show_book_info")
                 .dataset.addToWishlistRoute ?
                 document.getElementById("show_book_info").dataset
-                .addToWishlistRoute :
-                "",
+                .addToWishlistRoute : "",
             removeFromWishlistRoute: document.getElementById("show_book_info")
                 .dataset.removeFromWishlistRoute ?
                 document.getElementById("show_book_info").dataset
-                .removeFromWishlistRoute :
-                "",
+                .removeFromWishlistRoute : "",
             putBackBookRoute: document.getElementById("show_book_info").dataset
                 .putBackBookRoute ?
                 document.getElementById("show_book_info").dataset
-                .putBackBookRoute :
-                "",
+                .putBackBookRoute : "",
             isRead: document.getElementById("show_book_info").dataset.isRead ?
-                true :
-                false,
+                true : false,
             isBorrowed: document.getElementById("show_book_info").dataset
                 .isBorrowed ?
-                true :
-                false,
+                true : false,
             isBookAMonth: document.getElementById("show_book_info").dataset
                 .isBookAMonth ?
-                true :
-                false,
+                true : false,
             isWishlisted: document.getElementById("show_book_info").dataset
                 .isWishlisted ?
-                true :
-                false,
+                true : false,
             readers: document.getElementById("show_book_info").dataset.readers ?
-                document.getElementById("show_book_info").dataset.readers :
-                [],
+                document.getElementById("show_book_info").dataset.readers : [],
             borrowers: document.getElementById("show_book_info").dataset
                 .borrowers ?
-                document.getElementById("show_book_info").dataset.borrowers :
-                [],
+                document.getElementById("show_book_info").dataset.borrowers : [],
         },
         methods: {
             markBook: async function(read) {
@@ -1168,15 +1146,13 @@ if (document.getElementById("roles_permission_table")) {
                 JSON.parse(
                     document.getElementById("roles_permission_table").dataset
                     .roles
-                ) :
-                [],
+                ) : [],
             permissions: document.getElementById("roles_permission_table")
                 .dataset.permissions ?
                 JSON.parse(
                     document.getElementById("roles_permission_table").dataset
                     .permissions
-                ) :
-                [],
+                ) : [],
             updateRoute: document.getElementById("roles_permission_table").dataset
                 .updateRoute || "",
             currentRoleIndex: 0,
@@ -1245,13 +1221,11 @@ if (document.getElementById("user_roles_table")) {
             users: document.getElementById("user_roles_table").dataset.users ?
                 JSON.parse(
                     document.getElementById("user_roles_table").dataset.users
-                ) :
-                "",
+                ) : "",
             roles: document.getElementById("user_roles_table").dataset.roles ?
                 JSON.parse(
                     document.getElementById("user_roles_table").dataset.roles
-                ) :
-                "",
+                ) : "",
             updateRoute: document.getElementById("user_roles_table").dataset
                 .updateRoute || "",
             currentUserIndex: 0,
@@ -1503,8 +1477,8 @@ function barChart() {
                 afterBody: function(context) {
                     console.log(context);
                     return `Verified Applications: ${
-                        cData.afterBody[context[0].index]
-                    }`;
+                         cData.afterBody[context[0].index]
+                     }`;
                 },
             },
             displayColors: false,
