@@ -1968,7 +1968,7 @@ $(document).on("click", ".finish_interview", function(e) {
 		dataType: "json",
 		success: function(response) {
 			$("#meet_time").hide();
-            $("#durations").append(response.html);	
+			$("#durations").append(response.html);	
 		},
 	});
 });
