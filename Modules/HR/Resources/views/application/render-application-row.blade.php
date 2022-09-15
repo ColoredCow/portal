@@ -44,8 +44,13 @@
                     class="btn-sm btn-primary mr-1 text-decoration-none" target="_self">View</a>
                 @if ($application->latestApplicationRound->scheduledPerson->id == auth()->user()->id ||
                     $application->status != 'new')
+                    @if($application->job->type == 'job')
                     <a href="{{ route('applications.job.edit', $application->id) }}"
                         class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a>
+                    @else
+                        <a href="{{ route('applications.internship.edit', $application->id) }}"
+                            class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a>
+                    @endif
                 @else
                     <a data-target="#evaluation{{ $application->id }}" role="button"
                         class="btn-sm btn-primary text-decoration-none" data-toggle="modal">Evaluate</a>
