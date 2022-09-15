@@ -19,6 +19,7 @@ Vue.use(Laue);
 // vue toast registration
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
+import { ajax } from "jquery";
 const options = {
 	timeout: 2000
 };
@@ -1875,3 +1876,96 @@ $(".opt").on("click", function() {
 		},
 	});
 });
+/**
+ * Operations
+ *
+ */
+
+ 	$(document).ready(function() {
+
+
+		$('.deletebtn').on('click', function() {
+
+			$('#officelocationDeleteModal').modal('show');
+			var id = $(this).data('id');
+
+			$('#delete_id').val(id);
+		});
+
+		$(document).on('submit', function(e) {
+			e.preventDefault();
+
+			var id = $('#delete_id').val();
+
+			$.ajax({
+
+				type: "DELETE",
+				url: "/officelocation/"+id,
+				success: function (response) {
+
+					$('#officelocationDeleteModal').modal('hide');
+					
+					// alert("data deleted")
+				},
+				error: function(error) {
+					alert("data not deleted");
+				},
+			});
+		});
+	});
+
+
+$(document).ready(function(){
+
+	$('.editbtn').on('click', function() {
+		$('#officelocationEditModal').modal('show');
+
+		var center_head = $(this).data('center_head');
+		var location= $(this).data('location');
+		var capacity = $(this).data('capacity');
+		var id = $(this).data('id');
+		
+		$('#center_head').val(center_head);
+		$('#location').val(location);
+		$('#capacity').val(capacity);
+		$('#id').val(id);
+	});
+
+	$('#editformID').on('submit',function(e){
+		e.preventDefault();
+		var id = $('#id').val();
+
+		$.ajax({
+			type: "PUT",
+			url: "/officelocation/"+id,
+			data:$('#editformID').serialize(),
+			success: function(response) {
+				$('#officelocationEditModal').modal('hide');
+				alert("data updated")
+			},
+			error: function(error) {
+				alert("data not updated");
+			},
+		});
+	});
+});
+
+	$(document).ready(function(){
+
+		$('#addform').on('submit', function(e){
+			e.preventDefault();
+
+			$.ajax({
+				type: "POST",
+				url: "/officelocation",
+				data: $('#addform').serialize(),
+				success: function(response) {
+					$('#officelocationAddModal').modal('show')
+					alert("data saved");
+				},
+				error:function(error){
+					alert("data not saved");
+				},
+			});
+		});
+	});

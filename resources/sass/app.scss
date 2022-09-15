@@ -658,7 +658,7 @@ body.is-impersonating {
 	top: 0;
 	z-index: 100;
 
-	>.card-body {
+	.card-body {
 		height: 100%;
 	}
 
@@ -797,6 +797,15 @@ span.total-chart-count{
 		outline: none;
 	}
 }
+
+// Operations_Module
+
+.office_locations-table {
+    width: 60%;
+    margin-bottom: 12px;
+    color: #2C2A2C;
+    margin-left: 65px;
+  }
 
 // End Custom
 
