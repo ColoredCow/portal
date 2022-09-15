@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Modules\Project\Console\SyncEffortsheet;
 use Modules\Project\Console\ZeroEffortInProject;
 use Modules\Project\Console\EndedProject;
+use Modules\Project\Console\ZeroExpectedHourInProject;
 use Modules\Project\Console\FixedBudgetProject;
 use Modules\Project\Console\SendEffortSummaryCommand;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -23,6 +24,7 @@ class Kernel extends ConsoleKernel
         SyncEffortsheet::class,
         SendEffortSummaryCommand::class,
         ZeroEffortInProject::class,
+        ZeroExpectedHourInProject::class,
         EndedProject::class,
         FixedBudgetProject::class,
         SendDailyEffortSummaryForProjectsOnGoogleChat::class,
@@ -51,6 +53,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('project:ended-project')->dailyAt('09:00');
         $schedule->command('project:remind-to-update-effort')->weekdays()->at('19:00');
         $schedule->command('project:send-daily-effort-summary-google-chat')->weekdays()->at('22:30');
+        $schedule->command('project:zero-expected-hours-in-project')->weekly()->tuesdays()->at('11:00');
     }
 
     /**
