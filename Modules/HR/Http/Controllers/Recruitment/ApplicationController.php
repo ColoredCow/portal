@@ -39,15 +39,15 @@ abstract class ApplicationController extends Controller
 
     public function markInterviewFinished(Request $request)
     {
-    $ApplicationRound = ApplicationRound::find($request->documentId);
-    $this->service->markInterviewFinished($ApplicationRound);
+        $ApplicationRound = ApplicationRound::find($request->documentId);
+        $this->service->markInterviewFinished($ApplicationRound);
 
    
         return response()->json([
             'status' => 200, 'actual_end_time' => $ApplicationRound->actual_end_time->format('H:i:s'), 'html' => view('hr.application.meeting', ['applicationRound'=>$ApplicationRound])->render()
-    ]);
-    
-}
+        ]);
+
+    }
 
     /**
      * Display a listing of the resource.
