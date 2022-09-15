@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Modules\HR\Entities\Employee;
 use Modules\Operations\Entities\OfficeLocation;
 
 class OfficeLocationController extends Controller
@@ -99,5 +100,13 @@ class OfficeLocationController extends Controller
         $officelocation->delete();
 
         return $officelocation;
+    }
+
+    public function getEmployees()
+    
+    {
+       $employees = DB::table('Employee')->get();
+
+         return view('office-locations')->with('employees',$employees);
     }
 }

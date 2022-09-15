@@ -12,7 +12,7 @@
     </td>
     <td>
         @include('client::subviews.listing-client-type', ['client' => $client])
-    </td>   
+    </td>
     <td>
         @if ($client->keyAccountManager)
             <span data-html="true" data-toggle="tooltip" title="{{ $client->keyAccountManager->name}}" class="content tooltip-wrapper">

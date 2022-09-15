@@ -2,7 +2,7 @@
 
 namespace Modules\Operations\Entities;
 
-use App\User;
+// use App\User;
 use Modules\HR\Entities\Employee;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,4 +20,5 @@ class OfficeLocation extends Model
     {
         return $this->belongsTo(Employee::class, 'center_head');
     }
+
 }

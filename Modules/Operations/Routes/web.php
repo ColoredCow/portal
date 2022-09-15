@@ -18,12 +18,13 @@ Route::prefix('operations')->group(function() {
     Route::get('/', 'OperationsController@index');
 });
 Route::resource('/officelocation', 'OfficeLocationController')
-                ->only(['index', 'store', 'update','destroy'])
+                ->only(['index', 'store', 'update','destroy', 'getEmployee'])
                 ->names([
                     'index' => 'officelocation.index',
                     'store' => 'officelocation.store',
                     'update' => 'officelocation.update',
-                    'destroy' => 'officelocation.destroy'
+                    'destroy' => 'officelocation.destroy',
+                    'getEmployees'
                 ]);
 
 // Route::get('/delete/{id}', 'OfficeLocationController@delete')->name('officelocation.destroy');

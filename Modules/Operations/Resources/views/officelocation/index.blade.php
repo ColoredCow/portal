@@ -12,11 +12,23 @@
     
             <form id="addform">
             <div class="modal-body">
-                {{ csrf_field() }}  
-                    <div class="form-group">
+                {{ csrf_field() }}
+                    <div class="form-group"> 
                       <label>Center Head</label>
                       <input type="text" class="form-control" name="center_head" placeholder="Enter your name">
-                    </div>
+                   </div>
+                   {{-- <div class="form-group">
+                    <label>Center Head</label>
+                   <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" id="employees">
+                    <option value="">Select Employee</option>
+                    @foreach ($employees as $list )
+                      <option value="{{$list->id}}">{{$list->id}}</option>
+                    @endforeach
+                   </select>
+                   </div> --}}
+
+
+
                     <div class="form-group">
                         <label>Location</label>
                         <input type="text" class="form-control" name="location" placeholder="Enter your location">
@@ -99,8 +111,7 @@
     </div>
 
         <div class="container">
-          <div class="jumbotron">
-            <div class="row ml-10 mb-5">
+            <div class="row">
                 <h4> OfficeLocation</h4>
             </div>
           </div>
@@ -121,15 +132,23 @@
                     @foreach ($officelocations as $officelocation)    
                             <tr>
                                 <td>
-                                  @if ($officelocation->center_head)
+                                @if ( $officelocation->center_head )
                                   <span data-html="true" data-toggle="tooltip" title="{{ $officelocation->center_head }}" class="content tooltip-wrapper">
-                                    
-                                  <img src="{{ $officelocation->employee->user->avatar }}" class="w-35 h-30 rounded-circle mb-1"></a>
-                              @else
-                                  -
-                              @endif
-
-                                  {{ $officelocation->center_head}}</td>
+                                  
+                                  <img src="{{ $officelocation->employee->name }}" class="w-35 h-30 rounded-circle mb-1"></a>
+                                  @else
+                                    - 
+                                @endif
+                                  </span>
+                                  @if ( $officelocation->center_head )
+                                  <span data-html="true" data-toggle="tooltip" title="{{ $officelocation->center_head }}" class="content tooltip-wrapper">
+                                  <div class="text-primary fz-14">
+                                    {{ $officelocation->employee->name }}</div>
+                                  @else
+                                      - 
+                                  @endif
+                                  </span>
+                                    </td>
                                 <td>{{ $officelocation->location }}</td>
                                 <td>{{ $officelocation->capacity }}</td>
                                 <td>

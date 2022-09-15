@@ -1905,10 +1905,10 @@ $(".opt").on("click", function() {
 
 					$('#officelocationDeleteModal').modal('hide');
 					
-					// alert("data deleted")
+					alert("data deleted")
 				},
 				error: function(error) {
-					alert("data not deleted");
+					// alert("data not deleted");
 				},
 			});
 		});
