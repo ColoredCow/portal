@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('projectcontract')->group(function() {
+Route::prefix('projectcontract')->group(function () {
     Route::get('/', 'ProjectContractController@index');
 });

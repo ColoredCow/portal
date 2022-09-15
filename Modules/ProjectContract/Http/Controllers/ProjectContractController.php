@@ -23,7 +23,7 @@ class ProjectContractController extends Controller
      */
     public function create()
     {
-        return view('projectcontract::create');
+        return view('projectcontract::index');
     }
 
     /**
@@ -33,7 +33,7 @@ class ProjectContractController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return view('projectcontract::index');
     }
 
     /**
@@ -43,7 +43,7 @@ class ProjectContractController extends Controller
      */
     public function show($id)
     {
-        return view('projectcontract::show');
+        return view('projectcontract::index');
     }
 
     /**
@@ -53,7 +53,7 @@ class ProjectContractController extends Controller
      */
     public function edit($id)
     {
-        return view('projectcontract::edit');
+        return view('projectcontract::index');
     }
 
     /**
@@ -64,7 +64,7 @@ class ProjectContractController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return view('projectcontract::index');
     }
 
     /**
@@ -74,6 +74,6 @@ class ProjectContractController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return view('projectcontract::index');
     }
 }

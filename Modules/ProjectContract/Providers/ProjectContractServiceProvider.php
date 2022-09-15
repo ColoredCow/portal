@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Factory;
 class ProjectContractServiceProvider extends ServiceProvider
 {
     /**
-     * @var string $moduleName
+     * @var string
      */
     protected $moduleName = 'ProjectContract';
 
     /**
-     * @var string $moduleNameLower
+     * @var string
      */
     protected $moduleNameLower = 'projectcontract';
 
@@ -52,7 +52,8 @@ class ProjectContractServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
+            module_path($this->moduleName, 'Config/config.php'), 
+            $this->moduleNameLower
         );
     }
 
@@ -120,6 +121,7 @@ class ProjectContractServiceProvider extends ServiceProvider
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
+        
         return $paths;
     }
 }
