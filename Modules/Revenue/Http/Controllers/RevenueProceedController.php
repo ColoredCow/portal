@@ -14,7 +14,7 @@ class RevenueProceedController extends Controller
     {
         $this->service = $service;
     }
-    
+
     public function index()
     {
         $revenueProceedData = $this->service->index();
