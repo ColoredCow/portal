@@ -2,7 +2,6 @@
 
 namespace Modules\Revenue\Http\Controllers;
 
-use Modules\Revenue\Entities\RevenueProceed;
 use Illuminate\Http\Request;
 use Modules\Revenue\Services\RevenueProceedService;
 use Illuminate\Routing\Controller;
@@ -10,8 +9,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class RevenueProceedController extends Controller
 {
-    use AuthorizesRequests;
-
+    
     protected $service;
 
     public function __construct(RevenueProceedService $service)
