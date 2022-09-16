@@ -3,7 +3,6 @@
 namespace Modules\Revenue\Entities;
 
 use Illuminate\Support\Arr;
-
 use Illuminate\Database\Eloquent\Model;
 
 class RevenueProceed extends Model
@@ -25,15 +24,5 @@ class RevenueProceed extends Model
         }
 
         return $query;
-    }
-
-    public function scopeYear($query, $year)
-    {
-        return $query->whereYear('year', $year);
-    }
-
-    public function scopeMonth($query, $month)
-    {
-        return $query->whereMonth('month', $month);
     }
 }
