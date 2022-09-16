@@ -14,22 +14,22 @@
         </div>
         <table class="table table-striped table-bordered">
             <tr>
-                <th>Name</th>
                 <th>Category</th>
+                <th>Name</th>
                 <th>Currency</th>
                 <th>Amount</th>
-                <th>Note</th>
                 <th>Date of Recieved</th>
-                <th>Action</th>
+                <th>Note</th>
+                <th>Actions</th>
             </tr>
             @foreach ($revenueProceeds as $revenueProceed)
                 <tr>
+                    <td>{{ Str::headline( $revenueProceed->category)}}</td>
                     <td>{{ $revenueProceed->name }}</td>
-                    <td>{{Str::headline( $revenueProceed->category)}}</td>
                     <td>{{ $revenueProceed->currency }}</td>
                     <td>{{ $revenueProceed->amount }}</td>
-                    <td>{{ $revenueProceed->notes }}</td>
                     <td>{{ $revenueProceed->recieved_at }}</td>
+                    <td>{{ $revenueProceed->notes }}</td>
                     <td>
                         @php
                             $days = $revenueProceed->created_at->diffInDays(today());
@@ -44,6 +44,7 @@
                 </tr>
             @endforeach
         </table>
+        {{$revenueProceeds->links()}}
     </div>
     @include('revenue::revenue-proceeds.edit')
     @include('revenue::revenue-proceeds.create')

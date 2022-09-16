@@ -10,7 +10,7 @@ class RevenueProceedService
 {
     public function index()
     {
-        $revenueProceedData = RevenueProceed::orderby('name')->get();
+        $revenueProceedData = RevenueProceed::orderby('name')->paginate(config('constants.pagination_size'));
 
         return $revenueProceedData;
     }
