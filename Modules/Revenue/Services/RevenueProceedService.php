@@ -39,10 +39,6 @@ class RevenueProceedService
         $revenueProceed->save();
 
         return $revenueProceed;
-
-    public function show($id)
-    {
-        return view('revenue::index');
     }
 
     public function update(Request $request, $id)
