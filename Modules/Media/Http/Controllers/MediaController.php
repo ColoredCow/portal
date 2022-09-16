@@ -32,10 +32,15 @@ class MediaController extends Controller
      */
     public function store(MediaRequest $request)
     {
-        $request->validated();
+        $validated = $request->validated();
         $imageName = time() . '.' . $request->file->extension();
         $request->file->storeAs('public/media', $imageName);
-        $postData = ['event_name' => $request->event_name, 'img_url' => $imageName, 'uploaded_by' => Auth()->user()->id, 'description' => $request->description];
+        $postData = [
+            'event_name' => $validated['event_name'],
+            'description' => $validated['description'],
+            'img_url' => $imageName,
+            'uploaded_by' => Auth()->user()->id
+        ];
         Media::create($postData);
 
         return redirect(route('media.index'))->with(['message', 'status' => 'Photo added successfully!']);
@@ -69,6 +74,7 @@ class MediaController extends Controller
      */
     public function update(Request $request, Media $Media)
     {
+        $validated = $request->validated();
         $imageName = '';
         if ($request->hasFile('file')) {
             $imageName = time() . '.' . $request->file->extension();
@@ -79,7 +85,12 @@ class MediaController extends Controller
         } else {
             $imageName = $Media->img_url;
         }
-        $postData = ['event_name' => $request->event_name, 'img_url' => $imageName, 'uploaded_by' => Auth()->user()->id, 'description' => $request->description];
+        $postData = [
+            'event_name' => $validated['event_name'],
+            'description' => $validated['description'],
+            'img_url' => $imageName,
+            'uploaded_by' => Auth()->user()->id
+        ];
         $Media->update($postData);
 
         return redirect(route('media.index'))->with(['message', 'status' => 'Photo updated successfully!']);

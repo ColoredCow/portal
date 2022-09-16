@@ -8,7 +8,7 @@
 @if(session('message'))
 <div class="alert alert-{{ session('status') }} alert-dismissible fade show" role="alert">
   <strong>{{ session('message') }}</strong>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>\
 </div>
 @endif
 <div class="container">
@@ -86,17 +86,16 @@
         <div class="card-body">
           <p>
             <td class="">
-            <img src="{{auth()->user()->avatar}}" alt="{{auth()->user()->name}}" class="w-25 h-25 rounded-circle"
-              data-toggle="tooltip" data-placement="top" title="{{auth()->user()->name}}">
+              <img src="{{auth()->user()->avatar}}" alt="{{auth()->user()->name}}" class="w-25 h-25 rounded-circle" data-toggle="tooltip" data-placement="top" title="{{auth()->user()->name}}">
             </td>
           </p>
-        <p class="card-title fw-bold text-secondary">Event Name - {{ $row->event_name }}</p>
-        <p class="text-secondary">Description - {{ Str::limit($row->description, 10) }}</p>
+          <p class="card-title fw-bold text-secondary">Event Name - {{ $row->event_name }}</p>
+          <p class="text-secondary">Description - {{ Str::limit($row->description, 10) }}</p>
         </div>
       </div>
     </div>
     @empty
-      <h2 class="text-center text-secondary p-4">No post found in the database!</h2>
+    <h2 class="text-center text-secondary p-4">No post found in the database!</h2>
     @endforelse
     <div class="d-flex justify-content-center">
       {{ $media->onEachSide(1)->links() }}
