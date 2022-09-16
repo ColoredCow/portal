@@ -8,11 +8,19 @@ use Illuminate\Support\Str;
 
 class RevenueProceedService
 {
-    public function index()
+    public function index($filters)
     {
-        $revenueProceedData = RevenueProceed::orderby('name')->paginate(config('constants.pagination_size'));
+        $filters = [
+            'month' => $filters['month'] ?? null,
+            'year' => $filters['year'] ?? null,
+        ];
 
-        return $revenueProceedData;
+        $revenueProceeds = RevenueProceed::orderby('name')->applyFilters($filters)
+        ->paginate(config('constants.pagination_size'));
+        return [
+            'revenueProceedData'=> $revenueProceeds,
+            'filters' => $filters,
+        ];
     }
 
     public function store(Request $request)
@@ -57,5 +65,13 @@ class RevenueProceedService
     public function delete($id)
     {
         return RevenueProceed::find($id)->delete();
+    }
+
+    public function defaultFilters()
+    {
+        return [
+            'year' => now()->format('Y'),
+            'month' => now()->format('m'),
+        ];
     }
 }

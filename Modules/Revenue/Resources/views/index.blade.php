@@ -12,22 +12,30 @@
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createModal">Add Revenue</button>
             </span>
         </div>
+        <br>
+        <div>
+            @include('revenue::subviews.index-filters')
+        </div>
         <table class="table table-striped table-bordered">
             <tr>
                 <th>Category</th>
                 <th>Name</th>
-                <th>Currency</th>
                 <th>Amount</th>
                 <th>Date of Recieved</th>
                 <th>Note</th>
                 <th>Actions</th>
             </tr>
-            @foreach ($revenueProceeds as $revenueProceed)
+            @foreach ($revenueProceedData as $revenueProceed)
                 <tr>
                     <td>{{ Str::headline( $revenueProceed->category)}}</td>
                     <td>{{ $revenueProceed->name }}</td>
-                    <td>{{ $revenueProceed->currency }}</td>
-                    <td>{{ $revenueProceed->amount }}</td>
+                    <td>{{ $revenueProceed->amount }} @php
+                        if($revenueProceed->currency=='USD'){
+                            echo "$";
+                        }
+                        else {
+                            echo "₹";
+                        };@endphp</td>
                     <td>{{ $revenueProceed->recieved_at }}</td>
                     <td>{{ $revenueProceed->notes }}</td>
                     <td>
@@ -44,7 +52,7 @@
                 </tr>
             @endforeach
         </table>
-        {{$revenueProceeds->links()}}
+        {{$revenueProceedData->links()}}
     </div>
     @include('revenue::revenue-proceeds.edit')
     @include('revenue::revenue-proceeds.create')

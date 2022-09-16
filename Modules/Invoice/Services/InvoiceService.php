@@ -40,6 +40,7 @@ class InvoiceService implements InvoiceServiceContract
             $invoices = Invoice::query()->applyFilters($filters)
                 ->orderBy('sent_on', 'desc')
                 ->get();
+                // dd($invoices);
             $clientsReadyToSendInvoicesData = [];
             $projectsReadyToSendInvoicesData = [];
         } else {
