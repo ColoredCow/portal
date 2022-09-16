@@ -725,7 +725,6 @@ class InvoiceService implements InvoiceServiceContract
             'amount' => $amount,
             'gst' => $tax
         ]);
-        dd('hello');
 
         $filePath = $this->getInvoiceFilePath($invoice) . '/' . $invoiceNumber . '.pdf';
         $pdf->generateFromHtml($html, storage_path('app' . $filePath), [], true);

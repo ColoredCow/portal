@@ -3,7 +3,6 @@
 namespace Modules\Invoice\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 
 class CurrencyAvgRates extends Model
 {
