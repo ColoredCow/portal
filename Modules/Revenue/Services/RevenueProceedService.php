@@ -20,7 +20,7 @@ class RevenueProceedService
         $revenueProceed = new RevenueProceed;
 
         $revenueProceed->name = $request['name'];
-        $revenueProceed->category = Str::slug($request['category']);
+        $revenueProceed->category = Str::snake($request['category']);
         $revenueProceed->currency = $request['currency'];
         $revenueProceed->amount = $request['amount'];
         $revenueProceed->month = $request['month'];
@@ -42,7 +42,7 @@ class RevenueProceedService
         $revenueProceed = RevenueProceed::find($id);
 
         $revenueProceed->name = $request['name'];
-        $revenueProceed->category = Str::slug($request['category']);
+        $revenueProceed->category = Str::snake($request['category']);
         $revenueProceed->currency = $request['currency'];
         $revenueProceed->month = $request['month'];
         $revenueProceed->year = $request['year'];
