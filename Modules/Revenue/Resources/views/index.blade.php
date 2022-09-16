@@ -14,7 +14,7 @@
         </div>
         <br>
         <div>
-            @include('revenue::subviews.index-filters')
+            @include('revenue::revenue-proceeds.list-filters')
         </div>
         <table class="table table-striped table-bordered">
             <tr>
@@ -29,13 +29,7 @@
                 <tr>
                     <td>{{ Str::headline( $revenueProceed->category)}}</td>
                     <td>{{ $revenueProceed->name }}</td>
-                    <td>{{ $revenueProceed->amount }} @php
-                        if($revenueProceed->currency=='USD'){
-                            echo "$";
-                        }
-                        else {
-                            echo "₹";
-                        };@endphp</td>
+                    <td>{{ $revenueProceed->amount }} {{ $revenueProceed->currency=='USD' ? '$' :  '₹'}} </td>
                     <td>{{ $revenueProceed->recieved_at }}</td>
                     <td>{{ $revenueProceed->notes }}</td>
                     <td>
