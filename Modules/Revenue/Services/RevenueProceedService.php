@@ -17,7 +17,7 @@ class RevenueProceedService
 
         $revenueProceeds = RevenueProceed::orderby('name')->applyFilters($filters)
         ->paginate(config('constants.pagination_size'));
-        
+
         return [
             'revenueProceedData'=> $revenueProceeds,
             'filters' => $filters,
@@ -39,7 +39,6 @@ class RevenueProceedService
         $revenueProceed->save();
 
         return $revenueProceed;
-    }
 
     public function show($id)
     {
