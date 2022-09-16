@@ -24,6 +24,7 @@ use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Project\Entities\Project;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
 use Modules\Invoice\Entities\LedgerAccount;
+use Modules\Invoice\Entities\CurrencyAvgRates;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -157,6 +158,12 @@ class InvoiceService implements InvoiceServiceContract
         $invoice = Invoice::create($data);
         $this->saveInvoiceFile($invoice, $data['invoice_file']);
         $this->setInvoiceNumber($invoice, $data['sent_on']);
+        $currentDate = Carbon::now();
+        CurrencyAvgRates::create([
+            'currency' =>  $data['currency'],
+            'captured_for' => $currentDate,
+            'avg_rate' => $this->currencyService()->getCurrentRatesInINR(),
+        ]);
 
         return $invoice;
     }
@@ -718,6 +725,7 @@ class InvoiceService implements InvoiceServiceContract
             'amount' => $amount,
             'gst' => $tax
         ]);
+        dd('hello');
 
         $filePath = $this->getInvoiceFilePath($invoice) . '/' . $invoiceNumber . '.pdf';
         $pdf->generateFromHtml($html, storage_path('app' . $filePath), [], true);
