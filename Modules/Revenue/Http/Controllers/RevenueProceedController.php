@@ -20,7 +20,7 @@ class RevenueProceedController extends Controller
         $filters = $request->all();
         $filters = $filters ?: $this->service->defaultFilters();
 
-        return view('revenue::index',$this->service->index($filters));
+        return view('revenue::index', $this->service->index($filters));
     }
 
     public function store(Request $request)

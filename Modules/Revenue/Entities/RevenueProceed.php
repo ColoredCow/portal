@@ -1,6 +1,7 @@
 <?php
 
 namespace Modules\Revenue\Entities;
+
 use Illuminate\Support\Arr;
 
 use Illuminate\Database\Eloquent\Model;
