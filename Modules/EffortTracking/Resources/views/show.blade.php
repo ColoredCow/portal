@@ -92,21 +92,16 @@
                             <th scope="col" class="pb-lg-4">Name</th>
                             <th scope="col" class="pb-lg-4">Hours Booked</th>
                             <th scope="col" class="w-lg-200">Expected Hours 
-                            <div class="ml-lg-3">
-                                ({{$daysTillToday}} Days)
-                            </div></th>
+                                <div class="ml-lg-3">({{$daysTillToday}} Days)
+                                </div>
+                            </th>
                             <th scope="col" class="w-lg-200">Expected Hours Till Today</th>
                             <th scope="col" class="pb-lg-4">Hours To Add</th>
                             <th scope="col" class="pb-lg-4">Velocity 
-                                <span data-toggle="tooltip" data-placement="right"
-                                    title="Velocity is the ratio of current hours in project and expected hours.">
-                                    <i class="fa fa-question-circle"></i>&nbsp;
-                                </span>
+                                <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span>
                             </th>
-                            <th scope="col" class="pb-lg-4">
-                                FTE
-                                <span data-toggle="tooltip" data-placement="right"
-                                    title="{{ __('This is portion of the overall FTE that contributed to this projects by employee till ') .(now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')? today(config('constants.timezone.indian'))->subDay()->format('d M'): today(config('constants.timezone.indian'))->format('d M')) .'.' }}">
+                            <th scope="col" class="pb-lg-4">FTE
+                                <span data-toggle="tooltip" data-placement="right" title="{{ __('This is portion of the overall FTE that contributed to this projects by employee till ') .(now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')? today(config('constants.timezone.indian'))->subDay()->format('d M'): today(config('constants.timezone.indian'))->format('d M')) .'.' }}">
                                     <i class="fa fa-question-circle"></i>&nbsp;
                                 </span>
                             </th>
@@ -123,15 +118,11 @@
                         @endphp
                             <tr>
                                 <th scope="row" id="user-name<?php echo $teamMember->user->id; ?>">{{ $teamMember->user->name }}</th>
-                                <td
-                                    class="{{ $currentActualEffort >= $currentExpectedEffortTillToday ? 'text-success' : ($currentActualEffort < $currentExpectedEffortTillToday ? 'text-danger' : '') }}">
-                                    {{ $currentActualEffort }}</td>
+                                <td class="{{ $currentActualEffort >= $currentExpectedEffortTillToday ? 'text-success' : ($currentActualEffort < $currentExpectedEffortTillToday ? 'text-danger' : '') }}">{{ $currentActualEffort }}</td>
                                 <td>{{ $currentExpectedEffort }}</td>
                                 <td>{{ $currentExpectedEffortTillToday }}</td>
-                                <td>{{ $currentExpectedEffortTillToday - $currentActualEffort }}
-                                </td>
-                                <td class="{{ $velocity >= 1 ? 'text-success' : 'text-danger' }}">
-                                    {{ $velocity }}</td>
+                                <td>{{ $currentExpectedEffortTillToday - $currentActualEffort }}</td>
+                                <td class="{{ $velocity >= 1 ? 'text-success' : 'text-danger' }}">{{ $velocity }}</td>
                                 <td>{{ $fte }}</td>
                             </tr>
                         @endforeach
