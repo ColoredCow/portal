@@ -98,6 +98,7 @@ class ProjectService implements ProjectServiceContract
             'type' => $data['project_type'],
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
+            'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
         ]);
 
         if ($data['billing_level'] ?? null) {
@@ -176,6 +177,7 @@ class ProjectService implements ProjectServiceContract
             'end_date' => $data['end_date'] ?? null,
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
             'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
+            'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
         ]);
 
         if ($data['billing_level'] ?? null) {
@@ -344,23 +346,23 @@ class ProjectService implements ProjectServiceContract
         return $projectsData;
     }
 
-    public function getMailForFixedBudgetProjectKeyAccountManagers()
+    public function getMailDetailsForZeroExpectedHours()
     {
-        $currentdate = Carbon::today()->subdays(-5);
-        $projects = Project::wheretype('fixed-budget')->where('end_date', $currentdate)->get();
-        $projectsData = [];
-        foreach ($projects as $project) {
-            $user = $project->client->keyAccountManager;
-            if ($user) {
-                $projectsData[$user->id][] = [
-                    'project' => $project,
-                    'email' => $user->email,
-                    'end date' => $project->end_date,
-                    'name' => $user->name,
-                ];
+        $zeroEffortProjectsIds = ProjectTeamMember::where('daily_expected_effort', 0)->pluck('project_id');
+        $projectsWithZeroEffort = Project::with(['teamMembers'])->whereIn('id', $zeroEffortProjectsIds)->get();
+        $projectDetails = [];
+        foreach ($projectsWithZeroEffort as $project) {
+            foreach ($project->teamMembers as $teamMember) {
+                if ($teamMember->getOriginal('pivot_daily_expected_effort') == 0) {
+                    $projectDetails[] = [
+                        'projects' => $project,
+                        'name' => $teamMember->name,
+                        'email' =>$teamMember->email,
+                    ];
+                }
             }
         }
 
-        return $projectsData;
+        return $projectDetails;
     }
 }
