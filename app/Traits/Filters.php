@@ -16,13 +16,18 @@ trait Filters
 
     public function scopeApplyFilter($query, array $filters)
     {
-        foreach (array_filter($filters) as $type => $value) {
+        foreach ($filters as $type => $value) {
+         
             switch ($type) {
                 case 'status':
                     $query->filterByStatus($value);
                     break;
                 case 'name':
                     $query->filterByName($value);
+                    break;
+                case 'is_amc':
+                    $query->isAMC($value);
+                    break;
             }
         }
 

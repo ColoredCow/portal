@@ -5,7 +5,7 @@ return [
     'status' => [
         'active' => 'Active',
         'inactive' => 'Inactive',
-        'halted' => 'Halted'
+        'halted' => 'Halted',
     ],
     'designation' => [
         'project_manager' => 'Project Manager',
