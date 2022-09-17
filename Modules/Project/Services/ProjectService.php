@@ -24,13 +24,10 @@ class ProjectService implements ProjectServiceContract
             'name' => $data['name'] ?? null,
             'is_amc' => $data['is_amc'] ?? 0,            
         ];
-        
         $userId = auth()->user()->id;
         $data['projects'] = $data['projects'] ?? 'my-projects';
         $clients = null;
-        
         if ($data['projects'] == 'all-projects') {   
-
             $clients = Client::query()->with('projects', function ($query) use ($filters) {
                 $query->applyFilter($filters)->orderBy('name', 'asc');
             })->whereHas('projects', function ($query) use ($filters) {
