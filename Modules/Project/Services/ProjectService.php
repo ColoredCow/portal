@@ -28,8 +28,8 @@ class ProjectService implements ProjectServiceContract
         $data['projects'] = $data['projects'] ?? 'my-projects';
         $clients = null;
 
-        if ( $data['projects'] == 'all-projects') {  
-             
+        if ($data['projects'] == 'all-projects') {  
+
             $clients = Client::query()->with('projects', function ($query) use ($filters) {
                 $query->applyFilter($filters)->orderBy('name', 'asc');
             })->whereHas('projects', function ($query) use ($filters) {
@@ -51,6 +51,7 @@ class ProjectService implements ProjectServiceContract
         $haltedProjectsCount = $projectCounts['haltedProjectsCount'];
         $inactiveProjectsCount = $projectCounts['inactiveProjectsCount'];
         $AMCProjectCount = $projectCounts['AMCProjectCount'];
+
         return [
             'clients' => $clients->appends($data),
             'activeProjectsCount' => $activeProjectsCount,
