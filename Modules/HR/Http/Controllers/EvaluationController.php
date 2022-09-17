@@ -10,8 +10,8 @@ use Modules\HR\Entities\Evaluation\Parameter;
 use Modules\HR\Entities\Evaluation\ParameterOption;
 use Modules\HR\Entities\Evaluation\Segment;
 use Modules\HR\Entities\Round;
-use Modules\HR\Http\Requests\ManageEvaluationRequest;
 use Modules\HR\Http\Requests\EditEvaluationRequest;
+use Modules\HR\Http\Requests\ManageEvaluationRequest;
 
 class EvaluationController extends Controller
 {
@@ -20,11 +20,15 @@ class EvaluationController extends Controller
      */
     public function index(Request $request)
     {
-        $segments = Segment::all();
+        $roundWithSegments = [];
         $rounds = Round::select('id', 'name')->get();
+        foreach ($rounds as $value) {
+            $attr = Round::find($value->id)->evaluationSegments;
+            $roundWithSegments[$value->id][$value->name] = $attr;
+        }
 
         return view('hr::evaluation.index', [
-            'segments' => $segments,
+            'roundWithSegments' => $roundWithSegments,
             'rounds' => $rounds,
         ]);
     }
@@ -58,7 +62,7 @@ class EvaluationController extends Controller
         $segmentId = Round::select('*')->where('name', $request->rounds)->first()->id;
         $segment = Segment::create([
             'name' => $request->name,
-            'round_id' => $segmentId
+            'round_id' => $segmentId,
         ]);
 
         return redirect(route('hr.evaluation'));

@@ -136,6 +136,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
                 Route::post('markbook', 'BookController@markBook')->name('books.toggleReadStatus');
                 Route::post('addtowishlist', 'BookController@addToUserWishList')->name('books.addToWishList');
+                Route::post('removeFromwishlist', 'BookController@removeFromUserWishList')->name('books.removeFromWishList');
                 Route::get('disablesuggestion', 'BookController@disableSuggestion')->name('books.disableSuggestion');
                 Route::get('enablesuggestion', 'BookController@enableSuggestion')->name('books.enableSuggestion');
                 Route::get('mark-as-borrowed/{book}', 'BookController@markAsBorrowed')->name('books.markAsBorrowed');
