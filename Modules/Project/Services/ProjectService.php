@@ -44,6 +44,12 @@ class ProjectService implements ProjectServiceContract
 
             $filters['status'] = 'inactive';
             $inactiveProjectsCount = Project::query()->applyFilter($filters)->count();
+
+            $filters['is_amc'] = 1;
+
+            dd($filters);
+            $AMCcount = Project::query()->applyFilter($filters)->count();
+
         } else {
             $userId = auth()->user()->id;
 
@@ -71,13 +77,18 @@ class ProjectService implements ProjectServiceContract
             $inactiveProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
                 $query->where('team_member_id', $userId);
             })->count();
+            $filters['is_amc'] = 1;
+            $AMCcount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
+                $query->where('team_member_id', $userId);
+            })->count();
         }
 
         return [
             'clients' => $clients->appends($data),
             'activeProjectsCount' => $activeProjectsCount,
             'inactiveProjectsCount' => $inactiveProjectsCount,
-            'haltedProjectsCount' => $haltedProjectsCount
+            'haltedProjectsCount' => $haltedProjectsCount,
+            'AMCcount' => $AMCcount,
         ];
     }
 
@@ -117,6 +128,24 @@ class ProjectService implements ProjectServiceContract
 
         $project->client->update(['status' => 'active']);
         $this->saveOrUpdateProjectContract($data, $project);
+    }
+
+    private function getIndexTabsCount($filters, $type)
+    {
+        $filters['status'] = 'active';
+        $activeProjectsCount = Project::query()->applyFilter($filters)->count();
+
+        $filters['status'] = 'halted';
+        $haltedProjectsCount = Project::query()->applyFilter($filters)->count();
+
+        $filters['status'] = 'inactive';
+        $inactiveProjectsCount = Project::query()->applyFilter($filters)->count();
+
+        $filters['is_amc'] = 1;
+
+        dd($filters);
+        $AMCcount = Project::query()->applyFilter($filters)->count();
+        
     }
 
     public function getClients()

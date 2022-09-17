@@ -22,6 +22,7 @@
             <div class='d-flex justify-content-between align-items-md-center mb-2 mb-xl-0'>
                 <h4 class="">{{ config('project.status')[request()->input('status', 'active')] }} Projects</h4>
                 <input type="hidden" name="status" value="{{ request()->input('status', 'active') }}">
+                <input type="hidden" name="is_amc" value="{{ request()->input('is_amc', 0) }}">
                 <select class="fz-14 fz-lg-16 p-1 bg-info ml-3 my-auto text-white rounded border-0" name="projects"
                     onchange="this.form.submit()">
                     <option value="my-projects" {{ (request()->get('projects') == 'my-projects' || !request()->has('projects')) ? 'selected' : '' }}>
