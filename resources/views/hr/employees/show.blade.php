@@ -39,13 +39,15 @@
                             <div class="fz-lg-28 text-center mt-2"><div class="mb-4">Not in any project</div></div>
                         @else
                             @foreach($employee->user->activeProjectTeamMembers as $activeProjectTeamMember)
-                                <tr>
-                                    <td class="c-pointer"><div class="ml-7"><a href={{ route('project.show', $activeProjectTeamMember->project) }}>{{$activeProjectTeamMember->project->name}}</a></div></td>
-                                    <td><div>{{$activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), today(config('constants.timezone.indian'))->endOfMonth()))}}</div></td>
-                                    <td><div>{{$activeProjectTeamMember->current_actual_effort}}</div></td>
-                                    <td><div><div class="{{$activeProjectTeamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$activeProjectTeamMember->velocity}}</div></td>
-                                    <td><div>{{$activeProjectTeamMember->fte}}</td>
-                                </tr>
+                                @if($activeProjectTeamMember->project->status == 'active')
+                                    <tr>
+                                        <td class="c-pointer"><div class="ml-7"><a href={{ route('project.show', $activeProjectTeamMember->project) }}>{{$activeProjectTeamMember->project->name}}</a></div></td>
+                                        <td><div>{{$activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), today(config('constants.timezone.indian'))->endOfMonth()))}}</div></td>
+                                        <td><div>{{$activeProjectTeamMember->current_actual_effort}}</div></td>
+                                        <td><div><div class="{{$activeProjectTeamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$activeProjectTeamMember->velocity}}</div></td>
+                                        <td><div>{{$activeProjectTeamMember->fte}}</td>
+                                    </tr>
+                                @endif
                             @endforeach
                         @endif
                     </thead>

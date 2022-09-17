@@ -24,7 +24,7 @@
     </div>
     <div class="row mt-3 mb-2 px-2">
         <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 p-2 d-flex justify-content-center align-items-center">
-            <input type="text" data-value="{{ request()->input('search') }}" class="form-control" id="search_input" placeholder="Search all books" v-model="searchKey">
+            <input type="text" data-value="{{ request()->input('search') }}" class="form-control" id="search_input" placeholder="Enter the book name" v-model="searchKey">
             <button class="btn btn-info ml-2 py-1.5" @click="searchBooks()">Search</button>
         </div>
         <div>
@@ -55,7 +55,6 @@
         </div>
     </div>
     @endif
-<<<<<<< HEAD
     <div class="d-flex justify-content-start flex-wrap" id="books_table" 
         data-books="{{ json_encode($books) }}" 
         data-categories="{{ json_encode($categories) }}"
@@ -63,9 +62,7 @@
         data-reader-index-route="books/reader" 
         data-category-index-route="{{ route('books.category.index') }}"
         data-logged-in-user="{{ json_encode(auth()->user()) }}">
-=======
     <div class="d-flex justify-content-start flex-wrap" id="books_table" data-books="{{ json_encode($books) }}" data-categories="{{ json_encode($categories) }}" data-index-route="{{ route('books.index') }}" data-category-index-route="{{ route('books.category.index') }}" data-logged-in-user="{{ json_encode(auth()->user()) }}">
->>>>>>> 2b6ba38ce9b247090cc4791b08d3fbc54b7ba872
         <div class="d-flex flex-wrap w-full">
             <div v-for="(book, index) in books" class="col-lg-3 col-md-5 col-8 card book_card  mr-1 mb-3 p-2 mr-lg-4">
                 <div class="d-flex">
@@ -112,30 +109,24 @@
                     </div>
                 </div>
                 <div v-if="book.readers && book.readers.length">
-<<<<<<< HEAD
                     <p  class="mb-0 mt-1">Read by</p>
                     <div  class="pl-0 pt-2 pb-3">
                         <a v-for="reader in book.readers"  :href="readerIndexRoute+ '/'+ reader.id">
                         <img :src="reader.avatar" :alt="reader.name" :title="reader.name" class="reader_image mr-2 rounded-circle" data-toggle="tooltip" data-target="userDetails" data-placement="bottom">
                         </a>
-=======
                     <p class="mb-0 mt-1">Read by</p>
                     <div class="pl-0 pt-2 pb-3">
                         <img v-for="reader in book.readers" :src="reader.avatar" :alt="reader.name" :title="reader.name" class="reader_image mr-2 rounded-circle" data-toggle="tooltip" data-placement="bottom">
->>>>>>> 2b6ba38ce9b247090cc4791b08d3fbc54b7ba872
                     </div>
                 </div>
 
                 <div v-if="book.borrowers && book.borrowers.length">
-<<<<<<< HEAD
                     <p  class="mb-0 mt-1">Borrowed by</p>
                     <div  class="pl-0 pt-2 pb-3">
                         <img v-for="borrower in book.borrowers" :src="borrower.avatar" :alt="borrower.name" :title="borrower.name" class="reader_image mr-2 rounded-circle" data-target="userDetails" data-toggle="tooltip" data-placement="bottom">
-=======
                     <p class="mb-0 mt-1">Borrowed by</p>
                     <div class="pl-0 pt-2 pb-3">
                         <img v-for="borrower in book.borrowers" :src="borrower.avatar" :alt="borrower.name" :title="borrower.name" class="reader_image mr-2 rounded-circle" data-toggle="tooltip" data-placement="bottom">
->>>>>>> 2b6ba38ce9b247090cc4791b08d3fbc54b7ba872
                     </div>
                 </div>
 

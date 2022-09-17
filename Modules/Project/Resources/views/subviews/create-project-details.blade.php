@@ -60,8 +60,8 @@
                     value="{{ old('google_chat_webhook_url') }}">
             </div>
             <div class="form-group offset-md-1 col-md-5">
-                <input type="checkbox" id="isamc" name="isamc">
-                <label for="isamc">AMC</label><br>
+                <input type="checkbox" id="isamc" name="is_amc" value="true">
+                <label for="is_amc">AMC</label><br>
             </div>
             <div class="form-group offset col-md-2" v-if="projectType === 'fixed-budget'">
                 <label for="start_date">Start Date</label>
