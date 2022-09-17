@@ -119,7 +119,7 @@ class ProjectService implements ProjectServiceContract
         $data['is_amc'] = 1;
         $AMCProjectCountQuery = Project::query()->applyFilter($data);
 
-        if($type == 'my-projects') {
+        if ($type == 'my-projects') {
             $activeProjectsCountQuery = $activeProjectsCountQuery->whereHas('getTeamMembers', function ($query) use ($userId) {
                 $query->where('team_member_id', $userId);
             });
