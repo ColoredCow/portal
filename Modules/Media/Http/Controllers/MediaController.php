@@ -33,7 +33,7 @@ class MediaController extends Controller
     public function store(MediaRequest $request)
     {
         $validated = $request->validated();
-        $path = "public/media";
+        $path = 'public/media';
         $imageName = time() . '.' . $request->file->extension();
 
         $request->file->storeAs(
@@ -81,7 +81,7 @@ class MediaController extends Controller
     public function update(Request $request, Media $Media)
     {
         $validated = $request->validated();
-        $path = "public/media";
+        $path = 'public/media';
         $imageName = '';
         if ($request->hasFile('file')) {
             $imageName = time() . '.' . $request->file->extension();
@@ -112,7 +112,7 @@ class MediaController extends Controller
      */
     public function destroy(Media $media)
     {
-        $path = "public/media";
+        $path = 'public/media';
         Storage::delete($path . $media->img_url);
         $media->delete();
 
