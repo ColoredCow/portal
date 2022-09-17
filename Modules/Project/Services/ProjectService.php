@@ -22,7 +22,7 @@ class ProjectService implements ProjectServiceContract
         $filters = [
             'status' => $data['status'] ?? 'active',
             'name' => $data['name'] ?? null,
-            'is_amc' => $data['is_amc'] ?? 0,   
+            'is_amc' => $data['is_amc'] ?? 0,
         ];
         $userId = auth()->user()->id;
         $data['projects'] = $data['projects'] ?? 'my-projects';
@@ -130,6 +130,7 @@ class ProjectService implements ProjectServiceContract
                 $query->where('team_member_id', $userId);
             });
         }
+
         return [
             'activeProjectsCount' => $activeProjectsCountQuery->count(),
             'haltedProjectsCount' => $haltedProjectsCountQuery->count(),
