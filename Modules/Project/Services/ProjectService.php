@@ -45,7 +45,7 @@ class ProjectService implements ProjectServiceContract
             }
         })->orderBy('name')->paginate(config('constants.pagination_size'));
 
-        $projectCounts = $this->getIndexTabsCount($filters, $data['projects'], $userId);
+        $projectCounts = $this->getProjectTabCounts($filters, $showAllProjects, $userId);
         $mainProjectsCount = $projectCounts['mainProjectsCount'];
         $AMCProjectCount = $projectCounts['AMCProjectCount'];
         $haltedProjectsCount = $projectCounts['haltedProjectsCount'];
@@ -98,42 +98,22 @@ class ProjectService implements ProjectServiceContract
         $this->saveOrUpdateProjectContract($data, $project);
     }
 
-    private function getIndexTabsCount($filters, $type, $userId)
+    private function getProjectTabCounts($filters, $showAllProjects, $userId)
     {
-        $data = $filters;
-        $data['status'] = 'active';
-        $data['is_amc'] = 0;
-        $activeProjectsCountQuery = Project::query()->applyFilter($data);
+        $mainProjectsCountQuery = Project::query()->applyFilter(array_merge($filters, ['status' => 'active', 'is_amc' => 0]));
+        $AMCProjectCountQuery = Project::query()->applyFilter(array_merge($filters, ['status' => 'active', 'is_amc' => 1]));
+        $haltedProjectsCountQuery = Project::query()->applyFilter(array_merge($filters, ['status' => 'halted']));
+        $inactiveProjectsCountQuery = Project::query()->applyFilter(array_merge($filters, ['status' => 'inactive']));
 
-        $data = $filters;
-        $data['status'] = 'halted';
-        $haltedProjectsCountQuery = Project::query()->applyFilter($data);
-
-        $data = $filters;
-        $data['status'] = 'inactive';
-        $inactiveProjectsCountQuery = Project::query()->applyFilter($data);
-
-        $data = $filters;
-        $data['is_amc'] = 1;
-        $AMCProjectCountQuery = Project::query()->applyFilter($data);
-
-        if ($type == 'my-projects') {
-            $activeProjectsCountQuery = $activeProjectsCountQuery->whereHas('getTeamMembers', function ($query) use ($userId) {
-                $query->where('team_member_id', $userId);
-            });
-            $inactiveProjectsCountQuery = $inactiveProjectsCountQuery->whereHas('getTeamMembers', function ($query) use ($userId) {
-                $query->where('team_member_id', $userId);
-            });
-            $haltedProjectsCountQuery = $haltedProjectsCountQuery->whereHas('getTeamMembers', function ($query) use ($userId) {
-                $query->where('team_member_id', $userId);
-            });
-            $AMCProjectCountQuery = $AMCProjectCountQuery->whereHas('getTeamMembers', function ($query) use ($userId) {
-                $query->where('team_member_id', $userId);
-            });
+        if (! $showAllProjects) {
+            $mainProjectsCountQuery = $mainProjectsCountQuery->linkedToTeamMember($userId);
+            $AMCProjectCountQuery = $AMCProjectCountQuery->linkedToTeamMember($userId);
+            $inactiveProjectsCountQuery = $inactiveProjectsCountQuery->linkedToTeamMember($userId);
+            $haltedProjectsCountQuery = $haltedProjectsCountQuery->linkedToTeamMember($userId);
         }
 
         return [
-            'mainProjectsCount' => $activeProjectsCountQuery->count(),
+            'mainProjectsCount' => $mainProjectsCountQuery->count(),
             'haltedProjectsCount' => $haltedProjectsCountQuery->count(),
             'inactiveProjectsCount' => $inactiveProjectsCountQuery->count(),
             'AMCProjectCount' => $AMCProjectCountQuery->count(),
