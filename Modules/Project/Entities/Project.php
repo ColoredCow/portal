@@ -31,6 +31,7 @@ class Project extends Model implements Auditable
     {
         return new ProjectFactory();
     }
+    
     public function scopeIsAMC($query,$isamc)
     {
         $query->where('is_amc', $isamc);
