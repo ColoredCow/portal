@@ -122,7 +122,10 @@
                             <tr>
                                 <td colspan="3">
                                     <p class="my-4 text-left"> No
-                                        {{ config('project.status')[request()->input('status', 'active')] }} projects found.
+                                        {{ config('project.status')[request()->input('status', 'active')] }}
+                                        {{ ' ' }}
+                                        {{ request()->input('is_amc', '0') == '1' ? 'AMC' : 'Main' }}
+                                        projects found.
                                     </p>
                                 <td>
                             </tr>
@@ -130,7 +133,13 @@
                     @else
                         <tr>
                             <td colspan="3">
-                                <p class="my-4 text-left"> You don't have permission to see projects.</p>
+                                <p class="my-4 text-left">
+                                    No
+                                    {{ config('project.status')[request()->input('status', 'active')] }}
+                                    {{ ' ' }}
+                                    {{ request()->input('is_amc', '0') == '1' ? 'AMC' : 'Main' }}
+                                    projects found.
+                                </p>
                             <td>
                         </tr>
                     @endcan
