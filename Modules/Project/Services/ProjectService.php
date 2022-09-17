@@ -24,8 +24,9 @@ class ProjectService implements ProjectServiceContract
             'name' => $data['name'] ?? null,
             'is_amc' => $data['is_amc'] ?? 0,            
         ];
+        $userId = auth()->user()->id;
         
-
+        
         $data['projects'] = $data['projects'] ?? 'my-projects';
         $clients = null;
         
@@ -35,24 +36,7 @@ class ProjectService implements ProjectServiceContract
             })->whereHas('projects', function ($query) use ($filters) {
                 $query->applyFilter($filters);
             })->orderBy('name')->paginate(config('constants.pagination_size'));
-
-            $filters['status'] = 'active';
-            $activeProjectsCount = Project::query()->applyFilter($filters)->count();
-
-            $filters['status'] = 'halted';
-            $haltedProjectsCount = Project::query()->applyFilter($filters)->count();
-
-            $filters['status'] = 'inactive';
-            $inactiveProjectsCount = Project::query()->applyFilter($filters)->count();
-
-            $filters['is_amc'] = 1;
-
-            dd($filters);
-            $AMCcount = Project::query()->applyFilter($filters)->count();
-
         } else {
-            $userId = auth()->user()->id;
-
             $clients = Client::query()->with('projects', function ($query) use ($userId, $filters) {
                 $query->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
                     $query->where('team_member_id', $userId);
@@ -62,33 +46,19 @@ class ProjectService implements ProjectServiceContract
                     $query->where('team_member_id', $userId);
                 });
             })->orderBy('name')->paginate(config('constants.pagination_size'));
-
-            $filters['status'] = 'active';
-            $activeProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
-                $query->where('team_member_id', $userId);
-            })->count();
-
-            $filters['status'] = 'halted';
-            $haltedProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
-                $query->where('team_member_id', $userId);
-            })->count();
-
-            $filters['status'] = 'inactive';
-            $inactiveProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
-                $query->where('team_member_id', $userId);
-            })->count();
-            $filters['is_amc'] = 1;
-            $AMCcount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
-                $query->where('team_member_id', $userId);
-            })->count();
         }
-
+        $projectCounts = $this->getIndexTabsCount($filters, $data['projects'], $userId);
+        $activeProjectsCount = $projectCounts['activeProjectsCount'];
+        $haltedProjectsCount = $projectCounts['haltedProjectsCount'];
+        $inactiveProjectsCount = $projectCounts['inactiveProjectsCount'];
+        $AMCProjectCount = $projectCounts['AMCProjectCount'];
+  
         return [
             'clients' => $clients->appends($data),
             'activeProjectsCount' => $activeProjectsCount,
             'inactiveProjectsCount' => $inactiveProjectsCount,
             'haltedProjectsCount' => $haltedProjectsCount,
-            'AMCcount' => $AMCcount,
+            'AMCProjectCount' => $AMCProjectCount,
         ];
     }
 
@@ -130,22 +100,47 @@ class ProjectService implements ProjectServiceContract
         $this->saveOrUpdateProjectContract($data, $project);
     }
 
-    private function getIndexTabsCount($filters, $type)
+    private function getIndexTabsCount($filters, $type, $userId)
     {
-        $filters['status'] = 'active';
-        $activeProjectsCount = Project::query()->applyFilter($filters)->count();
+        $data = $filters;
+        $data['status'] = 'active';
+        $data['is_amc'] = 0;
+        $activeProjectsCountQuery = Project::query()->applyFilter($data);
 
-        $filters['status'] = 'halted';
-        $haltedProjectsCount = Project::query()->applyFilter($filters)->count();
+        $data = $filters;
+        $data['status'] = 'halted';
+        $haltedProjectsCountQuery = Project::query()->applyFilter($data);
 
-        $filters['status'] = 'inactive';
-        $inactiveProjectsCount = Project::query()->applyFilter($filters)->count();
+        $data = $filters;
+        $data['status'] = 'inactive';
+        $inactiveProjectsCountQuery = Project::query()->applyFilter($data);
 
-        $filters['is_amc'] = 1;
+        $data = $filters;
+        $data['is_amc'] = 1;
+        $AMCProjectCountQuery = Project::query()->applyFilter($data);
 
-        dd($filters);
-        $AMCcount = Project::query()->applyFilter($filters)->count();
-        
+        if($type == 'my-projects')
+        {
+            $activeProjectsCountQuery = $activeProjectsCountQuery->whereHas('getTeamMembers', function ($query) use ($userId) {
+                $query->where('team_member_id', $userId);
+            });
+            $inactiveProjectsCountQuery = $inactiveProjectsCountQuery->whereHas('getTeamMembers', function ($query) use ($userId) {
+                $query->where('team_member_id', $userId);
+            });
+            $haltedProjectsCountQuery = $haltedProjectsCountQuery->whereHas('getTeamMembers', function ($query) use ($userId) {
+                $query->where('team_member_id', $userId);
+            });
+            $AMCProjectCountQuery = $AMCProjectCountQuery->whereHas('getTeamMembers', function ($query) use ($userId) {
+                $query->where('team_member_id', $userId);
+            });
+        }
+        return [
+            'activeProjectsCount' => $activeProjectsCountQuery->count(),
+            'haltedProjectsCount' => $haltedProjectsCountQuery->count(),
+            'inactiveProjectsCount' => $inactiveProjectsCountQuery->count(),
+            'AMCProjectCount' => $AMCProjectCountQuery->count(),
+        ];
+
     }
 
     public function getClients()

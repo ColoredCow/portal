@@ -16,7 +16,7 @@
             $request['is_amc'] = '1';
 
         @endphp
-        <a class="nav-link  {{ (request()->input('is_amc', 0) == 1) ? 'active' : '' }}" href="{{ route('project.index', $request)  }}">AMC Projects({{ $AMCcount }})</a>
+        <a class="nav-link  {{ (request()->input('is_amc', 0) == 1) ? 'active' : '' }}" href="{{ route('project.index', $request)  }}">AMC Projects({{ $AMCProjectCount }})</a>
     </li>
 
     <li class="nav-item">
