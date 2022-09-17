@@ -36,31 +36,27 @@ class ProjectService implements ProjectServiceContract
         $clients = Client::query()->with('projects', function ($query) use ($filters, $showAllProjects, $userId) {
             $query->applyFilter($filters);
             if (! $showAllProjects) {
-                $query->whereHas('getTeamMembers', function ($query) use ($userId) {
-                    $query->where('team_member_id', $userId);
-                });
+                return $query->linkedToTeamMember($userId);
             }
         })->whereHas('projects', function ($query) use ($filters, $showAllProjects, $userId) {
             $query->applyFilter($filters);
             if (! $showAllProjects) {
-                $query->whereHas('getTeamMembers', function ($query) use ($userId) {
-                    $query->where('team_member_id', $userId);
-                });
+                return $query->linkedToTeamMember($userId);
             }
         })->orderBy('name')->paginate(config('constants.pagination_size'));
 
         $projectCounts = $this->getIndexTabsCount($filters, $data['projects'], $userId);
-        $activeProjectsCount = $projectCounts['activeProjectsCount'];
+        $mainProjectsCount = $projectCounts['mainProjectsCount'];
+        $AMCProjectCount = $projectCounts['AMCProjectCount'];
         $haltedProjectsCount = $projectCounts['haltedProjectsCount'];
         $inactiveProjectsCount = $projectCounts['inactiveProjectsCount'];
-        $AMCProjectCount = $projectCounts['AMCProjectCount'];
 
         return [
             'clients' => $clients->appends($data),
-            'activeProjectsCount' => $activeProjectsCount,
+            'mainProjectsCount' => $mainProjectsCount,
+            'AMCProjectCount' => $AMCProjectCount,
             'inactiveProjectsCount' => $inactiveProjectsCount,
             'haltedProjectsCount' => $haltedProjectsCount,
-            'AMCProjectCount' => $AMCProjectCount,
        ];
     }
 
@@ -137,7 +133,7 @@ class ProjectService implements ProjectServiceContract
         }
 
         return [
-            'activeProjectsCount' => $activeProjectsCountQuery->count(),
+            'mainProjectsCount' => $activeProjectsCountQuery->count(),
             'haltedProjectsCount' => $haltedProjectsCountQuery->count(),
             'inactiveProjectsCount' => $inactiveProjectsCountQuery->count(),
             'AMCProjectCount' => $AMCProjectCountQuery->count(),
