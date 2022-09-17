@@ -65,7 +65,6 @@ class ProjectService implements ProjectServiceContract
         return $this->getClients();
     }
 
-
     public function store($data)
     {
         $project = Project::create([
