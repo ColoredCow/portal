@@ -33,9 +33,6 @@
                 @can('hr_recruitment_applications.view')
                     <a class="dropdown-item" href="{{ route('resources.index') }}">Guidelines And Resources</a>
                 @endcan
-                @can('hr_recruitment_applications.view')
-                    <a class="dropdown-item" href="{{ route('recruitment.campaigns') }}">Campaigns</a>
-                @endcan
             </div>
         </li>
         @endif
