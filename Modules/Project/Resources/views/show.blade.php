@@ -4,7 +4,7 @@
 <div class="container" id="vueContainer">
     <br>
     <div class="d-flex">
-        <h4 class="c-pointer d-inline-block" v-on:click="counter += 1">{{ $project->name }}</h4>
+        <h4 class="c-pointer d-inline-block" v-on:click="counter += 1">{{$project->name}}</h4>
         @can('update', $project)
             <a id="view_effort_sheet_badge" target="_self" href="{{route('project.edit', $project )}}" class="btn btn-primary text-white ml-auto">{{ _('Edit') }}</a>
         @endcan
@@ -19,6 +19,9 @@
                             <label for="name" class="font-weight-bold mb-6 mt-2 ml-1">Name:</label>
                         </h4>
                         <span class="text-capitalize ml-2 fz-lg-22">{{ $project->name }}</span>
+                        @if ($project->is_amc == 1 )
+                        <span class="badge badge-pill badge-success mr-1  mt-1">AMC</span>
+                        @endif
                     </div>
                     <div class="form-group offset-md-1 pl-4 col-md-5 mt-3">
                         <h4 class="d-inline-block">
@@ -27,6 +30,7 @@
                         <span class="{{ $project->velocity >= 1 ? 'text-success' : 'text-danger'}} fz-lg-22">{{ $project->velocity }}</span>
                         <a target="_self" href="{{route('project.effort-tracking', $project )}}" class="btn-sm text-decoration-none btn-primary text-white ml-1 text-light rounded">{{ _('Check FTE') }}</a>
                     </div>
+                    
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6 pl-4">
@@ -62,18 +66,24 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    @if($project->billing_level)
-                        <div class="form-group col-md-6 pl-4">
+                    <div class="form-group col-md-6 pl-4">
+                        @if($project->billing_level)
                             <h4 class="d-inline-block">
                                 <label for="name" class="font-weight-bold mb-6 ml-1">Billing Level:</label>
                             </h4>
                             <span class="text-capitalize ml-2 fz-lg-22">{{ config('project.meta_keys.billing_level.value.' . $project->billing_level . '.label') }}</span>
-                        </div>
-                    @endif
+                        @endif
+                    </div>
+                    <div class="form-group offset-md-1 pl-4 col-md-5">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold">Total Estimated Hour:</label>
+                        </h4>
+                        <span class="text-capitalize ml-2 fz-lg-22">{{ $project->total_estimated_hours }}
+                    </div>
                 </div>
                 <div class="form-group col-md-6 pl-4">
                     <h4 class="d-inline-block">
-                        <label for="name" class="font-weight-bold mb-6 mr-3">Start Date:</label>
+                        <label for="name" class="font-weight-bold">Start Date:</label>
                     </h4>
                     <span class="text-capitalize ml-2 fz-lg-22">{{ optional($project->start_date)->format('d M Y') }}</span>
                 </div>
