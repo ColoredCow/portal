@@ -27,7 +27,6 @@ class ProjectService implements ProjectServiceContract
         $userId = auth()->user()->id;
         $data['projects'] = $data['projects'] ?? 'my-projects';
         $clients = null;
-
         if ($data['projects'] == 'all-projects') {  
             $clients = Client::query()->with('projects', function ($query) use ($filters) {
                 $query->applyFilter($filters)->orderBy('name', 'asc');
