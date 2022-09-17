@@ -13,17 +13,22 @@ class CreateExpenseTable extends Migration
      */
     public function up()
     {
-        Schema::create('Expense', function (Blueprint $table) {
+        Schema::create('expenses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('amount');
-            $table->string('status')->nullable();
+            $table->string('currency');
+            $table->string('status')->nullable()->comment('Pending, Paid, Draft');
             $table->string('paid_on')->nullable();
             $table->string('category');
             $table->string('location')->nullable();
-            $table->string('uploaded_by');
+            $table->unsignedInteger('user_id');
             $table->string('deleted_at')->nullable();
             $table->timestamps();
+        });
+
+        Schema::table('expenses', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -34,6 +39,6 @@ class CreateExpenseTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Expense');
+        Schema::dropIfExists('expenses');
     }
 }

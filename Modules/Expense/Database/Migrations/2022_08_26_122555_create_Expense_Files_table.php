@@ -13,10 +13,10 @@ class CreateExpenseFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('Expense_Files', function (Blueprint $table) {
+        Schema::create('expense_files', function (Blueprint $table) {
             $table->bigIncrements('expense_id');
-            $table->string('upload_image')->nullable();
-            $table->string('upload_pdf')->nullable();
+            $table->string('file_path');
+            $table->string('file_type')->nullable();
         });
     }
 
@@ -27,6 +27,6 @@ class CreateExpenseFilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Expense_Files');
+        Schema::dropIfExists('expense_files');
     }
 }

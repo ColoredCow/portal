@@ -6,13 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Expense extends Model
 {
-    protected $table = 'expense';
-
     protected $guarded = [];
 
     protected $fillable = [
         'name',
         'amount',
+        'currency',
         'status',
         'paid_on',
         'category',
