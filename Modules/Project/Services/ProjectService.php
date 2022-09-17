@@ -50,7 +50,6 @@ class ProjectService implements ProjectServiceContract
         $haltedProjectsCount = $projectCounts['haltedProjectsCount'];
         $inactiveProjectsCount = $projectCounts['inactiveProjectsCount'];
         $AMCProjectCount = $projectCounts['AMCProjectCount'];
-
         return [
             'clients' => $clients->appends($data),
             'activeProjectsCount' => $activeProjectsCount,
@@ -58,6 +57,7 @@ class ProjectService implements ProjectServiceContract
             'haltedProjectsCount' => $haltedProjectsCount,
             'AMCProjectCount' => $AMCProjectCount,
         ];
+        
     }
 
     public function create()
