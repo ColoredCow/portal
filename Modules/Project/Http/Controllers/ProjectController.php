@@ -29,7 +29,7 @@ class ProjectController extends Controller
     public function index()
     {
         $data = $this->service->index(request()->all());
-   
+
         return view('project::index', $data);
     }
 
