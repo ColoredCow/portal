@@ -29,6 +29,7 @@ trait Filters
                     break;
             }
         }
+        
         return $query;
     }
 }
