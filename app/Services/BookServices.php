@@ -6,6 +6,8 @@ use GuzzleHttp\Client;
 use Vision\Feature;
 use Vision\Request\Image\LocalImage;
 use Vision\Vision;
+use App\Models\KnowledgeCafe\Library\Book;
+use Illuminate\Support\Facades\DB;
 
 class BookServices
 {
@@ -63,5 +65,14 @@ class BookServices
         $description = str_replace('-', '', trim($description));
 
         return $description;
+    }
+    public function getReaderDetails()
+    {
+        $userBookReader = DB::table('book_readers')->select('*')->where('user_id', auth()->user()->id)->first()->library_book_id;
+        $readBooks = Book::where('id', $userBookReader)->get();
+        $userBookBorrower = DB::table('book_borrower')->where('user_id', auth()->user()->id)->first()->library_book_id;
+        $borrowedBooks = Book::where('id', $userBookBorrower)->get();
+        
+        return ['readBooks'=>$readBooks, 'borrowedBooks'=>$borrowedBooks];
     }
 }

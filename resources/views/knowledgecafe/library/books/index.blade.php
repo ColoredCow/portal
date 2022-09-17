@@ -114,9 +114,6 @@
                         <a v-for="reader in book.readers"  :href="readerIndexRoute+ '/'+ reader.id">
                         <img :src="reader.avatar" :alt="reader.name" :title="reader.name" class="reader_image mr-2 rounded-circle" data-toggle="tooltip" data-target="userDetails" data-placement="bottom">
                         </a>
-                    <p class="mb-0 mt-1">Read by</p>
-                    <div class="pl-0 pt-2 pb-3">
-                        <img v-for="reader in book.readers" :src="reader.avatar" :alt="reader.name" :title="reader.name" class="reader_image mr-2 rounded-circle" data-toggle="tooltip" data-placement="bottom">
                     </div>
                 </div>
 
@@ -124,9 +121,6 @@
                     <p  class="mb-0 mt-1">Borrowed by</p>
                     <div  class="pl-0 pt-2 pb-3">
                         <img v-for="borrower in book.borrowers" :src="borrower.avatar" :alt="borrower.name" :title="borrower.name" class="reader_image mr-2 rounded-circle" data-target="userDetails" data-toggle="tooltip" data-placement="bottom">
-                    <p class="mb-0 mt-1">Borrowed by</p>
-                    <div class="pl-0 pt-2 pb-3">
-                        <img v-for="borrower in book.borrowers" :src="borrower.avatar" :alt="borrower.name" :title="borrower.name" class="reader_image mr-2 rounded-circle" data-toggle="tooltip" data-placement="bottom">
                     </div>
                 </div>
 

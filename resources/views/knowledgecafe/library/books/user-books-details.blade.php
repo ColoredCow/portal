@@ -31,7 +31,7 @@
                               </div>
                               <div class="col-sm border px-0">
                                 <h4 class="card-header">Read Books</h4>
-                                @foreach ($readBooks as $readBook)
+                                @foreach ($books['readBooks'] as $readBook)
                                 <div class=" px-2 py-2 border-bottom">
                                     {{$readBook->title}}
                                 </div>
@@ -39,7 +39,7 @@
                               </div>
                               <div class="col-sm border px-0">
                                 <h4 class="card-header">Borrowed Books</h4>
-                                @foreach ($borrowedBooks as $borrowedBook)
+                                @foreach ($books['borrowedBooks'] as $borrowedBook)
                                 <div class=" px-2 py-2 border-bottom">
                                     {{$borrowedBook->title}}
                                 </div>
