@@ -62,7 +62,7 @@
                    </button>
                 </div>
                 
-                <div class="text-danger c-pointer ml-3" @click="deleteCategory(index)">
+                <div class="btn btn-danger text-white c-pointer ml-3" @click="deleteCategory(index)">
                     <i class="fa fa-times"></i>&nbsp;Delete
                 </div>
             </div>

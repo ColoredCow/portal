@@ -8,11 +8,20 @@ use Illuminate\Support\Str;
 
 class RevenueProceedService
 {
-    public function index()
+    public function index($filters)
     {
-        $revenueProceedData = RevenueProceed::orderby('name')->get();
+        $filters = [
+            'month' => $filters['month'] ?? null,
+            'year' => $filters['year'] ?? null,
+        ];
 
-        return $revenueProceedData;
+        $revenueProceeds = RevenueProceed::orderby('name')->applyFilters($filters)
+        ->paginate(config('constants.pagination_size'));
+
+        return [
+            'revenueProceedData'=> $revenueProceeds,
+            'filters' => $filters,
+        ];
     }
 
     public function store(Request $request)
@@ -20,7 +29,7 @@ class RevenueProceedService
         $revenueProceed = new RevenueProceed;
 
         $revenueProceed->name = $request['name'];
-        $revenueProceed->category = Str::slug($request['category']);
+        $revenueProceed->category = Str::snake($request['category']);
         $revenueProceed->currency = $request['currency'];
         $revenueProceed->amount = $request['amount'];
         $revenueProceed->month = $request['month'];
@@ -32,17 +41,12 @@ class RevenueProceedService
         return $revenueProceed;
     }
 
-    public function show($id)
-    {
-        return view('revenue::index');
-    }
-
     public function update(Request $request, $id)
     {
         $revenueProceed = RevenueProceed::find($id);
 
         $revenueProceed->name = $request['name'];
-        $revenueProceed->category = Str::slug($request['category']);
+        $revenueProceed->category = Str::snake($request['category']);
         $revenueProceed->currency = $request['currency'];
         $revenueProceed->month = $request['month'];
         $revenueProceed->year = $request['year'];
@@ -57,5 +61,13 @@ class RevenueProceedService
     public function delete($id)
     {
         return RevenueProceed::find($id)->delete();
+    }
+
+    public function defaultFilters()
+    {
+        return [
+            'year' => now()->format('Y'),
+            'month' => now()->format('m'),
+        ];
     }
 }

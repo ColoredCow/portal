@@ -18,5 +18,6 @@
     "SalesAutomation": true,
     "Report": true,
     "Expense": true,
-    "Revenue": true
+    "Revenue": true,
+    "ProjectContract": true
 }

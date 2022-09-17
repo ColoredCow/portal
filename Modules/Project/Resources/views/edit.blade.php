@@ -139,12 +139,10 @@
                             }
                             $('#edit-project-errors').removeClass('d-none');
                             $('.save-btn').attr('disabled', false);
-                            if(error){
-                                var concat = ' was not selected ';
-                                var errormessage =  error;
-                                var final = errormessage.concat(concat,'');
-                                this.$toast.error(final);                           
-                                }
+                            if(errors){
+                                var errormessage =  errors[error].join().replace('id','');
+                                this.$toast.error(errormessage);                           
+                            }
                         })
                 },
 
