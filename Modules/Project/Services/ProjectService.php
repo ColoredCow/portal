@@ -136,7 +136,6 @@ class ProjectService implements ProjectServiceContract
             'inactiveProjectsCount' => $inactiveProjectsCountQuery->count(),
             'AMCProjectCount' => $AMCProjectCountQuery->count(),
         ];
-
     }
 
     public function getClients()
