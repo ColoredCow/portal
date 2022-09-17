@@ -17,7 +17,6 @@ trait Filters
     public function scopeApplyFilter($query, array $filters)
     {
         foreach ($filters as $type => $value) {
-         
             switch ($type) {
                 case 'status':
                     $query->filterByStatus($value);
@@ -30,7 +29,6 @@ trait Filters
                     break;
             }
         }
-
         return $query;
     }
 }
