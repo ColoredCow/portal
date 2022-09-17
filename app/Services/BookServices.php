@@ -72,7 +72,7 @@ class BookServices
         $readBooks = Book::where('id', $userBookReader)->get();
         $userBookBorrower = DB::table('book_borrower')->where('user_id', auth()->user()->id)->first()->library_book_id;
         $borrowedBooks = Book::where('id', $userBookBorrower)->get();
-        
+
         return ['readBooks'=>$readBooks, 'borrowedBooks'=>$borrowedBooks];
     }
 }
