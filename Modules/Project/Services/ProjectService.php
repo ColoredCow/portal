@@ -56,7 +56,7 @@ class ProjectService implements ProjectServiceContract
             'inactiveProjectsCount' => $inactiveProjectsCount,
             'haltedProjectsCount' => $haltedProjectsCount,
             'AMCProjectCount' => $AMCProjectCount,
-        ];
+       ];
     }
 
     public function create()
