@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class OfficeLocation extends Model
 {
     protected $table = 'office_locations';
-    
+
     protected $fillable = [
         'center_head',
         'location',

@@ -20,14 +20,12 @@ class OfficeLocationController extends Controller
     {
         $officelocation = OfficeLocation::all();
         $centerHead = Employee::all();
+
         return view('operations::officelocation.index')->with([
                 'officelocations' => $officelocation,
                  'centerHeads' => $centerHead,
         ]);
     }
-
-
-                            
 
     /**
      * Show the form for creating a new resource.
@@ -50,7 +48,7 @@ class OfficeLocationController extends Controller
             'location' => 'required',
             'capacity' => 'required',
         ]);
-     
+
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()->all()]);
         } else {
@@ -60,6 +58,7 @@ class OfficeLocationController extends Controller
                 'capacity' => $request->capacity,
             ]);
         }
+
         return response()->json(['success'=>'Added new records.']);
     }
 
@@ -100,10 +99,10 @@ class OfficeLocationController extends Controller
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()->all()]);
         } else {
-            $officelocation =  Officelocation::find($id);
-            $officelocation->center_head=$request->input('center_head');
-            $officelocation->location=$request->input('location');
-            $officelocation->capacity=$request->input('capacity');
+            $officelocation = Officelocation::find($id);
+            $officelocation->center_head = $request->input('center_head');
+            $officelocation->location = $request->input('location');
+            $officelocation->capacity = $request->input('capacity');
 
             $officelocation->save();
         }
@@ -118,7 +117,7 @@ class OfficeLocationController extends Controller
      */
     public function destroy($id)
     {
-        $officelocation =  Officelocation::find($id);
+        $officelocation = Officelocation::find($id);
 
         $officelocation->delete();
 

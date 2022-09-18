@@ -25,7 +25,7 @@ class OfficeLocationTableSeeder extends Seeder
 
         ]);
     }
-    
+
     private function isgetlocationNames()
     {
         return [
