@@ -51,9 +51,8 @@ class OfficeLocationController extends Controller
             'capacity' => 'required',
         ]);
      
-    if ($validator->fails())
+        if ($validator->fails()) {
 
-        {
             return response()->json(['error'=>$validator->errors()->all()]);
 
         } else {
@@ -101,15 +100,15 @@ class OfficeLocationController extends Controller
             'capacity' => 'required',
         ]);
 
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()->all()]);
 
         } else {
 
-        $officelocation =  Officelocation::find($id);
-        $officelocation->center_head=$request->input('center_head');
-        $officelocation->location=$request->input('location');
-        $officelocation->capacity=$request->input('capacity');
+            $officelocation =  Officelocation::find($id);
+            $officelocation->center_head=$request->input('center_head');
+            $officelocation->location=$request->input('location');
+            $officelocation->capacity=$request->input('capacity');
 
             $officelocation->save();
 
