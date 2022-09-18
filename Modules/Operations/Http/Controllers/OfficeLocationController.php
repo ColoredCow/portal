@@ -19,15 +19,10 @@ class OfficeLocationController extends Controller
     public function index()
     {
         $officelocation = OfficeLocation::all();
-        
         $centerHead = Employee::all();
-        // $employee = Employee::all();
-        //  return view('operations::office-locations.index')->with('employee',$employees);
-
         return view('operations::officelocation.index')->with([
-
-                        'officelocations' => $officelocation,    
-                        'centerHeads' => $centerHead,
+                'officelocations' => $officelocation,    
+                'centerHeads' => $centerHead,
         ]);
 
     }
@@ -57,19 +52,19 @@ class OfficeLocationController extends Controller
             'capacity' => 'required',
         ]);
      
-        if ($validator->fails()) 
+    if ($validator->fails())
+
         {
             return response()->json(['error'=>$validator->errors()->all()]);
-        }
-        else
-        {
+
+        }else{
+
             OfficeLocation::create([
                 'center_head' => $request->center_head,
                 'location' => $request->location,
                 'capacity' => $request->capacity,
             ]);
         }
-
             return response()->json(['success'=>'Added new records.']);
     }  
 
@@ -111,9 +106,9 @@ class OfficeLocationController extends Controller
         if ($validator->fails()) 
         {
             return response()->json(['error'=>$validator->errors()->all()]);
-        }
-        else
-        {
+
+        }else{
+        
         $officelocation =  Officelocation::find($id);
         $officelocation->center_head=$request->input('center_head');
         $officelocation->location=$request->input('location');
@@ -124,8 +119,6 @@ class OfficeLocationController extends Controller
         }
         
         return response()->json(['success'=>'Added new records.']);
-
-        // return redirect()->route('operation::officelocation.index');
     }
 
     /**

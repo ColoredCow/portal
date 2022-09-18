@@ -19,7 +19,6 @@ class ResourcesController extends Controller
 
     public function show($job)
     {
-        dd('hello'); 
 
         $job = Job::find($job);
 
