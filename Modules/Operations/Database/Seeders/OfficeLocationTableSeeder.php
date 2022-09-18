@@ -4,9 +4,9 @@ namespace Modules\Operations\Database\Seeders;
 
 use Faker\Factory as faker;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
 use Modules\HR\Entities\Employee;
 use Modules\Operations\Entities\OfficeLocation;
+
 class OfficeLocationTableSeeder extends Seeder
 {
     /**
