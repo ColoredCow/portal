@@ -52,11 +52,8 @@ class OfficeLocationController extends Controller
         ]);
      
         if ($validator->fails()) {
-
             return response()->json(['error'=>$validator->errors()->all()]);
-
         } else {
-
             OfficeLocation::create([
                 'center_head' => $request->center_head,
                 'location' => $request->location,
@@ -101,19 +98,17 @@ class OfficeLocationController extends Controller
         ]);
 
         if ($validator->fails()) {
+
             return response()->json(['error'=>$validator->errors()->all()]);
-
         } else {
-
             $officelocation =  Officelocation::find($id);
             $officelocation->center_head=$request->input('center_head');
             $officelocation->location=$request->input('location');
             $officelocation->capacity=$request->input('capacity');
 
             $officelocation->save();
-
         }
-        
+
         return response()->json(['success'=>'Added new records.']);
     }
 
