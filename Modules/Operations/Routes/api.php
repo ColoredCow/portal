@@ -15,4 +15,5 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/operations', function (Request $request) {
     return $request->user();
+    
 });

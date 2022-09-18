@@ -14,8 +14,8 @@ use App\http\Controller\OfficeLocationController;
 |
 */
 
-Route::prefix('operations')->group(function() {
-    Route::get('/', 'OperationsController@index');
+Route::prefix('operations')->group(function () {
+Route::get('/', 'OperationsController@index');
 });
 Route::resource('/officelocation', 'OfficeLocationController')
                 ->only(['index', 'store', 'update','destroy', 'getEmployee'])

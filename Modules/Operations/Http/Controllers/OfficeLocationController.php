@@ -21,10 +21,9 @@ class OfficeLocationController extends Controller
         $officelocation = OfficeLocation::all();
         $centerHead = Employee::all();
         return view('operations::officelocation.index')->with([
-                'officelocations' => $officelocation,    
-                'centerHeads' => $centerHead,
+                'officelocations' => $officelocation,
+                 'centerHeads' => $centerHead,
         ]);
-
     }
 
 
@@ -57,7 +56,7 @@ class OfficeLocationController extends Controller
         {
             return response()->json(['error'=>$validator->errors()->all()]);
 
-        }else{
+        } else {
 
             OfficeLocation::create([
                 'center_head' => $request->center_head,
@@ -65,8 +64,8 @@ class OfficeLocationController extends Controller
                 'capacity' => $request->capacity,
             ]);
         }
-            return response()->json(['success'=>'Added new records.']);
-    }  
+        return response()->json(['success'=>'Added new records.']);
+    }
 
     /**
      * Show the specified resource.
@@ -96,25 +95,23 @@ class OfficeLocationController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $validator = Validator::make($request->all(), [
             'center_head' => 'required',
             'location' => 'required',
             'capacity' => 'required',
         ]);
 
-        if ($validator->fails()) 
-        {
+        if ($validator->fails()){
             return response()->json(['error'=>$validator->errors()->all()]);
 
-        }else{
-        
+        } else {
+
         $officelocation =  Officelocation::find($id);
         $officelocation->center_head=$request->input('center_head');
         $officelocation->location=$request->input('location');
         $officelocation->capacity=$request->input('capacity');
 
-        $officelocation->save();
+            $officelocation->save();
 
         }
         
@@ -135,4 +132,3 @@ class OfficeLocationController extends Controller
         return $officelocation;
     }
 }
-
