@@ -5,7 +5,8 @@ namespace Modules\Operations\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+// use Illuminate\Support\Facades\DB;
 use Modules\HR\Entities\Employee;
 use Modules\Operations\Entities\OfficeLocation;
 
@@ -18,9 +19,21 @@ class OfficeLocationController extends Controller
     public function index()
     {
         $officelocation = OfficeLocation::all();
+        
+        $centerHead = Employee::all();
+        // $employee = Employee::all();
+        //  return view('operations::office-locations.index')->with('employee',$employees);
 
-        return view('operations::officelocation.index')->with('officelocations', $officelocation);
+        return view('operations::officelocation.index')->with([
+
+                        'officelocations' => $officelocation,    
+                        'centerHeads' => $centerHead,
+        ]);
+
     }
+
+
+                            
 
     /**
      * Show the form for creating a new resource.
@@ -38,14 +51,27 @@ class OfficeLocationController extends Controller
      */
     public function store(Request $request)
     {
-        OfficeLocation::create([
-            'center_head' => $request->center_head,
-            'location' => $request->location,
-            'capacity' => $request->capacity
+        $validator = Validator::make($request->all(), [
+            'center_head' => 'required',
+            'location' => 'required',
+            'capacity' => 'required',
         ]);
+     
+        if ($validator->fails()) 
+        {
+            return response()->json(['error'=>$validator->errors()->all()]);
+        }
+        else
+        {
+            OfficeLocation::create([
+                'center_head' => $request->center_head,
+                'location' => $request->location,
+                'capacity' => $request->capacity,
+            ]);
+        }
 
-        return 'success';
-    }
+            return response()->json(['success'=>'Added new records.']);
+    }  
 
     /**
      * Show the specified resource.
@@ -75,14 +101,29 @@ class OfficeLocationController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $validator = Validator::make($request->all(), [
+            'center_head' => 'required',
+            'location' => 'required',
+            'capacity' => 'required',
+        ]);
+
+        if ($validator->fails()) 
+        {
+            return response()->json(['error'=>$validator->errors()->all()]);
+        }
+        else
+        {
         $officelocation =  Officelocation::find($id);
         $officelocation->center_head=$request->input('center_head');
         $officelocation->location=$request->input('location');
         $officelocation->capacity=$request->input('capacity');
 
         $officelocation->save();
+
+        }
         
-        return $officelocation;
+        return response()->json(['success'=>'Added new records.']);
 
         // return redirect()->route('operation::officelocation.index');
     }
@@ -94,19 +135,11 @@ class OfficeLocationController extends Controller
      */
     public function destroy($id)
     {
-
         $officelocation =  Officelocation::find($id);
 
         $officelocation->delete();
 
         return $officelocation;
     }
-
-    public function getEmployees()
-    
-    {
-       $employees = DB::table('Employee')->get();
-
-         return view('office-locations')->with('employees',$employees);
-    }
 }
+

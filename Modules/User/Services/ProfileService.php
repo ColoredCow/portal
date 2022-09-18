@@ -2,8 +2,10 @@
 
 namespace Modules\User\Services;
 
+use Matrix\Operators\Operator;
 use Modules\User\Contracts\ProfileServiceContract;
 use Modules\HR\Entities\HrJobDomain;
+use Modules\Operations\Entities\Officelocation;
 
 class ProfileService implements ProfileServiceContract
 {
@@ -15,7 +17,8 @@ class ProfileService implements ProfileServiceContract
         $user = auth()->user();
         $section = request()->input('section', 'basic-details');
         $domains = HrJobDomain::select('id', 'domain')->get()->toArray();
+        $officelocation = Officelocation::select('location')->get();
 
-        return ['user' => $user, 'section' => $section, 'domains' =>$domains];
+        return ['user' => $user, 'section' => $section, 'domains' =>$domains,'officelocation' =>$officelocation];
     }
 }

@@ -24,7 +24,6 @@ Route::resource('/officelocation', 'OfficeLocationController')
                     'store' => 'officelocation.store',
                     'update' => 'officelocation.update',
                     'destroy' => 'officelocation.destroy',
-                    'getEmployees'
                 ]);
 
 // Route::get('/delete/{id}', 'OfficeLocationController@delete')->name('officelocation.destroy');

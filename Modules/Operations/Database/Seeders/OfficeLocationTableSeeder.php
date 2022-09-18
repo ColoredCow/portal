@@ -32,18 +32,7 @@ class OfficeLocationTableSeeder extends Seeder
         return [
         'gurugram',
         'Ranchi',
-        'Tehri Garhwal'
+        'Tehri Garhwal',
         ];
     }
-    // private function isgetCapacity()
-    // {
-    //     return [
-    //     'gurugram',
-    //     'Ranchi',
-    //     'Tehri Garhwal'
-    //     ];
-    // }
-
-
 }
-

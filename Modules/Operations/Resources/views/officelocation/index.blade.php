@@ -13,29 +13,28 @@
             <form id="addform">
             <div class="modal-body">
                 {{ csrf_field() }}
-                    <div class="form-group"> 
-                      <label>Center Head</label>
-                      <input type="text" class="form-control" name="center_head" placeholder="Enter your name">
-                   </div>
-                   {{-- <div class="form-group">
-                    <label>Center Head</label>
-                   <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" id="employees">
-                    <option value="">Select Employee</option>
-                    @foreach ($employees as $list )
-                      <option value="{{$list->id}}">{{$list->id}}</option>
-                    @endforeach
-                   </select>
-                   </div> --}}
+
+                <ul id="saveform_errlist"></ul>
+                          <div class="form-group mb-3 ">
+                            <label>Center Head</label><br>
+                            <select name="center_head" class="forrm-control pl-2 pt-2 bg-white" id="center_id">
+                              <option value ="" selected> Select the employees</option>
+                              @foreach ( $centerHeads as $centerHead )
+                                <option value ="{{ $centerHead->id }}" required> {{$centerHead->name}}</option>
+                                
+                              @endforeach
+                            </select>
+                           </div>
 
 
 
                     <div class="form-group">
                         <label>Location</label>
-                        <input type="text" class="form-control" name="location" placeholder="Enter your location">
+                        <input type="text" class="form-control" name="location" id="location" placeholder="Enter your location" required>
                       </div>
                       <div class="form-group">
                         <label>Capacity</label>
-                        <input type="number" class="form-control" name="capacity" placeholder="Enter the strength">
+                        <input type="number" class="form-control" name="capacity" id="capacity" placeholder="Enter the strength" required>
                       </div>
     
             </div>
@@ -45,10 +44,9 @@
             </div>
             </div>
             </form> 
-        </div>
+          </div>
       </div>
-
-
+    </div>
       <div class="modal fade" id="officelocationEditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -62,23 +60,29 @@
                 {{ method_field('PUT')}}
 
                 <input type="hidden" name="id" id="id">
-                    <div class="form-group">
-                      <label>Center Head</label>
-                      <input type="text" class="form-control" name="center_head" id="center_head" placeholder="Enter your name">
-                    </div>
+                <div class="form-group mb-3">
+                  <label>Center Head</label><br>
+                  <select name="center_head" class="forrm-control pl-2 pt-2 bg-white text-center" id="center_id">
+                    <option value ="" selected> Select the employees</option>
+                    @foreach ( $centerHeads as $centerHead )
+                      <option value ="{{ $centerHead->id }}"> {{$centerHead->name}} </option>
+                      
+                    @endforeach
+                  </select>
+                 </div>
                     <div class="form-group">
                         <label>Location</label>
-                        <input type="text" class="form-control" name="location" id="location" placeholder="Enter your location">
+                        <input type="text" class="form-control" name="location" id="location" placeholder="Enter your location" required>
                       </div>
                       <div class="form-group">
                         <label>Capacity</label>
-                        <input type="number" class="form-control" name="capacity" id="capacity" placeholder="Enter the strength">
+                        <input type="number" class="form-control" name="capacity" id="capacity" placeholder="Enter the strength" required>
                       </div>
     
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">update officelocation</button>
+              <button type="submit" id="editLocationBtn" class="btn btn-primary">update officelocation</button>
             </div>
             </div>
           </form>
@@ -103,7 +107,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-danger"> Yes Delete</button>
+            <button type="submit" id="deleteLocationBtn" class="btn btn-danger"> Yes Delete</button>
           </div>
         </form>
       </div>
@@ -111,8 +115,8 @@
     </div>
 
         <div class="container">
-            <div class="row">
-                <h4> OfficeLocation</h4>
+            <div class="row mt-3 text-primary text-lg-start">
+                <h4> Office Location</h4>
             </div>
           </div>
             <div class="d-flex flex-row-reverse mr-25">
@@ -132,22 +136,24 @@
                     @foreach ($officelocations as $officelocation)    
                             <tr>
                                 <td>
-                                @if ( $officelocation->center_head )
-                                  <span data-html="true" data-toggle="tooltip" title="{{ $officelocation->center_head }}" class="content tooltip-wrapper">
+                              
+                                 @if ( $officelocation->centerHead->user )
+                                  <span data-html="true" data-toggle="tooltip" title="{{ $officelocation->centerHead->name }}" class="content tooltip-wrapper">
                                   
-                                  <img src="{{ $officelocation->employee->name }}" class="w-35 h-30 rounded-circle mb-1"></a>
+                                  <img src="{{ $officelocation->centerHead->user->avatar }}" class="w-35 h-30 rounded-circle mb-1"></a>
                                   @else
                                     - 
                                 @endif
-                                  </span>
-                                  @if ( $officelocation->center_head )
+                                  </span> 
+                                   @if ( $officelocation->centerHead->user )
                                   <span data-html="true" data-toggle="tooltip" title="{{ $officelocation->center_head }}" class="content tooltip-wrapper">
                                   <div class="text-primary fz-14">
-                                    {{ $officelocation->employee->name }}</div>
+                                    {{ $officelocation->centerHead->user->name }}</div>
                                   @else
                                       - 
-                                  @endif
-                                  </span>
+                                  @endif 
+                                  </span> 
+                                  {{$officelocation->center_head}}
                                     </td>
                                 <td>{{ $officelocation->location }}</td>
                                 <td>{{ $officelocation->capacity }}</td>

@@ -1892,7 +1892,7 @@ $(".opt").on("click", function() {
 			$('#delete_id').val(id);
 		});
 
-		$(document).on('submit', function(e) {
+		$(document).on('click','#deleteLocationBtn', function(e) {
 			e.preventDefault();
 
 			var id = $('#delete_id').val();
@@ -1904,11 +1904,10 @@ $(".opt").on("click", function() {
 				success: function (response) {
 
 					$('#officelocationDeleteModal').modal('hide');
-					
-					alert("data deleted")
+					alert("data deleted");
 				},
-				error: function(error) {
-					// alert("data not deleted");
+				error:function(error){
+					alert("data not deleted");
 				},
 			});
 		});
@@ -1931,11 +1930,16 @@ $(document).ready(function(){
 		$('#id').val(id);
 	});
 
-	$('#editformID').on('submit',function(e){
+	$('#editformID').on('click','#editLocationBtn',function(e){
 		e.preventDefault();
+		var id = $('#center_head').val();
+		var id = $('#location').val();
+		var id = $('#capacity').val();
 		var id = $('#id').val();
+		console.log(id);
 
 		$.ajax({
+			
 			type: "PUT",
 			url: "/officelocation/"+id,
 			data:$('#editformID').serialize(),
@@ -1946,7 +1950,7 @@ $(document).ready(function(){
 			error: function(error) {
 				alert("data not updated");
 			},
-		});
+	 	});
 	});
 });
 
@@ -1954,13 +1958,25 @@ $(document).ready(function(){
 
 		$('#addform').on('submit', function(e){
 			e.preventDefault();
+			console.log($('#addform').serialize());
 
-			$.ajax({
-				type: "POST",
-				url: "/officelocation",
-				data: $('#addform').serialize(),
-				success: function(response) {
-					$('#officelocationAddModal').modal('show')
+				var data = {
+
+					'center_head': $('#center_head').val(),
+					'location': $('#location').val(),
+					'capacity': $('#capacity').val(),
+
+				}
+				
+				$.ajax({
+					type: "POST",
+					url: "/officelocation",
+					data: $('#addform').serialize(),
+					success: function(response) {
+					console.log(response);
+
+					$('#officelocationAddModal').modal('hide')
+					if('#saveform_errlist')
 					alert("data saved");
 				},
 				error:function(error){

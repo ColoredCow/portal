@@ -30,6 +30,10 @@
                     <input type="text" class="form-control" id="designation" name="designation" required value="{{ $user->employee && $user->employee->designation ? $user->employee->designation : "" }}">
                 </div>
                 <div class="form-group">
+                    <label for="add_location">Add Location</label>
+                    <input type="text" class="form-control" id="location" name="location" required value="{{ $officelocation->location ? $officelocation->location : "" }}">
+                </div>
+                <div class="form-group">
                     <label>Domain</label>
                     <select class="form-control" name="domainId">
                         <option value="" disabled>Select Domain</option>

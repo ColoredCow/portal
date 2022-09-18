@@ -16,7 +16,7 @@ class OfficeLocation extends Model
         'capacity',
     ];
 
-    public function employee()
+    public function centerHead()
     {
         return $this->belongsTo(Employee::class, 'center_head');
     }
