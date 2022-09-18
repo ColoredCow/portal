@@ -113,7 +113,7 @@
                                                     <div class="text-right ml-5 ml-md-0">
                                                         <button type="button" id="meet_time"
                                                             value="{{ $applicationRound->id }}"
-                                                            class="py-0 px-0 mb-0 btn btn-info btn-sm round-submit finish_interview ">Finish
+                                                            class="btn-sm btn-primary text-decoration-none finish_interview ">Finish
                                                             Interview</button>
                                                     </div>        
                                                     @endif
@@ -451,7 +451,7 @@
                                                     <div class="text-right ml-5 ml-md-0">
                                                         <button type="button" id="meet_time"
                                                             value="{{ $applicationRound->id }}"
-                                                            class="py-0 px-0 mb-0 btn btn-info btn-sm round-submit finish_interview ">Finish
+                                                            class="btn-sm btn-primary text-decoration-none finish_interview ">Finish
                                                             Interview</button>
                                                     </div>        
                                                     @endif
@@ -986,8 +986,8 @@
                                             <div class="text-right ml-5 ml-md-0">
                                                 <button type="button" id="meet_time"
                                                     value="{{ $applicationRound->id }}"
-                                                    class="py-0 px-0 mb-0 btn btn-info btn-sm round-submit finish_interview "><h4>Finish
-                                                    Interview</h4></button>
+                                                    class="btn-sm btn-primary text-decoration-none finish_interview">Finish
+                                                    Interview</button>
                                             </div>
                                             @endif
                                         @endif
