@@ -1887,11 +1887,11 @@ $(".opt").on("click", function() {
     },
   });
 });
+
 /**
  * Operations
  *
  */
-
 $(document).ready(function() {
   $(".deletebtn").on("click", function() {
     $("#officelocationDeleteModal").modal("show");
