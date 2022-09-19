@@ -21,7 +21,7 @@ class MediaController extends Controller
     {
         $media = Media::where([
             ['event_name','!=', null],
-            [function($query) use ($request) {
+            [function ($query) use ($request) {
                 if (($term = $request->term)) {
                     $query->orWhere('event_name', 'LIKE', '%' . $term . '%')->get();
                 }
