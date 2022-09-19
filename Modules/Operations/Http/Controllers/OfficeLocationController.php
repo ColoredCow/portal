@@ -17,7 +17,7 @@ class OfficeLocationController extends Controller
 
         return view('operations::officelocation.index')->with([
                 'officelocations' => $officelocation,
-                 'centerHeads' => $centerHead,
+                'centerHeads' => $centerHead,
         ]);
     }
 
@@ -30,7 +30,7 @@ class OfficeLocationController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => 'error'], 200);
+            return response()->json(['error'=>$validator->errors()->all()]);
         } else {
             OfficeLocation::create([
                 'center_head' => $request->center_head,
@@ -40,11 +40,6 @@ class OfficeLocationController extends Controller
         }
 
         return response()->json(['success' => 'success'], 200);
-    }
-
-    public function show($id)
-    {
-        return view('operations::show');
     }
 
     public function update(Request $request, $id)
@@ -75,7 +70,7 @@ class OfficeLocationController extends Controller
      */
     public function destroy($id)
     {
-        $officelocation = Officelocation::find($id);
+        $officelocation = OfficeLocation::find($id);
 
         $officelocation->delete();
 
