@@ -8,7 +8,6 @@ use Vision\Request\Image\LocalImage;
 use Vision\Vision;
 use App\Models\KnowledgeCafe\Library\Book;
 use Illuminate\Support\Facades\DB;
-use Modules\User\Entities\User;
 
 class BookServices
 {
