@@ -47,7 +47,7 @@ class MailToAccountManagerForNotHavingEndDate extends Command
         $projects = Project::all();
         foreach ($projects as $project) {
             if($project->end_date == null) {
-                Mail::send(new SendMailForNotHavingProjectEndDate($project));
+                Mail::queue(new SendMailForNotHavingProjectEndDate($project));
             }
         }
     }
