@@ -14,6 +14,8 @@ class OfficeLocationController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * 
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -37,6 +39,7 @@ class OfficeLocationController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param Request $request
+     * * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -114,6 +117,6 @@ class OfficeLocationController extends Controller
 
         $officelocation->delete();
 
-        return $officelocation;
+        return back();
     }
 }
