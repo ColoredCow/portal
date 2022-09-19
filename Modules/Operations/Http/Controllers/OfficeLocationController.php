@@ -9,8 +9,7 @@ use Modules\HR\Entities\Employee;
 use Modules\Operations\Entities\OfficeLocation;
 
 class OfficeLocationController extends Controller
-{
-    
+{ 
     public function index()
     {
         $officelocation = OfficeLocation::all();
