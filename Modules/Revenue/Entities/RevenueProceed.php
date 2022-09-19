@@ -17,9 +17,9 @@ class RevenueProceed extends Model
     {
         if ($year = Arr::get($filters, 'year', false)) {
             $query = $query->where(function ($q) use ($year) {
-                $q->where('year', $year)->where('month','>', 3);
+                $q->where('year', $year)->where('month', '>', 3);
             })->orWhere(function ($q) use ($year) {
-                $q->where('year', $year+1)->where('month','<',4);
+                $q->where('year', $year+1)->where('month', '<',4);
             });
         }
 
