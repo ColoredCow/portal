@@ -3,6 +3,7 @@
 namespace Modules\Operations\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -38,7 +39,7 @@ class OfficeLocationController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param Request $request
-     * @return Renderable
+     *  @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -85,7 +86,7 @@ class OfficeLocationController extends Controller
      * Update the specified resource in storage.
      * @param Request $request
      * @param int $id
-     * @return Renderable
+     *  @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
