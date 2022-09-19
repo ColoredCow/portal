@@ -16,13 +16,13 @@ class CreateExpenseTable extends Migration
         Schema::create('expenses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('amount');
+            $table->float('amount');
             $table->string('currency');
             $table->string('status')->nullable()->comment('Pending, Paid, Draft');
-            $table->string('paid_on')->nullable();
             $table->string('category');
             $table->string('location')->nullable();
-            $table->string('deleted_at')->nullable();
+            $table->dateTime('paid_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
