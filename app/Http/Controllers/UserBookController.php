@@ -25,8 +25,7 @@ class UserBookController extends Controller
     }
     public function userBookDetails(User $user)
     {
-        
-        $books = (new BookServices)->getReaderDetails($user);
+       $books = (new BookServices)->getReaderDetails($user);
 
         return view('knowledgecafe.library.books.user-books-details', ['user'=>$user, 'books'=>$books]);
     }
