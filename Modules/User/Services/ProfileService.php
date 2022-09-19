@@ -13,11 +13,10 @@ class ProfileService implements ProfileServiceContract
      */
     public function index()
     {
-        // dd(OfficeLocation::select('location')->get()->toArray());
         $user = auth()->user();
         $section = request()->input('section', 'basic-details');
         $domains = HrJobDomain::select('id', 'domain')->get()->toArray();
-        $officelocation = OfficeLocation::select('location')->get()->toArray();
+        $officelocation = OfficeLocation::select('location')->get();
 
         return ['user' => $user, 'section' => $section, 'domains' =>$domains, 'officelocation' =>$officelocation];
     }

@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-group">
                     <label for="add_location">Add Location</label>
-                    <input type="text" class="form-control" id="location" name="location" required value="{{ $user->officelocation && $user->officelocation->location ? $user->officelocation->location : "" }}">
+                    <input type="text" class="form-control" id="location" name="location" required value="{{ $user->officelocation }}">
                 </div>
                 <div class="form-group">
                     <label>Domain</label>
@@ -80,9 +80,8 @@
                 <span>{{ $user->employee->designation }}</span>
             </div>
             <div class="form-group">
-                @dd($user->officelocation)
                 <label class="font-weight-bold" for="">Location:</label>
-                <span>{{ $user->officelocation->location }}</span>
+                <span>{{ $user->officelocation }}</span>
             </div>
 
             <div class="form-group">

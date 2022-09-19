@@ -14,8 +14,5 @@ class OperationsDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
-
-        // $this->call("OthersTableSeeder");
     }
 }

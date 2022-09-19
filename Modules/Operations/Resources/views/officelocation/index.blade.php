@@ -25,9 +25,6 @@
                               @endforeach
                             </select>
                            </div>
-
-
-
                     <div class="form-group">
                         <label>Location</label>
                         <input type="text" class="form-control" name="location" id="location" placeholder="Enter your location" required>
@@ -35,7 +32,7 @@
                       <div class="form-group">
                         <label>Capacity</label>
                         <input type="number" class="form-control" name="capacity" id="capacity" placeholder="Enter the strength" required>
-                      </div>
+                    </div>
     
             </div>
             <div class="modal-footer">
@@ -133,6 +130,7 @@
                       <th>Capacity</th>
                       <th>Action</th>
                     </tr>
+                    @dd($officelocations)
                     @foreach ($officelocations as $officelocation)    
                             <tr>
                                 <td>
@@ -150,7 +148,7 @@
                                   <div class="text-primary fz-14">
                                     {{ $officelocation->centerHead->user->name }}</div>
                                   @else
-                                      - 
+                                      -
                                   @endif 
                                   </span> 
                                   {{$officelocation->center_head}}
