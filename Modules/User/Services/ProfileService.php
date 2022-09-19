@@ -16,7 +16,7 @@ class ProfileService implements ProfileServiceContract
         $user = auth()->user();
         $section = request()->input('section', 'basic-details');
         $domains = HrJobDomain::select('id', 'domain')->get()->toArray();
-        $officelocation = Officelocation::select('location')->get();
+        $officelocation = Officelocation::select('location')->get()->toArray();
 
         return ['user' => $user, 'section' => $section, 'domains' =>$domains, 'officelocation' =>$officelocation];
     }
