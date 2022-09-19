@@ -2,7 +2,6 @@
 
 namespace Modules\Operations\Http\Controllers;
 
-use GrahamCampbell\ResultType\Success;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -40,7 +39,7 @@ class OfficeLocationController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param Request $request
-    //  * @return \Illuminate\Http\JsonResponse
+     * @return Renderable
      */
     public function store(Request $request)
     {
@@ -60,7 +59,6 @@ class OfficeLocationController extends Controller
             ]);
         }
 
-        // return response()->json(['success'=>'Added new records.']);
         return back();
     }
 
@@ -88,7 +86,7 @@ class OfficeLocationController extends Controller
      * Update the specified resource in storage.
      * @param Request $request
      * @param int $id
-    //  * @return \Illuminate\Http\JsonResponse
+     *@return Renderable
      */
     public function update(Request $request, $id)
     {
@@ -109,7 +107,6 @@ class OfficeLocationController extends Controller
             $officelocation->save();
         }
 
-        // return response()->json(['success'=>'Added new records.']);
         return back();
     }
 

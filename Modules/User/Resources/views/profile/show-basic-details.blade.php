@@ -80,6 +80,11 @@
                 <span>{{ $user->employee->designation }}</span>
             </div>
             <div class="form-group">
+                <label class="font-weight-bold" for="">Location:</label>
+                <span>{{ $officelocation->location }}</span>
+            </div>
+
+            <div class="form-group">
                 <label class="font-weight-bold" for="">Domain:</label>
                 @foreach ($domains as $domain )
                     <span>{{ $user->employee->domain_id == $domain['id'] ? $domain['domain'] : "" }}</span>
