@@ -19,6 +19,16 @@
                             <input type="text" class="form-control" name="name" id="name" required>
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
+                            <label for="status" class="field-required">Status</label>
+                            <select class="form-control" name="status">
+                                <option value="pending">Pending</option>
+                                <option value="paid">Paid</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row ">
+
+                        <div class="form-group  col-md-5">
                             <label class="field-required">Amount</label>
                             <div class="input-group">
                                 <div class=" input-group-prepend">
@@ -32,19 +42,11 @@
                                 <input type="number" required class="form-control" name="amount">
                             </div>
                         </div>
-                    </div>
-                    <div class="form-row ">
-                        <div class="form-group col-md-5">
-                            <label for="status" class="field-required">Status</label>
-                            <select class="form-control" name="status">
-                                <option value="pending">Pending</option>
-                                <option value="paid">Paid</option>
-                            </select>
-                        </div>
 
                         <div class="form-group offset-md-1 col-md-5">
                             <label for="paid_on">Paid On</label>
-                            <input type="date" class="form-control" name="paid_at" id="paidAt">
+                            <input type="date" class="form-control" name="paid_at" id="paidAt"
+                                value={{ date('Y-m-d') }}>
                         </div>
                     </div>
                     <div class="form-row">
