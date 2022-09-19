@@ -19,7 +19,7 @@ class RevenueProceed extends Model
             $query = $query->where(function ($q) use ($year) {
                 $q->where('year', $year)->where('month', '>', 3);
             })->orWhere(function ($q) use ($year) {
-                $q->where('year', $year+1)->where('month', '<', 4);
+                $q->where('year', $year + 1)->where('month', '<', 4);
             });
         }
 
