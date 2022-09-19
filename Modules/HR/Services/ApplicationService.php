@@ -13,7 +13,6 @@ use Modules\HR\Events\CustomMailTriggeredForApplication;
 use Modules\HR\Http\Requests\ApplicantMetaRequest;
 use Modules\HR\Entities\ApplicantMeta;
 
-
 class ApplicationService implements ApplicationServiceContract
 {
     public function index($applicationType)
