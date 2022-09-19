@@ -30,7 +30,7 @@ class OfficeLocationController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()->all()]);
+            return response()->json(['error' => 'error'], 200);
         } else {
             OfficeLocation::create([
                 'center_head' => $request->center_head,
