@@ -1,9 +1,7 @@
 <?php
 
-namespace Modules\Operations\Http\Controllers;
+namespace Modules\Operations\Http\Controller;
 
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -39,7 +37,6 @@ class OfficeLocationController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param Request $request
-     * * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
