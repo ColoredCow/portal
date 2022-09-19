@@ -1836,12 +1836,12 @@ $(document).ready(function () {
 $("body").on("click", "#offerLetter", function (e) {
 	e.preventDefault();
 	var originUrl = window.location.origin;
-	// let applicationid= applicationid;
+	let applicationid = $("#getApplicationId").val();
 	$.ajax({
 		url: originUrl + `/hr/recruitment/${applicationid}/save-offer-letter`,
 		type: "GET",
 		success: function (response) {
-			alert("success");
+			$("#seeOfferLetter").removeClass("d-none");
 		},
 		error: function () {
 			alert("error");

@@ -80,6 +80,25 @@
             .fz-14 {
                 font-size: 14px !important;
             }
+            .box1{
+                background-color: white;
+                width: 335px;
+                height: 300px;
+                border: 2px solid black;
+                float:left;
+                margin-bottom: 50px;
+                margin-left: 1px;
+
+            }
+            .box2{
+                background-color: white;
+                width: 335px;
+                height: 300px;
+                border: 2px solid black;
+                float:right;
+                margin-bottom:5px;
+                margin-right: 1px;
+            }
         </style>
     </head>
     <body>
@@ -373,11 +392,38 @@
                 <div class="img-center"><img src="{{ public_path() . '/images/coloredcow.png' }}" alt="" align="right" height="50" width="250"></div>
                 <p>___________________________________________________________________________________________________</p>
                 <p>IN WITNESS WHEREOF, this Agreement has been entered into the day and year first above written.</p>
-                <br><br><br>
-                <p>_________________________________________________________________________________________</p>
+                <p>______________________________________________________________________________________________</p>
+                <br><br><br><br>
+                <div>
+                <div class="box1"><pre>  For Coloredcow Consulting 
+                                         Private Limited
 
-                <br>
-                <p class="font-color">ColoredCow Consulting Pvt. Ltd | +91 9818571035 | <span href="mailto">contact@coloredcow.com</span> | F-61 Suncity,</p>
+
+
+
+
+
+
+                                          ____________________________
+                                          Name: Mr. Mohit Sharma
+                                          (HR, Admin)
+                </pre></div>
+                <div class="box2"><pre>  (Employee Name)
+
+
+
+
+
+
+
+
+
+                                            ______________________
+                    
+                </pre></div>
+                </div>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                <p class="font-color mt-6">ColoredCow Consulting Pvt. Ltd | +91 9818571035 | <span href="mailto">contact@coloredcow.com</span> | F-61 Suncity,</p>
                 <p class="font-color">Sector 54, Gurgaon, India | CIN No. U72900HR2019PTC081234 | <a href="https://coloredcow.com">https://coloredcow.com</a></p>
             </div>
             <div>

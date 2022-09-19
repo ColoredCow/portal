@@ -11,7 +11,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-row">
+                <div class="form">
                     @if ($application->offer_letter)
                     <div class="col-md-12">
                         <a target="_blank" href="{{ route("applications.{$application->job->type}.offer-letter", $application) }}" class="d-flex align-items-center">
@@ -19,7 +19,13 @@
                         </a>
                     </div>
                     @else
-                        <a value={{$application}}  class="btn btn-secondary px-4" id="offerLetter">Generate Offer Letter</a>
+                        <a class="btn btn-secondary px-4" id="offerLetter">Generate Offer Letter</a><br>
+                        <div class="d-none" id="seeOfferLetter">
+                            <a target="_blank" href="{{ route('applications.getOfferLetter', $application) }}" class="d-flex align-items-center" >
+                                <i class="fa fa-file fa-2x text-primary btn-file mt-3 "></i>&nbsp;See offer letter and Save
+                            </a>
+                            <input type="hidden" value="{{$application->id}}" id="getApplicationId"/>
+                        </div>
                     @endif
                 </div>
                 <div class="form-row mt-4">
