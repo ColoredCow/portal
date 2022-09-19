@@ -20,4 +20,9 @@ class OfficeLocation extends Model
     {
         return $this->belongsTo(Employee::class, 'center_head');
     }
+
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class, '');
+    // }
 }

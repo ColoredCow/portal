@@ -6,7 +6,6 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
-// use Illuminate\Support\Facades\DB;
 use Modules\HR\Entities\Employee;
 use Modules\Operations\Entities\OfficeLocation;
 
@@ -50,7 +49,7 @@ class OfficeLocationController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()->all()]);
+            return back();
         } else {
             OfficeLocation::create([
                 'center_head' => $request->center_head,
@@ -86,7 +85,7 @@ class OfficeLocationController extends Controller
      * Update the specified resource in storage.
      * @param Request $request
      * @param int $id
-     *@return Renderable
+     * @return Renderable
      */
     public function update(Request $request, $id)
     {
@@ -99,7 +98,7 @@ class OfficeLocationController extends Controller
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()->all()]);
         } else {
-            $officelocation = Officelocation::find($id);
+            $officelocation = OfficeLocation::find($id);
             $officelocation->center_head = $request->input('center_head');
             $officelocation->location = $request->input('location');
             $officelocation->capacity = $request->input('capacity');

@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Modules\AppointmentSlots\Entities\AppointmentSlot;
 use Modules\HR\Entities\Employee;
+use Modules\Operations\Entities\OfficeLocation;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\User\Database\Factories\UserFactory;
@@ -99,6 +100,11 @@ class User extends Authenticatable
     public function employee()
     {
         return $this->hasOne(Employee::class, 'user_id');
+    }
+
+    public function officelocation()
+    {
+        return $this->hasOne(OfficeLocation::class, 'location');
     }
 
     public function scopeFindByEmail($query, $email)

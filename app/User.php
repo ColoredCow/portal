@@ -6,6 +6,7 @@ use App\Models\KnowledgeCafe\Library\Book;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Modules\HR\Entities\Employee;
+use Modules\Operations\Entities\OfficeLocation;
 use Modules\User\Traits\HasWebsiteUser;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -13,7 +14,7 @@ class User extends Authenticatable
 {
     use Notifiable, HasRoles, HasWebsiteUser;
 
-    /**
+    /** 
      * The attributes that are mass assignable.
      *
      * @var array
@@ -77,6 +78,11 @@ class User extends Authenticatable
     public function employee()
     {
         return $this->hasOne(Employee::class, 'user_id');
+    }
+
+    public function officelocation()
+    {
+        return $this->belongsTo(OfficeLocation::class, 'user_id');
     }
 
     public function scopeFindByEmail($query, $email)
