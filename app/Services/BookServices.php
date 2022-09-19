@@ -8,9 +8,7 @@ use Vision\Request\Image\LocalImage;
 use Vision\Vision;
 use App\Models\KnowledgeCafe\Library\Book;
 use Illuminate\Support\Facades\DB;
-use PhpOption\None;
-
-use function PHPUnit\Framework\isNull;
+use Modules\User\Entities\User;
 
 class BookServices
 {
@@ -69,11 +67,11 @@ class BookServices
 
         return $description;
     }
-    public function getReaderDetails()
+    public function getReaderDetails($user)
     {
-        $userBookReader = DB::table('book_readers')->select('*')->where('user_id', auth()->user()->id)->first()->library_book_id;
+        $userBookReader = DB::table('book_readers')->select('*')->where('user_id', $user->id)->first()->library_book_id;
         $readBooks = Book::where('id', $userBookReader)->get();
-        $userBookBorrower = DB::table('book_borrower')->where('user_id', auth()->user()->id)->first()->library_book_id ?? '-' ;
+        $userBookBorrower = DB::table('book_borrower')->where('user_id', $user->id)->first()->library_book_id ?? '-';
         $borrowedBooks = Book::where('id', $userBookBorrower)->get();
 
         return ['readBooks'=>$readBooks, 'borrowedBooks'=>$borrowedBooks];
