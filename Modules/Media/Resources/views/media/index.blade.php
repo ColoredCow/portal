@@ -18,10 +18,20 @@
                 <h1>@yield('heading')</h1>
             </div>
         <div>
-        <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#photoGallery">
+        <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#media">
             <a>@yield('popup')</a>
         </button>
-        <div class="modal fade" id="photoGallery" tabindex="-1" role="dialog" aria-labelledby="photoGalleryLabel" aria-hidden="true">
+        <div class="d-flex">
+            <div class="row mr-2">
+                <form action="{{ route('media.index') }}" method="get">
+                    <div class="d-flex align-items-center">
+                        <input type="text" class="form-control input-sm" name="event_name" id="event_name" placeholder="Search Media" value="{{ old('event_name', request()->get('event_name')) }}"required>
+                        <button type="submit" class="btn btn-info ml-2 text-white fw-bold">Search</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal fade" id="media" tabindex="-1" role="dialog" aria-labelledby="mediaLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -34,13 +44,13 @@
                             <div class="col-lg-20 mx-auto">
                                 <div class="card shadow">
                                     <div class="card-header bg-secondary">
-                                        <h3 class="text-light fw-bold">Add New Post</h3>
+                                        <h3 class="text-light fw-bold ">Add New Post</h3>
                                     </div>
                                     <div class="card-body p-4">
                                         <form action="{{ route('media.index') }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             <div class="my-2"><h3 class="text-secondary">Event Name</h3>
-                                                <input type="text" name="event_name" id="event_name" class="form-control @error('event_name') is-invalid @enderror" placeholder="Event_name" value="{{ old('event_name') }}">
+                                                <input type="text" name="event_name" id="event_name" class="form-control @error('event_name') is-invalid @enderror" placeholder="Event name" value="{{ old('event_name') }}">
                                                 @error('event_name')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -56,6 +66,12 @@
                                                 @error('description')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
+                                            </div>
+                                            <div class="my-2"><h3 class="text-secondary">Tags</h3>
+                                                <input class="form-control" placeholder="Between 3 to 5 tags" type="text" data-role="tagsinput" name="tags" id="tags" min="3" max="5">
+                                                @if ($media->has('tags'))
+                                                <span class="text-danger">{{ $media->first('tags') }}</span>
+                                                @endif
                                             </div>
                                             <div class="my-2">
                                                 <input type="submit" value="Add Post" class="btn btn-success float-right">
@@ -89,6 +105,11 @@
                     </p>
                     <p class="card-title fw-bold text-secondary">Event Name - {{ $row->event_name }}</p>
                     <p class="text-secondary">Description - {{ Str::limit($row->description, 10) }}</p>
+                    <div : class="'pl-0 pt-1'">
+                        <span v-for="">
+                            <h2 class="badge badge-secondary px-2 py-1 mr-1">Events Tag</h2>
+                        </span>
+                    </div>    
                 </div>
             </div>
         </div>

@@ -15,10 +15,20 @@ class MediaController extends Controller
     /**
      * Display a listing of the resource.
      * @return Renderable
+     * @param Request $request
      */
-    public function index()
+    public function index(Request $request)
     {
-        $media = Media::orderBy('id', 'desc')->paginate(24);
+        $media = Media::where([
+            ['event_name','!=', null],
+            [function($query) use ($request) {
+                if (($term = $request->term)) {
+                    $query->orWhere('event_name', 'LIKE', '%' . $term . '%')->get();
+                }
+            }]
+        ])
+        ->orderBy('id', 'desc')
+        ->paginate(24);
 
         return view('media::media.index', ['media' => $media]);
     }
@@ -34,6 +44,7 @@ class MediaController extends Controller
     {
         $validated = $request->validated();
         $path = 'public/media';
+        $tags = explode(",", $request->tags);
         $imageName = time() . '.' . $request->file->extension();
 
         $request->file->storeAs(
@@ -45,7 +56,8 @@ class MediaController extends Controller
             'event_name' => $validated['event_name'],
             'description' => $validated['description'],
             'img_url' => $imageName,
-            'uploaded_by' => Auth()->user()->id
+            'uploaded_by' => Auth()->user()->id,
+            'tags'=> $tags
         ];
         Media::create($postData);
 
@@ -99,7 +111,8 @@ class MediaController extends Controller
             'event_name' => $validated['event_name'],
             'description' => $validated['description'],
             'img_url' => $imageName,
-            'uploaded_by' => Auth()->user()->id
+            'uploaded_by' => Auth()->user()->id,
+            'tags'=> $request->tags
         ];
         $Media->update($postData);
 

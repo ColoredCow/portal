@@ -27,6 +27,7 @@ class MediaRequest extends FormRequest
             'event_name' => 'required',
             'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'description' => 'required',
+            'tags' => 'required',
         ];
     }
 }
