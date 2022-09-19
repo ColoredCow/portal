@@ -33,10 +33,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-row">
+                    <div class="form-row ">
                         <div class="form-group col-md-5">
                             <label for="status" class="field-required">Status</label>
-                            <input type="text" class="form-control" name="status" id="status" required>
+                            <select class="form-control" name="status">
+                                <option value="pending">Pending</option>
+                                <option value="paid">Paid</option>
+                            </select>
                         </div>
 
                         <div class="form-group offset-md-1 col-md-5">
@@ -51,7 +54,13 @@
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
                             <label for="location" class="field-required">Location</label>
-                            <input type="text" class="form-control" name="location" id="location" required>
+                            <select class="form-control" name="location">
+                                <option value="">Select Location</option>
+                                @foreach (config('constants.office_locations') as $key => $value)
+                                    <option value="{{ $key }}">{{ $value }}</option>
+                                @endforeach
+
+                            </select>
                         </div>
                     </div>
                 </div>
