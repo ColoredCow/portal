@@ -20,7 +20,7 @@ class MediaController extends Controller
     public function index(Request $request)
     {
         $media = Media::where([
-            ['event_name','!=', null],
+            ['event_name', '!=', null],
             [function ($query) use ($request) {
                 if (($term = $request->term)) {
                     $query->orWhere('event_name', 'LIKE', '%' . $term . '%')->get();
@@ -44,7 +44,7 @@ class MediaController extends Controller
     {
         $validated = $request->validated();
         $path = 'public/media';
-        $tags = explode(",", $request->tags);
+        $tags = explode(',', $request->tags);
         $imageName = time() . '.' . $request->file->extension();
 
         $request->file->storeAs(
