@@ -7,6 +7,7 @@ use Modules\HR\Entities\University;
 use Modules\HR\Http\Requests\UniversityRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\HR\Contracts\UniversityServiceContract;
+use Illuminate\Support\Facades\DB;
 
 class UniversityController extends Controller
 {
@@ -23,11 +24,26 @@ class UniversityController extends Controller
     public function index()
     {
         $this->authorize('list', University::class);
+
+        $applications = DB::table('hr_universities')
+        ->leftJoin('hr_applicants', 'hr_universities.id', '=', 'hr_applicants.hr_university_id')
+        ->leftjoin('hr_universities_contacts', 'hr_universities.id', '=', 'hr_universities_contacts.hr_university_id')
+        ->select(
+            'hr_universities.*',
+            'hr_universities_contacts.name as st_name',
+            'hr_universities_contacts.email',
+            'hr_universities_contacts.phone',
+            'hr_universities_contacts.designation'
+        )
+        ->orderBy(DB::raw('count(hr_applicants.hr_university_id)'), 'desc')
+        ->groupBy('hr_universities.id')
+        ->get();
         $searchString = (request()->has('search')) ? request()->input('search') : false;
         $universities = $this->service->list($searchString);
 
         return view('hr::universities.index')->with([
             'universities' => $universities,
+            'applications' => $applications,
         ]);
     }
 

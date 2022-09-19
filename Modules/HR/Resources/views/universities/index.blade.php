@@ -38,7 +38,11 @@
                 <th>Contact Details</th>
                 <th>Actions</th>
             </tr>
+           @foreach($applications as $application)
+               
+          
             @foreach($universities as $university)
+            @if(($application->name)==($university->name))
             <tr>
                 <td>
                     <a href="{{ route('universities.edit',$university) }}" class="font-weight-bold text-primary">{{$university->name}}</a>
@@ -69,6 +73,8 @@
                     </form>
                 </td>
             </tr>
+            @endif
+            @endforeach
             @endforeach
         </table>
     </div>
