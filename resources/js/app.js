@@ -1898,6 +1898,7 @@ $(".status").on("change", function () {
 		});
 	}
 });
+});
 
 $(".pending").on("change", function () {
 	$("#completeSpinner").removeClass("d-none");
