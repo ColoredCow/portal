@@ -85,6 +85,7 @@ Route::middleware('auth')->group(function () {
             Route::get('internship/{application}/offer-letter', 'InternshipApplicationController@viewOfferLetter')->name('applications.internship.offer-letter');
 
             Route::post('/store', 'JobController@storeJobdomain')->name('hr-job-domains.storeJobdomain');
+            Route::post('/store-designation', 'JobController@storeDesignation')->name('hr-job-designation.storeJobDesignation');
 
             Route::resource('job', 'JobApplicationController')
                 ->only(['index', 'edit', 'update', 'store'])

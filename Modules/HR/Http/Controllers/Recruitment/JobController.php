@@ -6,9 +6,11 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\HrJobDomain as EntitiesHrJobDomain;
 use Modules\HR\Entities\Job;
+use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\Round;
 use Modules\HR\Http\Requests\Recruitment\JobRequest;
 use Modules\HR\Http\Requests\Recruitment\JobDomainRequest;
+use Modules\HR\Http\Requests\Recruitment\JobDesignationRequest;
 use Modules\User\Entities\User;
 use Illuminate\Support\Str;
 use Request;
@@ -140,6 +142,16 @@ class JobController extends Controller
         $hrJobDomains->domain = $request['name'];
         $hrJobDomains->slug = Str::slug($request['name']);
         $hrJobDomains->save();
+
+        return redirect()->back();
+    }
+
+    public function storeDesignation(JobDesignationRequest $request)
+    {
+        $jobDesignation = new HrJobDesignation();
+        $jobDesignation->designation = $request['name'];
+        $jobDesignation->slug = Str::slug($request['name']);
+        $jobDesignation->save();
 
         return redirect()->back();
     }
