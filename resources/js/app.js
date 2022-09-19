@@ -277,7 +277,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 				).innerText = `Evaluation\u00A0\u00A0•\u00A0\u00A0${roundName}`;
 
 				$("#page_hr_applicant_edit #application_evaluation_body").html(
-					'<div class="my-4 fz-18 text-center">Loading...</div>'
+					"<div class='my-4 fz-18 text-center'>Loading...</div>"
 				);
 				if (!this.showEvaluationFrame) {
 					axios
@@ -454,7 +454,7 @@ $("#page_hr_applicant_edit .applicant-round-form").on(
 			}
 		}
 
-		form.find('[name="action"]').val(selectedAction); // setting name="action" input inside form to "reject"
+		form.find("[name='action']").val(selectedAction); // setting name="action" input inside form to "reject"
 		button.prop("disabled", "disabled").addClass("disabled"); // making button disabled
 		form.submit(); // submitting the form
 	}
@@ -493,7 +493,7 @@ function getProjectList(projects) {
 	let html = "";
 	for (var index = 0; index < projects.length; index++) {
 		let project = projects[index];
-		html += '<option value="' + project.id + '">';
+		html += "<option value='" + project.id + "'>";
 		html += project.name;
 		html += "</option>";
 	}
@@ -822,7 +822,7 @@ if (document.getElementById("books_listing")) {
 					await this.bookCategories.push(response.data.category);
 					this.newCategory = "";
 					let allCheckboxes = document.querySelectorAll(
-						'#update_category_modal input[type="checkbox"]'
+						"#update_category_modal input[type='checkbox']"
 					);
 					let lastCheckbox = allCheckboxes[allCheckboxes.length - 1];
 					this.categoryInputs[lastCheckbox.value] = lastCheckbox;
@@ -873,7 +873,7 @@ if (document.getElementById("books_listing")) {
 				"#update_category_modal"
 			);
 			let allCategoryInputs = categoryInputContainer.querySelectorAll(
-				'input[type="checkbox"]'
+				"input[type='checkbox']"
 			);
 			allCategoryInputs.forEach(
 				(checkbox) => (this.categoryInputs[checkbox.value] = checkbox)
@@ -960,7 +960,7 @@ if (document.getElementById("books_listing")) {
 					await this.bookCategories.push(response.data.category);
 					this.newCategory = "";
 					let allCheckboxes = document.querySelectorAll(
-						'#update_category_modal input[type="checkbox"]'
+						"#update_category_modal input[type='checkbox']"
 					);
 					let lastCheckbox = allCheckboxes[allCheckboxes.length - 1];
 					this.categoryInputs[lastCheckbox.value] = lastCheckbox;
@@ -1011,7 +1011,7 @@ if (document.getElementById("books_listing")) {
 				"#update_category_modal"
 			);
 			let allCategoryInputs = categoryInputContainer.querySelectorAll(
-				'input[type="checkbox"]'
+				"input[type='checkbox']"
 			);
 			allCategoryInputs.forEach(
 				(checkbox) => (this.categoryInputs[checkbox.value] = checkbox)
@@ -1338,7 +1338,7 @@ if (document.getElementById("roles_permission_table")) {
 				"#update_role_permissions_modal"
 			);
 			let allPermissionInputs = permissionInputContainer.querySelectorAll(
-				'input[type="checkbox"]'
+				"input[type='checkbox']"
 			);
 			allPermissionInputs.forEach(
 				(checkbox) => (this.permissionInputs[checkbox.value] = checkbox)
@@ -1416,7 +1416,7 @@ if (document.getElementById("user_roles_table")) {
 				"#update_user_roles_modal"
 			);
 			let allRoleInputs = roleInputContainer.querySelectorAll(
-				'input[type="checkbox"]'
+				"input[type='checkbox']"
 			);
 			allRoleInputs.forEach(
 				(checkbox) => (this.roleInputs[checkbox.value] = checkbox)
@@ -1564,7 +1564,7 @@ function loadTemplateMail(status, successCallback) {
 function saveFollowUp() {
 	var form = $(this).closest("form");
 	if ($("#followUpAndReject").is(":checked")) {
-		var followUpComments = form.find('[name="comments"]').val();
+		var followUpComments = form.find("[name='comments']").val();
 		$(document)
 			.find("#followUpCommentForReject")
 			.val(followUpComments);
@@ -1870,7 +1870,7 @@ $(function () {
 		let reasonCheckboxInput = $(this);
 		let reasonCommentInput = reasonCheckboxInput
 			.closest(".rejection-reason-block")
-			.find('input[type="text"]');
+			.find("input[type='text']");
 		if (reasonCheckboxInput.is(":checked")) {
 			reasonCommentInput.show().focus();
 		} else {
