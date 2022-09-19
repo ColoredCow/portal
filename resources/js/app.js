@@ -1839,12 +1839,12 @@ $("body").on("click", "#offerLetter", function (e) {
 	// let applicationid= applicationid;
 	$.ajax({
 		url: originUrl + `/hr/recruitment/${applicationid}/save-offer-letter`,
-		type: 'GET',
+		type: "GET",
 		success: function (response) {
 			alert("success");
 		},
 		error: function () {
-			alert('error');
+			alert("error");
 		}
 	});
 });

@@ -15,7 +15,6 @@ use Modules\HR\Entities\Job;
 use Modules\HR\Events\Recruitment\ApplicantEmailVerified;
 use Modules\HR\Http\Requests\Recruitment\ApplicantRequest;
 use Modules\User\Entities\User;
-use Modules\HR\Entities\ApplicantMeta;
 use Modules\HR\Http\Requests\ApplicantMetaRequest;
 
 class ApplicantController extends Controller
