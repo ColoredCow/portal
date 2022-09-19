@@ -230,7 +230,6 @@ abstract class ApplicationController extends Controller
         $directory = 'app/' . config('constants.hr.offer-letters-dir');
         $fullPath = storage_path($directory . '/' . $fileName);
         $pdf->save($fullPath);
-
     }
 
     public static function getOfferLetter(Application $application, Request $request)
