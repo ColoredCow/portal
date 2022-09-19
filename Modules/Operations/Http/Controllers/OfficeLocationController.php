@@ -21,14 +21,6 @@ class OfficeLocationController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('operations::create');
-    }
-
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -53,15 +45,6 @@ class OfficeLocationController extends Controller
     public function show($id)
     {
         return view('operations::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     */
-    public function edit($id)
-    {
-        // return view('operations::edit');
     }
 
     public function update(Request $request, $id)
