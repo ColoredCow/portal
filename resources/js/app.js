@@ -880,6 +880,142 @@ if (document.getElementById("books_listing")) {
       );
     },
   });
+  
+	const bookForm = new Vue({
+		el: "#books_listing",
+		data: {
+			books: document.getElementById("books_table").dataset.books
+				? JSON.parse(document.getElementById("books_table").dataset.books)
+				: {},
+			bookCategories: document.getElementById("books_table").dataset.categories
+				? JSON.parse(document.getElementById("books_table").dataset.categories)
+				: [],
+			updateRoute:
+				document.getElementById("books_table").dataset.indexRoute || "",
+			categoryIndexRoute:
+				document.getElementById("books_table").dataset.categoryIndexRoute || "",
+			categoryInputs: [],
+			currentBookIndex: 0,
+			newCategory: "",
+			loggedInUser: document.getElementById("books_table").dataset.loggedInUser
+				? JSON.parse(document.getElementById("books_table").dataset.loggedInUser)
+				: {},
+			searchKey: document.getElementById("search_input")
+				? document.getElementById("search_input").dataset.value
+				: "",
+			sortKeys: document.getElementById("category_input")
+				? document.getElementById("category_input").dataset.value
+				: ""
+		},
+		methods: {
+			updateCategoryMode: function (index) {
+				let categories = this.books[index]["categories"];
+				if (!categories) {
+					return false;
+				}
+				this.currentBookIndex = index;
+				this.categoryInputs.map(checkbox => (checkbox.checked = false));
+				categories.forEach(
+					category => (this.categoryInputs[category.id].checked = true)
+				);
+			},
+
+			updateCategory: function () {
+				let selectedCategory = [];
+				let bookID = this.books[this.currentBookIndex]["id"];
+
+				this.categoryInputs.forEach(function (checkbox) {
+					if (checkbox.checked) {
+						selectedCategory.push({
+							name: checkbox.dataset.category,
+							id: checkbox.value
+						});
+					}
+				});
+
+				this.$set(
+					this.books[this.currentBookIndex],
+					"categories",
+					selectedCategory
+				);
+				let route = `${this.updateRoute}/${bookID}`;
+				axios.put(route, {
+					categories: JSON.parse(JSON.stringify(selectedCategory))
+				});
+				document.getElementById("close_update_category_modal").click();
+			},
+
+			addNewCategory: async function () {
+				if (!this.newCategory) {
+					alert("Please enter category name");
+					return false;
+				}
+
+				let response = await axios.post(this.categoryIndexRoute, {
+					name: this.newCategory
+				});
+				if (response.data && response.data.category) {
+					await this.bookCategories.push(response.data.category);
+					this.newCategory = "";
+					let allCheckboxes = document.querySelectorAll(
+						"#update_category_modal input[type=\"checkbox\"]"
+					);
+					let lastCheckbox = allCheckboxes[allCheckboxes.length - 1];
+					this.categoryInputs[lastCheckbox.value] = lastCheckbox;
+				}
+			},
+
+			deleteBook: async function (index) {
+				let bookID = this.books[index]["id"];
+				let route = `${this.updateRoute}/${bookID}`;
+				let response = await axios.delete(route);
+				this.books.splice(index, 1);
+				$("#exampleModal").modal("hide");
+			},
+
+			searchBooks: function () {
+				window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
+			},
+
+			searchBooksByCategoryName: function () {
+				window.location.href = `${this.updateRoute}?category_name=${this.sortKeys}`;
+			},	
+
+			strLimit: function (str, length) {
+				if (!str) {
+					return "";
+				}
+				return str.length > length ? str.substring(0, length) + "..." : str;
+			},
+
+			updateCopiesCount: function (index) {
+				var new_count = parseInt(
+					prompt(
+						"Number of copies of this book",
+						this.books[index].number_of_copies
+					)
+				);
+				if (new_count && isFinite(new_count)) {
+					this.books[index].number_of_copies = new_count;
+					axios.put(this.updateRoute + "/" + this.books[index].id, {
+						number_of_copies: new_count
+					});
+				}
+			}
+		},
+
+		mounted: function () {
+			let categoryInputContainer = document.querySelector(
+				"#update_category_modal"
+			);
+			let allCategoryInputs = categoryInputContainer.querySelectorAll(
+				"input[type=\"checkbox\"]"
+			);
+			allCategoryInputs.forEach(
+				checkbox => (this.categoryInputs[checkbox.value] = checkbox)
+			);
+		}
+	});
 }
 
 if (document.getElementById("books_category")) {
@@ -1744,6 +1880,74 @@ $(function() {
 $("#job_start_date").on("change", function() {
   let startDate = $("#job_start_date").val();
   $("#job_end_date").attr("min", startDate);
+$(".status").on("change", function () {
+	$("#spinner").removeClass("d-none");
+	if (this.checked) {
+		$.ajax({
+			url: "completed/change-status/" + this.dataset.id,
+			method: "GET",
+			success: function (res) {
+				location.reload(true);
+			},
+			error: function (err) {
+				alert("there is some problem");
+			},
+			complete: function (data) {
+				$("#spinner").addClass("d-none");
+			}
+		});
+	}
+});
+
+$(".pending").on("change", function () {
+	$("#completeSpinner").removeClass("d-none");
+	$.ajax({
+		url: "pending/" + this.dataset.id,
+		method: "GET",
+		success: function (res) {
+			location.reload(true);
+		},
+		error: function (err) {
+			alert("there is some problem");
+		},
+		complete: function (data) {
+			$("#completeSpinner").addClass("d-none");
+		}
+	});
+});
+
+$(document).ready(function(){
+	$("#requisitionModal").on("hidden.bs.modal", function () {
+		$(this).find("form").trigger("reset");
+	});
+	$("#requisitionForm").on("submit",function(e){
+		e.preventDefault();
+		$("#formSpinner").removeClass("d-none");
+		let form =$("#requisitionForm");
+
+	 	$.ajax({
+			type: form.attr("method"),
+			url: form.attr("action"),
+			data: form.serialize(),
+			success:function (response) {
+				$("#requisitionModal").modal("hide");
+				$("#successMessage").toggleClass("d-none");
+				$("#successMessage").fadeToggle(4000);
+			},
+			error: function(response){
+				alert("there is some problem");
+			},
+			complete: function(response){
+				$("#formSpinner").addClass("d-none");
+			}
+		});
+	});
+});
+
+
+$("#job_start_date").on("change", function () {
+	let startDate = $("#job_start_date").val();
+	$("#job_end_date").attr("min", startDate);
 });
 
 $("#job_end_date").on("change", function() {

@@ -4,16 +4,17 @@ namespace Modules\Project\Services;
 
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
-use Modules\Client\Entities\Client;
-use Modules\Project\Contracts\ProjectServiceContract;
-use Modules\Project\Entities\Project;
-use Modules\Project\Entities\ProjectContract;
-use Modules\Project\Entities\ProjectRepository;
+use Illuminate\Support\Arr;
 use Modules\User\Entities\User;
+use Modules\Client\Entities\Client;
+use Modules\Project\Entities\Project;
 use Illuminate\Support\Facades\Storage;
 use Modules\Project\Entities\ProjectMeta;
+use Modules\Project\Entities\ProjectContract;
+use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Entities\ProjectBillingDetail;
+use Modules\Project\Contracts\ProjectServiceContract;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -21,62 +22,42 @@ class ProjectService implements ProjectServiceContract
     {
         $filters = [
             'status' => $data['status'] ?? 'active',
-            'name' => $data['name'] ?? null,
+            'is_amc' => $data['is_amc'] ?? 0,
         ];
-        $data['projects'] = $data['projects'] ?? 'my-projects';
 
-        $clients = null;
-
-        if ($data['projects'] == 'all-projects') {
-            $clients = Client::query()->with('projects', function ($query) use ($filters) {
-                $query->applyFilter($filters)->orderBy('name', 'asc');
-            })->whereHas('projects', function ($query) use ($filters) {
-                $query->applyFilter($filters);
-            })->orderBy('name')->paginate(config('constants.pagination_size'));
-
-            $filters['status'] = 'active';
-            $activeProjectsCount = Project::query()->applyFilter($filters)->count();
-
-            $filters['status'] = 'halted';
-            $haltedProjectsCount = Project::query()->applyFilter($filters)->count();
-
-            $filters['status'] = 'inactive';
-            $inactiveProjectsCount = Project::query()->applyFilter($filters)->count();
-        } else {
-            $userId = auth()->user()->id;
-
-            $clients = Client::query()->with('projects', function ($query) use ($userId, $filters) {
-                $query->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
-                    $query->where('team_member_id', $userId);
-                });
-            })->whereHas('projects', function ($query) use ($userId, $filters) {
-                $query->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
-                    $query->where('team_member_id', $userId);
-                });
-            })->orderBy('name')->paginate(config('constants.pagination_size'));
-
-            $filters['status'] = 'active';
-            $activeProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
-                $query->where('team_member_id', $userId);
-            })->count();
-
-            $filters['status'] = 'halted';
-            $haltedProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
-                $query->where('team_member_id', $userId);
-            })->count();
-
-            $filters['status'] = 'inactive';
-            $inactiveProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
-                $query->where('team_member_id', $userId);
-            })->count();
+        if ($nameFilter = $data['name'] ?? false) {
+            $filters['name'] = $nameFilter;
         }
+
+        $showAllProjects = Arr::get($data, 'projects', 'my-projects') != 'my-projects';
+
+        $userId = auth()->user()->id;
+
+        $clients = Client::query()->with('projects', function ($query) use ($filters, $showAllProjects, $userId) {
+            $query->applyFilter($filters);
+            if (! $showAllProjects) {
+                return $query->linkedToTeamMember($userId);
+            }
+        })->whereHas('projects', function ($query) use ($filters, $showAllProjects, $userId) {
+            $query->applyFilter($filters);
+            if (! $showAllProjects) {
+                return $query->linkedToTeamMember($userId);
+            }
+        })->orderBy('name')->paginate(config('constants.pagination_size'));
+
+        $projectCounts = $this->getProjectTabCounts($filters, $showAllProjects, $userId);
+        $mainProjectsCount = $projectCounts['mainProjectsCount'];
+        $AMCProjectCount = $projectCounts['AMCProjectCount'];
+        $haltedProjectsCount = $projectCounts['haltedProjectsCount'];
+        $inactiveProjectsCount = $projectCounts['inactiveProjectsCount'];
 
         return [
             'clients' => $clients->appends($data),
-            'activeProjectsCount' => $activeProjectsCount,
+            'mainProjectsCount' => $mainProjectsCount,
+            'AMCProjectCount' => $AMCProjectCount,
             'inactiveProjectsCount' => $inactiveProjectsCount,
-            'haltedProjectsCount' => $haltedProjectsCount
-        ];
+            'haltedProjectsCount' => $haltedProjectsCount,
+       ];
     }
 
     public function create()
@@ -98,6 +79,7 @@ class ProjectService implements ProjectServiceContract
             'type' => $data['project_type'],
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
+            'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
         ]);
 
         if ($data['billing_level'] ?? null) {
@@ -114,6 +96,28 @@ class ProjectService implements ProjectServiceContract
 
         $project->client->update(['status' => 'active']);
         $this->saveOrUpdateProjectContract($data, $project);
+    }
+
+    private function getProjectTabCounts($filters, $showAllProjects, $userId)
+    {
+        $mainProjectsCountQuery = Project::query()->applyFilter(array_merge($filters, ['status' => 'active', 'is_amc' => 0]));
+        $AMCProjectCountQuery = Project::query()->applyFilter(array_merge($filters, ['status' => 'active', 'is_amc' => 1]));
+        $haltedProjectsCountQuery = Project::query()->applyFilter(array_merge($filters, ['status' => 'halted']));
+        $inactiveProjectsCountQuery = Project::query()->applyFilter(array_merge($filters, ['status' => 'inactive']));
+
+        if (! $showAllProjects) {
+            $mainProjectsCountQuery = $mainProjectsCountQuery->linkedToTeamMember($userId);
+            $AMCProjectCountQuery = $AMCProjectCountQuery->linkedToTeamMember($userId);
+            $inactiveProjectsCountQuery = $inactiveProjectsCountQuery->linkedToTeamMember($userId);
+            $haltedProjectsCountQuery = $haltedProjectsCountQuery->linkedToTeamMember($userId);
+        }
+
+        return [
+            'mainProjectsCount' => $mainProjectsCountQuery->count(),
+            'haltedProjectsCount' => $haltedProjectsCountQuery->count(),
+            'inactiveProjectsCount' => $inactiveProjectsCountQuery->count(),
+            'AMCProjectCount' => $AMCProjectCountQuery->count(),
+        ];
     }
 
     public function getClients()
@@ -176,6 +180,7 @@ class ProjectService implements ProjectServiceContract
             'end_date' => $data['end_date'] ?? null,
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
             'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
+            'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
         ]);
 
         if ($data['billing_level'] ?? null) {
@@ -344,23 +349,23 @@ class ProjectService implements ProjectServiceContract
         return $projectsData;
     }
 
-    public function getMailForFixedBudgetProjectKeyAccountManagers()
+    public function getMailDetailsForZeroExpectedHours()
     {
-        $currentdate = Carbon::today()->subdays(-5);
-        $projects = Project::wheretype('fixed-budget')->where('end_date', $currentdate)->get();
-        $projectsData = [];
-        foreach ($projects as $project) {
-            $user = $project->client->keyAccountManager;
-            if ($user) {
-                $projectsData[$user->id][] = [
-                    'project' => $project,
-                    'email' => $user->email,
-                    'end date' => $project->end_date,
-                    'name' => $user->name,
-                ];
+        $zeroEffortProjectsIds = ProjectTeamMember::where('daily_expected_effort', 0)->pluck('project_id');
+        $projectsWithZeroEffort = Project::with(['teamMembers'])->whereIn('id', $zeroEffortProjectsIds)->get();
+        $projectDetails = [];
+        foreach ($projectsWithZeroEffort as $project) {
+            foreach ($project->teamMembers as $teamMember) {
+                if ($teamMember->getOriginal('pivot_daily_expected_effort') == 0) {
+                    $projectDetails[] = [
+                        'projects' => $project,
+                        'name' => $teamMember->name,
+                        'email' =>$teamMember->email,
+                    ];
+                }
             }
         }
 
-        return $projectsData;
+        return $projectDetails;
     }
 }

@@ -20,4 +20,5 @@
     "Expense": true,
     "Revenue": true,
     "Operations": true
+    "ProjectContract": true
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Revenue\Http\Controllers;
+namespace Modules\ProjectContract\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class RevenueController extends Controller
+class ProjectContractController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class RevenueController extends Controller
      */
     public function index()
     {
-        return view('revenue::index');
+        return view('projectcontract::index');
     }
 
     /**
@@ -23,7 +23,7 @@ class RevenueController extends Controller
      */
     public function create()
     {
-        return view('revenue::index');
+        return view('projectcontract::index');
     }
 
     /**
@@ -33,7 +33,7 @@ class RevenueController extends Controller
      */
     public function store(Request $request)
     {
-        return view('revenue::index');
+        return view('projectcontract::index');
     }
 
     /**
@@ -43,7 +43,7 @@ class RevenueController extends Controller
      */
     public function show($id)
     {
-        return view('revenue::index');
+        return view('projectcontract::index');
     }
 
     /**
@@ -53,7 +53,7 @@ class RevenueController extends Controller
      */
     public function edit($id)
     {
-        return view('revenue::index');
+        return view('projectcontract::index');
     }
 
     /**
@@ -64,7 +64,7 @@ class RevenueController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return view('revenue::index');
+        return view('projectcontract::index');
     }
 
     /**
@@ -74,6 +74,6 @@ class RevenueController extends Controller
      */
     public function destroy($id)
     {
-        return view('revenue::index');
+        return view('projectcontract::index');
     }
 }
