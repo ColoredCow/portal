@@ -5,7 +5,7 @@ namespace Modules\Operations\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Validator;    
 use Modules\HR\Entities\Employee;
 use Modules\Operations\Entities\OfficeLocation;
 
@@ -96,7 +96,7 @@ class OfficeLocationController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response($validator->errors()->all());
+            return response()->json(['error'=>$validator->errors()->all()]);
         } else {
             $officelocation = OfficeLocation::find($id);
             $officelocation->center_head = $request->input('center_head');
