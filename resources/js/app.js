@@ -4,26 +4,26 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require("./bootstrap");
+require('./bootstrap')
 
-import "jquery-ui/ui/widgets/datepicker.js";
-import ImageCompressor from "image-compressor.js";
-var clipboard = new ClipboardJS(".btn-clipboard");
-import Chart from "chart.js/auto";
+import 'jquery-ui/ui/widgets/datepicker.js'
+import ImageCompressor from 'image-compressor.js'
+var clipboard = new ClipboardJS('.btn-clipboard')
+import Chart from 'chart.js/auto'
 
-window.Vue = require("vue");
+window.Vue = require('vue')
 
-import { Laue } from "laue";
-Vue.use(Laue);
+import { Laue } from 'laue'
+Vue.use(Laue)
 
 // vue toast registration
-import Toast from "vue-toastification";
-import "vue-toastification/dist/index.css";
-import { ajax } from "jquery";
+import Toast from 'vue-toastification'
+import 'vue-toastification/dist/index.css'
+import { ajax } from 'jquery'
 const options = {
-  timeout: 2000,
-};
-Vue.use(Toast, options);
+  timeout: 2000
+}
+Vue.use(Toast, options)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -37,2151 +37,2148 @@ Vue.use(Toast, options);
 /**
  *  Module Vue Components
  */
-require("./../../Modules/User/Resources/assets/js/vueComponents.js");
-require("./../../Modules/Salary/Resources/assets/js/vueComponents.js");
+require('./../../Modules/User/Resources/assets/js/vueComponents.js')
+require('./../../Modules/Salary/Resources/assets/js/vueComponents.js')
 // require("./../../Modules/Prospect/Resources/assets/js/vueComponents.js");
 
 Vue.component(
-  "project-stage-component",
-  require("./components/ProjectStageComponent.vue").default
-);
+  'project-stage-component',
+  require('./components/ProjectStageComponent.vue').default
+)
 Vue.component(
-  "project-stage-billing-component",
-  require("./components/ProjectStageBillingComponent.vue").default
-);
+  'project-stage-billing-component',
+  require('./components/ProjectStageBillingComponent.vue').default
+)
 Vue.component(
-  "applicant-round-action-component",
-  require("./components/HR/ApplicantRoundActionComponent.vue").default
-);
+  'applicant-round-action-component',
+  require('./components/HR/ApplicantRoundActionComponent.vue').default
+)
 Vue.component(
-  "project-details-component",
-  require("./components/ProjectDetailsComponent.vue").default
-);
+  'project-details-component',
+  require('./components/ProjectDetailsComponent.vue').default
+)
 Vue.component(
-  "books-comments-component",
-  require("./components/Book/BooksCommentsComponent.vue").default
-);
+  'books-comments-component',
+  require('./components/Book/BooksCommentsComponent.vue').default
+)
 Vue.component(
-  "effort-component",
-  require("./components/Project/Report.vue").default
-);
-Vue.component("comment", require("./components/CommentItem.vue").default);
+  'effort-component',
+  require('./components/Project/Report.vue').default
+)
+Vue.component('comment', require('./components/CommentItem.vue').default)
 Vue.component(
-  "user-dashboard-read-books",
-  require("./components/Dashboard/UserDashboardReadBooks.vue").default
-);
+  'user-dashboard-read-books',
+  require('./components/Dashboard/UserDashboardReadBooks.vue').default
+)
 Vue.component(
-  "user-dashboard-wishlist-books",
-  require("./components/Dashboard/UserDashboardWishlistBooks.vue").default
-);
+  'user-dashboard-wishlist-books',
+  require('./components/Dashboard/UserDashboardWishlistBooks.vue').default
+)
 Vue.component(
-  "user-dashboard-projects",
-  require("./components/Dashboard/UserDashboardProjects.vue").default
-);
+  'user-dashboard-projects',
+  require('./components/Dashboard/UserDashboardProjects.vue').default
+)
 Vue.component(
-  "user-dashboard-library",
-  require("./components/Dashboard/UserDashboardLibrary.vue").default
-);
+  'user-dashboard-library',
+  require('./components/Dashboard/UserDashboardLibrary.vue').default
+)
 Vue.component(
-  "user-dashboard-infrastructure",
-  require("./components/Dashboard/UserDashboardInfrastructure.vue").default
-);
+  'user-dashboard-infrastructure',
+  require('./components/Dashboard/UserDashboardInfrastructure.vue').default
+)
 Vue.component(
-  "user-dashboard-invoice",
-  require("./components/Dashboard/UserDashboardInvoice.vue").default
-);
+  'user-dashboard-invoice',
+  require('./components/Dashboard/UserDashboardInvoice.vue').default
+)
 Vue.component(
-  "job-application-component",
-  require("./components/HR/JobApplicationComponent.vue").default
-);
+  'job-application-component',
+  require('./components/HR/JobApplicationComponent.vue').default
+)
 
 if (Vue) {
-  Vue.filter("str_limit", function (value, size) {
-    if (!value) return "";
-    value = value.toString();
+  Vue.filter('str_limit', function (value, size) {
+    if (!value) return ''
+    value = value.toString()
 
     if (value.length <= size) {
-      return value;
+      return value
     }
-    return value.substr(0, size) + "...";
-  });
+    return value.substr(0, size) + '...'
+  })
 }
 
-if (document.getElementById("vueContainer")) {
+if (document.getElementById('vueContainer')) {
   new Vue({
-    el: "#vueContainer",
-  });
+    el: '#vueContainer'
+  })
 }
 
 $(document).ready(() => {
   setTimeout(function () {
-    $("#statusAlert").alert("close");
-  }, 2000);
+    $('#statusAlert').alert('close')
+  }, 2000)
 
-  $("#job_title").on("change", function (event) {
+  $('#job_title').on('change', function (event) {
     let opportunityId = $(this)
-      .find(":selected")
-      .attr("id");
-    $("#opportunityId").attr("value", opportunityId);
-  });
+      .find(':selected')
+      .attr('id')
+    $('#opportunityId').attr('value', opportunityId)
+  })
 
-  if ($(".form-create-invoice").length) {
-    let form = $(".form-create-invoice");
-    let client_id = form.find("#client_id").val();
+  if ($('.form-create-invoice').length) {
+    let form = $('.form-create-invoice')
+    let client_id = form.find('#client_id').val()
     if (client_id) {
-      updateClientProjects(form, client_id);
+      updateClientProjects(form, client_id)
     }
   }
-  $('[data-toggle="tooltip"]').tooltip();
+  $('[data-toggle="tooltip"]').tooltip()
 
-  $(".status-close").on("click", function () {
-    let wrapper = $(this).closest(".alert");
-    wrapper.fadeOut(500);
-  });
+  $('.status-close').on('click', function () {
+    let wrapper = $(this).closest('.alert')
+    wrapper.fadeOut(500)
+  })
 
-  $(".client_edit_form_submission_btn").on("click", function () {
-    if (!$("#edit_client_info_form")[0].checkValidity()) {
-      $("#edit_client_info_form")[0].reportValidity();
-      return false;
+  $('.client_edit_form_submission_btn').on('click', function () {
+    if (!$('#edit_client_info_form')[0].checkValidity()) {
+      $('#edit_client_info_form')[0].reportValidity()
+      return false
     }
-    $("#submit_action_input").val($(this).attr("data-submit-action"));
-    $("#edit_client_info_form").submit();
-  });
+    $('#submit_action_input').val($(this).attr('data-submit-action'))
+    $('#edit_client_info_form').submit()
+  })
 
-  $(".prospect_edit_form_submission_btn").on("click", function () {
-    if (!$("#edit_prospect_info_form")[0].checkValidity()) {
-      $("#edit_prospect_info_form")[0].reportValidity();
-      return false;
+  $('.prospect_edit_form_submission_btn').on('click', function () {
+    if (!$('#edit_prospect_info_form')[0].checkValidity()) {
+      $('#edit_prospect_info_form')[0].reportValidity()
+      return false
     }
-    $("#submit_action_input").val($(this).attr("data-submit-action"));
-    $("#edit_prospect_info_form").submit();
-  });
+    $('#submit_action_input').val($(this).attr('data-submit-action'))
+    $('#edit_prospect_info_form').submit()
+  })
 
-  $("body").on("change", ".custom-file-input", function () {
+  $('body').on('change', '.custom-file-input', function () {
     var fileName = $(this)
       .val()
-      .split("\\")
-      .pop();
+      .split('\\')
+      .pop()
     $(this)
-      .siblings(".custom-file-label")
-      .addClass("selected")
-      .html(fileName);
-  });
-  $("#addChannel").on("submit", function (e) {
-    e.preventDefault();
-    let form = $("#addChannel");
-    let button = $("#channelButton");
+      .siblings('.custom-file-label')
+      .addClass('selected')
+      .html(fileName)
+  })
+  $('#addChannel').on('submit', function (e) {
+    e.preventDefault()
+    let form = $('#addChannel')
+    let button = $('#channelButton')
     $.ajax({
-      url: form.attr("action"),
-      type: form.attr("method"),
+      url: form.attr('action'),
+      type: form.attr('method'),
       data: form.serialize(),
       success: function (response) {
-        $("#channelName").modal("hide");
-        $("#success").toggleClass("d-none");
-        $("#success").fadeToggle(5000);
+        $('#channelName').modal('hide')
+        $('#success').toggleClass('d-none')
+        $('#success').fadeToggle(5000)
       },
       error: function (response) {
-        $("#errorMessage").toggleClass("d-none");
-      },
-    });
-  });
+        $('#errorMessage').toggleClass('d-none')
+      }
+    })
+  })
 
-  if ($(".chart-data").length) {
-    datePickerChart();
-    barChart();
+  if ($('.chart-data').length) {
+    datePickerChart()
+    barChart()
   }
-  if ($("#myChart").length) {
-    datePickerChart();
-    HorizontalBarChart();
+  if ($('#myChart').length) {
+    datePickerChart()
+    HorizontalBarChart()
   }
-  if ($("#myGraph").length) {
-    roundWiseRejectionsGraph();
+  if ($('#myGraph').length) {
+    roundWiseRejectionsGraph()
   }
-  if ($("#myBarGraph").length) {
-    rejectedReasonsGraph();
+  if ($('#myBarGraph').length) {
+    rejectedReasonsGraph()
   }
 
-  $("#save-btn-action").on("click", function () {
-    this.disabled = true;
+  $('#save-btn-action').on('click', function () {
+    this.disabled = true
     if (!this.form.checkValidity()) {
-      this.disabled = false;
-      this.form.reportValidity();
-      return;
+      this.disabled = false
+      this.form.reportValidity()
+      return
     }
-    this.form.submit();
-  });
-});
+    this.form.submit()
+  })
+})
 
 $(document).ready(function () {
-  $("#domainformModal").on("hidden.bs.modal", function () {
+  $('#domainformModal').on('hidden.bs.modal', function () {
     $(this)
-      .find("form")
-      .trigger("reset");
-    $("#domainerror").addClass("d-none");
-  });
+      .find('form')
+      .trigger('reset')
+    $('#domainerror').addClass('d-none')
+  })
 
-  $("#domainForm").on("submit", function (e) {
-    e.preventDefault();
-    let form = $("#domainForm");
+  $('#domainForm').on('submit', function (e) {
+    e.preventDefault()
+    let form = $('#domainForm')
     $.ajax({
-      type: form.attr("method"),
-      url: form.attr("action"),
+      type: form.attr('method'),
+      url: form.attr('action'),
       data: form.serialize(),
       success: function (response) {
-        $("#domainformModal").modal("hide");
-        $("#successMessage").toggleClass("d-none");
-        $("#successMessage").fadeToggle(3000);
+        $('#domainformModal').modal('hide')
+        $('#successMessage').toggleClass('d-none')
+        $('#successMessage').fadeToggle(3000)
       },
       error: function (response) {
         if (response.responseJSON.errors.name) {
-          let text = response.responseJSON.errors.name[0];
-          $("#domainerror")
+          let text = response.responseJSON.errors.name[0]
+          $('#domainerror')
             .html(text)
-            .removeClass("d-none");
-          return false;
+            .removeClass('d-none')
+          return false
         }
-      },
-    });
-  });
-});
+      }
+    })
+  })
+})
 
-if (document.getElementById("page_hr_applicant_edit")) {
+if (document.getElementById('page_hr_applicant_edit')) {
   new Vue({
-    el: "#page_hr_applicant_edit",
+    el: '#page_hr_applicant_edit',
     data: {
       showResumeFrame: false,
       showEvaluationFrame: false,
-      applicationJobRounds: document.getElementById("action_type")
+      applicationJobRounds: document.getElementById('action_type')
         ? JSON.parse(
-          document.getElementById("action_type").dataset.applicationJobRounds
-        )
+            document.getElementById('action_type').dataset.applicationJobRounds
+          )
         : {},
-      selectedNextRound: "",
-      nextRoundName: "",
-      selectedAction: "round",
-      selectedActionOption: "",
-      nextRound: "",
-      createCalendarEvent: true,
+      selectedNextRound: '',
+      nextRoundName: '',
+      selectedAction: 'round',
+      selectedActionOption: '',
+      nextRound: '',
+      createCalendarEvent: true
     },
     methods: {
       toggleResumeFrame: function () {
-        this.showResumeFrame = !this.showResumeFrame;
+        this.showResumeFrame = !this.showResumeFrame
       },
       toggleEvaluationFrame: function () {
-        this.showEvaluationFrame = !this.showEvaluationFrame;
+        this.showEvaluationFrame = !this.showEvaluationFrame
       },
       getApplicationEvaluation: function (applicationRoundID, roundId) {
-        let roundName = $("#applicationRoundName" + roundId)[0].innerText;
+        let roundName = $('#applicationRoundName' + roundId)[0].innerText
         document.getElementById(
-          "roundName"
-        ).innerText = `Evaluation\u00A0\u00A0•\u00A0\u00A0${roundName}`;
+          'roundName'
+        ).innerText = `Evaluation\u00A0\u00A0•\u00A0\u00A0${roundName}`
 
-        $("#page_hr_applicant_edit #application_evaluation_body").html(
+        $('#page_hr_applicant_edit #application_evaluation_body').html(
           '<div class="my-4 fz-18 text-center">Loading...</div>'
-        );
+        )
         if (!this.showEvaluationFrame) {
           axios
-            .get("/hr/evaluation/" + applicationRoundID)
+            .get('/hr/evaluation/' + applicationRoundID)
             .then(function (response) {
-              $("#page_hr_applicant_edit #application_evaluation_body").html(
+              $('#page_hr_applicant_edit #application_evaluation_body').html(
                 response.data
-              );
+              )
             })
             .catch(function (error) {
-              alert("Error fetching application evaluation!");
-            });
+              alert('Error fetching application evaluation!')
+            })
         }
-        this.toggleEvaluationFrame();
+        this.toggleEvaluationFrame()
       },
 
       onSelectNextRound: function (event) {
-        this.selectedAction = event.target.value;
+        this.selectedAction = event.target.value
         this.selectedActionOption =
-          event.target.options[event.target.options.selectedIndex];
+          event.target.options[event.target.options.selectedIndex]
       },
       takeAction: function () {
         switch (this.selectedAction) {
-          case "round":
+          case 'round':
             if (!this.selectedActionOption) {
               this.selectedActionOption = document.querySelector(
-                "#action_type option:checked"
-              );
+                '#action_type option:checked'
+              )
             }
-            this.selectedNextRound = this.selectedActionOption.dataset.nextRoundId;
-            this.nextRoundName = this.selectedActionOption.innerText;
-            loadTemplateMail("confirm", (res) => {
-              $("#confirmMailToApplicantSubject").val(res.subject);
+            this.selectedNextRound = this.selectedActionOption.dataset.nextRoundId
+            this.nextRoundName = this.selectedActionOption.innerText
+            loadTemplateMail('confirm', res => {
+              $('#confirmMailToApplicantSubject').val(res.subject)
               tinymce
-                .get("confirmMailToApplicantBody")
-                .setContent(res.body, { format: "html" });
-            });
-            if (this.nextRoundName.trim() == "Move to Team Interaction Round") {
-              $("#sendmailform").removeClass("d-none");
+                .get('confirmMailToApplicantBody')
+                .setContent(res.body, { format: 'html' })
+            })
+            if (this.nextRoundName.trim() == 'Move to Team Interaction Round') {
+              $('#sendmailform').removeClass('d-none')
             } else {
-              $(".next-scheduled-person-container").removeClass("d-none");
-              $("#sendmailform").addClass("d-none");
+              $('.next-scheduled-person-container').removeClass('d-none')
+              $('#sendmailform').addClass('d-none')
             }
-            $("#round_confirm").modal("show");
-            break;
-          case "send-for-approval":
-            $("#send_for_approval").modal("show");
-            break;
-          case "approve":
-            $("#approve_application").modal("show");
-            break;
-          case "onboard":
-            $("#onboard_applicant").modal("show");
+            $('#round_confirm').modal('show')
+            break
+          case 'send-for-approval':
+            $('#send_for_approval').modal('show')
+            break
+          case 'approve':
+            $('#approve_application').modal('show')
+            break
+          case 'onboard':
+            $('#onboard_applicant').modal('show')
         }
       },
       rejectApplication: function () {
-        $("#application_reject_modal").modal("show");
-        loadTemplateMail("reject", (res) => {
-          $("#rejectMailToApplicantSubject").val(res.subject);
+        $('#application_reject_modal').modal('show')
+        loadTemplateMail('reject', res => {
+          $('#rejectMailToApplicantSubject').val(res.subject)
           tinymce
-            .get("rejectMailToApplicantBody")
-            .setContent(res.body, { format: "html" });
-        });
-      },
+            .get('rejectMailToApplicantBody')
+            .setContent(res.body, { format: 'html' })
+        })
+      }
     },
-    mounted() {
-      this.selectedNextRound = this.applicationJobRounds[0].id;
-      this.selectedAction = "round";
-      this.nextRoundName = this.applicationJobRounds[0].name;
-    },
-  });
+    mounted () {
+      this.selectedNextRound = this.applicationJobRounds[0].id
+      this.selectedAction = 'round'
+      this.nextRoundName = this.applicationJobRounds[0].name
+    }
+  })
 }
 
-if (document.getElementById("project_container")) {
+if (document.getElementById('project_container')) {
   const projectContainer = new Vue({
-    el: "#project_container",
+    el: '#project_container',
     data: {
-      newStage: false,
+      newStage: false
     },
     methods: {
       createProjectStage: function () {
-        this.$refs.projectStage.create();
-      },
-    },
-  });
+        this.$refs.projectStage.create()
+      }
+    }
+  })
 }
 
-if (document.getElementById("employee_projects")) {
+if (document.getElementById('employee_projects')) {
   const employeeProjects = new Vue({
-    el: "#employee_projects",
+    el: '#employee_projects',
     data: {},
-    methods: {},
-  });
+    methods: {}
+  })
 }
 
-if (document.getElementById("client_form")) {
+if (document.getElementById('client_form')) {
   const clientForm = new Vue({
-    el: "#client_form",
+    el: '#client_form',
     data: {
       country:
-        document.getElementById("country").dataset.preSelectCountry || "",
-      isActive: document.getElementById("is_active").dataset.preSelectStatus
-        ? parseInt(document.getElementById("is_active").dataset.preSelectStatus)
+        document.getElementById('country').dataset.preSelectCountry || '',
+      isActive: document.getElementById('is_active').dataset.preSelectStatus
+        ? parseInt(document.getElementById('is_active').dataset.preSelectStatus)
         : 1,
-      newEmailName: "",
-      newEmailId: "",
+      newEmailName: '',
+      newEmailId: '',
       clientEmails:
-        document.getElementById("emails").value == ""
+        document.getElementById('emails').value == ''
           ? []
-          : document.getElementById("emails").value.split(","),
+          : document.getElementById('emails').value.split(',')
     },
     methods: {
       toggleActive: function () {
-        this.isActive = !this.isActive;
+        this.isActive = !this.isActive
       },
       addNewEmail: function () {
-        this.clientEmails.push(
-          this.newEmailName + " <" + this.newEmailId + ">"
-        );
-        this.newEmailName = "";
-        this.newEmailId = "";
+        this.clientEmails.push(this.newEmailName + ' <' + this.newEmailId + '>')
+        this.newEmailName = ''
+        this.newEmailId = ''
       },
       removeEmail: function (item) {
-        let index = this.clientEmails.indexOf(item);
+        let index = this.clientEmails.indexOf(item)
         if (index !== -1) {
-          this.clientEmails.splice(index, 1);
+          this.clientEmails.splice(index, 1)
         }
-      },
-    },
-  });
+      }
+    }
+  })
 }
 
-if (document.getElementById("finance_report")) {
+if (document.getElementById('finance_report')) {
   const financeReport = new Vue({
-    el: "#finance_report",
+    el: '#finance_report',
     data: {
-      showReportTable: "received",
+      showReportTable: 'received',
       sentAmountINR:
-        document.getElementById("sent_amount_INR").dataset.sentAmount || 0,
+        document.getElementById('sent_amount_INR').dataset.sentAmount || 0,
       sentAmountUSD:
-        document.getElementById("sent_amount_USD").dataset.sentAmount || 0,
+        document.getElementById('sent_amount_USD').dataset.sentAmount || 0,
       conversionRateUSD:
-        document.getElementById("conversion_rate_usd").dataset
-          .conversionRateUsd || 0,
+        document.getElementById('conversion_rate_usd').dataset
+          .conversionRateUsd || 0
     },
     computed: {
       convertedUSDSentAmount: function () {
         let convertedAmount =
-          parseFloat(this.sentAmountUSD) * parseFloat(this.conversionRateUSD);
-        return isNaN(convertedAmount) ? 0 : convertedAmount.toFixed(2);
+          parseFloat(this.sentAmountUSD) * parseFloat(this.conversionRateUSD)
+        return isNaN(convertedAmount) ? 0 : convertedAmount.toFixed(2)
       },
       totalINREstimated: function () {
         return (
           parseFloat(this.sentAmountINR) +
           parseFloat(this.convertedUSDSentAmount)
-        );
-      },
-    },
-  });
+        )
+      }
+    }
+  })
 }
 
-$("#page_hr_applicant_edit .applicant-round-form").on(
-  "click",
-  ".round-submit",
+$('#page_hr_applicant_edit .applicant-round-form').on(
+  'click',
+  '.round-submit',
   function () {
-    let button = $(this); // reject button
-    let form = $(this).closest(".applicant-round-form"); // <form element with class "applicant-round-form" >
-    let selectedAction = $(this).data("action"); // reject
-    const actions = ["confirm", "send-for-approval", "onboard", "approve"];
+    let button = $(this) // reject button
+    let form = $(this).closest('.applicant-round-form') // <form element with class "applicant-round-form" >
+    let selectedAction = $(this).data('action') // reject
+    const actions = ['confirm', 'send-for-approval', 'onboard', 'approve']
     if (actions.includes(selectedAction)) {
       if (!form[0].checkValidity()) {
-        form[0].reportValidity();
-        return false;
+        form[0].reportValidity()
+        return false
       }
     }
 
-    form.find('[name="action"]').val(selectedAction); // setting name="action" input inside form to "reject"
-    button.prop("disabled", "disabled").addClass("disabled"); // making button disabled
-    form.submit(); // submitting the form
+    form.find('[name="action"]').val(selectedAction) // setting name="action" input inside form to "reject"
+    button.prop('disabled', 'disabled').addClass('disabled') // making button disabled
+    form.submit() // submitting the form
   }
-);
+)
 
-$(".date-field").datepicker({
-  dateFormat: "dd/mm/yy",
-});
+$('.date-field').datepicker({
+  dateFormat: 'dd/mm/yy'
+})
 
-$("#form_invoice").on("change", "#client_id", function () {
-  let form = $(this).closest("form");
-  let client_id = $(this).val();
+$('#form_invoice').on('change', '#client_id', function () {
+  let form = $(this).closest('form')
+  let client_id = $(this).val()
   if (!client_id) {
-    form.find("#project_ids").html("");
-    return false;
+    form.find('#project_ids').html('')
+    return false
   }
-  updateClientProjects(form, client_id);
-});
+  updateClientProjects(form, client_id)
+})
 
-$("#copy_weeklydose_service_url").tooltip({
-  trigger: "click",
-  placement: "bottom",
-});
+$('#copy_weeklydose_service_url').tooltip({
+  trigger: 'click',
+  placement: 'bottom'
+})
 
-function updateClientProjects(form, client_id) {
+function updateClientProjects (form, client_id) {
   $.ajax({
-    url: "/clients/" + client_id + "/get-projects",
-    method: "GET",
+    url: '/clients/' + client_id + '/get-projects',
+    method: 'GET',
     success: function (res) {
-      form.find("#project_ids").html(getProjectList(res));
-    },
-  });
+      form.find('#project_ids').html(getProjectList(res))
+    }
+  })
 }
 
-function getProjectList(projects) {
-  let html = "";
+function getProjectList (projects) {
+  let html = ''
   for (var index = 0; index < projects.length; index++) {
-    let project = projects[index];
-    html += '<option value="' + project.id + '">';
-    html += project.name;
-    html += "</option>";
+    let project = projects[index]
+    html += '<option value="' + project.id + '">'
+    html += project.name
+    html += '</option>'
   }
-  return html;
+  return html
 }
 
-function setTooltip(btn, message) {
+function setTooltip (btn, message) {
   $(btn)
-    .tooltip("hide")
-    .attr("data-original-title", message)
-    .tooltip("show");
+    .tooltip('hide')
+    .attr('data-original-title', message)
+    .tooltip('show')
 }
 
-function hideTooltip(btn) {
+function hideTooltip (btn) {
   setTimeout(function () {
-    $(btn).tooltip("hide");
-  }, 1000);
+    $(btn).tooltip('hide')
+  }, 1000)
 }
 
-clipboard.on("success", function (e) {
-  setTooltip(e.trigger, "Copied!");
-  hideTooltip(e.trigger);
-});
+clipboard.on('success', function (e) {
+  setTooltip(e.trigger, 'Copied!')
+  hideTooltip(e.trigger)
+})
 
 tinymce.init({
-  selector: ".richeditor",
-  skin: "lightgray",
+  selector: '.richeditor',
+  skin: 'lightgray',
   toolbar:
-    "undo redo formatselect | fontselect fontsizeselect bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-  plugins: ["advlist lists autolink link code image print"],
+    'undo redo formatselect | fontselect fontsizeselect bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+  plugins: ['advlist lists autolink link code image print'],
   font_formats:
-    "Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;AkrutiKndPadmini=Akpdmi-n",
-  images_upload_url: "postAcceptor.php",
-  content_style: "body{font-size:14pt;}",
+    'Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;AkrutiKndPadmini=Akpdmi-n',
+  images_upload_url: 'postAcceptor.php',
+  content_style: 'body{font-size:14pt;}',
   automatic_uploads: false,
-  fontsize_formats: "8pt 10pt 12pt 14pt 16pt 18pt 24pt 36pt 48pt",
+  fontsize_formats: '8pt 10pt 12pt 14pt 16pt 18pt 24pt 36pt 48pt',
   menubar: false,
   statusbar: false,
-  entity_encoding: "raw",
-  forced_root_block: "",
+  entity_encoding: 'raw',
+  forced_root_block: '',
   force_br_newlines: true,
   force_p_newlines: false,
-  height: "280",
-  convert_urls: 0,
-});
+  height: '280',
+  convert_urls: 0
+})
 
-$(".hr_round_guide").on("click", ".edit-guide", function () {
-  let container = $(this).closest(".hr_round_guide");
-  container.find(".btn-guide, .guide-container").toggleClass("d-none");
-});
+$('.hr_round_guide').on('click', '.edit-guide', function () {
+  let container = $(this).closest('.hr_round_guide')
+  container.find('.btn-guide, .guide-container').toggleClass('d-none')
+})
 
 $(document).ready(function () {
-  $("#addNewSegmentForm").submit(function (e) {
-    e.preventDefault();
-    let form = $("#addNewSegmentForm");
-    $("#createNewSegment").on("hidden.bs.modal", function () {
+  $('#addNewSegmentForm').submit(function (e) {
+    e.preventDefault()
+    let form = $('#addNewSegmentForm')
+    $('#createNewSegment').on('hidden.bs.modal', function () {
       $(this)
-        .find("form")
-        .trigger("reset");
-    });
+        .find('form')
+        .trigger('reset')
+    })
 
     $.ajax({
-      type: form.attr("method"),
-      url: form.attr("action"),
+      type: form.attr('method'),
+      url: form.attr('action'),
       data: form.serialize(),
       success: function (response) {
-        $("#createNewSegment").modal("hide");
-        $("#createNewSegment").on("hidden.bs.modal", function (e) {
-          $("#segmentsuccess").toggleClass("d-none");
-          $("#segmentsuccess").fadeToggle(6000);
-        });
+        $('#createNewSegment').modal('hide')
+        $('#createNewSegment').on('hidden.bs.modal', function (e) {
+          $('#segmentsuccess').toggleClass('d-none')
+          $('#segmentsuccess').fadeToggle(6000)
+        })
       },
       error: function (response) {
-        $("#segmentError").removeClass("d-none");
-        let errors = response.responseJSON.errors;
-        $("#errors").empty();
+        $('#segmentError').removeClass('d-none')
+        let errors = response.responseJSON.errors
+        $('#errors').empty()
         for (let error in errors) {
-          $("#errors").append(
-            "<li class='text-danger ml-2'>" + errors[error] + "</li>"
-          );
+          $('#errors').append(
+            "<li class='text-danger ml-2'>" + errors[error] + '</li>'
+          )
         }
-      },
-    });
-  });
-  $("#segmentModalCloseBtn").click(function () {
-    $("#segmentError").toggleClass("d-none");
-  });
-});
+      }
+    })
+  })
+  $('#segmentModalCloseBtn').click(function () {
+    $('#segmentError').toggleClass('d-none')
+  })
+})
 $(document).ready(function () {
-  $("#editSegmentForm").submit(function (e) {
-    e.preventDefault();
-    let form = $("#editSegmentForm");
-    $("#editSegmentModal").on("hidden.bs.modal", function () {
+  $('#editSegmentForm').submit(function (e) {
+    e.preventDefault()
+    let form = $('#editSegmentForm')
+    $('#editSegmentModal').on('hidden.bs.modal', function () {
       $(this)
-        .find("form")
-        .trigger("reset");
-    });
+        .find('form')
+        .trigger('reset')
+    })
 
     $.ajax({
-      type: form.attr("method"),
-      url: form.attr("action"),
+      type: form.attr('method'),
+      url: form.attr('action'),
       data: form.serialize(),
       success: function (response) {
-        $("#editSegmentModal").modal("hide");
-        $("#editSegmentModal").on("hidden.bs.modal", function (e) {
-          $("#editSegmentSuccess").toggleClass("d-none");
-          $("#editSegmentSuccess").fadeToggle(6000);
-        });
+        $('#editSegmentModal').modal('hide')
+        $('#editSegmentModal').on('hidden.bs.modal', function (e) {
+          $('#editSegmentSuccess').toggleClass('d-none')
+          $('#editSegmentSuccess').fadeToggle(6000)
+        })
       },
       error: function (response) {
-        $("#editSegmentError").removeClass("d-none");
-        let errors = response.responseJSON.errors;
-        $("#editErrors").empty();
+        $('#editSegmentError').removeClass('d-none')
+        let errors = response.responseJSON.errors
+        $('#editErrors').empty()
         for (let error in errors) {
-          $("#editErrors").append(
-            "<li class='text-danger ml-2'>" + errors[error] + "</li>"
-          );
+          $('#editErrors').append(
+            "<li class='text-danger ml-2'>" + errors[error] + '</li>'
+          )
         }
-      },
-    });
-  });
-  $("#editSegmentModalClose").click(function () {
-    $("#editSegmentError").toggleClass("d-none");
-  });
-});
+      }
+    })
+  })
+  $('#editSegmentModalClose').click(function () {
+    $('#editSegmentError').toggleClass('d-none')
+  })
+})
 
-$(".hr_round_guide").on("click", ".save-guide", function () {
-  let container = $(this).closest(".hr_round_guide");
-  let form = container.find("form");
-  let button = $(this);
+$('.hr_round_guide').on('click', '.save-guide', function () {
+  let container = $(this).closest('.hr_round_guide')
+  let form = container.find('form')
+  let button = $(this)
   $.ajax({
-    method: form.attr("method"),
-    url: form.attr("action"),
-    data: form.serialize() + "&guidelines=" + tinyMCE.activeEditor.getContent(),
+    method: form.attr('method'),
+    url: form.attr('action'),
+    data: form.serialize() + '&guidelines=' + tinyMCE.activeEditor.getContent(),
     beforeSend: function () {
       button
-        .prop("disabled", true)
-        .find(".item")
-        .toggleClass("d-none");
+        .prop('disabled', true)
+        .find('.item')
+        .toggleClass('d-none')
     },
     success: function (res) {
       button
-        .prop("disabled", false)
-        .find(".item")
-        .toggleClass("d-none");
+        .prop('disabled', false)
+        .find('.item')
+        .toggleClass('d-none')
       if (res.length) {
-        container.find(".guide-display").html(res);
-        container.find(".btn-guide, .guide-container").toggleClass("d-none");
+        container.find('.guide-display').html(res)
+        container.find('.btn-guide, .guide-container').toggleClass('d-none')
       }
-    },
-  });
-});
+    }
+  })
+})
 
 /**
  * Knowledge Cafe
  *
  */
-$(window).on("load", function () {
-  $("#preloader")
-    .removeClass("d-block")
-    .addClass(" d-none ");
-});
+$(window).on('load', function () {
+  $('#preloader')
+    .removeClass('d-block')
+    .addClass(' d-none ')
+})
 
-if (document.getElementById("show_and_save_book")) {
+if (document.getElementById('show_and_save_book')) {
   const bookForm = new Vue({
-    el: "#show_and_save_book",
+    el: '#show_and_save_book',
     data: {
-      addMethod: "from_isbn",
+      addMethod: 'from_isbn',
       showInfo: false,
       book: {},
       number_of_copies: 1,
       routes: {
-        index: document.getElementById("show_book").dataset.indexRoute || "",
-        fetch: document.getElementById("book_form").dataset.actionRoute || "",
-        store: document.getElementById("show_book").dataset.storeRoute || "",
+        index: document.getElementById('show_book').dataset.indexRoute || '',
+        fetch: document.getElementById('book_form').dataset.actionRoute || '',
+        store: document.getElementById('show_book').dataset.storeRoute || ''
       },
       buttons: {
         disableSubmitButton: false,
-        disableSaveButton: false,
-      },
+        disableSaveButton: false
+      }
     },
     methods: {
       onFileSelected: function (e) {
-        let file = e.target.files[0];
+        let file = e.target.files[0]
         if (!file) {
-          return;
+          return
         }
-        this.compressedFile = null;
+        this.compressedFile = null
         let image = new ImageCompressor(file, {
           quality: 0.1,
           success: function (result) {
-            this.compressedFile = result;
-          },
-        });
+            this.compressedFile = result
+          }
+        })
       },
 
       submitBookForm: function () {
-        let formData = new FormData(document.getElementById("book_form"));
+        let formData = new FormData(document.getElementById('book_form'))
         if (this.compressedFile) {
-          formData.append("book_image", compressedFile, compressedFile.name);
+          formData.append('book_image', compressedFile, compressedFile.name)
         }
 
-        this.book = {};
-        this.buttons.disableSubmitButton = true;
+        this.book = {}
+        this.buttons.disableSubmitButton = true
 
-        axios.post(this.routes.fetch, formData).then((response) => {
-          this.buttons.disableSubmitButton = false;
-          let data = response.data;
+        axios.post(this.routes.fetch, formData).then(response => {
+          this.buttons.disableSubmitButton = false
+          let data = response.data
 
           if (!data) {
-            alert("Error:Please try again");
-            return;
+            alert('Error:Please try again')
+            return
           }
 
           if (data.error) {
-            alert(data.message);
-            return;
+            alert(data.message)
+            return
           }
 
-          this.book = data.book;
+          this.book = data.book
 
           if (Object.keys(this.book).length) {
-            this.showInfo = true;
+            this.showInfo = true
           }
-        });
+        })
       },
 
       saveBookToRecords: function () {
         if (!this.book) {
-          alert("Error in saving records");
+          alert('Error in saving records')
         }
-        this.buttons.disableSaveButton = true;
-        this.book.number_of_copies = this.number_of_copies;
-        this.book["on_kindle"] = document.getElementById("on_kindle").checked
+        this.buttons.disableSaveButton = true
+        this.book.number_of_copies = this.number_of_copies
+        this.book['on_kindle'] = document.getElementById('on_kindle').checked
           ? 1
-          : 0;
-        axios.post(this.routes.store, this.book).then((response) => {
-          this.buttons.disableSaveButton = false;
+          : 0
+        axios.post(this.routes.store, this.book).then(response => {
+          this.buttons.disableSaveButton = false
 
           if (response.data.error) {
-            alert("Error in saving records");
-            return false;
+            alert('Error in saving records')
+            return false
           }
-          this.$toast.success("Book added successfully");
-          window.location.href = this.routes.index;
-        });
-      },
-    },
-  });
+          this.$toast.success('Book added successfully')
+          window.location.href = this.routes.index
+        })
+      }
+    }
+  })
 }
 
-if (document.getElementById("books_listing")) {
+if (document.getElementById('books_listing')) {
   const bookForm = new Vue({
-    el: "#books_listing",
+    el: '#books_listing',
     data: {
-      books: document.getElementById("books_table").dataset.books
-        ? JSON.parse(document.getElementById("books_table").dataset.books)
+      books: document.getElementById('books_table').dataset.books
+        ? JSON.parse(document.getElementById('books_table').dataset.books)
         : {},
-      bookCategories: document.getElementById("books_table").dataset.categories
-        ? JSON.parse(document.getElementById("books_table").dataset.categories)
+      bookCategories: document.getElementById('books_table').dataset.categories
+        ? JSON.parse(document.getElementById('books_table').dataset.categories)
         : [],
       updateRoute:
-        document.getElementById("books_table").dataset.indexRoute || "",
+        document.getElementById('books_table').dataset.indexRoute || '',
       categoryIndexRoute:
-        document.getElementById("books_table").dataset.categoryIndexRoute || "",
+        document.getElementById('books_table').dataset.categoryIndexRoute || '',
       categoryInputs: [],
       currentBookIndex: 0,
-      newCategory: "",
-      loggedInUser: document.getElementById("books_table").dataset.loggedInUser
+      newCategory: '',
+      loggedInUser: document.getElementById('books_table').dataset.loggedInUser
         ? JSON.parse(
-          document.getElementById("books_table").dataset.loggedInUser
-        )
-        : {},
-      searchKey: document.getElementById("search_input")
-        ? document.getElementById("search_input").dataset.value
-        : "",
-    },
-    methods: {
-      updateCategoryMode: function (index) {
-        let categories = this.books[index]["categories"];
-        if (!categories) {
-          return false;
-        }
-        this.currentBookIndex = index;
-        this.categoryInputs.map((checkbox) => (checkbox.checked = false));
-        categories.forEach(
-          (category) => (this.categoryInputs[category.id].checked = true)
-        );
-      },
-
-      updateCategory: function () {
-        let selectedCategory = [];
-        let bookID = this.books[this.currentBookIndex]["id"];
-
-        this.categoryInputs.forEach(function (checkbox) {
-          if (checkbox.checked) {
-            selectedCategory.push({
-              name: checkbox.dataset.category,
-              id: checkbox.value,
-            });
-          }
-        });
-
-        this.$set(
-          this.books[this.currentBookIndex],
-          "categories",
-          selectedCategory
-        );
-        let route = `${this.updateRoute}/${bookID}`;
-        axios.put(route, {
-          categories: JSON.parse(JSON.stringify(selectedCategory)),
-        });
-        document.getElementById("close_update_category_modal").click();
-      },
-
-      addNewCategory: async function () {
-        if (!this.newCategory) {
-          alert("Please enter category name");
-          return false;
-        }
-
-        let response = await axios.post(this.categoryIndexRoute, {
-          name: this.newCategory,
-        });
-        if (response.data && response.data.category) {
-          await this.bookCategories.push(response.data.category);
-          this.newCategory = "";
-          let allCheckboxes = document.querySelectorAll(
-            '#update_category_modal input[type="checkbox"]'
-          );
-          let lastCheckbox = allCheckboxes[allCheckboxes.length - 1];
-          this.categoryInputs[lastCheckbox.value] = lastCheckbox;
-        }
-      },
-
-      deleteBook: async function (index) {
-        let bookID = this.books[index]["id"];
-        let route = `${this.updateRoute}/${bookID}`;
-        let response = await axios.delete(route);
-        this.books.splice(index, 1);
-        $("#exampleModal").modal("hide");
-      },
-
-      searchBooks: function () {
-        window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
-      },
-
-      searchBooksByCategoryName: function () {
-        window.location.href = `${this.updateRoute}?category_name=${this.searchKeys}`;
-      },
-
-      strLimit: function (str, length) {
-        if (!str) {
-          return "";
-        }
-        return str.length > length ? str.substring(0, length) + "..." : str;
-      },
-
-      updateCopiesCount: function (index) {
-        var new_count = parseInt(
-          prompt(
-            "Number of copies of this book",
-            this.books[index].number_of_copies
+            document.getElementById('books_table').dataset.loggedInUser
           )
-        );
-        if (new_count && isFinite(new_count)) {
-          this.books[index].number_of_copies = new_count;
-          axios.put(this.updateRoute + "/" + this.books[index].id, {
-            number_of_copies: new_count,
-          });
-        }
-      },
-    },
-
-    mounted: function () {
-      let categoryInputContainer = document.querySelector(
-        "#update_category_modal"
-      );
-      let allCategoryInputs = categoryInputContainer.querySelectorAll(
-        'input[type="checkbox"]'
-      );
-      allCategoryInputs.forEach(
-        (checkbox) => (this.categoryInputs[checkbox.value] = checkbox)
-      );
-    },
-  });
-
-  const bookForms = new Vue({
-    el: "#books_listing",
-    data: {
-      books: document.getElementById("books_table").dataset.books
-        ? JSON.parse(document.getElementById("books_table").dataset.books)
         : {},
-      bookCategories: document.getElementById("books_table").dataset.categories
-        ? JSON.parse(document.getElementById("books_table").dataset.categories)
-        : [],
-      updateRoute:
-        document.getElementById("books_table").dataset.indexRoute || "",
-      categoryIndexRoute:
-        document.getElementById("books_table").dataset.categoryIndexRoute || "",
-      categoryInputs: [],
-      currentBookIndex: 0,
-      newCategory: "",
-      loggedInUser: document.getElementById("books_table").dataset.loggedInUser
-        ? JSON.parse(document.getElementById("books_table").dataset.loggedInUser)
-        : {},
-      searchKey: document.getElementById("search_input")
-        ? document.getElementById("search_input").dataset.value
-        : "",
-      sortKeys: document.getElementById("category_input")
-        ? document.getElementById("category_input").dataset.value
-        : ""
+      searchKey: document.getElementById('search_input')
+        ? document.getElementById('search_input').dataset.value
+        : ''
     },
     methods: {
       updateCategoryMode: function (index) {
-        let categories = this.books[index]["categories"];
+        let categories = this.books[index]['categories']
         if (!categories) {
-          return false;
+          return false
         }
-        this.currentBookIndex = index;
-        this.categoryInputs.map(checkbox => (checkbox.checked = false));
+        this.currentBookIndex = index
+        this.categoryInputs.map(checkbox => (checkbox.checked = false))
         categories.forEach(
           category => (this.categoryInputs[category.id].checked = true)
-        );
+        )
       },
 
       updateCategory: function () {
-        let selectedCategory = [];
-        let bookID = this.books[this.currentBookIndex]["id"];
+        let selectedCategory = []
+        let bookID = this.books[this.currentBookIndex]['id']
 
         this.categoryInputs.forEach(function (checkbox) {
           if (checkbox.checked) {
             selectedCategory.push({
               name: checkbox.dataset.category,
               id: checkbox.value
-            });
+            })
           }
-        });
+        })
 
         this.$set(
           this.books[this.currentBookIndex],
-          "categories",
+          'categories',
           selectedCategory
-        );
-        let route = `${this.updateRoute}/${bookID}`;
+        )
+        let route = `${this.updateRoute}/${bookID}`
         axios.put(route, {
           categories: JSON.parse(JSON.stringify(selectedCategory))
-        });
-        document.getElementById("close_update_category_modal").click();
+        })
+        document.getElementById('close_update_category_modal').click()
       },
 
       addNewCategory: async function () {
         if (!this.newCategory) {
-          alert("Please enter category name");
-          return false;
+          alert('Please enter category name')
+          return false
         }
 
         let response = await axios.post(this.categoryIndexRoute, {
           name: this.newCategory
-        });
+        })
         if (response.data && response.data.category) {
-          await this.bookCategories.push(response.data.category);
-          this.newCategory = "";
+          await this.bookCategories.push(response.data.category)
+          this.newCategory = ''
           let allCheckboxes = document.querySelectorAll(
-            "#update_category_modal input[type=\"checkbox\"]"
-          );
-          let lastCheckbox = allCheckboxes[allCheckboxes.length - 1];
-          this.categoryInputs[lastCheckbox.value] = lastCheckbox;
+            '#update_category_modal input[type="checkbox"]'
+          )
+          let lastCheckbox = allCheckboxes[allCheckboxes.length - 1]
+          this.categoryInputs[lastCheckbox.value] = lastCheckbox
         }
       },
 
       deleteBook: async function (index) {
-        let bookID = this.books[index]["id"];
-        let route = `${this.updateRoute}/${bookID}`;
-        let response = await axios.delete(route);
-        this.books.splice(index, 1);
-        $("#exampleModal").modal("hide");
+        let bookID = this.books[index]['id']
+        let route = `${this.updateRoute}/${bookID}`
+        let response = await axios.delete(route)
+        this.books.splice(index, 1)
+        $('#exampleModal').modal('hide')
       },
 
       searchBooks: function () {
-        window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
+        window.location.href = `${this.updateRoute}?search=${this.searchKey}`
       },
 
       searchBooksByCategoryName: function () {
-        window.location.href = `${this.updateRoute}?category_name=${this.sortKeys}`;
+        window.location.href = `${this.updateRoute}?category_name=${this.searchKeys}`
       },
 
       strLimit: function (str, length) {
         if (!str) {
-          return "";
+          return ''
         }
-        return str.length > length ? str.substring(0, length) + "..." : str;
+        return str.length > length ? str.substring(0, length) + '...' : str
       },
 
       updateCopiesCount: function (index) {
         var new_count = parseInt(
           prompt(
-            "Number of copies of this book",
+            'Number of copies of this book',
             this.books[index].number_of_copies
           )
-        );
+        )
         if (new_count && isFinite(new_count)) {
-          this.books[index].number_of_copies = new_count;
-          axios.put(this.updateRoute + "/" + this.books[index].id, {
+          this.books[index].number_of_copies = new_count
+          axios.put(this.updateRoute + '/' + this.books[index].id, {
             number_of_copies: new_count
-          });
+          })
         }
       }
     },
 
     mounted: function () {
       let categoryInputContainer = document.querySelector(
-        "#update_category_modal"
-      );
+        '#update_category_modal'
+      )
       let allCategoryInputs = categoryInputContainer.querySelectorAll(
-        "input[type=\"checkbox\"]"
-      );
+        'input[type="checkbox"]'
+      )
       allCategoryInputs.forEach(
         checkbox => (this.categoryInputs[checkbox.value] = checkbox)
-      );
+      )
     }
-  });
+  })
+
+  const bookForms = new Vue({
+    el: '#books_listing',
+    data: {
+      books: document.getElementById('books_table').dataset.books
+        ? JSON.parse(document.getElementById('books_table').dataset.books)
+        : {},
+      bookCategories: document.getElementById('books_table').dataset.categories
+        ? JSON.parse(document.getElementById('books_table').dataset.categories)
+        : [],
+      updateRoute:
+        document.getElementById('books_table').dataset.indexRoute || '',
+      categoryIndexRoute:
+        document.getElementById('books_table').dataset.categoryIndexRoute || '',
+      categoryInputs: [],
+      currentBookIndex: 0,
+      newCategory: '',
+      loggedInUser: document.getElementById('books_table').dataset.loggedInUser
+        ? JSON.parse(
+            document.getElementById('books_table').dataset.loggedInUser
+          )
+        : {},
+      searchKey: document.getElementById('search_input')
+        ? document.getElementById('search_input').dataset.value
+        : '',
+      sortKeys: document.getElementById('category_input')
+        ? document.getElementById('category_input').dataset.value
+        : ''
+    },
+    methods: {
+      updateCategoryMode: function (index) {
+        let categories = this.books[index]['categories']
+        if (!categories) {
+          return false
+        }
+        this.currentBookIndex = index
+        this.categoryInputs.map(checkbox => (checkbox.checked = false))
+        categories.forEach(
+          category => (this.categoryInputs[category.id].checked = true)
+        )
+      },
+
+      updateCategory: function () {
+        let selectedCategory = []
+        let bookID = this.books[this.currentBookIndex]['id']
+
+        this.categoryInputs.forEach(function (checkbox) {
+          if (checkbox.checked) {
+            selectedCategory.push({
+              name: checkbox.dataset.category,
+              id: checkbox.value
+            })
+          }
+        })
+
+        this.$set(
+          this.books[this.currentBookIndex],
+          'categories',
+          selectedCategory
+        )
+        let route = `${this.updateRoute}/${bookID}`
+        axios.put(route, {
+          categories: JSON.parse(JSON.stringify(selectedCategory))
+        })
+        document.getElementById('close_update_category_modal').click()
+      },
+
+      addNewCategory: async function () {
+        if (!this.newCategory) {
+          alert('Please enter category name')
+          return false
+        }
+
+        let response = await axios.post(this.categoryIndexRoute, {
+          name: this.newCategory
+        })
+        if (response.data && response.data.category) {
+          await this.bookCategories.push(response.data.category)
+          this.newCategory = ''
+          let allCheckboxes = document.querySelectorAll(
+            '#update_category_modal input[type="checkbox"]'
+          )
+          let lastCheckbox = allCheckboxes[allCheckboxes.length - 1]
+          this.categoryInputs[lastCheckbox.value] = lastCheckbox
+        }
+      },
+
+      deleteBook: async function (index) {
+        let bookID = this.books[index]['id']
+        let route = `${this.updateRoute}/${bookID}`
+        let response = await axios.delete(route)
+        this.books.splice(index, 1)
+        $('#exampleModal').modal('hide')
+      },
+
+      searchBooks: function () {
+        window.location.href = `${this.updateRoute}?search=${this.searchKey}`
+      },
+
+      searchBooksByCategoryName: function () {
+        window.location.href = `${this.updateRoute}?category_name=${this.sortKeys}`
+      },
+
+      strLimit: function (str, length) {
+        if (!str) {
+          return ''
+        }
+        return str.length > length ? str.substring(0, length) + '...' : str
+      },
+
+      updateCopiesCount: function (index) {
+        var new_count = parseInt(
+          prompt(
+            'Number of copies of this book',
+            this.books[index].number_of_copies
+          )
+        )
+        if (new_count && isFinite(new_count)) {
+          this.books[index].number_of_copies = new_count
+          axios.put(this.updateRoute + '/' + this.books[index].id, {
+            number_of_copies: new_count
+          })
+        }
+      }
+    },
+
+    mounted: function () {
+      let categoryInputContainer = document.querySelector(
+        '#update_category_modal'
+      )
+      let allCategoryInputs = categoryInputContainer.querySelectorAll(
+        'input[type="checkbox"]'
+      )
+      allCategoryInputs.forEach(
+        checkbox => (this.categoryInputs[checkbox.value] = checkbox)
+      )
+    }
+  })
 }
 
-if (document.getElementById("books_category")) {
+if (document.getElementById('books_category')) {
   const bookForm = new Vue({
-    el: "#books_category",
+    el: '#books_category',
     data: {
-      categories: document.getElementById("category_container").dataset
+      categories: document.getElementById('category_container').dataset
         .categories
         ? JSON.parse(
-          document.getElementById("category_container").dataset.categories
-        )
+            document.getElementById('category_container').dataset.categories
+          )
         : [],
       categoryNameToChange: [],
       indexRoute:
-        document.getElementById("category_container").dataset.indexRoute || "",
-      newCategoryName: "",
-      newCategoryMode: "",
+        document.getElementById('category_container').dataset.indexRoute || '',
+      newCategoryName: '',
+      newCategoryMode: ''
     },
 
     methods: {
       showEditMode: function (index) {
-        this.categoryNameToChange[index] = this.categories[index]["name"];
-        this.$set(this.categories[index], "editMode", true);
+        this.categoryNameToChange[index] = this.categories[index]['name']
+        this.$set(this.categories[index], 'editMode', true)
       },
 
       updateCategoryName: function (index) {
         this.$set(
           this.categories[index],
-          "name",
+          'name',
           this.categoryNameToChange[index]
-        );
-        let categoryID = this.categories[index]["id"];
-        let route = `${this.indexRoute}/${categoryID}`;
+        )
+        let categoryID = this.categories[index]['id']
+        let route = `${this.indexRoute}/${categoryID}`
         axios.put(route, {
-          name: this.categories[index]["name"],
-        });
-        this.$set(this.categories[index], "editMode", false);
-        this.$toast.success("Updated category for books");
+          name: this.categories[index]['name']
+        })
+        this.$set(this.categories[index], 'editMode', false)
+        this.$toast.success('Updated category for books')
       },
 
       deleteCategory: async function (index) {
-        let confirmDelete = confirm("Are you sure ?");
+        let confirmDelete = confirm('Are you sure ?')
 
         if (!confirmDelete) {
-          return false;
+          return false
         }
 
-        let categoryID = this.categories[index]["id"];
-        let route = `${this.indexRoute}/${categoryID}`;
-        let response = await axios.delete(route);
-        this.categories.splice(index, 1);
+        let categoryID = this.categories[index]['id']
+        let route = `${this.indexRoute}/${categoryID}`
+        let response = await axios.delete(route)
+        this.categories.splice(index, 1)
       },
 
       updateNewCategoryMode: function (mode) {
-        if (mode != "add") {
-          this.newCategoryName = "";
+        if (mode != 'add') {
+          this.newCategoryName = ''
         }
-        this.newCategoryMode = mode;
+        this.newCategoryMode = mode
       },
 
       addNewCategory: async function () {
         if (!this.newCategoryName) {
-          alert("Please enter category name");
-          return false;
+          alert('Please enter category name')
+          return false
         }
-        this.$toast.success("Category for books added successfully");
-        let route = `${this.indexRoute}`;
+        this.$toast.success('Category for books added successfully')
+        let route = `${this.indexRoute}`
         let response = await axios.post(route, {
-          name: this.newCategoryName,
-        });
+          name: this.newCategoryName
+        })
 
         if (response.data && response.data.category) {
-          this.categories.unshift(response.data.category);
+          this.categories.unshift(response.data.category)
         }
 
-        this.newCategoryMode = "saved";
-      },
-    },
-  });
+        this.newCategoryMode = 'saved'
+      }
+    }
+  })
 }
 
-if (document.getElementById("show_book_info")) {
+if (document.getElementById('show_book_info')) {
   const bookForm = new Vue({
-    el: "#show_book_info",
+    el: '#show_book_info',
     data: {
-      book: document.getElementById("show_book_info").dataset.book
-        ? document.getElementById("show_book_info").dataset.book
+      book: document.getElementById('show_book_info').dataset.book
+        ? document.getElementById('show_book_info').dataset.book
         : [],
-      route: document.getElementById("show_book_info").dataset.markBookRoute
-        ? document.getElementById("show_book_info").dataset.markBookRoute
-        : "",
-      borrowBookRoute: document.getElementById("show_book_info").dataset
+      route: document.getElementById('show_book_info').dataset.markBookRoute
+        ? document.getElementById('show_book_info').dataset.markBookRoute
+        : '',
+      borrowBookRoute: document.getElementById('show_book_info').dataset
         .borrowBookRoute
-        ? document.getElementById("show_book_info").dataset.borrowBookRoute
-        : "",
-      bookAMonthStoreRoute: document.getElementById("show_book_info").dataset
+        ? document.getElementById('show_book_info').dataset.borrowBookRoute
+        : '',
+      bookAMonthStoreRoute: document.getElementById('show_book_info').dataset
         .bookAMonthStoreRoute
-        ? document.getElementById("show_book_info").dataset.bookAMonthStoreRoute
-        : "",
-      bookAMonthDestroyRoute: document.getElementById("show_book_info").dataset
+        ? document.getElementById('show_book_info').dataset.bookAMonthStoreRoute
+        : '',
+      bookAMonthDestroyRoute: document.getElementById('show_book_info').dataset
         .bookAMonthDestroyRoute
-        ? document.getElementById("show_book_info").dataset
-          .bookAMonthDestroyRoute
-        : "",
-      addToWishlistRoute: document.getElementById("show_book_info").dataset
+        ? document.getElementById('show_book_info').dataset
+            .bookAMonthDestroyRoute
+        : '',
+      addToWishlistRoute: document.getElementById('show_book_info').dataset
         .addToWishlistRoute
-        ? document.getElementById("show_book_info").dataset.addToWishlistRoute
-        : "",
-      removeFromWishlistRoute: document.getElementById("show_book_info").dataset
+        ? document.getElementById('show_book_info').dataset.addToWishlistRoute
+        : '',
+      removeFromWishlistRoute: document.getElementById('show_book_info').dataset
         .removeFromWishlistRoute
-        ? document.getElementById("show_book_info").dataset
-          .removeFromWishlistRoute
-        : "",
-      putBackBookRoute: document.getElementById("show_book_info").dataset
+        ? document.getElementById('show_book_info').dataset
+            .removeFromWishlistRoute
+        : '',
+      putBackBookRoute: document.getElementById('show_book_info').dataset
         .putBackBookRoute
-        ? document.getElementById("show_book_info").dataset.putBackBookRoute
-        : "",
-      isRead: document.getElementById("show_book_info").dataset.isRead
+        ? document.getElementById('show_book_info').dataset.putBackBookRoute
+        : '',
+      isRead: document.getElementById('show_book_info').dataset.isRead
         ? true
         : false,
-      isBorrowed: document.getElementById("show_book_info").dataset.isBorrowed
+      isBorrowed: document.getElementById('show_book_info').dataset.isBorrowed
         ? true
         : false,
-      isBookAMonth: document.getElementById("show_book_info").dataset
+      isBookAMonth: document.getElementById('show_book_info').dataset
         .isBookAMonth
         ? true
         : false,
-      isWishlisted: document.getElementById("show_book_info").dataset
+      isWishlisted: document.getElementById('show_book_info').dataset
         .isWishlisted
         ? true
         : false,
-      readers: document.getElementById("show_book_info").dataset.readers
-        ? document.getElementById("show_book_info").dataset.readers
+      readers: document.getElementById('show_book_info').dataset.readers
+        ? document.getElementById('show_book_info').dataset.readers
         : [],
-      borrowers: document.getElementById("show_book_info").dataset.borrowers
-        ? document.getElementById("show_book_info").dataset.borrowers
-        : [],
+      borrowers: document.getElementById('show_book_info').dataset.borrowers
+        ? document.getElementById('show_book_info').dataset.borrowers
+        : []
     },
     methods: {
       markBook: async function (read) {
         let response = await axios.post(this.route, {
           book_id: this.book.id,
-          is_read: read,
-        });
-        this.isRead = read;
+          is_read: read
+        })
+        this.isRead = read
         if (!response.data) {
-          return false;
+          return false
         }
-        this.readers = response.data.readers;
+        this.readers = response.data.readers
       },
 
       addToBookAMonth: async function (action) {
-        let response = await axios.post(this.bookAMonthStoreRoute);
-        this.isBookAMonth = true;
+        let response = await axios.post(this.bookAMonthStoreRoute)
+        this.isBookAMonth = true
         if (!response.data) {
-          return false;
+          return false
         }
       },
 
       removeFromBookAMonth: async function (action) {
-        let response = await axios.post(this.bookAMonthDestroyRoute);
-        this.isBookAMonth = false;
+        let response = await axios.post(this.bookAMonthDestroyRoute)
+        this.isBookAMonth = false
         if (!response.data) {
-          return false;
+          return false
         }
       },
 
       addToWishlist: async function (action) {
         let response = await axios.post(this.addToWishlistRoute, {
-          book_id: this.book.id,
-        });
-        this.isWishlisted = true;
+          book_id: this.book.id
+        })
+        this.isWishlisted = true
         if (!response.data) {
-          return false;
+          return false
         }
       },
 
       removeFromWishlist: async function (action) {
         let response = await axios.post(this.removeFromWishlistRoute, {
-          book_id: this.book.id,
-        });
-        this.isWishlisted = false;
+          book_id: this.book.id
+        })
+        this.isWishlisted = false
         if (!response.data) {
-          return false;
+          return false
         }
       },
 
       borrowTheBook: async function () {
         if (this.borrowers.length < this.book.number_of_copies) {
-          let response = await axios.get(this.borrowBookRoute);
-          this.isBorrowed = true;
-          this.borrowers = response.data.borrowers;
+          let response = await axios.get(this.borrowBookRoute)
+          this.isBorrowed = true
+          this.borrowers = response.data.borrowers
         } else {
-          alert("Sorry ! No more copies of this book available right now.");
+          alert('Sorry ! No more copies of this book available right now.')
         }
       },
 
       putTheBookBackToLibrary: async function () {
-        let response = await axios.get(this.putBackBookRoute);
-        this.isBorrowed = false;
-        this.borrowers = response.data.borrowers;
-      },
+        let response = await axios.get(this.putBackBookRoute)
+        this.isBorrowed = false
+        this.borrowers = response.data.borrowers
+      }
     },
 
-    mounted() {
-      this.readers = JSON.parse(this.readers);
-      this.borrowers = JSON.parse(this.borrowers);
-      this.book = JSON.parse(this.book);
-    },
-  });
+    mounted () {
+      this.readers = JSON.parse(this.readers)
+      this.borrowers = JSON.parse(this.borrowers)
+      this.book = JSON.parse(this.book)
+    }
+  })
 }
 
-if (document.getElementById("home_page")) {
-  var el = document.getElementById("markBookAsRead");
-  el.addEventListener("click", markBookAsRead, false);
-  var wishlistBtn = document.getElementById("addBookToWishlist");
-  wishlistBtn.addEventListener("click", addBookToWishlist, false);
+if (document.getElementById('home_page')) {
+  var el = document.getElementById('markBookAsRead')
+  el.addEventListener('click', markBookAsRead, false)
+  var wishlistBtn = document.getElementById('addBookToWishlist')
+  wishlistBtn.addEventListener('click', addBookToWishlist, false)
   var disableBookSuggestionBtn = document.getElementById(
-    "disableBookSuggestion"
-  );
+    'disableBookSuggestion'
+  )
   disableBookSuggestionBtn.addEventListener(
-    "click",
+    'click',
     disableBookSuggestions,
     false
-  );
-  let isModalShown = sessionStorage.getItem("book_modal_has_shown");
+  )
+  let isModalShown = sessionStorage.getItem('book_modal_has_shown')
   if (!isModalShown) {
-    sessionStorage.setItem("book_modal_has_shown", "true");
-    $("#show_nudge_modal").modal("show");
+    sessionStorage.setItem('book_modal_has_shown', 'true')
+    $('#show_nudge_modal').modal('show')
   }
 }
 
-function markBookAsRead() {
-  let bookID = document.getElementById("markBookAsRead").dataset.id;
-  let route = document.getElementById("markBookAsRead").dataset.markBookRoute;
+function markBookAsRead () {
+  let bookID = document.getElementById('markBookAsRead').dataset.id
+  let route = document.getElementById('markBookAsRead').dataset.markBookRoute
   axios.post(route, {
     book_id: bookID,
-    is_read: true,
-  });
-  $("#show_nudge_modal").modal("hide");
+    is_read: true
+  })
+  $('#show_nudge_modal').modal('hide')
 }
 
-function addBookToWishlist() {
-  let bookID = document.getElementById("addBookToWishlist").dataset.id;
-  let route = document.getElementById("addBookToWishlist").dataset.route;
+function addBookToWishlist () {
+  let bookID = document.getElementById('addBookToWishlist').dataset.id
+  let route = document.getElementById('addBookToWishlist').dataset.route
   axios.post(route, {
-    book_id: bookID,
-  });
-  $("#show_nudge_modal").modal("hide");
+    book_id: bookID
+  })
+  $('#show_nudge_modal').modal('hide')
 }
 
-function disableBookSuggestions() {
-  $("#show_nudge_modal").modal("hide");
+function disableBookSuggestions () {
+  $('#show_nudge_modal').modal('hide')
   window.location.href = document.getElementById(
-    "disableBookSuggestion"
-  ).dataset.href;
+    'disableBookSuggestion'
+  ).dataset.href
 }
 
-if (document.getElementById("roles_permission_table")) {
+if (document.getElementById('roles_permission_table')) {
   new Vue({
-    el: "#roles_permission_table",
+    el: '#roles_permission_table',
     data: {
-      roles: document.getElementById("roles_permission_table").dataset.roles
+      roles: document.getElementById('roles_permission_table').dataset.roles
         ? JSON.parse(
-          document.getElementById("roles_permission_table").dataset.roles
-        )
+            document.getElementById('roles_permission_table').dataset.roles
+          )
         : [],
-      permissions: document.getElementById("roles_permission_table").dataset
+      permissions: document.getElementById('roles_permission_table').dataset
         .permissions
         ? JSON.parse(
-          document.getElementById("roles_permission_table").dataset
-            .permissions
-        )
+            document.getElementById('roles_permission_table').dataset
+              .permissions
+          )
         : [],
       updateRoute:
-        document.getElementById("roles_permission_table").dataset.updateRoute ||
-        "",
+        document.getElementById('roles_permission_table').dataset.updateRoute ||
+        '',
       currentRoleIndex: 0,
-      permissionInputs: [],
+      permissionInputs: []
     },
     methods: {
       updatePermissionModal: function (index) {
-        let permissions = this.roles[index].permissions;
-        this.currentRoleIndex = index;
-        this.permissionInputs.map((checkbox) => (checkbox.checked = false));
+        let permissions = this.roles[index].permissions
+        this.currentRoleIndex = index
+        this.permissionInputs.map(checkbox => (checkbox.checked = false))
         permissions.forEach(
-          (permission) => (this.permissionInputs[permission.id].checked = true)
-        );
+          permission => (this.permissionInputs[permission.id].checked = true)
+        )
       },
       updatePermissions: function () {
-        let selectedPermissions = [];
-        let roleID = this.roles[this.currentRoleIndex]["id"];
+        let selectedPermissions = []
+        let roleID = this.roles[this.currentRoleIndex]['id']
 
         this.permissionInputs.forEach(function (checkbox) {
           if (checkbox.checked) {
             selectedPermissions.push({
               name: checkbox.dataset.permission,
-              id: checkbox.value,
-            });
+              id: checkbox.value
+            })
           }
-        });
+        })
 
         this.$set(
           this.roles[this.currentRoleIndex],
-          "permissions",
+          'permissions',
           selectedPermissions
-        );
-        let route = `${this.updateRoute}/${roleID}`;
+        )
+        let route = `${this.updateRoute}/${roleID}`
         axios.put(route, {
           permissions: JSON.parse(JSON.stringify(selectedPermissions)),
-          roleID: roleID,
-        });
-        document.getElementById("update_role_permissions_modal").click();
-      },
+          roleID: roleID
+        })
+        document.getElementById('update_role_permissions_modal').click()
+      }
     },
     mounted: function () {
       let permissionInputContainer = document.querySelector(
-        "#update_role_permissions_modal"
-      );
+        '#update_role_permissions_modal'
+      )
       let allPermissionInputs = permissionInputContainer.querySelectorAll(
         'input[type="checkbox"]'
-      );
+      )
       allPermissionInputs.forEach(
-        (checkbox) => (this.permissionInputs[checkbox.value] = checkbox)
-      );
-    },
-  });
+        checkbox => (this.permissionInputs[checkbox.value] = checkbox)
+      )
+    }
+  })
 }
 
-if (document.getElementById("user_roles_table")) {
+if (document.getElementById('user_roles_table')) {
   var userRoles = new Vue({
-    el: "#user_roles_table",
+    el: '#user_roles_table',
     data: {
-      users: document.getElementById("user_roles_table").dataset.users
-        ? JSON.parse(document.getElementById("user_roles_table").dataset.users)
-        : "",
-      roles: document.getElementById("user_roles_table").dataset.roles
-        ? JSON.parse(document.getElementById("user_roles_table").dataset.roles)
-        : "",
+      users: document.getElementById('user_roles_table').dataset.users
+        ? JSON.parse(document.getElementById('user_roles_table').dataset.users)
+        : '',
+      roles: document.getElementById('user_roles_table').dataset.roles
+        ? JSON.parse(document.getElementById('user_roles_table').dataset.roles)
+        : '',
       updateRoute:
-        document.getElementById("user_roles_table").dataset.updateRoute || "",
+        document.getElementById('user_roles_table').dataset.updateRoute || '',
       currentUserIndex: 0,
-      roleInputs: [],
+      roleInputs: []
     },
     methods: {
       updateUserRolesModal: function (index) {
-        let roles = this.users[index]["roles"];
+        let roles = this.users[index]['roles']
         if (!roles) {
-          return false;
+          return false
         }
-        this.currentUserIndex = index;
-        this.roleInputs.map((checkbox) => (checkbox.checked = false));
-        roles.forEach((role) => (this.roleInputs[role.id].checked = true));
+        this.currentUserIndex = index
+        this.roleInputs.map(checkbox => (checkbox.checked = false))
+        roles.forEach(role => (this.roleInputs[role.id].checked = true))
       },
 
       updateRoles: function () {
-        let selectedRoles = [];
+        let selectedRoles = []
         if (this.users) {
-          let userID = this.users[this.currentUserIndex].id;
+          let userID = this.users[this.currentUserIndex].id
         }
 
         this.roleInputs.forEach(function (checkbox) {
           if (checkbox.checked) {
             selectedRoles.push({
               name: checkbox.dataset.role,
-              id: checkbox.value,
-            });
+              id: checkbox.value
+            })
           }
-        });
+        })
 
-        this.$set(this.users[this.currentUserIndex], "roles", selectedRoles);
-        let route = `${this.updateRoute}/${userID}`;
+        this.$set(this.users[this.currentUserIndex], 'roles', selectedRoles)
+        let route = `${this.updateRoute}/${userID}`
         axios.put(route, {
           roles: JSON.parse(JSON.stringify(selectedRoles)),
-          userID: userID,
-        });
-        document.getElementById("close_update_user_roles_modal").click();
+          userID: userID
+        })
+        document.getElementById('close_update_user_roles_modal').click()
       },
 
       formatRoles: function (user) {
-        let roleNames = [];
+        let roleNames = []
         for (var i in user.roles) {
-          let roleName = user.roles[i].label;
+          let roleName = user.roles[i].label
           // roleName = roleName.split('_').map(function (item) {
           //     return item.charAt(0).toUpperCase() + item.substring(1);
           // }).join(' ');
 
-          roleNames.push(roleName);
+          roleNames.push(roleName)
         }
 
-        return roleNames.join(", ");
-      },
+        return roleNames.join(', ')
+      }
     },
     mounted: function () {
       let roleInputContainer = document.querySelector(
-        "#update_user_roles_modal"
-      );
+        '#update_user_roles_modal'
+      )
       let allRoleInputs = roleInputContainer.querySelectorAll(
         'input[type="checkbox"]'
-      );
+      )
       allRoleInputs.forEach(
-        (checkbox) => (this.roleInputs[checkbox.value] = checkbox)
-      );
-    },
-  });
+        checkbox => (this.roleInputs[checkbox.value] = checkbox)
+      )
+    }
+  })
 }
 
-require("./finance/invoice");
-require("./finance/payment");
+require('./finance/invoice')
+require('./finance/payment')
 
 /*
  * HR Module JS code start
  */
 $(document).ready(function () {
-  $(document).on("click", ".show-comment", showCommentBlock);
-  $(document).on("click", ".section-toggle", sectionToggle);
-  $(document).on("click", "#saveFollowUp", saveFollowUp);
-  $(document).on("change", ".section-toggle-checkbox", sectionToggleCheckbox);
-  $(document).on("click", ".show-evaluation-stage", function () {
-    $(".evaluation-stage").addClass("d-none");
-    var target = $(this).data("target");
-    $(target).removeClass("d-none");
+  $(document).on('click', '.show-comment', showCommentBlock)
+  $(document).on('click', '.section-toggle', sectionToggle)
+  $(document).on('click', '#saveFollowUp', saveFollowUp)
+  $(document).on('change', '.section-toggle-checkbox', sectionToggleCheckbox)
+  $(document).on('click', '.show-evaluation-stage', function () {
+    $('.evaluation-stage').addClass('d-none')
+    var target = $(this).data('target')
+    $(target).removeClass('d-none')
 
     if (
-      $("#segment-general-information > span")[0].innerText ==
-      "General Information"
+      $('#segment-general-information > span')[0].innerText ==
+      'General Information'
     ) {
-      $(".evaluation-score input").each(function () {
-        if ($(this).is(":checked")) {
-          let evaluationParameterName = this.name.replace(/_/g, "-");
-          console.log(evaluationParameterName);
+      $('.evaluation-score input').each(function () {
+        if ($(this).is(':checked')) {
+          let evaluationParameterName = this.name.replace(/_/g, '-')
+          console.log(evaluationParameterName)
           if (this.id.slice(-1) == 1) {
             // Thumbs-up
             $(`.${evaluationParameterName}`)
-              .find("input:eq(0)")
-              .prop("checked", true);
+              .find('input:eq(0)')
+              .prop('checked', true)
           } else {
             // Thumbs-down
             $(`.${evaluationParameterName}`)
-              .find("input:eq(1)")
-              .prop("checked", true);
+              .find('input:eq(1)')
+              .prop('checked', true)
           }
         }
-      });
+      })
     }
-  });
-  $(document).on("change", ".set-segment-assignee", setSegmentAssignee);
-  $(document).on("click", ".toggle-block-display", toggleBlockDisplay);
-  $(document).on(
-    "change",
-    ".send-mail-to-applicant",
-    toggleApplicantMailEditor
-  );
-});
+  })
+  $(document).on('change', '.set-segment-assignee', setSegmentAssignee)
+  $(document).on('click', '.toggle-block-display', toggleBlockDisplay)
+  $(document).on('change', '.send-mail-to-applicant', toggleApplicantMailEditor)
+})
 
 $(function () {
-  $("#categoryName")
+  $('#categoryName')
     .keyup(check_save)
     .each(function () {
-      check_save();
-    });
-});
-function check_save() {
+      check_save()
+    })
+})
+function check_save () {
   if ($(this).val().length == 0) {
-    $("#save-btn-action").attr("disabled", true);
+    $('#save-btn-action').attr('disabled', true)
   } else {
-    $("#save-btn-action").removeAttr("disabled");
+    $('#save-btn-action').removeAttr('disabled')
   }
 }
 
-function showCommentBlock() {
-  var blockId = $(this).data("block-id");
+function showCommentBlock () {
+  var blockId = $(this).data('block-id')
   $(blockId)
-    .removeClass("d-none")
-    .find("input")
-    .focus();
-  $(this).addClass("d-none");
+    .removeClass('d-none')
+    .find('input')
+    .focus()
+  $(this).addClass('d-none')
 }
 
-function sectionToggle() {
-  var targetParent = $(this).data("target-parent");
-  var targetOption = $(this).data("target-option");
-  $(`.${targetParent}`).addClass("d-none");
-  $(`.${targetOption}`).removeClass("d-none");
+function sectionToggle () {
+  var targetParent = $(this).data('target-parent')
+  var targetOption = $(this).data('target-option')
+  $(`.${targetParent}`).addClass('d-none')
+  $(`.${targetOption}`).removeClass('d-none')
 }
 
-function sectionToggleCheckbox() {
-  var showOnChecked = $(this).data("show-on-checked");
-  if ($(this).is(":checked")) {
-    $(showOnChecked).removeClass("d-none");
+function sectionToggleCheckbox () {
+  var showOnChecked = $(this).data('show-on-checked')
+  if ($(this).is(':checked')) {
+    $(showOnChecked).removeClass('d-none')
   } else {
-    $(showOnChecked).addClass("d-none");
+    $(showOnChecked).addClass('d-none')
   }
 }
 
-function setSegmentAssignee() {
-  var segment = $(this).data("target-segment");
+function setSegmentAssignee () {
+  var segment = $(this).data('target-segment')
   var assignee = $(this)
-    .find(":selected")
-    .text();
+    .find(':selected')
+    .text()
   if (assignee) {
     $(segment)
-      .find(".assignee")
-      .removeClass("d-none")
-      .find(".name")
-      .text(assignee);
+      .find('.assignee')
+      .removeClass('d-none')
+      .find('.name')
+      .text(assignee)
   } else {
     $(segment)
-      .find(".assignee")
-      .addClass("d-none")
-      .find(".name")
-      .text("");
+      .find('.assignee')
+      .addClass('d-none')
+      .find('.name')
+      .text('')
   }
 }
 
-function toggleBlockDisplay() {
-  let target = $(this).data("target");
-  $(target).toggleClass("d-none");
+function toggleBlockDisplay () {
+  let target = $(this).data('target')
+  $(target).toggleClass('d-none')
 
-  var toggleIcon = $(this).data("toggle-icon");
+  var toggleIcon = $(this).data('toggle-icon')
   if (toggleIcon) {
-    $(".toggle-icon").toggleClass("d-none");
+    $('.toggle-icon').toggleClass('d-none')
   }
 }
 
-function toggleApplicantMailEditor() {
-  let target = $(this).data("target");
-  $(target).toggleClass("d-none");
+function toggleApplicantMailEditor () {
+  let target = $(this).data('target')
+  $(target).toggleClass('d-none')
 }
 
-function loadTemplateMail(status, successCallback) {
+function loadTemplateMail (status, successCallback) {
   // make query to load current template
-  let applicationRoundId = $("#current_applicationround_id").val();
+  let applicationRoundId = $('#current_applicationround_id').val()
   $.post({
     url: `/hr/recruitment/applicationround/${applicationRoundId}/mail-content/${status}`,
-    method: "post",
+    method: 'post',
     success: successCallback,
-    error: (err) => {
-      console.log(err);
-    },
-  });
+    error: err => {
+      console.log(err)
+    }
+  })
 }
 
-function saveFollowUp() {
-  var form = $(this).closest("form");
-  if ($("#followUpAndReject").is(":checked")) {
-    var followUpComments = form.find('[name="comments"]').val();
+function saveFollowUp () {
+  var form = $(this).closest('form')
+  if ($('#followUpAndReject').is(':checked')) {
+    var followUpComments = form.find('[name="comments"]').val()
     $(document)
-      .find("#followUpCommentForReject")
-      .val(followUpComments);
+      .find('#followUpCommentForReject')
+      .val(followUpComments)
     $(this)
-      .closest(".modal")
-      .modal("hide");
+      .closest('.modal')
+      .modal('hide')
     $(document)
-      .find("#rejectApplication")
-      .trigger("click");
+      .find('#rejectApplication')
+      .trigger('click')
   } else {
     $(this)
-      .attr("disabled", "disabled")
-      .addClass("disabled c-disabled");
-    form.submit();
+      .attr('disabled', 'disabled')
+      .addClass('disabled c-disabled')
+    form.submit()
   }
 }
 
-function datePickerChart() {
-  $("#EndDate").change(function () {
-    var startDate = document.getElementById("StartDate").value;
-    var endDate = document.getElementById("EndDate").value;
+function datePickerChart () {
+  $('#EndDate').change(function () {
+    var startDate = document.getElementById('StartDate').value
+    var endDate = document.getElementById('EndDate').value
     if (Date.parse(endDate) <= Date.parse(startDate)) {
-      alert("End date should be greater than Start date");
-      document.getElementById("EndDate").value = "";
+      alert('End date should be greater than Start date')
+      document.getElementById('EndDate').value = ''
     }
-  });
+  })
 }
 
-function barChart() {
-  var value = $(".chart-data").data("target");
-  var cData = value;
-  var ctx = $("#barChart");
+function barChart () {
+  var value = $('.chart-data').data('target')
+  var cData = value
+  var ctx = $('#barChart')
 
   var data = {
     labels: cData.label,
     datasets: [
       {
-        label: "Count",
+        label: 'Count',
         data: cData.data,
-        backgroundColor: "#67A7E2",
-        borderColor: "#67A7E2",
+        backgroundColor: '#67A7E2',
+        borderColor: '#67A7E2',
         borderWidth: 1,
-        pointHoverRadius: 7,
-      },
-    ],
-  };
+        pointHoverRadius: 7
+      }
+    ]
+  }
   var options = {
     responsive: true,
     tooltips: {
       callbacks: {
         afterBody: function (context) {
-          console.log(context);
-          return `Verified Applications: ${cData.afterBody[context[0].index]}`;
-        },
+          console.log(context)
+          return `Verified Applications: ${cData.afterBody[context[0].index]}`
+        }
       },
       displayColors: false,
       bodyFontSize: 20,
-      bodyFontStyle: "bold",
-      backgroundColor: "#282828",
-      bodyFontColor: "#ffffff",
+      bodyFontStyle: 'bold',
+      backgroundColor: '#282828',
+      bodyFontColor: '#ffffff',
       cornerRadius: 0,
-      borderWidth: 2,
+      borderWidth: 2
     },
     title: {
-      display: false,
+      display: false
     },
     legend: {
-      display: false,
+      display: false
     },
     scales: {
       yAxes: [
         {
-          ticks: { stepSize: 1, suggestedMin: 0.5, suggestedMax: 5.5 },
-        },
-      ],
+          ticks: { stepSize: 1, suggestedMin: 0.5, suggestedMax: 5.5 }
+        }
+      ]
     },
 
     elements: {
       line: {
         fill: false,
-        tension: 0,
+        tension: 0
       },
       point: {
-        radius: 0,
-      },
-    },
-  };
+        radius: 0
+      }
+    }
+  }
 
   var charts = new Chart(ctx, {
-    type: "bar",
+    type: 'bar',
     data: data,
-    options: options,
-  });
+    options: options
+  })
 }
 
-function HorizontalBarChart() {
-  var value = $("#myChart").data("target");
-  var cData = value;
-  var ctx = $("#myChart");
+function HorizontalBarChart () {
+  var value = $('#myChart').data('target')
+  var cData = value
+  var ctx = $('#myChart')
   var data = {
     labels: cData.jobsTitle,
     datasets: [
       {
         label: [],
         data: cData.application,
-        backgroundColor: ["rgba(52, 144, 220)"],
-        borderColor: ["rgba(52, 144, 220)"],
-        borderWidth: 10,
-      },
-    ],
-  };
+        backgroundColor: ['rgba(52, 144, 220)'],
+        borderColor: ['rgba(52, 144, 220)'],
+        borderWidth: 10
+      }
+    ]
+  }
   var myBar = new Chart(ctx, {
-    type: "bar",
+    type: 'bar',
     data: data,
     options: {
       tooltip: {
         enabled: true,
         callbacks: {
           label: function (tooltipItem) {
-            return tooltipItem.dataset.data;
-          },
-        },
+            return tooltipItem.dataset.data
+          }
+        }
       },
-      indexAxis: "y",
+      indexAxis: 'y',
       scales: {
         x: {
           min: 0,
           max: 1000,
           ticks: {
-            stepSize: 100,
-          },
-        },
+            stepSize: 100
+          }
+        }
       },
       plugins: {
         legend: {
           labels: {
-            boxWidth: 0,
-          },
-        },
+            boxWidth: 0
+          }
+        }
       },
       hover: {
-        mode: false,
+        mode: false
       },
       animation: {
         duration: 1,
         onProgress: function () {
-          var chart = this;
-          var ctx = chart.ctx;
-          ctx.textAlign = "top";
-          ctx.textBaseline = "middle";
-          ctx.font = "13px Arial";
+          var chart = this
+          var ctx = chart.ctx
+          ctx.textAlign = 'top'
+          ctx.textBaseline = 'middle'
+          ctx.font = '13px Arial'
           this.data.datasets.forEach(function (dataset, i) {
-            var meta = chart.getDatasetMeta(i);
+            var meta = chart.getDatasetMeta(i)
             meta.data.forEach(function (bar, index) {
-              var data = dataset.data[index];
-              if (data == "0") {
-                data = "";
+              var data = dataset.data[index]
+              if (data == '0') {
+                data = ''
               }
-              ctx.fillText(data, bar.x + 5, bar.y);
-            });
-          });
-        },
-      },
-    },
-  });
+              ctx.fillText(data, bar.x + 5, bar.y)
+            })
+          })
+        }
+      }
+    }
+  })
 }
-function roundWiseRejectionsGraph() {
-  var value = $("#myGraph").data("target");
-  var cData = value;
-  var ctx = $("#myGraph");
+function roundWiseRejectionsGraph () {
+  var value = $('#myGraph').data('target')
+  var cData = value
+  var ctx = $('#myGraph')
   var data = {
     labels: cData.totalapplication,
     datasets: [
       {
         label: [],
         data: cData.count,
-        backgroundColor: ["rgba(52, 144, 220)"],
-        datacolor: ["rgba(52,144,220)"],
-        borderColor: ["rgba(52, 144, 220)"],
-        borderWidth: 10,
-      },
-    ],
-  };
+        backgroundColor: ['rgba(52, 144, 220)'],
+        datacolor: ['rgba(52,144,220)'],
+        borderColor: ['rgba(52, 144, 220)'],
+        borderWidth: 10
+      }
+    ]
+  }
   var myBar = new Chart(ctx, {
-    type: "bar",
+    type: 'bar',
     data: data,
     options: {
       categoryPercentage: 1.0,
       barPercentage: 0.8,
       maintainAspectRatio: true,
-      indexAxis: "y",
+      indexAxis: 'y',
       scales: {
         x: {
           min: 0,
           max: 100,
           ticks: {
-            stepSize: 5,
-          },
-        },
+            stepSize: 5
+          }
+        }
       },
       plugins: {
         legend: {
           labels: {
-            boxWidth: 0,
-          },
-        },
+            boxWidth: 0
+          }
+        }
       },
       hover: {
-        mode: false,
+        mode: false
       },
       animation: {
         duration: 1,
         onProgress: function () {
-          var chart = this;
-          var ctx = chart.ctx;
-          ctx.textAlign = "top";
+          var chart = this
+          var ctx = chart.ctx
+          ctx.textAlign = 'top'
           // ctx.textBaseline = "middle";
-          ctx.font = "13px Arial";
+          ctx.font = '13px Arial'
           this.data.datasets.forEach(function (dataset, i) {
-            var meta = chart.getDatasetMeta(i);
+            var meta = chart.getDatasetMeta(i)
             meta.data.forEach(function (bar, index) {
-              var data = dataset.data[index];
-              ctx.fillText(data, bar.x + 5, bar.y);
-            });
-          });
-        },
-      },
-    },
-  });
+              var data = dataset.data[index]
+              ctx.fillText(data, bar.x + 5, bar.y)
+            })
+          })
+        }
+      }
+    }
+  })
 }
 
-function rejectedReasonsGraph() {
-  var value = $("#myBarGraph").data("target");
-  var cData = value;
-  var ctx = $("#myBarGraph");
+function rejectedReasonsGraph () {
+  var value = $('#myBarGraph').data('target')
+  var cData = value
+  var ctx = $('#myBarGraph')
   var data = {
     labels: cData.reason,
     datasets: [
       {
         label: [],
         data: cData.Applicationcounts,
-        backgroundColor: ["rgba(52, 144, 220)"],
-        borderColor: ["rgba(52, 144, 220)"],
-        borderWidth: 10,
-      },
-    ],
-  };
+        backgroundColor: ['rgba(52, 144, 220)'],
+        borderColor: ['rgba(52, 144, 220)'],
+        borderWidth: 10
+      }
+    ]
+  }
   var myBar = new Chart(ctx, {
-    type: "bar",
+    type: 'bar',
     data: data,
     options: {
       tooltip: {
         enabled: true,
         callbacks: {
           label: function (tooltipItem) {
-            return tooltipItem.dataset.data;
-          },
-        },
+            return tooltipItem.dataset.data
+          }
+        }
       },
-      indexAxis: "y",
+      indexAxis: 'y',
       scales: {
         x: {
           min: 0,
           max: 100,
           ticks: {
-            stepSize: 5,
-          },
-        },
+            stepSize: 5
+          }
+        }
       },
       plugins: {
         legend: {
           labels: {
-            boxWidth: 0,
-          },
-        },
+            boxWidth: 0
+          }
+        }
       },
       hover: {
-        mode: false,
+        mode: false
       },
       animation: {
         duration: 1,
         onProgress: function () {
-          var chart = this;
-          var ctx = chart.ctx;
-          ctx.textAlign = "top";
-          ctx.textBaseline = "middle";
-          ctx.font = "13px Arial";
+          var chart = this
+          var ctx = chart.ctx
+          ctx.textAlign = 'top'
+          ctx.textBaseline = 'middle'
+          ctx.font = '13px Arial'
           this.data.datasets.forEach(function (dataset, i) {
-            var meta = chart.getDatasetMeta(i);
+            var meta = chart.getDatasetMeta(i)
             meta.data.forEach(function (bar, index) {
-              var data = dataset.data[index];
-              ctx.fillText(data, bar.x + 5, bar.y);
-            });
-          });
-        },
-      },
-    },
-  });
+              var data = dataset.data[index]
+              ctx.fillText(data, bar.x + 5, bar.y)
+            })
+          })
+        }
+      }
+    }
+  })
 }
 
 $(function () {
-  $(".reject-reason").on("click", function () {
-    let reasonCheckboxInput = $(this);
+  $('.reject-reason').on('click', function () {
+    let reasonCheckboxInput = $(this)
     let reasonCommentInput = reasonCheckboxInput
-      .closest(".rejection-reason-block")
-      .find('input[type="text"]');
-    if (reasonCheckboxInput.is(":checked")) {
-      reasonCommentInput.show().focus();
+      .closest('.rejection-reason-block')
+      .find('input[type="text"]')
+    if (reasonCheckboxInput.is(':checked')) {
+      reasonCommentInput.show().focus()
     } else {
-      reasonCommentInput.hide();
+      reasonCommentInput.hide()
     }
-  });
-});
+  })
+})
 
-$("#job_start_date").on("change", function () {
-  let startDate = $("#job_start_date").val();
-  $("#job_end_date").attr("min", startDate);
-  $(".status").on("change", function () {
-    $("#spinner").removeClass("d-none");
+$('#job_start_date').on('change', function () {
+  let startDate = $('#job_start_date').val()
+  $('#job_end_date').attr('min', startDate)
+  $('.status').on('change', function () {
+    $('#spinner').removeClass('d-none')
     if (this.checked) {
       $.ajax({
-        url: "completed/change-status/" + this.dataset.id,
-        method: "GET",
+        url: 'completed/change-status/' + this.dataset.id,
+        method: 'GET',
         success: function (res) {
-          location.reload(true);
+          location.reload(true)
         },
         error: function (err) {
-          alert("there is some problem");
+          alert('there is some problem')
         },
         complete: function (data) {
-          $("#spinner").addClass("d-none");
+          $('#spinner').addClass('d-none')
         }
-      });
+      })
     }
-  });
-});
+  })
+})
 
-$(".pending").on("change", function () {
-  $("#completeSpinner").removeClass("d-none");
+$('.pending').on('change', function () {
+  $('#completeSpinner').removeClass('d-none')
   $.ajax({
-    url: "pending/" + this.dataset.id,
-    method: "GET",
+    url: 'pending/' + this.dataset.id,
+    method: 'GET',
     success: function (res) {
-      location.reload(true);
+      location.reload(true)
     },
     error: function (err) {
-      alert("there is some problem");
+      alert('there is some problem')
     },
     complete: function (data) {
-      $("#completeSpinner").addClass("d-none");
+      $('#completeSpinner').addClass('d-none')
     }
-  });
-});
+  })
+})
 
 $(document).ready(function () {
-  $("#requisitionModal").on("hidden.bs.modal", function () {
-    $(this).find("form").trigger("reset");
-  });
-  $("#requisitionForm").on("submit", function (e) {
-    e.preventDefault();
-    $("#formSpinner").removeClass("d-none");
-    let form = $("#requisitionForm");
+  $('#requisitionModal').on('hidden.bs.modal', function () {
+    $(this)
+      .find('form')
+      .trigger('reset')
+  })
+  $('#requisitionForm').on('submit', function (e) {
+    e.preventDefault()
+    $('#formSpinner').removeClass('d-none')
+    let form = $('#requisitionForm')
 
     $.ajax({
-      type: form.attr("method"),
-      url: form.attr("action"),
+      type: form.attr('method'),
+      url: form.attr('action'),
       data: form.serialize(),
       success: function (response) {
-        $("#requisitionModal").modal("hide");
-        $("#successMessage").toggleClass("d-none");
-        $("#successMessage").fadeToggle(4000);
+        $('#requisitionModal').modal('hide')
+        $('#successMessage').toggleClass('d-none')
+        $('#successMessage').fadeToggle(4000)
       },
       error: function (response) {
-        alert("there is some problem");
+        alert('there is some problem')
       },
       complete: function (response) {
-        $("#formSpinner").addClass("d-none");
+        $('#formSpinner').addClass('d-none')
       }
-    });
-  });
-});
+    })
+  })
+})
 
+$('#job_start_date').on('change', function () {
+  let startDate = $('#job_start_date').val()
+  $('#job_end_date').attr('min', startDate)
+})
 
-$("#job_start_date").on("change", function () {
-  let startDate = $("#job_start_date").val();
-  $("#job_end_date").attr("min", startDate);
-});
-
-$("#job_end_date").on("change", function () {
-  let endDate = $("#job_end_date").val();
-  $("#job_start_date").attr("max", endDate);
-});
+$('#job_end_date').on('change', function () {
+  let endDate = $('#job_end_date').val()
+  $('#job_start_date').attr('max', endDate)
+})
 
 $(document).ready(function () {
-  var multipleCancelButton = new Choices("#choices-multiple-remove-button", {
+  var multipleCancelButton = new Choices('#choices-multiple-remove-button', {
     removeItemButton: true,
     maxItemCount: 9,
     searchResultLimit: 9,
-    renderChoiceLimit: 9,
-  });
-});
+    renderChoiceLimit: 9
+  })
+})
 
 /*
  * HR Module JS code end
  */
 
 // fix for tinymce and bootstrap modal
-$(document).on("focusin", function (e) {
-  if ($(event.target).closest(".mce-window").length) {
-    e.stopImmediatePropagation();
+$(document).on('focusin', function (e) {
+  if ($(event.target).closest('.mce-window').length) {
+    e.stopImmediatePropagation()
   }
-});
+})
 
 $(document).ready(function () {
-  $("#holdSendMailToApplicant").on("click", function (event) {
-    var $optionContainer = $("#optionContainer");
-    if ($(this).is(":checked")) {
-      $optionContainer.removeClass("d-none");
+  $('#holdSendMailToApplicant').on('click', function (event) {
+    var $optionContainer = $('#optionContainer')
+    if ($(this).is(':checked')) {
+      $optionContainer.removeClass('d-none')
     } else {
-      $optionContainer.addClass("d-none");
+      $optionContainer.addClass('d-none')
     }
-  });
-});
+  })
+})
 
-$("#editform").on("submit", function (e) {
-  e.preventDefault();
-  let form = $("#editform");
-  let button = $("#editBT");
+$('#editform').on('submit', function (e) {
+  e.preventDefault()
+  let form = $('#editform')
+  let button = $('#editBT')
 
   $.ajax({
-    url: form.attr("action"),
-    type: form.attr("method"),
+    url: form.attr('action'),
+    type: form.attr('method'),
     data: form.serialize(),
     success: function (response) {
-      $("#edit").modal("hide");
-      $("#edit").on("hidden.bs.modal", function (e) {
-        $("#successMessage").toggleClass("d-none");
-        $("#successMessage").fadeToggle(5000);
-      });
+      $('#edit').modal('hide')
+      $('#edit').on('hidden.bs.modal', function (e) {
+        $('#successMessage').toggleClass('d-none')
+        $('#successMessage').fadeToggle(5000)
+      })
     },
     error: function (response) {
-      $("#profile-details-error").removeClass("d-none");
-      $("#successMessage").addClass("d-none");
-      let errors = response.responseJSON.errors;
-      $(".profile-details-error").empty();
+      $('#profile-details-error').removeClass('d-none')
+      $('#successMessage').addClass('d-none')
+      let errors = response.responseJSON.errors
+      $('.profile-details-error').empty()
       for (let error in errors) {
-        $(".profile-details-error").append(
-          "<li class='text-danger ml-2'>" + errors[error] + "</li>"
-        );
+        $('.profile-details-error').append(
+          "<li class='text-danger ml-2'>" + errors[error] + '</li>'
+        )
       }
-    },
-  });
-});
+    }
+  })
+})
 
-$("#updateEmail").on("click", function () {
+$('#updateEmail').on('click', function () {
   let formData = {
-    location: $("#location").val(),
-    date: $("#date").val(),
-    timing: $("#timing").val(),
-    applicant_name: $("#applicantName").text(),
-  };
-  var originUrl = window.location.origin;
+    location: $('#location').val(),
+    date: $('#date').val(),
+    timing: $('#timing').val(),
+    applicant_name: $('#applicantName').text()
+  }
+  var originUrl = window.location.origin
   $.ajax({
-    url: originUrl + "/hr/recruitment/teaminteraction",
-    type: "POST",
+    url: originUrl + '/hr/recruitment/teaminteraction',
+    type: 'POST',
     data: formData,
     success: function (response) {
-      $("#InteractionError").addClass("d-none");
-      $("#confirmMailToApplicantSubject").val(response.subject);
+      $('#InteractionError').addClass('d-none')
+      $('#confirmMailToApplicantSubject').val(response.subject)
       tinymce
-        .get("confirmMailToApplicantBody")
-        .setContent(response.body, { format: "html" });
-      $("#interactionsuccess").toggleClass("d-none");
-      $("#interactionsuccess").fadeToggle(6000);
-      $("#confirmMailToApplicantBlock").removeClass("d-none");
-      var toggleIcon = $("#previewMailToApplicant").data("toggle-icon");
-      if (toggleIcon && !$(".fa-eye-slash ").hasClass("d-none")) {
-        $(".toggle-icon").toggleClass("d-none");
+        .get('confirmMailToApplicantBody')
+        .setContent(response.body, { format: 'html' })
+      $('#interactionsuccess').toggleClass('d-none')
+      $('#interactionsuccess').fadeToggle(6000)
+      $('#confirmMailToApplicantBlock').removeClass('d-none')
+      var toggleIcon = $('#previewMailToApplicant').data('toggle-icon')
+      if (toggleIcon && !$('.fa-eye-slash ').hasClass('d-none')) {
+        $('.toggle-icon').toggleClass('d-none')
       }
     },
     error: function (response) {
-      $("#InteractionError").removeClass("d-none");
-      let errors = response.responseJSON.errors;
-      $("#errors").empty();
+      $('#InteractionError').removeClass('d-none')
+      let errors = response.responseJSON.errors
+      $('#errors').empty()
       for (let error in errors) {
-        $("#errors").append(
-          "<li class='text-danger ml-2'>" + errors[error] + "</li>"
-        );
+        $('#errors').append(
+          "<li class='text-danger ml-2'>" + errors[error] + '</li>'
+        )
       }
-      $("#confirmMailToApplicantBlock").addClass("d-none");
-    },
-  });
-});
-$("#interactionErrorModalCloseBtn").click(function () {
-  $("#InteractionError").toggleClass("d-none");
-});
+      $('#confirmMailToApplicantBlock').addClass('d-none')
+    }
+  })
+})
+$('#interactionErrorModalCloseBtn').click(function () {
+  $('#InteractionError').toggleClass('d-none')
+})
 
-$(".opt").on("click", function () {
+$('.opt').on('click', function () {
   let formData = {
-    setting_key_subject: $(this).data("key-subject"),
-    setting_key_body: $(this).data("key-body"),
-    applicant_name: $("#applicantName").text(),
-    job_title: $("#jobTitle").text(),
-  };
+    setting_key_subject: $(this).data('key-subject'),
+    setting_key_body: $(this).data('key-body'),
+    applicant_name: $('#applicantName').text(),
+    job_title: $('#jobTitle').text()
+  }
 
-  var originUrl = window.location.origin;
+  var originUrl = window.location.origin
   $.ajax({
-    url: originUrl + "/hr/recruitment/onHoldEmail",
-    type: "GET",
+    url: originUrl + '/hr/recruitment/onHoldEmail',
+    type: 'GET',
     data: formData,
-    contentType: "application/json",
+    contentType: 'application/json',
     success: function (response) {
-      $("#option1subject").val(response.subject);
-      tinymce.get("option1body").setContent(response.body, { format: "html" });
-    },
-  });
+      $('#option1subject').val(response.subject)
+      tinymce.get('option1body').setContent(response.body, { format: 'html' })
+    }
+  })
 
-  var originUrl = window.location.origin;
+  var originUrl = window.location.origin
   $.ajax({
-    url: originUrl + "/hr/recruitment/onHoldEmail",
-    type: "GET",
+    url: originUrl + '/hr/recruitment/onHoldEmail',
+    type: 'GET',
     data: formData,
-    contentType: "application/json",
+    contentType: 'application/json',
     success: function (response) {
-      $("#option2subject").val(response.subject);
-      tinymce.get("option2body").setContent(response.body, { format: "html" });
-    },
-  });
-});
+      $('#option2subject').val(response.subject)
+      tinymce.get('option2body').setContent(response.body, { format: 'html' })
+    }
+  })
+})
 
 /**
  * Operations
  *
  */
 $(document).ready(function () {
-  $(".deletebtn").on("click", function () {
-    $("#officelocationDeleteModal").modal("show");
-    var id = $(this).data("id");
+  $('.deletebtn').on('click', function () {
+    $('#officelocationDeleteModal').modal('show')
+    var id = $(this).data('id')
 
-    $("#delete_id").val(id);
-  });
+    $('#delete_id').val(id)
+  })
 
-  $(document).on("click", "#deleteLocationBtn", function (e) {
-    e.preventDefault();
+  $(document).on('click', '#deleteLocationBtn', function (e) {
+    e.preventDefault()
 
-    var id = $("#delete_id").val();
-
-    $.ajax({
-      type: "DELETE",
-      url: "/officelocation/" + id,
-      success: function (response) {
-        $("#officelocationDeleteModal").modal("hide");
-        alert("data deleted");
-      },
-      error: function (error) {
-        alert("data not deleted");
-      },
-    });
-  });
-});
-
-$(document).ready(function () {
-  $(".editbtn").on("click", function () {
-    $("#officelocationEditModal").modal("show");
-
-    var center_head = $(this).data("center_head");
-    var location = $(this).data("location");
-    var capacity = $(this).data("capacity");
-    var id = $(this).data("id");
-
-    $("#center_head").val(center_head);
-    $("#location").val(location);
-    $("#capacity").val(capacity);
-    $("#id").val(id);
-  });
-
-  $("#editformID").on("click", "#editLocationBtn", function (e) {
-    e.preventDefault();
-    var id = $("#center_head").val();
-    var id = $("#location").val();
-    var id = $("#capacity").val();
-    var id = $("#id").val();
+    var id = $('#delete_id').val()
 
     $.ajax({
-      type: "PUT",
-      url: "/officelocation/" + id,
-      data: $("#editformID").serialize(),
+      type: 'DELETE',
+      url: '/officelocation/' + id,
       success: function (response) {
-        $("#officelocationEditModal").modal("hide");
-        alert("data updated");
+        $('#officelocationDeleteModal').modal('hide')
+        alert('data deleted')
       },
       error: function (error) {
-        alert("data not updated");
-      },
-    });
-  });
-});
+        alert('data not deleted')
+      }
+    })
+  })
+})
 
 $(document).ready(function () {
-  $("#addform").on("submit", function (e) {
-    e.preventDefault();
+  $('.editbtn').on('click', function () {
+    $('#officelocationEditModal').modal('show')
+
+    var center_head = $(this).data('center_head')
+    var location = $(this).data('location')
+    var capacity = $(this).data('capacity')
+    var id = $(this).data('id')
+
+    $('#center_head').val(center_head)
+    $('#location').val(location)
+    $('#capacity').val(capacity)
+    $('#id').val(id)
+  })
+
+  $('#editformID').on('click', '#editLocationBtn', function (e) {
+    e.preventDefault()
+    var id = $('#center_head').val()
+    var id = $('#location').val()
+    var id = $('#capacity').val()
+    var id = $('#id').val()
+
+    $.ajax({
+      type: 'PUT',
+      url: '/officelocation/' + id,
+      data: $('#editformID').serialize(),
+      success: function (response) {
+        $('#officelocationEditModal').modal('hide')
+        alert('data updated')
+      },
+      error: function (error) {
+        alert('data not updated')
+      }
+    })
+  })
+})
+
+$(document).ready(function () {
+  $('#addform').on('submit', function (e) {
+    e.preventDefault()
 
     var data = {
-      center_head: $("#center_head").val(),
-      location: $("#location").val(),
-      capacity: $("#capacity").val(),
-    };
+      center_head: $('#center_head').val(),
+      location: $('#location').val(),
+      capacity: $('#capacity').val()
+    }
 
     $.ajax({
-      type: "POST",
-      url: "/officelocation",
-      data: $("#addform").serialize(),
+      type: 'POST',
+      url: '/officelocation',
+      data: $('#addform').serialize(),
       success: function (response) {
-        $("#officelocationAddModal").modal("hide");
-        alert("data saved");
+        $('#officelocationAddModal').modal('hide')
+        alert('data saved')
       },
       error: function (error) {
-        alert("data not saved");
-      },
-    });
-  });
-});
+        alert('data not saved')
+      }
+    })
+  })
+})
