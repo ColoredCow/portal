@@ -9,10 +9,10 @@ use Illuminate\Routing\Controller;
 
 class DesignationController extends Controller
 {
-
     public function index()
     {
         $designations = HrJobDesignation::all();
+
         return view('hr.designations.index')->with([
             'designations' => $designations,
         ]);
@@ -27,14 +27,15 @@ class DesignationController extends Controller
 
         return redirect()->back();
     }
-  
-    public function edit(HrJobDesignation $request, $id )
+
+    public function edit(HrJobDesignation $request, $id)
     {
         $HrJobDesignation = $request->find($id);
+
         return redirect()->back();
     }
 
-    public function destroy(HrJobDesignation $request, $id )
+    public function destroy(HrJobDesignation $request, $id)
     {
         $HrJobDesignation = $request->find($id);
         $HrJobDesignation->delete();

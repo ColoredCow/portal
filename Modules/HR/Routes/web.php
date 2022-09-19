@@ -124,7 +124,7 @@ Route::middleware('auth')->group(function () {
         ->names([
             'index' => 'requisition',
             'show' => 'requisition.show',
-        ]);  
+        ]);
         Route::post('store', 'RequisitionController@store')->name('requisition.store');
         Route::get('/completed/change-status/{jobRequisition}', 'RequisitionController@storecompleted');
         Route::get('/pending/{jobRequisition}', 'RequisitionController@storePending');
