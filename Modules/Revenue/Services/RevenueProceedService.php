@@ -11,7 +11,6 @@ class RevenueProceedService
     public function index($filters)
     {
         $filters = [
-            'month' => $filters['month'] ?? null,
             'year' => $filters['year'] ?? null,
         ];
 
