@@ -52,7 +52,14 @@
                     <div class="form-row">
                         <div class="form-group col-md-5">
                             <label for="category" class="field-required">Category</label>
-                            <input type="text" class="form-control" name="category" id="category" required>
+                            <select class="form-control" name="category">
+                                <option value="">Select Category</option>
+                                @foreach (config('expense.categories') as $key => $value)
+                                    <option value="{{ $key }}">{{ $value }}</option>
+                                @endforeach
+
+                            </select>
+
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
                             <label for="location" class="field-required">Location</label>

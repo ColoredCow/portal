@@ -6,8 +6,9 @@
         <div class="d-flex justify-content-between mb-2">
             <h4 class="mb-1 pb-1 fz-28">Expenses</h4>
             <span>
-                <a href="{{ route('expense.recurring.index') }}" class="btn btn-info text-white">Setup Recurring Expense</a>
                 <a href="{{ route('expense.create') }}" class="btn btn-success text-white">Add new expense</a>
+                <a href="{{ route('expense.recurring.index') }}" class="btn btn-info text-white">Setup Recurring Expense</a>
+
             </span>
         </div>
         <table class="table table-striped table-bordered">
