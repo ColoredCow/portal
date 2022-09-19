@@ -12,6 +12,8 @@
                 @can('hr_employees.view')
                     <a class="dropdown-item" href="{{ route('employees') }}">Employees</a>
                 @endcan
+                <a class="dropdown-item" href="{{ route('designation') }}">Designations</a>
+
                 <a class="dropdown-item" href="{{ route('requisition') }}">Resource Requisition</a>
                 @can('hr_volunteers_applications.view')
                     <a class="dropdown-item" href="{{ route('applications.volunteer.index') }}">Volunteers</a>

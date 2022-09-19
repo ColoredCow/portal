@@ -23,8 +23,7 @@
             <h2 class="mb-3">New Opportunity</h2>
         </div>
         <div>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#domainformModal"> Add domain</button>&nbsp;
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#designationformModal"> Add Desingnation</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#domainformModal"> Add domain</button>
         </div>
     </div>
     <div class="modal fade" id="domainformModal" tabindex="-1" role="dialog" aria-labelledby="domainformModalLabel" aria-hidden="true">
@@ -50,34 +49,7 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="modal fade" id="designationformModal" tabindex="-1" role="dialog" aria-labelledby="designationformModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="designationformModalLabel">Designation Name </h5> 
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <div class="spinner-border text-primary d-none" id="designationFormSpinner"></div>
-                </div>
-                <div class="designation modal-body">
-                    <form action="{{ route('hr-job-designation.storeJobDesignation')}}" method="POST" id="designationForm" >
-                        @csrf
-                        <div class="form-group">
-                            <label for="designationfield">name</label><strong class="text-danger">*</strong></label>
-                            <input type="text" name="name" class="form-control"  id="name" aria-describedby="Help" placeholder="name"> 
-                            <div class="d-none text-danger" name="error" id="designationerror"></div>
-                        </div>        
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="designation">Save changes</button>  
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>    
+    </div>  
     <form action="{{ $formAction }}" method="POST">
         @csrf
         <div class="card mb-3">

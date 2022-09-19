@@ -15,9 +15,11 @@ class HrDesignationTableSeeder extends Seeder
     public function run()
     {
         foreach (config('hr.opportunities.designation') as $slug => $designation) {
-            HrJobDesignation::updateOrCreate([
+            HrJobDesignation::updateOrCreate(
+                [
                     'slug' => $slug,
-                ], [
+                ],
+                [
                     'designation' => $designation,
                 ]
             );

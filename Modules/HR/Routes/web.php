@@ -85,7 +85,6 @@ Route::middleware('auth')->group(function () {
             Route::get('internship/{application}/offer-letter', 'InternshipApplicationController@viewOfferLetter')->name('applications.internship.offer-letter');
 
             Route::post('/store', 'JobController@storeJobdomain')->name('hr-job-domains.storeJobdomain');
-            Route::post('/store-designation', 'JobController@storeDesignation')->name('hr-job-designation.storeJobDesignation');
 
             Route::resource('job', 'JobApplicationController')
                 ->only(['index', 'edit', 'update', 'store'])
@@ -125,11 +124,20 @@ Route::middleware('auth')->group(function () {
         ->names([
             'index' => 'requisition',
             'show' => 'requisition.show',
-        ]);
+        ]);  
         Route::post('store', 'RequisitionController@store')->name('requisition.store');
         Route::get('/completed/change-status/{jobRequisition}', 'RequisitionController@storecompleted');
         Route::get('/pending/{jobRequisition}', 'RequisitionController@storePending');
         Route::get('/complete', 'RequisitionController@showCompletedRequisition')->name('requisition.complete');
+
+        Route::resource('designation', 'DesignationController')
+        ->only(['index', 'show'])
+        ->names([
+            'index' => 'designation',
+        ]);
+        Route::post('/delete/{id}', 'DesignationController@destroy')->name('designation.delete');
+        Route::get('/edit/{id}', 'DesignationController@edit')->name('designation.edit');
+        Route::post('/store', 'DesignationController@storeDesignation')->name('hr-job-designation.storeJobDesignation');
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');

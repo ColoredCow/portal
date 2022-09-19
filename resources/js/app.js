@@ -261,6 +261,7 @@ $(document).ready(function () {
 				$("#successMessage").fadeToggle(3000);
 			},
 			error: function (response) {
+				$("#designationFormSpinner").addClass("d-none");
 				if (response.responseJSON.errors.name) {
 					let text = response.responseJSON.errors.name[0];
 					$("#designationerror").html(text).removeClass("d-none");
