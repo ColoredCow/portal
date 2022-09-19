@@ -10,6 +10,7 @@ class Media extends Model
 {
     use HasFactory;
     protected $table = 'media';
+    public $timestamps = false;
     protected $fillable = [
         'event_name',
         'img_url',

@@ -23,26 +23,14 @@ class MediaFactory extends Factory
     {
         return [
             \DB::table('media')->insert([
-                0 => [
-                    'id' => 1,
-                    'event_name' => 'new1',
-                    'img_url' => 'img.jpg',
-                    'uploaded_by' => 1,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                    'deleted_at' => now(),
-                    'description' => 'new img',
-                ],
-                1 => [
-                    'id' => 2,
-                    'event_name' => 'new2',
-                    'img_url' => 'img.jpg',
-                    'uploaded_by' => 1,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                    'deleted_at' => now(),
-                    'description' => 'new img',
-                ],
+                'id' => null,
+                'event_name' => 'new1',
+                'img_url' => 'img.jpg',
+                'uploaded_by' => 1,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'description' => 'new img',
             ])
         ];
     }
