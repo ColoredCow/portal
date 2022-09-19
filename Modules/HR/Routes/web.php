@@ -90,6 +90,7 @@ Route::middleware('auth')->group(function () {
                 ->only(['index', 'edit', 'update', 'store'])
                 ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update', 'store' => 'applications.job.store']);
             Route::get('{application}/get-offer-letter', 'JobApplicationController@getOfferLetter')->name('applications.getOfferLetter');
+            Route::get('{application}/save-offer-letter', 'JobApplicationController@saveOfferLetter');
             Route::post('{application}/sendmail', 'JobApplicationController@sendApplicationMail')->name('application.custom-email');
             Route::post('/teaminteraction', 'JobApplicationController@generateTeamInteractionEmail');
             Route::get('/onHoldEmail', 'JobApplicationController@generateOnHoldEmail');
@@ -133,4 +134,4 @@ Route::middleware('auth')->group(function () {
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');
 Route::get('/viewForm/{id}/{email}', 'Recruitment\ApplicantController@viewForm');
-Route::post('/store', 'Recruitment\ApplicantController@storeDetails')->name('hr.applicant.store-details');
+Route::post('/store', 'Recruitment\ApplicantController@storeApprovedApplicantDetails')->name('hr.applicant.store-approved-applicants-details');

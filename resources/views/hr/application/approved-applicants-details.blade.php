@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form action="{{route('hr.applicant.store-details')}}" enctype="multipart/form-data" method="POST">
+<form action="{{route('hr.applicant.store-approved-applicants-details')}}" enctype="multipart/form-data" method="POST">
     @csrf
     <div class="container col-sm-6">
         <div class="card">
@@ -84,7 +84,7 @@
                             <div class="custom-file mb-3">
                                 <input type="file" name="head_shot_image" class="custom-file-input"
                                     required="required">
-                                <label for="customFile0" class="custom-file-label overflow-hidden w-300">Add File</label>
+                                <label for="customFile" class="custom-file-label overflow-hidden w-300">Add File</label>
                             </div>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                             <div class="custom-file mb-3">
                                 <input type="file" name="aadhar_card_scanned" class="custom-file-input"
                                     required="required">
-                                <label for="customFile0" class="custom-file-label overflow-hidden w-300">Add File</label>
+                                <label for="customFile" class="custom-file-label overflow-hidden w-300">Add File</label>
                             </div>
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                             <div class="custom-file mb-3">
                                 <input type="file" name="scanned_copy_pan_card" class="custom-file-input"
                                     required="required">
-                                <label for="customFile0" class="custom-file-label overflow-hidden w-300 mt-2">Add File</label>
+                                <label for="customFile" class="custom-file-label overflow-hidden w-300 mt-2">Add File</label>
                             </div>
                         </div>
                     </div>
@@ -151,7 +151,7 @@
                         <div class="d-flex">
                             <div class="custom-file mb-3">
                                 <input type="file" name="passbook_first_page_img" class="custom-file-input" required="required">
-                                <label for="customFile0" class="custom-file-label overflow-hidden w-300 mt-1">Add File</label>
+                                <label for="customFile" class="custom-file-label overflow-hidden w-300 mt-1">Add File</label>
                             </div>
                         </div>
                     </div>

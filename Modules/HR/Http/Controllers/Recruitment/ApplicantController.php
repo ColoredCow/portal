@@ -108,34 +108,12 @@ class ApplicantController extends Controller
     {
         $hr_applicant_id = $id;
 
-        return view('hr.application.applicant-details')->with(['hr_applicant_id' => $hr_applicant_id]);
+        return view('hr.application.approved-applicants-details')->with(['hr_applicant_id' => $hr_applicant_id]);
     }
 
-    public function storeDetails(ApplicantMetaRequest $request)
+    public function storeApprovedApplicantDetails(ApplicantMetaRequest $request)
     {
-        $keyConfigs = (config('hr.applicant_form-details'));
-        $uploadConfigs = (config('hr.applicant_upload_details'));
-
-        foreach ($keyConfigs as $key=>$label) {
-            ApplicantMeta::create([
-                'hr_applicant_id' => $request->get('hr_applicant_id'),
-                'key' => $label,
-                'value' => $request->get($key)
-            ]);
-        }
-
-        foreach ($uploadConfigs as $key=>$label) {
-            if ($request->file($key)) {
-                $file = $request->file($key);
-                $fileName = $key . $request->get('hr_applicant_id') . '.' . $file->extension();
-                $filepath = $file->move(storage_path('app/uploadedimages'), $fileName);
-                ApplicantMeta::create([
-                    'hr_applicant_id' => $request->get('hr_applicant_id'),
-                    'key' => $label,
-                    'value' => $filepath,
-                ]);
-            }
-        }
+        $this->service->store($request);
 
         return redirect()->back();
     }

@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="d-inline-block">
-                    <h5 class="modal-title" id="approved_application">Approve</h5>
+                    <h5 class="modal-title" id="approvedApplication">Approve</h5>
                     <h6 class="text-secondary">{{$application->applicant->name}} • {{$application->applicant->email}}</h6>
                 </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -19,7 +19,7 @@
                         </a>
                     </div>
                     @else
-                        <a href="{{ route('applications.getOfferLetter', $application) }}" class="btn btn-secondary px-4">Generate Offer Letter</a>
+                        <a value={{$application}}  class="btn btn-secondary px-4" id="offerLetter">Generate Offer Letter</a>
                     @endif
                 </div>
                 <div class="form-row mt-4">
@@ -30,7 +30,7 @@
                 </div>
                 <div class="form-row mt-4">
                     <div class="form-group col-md-12">
-                        <label for="body" class="field-required" id="bigbang">Body</label>
+                        <label for="body" class="field-required">Body</label>
                         <textarea name="body" id="body" rows="10" class="richeditor form-control" required="required">{{$approveMailTemplate['body']}}</textarea>
                     </div>
                 </div>

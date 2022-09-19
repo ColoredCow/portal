@@ -10,6 +10,9 @@ use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Application;
 use Modules\HR\Contracts\ApplicationServiceContract;
 use Modules\HR\Events\CustomMailTriggeredForApplication;
+use Modules\HR\Http\Requests\ApplicantMetaRequest;
+use Modules\HR\Entities\ApplicantMeta;
+
 
 class ApplicationService implements ApplicationServiceContract
 {
@@ -92,5 +95,32 @@ class ApplicationService implements ApplicationServiceContract
         // call event that triggers send custom application mail
         $data['mail_sender_name'] = $data['mail_sender_name'] ?? auth()->user()->name;
         event(new CustomMailTriggeredForApplication($application, $data));
+    }
+
+    public function store(ApplicantMetaRequest $request)
+    {
+        $keyConfigs = (config('hr.applicant_form-details'));
+        $uploadConfigs = (config('hr.applicant_upload_details'));
+
+        foreach ($keyConfigs as $key=>$label) {
+            ApplicantMeta::create([
+                'hr_applicant_id' => $request->get('hr_applicant_id'),
+                'key' => $label,
+                'value' => $request->get($key)
+            ]);
+        }
+
+        foreach ($uploadConfigs as $key=>$label) {
+            if ($request->file($key)) {
+                $file = $request->file($key);
+                $fileName = $key . $request->get('hr_applicant_id') . '.' . $file->extension();
+                $filepath = $file->move(storage_path('app/uploadedimages'), $fileName);
+                ApplicantMeta::create([
+                    'hr_applicant_id' => $request->get('hr_applicant_id'),
+                    'key' => $label,
+                    'value' => $filepath,
+                ]);
+            }
+        }
     }
 }

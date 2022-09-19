@@ -24,6 +24,7 @@ use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
 use Modules\HR\Http\Requests\TeamInteractionRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 abstract class ApplicationController extends Controller
 {
@@ -217,6 +218,18 @@ abstract class ApplicationController extends Controller
             'subject' => $subject->setting_value,
             'body' => $body->setting_value,
         ]);
+    }
+
+    public function saveOfferLetter(Application $application)
+    {
+        $offer_letter_body = Setting::getOfferLetterTemplate()['body'];
+        $job = $application->job;
+        $applicant = $application->applicant;
+        $pdf = Pdf::loadView('hr.application.draft-joining-letter', compact('applicant', 'job', 'offer_letter_body'));
+        $fileName = FileHelper::getOfferLetterFileName($pdf, $applicant);
+        $directory = 'app/' . config('constants.hr.offer-letters-dir');
+        $fullPath = storage_path($directory . '/' . $fileName);
+        $pdf->save($fullPath);
     }
 
     public static function getOfferLetter(Application $application, Request $request)

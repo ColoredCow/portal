@@ -539,7 +539,7 @@ function initRicheditor() {
 
 initRicheditor();
 
-$("body").on("click", "#take_action", function () {
+$("body").on("click", "#takeAction", function () {
 	initRicheditor();
 });
 
@@ -1832,6 +1832,23 @@ $(document).ready(function () {
 */
 
 // fix for tinymce and bootstrap modal
+
+$("body").on("click", "#offerLetter", function (e) {
+	e.preventDefault();
+	var originUrl = window.location.origin;
+	// let applicationid= applicationid;
+	$.ajax({
+		url: originUrl + `/hr/recruitment/${applicationid}/save-offer-letter`,
+		type: 'GET',
+		success: function (response) {
+			alert("success");
+		},
+		error: function () {
+			alert('error');
+		}
+	});
+});
+
 $(document).on("focusin", function (e) {
 	if ($(event.target).closest(".mce-window").length) {
 		e.stopImmediatePropagation();
