@@ -49,7 +49,7 @@ class OfficeLocationController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return back();
+            return response()->json(['error'=>$validator->errors()->all()]);
         } else {
             OfficeLocation::create([
                 'center_head' => $request->center_head,
@@ -58,7 +58,7 @@ class OfficeLocationController extends Controller
             ]);
         }
 
-        return back();
+        return response()->json(['success' => 'success'], 200);
     }
 
     /**
@@ -106,7 +106,7 @@ class OfficeLocationController extends Controller
             $officelocation->save();
         }
 
-        return back();
+        return response()->json(['success' => 'success'], 200);
     }
 
     /**
