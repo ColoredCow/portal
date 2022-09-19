@@ -1,6 +1,7 @@
 <?php
 
 namespace Modules\Operations\Http\Controller;
+
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -110,7 +111,7 @@ class OfficeLocationController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param int $id
-     * 
+     *
      */
     public function destroy($id)
     {
