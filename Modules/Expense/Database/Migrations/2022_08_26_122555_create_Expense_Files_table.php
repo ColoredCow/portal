@@ -17,6 +17,11 @@ class CreateExpenseFilesTable extends Migration
             $table->bigIncrements('expense_id');
             $table->string('file_path');
             $table->string('file_type')->nullable();
+            $table->unsignedInteger('user_id');
+        });
+
+        Schema::table('expense_files', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

@@ -16,6 +16,5 @@ class Expense extends Model
         'paid_on',
         'category',
         'location',
-        'uploaded_by',
     ];
 }

@@ -22,13 +22,8 @@ class CreateExpenseTable extends Migration
             $table->string('paid_on')->nullable();
             $table->string('category');
             $table->string('location')->nullable();
-            $table->unsignedInteger('user_id');
             $table->string('deleted_at')->nullable();
             $table->timestamps();
-        });
-
-        Schema::table('expenses', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
