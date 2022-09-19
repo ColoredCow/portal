@@ -19,6 +19,6 @@
     "Report": true,
     "Expense": true,
     "Revenue": true,
-    "Operations": true
+    "Operations": true,
     "ProjectContract": true
 }
