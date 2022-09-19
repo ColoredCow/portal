@@ -1,7 +1,7 @@
 <?php
 
 namespace Modules\Operations\Http\Controller;
-
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -37,6 +37,7 @@ class OfficeLocationController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -62,6 +63,7 @@ class OfficeLocationController extends Controller
     /**
      * Show the specified resource.
      * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
@@ -81,6 +83,7 @@ class OfficeLocationController extends Controller
      * Update the specified resource in storage.
      * @param Request $request
      * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
@@ -107,6 +110,7 @@ class OfficeLocationController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param int $id
+     * 
      */
     public function destroy($id)
     {
