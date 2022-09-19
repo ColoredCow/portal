@@ -881,7 +881,7 @@ if (document.getElementById("books_listing")) {
     },
   });
   
-	const bookForm = new Vue({
+	const bookForms = new Vue({
 		el: "#books_listing",
 		data: {
 			books: document.getElementById("books_table").dataset.books
@@ -2144,7 +2144,6 @@ $(document).ready(function() {
     var id = $("#location").val();
     var id = $("#capacity").val();
     var id = $("#id").val();
-    console.log(id);
 
     $.ajax({
       type: "PUT",
@@ -2164,7 +2163,6 @@ $(document).ready(function() {
 $(document).ready(function() {
   $("#addform").on("submit", function(e) {
     e.preventDefault();
-    console.log($("#addform").serialize());
 
     var data = {
       center_head: $("#center_head").val(),
@@ -2177,10 +2175,8 @@ $(document).ready(function() {
       url: "/officelocation",
       data: $("#addform").serialize(),
       success: function(response) {
-        console.log(response);
-
         $("#officelocationAddModal").modal("hide");
-        if ("#saveform_errlist") alert("data saved");
+         alert("data saved");
       },
       error: function(error) {
         alert("data not saved");

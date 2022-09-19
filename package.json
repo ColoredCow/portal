@@ -36,6 +36,8 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "@babel/core": "^7.19.1",
+        "@babel/preset-env": "^7.19.1",
         "@cubejs-client/core": "^0.28.45",
         "@cubejs-client/vue": "^0.28.45",
         "axios": "^0.21.2",
