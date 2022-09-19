@@ -10,12 +10,6 @@ use Modules\Operations\Entities\OfficeLocation;
 
 class OfficeLocationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
-     *
-     */
     public function index()
     {
         $officelocation = OfficeLocation::all();
@@ -35,11 +29,6 @@ class OfficeLocationController extends Controller
         return view('operations::create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -61,11 +50,6 @@ class OfficeLocationController extends Controller
         return response()->json(['success' => 'success'], 200);
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function show($id)
     {
         return view('operations::show');
@@ -80,12 +64,6 @@ class OfficeLocationController extends Controller
         // return view('operations::edit');
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
