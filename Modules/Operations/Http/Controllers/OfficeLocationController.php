@@ -96,7 +96,7 @@ class OfficeLocationController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()->all()]);
+            return response($validator->errors()->all());
         } else {
             $officelocation = OfficeLocation::find($id);
             $officelocation->center_head = $request->input('center_head');
