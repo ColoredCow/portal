@@ -132,7 +132,7 @@ $(document).ready(() => {
 			updateClientProjects(form, client_id);
 		}
 	}
-	$('[data-toggle="tooltip"]').tooltip();
+	$("[data-toggle='tooltip']").tooltip();
 
 	$(".status-close").on("click", function () {
 		let wrapper = $(this).closest(".alert");
