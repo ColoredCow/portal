@@ -16,9 +16,9 @@ $("#modalEdit").on("show.bs.modal", function(e) {
 	editForm.find("input[name='amount']").val(revenueProceed.amount);
 	editForm.find("select[name='currency']").val(revenueProceed.currency);
 	editForm
-	.find("input[name='received_at']")
-	.val(revenueProceed.display_received_at);
-  editForm.find("textarea[name='notes']").val(revenueProceed.notes);
+		.find("input[name='received_at']")
+		.val(revenueProceed.display_received_at);
+	editForm.find("textarea[name='notes']").val(revenueProceed.notes);
 });
 $("body").on("click", "#deleteRevenue", function() {
 	alert("Are you sure?");
