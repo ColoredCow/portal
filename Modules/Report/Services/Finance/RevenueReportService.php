@@ -80,21 +80,7 @@ class RevenueReportService
 
     private function getParticularAmountForCommissionReceived(array $particular, Object $startDate, Object $endDate): array
     {
-        $revenues = RevenueProceed::where('category', 'commission_received')->where('received_at', '>', $startDate)->where('received_at', '<', $endDate)->get();
-        $totalAmount = 0;
-        $results = [];
-
-        foreach ($revenues as $revenue) {
-            $amount = $revenue->amount;
-            $year = substr($revenue->year, -2);
-            $month = sprintf('%02d', $revenue->month);
-            $dateKey = $month . '-' . $year;
-            $totalAmount += $amount;
-            $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
-        }
-        $results['total'] = $totalAmount;
-
-        return $results;
+        return $this->getAmountsForRevenueProceeds('commission_received', $startDate, $endDate);
     }
 
     private function getParticularAmountForCashBack(array $particular, Object $startDate, Object $endDate): array
