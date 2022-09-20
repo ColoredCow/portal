@@ -51,7 +51,7 @@ class RevenueReportService
 
         $results['total'] = $totalAmount;
 
-        return ['total' => 0];
+        return $results;
     }
 
     private function getParticularAmountForExport(array $particular, Object $startDate, Object $endDate): array
@@ -72,7 +72,7 @@ class RevenueReportService
 
         $results['total'] = $totalAmount;
 
-        return ['total' => 0];
+        return $results;
     }
 
     // ToDo:: Defining all the required particular functions below.
