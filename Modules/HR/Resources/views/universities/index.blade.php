@@ -38,11 +38,7 @@
                 <th>Contact Details</th>
                 <th>Actions</th>
             </tr>
-          
-               
-          
             @foreach($universities as $university)
-        
             <tr>
                 <td>
                     <a href="{{ route('universities.edit',$university) }}" class="font-weight-bold text-primary">{{$university->name}}</a>
