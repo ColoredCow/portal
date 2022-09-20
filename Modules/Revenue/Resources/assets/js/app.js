@@ -19,5 +19,5 @@ $("#modalEdit").on("show.bs.modal", function(e) {
 	editForm.find("textarea[name='notes']").val(revenueProceed.notes);
 });
 $("body").on("click", "#deleteRevenue", function() {
-  alert("Are you sure?");
+	alert("Are you sure?");
 });
