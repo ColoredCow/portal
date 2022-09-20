@@ -31,9 +31,9 @@
                     <td>{{ Str::headline( $revenueProceed->category)}}</td>
                     <td>{{ $revenueProceed->name }}</td>
                     <td>{{ $revenueProceed->amount }} {{ $revenueProceed->currency=='USD' ? '$' :  '₹'}} </td>
-                    <td>{{date("M", mktime(null, null, null, $revenueProceed->month))}},&nbsp;
+                    <td>{{ date("M", mktime(null, null, null, $revenueProceed->month))}},&nbsp;
                         {{ $revenueProceed->year}}</td>
-                    <td>{{ $revenueProceed->recieved_at }}</td>
+                    <td>{{ $revenueProceed->recieved_at->format('d-M-Y') }}</td>
                     <td>{{ $revenueProceed->notes }}</td>
                     <td>
                         @php

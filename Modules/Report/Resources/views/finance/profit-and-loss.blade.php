@@ -63,7 +63,7 @@
             $lastYear = $currentYear - 1;
             $currentYearVal = substr($currentYear, -2);
             $lastYearVal = substr($lastYear, -2);
-            
+
         @endphp
 
         <div>
@@ -75,6 +75,7 @@
                         <th>Total</th>
                         <th>Apr-{{ $lastYearVal }} </th>
                         <th>May-{{ $lastYearVal }}</th>
+                        @dd($lastYearVal)
                         <th>Jun-{{ $lastYearVal }}</th>
                         <th>Jul-{{ $lastYearVal }}</th>
                         <th>Aug-{{ $lastYearVal }}</th>

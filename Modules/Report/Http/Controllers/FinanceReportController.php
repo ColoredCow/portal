@@ -30,7 +30,7 @@ class FinanceReportController extends Controller
     public function profitAndLoss()
     {
         $this->authorize('finance_reports.view');
-        $currentYear = date('m') > 03 ? date('Y') + 1 : date('Y');
+        $currentYear = date('m') > 3 ? date('Y') + 1 : date('Y');
         $defaultFilters = [
             'transaction' => 'revenue',
             'year' => $currentYear,

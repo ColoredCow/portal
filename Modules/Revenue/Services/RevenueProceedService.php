@@ -19,7 +19,7 @@ class RevenueProceedService
 
         return [
             'revenueProceedData'=> $revenueProceeds,
-            'filters' => $filters,
+            'filters' => $filters, 
         ];
     }
 
