@@ -130,7 +130,6 @@
                       <th>Capacity</th>
                       <th>Action</th>
                     </tr>
-                    @dd($officelocations)
                     @foreach ($officelocations as $officelocation)    
                             <tr>
                                 <td>
