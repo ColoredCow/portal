@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Operations\Database\Seeders;
+namespace Modules\HR\Database\Seeders;
 
 use Faker\Factory as faker;
 use Illuminate\Database\Seeder;
