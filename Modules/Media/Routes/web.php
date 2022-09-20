@@ -25,4 +25,4 @@ Route::resource('media', 'MediaController')
         'edit' => 'media.edit',
         'destroy' => 'media.destroy',
 ]);
-Route::get('/search','MediaController@search');
+Route::get('/search', 'MediaController@search');
