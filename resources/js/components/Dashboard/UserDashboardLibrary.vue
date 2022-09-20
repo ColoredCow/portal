@@ -37,7 +37,7 @@
         <user-dashboard-read-books />
       </span>
       <span v-show="this.activeTile == 'recommend'">
-        Books recommend for you. COMING SOON
+        COMING SOON
       </span>
     </div>
   </div>
