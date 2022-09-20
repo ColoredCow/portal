@@ -15,7 +15,6 @@ class MediaController extends Controller
     /**
      * Display a listing of the resource.
      * @return Renderable
-     * @param Request $request
      */
     public function index()
     {
@@ -36,7 +35,6 @@ class MediaController extends Controller
         $validated = $request->validated();
         $path = 'public/media';
         $tags = explode(',', $request->tags);
-        // dd($tags);
         $imageName = time() . '.' . $request->file->extension();
 
         $request->file->storeAs(
@@ -127,7 +125,7 @@ class MediaController extends Controller
     public function search()
     {
         $search_text = $_GET['query'];
-        $media = Media::where('event_name', 'LIKE', '%'.$search_text.'%')->get();
+        $media = Media::where('event_name', 'LIKE', '%' . $search_text . '%')->get();
 
         return view('media::media.search', ['media' => $media]);
     }
