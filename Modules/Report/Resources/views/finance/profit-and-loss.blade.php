@@ -63,7 +63,6 @@
             $lastYear = $currentYear - 1;
             $currentYearVal = substr($currentYear, -2);
             $lastYearVal = substr($lastYear, -2);
-
         @endphp
 
         <div>

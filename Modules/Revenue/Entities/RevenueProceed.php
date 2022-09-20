@@ -12,10 +12,10 @@ class RevenueProceed extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'recieved_at' => 'date',
+        'received_at' => 'date',
     ];
 
-    protected $fillable = ['name', 'category', 'currency', 'amount', 'recieved_at', 'year', 'month', 'notes'];
+    protected $fillable = ['name', 'category', 'currency', 'amount', 'received_at', 'year', 'month', 'notes'];
 
     public function scopeApplyFilters($query, $filters)
     {

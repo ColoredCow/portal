@@ -32,7 +32,7 @@ class RevenueProceedService
         $revenueProceed->currency = $request['currency'];
         $revenueProceed->amount = $request['amount'];
         $revenueProceed->month = $request['month'];
-        $revenueProceed->recieved_at = $request['recieved_at'];
+        $revenueProceed->received_at = $request['received_at'];
         $revenueProceed->year = $request['year'];
         $revenueProceed->notes = $request['notes'];
         $revenueProceed->save();
@@ -50,7 +50,7 @@ class RevenueProceedService
         $revenueProceed->month = $request['month'];
         $revenueProceed->year = $request['year'];
         $revenueProceed->amount = $request['amount'];
-        $revenueProceed->recieved_at = $request['recieved_at'];
+        $revenueProceed->received_at = $request['received_at'];
         $revenueProceed->notes = $request['notes'];
         $revenueProceed->save();
 

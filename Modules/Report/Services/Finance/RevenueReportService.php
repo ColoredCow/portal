@@ -80,7 +80,7 @@ class RevenueReportService
 
     private function getParticularAmountForCommissionReceived(array $particular, Object $startDate, Object $endDate): array
     {
-        $revenues = RevenueProceed::where('category', 'commission_received')->where('recieved_at', '>', $startDate)->where('recieved_at', '<', $endDate)->get();
+        $revenues = RevenueProceed::where('category', 'commission_received')->where('received_at', '>', $startDate)->where('received_at', '<', $endDate)->get();
         $totalAmount = 0;
         $results = [];
 
@@ -99,64 +99,31 @@ class RevenueReportService
 
     private function getParticularAmountForCashBack(array $particular, Object $startDate, Object $endDate): array
     {
-        $revenues = RevenueProceed::where('category', 'cash_back')->where('recieved_at', '>', $startDate)->where('recieved_at', '<', $endDate)->get();
-        $totalAmount = 0;
-        $results = [];
-
-        foreach ($revenues as $revenue) {
-            $amount = $revenue->amount;
-            $year = substr($revenue->year, -2);
-            $month = sprintf('%02d', $revenue->month);
-            $dateKey = $month . '-' . $year;
-            $totalAmount += $amount;
-            $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
-        }
-        $results['total'] = $totalAmount;
-
-        return $results;
+        return $this->getAmountsForRevenueProceeds('cash_back', $startDate, $endDate);
     }
 
     private function getParticularAmountForDiscountReceived(array $particular, Object $startDate, Object $endDate): array
     {
-        $revenues = RevenueProceed::where('category', 'discount_received')->where('recieved_at', '>', $startDate)->where('recieved_at', '<', $endDate)->get();
-        $totalAmount = 0;
-        $results = [];
-
-        foreach ($revenues as $revenue) {
-            $amount = $revenue->amount;
-            $year = substr($revenue->year, -2);
-            $month = sprintf('%02d', $revenue->month);
-            $dateKey = $month . '-' . $year;
-            $totalAmount += $amount;
-            $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
-        }
-        $results['total'] = $totalAmount;
-
-        return $results;
+        return $this->getAmountsForRevenueProceeds('discount_received', $startDate, $endDate);
     }
 
     private function getParticularAmountForInterestOnFd(array $particular, Object $startDate, Object $endDate): array
     {
-        $revenues = RevenueProceed::where('category', 'interest_on_fd')->where('recieved_at', '>', $startDate)->where('recieved_at', '<', $endDate)->get();
-        $totalAmount = 0;
-        $results = [];
-
-        foreach ($revenues as $revenue) {
-            $amount = $revenue->amount;
-            $year = substr($revenue->year, -2);
-            $month = sprintf('%02d', $revenue->month);
-            $dateKey = $month . '-' . $year;
-            $totalAmount += $amount;
-            $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
-        }
-        $results['total'] = $totalAmount;
-
-        return $results;
+        return $this->getAmountsForRevenueProceeds('interest_on_fd', $startDate, $endDate);
     }
 
     private function getParticularAmountForForeignExchangeLoss(array $particular, Object $startDate, Object $endDate): array
     {
-        $revenues = RevenueProceed::where('category', 'foreign_exchange_loss')->where('recieved_at', '>', $startDate)->where('recieved_at', '<', $endDate)->get();
+        return $this->getAmountsForRevenueProceeds('foreign_exchange_loss', $startDate, $endDate);
+    }
+
+    private function getAmountsForRevenueProceeds($category, $startDate, $endDate)
+    {
+        $revenues = RevenueProceed::where('category', $category)
+            ->where('received_at', '>=', $startDate)
+            ->where('received_at', '<=', $endDate)
+            ->get();
+
         $totalAmount = 0;
         $results = [];
 
