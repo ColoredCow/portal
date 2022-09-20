@@ -22,7 +22,7 @@ class CreateRevenueTable extends Migration
             $table->date('recieved_at');
             $table->string('notes')->nullable();
             $table->timestamps();
-            $table->softdeletes();
+            $table->softDeletes();
         });
     }
 
