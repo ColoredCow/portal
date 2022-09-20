@@ -127,7 +127,7 @@ class MediaController extends Controller
     public function search()
     {
         $search_text = $_GET['query'];
-        $media = Media::where('event_name','LIKE','%'.$search_text.'%')->get();
+        $media = Media::where('event_name', 'LIKE', '%'.$search_text.'%')->get();
 
         return view('media::media.search', ['media' => $media]);
     }
