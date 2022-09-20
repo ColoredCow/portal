@@ -7,13 +7,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use Modules\HR\Entities\Employee;
 use Modules\Operations\Entities\OfficeLocation;
-
 class OfficeLocationController  extends Controller
 {
-     /**
-     * Display a listing of the resource.
-     */
-
     public function index()
     {
         $officelocation = OfficeLocation::all();
@@ -65,7 +60,7 @@ class OfficeLocationController  extends Controller
             $officelocation->save();
         }
 
-        return response()->json(['success'=>'Added new records.']);;
+        return response()->json(['success'=>'Added new records.']);
     }
 
     /**
