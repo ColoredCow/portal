@@ -2,8 +2,6 @@ $("#modalEdit").on("show.bs.modal", function(e) {
   const revenueProceedEdited = e.relatedTarget;
   const revenueProceed = $(revenueProceedEdited).data("json");
 
-  console.log(revenueProceed);
-
   const editForm = $(this).find("form");
   const newId = editForm.find("input.hidden");
   const value = newId.attr("value");
