@@ -43,6 +43,39 @@
                     <label for="email">Email</label>
                     <input type="text" class="form-control" id="email" name="email" value="{{$user->email}}" readonly>
                 </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <input type="text" class="form-control" id="gender" name="gender" required value="{{ $user->profile && $user->profile->gender ? $user->profile->gender : "" }}">
+                </div>
+                <div class="form-group">
+                    <label for="date_of_birth">Date of birth</label>
+                    <input type="text" class="form-control" id="date_of_birth" name="date_of_birth" required value="{{ $user->profile && $user->profile->date_of_birth ? $user->profile->date_of_birth : "" }}">
+                </div>
+                <div class="form-group">
+                    <label for="husband_name">Husband Name</label>
+                    <input type="text" class="form-control" id="husband_name" name="husband_name" required value="{{ $user->profile && $user->profile->husband_name ? $user->profile->husband_name : "" }}">
+                </div>
+                <div class="form-group">
+                    <label for="date_of_joining">Date of joining</label>
+                    <input type="text" class="form-control" id="date_of_joining" name="date_of_joining" required value="{{ $user->profile && $user->profile->date_of_joining ? $user->profile->date_of_joining : "" }}">
+                <div class="form-group">
+                    <label for="gender">Mobile</label>
+                    <input type="text" class="form-control" id="mobile" name="mobile" required value="{{ $user->profile && $user->profile->mobile ? $user->profile->mobile : "" }}">
+                </div>
+                <div class="form-group">
+                    <label for="father_name">Father</label>
+                    <input type="text" class="form-control" id="father_name" name="father_name" required value="{{ $user->profile && $user->profile->father_name ? $user->profile->father_name : "" }}">
+                </div>
+                
+                </div>
+                <div class="form-group">
+                    <label for="marital_status">Marital Status</label>
+                    <input type="text" class="form-control" id="marital_status" name="marital_status" required value="{{ $user->profile && $user->profile->marital_status ? $user->profile->marital_status : "" }}">
+                </div>
+                <div class="form-group">
+                    <label for="current_location">Current Location</label>
+                    <input type="text" class="form-control" id="current_location" name="current_location" required value="{{ $user->profile && $user->profile->current_location ? $user->profile->current_location : "" }}">
+                </div>
                 <div class="form-group">  
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -85,6 +118,23 @@
                 <label class="font-weight-bold" for="">Email:</label>
                 <span>{{ $user->email }}</span>
             </div>
+            <div class="form-group">
+                <label class="font-weight-bold" for="">Gender:</label>
+                <span>{{ $user->profile->gender }}</span>
+            </div>
+            <div class="form-group">
+                <label class="font-weight-bold" for="">Date of birth:</label>
+                <span>{{ $user->profile->date_of_birth }}</span>
+            </div>
+            <div class="form-group">
+                <label class="font-weight-bold" for="">Husband Name:</label>
+                <span>{{ $user->profile->husband_name }}</span>
+            </div>
+            <div class="form-group">
+                <label class="font-weight-bold" for="">Date of joining:</label>
+                <span>{{ $user->profile->date_of_joining }}</span>
+            </div>
+
             @includeWhen($user->profile, 'user::profile.subviews.show-user-profile-info')
         </div>
     </div>
