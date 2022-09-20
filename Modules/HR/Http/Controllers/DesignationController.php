@@ -28,9 +28,13 @@ class DesignationController extends Controller
         return redirect()->back();
     }
 
-    public function edit(HrJobDesignation $request, $id)
+    public function edit(JobDesignationRequest $request, $id)
     {
-        $HrJobDesignation = $request->find($id);
+        $HrJobDesignation = HrJobDesignation::find($id);
+
+        $HrJobDesignation->designation = $request['name'];
+        $HrJobDesignation->slug = Str::slug($request['name']);
+        $HrJobDesignation->save();
 
         return redirect()->back();
     }

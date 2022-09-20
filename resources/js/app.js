@@ -1874,6 +1874,21 @@ $(document).ready(function(){
 	});
 });
 
+$("#designationEditFormModal").on("show.bs.modal", function (e) {
+	const designationEdited = e.relatedTarget;
+	const designation = $(designationEdited).data("json");
+
+	const editForm = $(this).find("form");
+	const newId = editForm.find("input.hidden");
+	const value = newId.attr("value");
+	const action = value.replace("id", designation.id);
+
+	editForm.attr("action", action);
+
+	editForm.find("select[name='name']").val(designation.name);
+
+});
+
 $("#editform").on("submit", function(e) {
 	e.preventDefault();
 	let form = $("#editform");

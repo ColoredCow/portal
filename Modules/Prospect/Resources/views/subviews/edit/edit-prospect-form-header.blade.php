@@ -11,7 +11,7 @@
 
             <div  onclick="window.location.href='{{ route('prospect.edit', [$prospect, 'prospect-requirements']) }}'"  class="theme-tab c-pointer flex-center px-2 py-1 px-xl-6 py-xl-2 bg-theme-gray-lighter hover-bg-theme-gray-light rounded-6  mr-1 mr-xl-2  {{ $section == 'prospect-requirements' ? 'active' : '' }}">Requirements</div> 
 
-            <div  onclick="window.location.href='{{ route('prospect.edit', [$prospect, 'prospect-requirements']) }}'"  class=" theme-tab c-pointer flex-center px-2 py-1 px-xl-6 py-xl-2 bg-theme-gray-lighter hover-bg-theme-gray-light rounded-6  mr-1 mr-xl-2  {{ $section == 'prospect-meetings' ? 'active' : '' }}">Mettings</div> 
+            <div  onclick="window.location.href='{{ route('prospect.edit', [$prospect, 'prospect-meetings']) }}'"  class=" theme-tab c-pointer flex-center px-2 py-1 px-xl-6 py-xl-2 bg-theme-gray-lighter hover-bg-theme-gray-light rounded-6  mr-1 mr-xl-2  {{ $section == 'prospect-meetings' ? 'active' : '' }}">Mettings</div> 
         </div>
     </div>
 </div>

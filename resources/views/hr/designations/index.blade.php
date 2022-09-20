@@ -2,12 +2,9 @@
 
 @section('content')
 <div class="container">
-    <div class="text-primary">
-        <h1><b> Designation Dashboard</b></h1>
-    </div><br>
     <div class="d-flex justify-content-between">
         <div>
-            <h2 class="mb-3 text-primary">New Designations</h2>
+            <h2 class="mb-3">New Designations</h2>
         </div>
         <div>
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#designationformModal"> Add Desingnation</button>
@@ -17,7 +14,7 @@
         <strong>Updated</strong> Submitted successfully!
         <button type="button" class="close" id="closeSuccessMessage" aria-label="Close">
         </button>
-    </div>
+    </div><br>
     <div class="modal fade" id="designationformModal" tabindex="-1" role="dialog" aria-labelledby="designationformModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -60,7 +57,7 @@
                 </span>
             </td>
             <td>
-                <a href="{{ route('designation.edit', ['id' => $designation->id]) }}"  class="pr-1 btn btn-link"  ><i class="text-success fa fa-edit fa-lg"></i></a>   
+             <button type="button" class="pr-1 btn btn-link" data-toggle="modal" data-target="#designationEditFormModal" data-json="{{$designation}}" ><i class="text-success fa fa-edit fa-lg"></i></button>
             </td>
             <td>
                 <form action="{{ route('designation.delete', ['id' => $designation->id]) }}" method="post">
@@ -72,5 +69,6 @@
         @endforeach
     </table>
 </div>
+@include('hr.designations.edit')
 @endsection
 
