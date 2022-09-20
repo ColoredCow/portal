@@ -17,18 +17,9 @@ class MediaController extends Controller
      * @return Renderable
      * @param Request $request
      */
-    public function index(Request $request)
+    public function index()
     {
-        $media = Media::where([
-            ['event_name', '!=', null],
-            [function ($query) use ($request) {
-                if (($term = $request->term)) {
-                    $query->orWhere('event_name', 'LIKE', '%' . $term . '%')->get();
-                }
-            }]
-        ])
-        ->orderBy('id', 'desc')
-        ->paginate(24);
+        $media = Media::orderBy('id', 'desc')->paginate(24);
 
         return view('media::media.index', ['media' => $media]);
     }
@@ -45,6 +36,7 @@ class MediaController extends Controller
         $validated = $request->validated();
         $path = 'public/media';
         $tags = explode(',', $request->tags);
+        // dd($tags);
         $imageName = time() . '.' . $request->file->extension();
 
         $request->file->storeAs(
@@ -81,7 +73,7 @@ class MediaController extends Controller
      */
     public function edit(Media $media)
     {
-        return view('media::media.edit', ['Media' => $media]);
+        return view('media::media.edit', ['media' => $media]);
     }
 
     /**
@@ -130,5 +122,13 @@ class MediaController extends Controller
         $media->delete();
 
         return redirect(route('media.index'))->with(['message', 'status' => 'Photo deleted successfully!']);
+    }
+
+    public function search()
+    {
+        $search_text = $_GET['query'];
+        $media = Media::where('event_name','LIKE','%'.$search_text.'%')->get();
+
+        return view('media::media.search', ['media' => $media]);
     }
 }

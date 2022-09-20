@@ -23,9 +23,9 @@
         </button>
         <div class="d-flex">
             <div class="row mr-2">
-                <form action="{{ route('media.index') }}" method="get">
+                <form class = "form-inline my-2 my-lg-0"  type = "get"  action="{{ url('/search') }}">
                     <div class="d-flex align-items-center">
-                        <input type="text" class="form-control input-sm" name="event_name" id="event_name" placeholder="Search Media" value="{{ old('event_name', request()->get('event_name')) }}"required>
+                        <input type="search" class="form-control mr-sm-2" name="query" type="search" placeholder="Search Media" required>
                         <button type="submit" class="btn btn-info ml-2 text-white fw-bold">Search</a>
                     </div>
                 </form>
