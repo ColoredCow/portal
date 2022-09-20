@@ -75,7 +75,6 @@
                         <th>Total</th>
                         <th>Apr-{{ $lastYearVal }} </th>
                         <th>May-{{ $lastYearVal }}</th>
-                        @dd($lastYearVal)
                         <th>Jun-{{ $lastYearVal }}</th>
                         <th>Jul-{{ $lastYearVal }}</th>
                         <th>Aug-{{ $lastYearVal }}</th>

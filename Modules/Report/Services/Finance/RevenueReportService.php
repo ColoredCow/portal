@@ -39,38 +39,38 @@ class RevenueReportService
 
     private function getParticularAmountForDomestic(array $particular, Object $startDate, Object $endDate): array
     {
-        // $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'indian');
-        // $totalAmount = 0;
-        // $results = [];
+        $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'indian');
+        $totalAmount = 0;
+        $results = [];
 
-        // foreach ($invoices as $invoice) {
-        //     $dateKey = $invoice->sent_on->format('m-y');
-        //     $totalAmount += $invoice->amount;
-        //     $results[$dateKey] = ($results[$dateKey] ?? 0) + $invoice->amount;
-        // }
+        foreach ($invoices as $invoice) {
+            $dateKey = $invoice->sent_on->format('m-y');
+            $totalAmount += $invoice->amount;
+            $results[$dateKey] = ($results[$dateKey] ?? 0) + $invoice->amount;
+        }
 
-        // $results['total'] = $totalAmount;
+        $results['total'] = $totalAmount;
 
         return ['total' => 0];
     }
 
     private function getParticularAmountForExport(array $particular, Object $startDate, Object $endDate): array
     {
-        // $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'non-indian');
-        // $totalAmount = 0;
-        // $results = [];
+        $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'non-indian');
+        $totalAmount = 0;
+        $results = [];
 
-        // // ToDo:: We need to change this logic and get the exchange rate for every month.
-        // $exchangeRates = app(CurrencyService::class)->getCurrentRatesInINR();
+        // ToDo:: We need to change this logic and get the exchange rate for every month.
+        $exchangeRates = app(CurrencyService::class)->getCurrentRatesInINR();
 
-        // foreach ($invoices as $invoice) {
-        //     $amount = $invoice->amount * $exchangeRates;
-        //     $dateKey = $invoice->sent_on->format('m-y');
-        //     $totalAmount += $amount;
-        //     $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
-        // }
+        foreach ($invoices as $invoice) {
+            $amount = $invoice->amount * $exchangeRates;
+            $dateKey = $invoice->sent_on->format('m-y');
+            $totalAmount += $amount;
+            $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
+        }
 
-        // $results['total'] = $totalAmount;
+        $results['total'] = $totalAmount;
 
         return ['total' => 0];
     }
@@ -131,7 +131,6 @@ class RevenueReportService
             $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
         }
         $results['total'] = $totalAmount;
-        // dd($results);
 
         return $results;
     }
