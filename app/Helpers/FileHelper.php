@@ -60,9 +60,9 @@ class FileHelper
             return $pdf->stream($fileName);
         }
         $directory = 'app/' . config('constants.hr.offer-letters-dir');
-        if (! file_exists($directory)) {
-            mkdir(storage_path($directory), 0, true);
-        }
+        // if (! file_exists($directory)) {
+        //     mkdir(storage_path($directory), 0, true);
+        // }
         $fullPath = storage_path($directory . '/' . $fileName);
         $pdf->save($fullPath);
         $filePath = config('constants.hr.offer-letters-dir') . '/' . $fileName;
