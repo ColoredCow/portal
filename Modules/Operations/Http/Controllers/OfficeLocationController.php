@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Modules\HR\Entities\Employee;
 use Modules\Operations\Entities\OfficeLocation;
 
-class OfficeLocationController  extends Controller
+class OfficeLocationController extends Controller
 {
     public function index()
     {
