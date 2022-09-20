@@ -80,27 +80,27 @@ class RevenueReportService
 
     private function getParticularAmountForCommissionReceived(array $particular, Object $startDate, Object $endDate): array
     {
-        return $this->getAmountsForRevenueProceeds('commission_received', $startDate, $endDate);
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
     private function getParticularAmountForCashBack(array $particular, Object $startDate, Object $endDate): array
     {
-        return $this->getAmountsForRevenueProceeds('cash_back', $startDate, $endDate);
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
     private function getParticularAmountForDiscountReceived(array $particular, Object $startDate, Object $endDate): array
     {
-        return $this->getAmountsForRevenueProceeds('discount_received', $startDate, $endDate);
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
     private function getParticularAmountForInterestOnFd(array $particular, Object $startDate, Object $endDate): array
     {
-        return $this->getAmountsForRevenueProceeds('interest_on_fd', $startDate, $endDate);
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
     private function getParticularAmountForForeignExchangeLoss(array $particular, Object $startDate, Object $endDate): array
     {
-        return $this->getAmountsForRevenueProceeds('foreign_exchange_loss', $startDate, $endDate);
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
     private function getAmountsForRevenueProceeds($category, $startDate, $endDate)
