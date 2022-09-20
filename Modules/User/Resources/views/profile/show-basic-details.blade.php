@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-group">
                     <label for="add_location">Add Location</label>
-                    <input type="text" class="form-control" id="location" name="location" required value="{{ $user->officelocation }}">
+                    <input type="text" class="form-control" id="location" name="location" required value="{{ $officelocation->location }}">
                 </div>
                 <div class="form-group">
                     <label>Domain</label>
@@ -81,7 +81,7 @@
             </div>
             <div class="form-group">
                 <label class="font-weight-bold" for="">Location:</label>
-                <span>{{ $user->officelocation }}</span>
+                <span>{{ $officelocation->location }}</span>
             </div>
 
             <div class="form-group">

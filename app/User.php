@@ -82,7 +82,7 @@ class User extends Authenticatable
 
     public function officelocation()
     {
-        return $this->belongsTo(OfficeLocation::class, 'user_id');
+        return $this->belongsTo(OfficeLocation::class, 'location');
     }
 
     public function scopeFindByEmail($query, $email)

@@ -26,7 +26,7 @@ class ProfileController extends ModuleBaseController
         $user->name = $request->name;
         $user->nickname = $request->nickName;
         $user->employee->designation = $request->designation;
-        $user->officelocation->location = $request->location;
+        $user->employee->officelocation->location = $request->location;
         $user->employee->name = $request->name;
         $user->employee->domain_id = $request->domainId;
 
