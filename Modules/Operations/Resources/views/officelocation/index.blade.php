@@ -25,14 +25,14 @@
                               @endforeach
                             </select>
                            </div>
-                    <div class="form-group">
+                      <div class="form-group">
                         <label>Location</label>
                         <input type="text" class="form-control" name="location" id="location" placeholder="Enter your location" required>
                       </div>
                       <div class="form-group">
                         <label>Capacity</label>
                         <input type="number" class="form-control" name="capacity" id="capacity" placeholder="Enter the strength" required>
-                    </div>
+                      </div>
     
             </div>
             <div class="modal-footer">
