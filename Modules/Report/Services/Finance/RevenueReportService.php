@@ -85,10 +85,10 @@ class RevenueReportService
         $results = [];
 
         foreach ($revenues as $revenue) {
-            $amount = $revenue-> amount;
-            $year =  substr($revenue->year, - 2);
+            $amount = $revenue->amount;
+            $year =  substr($revenue->year, -2);
             $month = sprintf("%02d", $revenue->month);
-            $dateKey = $month . '-'. $year;
+            $dateKey = $month . '-' . $year;
             $totalAmount += $amount;
             $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
         }
@@ -104,10 +104,10 @@ class RevenueReportService
         $results = [];
 
         foreach ($revenues as $revenue) {
-            $amount = $revenue-> amount;
-            $year =  substr($revenue->year, - 2);
+            $amount = $revenue->amount;
+            $year =  substr($revenue->year, -2);
             $month = sprintf("%02d", $revenue->month);
-            $dateKey = $month . '-'. $year;
+            $dateKey = $month . '-' . $year;
             $totalAmount += $amount;
             $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
         }
@@ -123,10 +123,10 @@ class RevenueReportService
         $results = [];
 
         foreach ($revenues as $revenue) {
-            $amount = $revenue-> amount;
-            $year =  substr($revenue->year, - 2);
+            $amount = $revenue->amount;
+            $year =  substr($revenue->year, -2);
             $month = sprintf("%02d", $revenue->month);
-            $dateKey = $month . '-'. $year;
+            $dateKey = $month . '-' . $year;
             $totalAmount += $amount;
             $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
         }
@@ -142,10 +142,10 @@ class RevenueReportService
         $results = [];
 
         foreach ($revenues as $revenue) {
-            $amount = $revenue-> amount;
-            $year =  substr($revenue->year, - 2);
+            $amount = $revenue->amount;
+            $year =  substr($revenue->year, -2);
             $month = sprintf("%02d", $revenue->month);
-            $dateKey = $month . '-'. $year;
+            $dateKey = $month . '-' . $year;
             $totalAmount += $amount;
             $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
         }
@@ -161,10 +161,10 @@ class RevenueReportService
         $results = [];
 
         foreach ($revenues as $revenue) {
-            $amount = $revenue-> amount;
-            $year =  substr($revenue->year, - 2);
+            $amount = $revenue->amount;
+            $year =  substr($revenue->year, -2);
             $month = sprintf("%02d", $revenue->month);
-            $dateKey = $month . '-'. $year;
+            $dateKey = $month . '-' . $year;
             $totalAmount += $amount;
             $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
         }
