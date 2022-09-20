@@ -11,7 +11,7 @@ class RevenueProceed extends Model
 
     protected $guarded = [];
 
-     protected $casts = [
+    protected $casts = [
         'recieved_at' => 'date',
     ];
 
