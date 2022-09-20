@@ -18,7 +18,7 @@
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
                             <label class="field-required">Date of Recieved</label>
-                            <input type="date" class="form-control" required name="received_at">
+                            <input type="date" class="form-control" name="received_at" required>
                         </div>
                     </div>
                     <div class="form-row">
@@ -27,25 +27,14 @@
                             <select name="category" class="form-control">
                                 <option class="disabled">Select category</option>
                                 @foreach (config('report.finance.profit_and_loss.particulars.revenue') as $key => $label)
-                                    <option value="{{ $label['name'] }}">{{ $label['name'] }}</option>
+                                    @if (!in_array($key, ['domestic', 'export']))
+                                        <option value="{{ $key }}">{{ $label['name'] }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="form-group offset-md-1 col-md-5">
-                            <label class="field-required">Year</label>
-                            <select name="year" class="form-control">
-                                @php $year = now()->year; @endphp
-                                @while ($year != 2017)
-                                    <option value="{{ $year }}">{{ $year }}</option>
-                                    @php
-                                        $year--;
-                                    @endphp
-                                @endwhile
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group ml-6 col-md-5">
                             <label class="field-required">Amount</label>
                             <div class="input-group">
                                 <div class=" input-group-prepend">
@@ -59,16 +48,8 @@
                                 <input type="number" required class="form-control" name="amount">
                             </div>
                         </div>
-                        <div class="form-group offset-md-1 col-md-5">
-                            <label class="field-required">Month</label>
-                            <select class="form-control" required name="month">
-                                <option class="disabled">Select month</option>
-                                @foreach (config('constants.months') as $months => $month)
-                                    <option value="{{ $months }}">{{ $month }}</option>
-                                @endforeach
-                            </select>
-                            </select>
-                        </div>
+
+
                     </div>
                     <div class="form-row">
                         <div class="form-group ml-6 col-md-7">

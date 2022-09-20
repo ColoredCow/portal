@@ -28,12 +28,14 @@ class RevenueProceedService
         $revenueProceed = new RevenueProceed;
 
         $revenueProceed->name = $request['name'];
-        $revenueProceed->category = Str::snake($request['category']);
+
         $revenueProceed->currency = $request['currency'];
         $revenueProceed->amount = $request['amount'];
-        $revenueProceed->month = $request['month'];
+        $revenueProceed->category = Str::snake($request['category']);
         $revenueProceed->received_at = $request['received_at'];
-        $revenueProceed->year = $request['year'];
+        $revenueProceed->month = $revenueProceed->received_at->month;
+        $revenueProceed->year = $revenueProceed->received_at->year;
+
         $revenueProceed->notes = $request['notes'];
         $revenueProceed->save();
 
@@ -43,14 +45,13 @@ class RevenueProceedService
     public function update(Request $request, $id)
     {
         $revenueProceed = RevenueProceed::find($id);
-
         $revenueProceed->name = $request['name'];
-        $revenueProceed->category = Str::snake($request['category']);
-        $revenueProceed->currency = $request['currency'];
-        $revenueProceed->month = $request['month'];
-        $revenueProceed->year = $request['year'];
         $revenueProceed->amount = $request['amount'];
+        $revenueProceed->currency = $request['currency'];
+        $revenueProceed->category = Str::snake($request['category']);
         $revenueProceed->received_at = $request['received_at'];
+        $revenueProceed->month = $revenueProceed->received_at->month;
+        $revenueProceed->year = $revenueProceed->received_at->year;
         $revenueProceed->notes = $request['notes'];
         $revenueProceed->save();
 

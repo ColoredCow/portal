@@ -11,6 +11,8 @@ class RevenueProceed extends Model
 
     protected $guarded = [];
 
+    protected $appends = ['display_received_at'];
+
     protected $casts = [
         'received_at' => 'date',
     ];
@@ -28,5 +30,10 @@ class RevenueProceed extends Model
         }
 
         return $query;
+    }
+
+    public function getDisplayReceivedAtAttribute()
+    {
+        return $this->received_at->format('Y-m-d');
     }
 }
