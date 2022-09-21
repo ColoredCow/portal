@@ -146,6 +146,6 @@
                 </tbody>
             </table>
         </div>
-        {{ $clients->links() }}
+        {{ $clients->withQueryString()->links() }}
     </div>
 @endsection
