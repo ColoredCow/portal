@@ -57,3 +57,12 @@
 - [fix merge conflicts vscode](https://linuxpip.org/fix-merge-conflicts-vscode/)
 
 - [How do i resolve merge conflicts](https://dev.to/github/how-do-i-resolve-merge-conflicts-5438)
+
+**After creating pull request perform the following steps**
+
+6) **Self Assign ** : On the right hand side under the 'Assignees' click on 'assign-yourself'
+
+7) **Assigning Ready to review label ** : On right hand side under assignees you will find 'Labels'.
+    Click on 'Labels' and select 'status : ready for review'
+8) ** Assigning reviewers for reviewing your task ** : On the right hand side above 'Assignees' you can find 'Reviewers'.
+    Click on 'Reviewers' and select 'team-portal-reviewers'
