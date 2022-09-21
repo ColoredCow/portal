@@ -2157,7 +2157,7 @@ $(document).ready(function () {
 			data: $("#editformID").serialize(),
 			success: function (response) {
 				$("#officelocationEditModal").modal("hide");
-				toastr.success('data updated successfully');
+				toastr.success("data updated successfully");
 				location.reload();
 			},
 			error: function (error) {
@@ -2184,7 +2184,7 @@ $(document).ready(function () {
 			data: $("#addform").serialize(),
 			success: function (response) {
 				$("#officelocationAddModal").modal("hide");
-				toastr.success('data saved successfully');
+				toastr.success("data saved successfully");
 				location.reload();
 			},
 			error: function (error) {
