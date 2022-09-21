@@ -74,6 +74,6 @@ class OfficeLocationController extends Controller
 
         $officelocation->delete();
 
-        return back();
+        return response()->json(['success'=>'Data deleted successfully']);
     }
 }

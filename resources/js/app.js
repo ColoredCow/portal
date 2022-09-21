@@ -2126,6 +2126,7 @@ $(document).ready(function () {
 				alert("data not deleted");
 			},
 		});
+		console.log(error);
 	});
 });
 
