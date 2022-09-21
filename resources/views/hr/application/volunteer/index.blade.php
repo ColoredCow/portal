@@ -8,6 +8,11 @@
     <div class="row">
         <div class="col-md-6">
             <h1>Volunteering Applications</h1>
+            <form method="get" action="{{ route('addUser') }}">
+                
+                <button>Add new Volunteer</button>
+            </form>
+            
         </div>
         <form class="offset-md-2 col-md-4 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">
             <input type="hidden" name="status" class="form-control" id="search" value=

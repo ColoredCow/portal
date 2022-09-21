@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,7 +11,7 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
-
+use App\Http\Controllers\HR\Volunteers\VolunteerOpportunityController;
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect('home');
@@ -165,3 +166,7 @@ Route::middleware('auth')->group(function () {
     Route::get('user/wishlist-books', 'UserBookController@booksInWishlist');
     Route::get('user/projects', 'UserController@projects');
 });
+
+Route::get('/AddUser', [VolunteerOpportunityController::class,'AddUser'])->name('addUser');
+Route::post('/SaveItem', [VolunteerOpportunityController::class,'SaveItem']
+)->name('saveItem');

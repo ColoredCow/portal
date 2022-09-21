@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\HR\Volunteers;
-
+//use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 use Modules\HR\Entities\Job;
-use Illuminate\Support\Facades\Request;
+//use Illuminate\Support\Facades\Request;
 use Modules\HR\Http\Controllers\Recruitment\JobController;
 
 class VolunteerOpportunityController extends JobController
@@ -11,6 +12,43 @@ class VolunteerOpportunityController extends JobController
     public function getOpportunityType()
     {
         return 'volunteer';
+    }
+
+    public function AddUser()
+    {
+        return view('addUser');
+        //dd('hey');
+        /*$newUser = new Job;
+        
+        $newUser->title = 'Weaponslol Specialists';
+        $newUser->description = 'Temporibus ea quaerat';
+        $newUser->type = 'volunteer';
+        $newUser->domain = 'engineering';
+        $newUser->status = 'published';
+        $newUser->resources_required = '0';
+        */
+    }
+
+    public function SaveItem(Request $request)
+    {
+        //dd('hey');
+        /*$newUser = new Job;
+        $newUser->title = $request->input('title');
+        $newUser->description = $request->input('description');
+        $newUser->type = $request->input('type');
+        $newUser->domain = $request->input('domain');
+        */
+        $validated = $request->all();
+        $volunteer = Job::create([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'type' => $validated['type'],
+            'domain' => $validated['domain']
+            
+        ]);
+        return redirect("/hr/applications/volunteer")->with('status', 'Volunteer added succesfully!');
+
+
     }
 
     /**
