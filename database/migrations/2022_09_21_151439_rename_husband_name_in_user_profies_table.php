@@ -14,7 +14,7 @@ class RenameHusbandNameInUserProfiesTable extends Migration
     public function up()
     {
         Schema::table('user_profiles', function (Blueprint $table) {
-            $table->renameColumn('husband_name','spouse_name');
+            $table->renameColumn('husband_name', 'spouse_name');
         });
     }
 
@@ -26,7 +26,7 @@ class RenameHusbandNameInUserProfiesTable extends Migration
     public function down()
     {
         Schema::table('user_profiles', function (Blueprint $table) {
-            $table->renameColumn('spouse_name','husband_name');
+            $table->renameColumn('spouse_name', 'husband_name');
         });
     }
 }
