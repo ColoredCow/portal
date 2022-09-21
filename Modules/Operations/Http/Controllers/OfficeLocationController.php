@@ -37,7 +37,7 @@ class OfficeLocationController extends Controller
                 'center_head' => $request->center_head,
                 'location' => $request->location,
                 'capacity' => $request->capacity,
-                
+
             ]);
         }
 
