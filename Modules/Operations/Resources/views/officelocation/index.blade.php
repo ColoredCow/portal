@@ -15,10 +15,10 @@
                 {{ csrf_field() }}
 
                 <ul id="saveform_errlist"></ul>
-                          <div class="form-group mb-3 ">
+                          <div class="mr-2 mt-2 mt-md-0 form-group">
                             <label>Center Head</label><br>
-                            <select name="center_head" class="forrm-control pl-2 pt-2 bg-white" id="center_id">
-                              <option value ="" selected> Select the employees</option>
+                            <select name="center_head" class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" id="center_id">
+                              <option value ="" selected> All Employees</option>
                               @foreach ( $centerHeads as $centerHead )
                                 <option value ="{{ $centerHead->id }}" required> {{$centerHead->name}}</option>
                                 
@@ -57,10 +57,10 @@
                 {{ method_field('PUT')}}
 
                 <input type="hidden" name="id" id="id">
-                <div class="form-group mb-3">
+                <div class="mr-5 mt-2 mt-md-0 form-group">
                   <label>Center Head</label><br>
-                  <select name="center_head" class="forrm-control pl-2 pt-2 bg-white text-center" id="center_id">
-                    <option value ="" selected> Select the employees</option>
+                  <select name="center_head" class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" id="center_id">
+                    <option value ="" selected> All Employees</option>
                     @foreach ( $centerHeads as $centerHead )
                       <option value ="{{ $centerHead->id }}"> {{$centerHead->name}} </option>
                       
@@ -118,20 +118,23 @@
           </div>
             <div class="d-flex flex-row-reverse mr-25">
                 <button type="button"  data-bs-toggle="modal" data-bs-target="#officelocationAddModal"class="btn btn-success mr-15 mb-4">
-                    Add OfficeLocation
+                    Add Office Location
                 </button>
               </div>
             <div>
               <table class="table table-striped table-bordered w-75 ml-25 mb-15">
                   <thead class="thead-dark">
                       <tr class="top">
-                      <th>Center Head</th>
                       <th>Location</th>
                       <th>Capacity</th>
-                      <th>Action</th>
+                      <th>Center Head</th>
+                      <th>Actions</th>
                     </tr>
                     @foreach ($officelocations as $officelocation)    
                             <tr>
+                              <td>{{ $officelocation->location }}</td>
+                                <td>{{ $officelocation->capacity }}</td>
+
                                 <td>
                               
                                  @if ( $officelocation->centerHead->user )
@@ -149,11 +152,9 @@
                                   @else
                                       -
                                   @endif 
-                                  </span> 
-                                  {{$officelocation->center_head}}
+                                  </span>
                                     </td>
-                                <td>{{ $officelocation->location }}</td>
-                                <td>{{ $officelocation->capacity }}</td>
+                                
                                 <td>
                                     <button 
                                         type="button" 

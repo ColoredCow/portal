@@ -63,6 +63,19 @@
             </li>
         @endcan
 
+        <li class="nav-item dropdown">
+            <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Operations<span
+                    class="caret"></span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
+                @can('officelocation.view')
+                    <a class="dropdown-item" href="{{ route('officelocation.index') }}">Office Locations</a>
+                @endcan
+            </div>
+        </li>
+
+
         @can('finance_invoices.view')
             <li class="nav-item dropdown">
                 <a id="navbarDropdown_finance" class="nav-link dropdown-toggle" href="#" role="button"
@@ -153,16 +166,5 @@
                 </div>
             </li>
         @endcanany
-        <li class="nav-item dropdown">
-            <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Operations <span
-                    class="caret"></span>
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
-                @can('officelocation.view')
-                    <a class="dropdown-item" href="{{ route('officelocation.index') }}">Office Location</a>
-                @endcan
-            </div>
-        </li>
-    </ul>
-    </ul>
+        
+</ul>

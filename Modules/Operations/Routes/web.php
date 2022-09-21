@@ -17,7 +17,7 @@ Route::prefix('operations')->group(function () {
     Route::get('/', 'OperationsController@index');
 });
 Route::resource('/officelocation', 'OfficeLocationController')
-                ->only(['index', 'store', 'update', 'destroy', 'getEmployee'])
+                ->only(['index', 'store', 'update', 'destroy'])
                 ->names([
                     'index' => 'officelocation.index',
                     'store' => 'officelocation.store',

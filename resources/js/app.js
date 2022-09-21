@@ -2117,8 +2117,10 @@ $(document).ready(function () {
 			type: "DELETE",
 			url: "/officelocation/" + id,
 			success: function (response) {
+				console.log(response);
 				$("#officelocationDeleteModal").modal("hide");
 				alert("data deleted");
+				location.reload();
 			},
 			error: function (error) {
 				alert("data not deleted");
@@ -2155,7 +2157,8 @@ $(document).ready(function () {
 			data: $("#editformID").serialize(),
 			success: function (response) {
 				$("#officelocationEditModal").modal("hide");
-				alert("data updated");
+				toastr.success('data updated successfully');
+				location.reload();
 			},
 			error: function (error) {
 				alert("data not updated");
@@ -2165,6 +2168,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
+
 	$("#addform").on("submit", function (e) {
 		e.preventDefault();
 
@@ -2180,7 +2184,8 @@ $(document).ready(function () {
 			data: $("#addform").serialize(),
 			success: function (response) {
 				$("#officelocationAddModal").modal("hide");
-				alert("data saved");
+				toastr.success('data saved successfully');
+				location.reload();
 			},
 			error: function (error) {
 				alert("data not saved");
