@@ -2117,16 +2117,14 @@ $(document).ready(function () {
 			type: "DELETE",
 			url: "/officelocation/" + id,
 			success: function (response) {
-				console.log(response);
 				$("#officelocationDeleteModal").modal("hide");
-				alert("data deleted");
+				toastr.success("data deleted successfully");
 				location.reload();
 			},
 			error: function (error) {
 				alert("data not deleted");
 			},
 		});
-		console.log(error);
 	});
 });
 
