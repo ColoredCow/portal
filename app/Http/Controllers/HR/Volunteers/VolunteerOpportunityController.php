@@ -43,7 +43,8 @@ class VolunteerOpportunityController extends JobController
             'title' => $validated['title'],
             'description' => $validated['description'],
             'type' => $validated['type'],
-            'domain' => $validated['domain']
+            'domain' => $validated['domain'],
+            'status' => $validated['status']
             
         ]);
         return redirect("/hr/applications/volunteer")->with('status', 'Volunteer added succesfully!');

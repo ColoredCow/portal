@@ -3,18 +3,29 @@
 @section('content')
 <div class="container">
     <br>
-    @include('hr.volunteers.menu')
+    <div class="d-flex p-2 bd-highlight justify-content-between"">
+        <div>
+            @include('hr.volunteers.menu')
+        </div>
+        <div>
+            <form method="get" action="{{ route('addUser') }}">       
+                <button class="btn btn-success text-white ml-1"><i class="fa fa-plus"></i>Add new Volunteer</button>
+            </form>
+        </div>
+    </div>
+        
+        
     <br><br>
+
+    
     <div class="row">
         <div class="col-md-6">
             <h1>Volunteering Applications</h1>
-            <form method="get" action="{{ route('addUser') }}">
-                
-                <button>Add new Volunteer</button>
-            </form>
+            
             
         </div>
         <form class="offset-md-2 col-md-4 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">
+            
             <input type="hidden" name="status" class="form-control" id="search" value=
                 @switch(request('status'))
                     @case('on-hold')
@@ -28,7 +39,10 @@
                     @endswitch>
            <input type="text" name="search" class="form-control" id="search" placeholder="Search volunteers">
            <button class="btn btn-info ml-2">Search</button>
+           
         </form>
+        
+        
     </div>
     @if(request()->has('search'))
     <div class="row mt-3 mb-2">
