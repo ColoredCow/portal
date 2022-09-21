@@ -921,12 +921,13 @@
                                                                 </div>
                                                                 <div class="form-group offset-md-1 col-md-5">
                                                                     <label
-                                                                        class="text-secondary fz-14 leading-none mb-0.16" >Applied
+                                                                        class="text-secondary fz-14 leading-none mb-0.16">Applied
                                                                         for</label>
                                                                     <div>
                                                                         <a href="{{ $application->job->link }}"
                                                                             target="_blank">
-                                                                            <span id="jobTitle">{{ $application->job->title }}</span>
+                                                                            <span
+                                                                                id="jobTitle">{{ $application->job->title }}</span>
                                                                             <i class="fa fa-external-link fz-14"
                                                                                 aria-hidden="true"></i>
                                                                         </a>
@@ -1039,9 +1040,10 @@
                                                                 </div>
                                                                 <div class="form-group col-md-5">
                                                                     <label
-                                                                        class="text-secondary fz-14 leading-none mb-0.16">Resume Link</label>
+                                                                        class="text-secondary fz-14 leading-none mb-0.16">Resume
+                                                                        Link</label>
                                                                     <div>
-                                                                        <a href="{{route('table.show',[str_slug($application->job->title),$application->job->id])}}"
+                                                                        <a href="{{ route('table.show', [str_slug($application->job->title), $application->job->id]) }}"
                                                                             target="_blank">sample desired resume
                                                                         </a>
                                                                     </div>
@@ -1091,7 +1093,8 @@
 
                                                 @if (!$applicationRound->round_status)
                                                     <div class="form-row">
-                                                        @if ($application->latestApplicationRound->round->name != "Telephonic Interview"  && $applicationRound->round->name != "Team Interaction Round")
+                                                        @if ($application->latestApplicationRound->round->name != 'Telephonic Interview' &&
+                                                            $applicationRound->round->name != 'Team Interaction Round')
                                                             <div class="form-group col-md-5">
                                                                 <label for="scheduled_date"
                                                                     class="fz-14 leading-none text-secondary w-100p">
@@ -1117,9 +1120,10 @@
                                                                         class="form-control form-control-sm"
                                                                         value="{{ $applicationRound->scheduled_date->format(config('constants.display_datetime_format')) }}">
                                                                 @else
-                                                                @if($applicationRound->round->name != "Team Interaction Round")
-                                                                    <div class="fz-16 leading-tight">Pending calendar confirmation</div>
-                                                                @endif
+                                                                    @if ($applicationRound->round->name != 'Team Interaction Round')
+                                                                        <div class="fz-16 leading-tight">Pending calendar
+                                                                            confirmation</div>
+                                                                    @endif
                                                                 @endif
                                                             </div>
                                                             <div class="form-group col-md-4">
@@ -1247,7 +1251,8 @@
                                                                 v-on:change="onSelectNextRound($event)"
                                                                 data-application-job-rounds="{{ json_encode($application->job->exceptTrialRounds) }}">
                                                                 <option v-for="round in applicationJobRounds"
-                                                                    value="round" :data-next-round-id="round.id">Move to @{{ round.name }}</option>
+                                                                    value="round" :data-next-round-id="round.id">Move to
+                                                                    @{{ round.name }}</option>
                                                                 <option value="send-for-approval">Send for approval
                                                                 </option>
                                                                 <option value="approve">Approve</option>
@@ -1299,7 +1304,6 @@
                                         @includeWhen($loop->last, 'hr.application.approve-applicant-modal')
                                         @includeWhen($loop->last, 'hr.application.put-on-hold-modal')
                                     </form>
-                                    
                                 @endif
                             </div>
                             @include('hr.round-guide-modal', ['round' => $applicationRound->round])
@@ -1322,11 +1326,12 @@
                     <h3 class="modal-title">Give Reason:</h3>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form action="{{route('response.store',$application->id)}}" method="POST" id="responseForm">
+                <form action="{{ route('response.store', $application->id) }}" method="POST" id="responseForm">
                     @csrf
                     <div class="modal-body">
                         <div class="fomodal-body">
-                            <textarea name="body" rows="10" class="form-control" placeholder="Why do you think this is a desired resume?" required></textarea>
+                            <textarea name="body" rows="10" class="form-control"
+                                placeholder="Why do you think this is a desired resume?" required></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -1337,5 +1342,5 @@
             </div>
         </div>
     </div>
-    
+
 @endsection

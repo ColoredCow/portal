@@ -88,7 +88,6 @@ Route::middleware('auth')->group(function () {
             Route::post('/store-response/{id}', 'JobController@storeResponse')->name('response.store');
             Route::get('/show-table/{name}/{id}', 'JobController@showTable')->name('table.show');
 
-
             Route::resource('job', 'JobApplicationController')
                 ->only(['index', 'edit', 'update', 'store'])
                 ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update', 'store' => 'applications.job.store']);

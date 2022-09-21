@@ -5,17 +5,17 @@ namespace Modules\HR\Http\Controllers\Recruitment;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Modules\HR\Entities\Application;
+use Modules\HR\Entities\ApplicationMeta;
 use Modules\HR\Entities\HrJobDomain as EntitiesHrJobDomain;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\Round;
-use Modules\HR\Http\Requests\Recruitment\JobRequest;
 use Modules\HR\Http\Requests\Recruitment\JobDomainRequest;
+use Modules\HR\Http\Requests\Recruitment\JobRequest;
 use Modules\User\Entities\User;
-use Illuminate\Support\Str;
 use Request;
-use Modules\HR\Entities\Application;
-use Modules\HR\Entities\ApplicationMeta;
-use Illuminate\Support\Facades\DB;
 
 class JobController extends Controller
 {
@@ -150,31 +150,31 @@ class JobController extends Controller
 
     public function storeResponse(HttpRequest $request)
     {
-       
+
         $application = Application::findOrFail($request->id);
-        $application->update(['is_desired_resume'=> true]);
+        $application->update(['is_desired_resume' => true]);
 
         ApplicationMeta::create([
             'hr_application_id' => $application->id,
             'key' => 'resume-flag',
             'value' =>
-                 $request->get('body'),
-            
+            $request->get('body'),
+
         ]);
     }
-    
+
     public function showTable(HttpRequest $request)
     {
         $data = DB::table('hr_applications')
             ->select(['hr_applications.resume', 'hr_application_meta.value'])
-            ->join('hr_application_meta',  'hr_applications.id','=' ,'hr_application_meta.hr_application_id')
+            ->join('hr_application_meta', 'hr_applications.id', '=', 'hr_application_meta.hr_application_id')
             ->where('hr_applications.hr_job_id', '=', $request->id)
-            ->where('hr_applications.is_desired_resume','=',1)
-            ->where('hr_application_meta.key','=','resume-flag')
+            ->where('hr_applications.is_desired_resume', '=', 1)
+            ->where('hr_application_meta.key', '=', 'resume-flag')
             ->get();
 
         return view('hr.application.resume-table')->with([
-            'data'=> $data,
+            'data' => $data,
         ]);
     }
 }
