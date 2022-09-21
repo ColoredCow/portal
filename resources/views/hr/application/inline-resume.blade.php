@@ -4,6 +4,9 @@
     <div class="card-header py-1">
         <ul class="nav justify-content-end">
             <li class="nav-item">
+                <i class="c-pointer text-primary fa fa-flag fz-18" aria-hidden="true" data-toggle="modal" data-target="#responseModal"></i>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link py-0" href="{{ $resume }}#zoom=100" target="_blank">
                     <i class="fa fa-external-link fz-18" aria-hidden="true"></i>
                 </a>

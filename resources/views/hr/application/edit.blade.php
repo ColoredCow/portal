@@ -1037,6 +1037,15 @@
                                                                         @endif
                                                                     </div>
                                                                 </div>
+                                                                <div class="form-group col-md-5">
+                                                                    <label
+                                                                        class="text-secondary fz-14 leading-none mb-0.16">Resume Link</label>
+                                                                    <div>
+                                                                        <a href="{{route('table.show',[str_slug($application->job->title),$application->job->id])}}"
+                                                                            target="_blank">sample desired resume
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
                                                                 @if (isset($applicant->reference))
                                                                     <div class="form-group col-md-5">
                                                                         <label
@@ -1306,4 +1315,27 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="responseModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Give Reason:</h3>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form action="{{route('response.store',$application->id)}}" method="POST" id="responseForm">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="fomodal-body">
+                            <textarea name="body" rows="10" class="form-control" placeholder="Why do you think this is a desired resume?" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="responseBtn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
 @endsection
