@@ -150,7 +150,6 @@ class JobController extends Controller
 
     public function storeResponse(HttpRequest $request)
     {
-
         $application = Application::findOrFail($request->id);
         $application->update(['is_desired_resume' => true]);
 
