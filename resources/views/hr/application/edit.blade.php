@@ -820,11 +820,9 @@
                             @endif
                             @if ($loop->last && $applicationRound->application->hasTag('need-follow-up'))
                                 <div class="d-flex justify-content-start">
-                                    @if(($application->latestApplicationRound->followUps)->count()< 3)
                                     <button type="button"
                                         class="btn btn-sm btn-info fz-14 leading-none text-white rounded-0 py-1"
                                         data-toggle="modal" data-target="#followUpModal">Follow up</button>
-                                    @endif
                                 </div>
                                 @include('hr.application.follow-up-modal')
                             @endif
