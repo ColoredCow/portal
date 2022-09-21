@@ -24,9 +24,10 @@ class OfficeLocationController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'center_head' => 'required',
             'location' => 'required',
             'capacity' => 'required',
+            'center_head' => 'required',
+
         ]);
 
         if ($validator->fails()) {
@@ -36,6 +37,7 @@ class OfficeLocationController extends Controller
                 'center_head' => $request->center_head,
                 'location' => $request->location,
                 'capacity' => $request->capacity,
+                
             ]);
         }
 

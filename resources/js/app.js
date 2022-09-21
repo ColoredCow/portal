@@ -1968,139 +1968,11 @@ $(document).ready(function () {
 	});
 });
 
-/*
- * HR Module JS code end
- */
-
-// fix for tinymce and bootstrap modal
-$(document).on("focusin", function (e) {
-	if ($(event.target).closest(".mce-window").length) {
-		e.stopImmediatePropagation();
-	}
-});
-
-$(document).ready(function () {
-	$("#holdSendMailToApplicant").on("click", function (event) {
-		var $optionContainer = $("#optionContainer");
-		if ($(this).is(":checked")) {
-			$optionContainer.removeClass("d-none");
-		} else {
-			$optionContainer.addClass("d-none");
-		}
-	});
-});
-
-$("#editform").on("submit", function (e) {
-	e.preventDefault();
-	let form = $("#editform");
-	let button = $("#editBT");
-
-	$.ajax({
-		url: form.attr("action"),
-		type: form.attr("method"),
-		data: form.serialize(),
-		success: function (response) {
-			$("#edit").modal("hide");
-			$("#edit").on("hidden.bs.modal", function (e) {
-				$("#successMessage").toggleClass("d-none");
-				$("#successMessage").fadeToggle(5000);
-			});
-		},
-		error: function (response) {
-			$("#profile-details-error").removeClass("d-none");
-			$("#successMessage").addClass("d-none");
-			let errors = response.responseJSON.errors;
-			$(".profile-details-error").empty();
-			for (let error in errors) {
-				$(".profile-details-error").append(
-					"<li class='text-danger ml-2'>" + errors[error] + "</li>"
-				);
-			}
-		},
-	});
-});
-
-$("#updateEmail").on("click", function () {
-	let formData = {
-		location: $("#location").val(),
-		date: $("#date").val(),
-		timing: $("#timing").val(),
-		applicant_name: $("#applicantName").text(),
-	};
-	var originUrl = window.location.origin;
-	$.ajax({
-		url: originUrl + "/hr/recruitment/teaminteraction",
-		type: "POST",
-		data: formData,
-		success: function (response) {
-			$("#InteractionError").addClass("d-none");
-			$("#confirmMailToApplicantSubject").val(response.subject);
-			tinymce
-				.get("confirmMailToApplicantBody")
-				.setContent(response.body, { format: "html" });
-			$("#interactionsuccess").toggleClass("d-none");
-			$("#interactionsuccess").fadeToggle(6000);
-			$("#confirmMailToApplicantBlock").removeClass("d-none");
-			var toggleIcon = $("#previewMailToApplicant").data("toggle-icon");
-			if (toggleIcon && !$(".fa-eye-slash ").hasClass("d-none")) {
-				$(".toggle-icon").toggleClass("d-none");
-			}
-		},
-		error: function (response) {
-			$("#InteractionError").removeClass("d-none");
-			let errors = response.responseJSON.errors;
-			$("#errors").empty();
-			for (let error in errors) {
-				$("#errors").append(
-					"<li class='text-danger ml-2'>" + errors[error] + "</li>"
-				);
-			}
-			$("#confirmMailToApplicantBlock").addClass("d-none");
-		},
-	});
-});
-$("#interactionErrorModalCloseBtn").click(function () {
-	$("#InteractionError").toggleClass("d-none");
-});
-
-$(".opt").on("click", function () {
-	let formData = {
-		setting_key_subject: $(this).data("key-subject"),
-		setting_key_body: $(this).data("key-body"),
-		applicant_name: $("#applicantName").text(),
-		job_title: $("#jobTitle").text(),
-	};
-
-	var originUrl = window.location.origin;
-	$.ajax({
-		url: originUrl + "/hr/recruitment/onHoldEmail",
-		type: "GET",
-		data: formData,
-		contentType: "application/json",
-		success: function (response) {
-			$("#option1subject").val(response.subject);
-			tinymce.get("option1body").setContent(response.body, { format: "html" });
-		},
-	});
-
-	var originUrl = window.location.origin;
-	$.ajax({
-		url: originUrl + "/hr/recruitment/onHoldEmail",
-		type: "GET",
-		data: formData,
-		contentType: "application/json",
-		success: function (response) {
-			$("#option2subject").val(response.subject);
-			tinymce.get("option2body").setContent(response.body, { format: "html" });
-		},
-	});
-});
-
 /**
  * Operations
  *
  */
-$(document).ready(function () {
+ $(document).ready(function () {
 	$(".deletebtn").on("click", function () {
 		$("#officelocationDeleteModal").modal("show");
 		var id = $(this).data("id");
@@ -2132,14 +2004,14 @@ $(document).ready(function () {
 	$(".editbtn").on("click", function () {
 		$("#officelocationEditModal").modal("show");
 
-		var center_head = $(this).data("center_head");
+		var centerHead = $(this).data("center_head");
 		var location = $(this).data("location");
 		var capacity = $(this).data("capacity");
 		var id = $(this).data("id");
 
-		$("#center_head").val(center_head);
-		$("#location").val(location);
-		$("#capacity").val(capacity);
+		$("#center_head_id").val(centerHead);
+		$("#location_id").val(location);
+		$("#capacity_id").val(capacity);
 		$("#id").val(id);
 	});
 

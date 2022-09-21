@@ -14,13 +14,13 @@
             <div class="modal-body">
                 {{ csrf_field() }}
 
-                <ul id="saveform_errlist"></ul>
+                
                           <div class="mr-2 mt-2 mt-md-0 form-group">
                             <label>Center Head</label><br>
-                            <select name="center_head" class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" id="center_id">
+                            <select name="center_head" class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" id="center_head_id" required>
                               <option value ="" selected> All Employees</option>
                               @foreach ( $centerHeads as $centerHead )
-                                <option value ="{{ $centerHead->id }}" required> {{$centerHead->name}}</option>
+                                <option value ="{{ $centerHead->id }}"> {{$centerHead->name}}</option>
                                 
                               @endforeach
                             </select>
@@ -59,7 +59,7 @@
                 <input type="hidden" name="id" id="id">
                 <div class="mr-5 mt-2 mt-md-0 form-group">
                   <label>Center Head</label><br>
-                  <select name="center_head" class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" id="center_id">
+                  <select name="center_head" class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" id="center_head_id" required>
                     <option value ="" selected> All Employees</option>
                     @foreach ( $centerHeads as $centerHead )
                       <option value ="{{ $centerHead->id }}"> {{$centerHead->name}} </option>
@@ -69,17 +69,17 @@
                  </div>
                     <div class="form-group">
                         <label>Location</label>
-                        <input type="text" class="form-control" name="location" id="location" placeholder="Enter your location" required>
+                        <input type="text" class="form-control" name="location" id="location_id" placeholder="Enter your location" required>
                       </div>
                       <div class="form-group">
                         <label>Capacity</label>
-                        <input type="number" class="form-control" name="capacity" id="capacity" placeholder="Enter the strength" required>
+                        <input type="number" class="form-control" name="capacity" id="capacity_id" placeholder="Enter the strength" required>
                       </div>
     
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" id="editLocationBtn" class="btn btn-primary">update officelocation</button>
+              <button type="submit" id="editLocationBtn" class="btn btn-primary">Update</button>
             </div>
             </div>
           </form>
@@ -112,17 +112,14 @@
     </div>
 
         <div class="container">
-            <div class="row mt-3 text-primary text-lg-start">
-                <h4> Office Location</h4>
-            </div>
+          <div class="d-none d-md-flex justify-content-between my-1">
+            <h4 class="text-primary"> Office Location<h4>
+            <button type="button"  data-bs-toggle="modal" data-bs-target="#officelocationAddModal"class="btn btn-success mr-5 mb-4">
+                Add Office Location
+            </button>
           </div>
-            <div class="d-flex flex-row-reverse mr-25">
-                <button type="button"  data-bs-toggle="modal" data-bs-target="#officelocationAddModal"class="btn btn-success mr-15 mb-4">
-                    Add Office Location
-                </button>
-              </div>
             <div>
-              <table class="table table-striped table-bordered w-75 ml-25 mb-15">
+              <table class="table table-striped table-bordered w-80 ml-0 mb-15">
                   <thead class="thead-dark">
                       <tr class="top">
                       <th>Location</th>
@@ -146,7 +143,7 @@
                                 @endif
                                   </span> 
                                    @if ( $officelocation->centerHead->user )
-                                  <span data-html="true" data-toggle="tooltip" title="{{ $officelocation->center_head }}" class="content tooltip-wrapper">
+                                  <span data-html="true" data-toggle="tooltip" class="content tooltip-wrapper">
                                   <div class="text-primary fz-14">
                                     {{ $officelocation->centerHead->user->name }}</div>
                                   @else
@@ -160,7 +157,7 @@
                                         type="button" 
                                         id="edit" 
                                         data-id="{{ $officelocation->id }}"
-                                        data-center_head="{{ $officelocation->center_head }}"
+                                        data-centerHead="{{ $officelocation->centerHead }}"
                                         data-location="{{ $officelocation->location }}"
                                         data-capacity="{{ $officelocation->capacity }}"
                                         class="btn btn-sm btn-info ml-1 editbtn"
@@ -178,11 +175,4 @@
         </div>
     </div>
 @endsection
-
-
-   
-    
-
-
-  
  
