@@ -156,8 +156,7 @@ class JobController extends Controller
         ApplicationMeta::create([
             'hr_application_id' => $application->id,
             'key' => 'resume-flag',
-            'value' =>
-            $request->get('body'),
+            'value' => $request->get('body'),
 
         ]);
     }
