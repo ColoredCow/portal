@@ -25,7 +25,7 @@ class UserController extends ModuleBaseController
         $this->authorize('viewAny', User::class);
         $users = $this->service->index();
 
-        return view('user::index', compact('users'));
+        return view('user::index', compact('users' ));
     }
 
     /**
@@ -74,9 +74,13 @@ class UserController extends ModuleBaseController
         return view('user::roles.show-form');
     }
 
-    public function storeRoles(Request $request)
+    public function StoreRoles(Request $request)
     {
-        $role = new Role;
+        $role = $request->validate([
+            'name' => 'required|unique:roles,name',
+        ]);
+        
+        $role = new Role();
         $role->name = $request->name;
         $role->label = $request->label;
         $role->guard_name = $request->guard_name;
@@ -85,4 +89,16 @@ class UserController extends ModuleBaseController
 
         return redirect()->back();
     }
-}
+
+    public function DeleteRoles($id )
+    {
+        Role::find($id)->delete();
+
+    return response()->json([
+        'status'=>200,
+        'message'=>'Role deleted successfuly'
+    ]);
+    }
+
+}  
+

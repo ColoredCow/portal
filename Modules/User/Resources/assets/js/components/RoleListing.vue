@@ -4,6 +4,7 @@
 			<thead class="thead-dark">
 				<tr>
 					<th>Role</th>
+					<th>Correction</th>
 					<th>Permissions</th>
 					<th>Actions</th>
 				</tr>
@@ -13,6 +14,9 @@
 					<td>
 						<div class="mb-1">{{ role.label }}</div>
 						<div class="text-muted fz-14">{{ role.description }}</div>
+					</td>
+					<td>
+						<button v-on:click="removeRole(index)" class="btn btn-danger">Delete</button>
 					</td>
 					<td>
 						<span>Assigned: {{ role.permissions.length }}</span>
@@ -59,7 +63,19 @@ export default {
 
 		onRolePressionsUpdated: function(selectedPermissions) {
 			Vue.set(this.selectedRole, "permissions", selectedPermissions);
-		}
+		},
+
+		removeRole: async function(index) {
+		let id = this.roles[index]["id"];
+		let route = `DeleteRoles/${id}`;
+		console.log(route);
+		let response = await axios.delete(route);
+		this.role =response.data;
+		// window.location.reload();
+		//this.$toast.success("roles removed successfully!");
+		// this.$delete(this.roles, index);
+		this.roles.splice(index, 1);
+		},
 	}
 };
 </script>
