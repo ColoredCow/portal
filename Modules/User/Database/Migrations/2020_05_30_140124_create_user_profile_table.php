@@ -19,7 +19,7 @@ class CreateUserProfileTable extends Migration
             $table->date('date_of_birth');
             $table->string('gender');
             $table->string('father_name')->nullable();
-            $table->string('husband_name')->nullable();
+            $table->string('spouse_name')->nullable();
             $table->string('mobile')->nullable();
             $table->date('date_of_joining')->nullable();
             $table->string('designation')->nullable();

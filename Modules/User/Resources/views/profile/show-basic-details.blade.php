@@ -52,8 +52,8 @@
                     <input type="text" class="form-control" id="date_of_birth" name="date_of_birth" required value="{{ $user->profile && $user->profile->date_of_birth ? $user->profile->date_of_birth : "" }}">
                 </div>
                 <div class="form-group">
-                    <label for="husband_name">Husband Name</label>
-                    <input type="text" class="form-control" id="husband_name" name="husband_name" required value="{{ $user->profile && $user->profile->husband_name ? $user->profile->husband_name : "" }}">
+                    <label for="spouse_name">Spouse</label>
+                    <input type="text" class="form-control" id="spouse_name" name="spouse_name" required value="{{ $user->profile && $user->profile->spouse_name ? $user->profile->spouse_name : "" }}">
                 </div>
                 <div class="form-group">
                     <label for="date_of_joining">Date of joining</label>
@@ -127,8 +127,8 @@
                 <span>{{ $user->profile->date_of_birth }}</span>
             </div>
             <div class="form-group">
-                <label class="font-weight-bold" for="">Husband Name:</label>
-                <span>{{ $user->profile->husband_name }}</span>
+                <label class="font-weight-bold" for="">Spouse:</label>
+                <span>{{ $user->profile->spouse_name }}</span>
             </div>
             <div class="form-group">
                 <label class="font-weight-bold" for="">Date of joining:</label>
