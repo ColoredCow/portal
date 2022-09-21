@@ -129,6 +129,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/completed/change-status/{jobRequisition}', 'RequisitionController@storecompleted');
         Route::get('/pending/{jobRequisition}', 'RequisitionController@storePending');
         Route::get('/complete', 'RequisitionController@showCompletedRequisition')->name('requisition.complete');
+        Route::post('/details', 'RequisitionController@storeBatchDetails')->name('requisition.storeBatchDetails');
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');

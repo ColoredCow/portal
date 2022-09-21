@@ -8,7 +8,7 @@ class JobRequisition extends Model
 {
     protected $guarded = [];
 
-    protected $table = 'job_requisition';
+    protected $table = 'job_Requisition';
 
     public function job()
     {
@@ -18,5 +18,10 @@ class JobRequisition extends Model
     public function hrJobDomain()
     {
         return $this->belongsTo(HrJobDomain::class, 'domain_id');
+    }
+
+    public function batches()
+    {
+        return $this->belongsTo(Batches::class, 'batch_table_id');
     }
 }

@@ -8,11 +8,11 @@ class RequisitionService
 {
     public function index()
     {
-        return JobRequisition::with('hrJobDomain', 'job')->where('status', 'pending')->get();
+        return JobRequisition::with('hrJobDomain', 'job', 'batches')->where('status', 'pending')->get();
     }
 
     public function showCompletedRequisition()
     {
-        return JobRequisition::with('hrJobDomain', 'job')->where('status', 'completed')->get();
+        return JobRequisition::with('hrJobDomain', 'job', 'batches')->where('status', 'completed')->get();
     }
 }

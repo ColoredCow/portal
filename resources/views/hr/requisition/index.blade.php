@@ -6,6 +6,35 @@
         <h1><b> Requisition Dashbord</b></h1>
     </div><br>
     @include('hr.requisition.menu')<br>
+    <div class="modal fade" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="batchMembersModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="batchMembersModalLabel">Batch Members Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{-- @dd($member) --}}
+                    <form id="batchDetailsForm" action="{{ route('requisition.storeBatchDetails') }}" method="post">
+                        @csrf
+                        <input type="text" id="batchId" name="batchId" value="{{$member->id}}">
+                        <label for="teamMembersDropdown">Select Team Members</label>
+                        <select class="form-control"  name="teamMembers[]" multiple="multiple">
+                            @foreach ($employees as $employee)
+                                <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                            @endforeach
+                        </select><br>
+                        <div>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="spinner-border text-primary d-none" id="spinner"></div>
     <table class="table table-striped table-bordered">
         <thead class="thead-dark">

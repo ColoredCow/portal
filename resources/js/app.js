@@ -1738,11 +1738,12 @@ $(function () {
 $(".status").on("change", function () {
 	$("#spinner").removeClass("d-none");
 	if (this.checked) {
+		$('#mymodal').modal();
 		$.ajax({
 			url: "completed/change-status/" + this.dataset.id,
 			method: "GET",
 			success: function (res) {
-				location.reload(true);
+				// location.reload(true);
 			},
 			error: function (err) {
 				alert("there is some problem");
