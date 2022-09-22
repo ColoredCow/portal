@@ -19,48 +19,7 @@ class VolunteerOpportunityController extends JobController
     public function AddUser()
     {
         return view('addUser');
-        //dd('hey');
-        /*$newUser = new Job;
-
-        $newUser->title = 'Weaponslol Specialists';
-        $newUser->description = 'Temporibus ea quaerat';
-        $newUser->type = 'volunteer';
-        $newUser->domain = 'engineering';
-        $newUser->status = 'published';
-        $newUser->resources_required = '0';
-        */
     }
-
-    public function SaveItem(Request $request)
-    {
-        //dd('hey');
-        /*$newUser = new Job;
-        $newUser->title = $request->input('title');
-        $newUser->description = $request->input('description');
-        $newUser->type = $request->input('type');
-        $newUser->domain = $request->input('domain');
-        */
-
-        /*
-        $validated = $request->all();
-        $volunteer = Job::create([
-            'title' => $validated['title'],
-            'description' => $validated['description'],
-            'type' => $validated['type'],
-            'domain' => $validated['domain'],
-            'status' => $validated['status']
-            
-        ]);*/
-
-        //$validated = $request->all();
-        //$this->service->saveApplication($validated);
-
-        //return redirect(route('applications.job.index'));
-        //return redirect("/hr/applications/volunteer")->with('status', 'Volunteer added succesfully!');
-
-
-    }
-
     /**
      * Display a listing of the resource.
      *
