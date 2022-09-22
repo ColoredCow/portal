@@ -168,5 +168,3 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/AddUser', [VolunteerOpportunityController::class,'AddUser'])->name('addUser');
-Route::post('/SaveItem', [VolunteerOpportunityController::class,'SaveItem']
-)->name('saveItem');
