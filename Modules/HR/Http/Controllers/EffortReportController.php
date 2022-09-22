@@ -7,14 +7,21 @@ use Illuminate\Routing\Controller;
 use Modules\User\Entities\User;
 use Modules\Project\Entities\ProjectTeamMemberEffort;
 use Carbon\Carbon;
+use Exception;
 
 class EffortReportController extends Controller
 {
     public function barGraph(Request $request, $employeeId)
     {
         $employee = User::find($employeeId);
-
-        $projectTeamMembers = $employee->projectTeamMembers;
+        try {
+            $projectTeamMembers = $employee->projectTeamMembers;
+            if ($projectTeamMembers == null) {
+                throw new Exception("Error Processing Request");
+            }
+        } catch (Exception $e) {
+            return "<h1>TeamMember not found please add a new teammember</h1>";
+        }
 
         $result = [];
 
@@ -54,7 +61,7 @@ class EffortReportController extends Controller
             'efforts' => $efforsts
         ];
 
-        return view('hr.effort.bar-graph', ['employee' => $employee])->with([
+        return view('hr.effort.bar-graph', ['employee' => $employee, 'projectTeamMembers' => $projectTeamMembers])->with([
             'chartData' => json_encode($chartData)
         ]);
     }
