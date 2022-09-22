@@ -66,12 +66,11 @@ export default {
 		},
 
 		removeRole: async function(index) {
-		let id = this.roles[index]["id"];
-		let route = `DeleteRoles/${id}`;
-		console.log(route);
-		let response = await axios.delete(route);
-		this.role =response.data;
-		this.roles.splice(index, 1);
+			let id = this.roles[index]["id"];
+			let route = `DeleteRoles/${id}`;
+			let response = await axios.delete(route);
+			this.role =response.data;
+			this.roles.splice(index, 1);
 		},
 	}
 };

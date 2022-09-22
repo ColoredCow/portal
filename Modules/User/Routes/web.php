@@ -20,7 +20,7 @@ Route::prefix('user')->middleware('auth')->group(function () {
     Route::get('/showForm', 'UserController@showForm')->name('user.show-form');
     Route::post('/StoreRoles', 'UserController@StoreRoles')->name('user.store-roles');
     Route::delete('DeleteRoles/{roles}', 'UserController@DeleteRoles')->name('roles.delete');
-        /*
+    /*
      * User Profile
     */
     Route::get('/profile', 'ProfileController@index')->name('user.profile');

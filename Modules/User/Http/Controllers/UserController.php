@@ -25,7 +25,7 @@ class UserController extends ModuleBaseController
         $this->authorize('viewAny', User::class);
         $users = $this->service->index();
 
-        return view('user::index', compact('users' ));
+        return view('user::index', compact('users'));
     }
 
     /**
@@ -69,11 +69,6 @@ class UserController extends ModuleBaseController
         $this->service->delete($user);
     }
 
-    public function showForm()
-    {
-        return view('user::roles.show-form');
-    }
-
     public function StoreRoles(Request $request)
     {
         $role = $request->validate([
@@ -98,4 +93,4 @@ class UserController extends ModuleBaseController
             'message'=>'Role deleted successfuly'
         ]);
     }
-}  
+}
