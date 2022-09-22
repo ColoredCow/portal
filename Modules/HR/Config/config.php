@@ -192,12 +192,8 @@ return [
         'emergency_contact_number' => 'Emergency Contact Number',
         'blood_group' => 'Blood Group',
         'illness' => 'Illness',
-        'aadhar_card_number' => 'Aadhar Card Number',
-        'pan_card_number' => 'Pan Card Number',
         'acc_holder_name' => 'Account Holder Name',
         'bank_name' => 'Bank Name',
-        'acc_number' => 'Account Number',
-        'ifsc_code' => 'IFSC Code',
         'uan_number' => 'PF account/ UAN Number',
     ],
     'applicant_upload_details' => [
@@ -205,5 +201,11 @@ return [
         'aadhar_card_scanned' => 'Scanned copy of Aadhaar Card',
         'scanned_copy_pan_card' => 'scanned copy of Pan Card',
         'passbook_first_page_img' => 'Passbook First page IMG',
+    ],
+    'encrypted-applicant-details' => [
+        'aadhar_card_number' => 'Aadhar Card Number',
+        'pan_card_number' => 'Pan Card Number',
+        'acc_number' => 'Account Number',
+        'ifsc_code' => 'IFSC Code',
     ],
 ];
