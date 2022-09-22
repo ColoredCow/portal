@@ -166,5 +166,5 @@ Route::middleware('auth')->group(function () {
     Route::get('user/wishlist-books', 'UserBookController@booksInWishlist');
     Route::get('user/projects', 'UserController@projects');
 });
-
-Route::get('/AddUser', [VolunteerOpportunityController::class,'AddUser'])->name('addUser');
+ 
+Route::get('/AddUser', [VolunteerOpportunityController::class, 'AddUser'])->name('addUser');
