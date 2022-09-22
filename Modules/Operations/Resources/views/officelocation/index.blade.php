@@ -59,10 +59,10 @@
                 <input type="hidden" name="id" id="id">
                 <div class="mr-5 mt-2 mt-md-0 form-group">
                   <label>Center Head</label><br>
-                  <select name="center_head" class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" id="center_head_id" required>
-                    <option value ="" selected> All Employees</option>
+                    <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" name="center_head" id="center_head_id"required>
+                    <option value =""> All Employees</option>
                     @foreach ( $centerHeads as $centerHead )
-                      <option value ="{{ $centerHead->id }}"> {{$centerHead->name}} </option>
+                      <option value ="{{ $centerHead->id }}"selected > {{$centerHead->name}} </option>
                       
                     @endforeach
                   </select>

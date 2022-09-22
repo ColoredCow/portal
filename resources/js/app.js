@@ -2015,6 +2015,8 @@ $(document).ready(function () {
 		$("#id").val(id);
 	});
 
+	console.log($("#center_head_id").val(centerHead));
+
 	$("#editformID").on("click", "#editLocationBtn", function (e) {
 		e.preventDefault();
 		var id = $("#center_head").val();
