@@ -3,18 +3,24 @@
 namespace Modules\ProjectContract\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\ProjectContract\Services\ProjectContractService;
+use App\Models\Client;
+use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
 
 class ProjectContractController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
+    protected $service;
+    public function __construct(ProjectContractService $service)
+    {
+        $this->service = $service;
+    }
+
     public function index()
     {
-        return view('projectcontract::index');
+        $projects = $this->service->index();
+
+        return view('projectcontract::index')->with('projects', $projects);
     }
 
     /**
@@ -28,12 +34,14 @@ class ProjectContractController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param Request $request
+     * @param ProjectContractRequest
      * @return Renderable
      */
-    public function store(Request $request)
+    public function store(ProjectContractRequest $ProjectContractMeta)
     {
-        return view('projectcontract::index');
+        $this->service->store($ProjectContractMeta);
+
+        return redirect(route('projectcontract.index'))->with('success', 'Project Contract created successfully');
     }
 
     /**
@@ -53,18 +61,15 @@ class ProjectContractController extends Controller
      */
     public function edit($id)
     {
-        return view('projectcontract::index');
-    }
+        $projects = $this->service->index($id);
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
-    {
-        return view('projectcontract::index');
+        foreach($projects as $project)
+        {
+            $projectId = $project;
+        }
+        $clients = client::all();
+        
+        return view('projectcontract::edit-project-contract')->with(compact('projectId', 'clients'));
     }
 
     /**
@@ -72,8 +77,25 @@ class ProjectContractController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        return view('projectcontract::index');
+        $this->service->delete($id);
+
+        return redirect(route('projectcontract.index'));
     }
+
+    public function viewForm()
+    {
+        $clients = client::all();
+
+        return view('projectcontract::add-new-client')->with('clients', $clients);
+    }
+
+    public function update(ProjectContractRequest $ProjectContractMeta, $id)
+    {
+        $this->service->update($ProjectContractMeta, $id);
+
+        return redirect(route('projectcontract.index'))->with('success', 'Project Contract updated successfully');
+    }
+
 }
