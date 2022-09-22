@@ -23,7 +23,6 @@
 		@foreach ($roundMailTypes as $type)
 			@php
 				$mailTemplate = $type['label'] . '_mail_template';
-				$round->{$mailTemplate} = $round->{$mailTemplate};
 			@endphp
 			<div class="card mt-4">
 				<form action="{{ route('hr.round.update', $round->id) }}" method="POST">
