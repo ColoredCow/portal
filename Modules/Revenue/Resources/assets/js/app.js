@@ -1,4 +1,4 @@
-$("#modalEdit").on("show.bs.modal", function (e) {
+$("#modalEdit").on("show.bs.modal", function(e) {
 	const revenueProceedEdited = e.relatedTarget;
 	const revenueProceed = $(revenueProceedEdited).data("json");
 
@@ -10,12 +10,16 @@ $("#modalEdit").on("show.bs.modal", function (e) {
 	editForm.attr("action", action);
 
 	editForm.find("select[name='category']").val(revenueProceed.category);
+	editForm.find("select[name='year']").val(revenueProceed.year);
+	editForm.find("select[name='month']").val(revenueProceed.month);
 	editForm.find("input[name='name']").val(revenueProceed.name);
 	editForm.find("input[name='amount']").val(revenueProceed.amount);
 	editForm.find("select[name='currency']").val(revenueProceed.currency);
-	editForm.find("input[name='recieved_at']").val(revenueProceed.recieved_at);
+	editForm
+		.find("input[name='received_at']")
+		.val(revenueProceed.display_received_at);
 	editForm.find("textarea[name='notes']").val(revenueProceed.notes);
 });
-$("body").on("click","#deleteRevenue",function(){
+$("body").on("click", "#deleteRevenue", function() {
 	alert("Are you sure?");
 });

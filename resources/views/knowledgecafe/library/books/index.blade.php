@@ -24,7 +24,7 @@
     </div>
     <div class="row mt-3 mb-2 px-2">
         <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 p-2 d-flex justify-content-center align-items-center">
-            <input type="text" data-value="{{ request()->input('search') }}" class="form-control" id="search_input" placeholder="Search all books" v-model="searchKey">
+            <input type="text" data-value="{{ request()->input('search') }}" class="form-control" id="search_input" placeholder="Enter the book name" v-model="searchKey">
             <button class="btn btn-info ml-2 py-1.5" @click="searchBooks()">Search</button>
         </div>
         <div>

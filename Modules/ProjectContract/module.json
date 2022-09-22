@@ -1,0 +1,13 @@
+{
+    "name": "ProjectContract",
+    "alias": "projectcontract",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\ProjectContract\\Providers\\ProjectContractServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
