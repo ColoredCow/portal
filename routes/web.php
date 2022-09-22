@@ -12,6 +12,7 @@
 |
  */
 use App\Http\Controllers\HR\Volunteers\VolunteerOpportunityController;
+
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect('home');
