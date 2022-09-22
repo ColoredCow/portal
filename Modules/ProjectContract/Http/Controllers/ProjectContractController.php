@@ -41,6 +41,7 @@ class ProjectContractController extends Controller
 
     public function edit($id)
     {
+        $projectId = [];
         $projects = $this->service->index($id);
 
         foreach ($projects as $project) {
