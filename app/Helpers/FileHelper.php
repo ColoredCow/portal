@@ -59,7 +59,7 @@ class FileHelper
         if ($offerLetterPreview) {
             return $pdf->stream($fileName);
         }
-        $directory = 'app/' . config('constants.hr.offer-letters-dir');
+        $directory = 'app/public/' . config('constants.hr.offer-letters-dir');
         $fullPath = storage_path($directory . '/' . $fileName);
         $pdf->save($fullPath);
         $filePath = config('constants.hr.offer-letters-dir') . '/' . $fileName;

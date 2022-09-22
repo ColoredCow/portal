@@ -113,7 +113,7 @@ class ApplicationService implements ApplicationServiceContract
             if ($request->file($key)) {
                 $file = $request->file($key);
                 $fileName = $key . $request->get('hr_applicant_id') . '.' . $file->extension();
-                $filepath = $file->move(storage_path('app/uploadedimages'), $fileName);
+                $filepath = $file->move(storage_path('app/public/uploadedimages'), $fileName);
                 ApplicantMeta::create([
                     'hr_applicant_id' => $request->get('hr_applicant_id'),
                     'key' => $label,
