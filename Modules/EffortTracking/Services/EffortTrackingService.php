@@ -186,7 +186,7 @@ class EffortTrackingService
 
             $sheetId = $correctedEffortsheetUrl[1];
             $sheets = new Sheets();
-            $projectMembersCount = $project->teamMembers()->count();
+            $projectMembersCount = 0;
             $lastColumn = config('efforttracking.default_last_column_in_effort_sheet');
             $columnIndex = 5;
             $projectsInSheet = [];
