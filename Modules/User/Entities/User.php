@@ -178,7 +178,7 @@ class User extends Authenticatable
     public function getMainProjectsFteAttribute()
     {
         $fte = 0;
-        foreach ($this->projectTeamMembers as $projectTeamMembers) {
+        foreach ($this->projectTeamMembers()->with('project')->get() as $projectTeamMembers) {
             if ($projectTeamMembers->project->isAMC(0)) {
                 $fte += $projectTeamMembers->fte;
             }
