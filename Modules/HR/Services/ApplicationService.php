@@ -100,7 +100,7 @@ class ApplicationService implements ApplicationServiceContract
     {
         $keyConfigs = (config('hr.applicant_form-details'));
         $uploadConfigs = (config('hr.applicant_upload_details'));
-        $encryptConfigs =(config('hr.encrypted-applicant-details'));
+        $encryptConfigs = (config('hr.encrypted-applicant-details'));
 
         foreach ($keyConfigs as $key=>$label) {
             ApplicantMeta::create([
