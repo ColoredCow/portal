@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\HR\Volunteers;
+
 //use Illuminate\Http\Request;
 use Illuminate\Http\Request;
 use Modules\HR\Entities\Job;
@@ -20,7 +21,7 @@ class VolunteerOpportunityController extends JobController
         return view('addUser');
         //dd('hey');
         /*$newUser = new Job;
-        
+
         $newUser->title = 'Weaponslol Specialists';
         $newUser->description = 'Temporibus ea quaerat';
         $newUser->type = 'volunteer';
@@ -72,7 +73,8 @@ class VolunteerOpportunityController extends JobController
         $jobs = Job::with([
             'applications' => function ($query) {
                 $query->isOpen()->get();
-            }])
+            }
+        ])
             ->typeVolunteer()
             ->latest()
             ->paginate(config('constants.pagination_size'))
