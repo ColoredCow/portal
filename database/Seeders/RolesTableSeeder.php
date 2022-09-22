@@ -56,7 +56,7 @@ class RolesTableSeeder extends Seeder
               'label' => '5',
               'guard_name' => 'seven',
               'description' => 'vvvvvvv',
-            ]
+            ],
         ];
 
         foreach ($defaultRoles as $role) {
