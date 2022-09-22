@@ -58,12 +58,12 @@
 
 - [How do i resolve merge conflicts](https://dev.to/github/how-do-i-resolve-merge-conflicts-5438)
 
+
+
 **After creating pull request perform the following steps**
 
 **Look on the Righ Hand Side**
-<img src="RightSide.png" alt="Right Side Image" width="900" height="300"><br><br><br>
-
-
+<img src="RighSide.png" alt="Right Side Image" width="900" height="300"><br><br><br>
 
 
 
@@ -75,9 +75,8 @@
 
 
 
-
 7) **Assigning Ready to review label** : On right hand side under assignees you will find 'Labels'.
-    Click on 'Labels' and select 'status : ready for review'<br>
+    Click on 'Labels' and select 'status : ready for review'<br>
 <img src="assign-label.png" alt="assign-label-tutorial" width="900" height="500"><br><br><br>
 
 
