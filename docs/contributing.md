@@ -61,15 +61,29 @@
 **After creating pull request perform the following steps**
 
 **Look on the Righ Hand Side**
-<img src="RightSide.png" alt="Right Side Image" width="500" height="600">
+<img src="RightSide.png" alt="Right Side Image" width="900" height="300"><br><br><br>
 
-6) **Self Assign ** : On the right hand side under the 'Assignees' click on 'assign-yourself'
 
-<img src="assign-yourself.png" alt="assign-yourself-tutorial" width="500" height="600">
 
-7) **Assigning Ready to review label ** : On right hand side under assignees you will find 'Labels'.
-    Click on 'Labels' and select 'status : ready for review'
-<img src="assign-label.png" alt="assign-label-tutorial" width="500" height="600">
-8) ** Assigning reviewers for reviewing your task ** : On the right hand side above 'Assignees' you can find 'Reviewers'.
-<img src="assign-reviewers.png" alt="assign-reviewers-tutorial" width="500" height="600">
-    Click on 'Reviewers' and select 'team-portal-reviewers'
+
+
+
+
+6) **Self Assign** : On the right hand side under the 'Assignees' click on 'assign-yourself'
+
+<img src="assign-yourself.png" alt="assign-yourself-tutorial" width="800" height="300"><br><br><br>
+
+
+
+
+7) **Assigning Ready to review label** : On right hand side under assignees you will find 'Labels'.
+    Click on 'Labels' and select 'status : ready for review'<br>
+<img src="assign-label.png" alt="assign-label-tutorial" width="900" height="500"><br><br><br>
+
+
+
+
+8) **Assigning Reviewers for review** : On the right hand side above 'Assignees' you can find 'Reviewers'.
+   Click on 'Reviewers' and select 'team-portal-reviewers'
+<img src="assign-reviewers.png" alt="assign-reviewers-tutorial" width="900" height="500"><br><br><br>
+    
