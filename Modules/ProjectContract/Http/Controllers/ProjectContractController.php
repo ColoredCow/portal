@@ -2,7 +2,6 @@
 
 namespace Modules\ProjectContract\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
 use Modules\ProjectContract\Services\ProjectContractService;
 use App\Models\Client;
@@ -23,20 +22,11 @@ class ProjectContractController extends Controller
         return view('projectcontract::index')->with('projects', $projects);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
     public function create()
     {
         return view('projectcontract::index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param ProjectContractRequest
-     * @return Renderable
-     */
     public function store(ProjectContractRequest $ProjectContractMeta)
     {
         $this->service->store($ProjectContractMeta);
@@ -44,39 +34,23 @@ class ProjectContractController extends Controller
         return redirect(route('projectcontract.index'))->with('success', 'Project Contract created successfully');
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
+    public function show()
     {
         return view('projectcontract::index');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function edit($id)
     {
         $projects = $this->service->index($id);
 
-        foreach($projects as $project)
-        {
+        foreach($projects as $project) {
             $projectId = $project;
         }
         $clients = client::all();
-        
+
         return view('projectcontract::edit-project-contract')->with(compact('projectId', 'clients'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
     public function delete($id)
     {
         $this->service->delete($id);
@@ -97,5 +71,4 @@ class ProjectContractController extends Controller
 
         return redirect(route('projectcontract.index'))->with('success', 'Project Contract updated successfully');
     }
-
 }

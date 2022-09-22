@@ -2,7 +2,6 @@
 
 namespace Modules\ProjectContract\Services;
 
-use Illuminate\Http\Request;
 use Modules\ProjectContract\Entities\ProjectContractMeta;
 use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
 
@@ -10,7 +9,7 @@ class ProjectContractService
 {
     public function index()
     {
-        return ProjectContractMeta::with('client')->orderBy('updated_at','desc')->get();
+        return ProjectContractMeta::with('client')->orderBy('updated_at', 'desc')->get();
     }
 
     public function store(ProjectContractRequest $request)
@@ -40,9 +39,8 @@ class ProjectContractService
         return ProjectContractMeta::find($id)->delete();
     }
 
-    public function update(ProjectContractRequest $request , $id)
+    public function update(ProjectContractRequest $request, $id)
     {
-
         if ($request->hasFile('logo_img')) {
             $file = $request->file('logo_img');
             $path = 'app/public/contractlogo';

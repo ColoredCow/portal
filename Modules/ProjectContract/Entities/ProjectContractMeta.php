@@ -20,7 +20,7 @@ class ProjectContractMeta extends Model
         'authority_name',
         'contract_date_for_signing',
         'contract_date_for_effective',
-        'contract_expiry_date', 
+        'contract_expiry_date',
         'attributes'
     ];
 
