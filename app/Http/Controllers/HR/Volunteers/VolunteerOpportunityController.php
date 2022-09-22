@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\HR\Volunteers;
 
-use Illuminate\Http\Request;
+use Request;
 use Modules\HR\Entities\Job;
 use Modules\HR\Http\Controllers\Recruitment\JobController;
 
