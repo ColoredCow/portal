@@ -17,10 +17,10 @@ class EffortReportController extends Controller
         try {
             $projectTeamMembers = $employee->projectTeamMembers;
             if ($projectTeamMembers == null) {
-                throw new Exception("Error Processing Request");
+                throw new Exception('Error Processing Request');
             }
         } catch (Exception $e) {
-            return "<h1>TeamMember not found please add a new teammember</h1>";
+            return '<h1>TeamMember not found please add a new teammember</h1>';
         }
 
         $result = [];
