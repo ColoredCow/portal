@@ -39,9 +39,12 @@ class ProjectContractController extends Controller
         return view('projectcontract::index');
     }
 
-    public function edit(ProjectContractRequest $request, $id)
+    /**
+     * 
+     * @return $projectId
+     */
+    public function edit($id)
     {
-        $projectID = $request->$id;
         $projects = $this->service->index($id);
 
         foreach ($projects as $project) {
