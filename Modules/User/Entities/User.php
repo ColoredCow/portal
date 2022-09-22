@@ -146,6 +146,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(ProjectTeamMember::class, 'team_member_id')->where('ended_on', null);
     }
+    
     public function getMonthTotalEffortAttribute()
     {
         if (! $this->projectTeamMembers->first()) {
@@ -180,6 +181,17 @@ class User extends Authenticatable
         $fte = 0;
         foreach ($this->projectTeamMembers()->with('project')->get() as $projectTeamMembers) {
             if ($projectTeamMembers->project->isAMC(0)) {
+                $fte += $projectTeamMembers->fte;
+            }
+        }
+
+        return $fte;
+    }
+    public function getamcProjectsFteAttribute()
+    {
+        $fte = 0;
+        foreach ($this->projectTeamMembers()->with('project')->get() as $projectTeamMembers) {
+            if ($projectTeamMembers->project->isAMC(1)) {
                 $fte += $projectTeamMembers->fte;
             }
         }
