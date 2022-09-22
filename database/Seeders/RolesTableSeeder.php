@@ -54,7 +54,7 @@ class RolesTableSeeder extends Seeder
             [
               'name' => 'sbhai',
               'label' => '5',
-              'guard_name' => 'seven',
+              'guard_name' => 'web',
               'description' => 'vvvvvvv',
             ],
         ];
