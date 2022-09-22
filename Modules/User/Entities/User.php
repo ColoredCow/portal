@@ -177,89 +177,17 @@ class User extends Authenticatable
     }
     public function getMainProjectsFteAttribute()
     {
-
         $fte = 0;
+        foreach ($this->projectTeamMembers as $projectTeamMembers) {
 
-        foreach ($this->projectTeamMembers as $projectTeamMember) {
-
-            if(!$projectTeamMember->project->isAMC(0))
-            {
-            $fte += $projectTeamMember->fte;
+            if($projectTeamMembers->project->isAMC(0))
+            {                
+                $fte += $projectTeamMembers->fte;
             }
         }
-
-        return $fte;
-
-
-        // $projects = Project::where('is_amc', '=', 0)->get();
-        // foreach($projects as $project) {
-        //     dd($project);
-        // }
-        // dd($project);
-        // // $d = ProjectTeamMember::find(1);
-        // // echo $d;
-        // // foreach ($comments as $c)
-        // // {
-        // //      echo $c;
-        // // // }
-        // $p = Project::whereHas('is_amc',function($query){
-        //    return $query->where('is_amc',0);
-        // })->get();
-
-        // $p = $this->Project::isAMC(1)->get();
-        // dd($p);
-       
-        // // $p  = $this->projectTeamMember->query()->has('is_amc',1)->get()->toArray();
-        // // dd($p);
-        // // })->get();
-      
-        // // $fte = 0;
-
-
-        // $ps = $this->project::whereHas('id',function($query){
-        //    return $query->where('is_amc','0');
-        // })->get();
-        // echo $ps;
-
-
-
-
-        // $ps1 = $this->projectTeamMember::whereHas('project_id',function($query){
-        //     return $query->where('is_amc','0');
-        //  })->get();
-        //  echo $ps;
-        // foreach ($this->projects as $project) {
-        //     if($project->is_amc==0)
-        //     {
-        //         fte += $project->fte;
-        //     }
-        // }
-
-        // return $fte;
-
-        // dd($b);
-        // dd($p);
-
-        // $clients = Client::query()->with('projects', function ($query) use ($filters, $showAllProjects, $userId) {
-        //     $query->applyFilter($filters);
-        //     if (! $showAllProjects) {
-        //         return $query->linkedToTeamMember($userId);
-        //     }
-        // })->whereHas('projects', function ($query) use ($filters, $showAllProjects, $userId) {
-        //     $query->applyFilter($filters);
-        //     if (! $showAllProjects) {
-        //         return $query->linkedToTeamMember($userId);
-        //     }
-
-
-    //    $p =this->ProjectTeamMembers::join('projects','project_id','=','projects.id')->get(['projects.id']);
-    //     dd($p)
-
-        
-
-            
-
+        return $fte;         
     }
+
     public function activeProjects()
     {
         $projects = Project::linkedToTeamMember($this->id)->get();
