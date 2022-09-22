@@ -9,6 +9,7 @@ use Modules\HR\Http\Controllers\Recruitment\JobController;
 
 class VolunteerOpportunityController extends JobController
 {
+    protected $service;
     public function getOpportunityType()
     {
         return 'volunteer';
@@ -38,6 +39,8 @@ class VolunteerOpportunityController extends JobController
         $newUser->type = $request->input('type');
         $newUser->domain = $request->input('domain');
         */
+
+        /*
         $validated = $request->all();
         $volunteer = Job::create([
             'title' => $validated['title'],
@@ -46,8 +49,13 @@ class VolunteerOpportunityController extends JobController
             'domain' => $validated['domain'],
             'status' => $validated['status']
             
-        ]);
-        return redirect("/hr/applications/volunteer")->with('status', 'Volunteer added succesfully!');
+        ]);*/
+
+        //$validated = $request->all();
+        //$this->service->saveApplication($validated);
+
+        //return redirect(route('applications.job.index'));
+        //return redirect("/hr/applications/volunteer")->with('status', 'Volunteer added succesfully!');
 
 
     }

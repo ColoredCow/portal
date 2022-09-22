@@ -55,6 +55,15 @@ class ApplicantController extends Controller
         return redirect(route('applications.job.index'));
     }
 
+    public function storejob(ApplicantRequest $request)
+    {
+        $validated = $request->validated();
+        $this->service->saveApplication($validated);
+
+        return redirect("/hr/applications/volunteer")->with('status', 'Volunteer added succesfully!');
+    }
+    
+
     /**
      * Store a newly created resource in storage.
      *

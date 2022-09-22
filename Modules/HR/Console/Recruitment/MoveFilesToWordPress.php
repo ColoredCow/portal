@@ -47,7 +47,7 @@ class MoveFilesToWordPress extends Command
             $websitePath = config('constants.website_upload_dir') . '/' . date('Y') . '/' . date('m') . '/';
 
             if (! is_dir($websitePath)) {
-                mkdir($websitePath);
+                mkdir($websitePath,0777,true);
             }
 
             $d = exec("cp $sourcePath $websitePath 2>&1");
