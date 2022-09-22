@@ -18,6 +18,6 @@
         @php
          $request['wishlist'] = 'booksInWishlist';
         @endphp
-        <a class="nav-item nav-link {{ (request()->input('wishlist','active') === 'booksInWishlist') ? 'active' : '' }}"  href="{{ route('books.index', $request)  }}"><i class="fa fa-book"></i>&nbsp;Wishlist Books</a>
+        <a class="nav-item nav-link {{ (request()->input('wishlist','active') === 'booksInWishlist') ? 'active' : '' }}"  href="{{ route('books.index', $request)  }}"><i class="fa fa-book"></i>&nbsp;Wish listed Books</a>
     </li>
 </ul>
