@@ -8,6 +8,10 @@ use Modules\HR\Http\Controllers\Recruitment\JobController;
 
 class VolunteerOpportunityController extends JobController
 {
+    public function AddUser()
+    {
+        return view('addUser');
+    }
     public function getOpportunityType()
     {
         return 'volunteer';

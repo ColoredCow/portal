@@ -3,7 +3,16 @@
 @section('content')
 <div class="container">
     <br>
-    @include('hr.volunteers.menu')
+    <div class="d-flex p-2 bd-highlight justify-content-between"">
+        <div>
+            @include('hr.volunteers.menu')
+        </div>
+        <div>
+            <form method="get" action="{{ route('addUser') }}">       
+                <button class="btn btn-success text-white ml-1"><i class="fa fa-plus"></i>Add new Volunteer</button>
+            </form>
+        </div>
+    </div>
     <br><br>
     <div class="row">
         <div class="col-md-6">

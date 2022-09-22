@@ -18,6 +18,14 @@ use Modules\User\Entities\User;
 
 class ApplicantController extends Controller
 {
+    public function storejob(ApplicantRequest $request)
+    {
+        $validated = $request->validated();
+        $this->service->saveApplication($validated);
+
+        return redirect("/hr/applications/volunteer")->with('status', 'Volunteer added succesfully!');
+    }
+
     use AuthorizesRequests;
 
     protected $service;
