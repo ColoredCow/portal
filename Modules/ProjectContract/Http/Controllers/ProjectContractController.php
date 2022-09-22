@@ -39,10 +39,6 @@ class ProjectContractController extends Controller
         return view('projectcontract::index');
     }
 
-    /**
-     * 
-     * @return $projectId
-     */
     public function edit($id)
     {
         $projects = $this->service->index($id);
@@ -52,7 +48,10 @@ class ProjectContractController extends Controller
         }
         $clients = client::all();
 
-        return view('projectcontract::edit-project-contract')->with(compact('projectId', 'clients'));
+        return view('projectcontract::edit-project-contract')->with([
+            'projectId' => $projectId,
+            'clients' => $clients,
+        ]);
     }
 
     public function delete($id)
