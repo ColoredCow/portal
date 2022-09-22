@@ -179,12 +179,12 @@ class User extends Authenticatable
     {
         $fte = 0;
         foreach ($this->projectTeamMembers as $projectTeamMembers) {
-            if ($projectTeamMembers->project->isAMC(0)) {                
+            if ($projectTeamMembers->project->isAMC(0)) {
                 $fte += $projectTeamMembers->fte;
             }
         }
 
-        return $fte;         
+        return $fte;
     }
 
     public function activeProjects()
