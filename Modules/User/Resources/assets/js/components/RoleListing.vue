@@ -71,9 +71,6 @@ export default {
 		console.log(route);
 		let response = await axios.delete(route);
 		this.role =response.data;
-		// window.location.reload();
-		//this.$toast.success("roles removed successfully!");
-		// this.$delete(this.roles, index);
 		this.roles.splice(index, 1);
 		},
 	}

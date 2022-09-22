@@ -1197,6 +1197,35 @@ if (document.getElementById("roles_permission_table")) {
 	});
 }
 
+$(document).ready(function () {
+	$("#rolesModal").on("hidden.bs.modal", function () {
+		$(this).find("form").trigger("reset");
+		$("#roleserror").addClass("d-none");
+	});
+
+	$("#roleform").on("submit", function (e) {
+		e.preventDefault();
+		let form = $("#roleform");
+		$.ajax({
+			type: form.attr("method"),
+			url: form.attr("action"),
+			data: form.serialize(),
+			success: function (response) {
+				$("#rolesModal").modal("hide");
+				$("#successMessage").toggleClass("d-none");
+				$("#successMessage").fadeToggle(3000);
+			},
+			error: function (response) {
+				if (response.responseJSON.errors.name) {
+					let text = response.responseJSON.errors.name[0];
+					$("#roleserror").html(text).removeClass("d-none");
+					return false;
+				}
+			},
+		});
+	});
+});
+
 if (document.getElementById("user_roles_table")) {
 	var userRoles = new Vue({
 		el: "#user_roles_table",

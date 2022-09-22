@@ -5,6 +5,11 @@
     @includeWhen(session('success'), 'toast', ['message' => session('success')])
 	@include('user::layouts.navbar')
 	<h4>Roles management </h4>
+	<div class="d-none alert alert-success " id="successMessage" role="alert">
+        <strong>Updated!</strong> Submitted successfully.
+        <button type="button" class="close" id="closeSuccessMessage" aria-label="Close">
+        </button>
+    </div>
 	<button type="button" class="btn btn-primary float-right mb-6" data-toggle="modal" data-target="#rolesModal">
 	ADD NEW ROLE
 	</button>
@@ -25,48 +30,32 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form action="{{ route('user.store-roles'  ) }}" method="POST">
+					<form action="{{ route('user.store-roles'  ) }}" method="POST" id="roleform">
 						@csrf
 						<div class="form-group">
-							<label for="name">Name</label>
+							<label for="name">Name</label><strong class="text-danger">*</strong>
 							<input type="text" class="form-control" name="name" required>
-							@error('name')
-										<div class="alert alert-danger">{{ $message }}</div>
-									@enderror 
+                            <div class="d-none text-danger" name="error" id="roleserror"></div>
 						</div>
-						<div class=" form-group">
+						<div class="form-group">
 							<label for="label" >Label</label><strong class="text-danger">*</strong>
-							<input type="text" class="form-control " name="label" required>
-							@error('label')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                                 @enderror
+							<input type="text" class="form-control" name="label" required>
 						</div>
-						<div class=" form-group">
+						<div class="form-group">
 							<label for="guard_name" >Guard Name</label><strong class="text-danger">*</strong>
 							<input type="text" class="form-control" name="guard_name" required>
-							<span class="text-danger">
-								@error('guard_name')
-								  {{$message}}
-								@enderror
-							</span>
 						</div>
 						<div class="form-group">
 							<label for="description">Description</label><strong class="text-danger">*</strong>
 							<input type="text" class="form-control" name="description" required>
-							<span class="text-danger">
-								@error('description')
-								  {{$message}}
-								@enderror
-							</span>
 						</div>
 						<div class="modal-footer">
 							<button type="submit" class="btn btn-sm btn-outline-danger">Save</button>
 						</div>
 					</form> 
-				</div>
+				</div>	
 			</div>
 		</div>
 	</div>
 </div>
-
 @endsection

@@ -79,7 +79,6 @@ class UserController extends ModuleBaseController
         $role = $request->validate([
             'name' => 'required|unique:roles,name',
         ]);
-        
         $role = new Role();
         $role->name = $request->name;
         $role->label = $request->label;
@@ -90,15 +89,13 @@ class UserController extends ModuleBaseController
         return redirect()->back();
     }
 
-    public function DeleteRoles($id )
+    public function DeleteRoles($id)
     {
         Role::find($id)->delete();
 
-    return response()->json([
-        'status'=>200,
-        'message'=>'Role deleted successfuly'
-    ]);
+        return response()->json([
+            'status'=>200,
+            'message'=>'Role deleted successfuly'
+        ]);
     }
-
 }  
-
