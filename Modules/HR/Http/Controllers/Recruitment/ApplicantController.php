@@ -23,7 +23,7 @@ class ApplicantController extends Controller
         $validated = $request->validated();
         $this->service->saveApplication($validated);
 
-        return redirect("/hr/applications/volunteer")->with('status', 'Volunteer added succesfully!');
+        return redirect('/hr/applications/volunteer')->with('status', 'Volunteer added succesfully!');
     }
 
     use AuthorizesRequests;
