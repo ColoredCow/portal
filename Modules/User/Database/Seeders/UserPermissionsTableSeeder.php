@@ -15,7 +15,7 @@ class UserPermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-        Model::guarded();
+        Model::unguard();
         Permission::updateOrCreate(['name' => 'user_management.create']);
         Permission::updateOrCreate(['name' => 'user_management.view']);
         Permission::updateOrCreate(['name' => 'user_management.update']);
