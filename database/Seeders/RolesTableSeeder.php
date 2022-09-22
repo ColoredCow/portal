@@ -50,13 +50,7 @@ class RolesTableSeeder extends Seeder
                'label'=> 'Intern',
                'guard_name' => 'web',
                'description' => 'Someone who is in training',
-            ],
-            [
-              'name' => 'sbhai',
-              'label' => '5',
-              'guard_name' => 'web',
-              'description' => 'vvvvvvv',
-            ],
+            ],    
         ];
 
         foreach ($defaultRoles as $role) {
