@@ -22,4 +22,9 @@
         @endif
     </td>
 
+    <td>
+        <a href='{{ route('client.edit', [$client, 'projects']) }}'> {{$client->projects->count()}} </a>
+        
+    </td>
 </tr>
+

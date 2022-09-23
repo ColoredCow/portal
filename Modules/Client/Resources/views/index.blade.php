@@ -35,6 +35,7 @@
                     <th>Name</th>
                     <th>Client Type</th>
                     <th>Key Account Manager</th>
+                    <th>Projects Count</th>
                 </tr>
             </thead>
             <tbody>
