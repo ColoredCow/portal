@@ -82,12 +82,7 @@ class RequisitionController extends Controller
             ]);
         };
 
-        $a = DB::table('job_requisition')->where('id','=',$batchId )->update(['batch_table_id','=',$batchId ]);
-        // $a->update(['batch_table_id','=',$batchId ]);
-        dd($a);
-
-        
-    
+        DB::table('job_requisition')->where('id', $batchId )->update(['batch_table_id' => $batchId ]);
 
         return redirect()->back();
     }
@@ -96,7 +91,6 @@ class RequisitionController extends Controller
     {
         $requisitions = $this->service->showCompletedRequisition();
 
-        // dd($requisitions);
         return view('hr.requisition.complete')->with([
             'requisitions' => $requisitions,
         ]);
