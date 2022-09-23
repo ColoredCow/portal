@@ -15,4 +15,3 @@ class ExpenseFile extends Model
         'user_id',
     ];
 }
-    
