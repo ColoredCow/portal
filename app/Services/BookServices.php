@@ -70,9 +70,12 @@ class BookServices
     {
         $userBookReader = DB::table('book_readers')->select('*')->where('user_id', $user->id)->first()->library_book_id;
         $readBooks = Book::where('id', $userBookReader)->get();
+        $readBookCount = $readBooks->count();
         $userBookBorrower = DB::table('book_borrower')->where('user_id', $user->id)->first()->library_book_id ?? '-';
         $borrowedBooks = Book::where('id', $userBookBorrower)->get();
+        $borrowedBookCount = $borrowedBooks->count();
 
-        return ['readBooks'=>$readBooks, 'borrowedBooks'=>$borrowedBooks];
+        return ['readBooks'=>$readBooks, 'borrowedBooks'=>$borrowedBooks, 'borrowedBookCount'=>$borrowedBookCount,
+        'readBookCount'=>$readBookCount];
     }
 }

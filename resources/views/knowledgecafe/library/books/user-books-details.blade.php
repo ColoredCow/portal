@@ -23,7 +23,7 @@
                         <div class="container mb-3">
                             <div class="row">
                               <div class="col-sm border px-0">
-                                <h4 class="card-header" style="color: #1B65D5">Wishlisted Books</h4>
+                                <h4 class="card-header" style="color: #1B65D5">Wishlisted Books({{$bookcount}})</h4>
                                 @foreach ($user->booksInWishlist as $list)
                                 <div class="px-3 py-2 border-bottom">
                                     {{$list->title}}
@@ -31,7 +31,7 @@
                                 @endforeach
                               </div>
                               <div class="col-sm border px-0">
-                                <h4 class="card-header" style="color: #0A6B51">Read Books</h4>
+                                <h4 class="card-header" style="color: #0A6B51">Read Books({{$books['readBookCount']}})</h4>
                                 @foreach ($books['readBooks'] as $readBook)
                                 <div class="px-3 py-2 border-bottom">
                                     {{$readBook->title}}
@@ -39,7 +39,7 @@
                                 @endforeach
                               </div>
                               <div class="col-sm border px-0">
-                                <h4 class="card-header"  style="color: #E32315">Borrowed Books</h4>
+                                <h4 class="card-header"  style="color: #E32315">Borrowed Books({{$books['borrowedBookCount']}})</h4>
                                 @foreach ($books['borrowedBooks'] as $borrowedBook)
                                 <div class="px-3 py-2 border-bottom">
                                     {{$borrowedBook->title}}
