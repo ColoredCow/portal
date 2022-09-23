@@ -11,7 +11,13 @@ class RevenueProceed extends Model
 
     protected $guarded = [];
 
-    protected $fillable = ['name', 'category', 'currency', 'amount', 'recieved_at', 'year', 'month', 'notes'];
+    protected $appends = ['display_received_at'];
+
+    protected $casts = [
+        'received_at' => 'date',
+    ];
+
+    protected $fillable = ['name', 'category', 'currency', 'amount', 'received_at', 'year', 'month', 'notes'];
 
     public function scopeApplyFilters($query, $filters)
     {
@@ -24,5 +30,10 @@ class RevenueProceed extends Model
         }
 
         return $query;
+    }
+
+    public function getDisplayReceivedAtAttribute()
+    {
+        return $this->received_at->format('Y-m-d');
     }
 }
