@@ -34,7 +34,6 @@ class Project extends Model implements Auditable
 
     public function scopeIsAMC($query, $isAmc)
     {
-        
         $query->where('is_amc', $isAmc);
     }
 

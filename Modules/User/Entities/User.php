@@ -181,9 +181,7 @@ class User extends Authenticatable
         $fte = 0;
        
         foreach ($this->projectTeamMembers()->with('project')->get() as $projectTeamMembers) {
-
             if (!$projectTeamMembers->project->is_amc) {
-                dump($projectTeamMembers->fte,$projectTeamMembers->id);
                 $fte += $projectTeamMembers->fte;
             }
         }
@@ -193,7 +191,7 @@ class User extends Authenticatable
     public function getamcProjectsFteAttribute()
     {
         $fte = 0;
-        
+
         foreach ($this->projectTeamMembers()->with('project')->get() as $projectTeamMembers) {
 
             if ($projectTeamMembers->project->is_amc) {
