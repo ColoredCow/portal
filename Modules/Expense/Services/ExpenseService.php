@@ -4,7 +4,7 @@ namespace Modules\Expense\Services;
 
 use Illuminate\Http\Request;
 use Modules\Expense\Entities\Expense;
-use Modules\Expense\Entities\Expensefile;
+use Modules\Expense\Entities\ExpenseFile;
 
 class ExpenseService
 {
@@ -16,7 +16,6 @@ class ExpenseService
 
     public function store(Request $request)
     {
-         
         $file = $request->file('file_path');
         $path = 'app/public/expenseDocument';
         $imageName = $file->getClientOriginalName();
@@ -32,13 +31,13 @@ class ExpenseService
         $expense->paid_at = $request['paid_at'];
         $expense->save();
         $expenseFile = new ExpenseFile;
-        
+
         $expenseFile->expense_id = $expense->id;
         $expenseFile->file_type = $request['file_type'];
         $expenseFile->file_path = $fullpath;
         $expenseFile->user_id = auth()->user()->id;
         $expenseFile->save();
-    } 
+    }
 
     public function edit(int $id)
     {
