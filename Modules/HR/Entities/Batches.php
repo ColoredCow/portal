@@ -18,4 +18,5 @@ class Batches extends Model
     public function batchMembers()
     {
         return $this->hasOne(EmployeeBatchMembers::class, 'batch_id');
-    }}
+    }
+}

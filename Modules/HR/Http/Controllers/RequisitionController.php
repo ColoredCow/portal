@@ -28,10 +28,6 @@ class RequisitionController extends Controller
 
     public function index(JobRequisition $jobRequisition)
     {
-        // $batchId = EmployeeBatches::all();
-        // dd($jobRequisition);
-
-        // dd($batchId);
         $requisitions = $this->service->index();
         $employees = Employee::all();
         foreach ($requisitions as $requisition) {
@@ -63,19 +59,14 @@ class RequisitionController extends Controller
 
     public function storeBatchDetails(Request $request)
     {
-        // $batchId = Batches::all();
-        // $batchId = Batches::whereRaw('batch_id = id')->get();
-        
-        
         $batchMembers = $request->get('teamMembers');
         $batchId = $request->get('batchId');
-
 
         Batches::create([
             'id' => $batchId,
         ]);
-        
-        foreach($batchMembers as $batchMember){
+  
+        foreach ($batchMembers as $batchMember) {
             BatchMembers::create([
                 'batch_id' => $batchId,
                 'employee_id' => $batchMember,

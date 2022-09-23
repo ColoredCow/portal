@@ -1743,7 +1743,7 @@ $(".status").on("change", function () {
 			url: "completed/change-status/" + this.dataset.id,
 			method: "GET",
 			success: function (res) {
-				// location.reload(true);
+		        $('#mymodal').modal();
 			},
 			error: function (err) {
 				alert("there is some problem");
