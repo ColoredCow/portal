@@ -74,7 +74,6 @@ class RevenueReportService
             $dateKey = $invoice->sent_on->format('m-y');
             $totalAmount += $amount;
             $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
-
         }
 
         $results['total'] = $totalAmount;
