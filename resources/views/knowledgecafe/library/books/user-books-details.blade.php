@@ -23,7 +23,7 @@
                         <div class="container mb-3">
                             <div class="row">
                               <div class="col-sm border px-0">
-                                <h4 class="card-header" style="color: #1B65D5">Wishlisted Books({{$bookcount}})</h4>
+                                <h4 class="card-header" style="color: #1B65D5">Wishlisted Books({{$books['wishlistBookCount']}})</h4>
                                 @foreach ($user->booksInWishlist as $list)
                                 <div class="px-3 py-2 border-bottom">
                                     {{$list->title}}

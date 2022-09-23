@@ -68,6 +68,7 @@ class BookServices
     }
     public function getReaderDetails($user)
     {
+        $wishlistBookCount = $user->booksInWishlist->count();
         $userBookReader = DB::table('book_readers')->select('*')->where('user_id', $user->id)->first()->library_book_id;
         $readBooks = Book::where('id', $userBookReader)->get();
         $readBookCount = $readBooks->count();
@@ -76,6 +77,6 @@ class BookServices
         $borrowedBookCount = $borrowedBooks->count();
 
         return ['readBooks'=>$readBooks, 'borrowedBooks'=>$borrowedBooks, 'borrowedBookCount'=>$borrowedBookCount,
-        'readBookCount'=>$readBookCount];
+        'readBookCount'=>$readBookCount, 'wishlistBookCount'=>$wishlistBookCount];
     }
 }
