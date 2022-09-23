@@ -33,7 +33,7 @@
 
 <script>
 export default {
-	props: ["updateRoute", "permissions"],
+	props: ["roles", "updateRoute", "permissions"],
 
 	data(){
 		return {
@@ -71,7 +71,7 @@ export default {
 			let response = await axios.delete(route);
 			this.role =response.data;
 			this.roles.splice(index, 1);
-		},
+		}
 	}
 };
 </script>
