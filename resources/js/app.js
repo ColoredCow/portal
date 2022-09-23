@@ -1431,6 +1431,40 @@ require("./finance/payment");
 /*
  * HR Module JS code start
  */
+
+$("#editform").on("submit", function(e) {
+	e.preventDefault();
+	let form = $("#editform");
+	let button = $("#editBT");
+
+	$.ajax({
+		url: form.attr("action"),
+		type: form.attr("method"),
+		data: form.serialize(),
+		success: function (response) {
+			$("#edit").modal("hide");
+			$("#edit").on("hidden.bs.modal", function (e) {
+				$("#successMessage").toggleClass("d-none");
+				$("#successMessage").fadeToggle(5000);
+			});
+		},
+		error: function (response) {
+			$("#profile-details-error").removeClass("d-none");
+			$("#successMessage").addClass("d-none");
+			let errors = response.responseJSON.errors;
+			$(".profile-details-error").empty();
+			for (let error in errors) {
+				$(".profile-details-error").append(
+					"<li class='text-danger ml-2'>" + errors[error] + "</li>"
+				);
+			}
+		},
+	});
+});
+
+
+
+
 $(document).ready(function () {
 	$(document).on("click", ".show-comment", showCommentBlock);
 	$(document).on("click", ".section-toggle", sectionToggle);
