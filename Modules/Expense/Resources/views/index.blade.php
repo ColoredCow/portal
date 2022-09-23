@@ -24,8 +24,8 @@
                 <tr>
                     <td>{{ $expense->name }}</td>
                     <td>{{ $expense->amount }}</td>
-                    <td>{{ $expense->category }}</td>
-                    <td>{{ $expense->location }}</td>
+                    <td>{{ Str::headline($expense->category) }}</td>
+                    <td>{{ Str::headline($expense->location) }}</td>
                     <td>{{ $expense->uploaded_by }}</td>
                     <td>{{ $expense->paid_on }}</td>
                 </tr>
