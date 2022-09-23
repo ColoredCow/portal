@@ -7,7 +7,7 @@
             <h4 class="mb-1 pb-1 fz-28">Add New Expense</h4>
         </div>
         <div class="card">
-            <form action="{{ route('expense.store') }}" method="POST">
+            <form action="{{ route('expense.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="card-header">
                     <span>Expenses Details</span>
@@ -73,7 +73,7 @@
                     </div>
                     <hr> 
                     <div class="parent">
-                        <div class="row mb-3 bg bg-grey pt-2" v-for="(documentRow, index) in expense" :key="documents" id="documents">
+                        <div class="row mb-3 bg bg-grey pt-2">
                             <div class="col-5">
                                 <label for="document"> {{ __('Upload Document') }}</label>
                                 <div class="custom-file mb-3">

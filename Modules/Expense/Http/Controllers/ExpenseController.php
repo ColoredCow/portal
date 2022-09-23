@@ -27,8 +27,8 @@ class ExpenseController extends Controller
 
     public function store(Request $request)
     {
-        $this->service->store($request->all());
+        $this->service->store($request);
 
-        return redirect()->route('expense::index');
+        return redirect()->route('expense.index');
     }
 }

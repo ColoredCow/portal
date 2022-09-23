@@ -18,10 +18,12 @@ class CreateExpenseFilesTable extends Migration
             $table->string('file_path');
             $table->string('file_type')->nullable();
             $table->unsignedInteger('user_id');
+            $table->timestamps();
         });
 
         Schema::table('expense_files', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('expense_id')->references('id')->on('expenses');
         });
     }
 
