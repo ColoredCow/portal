@@ -1955,6 +1955,8 @@ $("#responseModal").on("submit",function(e){
 		data: form.serialize(),
 		success: function(response) {
 			$("#responseModal").modal("hide");
+			$("#success").toggleClass("d-none");
+			$("#success").fadeToggle(5000);
 		},
 	});
 });

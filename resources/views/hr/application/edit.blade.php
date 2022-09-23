@@ -1038,16 +1038,18 @@
                                                                         @endif
                                                                     </div>
                                                                 </div>
+                                                                @if (!$resumeData->isempty())
                                                                 <div class="form-group col-md-5">
                                                                     <label
                                                                         class="text-secondary fz-14 leading-none mb-0.16">Resume
                                                                         Link</label>
                                                                     <div>
-                                                                        <a href="{{ route('table.show', [str_slug($application->job->title), $application->job->id]) }}"
+                                                                        <a href="{{ route('desired.resume', [str_slug($application->job->title), $application->job->id]) }}"
                                                                             target="_blank">sample desired resume
                                                                         </a>
                                                                     </div>
                                                                 </div>
+                                                                @endif
                                                                 @if (isset($applicant->reference))
                                                                     <div class="form-group col-md-5">
                                                                         <label
@@ -1319,6 +1321,7 @@
             </div>
         </div>
     </div>
+  
     <div class="modal fade" id="responseModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

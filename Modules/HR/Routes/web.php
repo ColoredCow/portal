@@ -86,7 +86,7 @@ Route::middleware('auth')->group(function () {
 
             Route::post('/store', 'JobController@storeJobdomain')->name('hr-job-domains.storeJobdomain');
             Route::post('/store-response/{id}', 'JobController@storeResponse')->name('response.store');
-            Route::get('/show-table/{name}/{id}', 'JobController@showTable')->name('table.show');
+            Route::get('/desired-resume/{name}/{id}', 'JobController@showTable')->name('desired.resume');
 
             Route::resource('job', 'JobApplicationController')
                 ->only(['index', 'edit', 'update', 'store'])
@@ -122,11 +122,11 @@ Route::middleware('auth')->group(function () {
         Route::get('fte-handler/{domain_id}', 'EmployeeController@showFTEdata')->name('employees.alert');
 
         Route::resource('requisition', 'RequisitionController')
-        ->only(['index', 'show'])
-        ->names([
-            'index' => 'requisition',
-            'show' => 'requisition.show',
-        ]);
+            ->only(['index', 'show'])
+            ->names([
+                'index' => 'requisition',
+                'show' => 'requisition.show',
+            ]);
         Route::post('store', 'RequisitionController@store')->name('requisition.store');
         Route::get('/completed/change-status/{jobRequisition}', 'RequisitionController@storecompleted');
         Route::get('/pending/{jobRequisition}', 'RequisitionController@storePending');

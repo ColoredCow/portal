@@ -7,13 +7,14 @@ use App\Models\Setting;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Modules\HR\Emails\Recruitment\Application\ApplicationHandover;
 use Modules\HR\Emails\Recruitment\Application\JobChanged;
 use Modules\HR\Emails\Recruitment\Application\RoundNotConducted;
-use Modules\HR\Emails\Recruitment\Application\ApplicationHandover;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationMeta;
 use Modules\HR\Entities\Job;
@@ -46,7 +47,7 @@ abstract class ApplicationController extends Controller
         // We need this so that we can redirect user to the older page number.
         // we can improve this logic in the future.
 
-        if (! session()->get('should_skip_page') && Str::endsWith($referer, 'edit')) {
+        if (!session()->get('should_skip_page') && Str::endsWith($referer, 'edit')) {
             session()->put(['should_skip_page' => true]);
 
             return redirect()->route(request()->route()->getName(), session()->get('previous_application_data'))->with('status', session()->get('status'));
@@ -68,8 +69,8 @@ abstract class ApplicationController extends Controller
             'search' => request()->get('search'),
             'tags' => request()->get('tags'),
             'assignee' => request()->get('assignee'), // TODO
-            'round' =>str_replace('-', ' ', request()->get('round')),
-            'roundFilters' => request()->get('roundFilters')
+            'round' => str_replace('-', ' ', request()->get('round')),
+            'roundFilters' => request()->get('roundFilters'),
         ];
         $loggedInUserId = auth()->id();
         $applications = Application::join('hr_application_round', function ($join) {
@@ -162,6 +163,7 @@ abstract class ApplicationController extends Controller
         $job = $application->job;
         $approveMailTemplate = Setting::getApplicationApprovedEmail();
         $offerLetterTemplate = Setting::getOfferLetterTemplate();
+        $resumeData = DB::table('hr_applications')->select(['hr_applications.resume'])->where('hr_applications.hr_job_id', '=', $job->id)->where('is_desired_resume', '=', 1)->get();
         $attr = [
             'applicant' => $application->applicant,
             'application' => $application,
@@ -172,6 +174,7 @@ abstract class ApplicationController extends Controller
             'offer_letter' => $application->offer_letter,
             'approveMailTemplate' => $approveMailTemplate,
             'offerLetterTemplate' => $offerLetterTemplate,
+            'resumeData' => $resumeData,
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],
@@ -281,7 +284,7 @@ abstract class ApplicationController extends Controller
 
     public function viewOfferLetter(Application $application)
     {
-        if (! Storage::exists($application->offer_letter)) {
+        if (!Storage::exists($application->offer_letter)) {
             return false;
         }
 
@@ -303,7 +306,7 @@ abstract class ApplicationController extends Controller
     {
         $applicationRound = $application->latestApplicationRound;
         $applicationRound->update([
-            'scheduled_person_id' => auth()->user()->id
+            'scheduled_person_id' => auth()->user()->id,
         ]);
 
         $status = 'Successful Assigned to ' . auth()->user()->name;
