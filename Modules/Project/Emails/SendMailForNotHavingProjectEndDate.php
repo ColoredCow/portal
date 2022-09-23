@@ -4,7 +4,6 @@ namespace Modules\Project\Emails;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\SerializesModels;
 
 class SendMailForNotHavingProjectEndDate extends Mailable
@@ -22,7 +21,7 @@ class SendMailForNotHavingProjectEndDate extends Mailable
     {
         $this->project = $project;
     }
-    
+
     /**
      * Build the message.
      *

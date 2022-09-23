@@ -3,13 +3,9 @@
 namespace Modules\Project\Console;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 use Illuminate\Support\Facades\Mail;
 use Modules\Project\Entities\Project;
 use Modules\Project\Emails\SendMailForNotHavingProjectEndDate;
-
-
 
 class MailToAccountManagerForNotHavingEndDate extends Command
 {
@@ -46,7 +42,7 @@ class MailToAccountManagerForNotHavingEndDate extends Command
     {
         $projects = Project::all();
         foreach ($projects as $project) {
-            if($project->end_date == null) {
+            if ($project->end_date == null) {
                 Mail::queue(new SendMailForNotHavingProjectEndDate($project));
             }
         }
