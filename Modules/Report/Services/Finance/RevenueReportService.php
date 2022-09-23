@@ -62,13 +62,13 @@ class RevenueReportService
 
         // ToDo:: We need to change this logic and get the exchange rate for every month.
         $exchangeRates = CurrencyAvgRate::select('avg_rate', 'captured_for')->groupBy('captured_for')->get()->toArray();
-        foreach($exchangeRates as $exchangeRate) {
-            if($exchangeRate['avg_rate']) {
-                $exchangeDollor =  $exchangeRate['avg_rate'];
-            } else {
-                $exchangeDollor = app(CurrencyService::class)->getCurrentRatesInINR();
-            }
-        }
+        // foreach($exchangeRates as $exchangeRate) {
+        //     if($exchangeRate['avg_rate']) {
+        //         $exchangeDollor =  $exchangeRate['avg_rate'];
+        //     } else {
+        //         $exchangeDollor = app(CurrencyService::class)->getCurrentRatesInINR();
+        //     }
+        // }
         foreach ($invoices as $invoice) {
             $amount = ($invoice->amount) * ($exchangeDollor);
             $dateKey = $invoice->sent_on->format('m-y');
