@@ -11,7 +11,7 @@
         </button>
     </div>
 	<button type="button" class="btn btn-primary float-right mb-6" data-toggle="modal" data-target="#rolesModal">
-	ADD NEW ROLE
+	ADD NEW ROLE 
 	</button>
 	
 	<role-listing
