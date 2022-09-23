@@ -111,15 +111,17 @@ class ApplicationService implements ApplicationServiceContract
         }
 
         foreach ($encryptConfigs as $key=>$label) {
-            ApplicantMeta::updateOrInsert([
+            ApplicantMeta::updateOrInsert(
+                [
                 'key' => $label,
                 'hr_applicant_id' => $request->get('hr_applicant_id'),
             ],
-            [
+                [
                 'hr_applicant_id' => $request->get('hr_applicant_id'),
                 'key' => $label,
                 'value' => encrypt($request->get($key)),
-            ]);
+            ]
+            );
         }
 
         foreach ($uploadConfigs as $key=>$label) {
