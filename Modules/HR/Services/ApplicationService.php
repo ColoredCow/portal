@@ -103,7 +103,7 @@ class ApplicationService implements ApplicationServiceContract
         $encryptConfigs = (config('hr.encrypted-applicant-details'));
 
         foreach ($keyConfigs as $key=>$label) {
-            ApplicantMeta::create([
+            ApplicantMeta::updateOrCreate([
                 'hr_applicant_id' => $request->get('hr_applicant_id'),
                 'key' => $label,
                 'value' => $request->get($key),
@@ -111,7 +111,7 @@ class ApplicationService implements ApplicationServiceContract
         }
 
         foreach ($encryptConfigs as $key=>$label) {
-            ApplicantMeta::create([
+            ApplicantMeta::updateOrCreate([
                 'hr_applicant_id' => $request->get('hr_applicant_id'),
                 'key' => $label,
                 'value' => encrypt($request->get($key)),
@@ -123,7 +123,7 @@ class ApplicationService implements ApplicationServiceContract
                 $file = $request->file($key);
                 $fileName = $key . $request->get('hr_applicant_id') . '.' . $file->extension();
                 $filepath = $file->move(storage_path('app/public/Employee-Documents-Details'), $fileName);
-                ApplicantMeta::create([
+                ApplicantMeta::updateOrCreate([
                     'hr_applicant_id' => $request->get('hr_applicant_id'),
                     'key' => $label,
                     'value' => $filepath,

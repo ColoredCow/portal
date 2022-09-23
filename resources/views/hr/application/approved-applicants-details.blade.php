@@ -2,6 +2,8 @@
 
 @section('content')
 
+@if( session('status'))
+@endif
 <form action="{{route('hr.applicant.store-approved-applicants-details')}}" enctype="multipart/form-data" method="POST">
     @csrf
     <div class="container col-sm-6">
@@ -278,7 +280,7 @@
     <div class="container">
         <div class="form-row">
             <div class="form-group col-md-12">
-                <button type="submit" class="btn btn-success round-submit">Submit</button>
+                <button type="submit" class="btn btn-success round-submit" id="formSubmit">Submit</button>
                 <button type="reset" value="Reset" class="btn btn-danger float-right">Clear form</button>
             </div>
         </div>

@@ -37,7 +37,7 @@
                 </div>
                 <div class="d-none" id="seeOfferLetter">
                     <a target="_blank" href="{{ route('applications.getOfferLetter', $application) }}" class="d-flex align-items-center" >
-                        <i class="fa fa-file fa-2x text-primary btn-file mt-3 "></i>&nbsp;See offer letter and Save
+                        <i class="fa fa-file fa-2x text-primary btn-file mt-3 "></i>&nbsp;Preview Offer Letter
                     </a>
                     <input type="hidden" value="{{$application->id}}" id="getApplicationId"/>
                 </div>

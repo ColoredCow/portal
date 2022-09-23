@@ -114,6 +114,6 @@ class ApplicantController extends Controller
     {
         $this->service->store($request);
 
-        return redirect()->back();
+        return redirect()->back()->with('status','Thanks for submitting the Details');
     }
 }
