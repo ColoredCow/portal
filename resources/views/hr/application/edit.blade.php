@@ -106,16 +106,13 @@
                                                     @endif
                                                 </div>
                                                 @if ($applicationRound->scheduled_date && $applicationRound->hangout_link)
-                                                    @if ($applicationRound->actual_end_time != null)
-                                                        <input type="hidden" readonly="readonly" name="meeting"
-                                                            id="meeting" class="form-control form-control-sm">
-                                                    @else
-                                                    <div class="text-right ml-5 ml-md-0">
-                                                        <button type="button" id="meet_time"
-                                                            value="{{ $applicationRound->id }}"
-                                                            class="btn-sm btn-primary text-decoration-none finish_interview ">Finish
-                                                            Interview</button>
-                                                    </div>        
+                                                    @if ($applicationRound->actual_end_time == null)
+                                                        <div class="text-right ml-5 ml-md-0">
+                                                            <button type="button" id="meet_time"
+                                                                value="{{ $applicationRound->id }}"
+                                                                class="btn-sm btn-primary text-decoration-none finish_interview ">Finish
+                                                                Interview</button>
+                                                        </div>        
                                                     @endif
                                                 @endif
                                                 <div class="icon-pencil position-relative ml-3 c-pointer"
@@ -444,16 +441,13 @@
                                                 </div>
 
                                                 @if ($applicationRound->scheduled_date && $applicationRound->hangout_link)
-                                                    @if ($applicationRound->actual_end_time != null)
-                                                        <input type="hidden" readonly="readonly" name="meeting"
-                                                            id="meeting" class="form-control form-control-sm">
-                                                    @else
-                                                    <div class="text-right ml-5 ml-md-0">
-                                                        <button type="button" id="meet_time"
-                                                            value="{{ $applicationRound->id }}"
-                                                            class="btn-sm btn-primary text-decoration-none finish_interview ">Finish
-                                                            Interview</button>
-                                                    </div>        
+                                                    @if ($applicationRound->actual_end_time == null)
+                                                        <div class="text-right ml-5 ml-md-0">
+                                                            <button type="button" id="meet_time"
+                                                                value="{{ $applicationRound->id }}"
+                                                                class="btn-sm btn-primary text-decoration-none finish_interview ">Finish
+                                                                Interview</button>
+                                                        </div>        
                                                     @endif
                                                 @endif
                                                 <div class="icon-pencil position-relative ml-3 c-pointer"
@@ -979,18 +973,15 @@
                                             @endif
                                         </div>
                                         @if ($applicationRound->scheduled_date && $applicationRound->hangout_link)
-                                            @if ($applicationRound->actual_end_time != null)
-                                                <input type="hidden" readonly="readonly" name="meeting" id="meeting"
-                                                    class="form-control form-control-sm">
-                                            @else
-                                            <div class="text-right ml-5 ml-md-0">
-                                                <button type="button" id="meet_time"
-                                                    value="{{ $applicationRound->id }}"
-                                                    class="btn-sm btn-primary text-decoration-none finish_interview">Finish
-                                                    Interview</button>
-                                            </div>
-                                            @endif
-                                        @endif
+                                                    @if ($applicationRound->actual_end_time == null)
+                                                        <div class="text-right ml-5 ml-md-0">
+                                                            <button type="button" id="meet_time"
+                                                                value="{{ $applicationRound->id }}"
+                                                                class="btn-sm btn-primary text-decoration-none finish_interview ">Finish
+                                                                Interview</button>
+                                                        </div>        
+                                                    @endif
+                                                @endif
                                         <div class="icon-pencil position-relative ml-3 c-pointer" data-toggle="collapse"
                                             data-target="#collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i>
                                         </div>
