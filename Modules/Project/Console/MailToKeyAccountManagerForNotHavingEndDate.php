@@ -7,21 +7,21 @@ use Illuminate\Support\Facades\Mail;
 use Modules\Project\Entities\Project;
 use Modules\Project\Emails\SendMailForNotHavingProjectEndDate;
 
-class MailToAccountManagerForNotHavingEndDate extends Command
+class MailToKeyAccountManagerForNotHavingEndDate extends Command
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'project:send-daily-mail-for-not-having-project-end-date';
+    protected $name = 'project:send-mail-for-not-having-project-end-date';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Sends a mail to key account manager that fixed budget project is not having an end date';
+    protected $description = 'Send mail to key account manager that fixed budget project is not having project end date';
 
     /**
      * Create a new command instance.
