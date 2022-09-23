@@ -73,7 +73,7 @@ class RequisitionController extends Controller
             ]);
         };
 
-        DB::table('job_requisition')->where('id', $batchId )->update(['batch_table_id' => $batchId ]);
+        DB::table('job_requisition')->where('id', $batchId)->update(['batch_table_id' => $batchId ]);
 
         return redirect()->back();
     }
