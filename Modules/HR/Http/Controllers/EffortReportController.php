@@ -41,7 +41,6 @@ class EffortReportController extends Controller
                     ->where('project_team_member_id', $projectTeamMember->team_member_id)->sum('actual_effort');
             }
         }
-        
         $projectNames = array_keys($result);
         $efforts = [];
 
