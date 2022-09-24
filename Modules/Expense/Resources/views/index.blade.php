@@ -27,7 +27,7 @@
                     <td>{{ Str::headline($expense->category) }}</td>
                     <td>{{ Str::headline($expense->location) }}</td>
                     <td>{{ $expense->uploaded_by }}</td>
-                    <td>{{ $expense->paid_on }}</td>
+                    <td>{{ $expense->paid_at->format('d-M-Y') }}</td>
                 </tr>
             @endforeach
         </table>
