@@ -72,17 +72,15 @@ class RevenueReportService
         }
         foreach ($invoices as $invoice) {
             $dateKey = $invoice->sent_on->format('m-y');
-            $exchangeMonth = (date('m-y', strtotime($exchangeRate['captured_for'])));
             if ($exchangeMonth == $dateKey) {
                 $exchangeDollor = $exchangeRate['avg_rate'];
             } else {
                 $exchangeDollor = app(CurrencyService::class)->getCurrentRatesInINR();
             }
-            $amount = ($invoice->amount) * $exchangeDollor;
+            $amount = ($invoice->amount) * intval($exchangeDollor);
             $totalAmount += $amount;
             $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
         }
-        
         $results['total'] = $totalAmount;
 
         return $results;
