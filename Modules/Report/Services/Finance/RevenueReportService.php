@@ -57,7 +57,7 @@ class RevenueReportService
 
     private function getParticularAmountForExport(array $particular, Object $startDate, Object $endDate): array
     {
-        $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'indian');
+        $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'non-indian');
         $totalAmount = 0;
         $results = [];
         $currency_chages = [];
