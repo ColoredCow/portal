@@ -5,14 +5,14 @@
     @include('hr::universities.menu')
     <br><br>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <h1>Universities</h1>
         </div>
-        <div class="col-md-4 p-0">
+        <div class="col-md-4">
             <form class="d-flex" method="GET" action="/{{ Request::path() }}">
                 <input type="hidden" name="status" class="form-control" id="search" value="">
                 <input type="text" name="search" class="form-control" id="search" placeholder="Search university">
-                <button class="btn btn-info ml-2">Search</button>
+                <button class="btn btn-info ml-1">Search</button>
             </form>
         </div>
         <div class="col-md-3">
@@ -69,6 +69,7 @@
                     </form>
                 </td>
             </tr>
+        
             @endforeach
         </table>
     </div>
