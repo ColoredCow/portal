@@ -29,7 +29,6 @@ class ExpenseService
                 'file_path' => $fullpath,
                 'file_type' => $file['type']
             ]);
-
         }
 
         
