@@ -176,34 +176,6 @@
                                                                 @endif
                                                             </div>
                                                             <div class="form-group col-md-4">
-                                                                <label for="expected_time"
-                                                                    class="fz-14 leading-none text-secondary w-100p">
-                                                                    <div>
-                                                                        <span>Expected End Time</span>
-                                                                    </div>
-                                                                </label>
-                                                                @if ($applicationRound->scheduled_date)
-                                                                    <input type="Time" readonly="readonly"
-                                                                        name="scheduled_time" id="scheduled_time"
-                                                                        class="form-control form-control-sm"
-                                                                        value="{{ $applicationRound->scheduled_date->toTimeString() }}">
-                                                                @endif
-                                                            </div>
-                                                            <div class="form-group col-md-4">
-                                                                <label for="actualEndTime"
-                                                                    class="fz-14 leading-none text-secondary w-100p">
-                                                                    <div>
-                                                                        <span>Meeting Duration</span>
-                                                                    </div>
-                                                                </label>
-                                                                @if ($applicationRound->actual_end_time != null)
-                                                                    <input type="Text" readonly="readonly"
-                                                                        name="actualEndTime" id="actualEndTime"
-                                                                        class="form-control form-control-sm"
-                                                                        value="{{ $applicationRound->actual_end_time }}">
-                                                                @endif
-                                                            </div>
-                                                            <div class="form-group col-md-4">
                                                                 <label for="scheduled_person_id"
                                                                     class="fz-14 leading-none text-secondary">
                                                                     <i class="fa fa-user" aria-hidden="true"></i>
@@ -242,6 +214,11 @@
                                                             @endif
                                                         </div>
                                                     @endif
+                                                    <div class="form-row" id="durations">
+                                                        @if ($applicationRound->actual_end_time != null)
+                                                            @include('hr.application.meeting')
+                                                        @endif
+                                                    </div>
                                                     @if ($applicationRound->round->name == 'Resume Screening')
                                                         <div class="form-row">
                                                             <div class="form-group col-md-12">
@@ -440,15 +417,13 @@
                                                     @endif
                                                 </div>
 
-                                                @if ($applicationRound->scheduled_date && $applicationRound->hangout_link)
-                                                    @if ($applicationRound->actual_end_time == null)
-                                                        <div class="text-right ml-5 ml-md-0">
-                                                            <button type="button" id="meet_time"
-                                                                value="{{ $applicationRound->id }}"
-                                                                class="btn-sm btn-primary text-decoration-none finish_interview ">Finish
-                                                                Interview</button>
-                                                        </div>        
-                                                    @endif
+                                                @if ($applicationRound->scheduled_date && $applicationRound->hangout_link && $applicationRound->actual_end_time == null)
+                                                    <div class="text-right ml-5 ml-md-0">
+                                                        <button type="button" id="meet_time"
+                                                            value="{{ $applicationRound->id }}"
+                                                            class="btn-sm btn-primary text-decoration-none finish_interview ">Finish
+                                                            Interview</button>
+                                                    </div>
                                                 @endif
                                                 <div class="icon-pencil position-relative ml-3 c-pointer"
                                                     data-toggle="collapse"
@@ -706,34 +681,6 @@
                                                                 @endif
                                                             </div>
                                                             <div class="form-group col-md-4">
-                                                                <label for="expected_time"
-                                                                    class="fz-14 leading-none text-secondary w-100p">
-                                                                    <div>
-                                                                        <span>Expected End Time</span>
-                                                                    </div>
-                                                                </label>
-                                                                @if ($applicationRound->scheduled_date)
-                                                                    <input type="Time" readonly="readonly"
-                                                                        name="scheduled_time" id="scheduled_time"
-                                                                        class="form-control form-control-sm"
-                                                                        value="{{ $applicationRound->scheduled_date->toTimeString() }}">
-                                                                @endif
-                                                            </div>
-                                                            <div class="form-group col-md-4">
-                                                                <label for="actualEndTime"
-                                                                    class="fz-14 leading-none text-secondary w-100p">
-                                                                    <div>
-                                                                        <span>Meeting Duration</span>
-                                                                    </div>
-                                                                </label>
-                                                                @if ($applicationRound->actual_end_time != null)
-                                                                    <input type="Text" readonly="readonly"
-                                                                        name="actualEndTime" id="actualEndTime"
-                                                                        class="form-control form-control-sm"
-                                                                        value="{{ $applicationRound->actual_end_time }}">
-                                                                @endif
-                                                            </div>
-                                                            <div class="form-group col-md-4">
                                                                 <label for="scheduled_person_id"
                                                                     class="fz-14 leading-none text-secondary">
                                                                     <i class="fa fa-user" aria-hidden="true"></i>
@@ -769,6 +716,11 @@
                                                                         data-action="schedule-update">Update
                                                                         Schedule</button>
                                                                 </div>
+                                                            @endif
+                                                        </div>
+                                                        <div class="form-row" id="durations">
+                                                            @if ($applicationRound->actual_end_time != null)
+                                                                @include('hr.application.meeting-duration')
                                                             @endif
                                                         </div>
                                                     @endif
@@ -972,16 +924,14 @@
                                                     {{ $applicationRound->conducted_date->format(config('constants.display_date_format')) }}</span>
                                             @endif
                                         </div>
-                                        @if ($applicationRound->scheduled_date && $applicationRound->hangout_link)
-                                                    @if ($applicationRound->actual_end_time == null)
-                                                        <div class="text-right ml-5 ml-md-0">
-                                                            <button type="button" id="meet_time"
-                                                                value="{{ $applicationRound->id }}"
-                                                                class="btn-sm btn-primary text-decoration-none finish_interview ">Finish
-                                                                Interview</button>
-                                                        </div>        
-                                                    @endif
-                                                @endif
+                                        @if ($applicationRound->scheduled_date && $applicationRound->hangout_link && $applicationRound->actual_end_time == null)
+                                            <div class="text-right ml-5 ml-md-0">
+                                                <button type="button" id="meet_time"
+                                                    value="{{ $applicationRound->id }}"
+                                                    class="btn-sm btn-primary text-decoration-none finish_interview ">Finish
+                                                    Interview</button>
+                                            </div>        
+                                        @endif
                                         <div class="icon-pencil position-relative ml-3 c-pointer" data-toggle="collapse"
                                             data-target="#collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i>
                                         </div>
@@ -1284,7 +1234,7 @@
                                                         </div>
                                                         <div class="form-row" id="durations">
                                                             @if ($applicationRound->actual_end_time != null)
-                                                                @include('hr.application.meeting')
+                                                                @include('hr.application.meeting-duration')
                                                             @endif
                                                         </div>
                                                     @endif
