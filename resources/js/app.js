@@ -1955,7 +1955,7 @@ $("#responseModal").on("submit",function(e){
 		data: form.serialize(),
 		success: function(response) {
 			$("#responseModal").modal("hide");
-			Vue.$toast.success("Data saved successfully");
+			Vue.$toast.success("Resume flagged Succesfully!");
 		},
 	});
 });
