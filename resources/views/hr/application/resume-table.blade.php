@@ -4,7 +4,7 @@
     <table class="table table-striped table-bordered">
         <thead class="thead-dark">
             <th><strong>Resume</strong></th>
-            <th><strong>Why you think the resume is desired?</strong></th>
+            <th><strong>Desired Resume for {{ $data->pluck('title')->first() }}</strong></th>
         </thead>
         @foreach ($data as $datas)
         <tr>

@@ -164,8 +164,9 @@ class JobController extends Controller
     public function showTable(HttpRequest $request)
     {
         $data = DB::table('hr_applications')
-            ->select(['hr_applications.resume', 'hr_application_meta.value', 'hr_applicants.name'])
+            ->select(['hr_applications.resume', 'hr_application_meta.value', 'hr_jobs.title','hr_applicants.name'])
             ->join('hr_application_meta', 'hr_applications.id', '=', 'hr_application_meta.hr_application_id')
+            ->join('hr_jobs', 'hr_applications.hr_job_id', '=', 'hr_jobs.id')
             ->join('hr_applicants', 'hr_applicants.id', '=', 'hr_applications.hr_applicant_id')
             ->where('hr_applications.hr_job_id', '=', $request->id)
             ->where('hr_application_meta.key', '=', 'resume-flag')
