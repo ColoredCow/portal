@@ -166,37 +166,22 @@ class User extends Authenticatable
         return $totalEffort;
     }
 
-    public function getFteAttribute()
+    public function getFtesAttribute()
     {
         $fte = 0;
-        foreach ($this->projectTeamMembers as $projectTeamMember) {
-            $fte += $projectTeamMember->fte;
-        }
-
-        return $fte;
-    }
-    public function getMainProjectsFteAttribute()
-    {
-        $fte = 0;
-        foreach ($this->projectTeamMembers()->with('project')->get() as $projectTeamMembers) {
-            if (! $projectTeamMembers->project->is_amc) {
-                $fte += $projectTeamMembers->fte;
+        $fteAmc=0;
+        foreach ($this->projectTeamMembers()->with('project')->get() as $projectTeamMember) {
+            if (! $projectTeamMember->project->is_amc) {
+                $fte += $projectTeamMember->fte;
+            }
+            if ($projectTeamMember->project->is_amc) {
+                $fteAmc += $projectTeamMember->fte;
             }
         }
 
-        return $fte;
+        return ['main'=>$fte,'amc'=>$fteAmc];
     }
-    public function getamcProjectsFteAttribute()
-    {
-        $fte = 0;
-        foreach ($this->projectTeamMembers()->with('project')->get() as $projectTeamMembers) {
-            if ($projectTeamMembers->project->is_amc) {
-                $fte += $projectTeamMembers->fte;
-            }
-        }
-
-        return $fte;
-    }
+  
 
     public function activeProjects()
     {
