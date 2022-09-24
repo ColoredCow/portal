@@ -63,7 +63,6 @@ class RevenueReportService
 
         // ToDo:: We need to change this logic and get the exchange rate for every month.
         $exchangeRates = CurrencyAvgRate::select('avg_rate', 'captured_for')->groupBy('captured_for')->get()->toArray();
-        
         foreach ($invoices as $invoice) {
             $dateKey = $invoice->sent_on->format('m-y');
             foreach ($exchangeRates as $exchangeRate) {
