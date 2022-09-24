@@ -30,12 +30,6 @@ class ExpenseService
                 'file_type' => $file['type']
             ]);
         }
-
-        
-        return [
-            'expense' => $expense,
-            'expenseFile' => $expenseFile
-        ];
     }
 
     public function edit(int $id)
