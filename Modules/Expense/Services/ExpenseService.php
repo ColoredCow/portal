@@ -14,29 +14,30 @@ class ExpenseService
         ->paginate(config('constants.pagination_size'));
     }
 
-    public function store(Request $request)
+    public function store(array $data)
     {
-        $file = $request->file('file_path');
-        $path = 'app/public/expenseDocument';
-        $imageName = $file->getClientOriginalName();
-        $fullpath = $file->move(storage_path($path), $imageName);
+        
+        foreach ( $data['documents'] as $file) {
+            $documentFile = $file['file'];
+            $path = 'app/public/expenseDocument';
+            $imageName = $documentFile->getClientOriginalName();
+            $fullpath = $documentFile->move(storage_path($path), $imageName);
+            $expense = Expense::create($data);
+    
+            $expenseFile = ExpenseFile::create([
+                'expense_id' => $expense->id,
+                'user_id' => auth()->user()->id,
+                'file_path' => $fullpath,
+                'file_type' => $file['type']
+            ]);
 
-        $expense = new Expense;
-        $expense->name = $request['name'];
-        $expense->status = $request['status'];
-        $expense->amount = $request['amount'];
-        $expense->currency = $request['currency'];
-        $expense->category = $request['category'];
-        $expense->location = $request['location'];
-        $expense->paid_at = $request['paid_at'];
-        $expense->save();
-        $expenseFile = new ExpenseFile;
+        }
 
-        $expenseFile->expense_id = $expense->id;
-        $expenseFile->file_type = $request['file_type'];
-        $expenseFile->file_path = $fullpath;
-        $expenseFile->user_id = auth()->user()->id;
-        $expenseFile->save();
+        
+        return [
+            'expense' => $expense,
+            'expenseFile' => $expenseFile
+        ];
     }
 
     public function edit(int $id)
