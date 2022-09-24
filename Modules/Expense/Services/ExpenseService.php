@@ -16,8 +16,7 @@ class ExpenseService
 
     public function store(array $data)
     {
-        
-        foreach ( $data['documents'] as $file) {
+        foreach ($data['documents'] as $file) {
             $documentFile = $file['file'];
             $path = 'app/public/expenseDocument';
             $imageName = $documentFile->getClientOriginalName();
