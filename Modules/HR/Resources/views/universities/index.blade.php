@@ -15,7 +15,7 @@
                 <button class="btn btn-info ml-2">Search</button>
             </form>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <a href="{{ route('universities.create') }}" class="btn btn-success btn-block btn-lg"><i class="fa fa-plus fa-light icon-0.2x"><span style="font-size:medium;"> Add University</span></i></a>
         </div>
     </div>
