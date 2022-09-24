@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Modules\Invoice\Services\CurrencyService;
 use Modules\Invoice\Services\InvoiceService;
+use Modules\Revenue\Entities\RevenueProceed;
 use Modules\Invoice\Entities\CurrencyAvgRate;
 
 class RevenueReportService
@@ -56,23 +57,28 @@ class RevenueReportService
 
     private function getParticularAmountForExport(array $particular, Object $startDate, Object $endDate): array
     {
-        $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'non-indian');
+        $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'indian');
         $totalAmount = 0;
         $results = [];
-        $exchangeDollor = 0;
+        $currency_chages = [];
 
         // ToDo:: We need to change this logic and get the exchange rate for every month.
         $exchangeRates = CurrencyAvgRate::select('avg_rate', 'captured_for')->groupBy('captured_for')->get()->toArray();
+        foreach ($exchangeRates as $exchangeRate) {
+            $exchangeMonth = (date('m-y', strtotime($exchangeRate['captured_for'])));
+                $currency_chages[] = [
+                    $exchangeMonth => $exchangeRate['avg_rate']
+                ];
+        }
         foreach ($invoices as $invoice) {
             $dateKey = $invoice->sent_on->format('m-y');
-            foreach ($exchangeRates as $exchangeRate) {
-                $exchangeMonth = (date('m-y', strtotime($exchangeRate['captured_for'])));
-                if ($exchangeMonth == $dateKey) {
-                    $exchangeDollor = $exchangeRate['avg_rate'];
-                } else {
+            $exchangeMonth = (date('m-y', strtotime($exchangeRate['captured_for'])));
+            if ($exchangeMonth == $dateKey) {
+                $exchangeDollor = $exchangeRate['avg_rate'];
+            }
+                else {
                     $exchangeDollor = app(CurrencyService::class)->getCurrentRatesInINR();
                 }
-            }
             $amount = ($invoice->amount) * $exchangeDollor;
             $totalAmount += $amount;
             $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
@@ -88,26 +94,49 @@ class RevenueReportService
 
     private function getParticularAmountForCommissionReceived(array $particular, Object $startDate, Object $endDate): array
     {
-        return ['total' => 0];
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
     private function getParticularAmountForCashBack(array $particular, Object $startDate, Object $endDate): array
     {
-        return ['total' => 0];
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
     private function getParticularAmountForDiscountReceived(array $particular, Object $startDate, Object $endDate): array
     {
-        return ['total' => 0];
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
     private function getParticularAmountForInterestOnFd(array $particular, Object $startDate, Object $endDate): array
     {
-        return ['total' => 0];
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
     private function getParticularAmountForForeignExchangeLoss(array $particular, Object $startDate, Object $endDate): array
     {
-        return ['total' => 0];
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
+    }
+
+    private function getAmountsForRevenueProceeds($category, $startDate, $endDate)
+    {
+        $revenues = RevenueProceed::where('category', $category)
+            ->where('received_at', '>=', $startDate)
+            ->where('received_at', '<=', $endDate)
+            ->get();
+
+        $totalAmount = 0;
+        $results = [];
+
+        foreach ($revenues as $revenue) {
+            $amount = $revenue->amount;
+            $year = substr($revenue->year, -2);
+            $month = sprintf('%02d', $revenue->month);
+            $dateKey = $month . '-' . $year;
+            $totalAmount += $amount;
+            $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
+        }
+        $results['total'] = $totalAmount;
+
+        return $results;
     }
 }
