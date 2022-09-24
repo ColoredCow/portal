@@ -24,7 +24,7 @@ class MediaTagRequest extends FormRequest
     public function rules()
     {
         return [
-            'media_tag_name' => 'required',
+        'media_tag_name' => 'required|unique:media_tag,media_tag_name',
         ];
     }
 }

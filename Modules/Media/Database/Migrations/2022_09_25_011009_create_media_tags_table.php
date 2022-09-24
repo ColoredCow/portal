@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class MediaTagTable extends Migration
+class CreateMediaTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class MediaTagTable extends Migration
      */
     public function up()
     {
-        Schema::create('media_tag', function (Blueprint $table) {
+        Schema::create('media_tags', function (Blueprint $table) {
             $table->id();
-            $table->BigInteger('media_id')->unsigned();
             $table->string('media_tag_name');
-            $table->string('media_type');
             $table->timestamps();
             $table->softDeletes()->nullable();
-            $table->foreign('media_id')->references('id')->on('media');
         });
     }
 
@@ -31,6 +28,6 @@ class MediaTagTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('media_tag');
+        Schema::dropIfExists('media_tags');
     }
 }

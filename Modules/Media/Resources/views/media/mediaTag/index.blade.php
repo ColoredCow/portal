@@ -1,75 +1,61 @@
 @extends('media::layouts.master')
 
 @section('content')
-<div class="container" id="media_tag">
+<div class="container"><br>
+    @include('media::media.menu', ['active' => 'media_Tag']) 
     <br>
-    @include('media::media.menu', ['active' => 'media_tag']) 
-    <br>
-    <br>
-    <div class="row">
-        <div class="col-md-6"><h1>Media Tags</h1></div>
-        <div class="col-md-6">
-            {{-- <button @click="updateNewTagMode('add')" class="btn btn-success float-right">Add Tags</button> --}}
-        </div>
+    <div class="d-flex justify-content-between">
+        <div class="text"><h1>Media Tags</h1></div>
+        <div><button type="button" class="btn btn-success align-right" data-toggle="modal" data-target="#tagModal"><i class="fa fa-plus mr-1"></i>Add Tags</button></div>
     </div>
-
-    <div class="row mt-3 mb-2">
-        <div class="col-12">
-            {{-- <h4 class="font-weight-bold"><span>@{{ tags.length }}</span>&nbsp;Tags</h4> --}}
-        </div>
-    </div>
-
-    <div id="tag_container" 
-        {{-- data-tags="{{ json_encode($tags) }}" --}}
-        {{-- data-index-route="{{ route('mediaTag.index') }}"  --}}
-        class ="table-bordered">
-
-        <div class="row py-3 border-bottom mx-0" v-if="newTagMode == 'add'">
-            <div class="col-lg-8 d-flex justify-content-between">
-                <input class="form-control mr-3" v-model="newTagName" type="text" placeholder="Enter Tag Name" autofocus>
-                {{-- <button type="button" class="btn btn-info px-3 mr-2" @click="addNewTag()" >Add</button> --}}
-                {{-- <button type="button" class="btn btn-secondary px-3" @click="updateNewTagMode('cancel')" >Cancel</button> --}}
-            </div>
-        </div>
-
-        <div v-for="(tag, index) in tags" class="row py-3 border-bottom mx-0">
-            <div class="col-lg-4">
-                <span v-if="tag.editMode">
-                    <div class="d-flex justify-content-between">
-                        <input class="form-control mr-3" type="text" v-model="tagNameToChange[index]">
-                        {{-- <button type="button" class="btn btn-success btn-sm" @click="updateTagName(index)">Save</button> --}}
-                    </div>
-                </span>
-
-                <span v-else >
-                    {{-- @{{ tag.name }} --}}
-                </span>
-
-            </div>
-
-            <div class="col-lg-4">
-                <span v-if = "!tag.assign_media_count">No media for this tag</span> 
-                <span v-else>
-                    {{-- <span> @{{ tag.assign_media_count }}</span>  --}}
-                    {{-- <span> @{{ (tag.assign_media_count > 1) ? 'media' : 'media' }} </span> --}}
-                </span>
-            </div>
-
-            <div class="col-lg-4 d-flex align-items-center justify-content-end">
-                {{-- <div @click="showEditMode(index)"> --}}
-                   <button class="btn btn-primary">
-                    <i class="fa fa-pencil"></i>&nbsp;Edit
-                   </button>
+    <div class="modal fade" id="tagModal" tabindex="-1" role="dialog" aria-labelledby="tags" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tags">Add Tag</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                
-                {{-- <div class="text-danger c-pointer ml-3" @click="deleteTag(index)"> --}}
-                    <i class="fa fa-times"></i>&nbsp;Delete
+                <div class="modal-body">
+                    <form id="tagForm" action="{{ route('media.Tag.store') }}" method="post">
+                        @csrf
+                        <div class="form-group">
+                            <label for="tag">Enter Tag</label><strong class="text-danger">*</strong>
+                            <input type="text" name="media_tag_name" class="form-control" id="tagName" >
+                        </div><br>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
                 </div>
             </div>
-
         </div>
     </div>
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+        <tr class="sticky-top">
+            <th>{{ __('tags') }}</th>
+            <th>{{ __('Edit') }}</th>
+            <th>{{ __('Delete') }}</th>
+        </tr>
+        @foreach ($tags as $tag)
+        <tr>
+            <td>
+                <span class="d-flex text-justify-center">
+                {{$tag->media_tag_name}}
+                </span>
+            </td>
+            <td>
+             <button type="button" class="pr-1 btn btn-link" data-toggle="modal" data-target="#designationEditFormModal" data-json="{{$tag}}" ><i class="text-success fa fa-edit fa-lg"></i></button>
+            </td>
+            <td>
+                <form action="{{ route('media.Tag.destroy', ['id' => $tag->id]) }}" method="post">
+                    @csrf
+                    <button type="submit" class="pl-1 btn btn-link" onclick="return confirm('Are you sure you want to delete?')"><i class="text-danger fa fa-trash fa-lg"></i></button>
+                </form>
+            </td>
+        </tr>
+        @endforeach
+    </table>
 </div>
-
-
 @endsection

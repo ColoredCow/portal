@@ -17,23 +17,25 @@
     <br><br>
     <div class="row my-2">
         <div class="col-lg-12 d-flex justify-content-between align-items-center mx-auto">
-            <div>
+            <div class="d-flex">
                 <h1>@yield('heading')</h1>
             </div>
-        <div>
             <div class="d-flex">
-                <div class="row mr-2">
-                    <form class = "form-inline my-2 my-lg-0"  type = "get"  action="{{ url('/search') }}">
-                        <div class="d-flex align-items-center">
-                            <input type="search" class="form-control mr-sm-2" name="query" type="search" placeholder="Search Media" required>
-                            <button type="submit" class="btn btn-info mr-sm-2 text-white fw-bold">Search</a>
-                        </div>
-                    </form>
+                <div class="d-flex">
+                    <div class="row mr-2">
+                        <form class = "form-inline my-2 my-lg-0"  type = "get"  action="{{ url('/search') }}">
+                            <div class="d-flex align-items-center">
+                                <input type="search" class="form-control mr-sm-2" name="query" type="search" placeholder="Search Media" required>
+                                <button type="submit" class="btn btn-info mr-sm-2 text-white fw-bold">Search</a>
+                            </div>
+                        </form>
+                    </div>
+                    <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#media">
+                        <a><i class="fa fa-plus fa-light icon-0.2x">  @yield('popup')</i></a>
+                    </button>
                 </div>
-                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#media">
-                    <a>@yield('popup')</a>
-                </button>
             </div>
+        </div>
         <div class="modal fade" id="media" tabindex="-1" role="dialog" aria-labelledby="mediaLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -90,8 +92,8 @@
     <div class="row g-3 mt-1">
         @forelse($media as $key => $row)
         <div class="col-lg-3 mb-3">
-            <div class="card shadow">
-                <div class="p-0 position-absolute action_buttons">
+            <div class="card shadow border border-white">
+                <div class="d-flex justify-content-end action_buttons">
                     <div class="dropdown">
                         <a href="#" class="m-1 mr-2 text-muted h4" data-toggle="dropdown">
                             <i class="fa fa-cog"></i>
@@ -102,7 +104,7 @@
                     </div>
                 </div>
                 <a href="{{ route('media.show', $row->id) }}">
-                    <img src="{{ asset('storage/media/'.$row->img_url) }}" class="card-img-top img-fluid ">
+                    <img src="{{ asset('storage/media/'.$row->img_url) }}" class="card-img-top img-fluid border border-white">
                 </a>
                 <div class="card-body">
                     <p>
@@ -110,8 +112,8 @@
                             <img src="{{auth()->user()->avatar}}" alt="{{auth()->user()->name}}" class="w-25 h-25 rounded-circle" data-toggle="tooltip" data-placement="top" title="{{auth()->user()->name}}">
                         </td>
                     </p>
-                    <p class="card-title fw-bold text-secondary">Event Name - {{ $row->event_name }}</p>
-                    <p class="text-secondary">Description - {{ Str::limit($row->description, 10) }}</p>
+                    <p class="card-title fw-bold text-secondary"><strong> Event Name - </strong>{{ $row->event_name }}</p>
+                    <p class="text-secondary"><strong> Description - </strong>{{ Str::limit($row->description, 10) }}</p>
                 </div>
             </div>
         </div>

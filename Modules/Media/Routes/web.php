@@ -17,13 +17,13 @@ Route::resource('media', 'MediaController')
     'media'=> 'media'
 ])
 ->names([
-        'index' => 'media.index',
-        'show' => 'media.show',
-        'create' => 'media.create',
-        'store' => 'media.store',
-        'update' => 'media.update',
-        'edit' => 'media.edit',
-        'destroy' => 'media.destroy',
+    'index' => 'media.index',
+    'show' => 'media.show',
+    'create' => 'media.create',
+    'store' => 'media.store',
+    'update' => 'media.update',
+    'edit' => 'media.edit',
+    'destroy' => 'media.destroy',
 ]);
 Route::get('/search', 'MediaController@search');
 
@@ -31,22 +31,13 @@ Route::get('/search', 'MediaController@search');
 |Media Tags
 */
 
-Route::resource('mediaTag', 'MediaTagController')
+Route::resource('Tag', 'MediaTagController')
 ->parameters([
-    'mediaTag'=> 'mediaTag'
+    'Tag'=> 'Tag'
 ])
 ->names([
-        'index' => 'mediaTag.index',
-        'store' => 'mediaTag.store',
-        'update' => 'mediaTag.update',
-        'destroy' => 'mediaTag.destroy',
-        // 'show' => 'mediaTag.show',
-        // 'create' => 'mediaTag.create',
-        // 'edit' => 'mediaTag.edit',
+    'index' => 'media.Tag.index',
+    'store' => 'media.Tag.store',
+    'update' => 'media.Tag.update',
 ]);
-// Route::get('mediaTag', 'MediaTagController@index')->name('mediaTag.index');
-
-// Route::prefix('media')->group(function () {
-//     Route::get('/', function () {
-//     });
-// });
+Route::post('/delete/{id}', 'MediaTagController@destroy')->name('media.Tag.destroy');
