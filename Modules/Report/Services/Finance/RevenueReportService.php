@@ -75,8 +75,7 @@ class RevenueReportService
             $exchangeMonth = (date('m-y', strtotime($exchangeRate['captured_for'])));
             if ($exchangeMonth == $dateKey) {
                 $exchangeDollor = $exchangeRate['avg_rate'];
-            }
-            else {
+            } else {
                 $exchangeDollor = app(CurrencyService::class)->getCurrentRatesInINR();
             }
             $amount = ($invoice->amount) * $exchangeDollor;
