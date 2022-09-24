@@ -63,7 +63,7 @@ class RevenueReportService
         $currency_chages = [];
 
         // ToDo:: We need to change this logic and get the exchange rate for every month.
-        $exchangeRates = [];
+        $exchangeRate = [];
         $exchangeRates = CurrencyAvgRate::select('avg_rate', 'captured_for')->groupBy('captured_for')->get()->toArray();
         $exchangeMonth = null;
         foreach ($exchangeRates as $exchangeRate) {
