@@ -30,9 +30,9 @@ class ExpenseService
             ]);
         }
     }
-    
+
     public function edit(int $id)
     {
-        return ExpenseFile::find($id);
+        return Expense::find($id);
     }
 }
