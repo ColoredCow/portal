@@ -22,7 +22,7 @@ class ExpenseService
             $imageName = $documentFile->getClientOriginalName();
             $fullpath = $documentFile->move(storage_path($path), $imageName);
             $expense = Expense::create($data);
-    
+
             $expenseFile = ExpenseFile::create([
                 'expense_id' => $expense->id,
                 'user_id' => auth()->user()->id,
