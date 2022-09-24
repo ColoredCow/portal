@@ -15,9 +15,9 @@ class CreateOfficeLocationsTable extends Migration
     {
         Schema::create('office_locations', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('center_head')->nullable();
             $table->string('location')->nullable();
             $table->integer('capacity')->nullable();
+            $table->unsignedInteger('center_head')->nullable();
             $table->timestamps();
         });
 

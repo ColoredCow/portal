@@ -29,10 +29,17 @@
                     <label for="designation">Designation</label>
                     <input type="text" class="form-control" id="designation" name="designation" required value="{{ $user->employee && $user->employee->designation ? $user->employee->designation : "" }}">
                 </div>
-                {{-- <div class="form-group">
-                    <label for="add_location">Add Location</label>
-                    <input type="text" class="form-control" id="location" name="location"  value="{{ $officelocation->location }}">
-                </div> --}}
+                <div class="mr-5 mt-2 mt-md-0 form-group">
+                    <label> Add Locations</label><br>
+                    {{-- @dd( $locations) --}}
+                      <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" name="location" id="location_id"required>
+                      <option value =""> All locations</option>
+                      @foreach ( $locations as $location )
+                        <option value ="{{ $location->id }}" selected> {{$location->name}} </option>
+                        
+                      @endforeach
+                    </select>
+                   </div>
                 <div class="form-group">
                     <label>Domain</label>
                     <select class="form-control" name="domainId">
@@ -80,8 +87,9 @@
                 <span>{{ $user->employee->designation }}</span>
             </div>
             <div class="form-group">
+                {{-- @dd( $user->location_id) --}}
                 <label class="font-weight-bold" for="">Location:</label>
-                <span>{{ $officelocation->location }}</span>
+                <span>{{ $user->location_id->officelocations->location }}</span>
             </div>
 
             <div class="form-group">

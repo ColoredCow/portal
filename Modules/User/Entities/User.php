@@ -107,6 +107,11 @@ class User extends Authenticatable
         return $this->hasOne(OfficeLocation::class, 'location');
     }
 
+    public function location()
+    {
+        return $this->belongsTo(OfficeLocation::class, 'location_id');
+    }
+
     public function scopeFindByEmail($query, $email)
     {
         return $query->where('email', $email);
