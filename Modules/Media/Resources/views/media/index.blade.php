@@ -12,25 +12,28 @@
 </div>
 @endif
 <div class="container">
+    <br>
+    @include('media::media.menu', ['active' => 'media'])
+    <br><br>
     <div class="row my-2">
         <div class="col-lg-12 d-flex justify-content-between align-items-center mx-auto">
             <div>
                 <h1>@yield('heading')</h1>
             </div>
         <div>
-        <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#media">
-            <a>@yield('popup')</a>
-        </button>
-        <div class="d-flex">
-            <div class="row mr-2">
-                <form class = "form-inline my-2 my-lg-0"  type = "get"  action="{{ url('/search') }}">
-                    <div class="d-flex align-items-center">
-                        <input type="search" class="form-control mr-sm-2" name="query" type="search" placeholder="Search Media" required>
-                        <button type="submit" class="btn btn-info ml-2 text-white fw-bold">Search</a>
-                    </div>
-                </form>
+            <div class="d-flex">
+                <div class="row mr-2">
+                    <form class = "form-inline my-2 my-lg-0"  type = "get"  action="{{ url('/search') }}">
+                        <div class="d-flex align-items-center">
+                            <input type="search" class="form-control mr-sm-2" name="query" type="search" placeholder="Search Media" required>
+                            <button type="submit" class="btn btn-info mr-sm-2 text-white fw-bold">Search</a>
+                        </div>
+                    </form>
+                </div>
+                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#media">
+                    <a>@yield('popup')</a>
+                </button>
             </div>
-        </div>
         <div class="modal fade" id="media" tabindex="-1" role="dialog" aria-labelledby="mediaLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -67,12 +70,6 @@
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                            <div class="my-2"><h3 class="text-secondary">Tags</h3>
-                                                <input class="form-control" placeholder="Between 3 to 5 tags" type="text" data-role="tagsinput" name="tags" id="tags" min="3" max="5">
-                                                @if ($media->has('tags'))
-                                                <span class="text-danger">{{ $media->first('tags') }}</span>
-                                                @endif
-                                            </div>
                                             <div class="my-2">
                                                 <input type="submit" value="Add Post" class="btn btn-success float-right">
                                             </div>
@@ -94,6 +91,16 @@
         @forelse($media as $key => $row)
         <div class="col-lg-3 mb-3">
             <div class="card shadow">
+                <div class="p-0 position-absolute action_buttons">
+                    <div class="dropdown">
+                        <a href="#" class="m-1 mr-2 text-muted h4" data-toggle="dropdown">
+                            <i class="fa fa-cog"></i>
+                        </a>
+                        <ul class="dropdown-menu ">
+                            <li class="dropdown-item">Update Tags</li>
+                        </ul>
+                    </div>
+                </div>
                 <a href="{{ route('media.show', $row->id) }}">
                     <img src="{{ asset('storage/media/'.$row->img_url) }}" class="card-img-top img-fluid ">
                 </a>
@@ -105,11 +112,6 @@
                     </p>
                     <p class="card-title fw-bold text-secondary">Event Name - {{ $row->event_name }}</p>
                     <p class="text-secondary">Description - {{ Str::limit($row->description, 10) }}</p>
-                    <div : class="'pl-0 pt-1'">
-                        <span v-for="">
-                            <h2 class="badge badge-secondary px-2 py-1 mr-1">Events Tag</h2>
-                        </span>
-                    </div>    
                 </div>
             </div>
         </div>

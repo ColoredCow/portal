@@ -4,7 +4,7 @@ namespace Modules\Media\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MediaRequest extends FormRequest
+class MediaTagRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,7 @@ class MediaRequest extends FormRequest
     public function rules()
     {
         return [
-            'event_name' => 'required',
-            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-            'description' => 'required',
+            'media_tag_name' => 'required',
         ];
     }
 }

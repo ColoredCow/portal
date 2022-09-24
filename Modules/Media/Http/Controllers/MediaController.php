@@ -34,7 +34,6 @@ class MediaController extends Controller
     {
         $validated = $request->validated();
         $path = 'public/media';
-        $tags = explode(',', $request->tags);
         $imageName = time() . '.' . $request->file->extension();
 
         $request->file->storeAs(
@@ -47,7 +46,6 @@ class MediaController extends Controller
             'description' => $validated['description'],
             'img_url' => $imageName,
             'uploaded_by' => Auth()->user()->id,
-            'tags'=> $tags
         ];
         Media::create($postData);
 
@@ -71,7 +69,7 @@ class MediaController extends Controller
      */
     public function edit(Media $media)
     {
-        return view('media::media.edit', ['media' => $media]);
+        return view('media::media.edit', ['Media' => $media]);
     }
 
     /**
@@ -82,7 +80,6 @@ class MediaController extends Controller
      */
     public function update(Request $request, Media $Media)
     {
-        $validated = $request->validated();
         $path = 'public/media';
         $imageName = '';
         if ($request->hasFile('file')) {
@@ -98,11 +95,10 @@ class MediaController extends Controller
             $imageName = $Media->img_url;
         }
         $postData = [
-            'event_name' => $validated['event_name'],
-            'description' => $validated['description'],
+            'event_name' => $request->event_name,
+            'description' => $request->description,
             'img_url' => $imageName,
             'uploaded_by' => Auth()->user()->id,
-            'tags'=> $request->tags
         ];
         $Media->update($postData);
 
