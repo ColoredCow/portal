@@ -39,6 +39,12 @@ mix
     "public/css/report.css"
   );
 mix
+  .js("Modules/Revenue/Resources/assets/js/app.js", "public/js/revenue.js")
+  .sass(
+    "Modules/Revenue/Resources/assets/sass/app.scss",
+    "public/css/revenue.css"
+  );
+mix
   .js(
     "Modules/EffortTracking/Resources/assets/js/app.js",
     "public/js/efforttracking.js"

@@ -5,9 +5,12 @@
     data-book="{{ json_encode($book) }}"
     data-is-read="{{ $book->readers->contains(auth()->user()) }}"
     data-is-borrowed="{{ $book->borrowers->contains(auth()->user()) }}"
+    data-is-wishlisted="{{ $book->wishers->contains(auth()->user()) }}"
     data-is-book-a-month="{{ $isBookAMonth }}"
     data-mark-book-route= "{{ route('books.toggleReadStatus') }}"
     data-borrow-book-route= "{{ route('books.markAsBorrowed', $book->id) }}"
+    data-add-to-wishlist-route= "{{ route('books.addToWishList', $book->id) }}"
+    data-remove-from-wishlist-route= "{{ route('books.removeFromWishList', $book->id) }}"
     data-put-back-book-route= "{{ route('books.putBack', $book->id) }}"
     data-readers = "{{ json_encode($book->readers) }}"
     data-book-a-month-store-route="{{ route('books.addToBam', $book->id) }}"
@@ -70,16 +73,20 @@
             </div>
             <div class="col-md-4 col-xl-3">
                 <span class="d-block mb-1">
-                    <button class="btn btn-info p-2" @click="borrowTheBook()" v-if="!isBorrowed">I have this book</button>
-                    <button class="btn btn-success p-2" @click="putTheBookBackToLibrary()" v-else>I have returned it</button>
+                    <button class="btn btn-success p-2" @click="borrowTheBook()" v-if="!isBorrowed">I have this book</button>
+                    <button class="btn btn-primary p-2" @click="putTheBookBackToLibrary()" v-else>I have returned it</button>
                 </span>
                 <span class="d-block mb-1">
-                    <button class="btn btn-primary p-2" @click="markBook(true)" v-if="!isRead">I have read this book</button>
+                    <button class="btn btn-secondary p-2" @click="markBook(true)" v-if="!isRead">I have read this book</button>
                     <button class="btn btn-danger p-2" @click="markBook(false)" v-else>Mark as unread</button>
                 </span>
                 <span class="d-block mb-1">
                     <button type="button" class="btn btn-primary font-italic" @click="addToBookAMonth()" v-if="!isBookAMonth">Pick as Book of the Month</button>
                     <button type="button" class="btn btn-danger font-italic" @click="removeFromBookAMonth()" v-else>Unpick as Book of the Month</button>
+                </span>
+                <span class="d-block mb-1">
+                    <button type="button" class="btn btn-primary" @click="addToWishlist()" v-if="!isWishlisted">Add To Wishlist</button>
+                    <button type="button" class="btn btn-danger" @click="removeFromWishlist()" v-else>Remove From Wishlist</button>
                 </span>
             </div>
         </div>
