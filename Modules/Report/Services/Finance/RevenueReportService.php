@@ -59,6 +59,7 @@ class RevenueReportService
         $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'non-indian');
         $totalAmount = 0;
         $results = [];
+        $exchangeDollor = 0;
 
         // ToDo:: We need to change this logic and get the exchange rate for every month.
         $exchangeRates = CurrencyAvgRate::select('avg_rate', 'captured_for')->groupBy('captured_for')->get()->toArray();
