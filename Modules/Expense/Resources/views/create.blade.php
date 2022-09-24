@@ -65,8 +65,8 @@
                             <label for="location" class="field-required">Location</label>
                             <select class="form-control" name="location">
                                 <option value="">Select Location</option>
-                                @foreach (config('constants.office_locations') as $office => $locaions)
-                                    <option value="{{ $office }}">{{ $locaions }}</option>
+                                @foreach (config('constants.office_locations') as $office => $locations)
+                                    <option value="{{ $office }}">{{ $locations }}</option>
                                 @endforeach
                             </select>
                         </div>

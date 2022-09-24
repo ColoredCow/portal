@@ -15,14 +15,14 @@ class ExpenseService
 
     public function store(array $data)
     {
+        $expense = Expense::create($data);
+
         foreach ($data['documents'] as $file) {
             $documentFile = $file['file'];
             $path = 'app/public/expenseDocument';
             $imageName = $documentFile->getClientOriginalName();
             $fullpath = $documentFile->move(storage_path($path), $imageName);
-            $expense = Expense::create($data);
-
-            $expenseFile = ExpenseFile::create([
+            ExpenseFile::create([
                 'expense_id' => $expense->id,
                 'user_id' => auth()->user()->id,
                 'file_path' => $fullpath,
@@ -30,7 +30,7 @@ class ExpenseService
             ]);
         }
     }
-
+    
     public function edit(int $id)
     {
         return ExpenseFile::find($id);
