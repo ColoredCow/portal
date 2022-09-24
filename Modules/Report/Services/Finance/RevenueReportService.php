@@ -79,10 +79,11 @@ class RevenueReportService
             else {
                 $exchangeDollor = app(CurrencyService::class)->getCurrentRatesInINR();
             }
-        $amount = ($invoice->amount) * $exchangeDollor;
-        $totalAmount += $amount;
-        $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
-    }
+            $amount = ($invoice->amount) * $exchangeDollor;
+            $totalAmount += $amount;
+            $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
+        }
+        
         $results['total'] = $totalAmount;
 
         return $results;
