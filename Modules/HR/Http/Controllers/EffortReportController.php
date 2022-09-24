@@ -6,9 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\User\Entities\User;
 use Modules\Project\Entities\ProjectTeamMemberEffort;
-use Carbon\Carbon;
 use Exception;
-use config;
 
 class EffortReportController extends Controller
 {
@@ -61,6 +59,7 @@ class EffortReportController extends Controller
             'projects' => $projectNames,
             'efforts' => $efforts
         ];
+        
         return view('hr.effort.bar-graph', ['employee' => $employee, 'chartData' => json_encode($chartData)]);
     }
 }
