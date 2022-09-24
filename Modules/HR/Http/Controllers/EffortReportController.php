@@ -8,32 +8,34 @@ use Modules\User\Entities\User;
 use Modules\Project\Entities\ProjectTeamMemberEffort;
 use Carbon\Carbon;
 use Exception;
+use config;
 
 class EffortReportController extends Controller
 {
-    public function barGraph(Request $request, $employeeId)
+    public function barGraph(Request $request, $userId)
     {
-        $employee = User::find($employeeId);
+        $employee = User::find($userId);
         try {
             $projectTeamMembers = $employee->projectTeamMembers;
             if ($projectTeamMembers == null) {
                 throw new Exception('Error Processing Request');
             }
         } catch (Exception $e) {
-            return '<h1>TeamMember not found please add a new teammember</h1>';
+            return 'The user does not have any project.';
         }
 
         $result = [];
 
-        $start = Carbon::now()->addDays(-7);
-        $end = Carbon::now();
+        $start = today()->subDays(7);
+        $end = today();
         $dates = [];
 
         for ($i = 0; $i < $end->diffInDays($start); $i++) {
-            $dates[] = (clone $start)->addDays($i)->format('Y-m-d');
+            $dates[] = (clone $start)->subDays($i)->format('Y-m-d');
         }
 
-        $color = ['#ff0080', '#00bfff', '#ffff00'];
+        $color = config('constants.bar-Chart-Colors');
+        $colors = array_values($color);
 
         foreach ($projectTeamMembers as $projectTeamMember) {
             foreach ($dates as $date) {
@@ -41,9 +43,8 @@ class EffortReportController extends Controller
                     ->where('project_team_member_id', $projectTeamMember->team_member_id)->sum('actual_effort');
             }
         }
-
         $projectNames = array_keys($result);
-        $efforsts = [];
+        $efforts = [];
 
         foreach ($projectNames as $projectName) {
             $projectEffort = [];
@@ -51,18 +52,15 @@ class EffortReportController extends Controller
                 $projectEffort[] = $result[$projectName][$date];
             }
 
-            $efforsts[] = $projectEffort;
+            $efforts[] = $projectEffort;
         }
 
         $chartData = [
             'labels' => $dates,
-            'colors' => $color,
+            'colors' => $colors,
             'projects' => $projectNames,
-            'efforts' => $efforsts
+            'efforts' => $efforts
         ];
-
-        return view('hr.effort.bar-graph', ['employee' => $employee, 'projectTeamMembers' => $projectTeamMembers])->with([
-            'chartData' => json_encode($chartData)
-        ]);
+        return view('hr.effort.bar-graph', ['employee' => $employee, 'chartData' => json_encode($chartData)]);
     }
 }

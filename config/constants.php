@@ -252,5 +252,10 @@ return [
         '70' => 'seventy',
         '80' => 'eighty',
         '90' => 'ninety'
+    ],
+    'bar-Chart-Colors' => [
+    'color1Name' => '#ff0080',
+    'color2Name' => '#00bfff',
+    'color3Name' => '#ffff00',
     ]
 ];
