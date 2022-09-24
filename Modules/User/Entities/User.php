@@ -84,6 +84,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Book::class, 'book_wishlist', 'user_id', 'library_book_id');
     }
 
+    public function booksBorrower()
+    {
+        return $this->belongsToMany(Book::class, 'book_borrower', 'user_id', 'library_book_id');
+    }
+
     public function totalReadBooks()
     {
         return $this->books()->count();
