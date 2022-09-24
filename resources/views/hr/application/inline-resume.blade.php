@@ -18,9 +18,6 @@
                 </span>
             </li>
         </ul>
-        <div class="d-none alert alert-success container " id="success" role="alert">
-            <strong>Saved Successfully!</strong>
-        </div>
     </div>
     <div class="card-body p-0">
         <iframe src="{{ $resume }}#zoom=80"></iframe>
