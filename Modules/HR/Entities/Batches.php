@@ -14,5 +14,4 @@ class Batches extends Model
     {
         return $this->belongsTo(JobRequisition::class, 'batch_id');
     }
-
 }
