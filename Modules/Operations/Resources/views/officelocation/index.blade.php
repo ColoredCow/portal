@@ -17,8 +17,8 @@
                 
                           <div class="mr-2 mt-2 mt-md-0 form-group">
                             <label>Center Head</label><br>
-                            <select name="center_head" class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" id="center_head_id" required>
-                              <option value ="" selected> All Employees</option>
+                            <select name="center_head" class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" id="center_id" required>
+                              <option value =""selected> All Employees</option>
                               @foreach ( $centerHeads as $centerHead )
                                 <option value ="{{ $centerHead->id }}"> {{$centerHead->name}}</option>
                                 
@@ -62,7 +62,7 @@
                     <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" name="center_head" id="center_head_id"required>
                     <option value =""> All Employees</option>
                     @foreach ( $centerHeads as $centerHead )
-                      <option value ="{{ $centerHead->id }}"selected > {{$centerHead->name}} </option>
+                      <option selected value ="{{ $centerHead->id }}"> {{$centerHead->name}} </option>
                       
                     @endforeach
                   </select>
@@ -141,7 +141,7 @@
                                   @else
                                     - 
                                 @endif
-                                  </span> 
+                                  </span>
                                    @if ( $officelocation->centerHead->user )
                                   <span data-html="true" data-toggle="tooltip" class="content tooltip-wrapper">
                                   <div class="text-primary fz-14">

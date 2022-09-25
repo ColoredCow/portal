@@ -1432,39 +1432,6 @@ require("./finance/payment");
  * HR Module JS code start
  */
 
-$("#editform").on("submit", function(e) {
-	e.preventDefault();
-	let form = $("#editform");
-	let button = $("#editBT");
-
-	$.ajax({
-		url: form.attr("action"),
-		type: form.attr("method"),
-		data: form.serialize(),
-		success: function (response) {
-			$("#edit").modal("hide");
-			$("#edit").on("hidden.bs.modal", function (e) {
-				$("#successMessage").toggleClass("d-none");
-				$("#successMessage").fadeToggle(5000);
-			});
-		},
-		error: function (response) {
-			$("#profile-details-error").removeClass("d-none");
-			$("#successMessage").addClass("d-none");
-			let errors = response.responseJSON.errors;
-			$(".profile-details-error").empty();
-			for (let error in errors) {
-				$(".profile-details-error").append(
-					"<li class='text-danger ml-2'>" + errors[error] + "</li>"
-				);
-			}
-		},
-	});
-});
-
-
-
-
 $(document).ready(function () {
 	$(document).on("click", ".show-comment", showCommentBlock);
 	$(document).on("click", ".section-toggle", sectionToggle);
@@ -2047,16 +2014,21 @@ $(document).ready(function () {
 		$("#location_id").val(location);
 		$("#capacity_id").val(capacity);
 		$("#id").val(id);
+		// console.log(centerHead);
 	});
 
-	console.log($("#center_head_id").val(centerHead));
 
 	$("#editformID").on("click", "#editLocationBtn", function (e) {
 		e.preventDefault();
-		var id = $("#center_head").val();
-		var id = $("#location").val();
-		var id = $("#capacity").val();
+		var centerHead = $("#center_head_id").val();
+		var location = $("#location_id").val();
+		var capacity = $("#capacity_id").val();
 		var id = $("#id").val();
+
+		$("#center_head_id").val(centerHead);
+		$("#location_id").val(location);
+		$("#capacity_id").val(capacity);
+		$("#id").val(id);
 
 		$.ajax({
 			type: "PUT",
@@ -2064,8 +2036,8 @@ $(document).ready(function () {
 			data: $("#editformID").serialize(),
 			success: function (response) {
 				$("#officelocationEditModal").modal("hide");
-				toastr.success("data updated successfully");
-				location.reload();
+				// toastr.success("data updated successfully");
+				// location.reload();
 			},
 			error: function (error) {
 				alert("data not updated");
@@ -2080,7 +2052,7 @@ $(document).ready(function () {
 		e.preventDefault();
 
 		var data = {
-			center_head: $("#center_head").val(),
+			center_head: $("#center_id").val(),
 			location: $("#location").val(),
 			capacity: $("#capacity").val(),
 		};
@@ -2091,8 +2063,8 @@ $(document).ready(function () {
 			data: $("#addform").serialize(),
 			success: function (response) {
 				$("#officelocationAddModal").modal("hide");
-				toastr.success("data saved successfully");
-				location.reload();
+				// toastr.success("data saved successfully");
+				// location.reload();
 			},
 			error: function (error) {
 				alert("data not saved");

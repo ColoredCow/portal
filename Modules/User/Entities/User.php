@@ -28,7 +28,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'provider', 'provider_id', 'avatar',
+        'name', 'email', 'password', 'provider', 'provider_id', 'avatar','locations'
     ];
 
     protected $appends = ['websiteUserRole', 'websiteUser'];
@@ -109,12 +109,7 @@ class User extends Authenticatable
 
     public function officelocation()
     {
-        return $this->hasOne(OfficeLocation::class, 'location');
-    }
-
-    public function location()
-    {
-        return $this->belongsTo(OfficeLocation::class, 'location_id');
+        return $this->belongsTo(OfficeLocation::class, 'locations');
     }
 
     public function scopeFindByEmail($query, $email)

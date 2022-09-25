@@ -21,12 +21,12 @@ class ProfileController extends ModuleBaseController
         return view('user::profile.index', $this->service->index());
     }
 
-    public function update(ProfileEditRequest $request, User $user, OfficeLocation $officelocation)
+    public function update(ProfileEditRequest $request, User $user)
     {
         $user->name = $request->name;
         $user->nickname = $request->nickName;
+        $user->locations = $request->locations;
         $user->employee->designation = $request->designation;
-        $user->employee->officelocation->location = $request->location;
         $user->employee->name = $request->name;
         $user->employee->domain_id = $request->domainId;
 

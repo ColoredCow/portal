@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddLocationIdToUsersTable extends Migration
+class AddLocationsToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,8 @@ class AddLocationIdToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedInteger('location_id')->nullable();
-            $table->foreign('location_id')->references('id')->on('office_locations');
+            $table->unsignedInteger('locations')->nullable();
+            $table->foreign('locations')->references('id')->on('office_locations');
         });
     }
 
@@ -29,7 +29,7 @@ class AddLocationIdToUsersTable extends Migration
     {
         Schema::dropIfExists('users');
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign('location_id');
+            $table->dropForeign('locations');
         });
     }
 }

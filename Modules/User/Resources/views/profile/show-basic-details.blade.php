@@ -29,13 +29,12 @@
                     <label for="designation">Designation</label>
                     <input type="text" class="form-control" id="designation" name="designation" required value="{{ $user->employee && $user->employee->designation ? $user->employee->designation : "" }}">
                 </div>
-                <div class="mr-5 mt-2 mt-md-0 form-group">
-                    <label> Add Locations</label><br>
-                    {{-- @dd( $locations) --}}
-                      <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" name="location" id="location_id"required>
-                      <option value =""> All locations</option>
-                      @foreach ( $locations as $location )
-                        <option value ="{{ $location->id }}" selected> {{$location->name}} </option>
+                <div class="mr-2 mt-2 mt-md-0 form-group">
+                    <label>All Locations</label><br>
+                    <select name="center_head" class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" id="center_head_id" required>
+                      <option value ="" selected> All OfficeLocation</option>
+                      @foreach ( $officelocations as $officelocation )
+                        <option value ="{{ $officelocation->id }}"> {{$officelocation->location}}</option>
                         
                       @endforeach
                     </select>
@@ -87,9 +86,9 @@
                 <span>{{ $user->employee->designation }}</span>
             </div>
             <div class="form-group">
-                {{-- @dd( $user->location_id) --}}
                 <label class="font-weight-bold" for="">Location:</label>
-                <span>{{ $user->location_id->officelocations->location }}</span>
+                <span>{{ $user->locations}}</span>
+                <span>{{ $user->officelocation->location}}</span>
             </div>
 
             <div class="form-group">
