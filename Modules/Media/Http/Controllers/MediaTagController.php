@@ -26,7 +26,7 @@ class MediaTagController extends Controller
 
     public function update(MediaTagRequest $request, $id)
     {
-        $mediaData= MediaTags::find($id);
+        $mediaData = MediaTags::find($id);
 
         $mediaData->media_tag_name = $request['media_tag_name'];
         $mediaData->save();
