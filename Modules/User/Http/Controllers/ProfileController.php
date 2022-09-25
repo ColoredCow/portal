@@ -4,7 +4,6 @@ namespace Modules\User\Http\Controllers;
 
 use Modules\User\Contracts\ProfileServiceContract;
 use Modules\User\Entities\User;
-use Modules\Operations\Entities\OfficeLocation;
 use Modules\HR\Http\Requests\ProfileEditRequest;
 
 class ProfileController extends ModuleBaseController
