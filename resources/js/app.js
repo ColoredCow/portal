@@ -1149,9 +1149,9 @@ $(document).ready(function(){
 		ev.preventDefault();
 		var fName = document.getElementById("choices-multiple").value;
 		let name = fName;
-		$('#write_here').html(name);
+		$("#write_here").html(name);
 		return false;
-	})
+	});
 });
 
 $(document).ready(function(){
