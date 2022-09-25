@@ -16,12 +16,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    {{-- @dd($member) --}}
                     <form id="batchDetailsForm" action="{{ route('requisition.storeBatchDetails') }}" method="post">
                         @csrf
-                        <input type="text" id="batchId" name="batchId" value="{{$member->id}}">
-                        <label for="teamMembersDropdown">Select Team Members</label>
-                        <select class="form-control"  name="teamMembers[]" multiple="multiple">
+                        <input type="hidden" id="batchId" name="batchId" value="{{$member->id}}">
+                        <select id="choices-multiple" class="form-control"  name="teamMembers[]" placeholder="Select Team Members" multiple>
                             @foreach ($employees as $employee)
                                 <option value="{{ $employee->id }}">{{ $employee->name }}</option>
                             @endforeach

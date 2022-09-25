@@ -1738,7 +1738,6 @@ $(function () {
 $(".status").on("change", function () {
 	$("#spinner").removeClass("d-none");
 	if (this.checked) {
-		$('#mymodal').modal();
 		$.ajax({
 			url: "completed/change-status/" + this.dataset.id,
 			method: "GET",
@@ -1754,6 +1753,15 @@ $(".status").on("change", function () {
 		});
 	}
 });
+
+$(document).ready(function(){
+    
+     var multipleSelect = new Choices('#choices-multiple', {
+        removeItemButton: true,
+      }); 
+     
+     
+ });
 
 $(".pending").on("change", function () {
 	$("#completeSpinner").removeClass("d-none");
