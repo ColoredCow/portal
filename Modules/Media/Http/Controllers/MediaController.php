@@ -9,6 +9,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
+use Modules\Media\Entities\MediaTags;
 
 class MediaController extends Controller
 {
@@ -19,8 +20,9 @@ class MediaController extends Controller
     public function index()
     {
         $media = Media::orderBy('id', 'desc')->paginate(24);
+        $mediaTag = MediaTags::all();
 
-        return view('media::media.index', ['media' => $media]);
+        return view('media::media.index', ['media' => $media, 'tags' => $mediaTag]);
     }
 
     /**

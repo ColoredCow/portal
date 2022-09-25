@@ -24,14 +24,14 @@ class MediaTagController extends Controller
         return redirect(route('media.Tag.index'))->with(['message', 'status' => 'Tag added successfully!']);
     }
 
-    public function update(MediaTagRequest $request, MediaTags $mediaTag)
+    public function update(MediaTagRequest $request, $id)
     {
-        $tagsData = [
-            'media_tag_name' => $request->media_tag_name,
-        ];
-        $mediaTag->update($tagsData);
+        $mediaData= MediaTags::find($id);
 
-        return redirect(route('media.index'))->with(['message', 'status' => 'media updated successfully!']);
+        $mediaData->media_tag_name = $request['media_tag_name'];
+        $mediaData->save();
+
+        return redirect()->back()->with(['message', 'status' => 'Tag updated successfully!']);
     }
 
     public function destroy(MediaTags $request, $id)

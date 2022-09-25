@@ -1,7 +1,6 @@
 @extends('media::layouts.master')
 @section('title', 'Media Page')
 @section('heading', 'Media')
-@section('popup', 'Add New Post')
 @section('link', route('media.index'))
 @section('content')
 
@@ -21,19 +20,17 @@
                 <h1>@yield('heading')</h1>
             </div>
             <div class="d-flex">
-                <div class="d-flex">
-                    <div class="row mr-2">
-                        <form class = "form-inline my-2 my-lg-0"  type = "get"  action="{{ url('/search') }}">
-                            <div class="d-flex align-items-center">
-                                <input type="search" class="form-control mr-sm-2" name="query" type="search" placeholder="Search Media" required>
-                                <button type="submit" class="btn btn-info mr-sm-2 text-white fw-bold">Search</a>
-                            </div>
-                        </form>
-                    </div>
-                    <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#media">
-                        <a><i class="fa fa-plus fa-light icon-0.2x">  @yield('popup')</i></a>
-                    </button>
+                <div class="row mr-2">
+                    <form class = "form-inline my-2 my-lg-0"  type = "get"  action="{{ url('/search') }}">
+                        <div class="d-flex align-items-center">
+                            <input type="search" class="form-control mr-sm-2" name="query" type="search" placeholder="Search Media" required>
+                            <button type="submit" class="btn btn-info mr-sm-2 text-white fw-bold">Search</a>
+                        </div>
+                    </form>
                 </div>
+                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#media">
+                    <a><i class="fa fa-plus mr-1"></i>Add New Post</a>
+                </button>
             </div>
         </div>
         <div class="modal fade" id="media" tabindex="-1" role="dialog" aria-labelledby="mediaLabel" aria-hidden="true">
@@ -54,19 +51,19 @@
                                     <div class="card-body p-4">
                                         <form action="{{ route('media.index') }}" method="POST" enctype="multipart/form-data">
                                             @csrf
-                                            <div class="my-2"><h3 class="text-secondary">Event Name</h3>
+                                            <div class="my-2"><h3 class="text-secondary"><strong> Event Name</strong></h3>
                                                 <input type="text" name="event_name" id="event_name" class="form-control @error('event_name') is-invalid @enderror" placeholder="Event name" value="{{ old('event_name') }}">
                                                 @error('event_name')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                            <div class="my-2"><h3 class="text-secondary">File Upload</h3>
+                                            <div class="my-2"><h3 class="text-secondary"><strong> File Upload</strong></h3>
                                                 <input type="file" name="file" id="file" accept="image/*" class="form-control @error('file') is-invalid @enderror">
                                                 @error('file')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                            <div class="my-2"><h3 class="text-secondary">Description</h3>
+                                            <div class="my-2"><h3 class="text-secondary"><strong> Description </strong></h3>
                                                 <textarea name="description" id="description" rows="6" class="form-control @error('description') is-invalid @enderror" placeholder="Description">{{ old('description') }}</textarea>
                                                 @error('description')
                                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -99,8 +96,11 @@
                             <i class="fa fa-cog"></i>
                         </a>
                         <ul class="dropdown-menu ">
-                            <li class="dropdown-item">Update Tags</li>
+                            <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+                                <li class="dropdown-item">Update Tags</li>
+                            </button>
                         </ul>
+                        @include('media::media.mediaTag.updateTag')
                     </div>
                 </div>
                 <a href="{{ route('media.show', $row->id) }}">
@@ -114,6 +114,7 @@
                     </p>
                     <p class="card-title fw-bold text-secondary"><strong> Event Name - </strong>{{ $row->event_name }}</p>
                     <p class="text-secondary"><strong> Description - </strong>{{ Str::limit($row->description, 10) }}</p>
+                    <p><div class="badge badge-primary text-white" id='write_here'></div></p>
                 </div>
             </div>
         </div>

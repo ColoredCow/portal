@@ -21,8 +21,8 @@
                         {{ \Carbon\Carbon::parse($media->created_at)->diffForHumans() }}
                     </p>
                 </div>
-                <p class="fw-bold text-secondary">Event Name - {{ $media->event_name }}</p>
-                <p class="fw-bold text-secondary">Description - {{ $media->description }}</p>
+                <p class="fw-bold text-secondary"><strong> Event Name - </strong>{{ $media->event_name }}</p>
+                <p class="fw-bold text-secondary"><strong> Description - </strong>{{ $media->description }}</p>
             </div>
             <div class="card-footer px-5 py-3 d-flex justify-content-end">
                 <div>

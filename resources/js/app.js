@@ -1126,6 +1126,40 @@ function disableBookSuggestions() {
 	).dataset.href;
 }
 
+/*
+|Media
+*/
+
+$("#tagEditModal").on("show.bs.modal", function (e) {
+	const tagEdited = e.relatedTarget;
+	const tag = $(tagEdited).data("json");
+	const editForm = $(this).find("form");
+	const newId = editForm.find("input.hidden");
+	const value = newId.attr("value");
+	const action = value.replace("id", tag.id);
+
+	editForm.attr("action", action);
+
+	editForm.find("select[media_tag_name ='media_tag_name']").val(tag.media_tag_name);
+});
+
+$(document).ready(function(){
+	const formDetails = document.getElementById("details");
+	formDetails.addEventListener("submit", async (ev) => {
+		ev.preventDefault();
+		var fName = document.getElementById("choices-multiple").value;
+		let name = fName;
+		$('#write_here').html(name);
+		return false;
+	})
+});
+
+$(document).ready(function(){
+	var multipleSelect = new Choices("#choices-multiple", {
+		removeItemButton: true,
+	});
+});
+
 if (document.getElementById("roles_permission_table")) {
 	new Vue({
 		el: "#roles_permission_table",

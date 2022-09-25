@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MediaTags extends Model
 {
- protected $table = 'media_tags';
+    protected $table = 'media_tags';
 
- protected $gaurded = [];
-
+    protected $gaurded = [];
 }

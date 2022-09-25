@@ -38,6 +38,6 @@ Route::resource('Tag', 'MediaTagController')
 ->names([
     'index' => 'media.Tag.index',
     'store' => 'media.Tag.store',
-    'update' => 'media.Tag.update',
 ]);
 Route::post('/delete/{id}', 'MediaTagController@destroy')->name('media.Tag.destroy');
+Route::get('/update/{MediaTags}', 'MediaTagController@update')->name('media.Tag.update');

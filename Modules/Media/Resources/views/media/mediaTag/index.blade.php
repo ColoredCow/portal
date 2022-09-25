@@ -2,11 +2,19 @@
 
 @section('content')
 <div class="container"><br>
-    @include('media::media.menu', ['active' => 'media_Tag']) 
+    @include('media::media.menu', ['active' => 'media_tags']) 
     <br>
-    <div class="d-flex justify-content-between">
-        <div class="text"><h1>Media Tags</h1></div>
-        <div><button type="button" class="btn btn-success align-right" data-toggle="modal" data-target="#tagModal"><i class="fa fa-plus mr-1"></i>Add Tags</button></div>
+    <div class="col-lg-12 d-flex justify-content-between align-items-center mx-auto">
+        <div class="d-flex">
+            <h1>Media Tags</h1>
+        </div>
+        <div class="d-flex">
+            <div class="d-flex">
+                <div class="row mr-2">
+                    <button type="button" class="btn btn-success align-right" data-toggle="modal" data-target="#tagModal"><i class="fa fa-plus mr-1"></i>Add Tags</button>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="modal fade" id="tagModal" tabindex="-1" role="dialog" aria-labelledby="tags" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -34,7 +42,7 @@
     <table class="table table-striped table-bordered">
         <thead class="thead-dark">
         <tr class="sticky-top">
-            <th>{{ __('tags') }}</th>
+            <th>{{ __('Tags') }}</th>
             <th>{{ __('Edit') }}</th>
             <th>{{ __('Delete') }}</th>
         </tr>
@@ -46,7 +54,7 @@
                 </span>
             </td>
             <td>
-             <button type="button" class="pr-1 btn btn-link" data-toggle="modal" data-target="#designationEditFormModal" data-json="{{$tag}}" ><i class="text-success fa fa-edit fa-lg"></i></button>
+             <button type="button" class="pr-1 btn btn-link" data-toggle="modal" data-target="#tagEditModal" data-json="{{$tag}}" ><i class="text-success fa fa-edit fa-lg"></i></button>
             </td>
             <td>
                 <form action="{{ route('media.Tag.destroy', ['id' => $tag->id]) }}" method="post">
@@ -58,4 +66,5 @@
         @endforeach
     </table>
 </div>
+@include('media::media.mediaTag.edit')
 @endsection
