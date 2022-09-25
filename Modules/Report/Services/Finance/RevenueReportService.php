@@ -81,7 +81,7 @@ class RevenueReportService
         $exchangeMonth = null;
         $exchangeRates = CurrencyAvgRate::select('captured_for')->groupBy('captured_for')->get()->toArray();
         foreach ($exchangeRates as $exchangeRate) {
-        $exchangeMonth = (date('m-y', strtotime($exchangeRate['captured_for'])));
+            $exchangeMonth = (date('m-y', strtotime($exchangeRate['captured_for'])));
         }
 
         // ToDo:: We need to change this logic and get the exchange rate for every month.
