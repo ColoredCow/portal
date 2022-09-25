@@ -19,7 +19,6 @@ class AddLocationsToUsersTable extends Migration
         });
     }
 
-
     /**
      * Reverse the migrations.
      *
