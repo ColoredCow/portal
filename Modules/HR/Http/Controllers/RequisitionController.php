@@ -65,15 +65,15 @@ class RequisitionController extends Controller
         Batches::create([
             'id' => $batchId,
         ]);
-  
+
         foreach ($batchMembers as $batchMember) {
             BatchMembers::create([
                 'batch_id' => $batchId,
                 'employee_id' => $batchMember,
             ]);
-        };
+        }
 
-        DB::table('job_requisition')->where('id', $batchId)->update(['batch_table_id' => $batchId ]);
+        DB::table('job_requisition')->where('id', $batchId)->update(['batch_table_id' => $batchId]);
 
         return redirect()->back();
     }
