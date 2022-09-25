@@ -1754,13 +1754,10 @@ $(".status").on("change", function () {
 	}
 });
 
-$(document).ready(function(){
-    
+$(document).ready(function(){  
     var multipleSelect = new Choices("#choices-multiple", {
         removeItemButton: true,
-    }); 
-     
-     
+    });    
 });
 
 $(".pending").on("change", function () {
