@@ -31,5 +31,6 @@
                 </tr>
             @endforeach
         </table>
+        {{$expenses->links()}}
     </div>
 @endsection

@@ -76,15 +76,15 @@
                         <div class="row mb-3 bg bg-grey pt-2">
                             <div class="col-5">
                                 
-                                <label for="document"> {{ __('Upload Document') }}</label>
+                                <label class="field-required" for="document"> {{ __('Upload Document') }}</label>
                                 <div class="custom-file mb-3">
-                                    <input type="file" id="document_file" name="documents[][file]" class="custom-file-input">
+                                    <input type="file" id="document_file" name="documents[][file]" class="custom-file-input" required>
                                     <label for="customFile0" class="custom-file-label overflow-hidden">Choose file</label>
                                 </div>
                             </div>
                             <div class="col-5">
-                                <label for="document"> {{ __('Document Type') }}</label>
-                                <select class="form-control" name="documents[][type]">
+                                <label class="field-required" for="document"> {{ __('Document Type') }}</label>
+                                <select class="form-control" name="documents[][type]" required>
                                     <option value="">Select Type</option>
                                     @foreach (config('expense.type_of_documents') as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
