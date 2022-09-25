@@ -38,9 +38,27 @@ class RevenueReportService
         return $particular;
     }
 
+    public function getAvgCurrencyRates()
+    {
+        $totalRate = 0;
+        $exchangeRate = [];
+        $currency_chages = [];
+        $exchangeRates = CurrencyAvgRate::select('avg_rate', 'captured_for')->groupBy('captured_for')->get()->toArray();
+        $exchangeMonth = null;
+        foreach ($exchangeRates as $exchangeRate) {
+            $exchangeMonth = (date('m-y', strtotime($exchangeRate['captured_for'])));
+            $currency_chages[] = [
+            $exchangeMonth => $exchangeRate['avg_rate']
+            ];
+        }
+        $totalRate = $exchangeRate['avg_rate'];
+
+        return $totalRate;
+    }
+
     private function getParticularAmountForDomestic(array $particular, Object $startDate, Object $endDate): array
     {
-        $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'indian');
+        $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'non-indian');
         $totalAmount = 0;
         $results = [];
 
@@ -57,29 +75,24 @@ class RevenueReportService
 
     private function getParticularAmountForExport(array $particular, Object $startDate, Object $endDate): array
     {
-        $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'non-indian');
+        $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'indian');
         $totalAmount = 0;
         $results = [];
-        $currency_chages = [];
+        $exchangeMonth = null;
+        $exchangeRates = CurrencyAvgRate::select('captured_for')->groupBy('captured_for')->get()->toArray();
+        foreach ($exchangeRates as $exchangeRate) {
+        $exchangeMonth = (date('m-y', strtotime($exchangeRate['captured_for'])));
+        }
 
         // ToDo:: We need to change this logic and get the exchange rate for every month.
-        $exchangeRate = [];
-        $exchangeRates = CurrencyAvgRate::select('avg_rate', 'captured_for')->groupBy('captured_for')->get()->toArray();
-        $exchangeMonth = null;
-        foreach ($exchangeRates as $exchangeRate) {
-            $exchangeMonth = (date('m-y', strtotime($exchangeRate['captured_for'])));
-            $currency_chages[] = [
-                $exchangeMonth => $exchangeRate['avg_rate']
-            ];
-        }
         foreach ($invoices as $invoice) {
             $dateKey = $invoice->sent_on->format('m-y');
             if ($exchangeMonth == $dateKey) {
-                $exchangeDollor = $exchangeRate['avg_rate'];
+                $exchangeDollor = $this->getAvgCurrencyRates();
             } else {
                 $exchangeDollor = app(CurrencyService::class)->getCurrentRatesInINR();
             }
-            $amount = ($invoice->amount) * intval($exchangeDollor);
+            $amount = ($invoice->amount) * ($exchangeDollor);
             $totalAmount += $amount;
             $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
         }
