@@ -1742,7 +1742,7 @@ $(".status").on("change", function () {
 			url: "completed/change-status/" + this.dataset.id,
 			method: "GET",
 			success: function (res) {
-		        $('#mymodal').modal();
+		        $("#mymodal").modal();
 			},
 			error: function (err) {
 				alert("there is some problem");
@@ -1756,12 +1756,12 @@ $(".status").on("change", function () {
 
 $(document).ready(function(){
     
-     var multipleSelect = new Choices('#choices-multiple', {
+    var multipleSelect = new Choices("#choices-multiple", {
         removeItemButton: true,
-      }); 
+    }); 
      
      
- });
+});
 
 $(".pending").on("change", function () {
 	$("#completeSpinner").removeClass("d-none");
