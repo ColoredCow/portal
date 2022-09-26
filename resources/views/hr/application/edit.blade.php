@@ -105,6 +105,16 @@
                                                             {{ $applicationRound->conducted_date->format(config('constants.display_date_format')) }}</span>
                                                     @endif
                                                 </div>
+                                                @if ($applicationRound->scheduled_date && $applicationRound->hangout_link)
+                                                    @if ($applicationRound->actual_end_time == null)
+                                                        <div class="text-right ml-5 ml-md-0">
+                                                            <button type="button" id="meet_time"
+                                                                value="{{ $applicationRound->id }}"
+                                                                class="btn-sm btn-primary text-decoration-none finish_interview ">Finish
+                                                                Interview</button>
+                                                        </div>        
+                                                    @endif
+                                                @endif
                                                 <div class="icon-pencil position-relative ml-3 c-pointer"
                                                     data-toggle="collapse" data-target="#collapse_{{ $loop->iteration }}">
                                                     <i class="fa fa-pencil"></i>
@@ -122,9 +132,9 @@
                                                 <div class="card-body">
                                                     @if (!$applicationRound->round_status)
                                                         <div class="form-row">
-                                                            <div class="form-group col-md-5">
+                                                            <div class="form-group col-md-4">
                                                                 <label for="scheduled_date"
-                                                                    class="fz-14 leading-none text-secondary w-100p">
+                                                                    class="fz-12 leading-none text-secondary w-100p">
                                                                     <div>
                                                                         <i class="fa fa-calendar" aria-hidden="true"></i>
                                                                         <span>Scheduled date</span>
@@ -142,13 +152,27 @@
                                                                     </div>
                                                                 </label>
                                                                 @if ($applicationRound->scheduled_date)
-                                                                    <input type="datetime-local" name="scheduled_date"
+                                                                    <input type="date" name="scheduled_date"
                                                                         id="scheduled_date"
                                                                         class="form-control form-control-sm"
-                                                                        value="{{ $applicationRound->scheduled_date->format(config('constants.display_datetime_format')) }}">
+                                                                        value="{{ $applicationRound->scheduled_date->format(config('constants.date_format')) }}">
                                                                 @else
                                                                     <div class="fz-16 leading-tight">Pending calendar
                                                                         confirmation</div>
+                                                                @endif
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="scheduled_time"
+                                                                    class="fz-14 leading-none text-secondary w-100p">
+                                                                    <div>
+                                                                        <span>Scheduled Time</span>
+                                                                    </div>
+                                                                </label>
+                                                                @if ($applicationRound->scheduled_date)
+                                                                    <input type="Time" name="scheduled_time"
+                                                                        id="scheduled_time"
+                                                                        class="form-control form-control-sm"
+                                                                        value="{{ $applicationRound->scheduled_date->toTimeString() }}">
                                                                 @endif
                                                             </div>
                                                             <div class="form-group col-md-4">
@@ -190,6 +214,11 @@
                                                             @endif
                                                         </div>
                                                     @endif
+                                                    <div class="form-row" id="durations">
+                                                        @if ($applicationRound->actual_end_time != null)
+                                                            @include('hr.application.meeting-duration')
+                                                        @endif
+                                                    </div>
                                                     @if ($applicationRound->round->name == 'Resume Screening')
                                                         <div class="form-row">
                                                             <div class="form-group col-md-12">
@@ -388,6 +417,14 @@
                                                     @endif
                                                 </div>
 
+                                                @if ($applicationRound->scheduled_date && $applicationRound->hangout_link && $applicationRound->actual_end_time == null)
+                                                    <div class="text-right ml-5 ml-md-0">
+                                                        <button type="button" id="meet_time"
+                                                            value="{{ $applicationRound->id }}"
+                                                            class="btn-sm btn-primary text-decoration-none finish_interview ">Finish
+                                                            Interview</button>
+                                                    </div>
+                                                @endif
                                                 <div class="icon-pencil position-relative ml-3 c-pointer"
                                                     data-toggle="collapse"
                                                     data-target="#pre-trial-collapse_{{ $loop->iteration }}"><i
@@ -600,9 +637,9 @@
                                                 <div class="card-body">
                                                     @if (!$applicationRound->round_status)
                                                         <div class="form-row">
-                                                            <div class="form-group col-md-5">
+                                                            <div class="form-group col-md-4">
                                                                 <label for="scheduled_date"
-                                                                    class="fz-14 leading-none text-secondary w-100p">
+                                                                    class="fz-12 leading-none text-secondary w-100p">
                                                                     <div>
                                                                         <i class="fa fa-calendar" aria-hidden="true"></i>
                                                                         <span>Scheduled date</span>
@@ -620,13 +657,27 @@
                                                                     </div>
                                                                 </label>
                                                                 @if ($applicationRound->scheduled_date)
-                                                                    <input type="datetime-local" name="scheduled_date"
+                                                                    <input type="date" name="scheduled_date"
                                                                         id="scheduled_date"
                                                                         class="form-control form-control-sm"
-                                                                        value="{{ $applicationRound->scheduled_date->format(config('constants.display_datetime_format')) }}">
+                                                                        value="{{ $applicationRound->scheduled_date->format(config('constants.date_format')) }}">
                                                                 @else
                                                                     <div class="fz-16 leading-tight">Pending calendar
                                                                         confirmation</div>
+                                                                @endif
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="scheduled_time"
+                                                                    class="fz-14 leading-none text-secondary w-100p">
+                                                                    <div>
+                                                                        <span>Scheduled Time</span>
+                                                                    </div>
+                                                                </label>
+                                                                @if ($applicationRound->scheduled_date)
+                                                                    <input type="Time" name="scheduled_time"
+                                                                        id="scheduled_time"
+                                                                        class="form-control form-control-sm"
+                                                                        value="{{ $applicationRound->scheduled_date->toTimeString() }}">
                                                                 @endif
                                                             </div>
                                                             <div class="form-group col-md-4">
@@ -665,6 +716,11 @@
                                                                         data-action="schedule-update">Update
                                                                         Schedule</button>
                                                                 </div>
+                                                            @endif
+                                                        </div>
+                                                        <div class="form-row" id="durations">
+                                                            @if ($applicationRound->actual_end_time != null)
+                                                                @include('hr.application.meeting-duration')
                                                             @endif
                                                         </div>
                                                     @endif
@@ -764,7 +820,8 @@
                                             <input type="hidden" name="next_round" value="">
                                             @if ($loop->last && !$application->latestApplicationRound->round->isTrialRound())
                                                 <input type="hidden" name="current_applicationround_id"
-                                                    id="current_applicationround_id" value="{{ $applicationRound->id }}">
+                                                    id="current_applicationround_id"
+                                                    value="{{ $applicationRound->id }}">
                                             @endif
                                             @includeWhen($applicationRound->showActions,
                                                 'hr.round-review-confirm-modal',
@@ -867,6 +924,14 @@
                                                     {{ $applicationRound->conducted_date->format(config('constants.display_date_format')) }}</span>
                                             @endif
                                         </div>
+                                        @if ($applicationRound->scheduled_date && $applicationRound->hangout_link && $applicationRound->actual_end_time == null)
+                                            <div class="text-right ml-5 ml-md-0">
+                                                <button type="button" id="meet_time"
+                                                    value="{{ $applicationRound->id }}"
+                                                    class="btn-sm btn-primary text-decoration-none finish_interview ">Finish
+                                                    Interview</button>
+                                            </div>        
+                                        @endif
                                         <div class="icon-pencil position-relative ml-3 c-pointer" data-toggle="collapse"
                                             data-target="#collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i>
                                         </div>
@@ -921,13 +986,12 @@
                                                                 </div>
                                                                 <div class="form-group offset-md-1 col-md-5">
                                                                     <label
-                                                                        class="text-secondary fz-14 leading-none mb-0.16">Applied
+                                                                        class="text-secondary fz-14 leading-none mb-0.16" >Applied
                                                                         for</label>
                                                                     <div>
                                                                         <a href="{{ $application->job->link }}"
                                                                             target="_blank">
-                                                                            <span
-                                                                                id="jobTitle">{{ $application->job->title }}</span>
+                                                                            <span id="jobTitle">{{ $application->job->title }}</span>
                                                                             <i class="fa fa-external-link fz-14"
                                                                                 aria-hidden="true"></i>
                                                                         </a>
@@ -1094,12 +1158,12 @@
                                                 @endif
 
                                                 @if (!$applicationRound->round_status)
-                                                    <div class="form-row">
-                                                        @if ($application->latestApplicationRound->round->name != 'Telephonic Interview' &&
-                                                            $applicationRound->round->name != 'Team Interaction Round')
-                                                            <div class="form-group col-md-5">
+                                                    @if ($application->latestApplicationRound->round->name != 'Telephonic Interview' &&
+                                                        $applicationRound->round->name != 'Team Interaction Round')
+                                                        <div class="form-row">
+                                                            <div class="form-group col-md-4">
                                                                 <label for="scheduled_date"
-                                                                    class="fz-14 leading-none text-secondary w-100p">
+                                                                    class="fz-12 leading-none text-secondary w-100p">
                                                                     <div>
                                                                         <i class="fa fa-calendar" aria-hidden="true"></i>
                                                                         <span>Scheduled date</span>
@@ -1117,15 +1181,29 @@
                                                                     </div>
                                                                 </label>
                                                                 @if ($applicationRound->scheduled_date)
-                                                                    <input type="datetime-local" name="scheduled_date"
+                                                                    <input type="date" name="scheduled_date"
                                                                         id="scheduled_date"
                                                                         class="form-control form-control-sm"
-                                                                        value="{{ $applicationRound->scheduled_date->format(config('constants.display_datetime_format')) }}">
+                                                                        value="{{ $applicationRound->scheduled_date->format(config('constants.date_format')) }}">
                                                                 @else
                                                                     @if ($applicationRound->round->name != 'Team Interaction Round')
                                                                         <div class="fz-16 leading-tight">Pending calendar
                                                                             confirmation</div>
                                                                     @endif
+                                                                @endif
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="scheduled_time"
+                                                                    class="fz-14 leading-none text-secondary w-100p">
+                                                                    <div>
+                                                                        <span>Scheduled Time</span>
+                                                                    </div>
+                                                                </label>
+                                                                @if ($applicationRound->scheduled_date)
+                                                                    <input type="Time" name="scheduled_time"
+                                                                        id="scheduled_time"
+                                                                        class="form-control form-control-sm"
+                                                                        value="{{ $applicationRound->scheduled_date->toTimeString() }}">
                                                                 @endif
                                                             </div>
                                                             <div class="form-group col-md-4">
@@ -1156,7 +1234,6 @@
                                                                         <span>{{ $applicationRound->scheduledPerson->name }}</span>
                                                                     </div>
                                                                 @endif
-
                                                             </div>
                                                             @if ($applicationRound->scheduled_date)
                                                                 <div class="form-group col-md-3 d-flex align-items-end">
@@ -1234,7 +1311,8 @@
                                                 </div>
                                                 <div class="form-row d-flex justify-content-end">
                                                     <button type="button" class="btn btn-info btn-sm round-submit"
-                                                        data-action="update">Update feedback</button>
+                                                        data-action="update">Update
+                                                        feedback</button>
                                                 </div>
                                             </div>
                                             @php
@@ -1266,13 +1344,16 @@
                                                                 <option value="onboard">Onboard</option>
                                                             </select>
                                                             <button type="button" class="btn btn-success ml-2"
-                                                                @click="takeAction()">Take action</button>
+                                                                @click="takeAction()">Take
+                                                                action</button>
                                                         @endif
                                                         <!-- Button trigger modal -->
                                                         <button type="button" class="btn btn-primary p-0 px-1 py-1 ml-2"
                                                             data-toggle="modal" data-target="#ModalCenter">
                                                             Put on Hold
                                                         </button>
+
+                                                        <!-- Modal -->
 
                                                         @if ($loop->last && !$application->isRejected())
                                                             {{-- @if ($applicantOpenApplications->count() > 1) --}}
@@ -1305,7 +1386,9 @@
                                         @endif
                                         @includeWhen($applicationRound->showActions,
                                             'hr.round-review-confirm-modal',
-                                            ['applicationRound' => $applicationRound])
+                                            [
+                                                'applicationRound' => $applicationRound,
+                                            ])
                                         @includeWhen($loop->last, 'hr.application.send-for-approval-modal')
                                         @includeWhen($loop->last, 'hr.application.onboard-applicant-modal')
                                         @includeWhen($loop->last, 'hr.application.approve-applicant-modal')
