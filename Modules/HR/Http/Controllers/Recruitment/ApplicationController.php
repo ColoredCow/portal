@@ -310,14 +310,17 @@ abstract class ApplicationController extends Controller
         return redirect()->back()->with('status', 'Your request has successfully been sent');
     }
 
-    public function acceptHandoverRequest(Application $application)
+    public function acceptHandoverRequest(Request $request, Application $application)
     {
+        $scheduledPersonId = $request->get('user');
+
         $applicationRound = $application->latestApplicationRound;
         $applicationRound->update([
-            'scheduled_person_id' => auth()->user()->id,
+            'scheduled_person_id' => $scheduledPersonId,
         ]);
+        $scheduledUser = User::where('id', $scheduledPersonId)->first()->name;
 
-        $status = 'Successful Assigned to ' . auth()->user()->name;
+        $status = 'Successful Assigned to ' . $scheduledUser;
 
         return redirect(route('applications.job.index'))->with('status', $status);
     }
