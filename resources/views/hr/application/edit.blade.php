@@ -216,7 +216,7 @@
                                                     @endif
                                                     <div class="form-row" id="durations">
                                                         @if ($applicationRound->actual_end_time != null)
-                                                            @include('hr.application.meeting')
+                                                            @include('hr.application.meeting-duration')
                                                         @endif
                                                     </div>
                                                     @if ($applicationRound->round->name == 'Resume Screening')
