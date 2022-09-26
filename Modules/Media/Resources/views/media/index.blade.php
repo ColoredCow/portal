@@ -93,7 +93,7 @@
             </div>
         </div>
         @empty
-        <h2 class="text-center text-secondary p-4">No post found in the database!</h2>
+        <h2 class="text-center text-secondary p-4">No post found!</h2>
         @endforelse
         <div class="d-flex justify-content-center">
             {{ $media->onEachSide(1)->links() }}
