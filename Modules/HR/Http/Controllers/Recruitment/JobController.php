@@ -163,7 +163,7 @@ class JobController extends Controller
 
     public function showTable(HttpRequest $request)
     {
-        $data = DB::table('hr_applications')
+        $applicationData = DB::table('hr_applications')
             ->select(['hr_applications.resume', 'hr_application_meta.value', 'hr_jobs.title', 'hr_applicants.name'])
             ->join('hr_application_meta', 'hr_applications.id', '=', 'hr_application_meta.hr_application_id')
             ->join('hr_jobs', 'hr_applications.hr_job_id', '=', 'hr_jobs.id')
@@ -173,7 +173,7 @@ class JobController extends Controller
             ->get();
 
         return view('hr.application.resume-table')->with([
-            'data' => $data,
+            'applicationData' => $applicationData,
         ]);
     }
 }

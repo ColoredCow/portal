@@ -8,10 +8,8 @@
             <form action="{{ route('response.store', $application->id) }}" method="POST" id="responseForm">
                 @csrf
                 <div class="modal-body">
-                    <div class="fomodal-body">
-                        <textarea name="body" rows="10" class="form-control"
-                            placeholder="Why do you think this is a desired resume?" required></textarea>
-                    </div>
+                    <textarea name="body" rows="10" class="form-control"
+                        placeholder="Why do you think this is a desired resume?" required></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

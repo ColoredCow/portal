@@ -3,7 +3,7 @@
     <div class="container">
         <div>
             <h2 class="text-primary">
-                Desired Resume for {{ $data->pluck('title')->first() }}
+                Desired Resume for {{ $applicationData->pluck('title')->first() }}
             </h2>
         </div>
         <br><br>
@@ -12,10 +12,10 @@
                 <th><strong>Resume</strong></th>
                 <th><strong>Reasons for desirability</strong></th>
             </thead>
-            @foreach ($data as $datas)
+            @foreach ($applicationData as $data)
                 <tr>
-                    <td><a href="{{ $datas->resume }}" target="_blank"><i class="fa fa-file"> {{ $datas->name }} </i></a></td>
-                    <td>{{ $datas->value }}</td>
+                    <td><a href="{{ $data->resume }}" target="_blank"><i class="fa fa-file"> {{ $data->name }} </i></a></td>
+                    <td>{{ $data->value }}</td>
                 </tr>
             @endforeach
         </table>
