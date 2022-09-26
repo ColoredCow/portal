@@ -108,8 +108,7 @@ class ApplicantController extends Controller
     {
         $hr_applicant_email = $email;
         $hr_applicant_id = $id;
-        $applicantMeta = ApplicantMeta::where('hr_applicant_id',$id)->get()->keyBy('key');
-        // dd($applicantMeta);
+        $applicantMeta = ApplicantMeta::where('hr_applicant_id', $id)->get()->keyBy('key');
         
         return view('hr.application.approved-applicants-details')->with(['hr_applicant_id' => $hr_applicant_id,'hr_applicant_email' => $hr_applicant_email,'applicantMeta'=> $applicantMeta]);
     }
@@ -123,7 +122,7 @@ class ApplicantController extends Controller
         return redirect()->route('hr.applicant.form-submitted', [$hr_applicant_id ,$hr_applicant_email]);
     }
 
-    public function formSubmit($id,$email)
+    public function formSubmit($id, $email)
     {
         $hr_applicant_id = $id;
         $hr_applicant_email = $email;
@@ -133,8 +132,8 @@ class ApplicantController extends Controller
 
     public function showFormDetails($id)
     {
-        $applicantMeta = ApplicantMeta::where('hr_applicant_id',$id)->get()->keyBy('key');
-        $applicant = Applicant::where('id',$id)->get();
+        $applicantMeta = ApplicantMeta::where('hr_applicant_id', $id)->get()->keyBy('key');
+        $applicant = Applicant::where('id', $id)->get();
 
         return view('hr.application.verify-details', ['applicantMeta'=> $applicantMeta, 'applicant'=> $applicant]);
     }
