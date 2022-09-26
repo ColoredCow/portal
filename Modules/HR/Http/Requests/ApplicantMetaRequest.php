@@ -31,7 +31,7 @@ class ApplicantMetaRequest extends FormRequest
             'acc_holder_name' => 'required|string',
             'bank_name' => 'required|string',
             'acc_number' => 'required|integer',
-            'ifsc_code' => 'required|integer',
+            'ifsc_code' => 'required|string',
             'passbook_first_page_img' => 'required|mimes:jpg,jpeg,png,pdf',
             'uan_number' => 'required|integer',
             'hr_applicant_id' => 'required|integer',
