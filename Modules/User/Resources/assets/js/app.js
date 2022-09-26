@@ -6,13 +6,13 @@
 
 
 $(document).ready(function () {
-$("#unmarried").click(function () {
+	$("#unmarried").click(function () {
 		$("#spouse").addClass("d-none");
 	});
-$("#married").click(function () {
+	$("#married").click(function () {
 		$("#spouse").removeClass("d-none");
 	});
-$("#divorced").click(function () {
+	$("#divorced").click(function () {
 		$("#spouse").addClass("d-none");
 	});
 });
