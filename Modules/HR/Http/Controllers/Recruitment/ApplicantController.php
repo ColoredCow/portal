@@ -109,7 +109,7 @@ class ApplicantController extends Controller
         $hr_applicant_email = $email;
         $hr_applicant_id = $id;
 
-        return view('hr.application.approved-applicants-details')->with(['hr_applicant_id' => $hr_applicant_id,'hr_applicant_email' => $hr_applicant_email]);
+        return view('hr.application.approved-applicants-details')->with(['hr_applicant_id' => $hr_applicant_id, 'hr_applicant_email' => $hr_applicant_email]);
     }
 
     public function storeApprovedApplicantDetails(ApplicantMetaRequest $request)
