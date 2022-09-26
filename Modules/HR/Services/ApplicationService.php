@@ -129,11 +129,17 @@ class ApplicationService implements ApplicationServiceContract
                 $file = $request->file($key);
                 $fileName = $key . $request->get('hr_applicant_id') . '.' . $file->extension();
                 $filepath = $file->move(storage_path('app/public/Employee-Documents-Details'), $fileName);
-                ApplicantMeta::updateOrCreate([
+                ApplicantMeta::updateOrInsert(
+                    [
+                    'key' => $label,
+                    'hr_applicant_id' => $request->get('hr_applicant_id'),
+                ],
+                    [
                     'hr_applicant_id' => $request->get('hr_applicant_id'),
                     'key' => $label,
-                    'value' => $filepath,
-                ]);
+                    'value' => $fileName,
+                ]
+                );
             }
         }
     }

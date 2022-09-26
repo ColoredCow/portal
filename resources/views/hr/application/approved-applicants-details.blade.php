@@ -6,6 +6,7 @@
 @endif
 <form action="{{route('hr.applicant.store-approved-applicants-details')}}" enctype="multipart/form-data" method="POST">
     @csrf
+    {{-- @dd($applicantMeta) --}}
     <div class="container col-sm-6">
         <div class="card">
             <div class="card-body">
@@ -34,7 +35,7 @@
                     <div class="col-md-5 form-group">
                         <label for="name" class="field-required fz-14 leading-none text-secondary mb-1">Full Name</label>
                         <p class="fz-14 leading-none text-secondary mb-1">As Per Pan Card</p>
-                        <input type="text" class="form-control w-300" name="name" required="required">
+                        <input type="text" class="form-control w-300" name="name" value="" required="required" >
                         <span class="text-danger">
                             @error('name')
                                 {{$message}}
@@ -143,12 +144,12 @@
                                     required="required">
                                 <label for="customFile" class="custom-file-label overflow-hidden w-300">Add File</label>
                             </div>
-                            <span class="text-danger">
-                                @error('head_shot_image')
-                                    {{$message}}
-                                    @enderror
-                            </span>
                         </div>
+                        <span class="text-danger">
+                            @error('head_shot_image')
+                                {{$message}}
+                                @enderror
+                        </span>
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="aadhar_card_number" class="field-required fz-14 leading-none text-secondary mb-1">Aadhar Card Number</label>
@@ -240,7 +241,7 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="ifsc_code" class="field-required fz-14 leading-none text-secondary mb-1 mt-2">IFSC Code</label>
-                        <input type="number" class="form-control w-300 mt-6" name="ifsc_code" required="required">
+                        <input type="text" class="form-control w-300 mt-6" name="ifsc_code" required="required">
                         <span class="text-danger">
                             @error('ifsc_code')
                                 {{$message}}
@@ -273,6 +274,8 @@
                         </span>
                     </div>
                     <input type="hidden" name="hr_applicant_id" value={{$hr_applicant_id}}>
+                    <input type="hidden" name="hr_applicant_email" value={{$hr_applicant_email}}>
+                    {{-- @dd($hr_applicant_email) --}}
                 </div>
             </div>
         </div>
@@ -280,7 +283,7 @@
     <div class="container">
         <div class="form-row">
             <div class="form-group col-md-12">
-                <button type="submit" class="btn btn-success round-submit" id="formSubmit">Submit</button>
+                <button type="submit"  href="{{route('hr.applicant.form-submitted',[$hr_applicant_id , $hr_applicant_email])}}" class="btn btn-success round-submit" id="formSubmit">Submit</button>
                 <button type="reset" value="Reset" class="btn btn-danger float-right">Clear form</button>
             </div>
         </div>

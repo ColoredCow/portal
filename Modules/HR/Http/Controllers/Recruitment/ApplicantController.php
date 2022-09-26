@@ -16,6 +16,7 @@ use Modules\HR\Events\Recruitment\ApplicantEmailVerified;
 use Modules\HR\Http\Requests\Recruitment\ApplicantRequest;
 use Modules\User\Entities\User;
 use Modules\HR\Http\Requests\ApplicantMetaRequest;
+use Modules\HR\Entities\ApplicantMeta;
 
 class ApplicantController extends Controller
 {
@@ -103,17 +104,38 @@ class ApplicantController extends Controller
         return view('hr.application.verification')->with(['application' => $application, 'email' => decrypt($applicantEmail)]);
     }
 
-    public function viewForm($id)
+    public function viewForm($id, $email)
     {
+        $hr_applicant_email = $email;
         $hr_applicant_id = $id;
-
-        return view('hr.application.approved-applicants-details')->with(['hr_applicant_id' => $hr_applicant_id]);
+        $applicantMeta = ApplicantMeta::where('hr_applicant_id',$id)->get()->keyBy('key');
+        // dd($applicantMeta);
+        
+        return view('hr.application.approved-applicants-details')->with(['hr_applicant_id' => $hr_applicant_id,'hr_applicant_email' => $hr_applicant_email,'applicantMeta'=> $applicantMeta]);
     }
 
     public function storeApprovedApplicantDetails(ApplicantMetaRequest $request)
     {
+        $hr_applicant_id = $request->get('hr_applicant_id');
+        $hr_applicant_email = $request->get('hr_applicant_email');
         $this->service->store($request);
 
-        return redirect()->back()->with('status', 'Thanks for submitting the Details');
+        return redirect()->route('hr.applicant.form-submitted', [$hr_applicant_id ,$hr_applicant_email]);
+    }
+
+    public function formSubmit($id,$email)
+    {
+        $hr_applicant_id = $id;
+        $hr_applicant_email = $email;
+
+        return view('hr.application.details-submitted')->with(['hr_applicant_id'=>$hr_applicant_id, 'hr_applicant_email'=> $hr_applicant_email]);
+    }
+
+    public function showFormDetails($id)
+    {
+        $applicantMeta = ApplicantMeta::where('hr_applicant_id',$id)->get()->keyBy('key');
+        $applicant = Applicant::where('id',$id)->get();
+
+        return view('hr.application.verify-details', ['applicantMeta'=> $applicantMeta, 'applicant'=> $applicant]);
     }
 }
