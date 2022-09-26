@@ -7,6 +7,7 @@ use App\Models\Setting;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
@@ -173,6 +174,7 @@ abstract class ApplicationController extends Controller
         $job = $application->job;
         $approveMailTemplate = Setting::getApplicationApprovedEmail();
         $offerLetterTemplate = Setting::getOfferLetterTemplate();
+        $desiredResume = DB::table('hr_applications')->select(['hr_applications.resume'])->where('hr_applications.hr_job_id', '=', $job->id)->where('is_desired_resume', '=', 1)->get();
         $attr = [
             'applicant' => $application->applicant,
             'application' => $application,
@@ -183,6 +185,7 @@ abstract class ApplicationController extends Controller
             'offer_letter' => $application->offer_letter,
             'approveMailTemplate' => $approveMailTemplate,
             'offerLetterTemplate' => $offerLetterTemplate,
+            'desiredResume' => $desiredResume,
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],
