@@ -17,6 +17,7 @@ use Modules\HR\Emails\Recruitment\Application\JobChanged;
 use Modules\HR\Emails\Recruitment\Application\RoundNotConducted;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationMeta;
+use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\Round;
 use Modules\HR\Entities\University;
@@ -35,6 +36,16 @@ abstract class ApplicationController extends Controller
     public function __construct(ApplicationService $service)
     {
         $this->service = $service;
+    }
+
+    public function markInterviewFinished(Request $request)
+    {
+        $ApplicationRound = ApplicationRound::find($request->documentId);
+        $this->service->markInterviewFinished($ApplicationRound);
+
+        return response()->json([
+            'status' => 200, 'actual_end_time' => $ApplicationRound->actual_end_time->format('H:i:s'), 'html' => view('hr.application.meeting-duration')->with(['applicationRound' => $ApplicationRound])->render(),
+        ]);
     }
 
     /**

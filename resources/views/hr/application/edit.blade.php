@@ -1166,8 +1166,13 @@
                                                                         Schedule</button>
                                                                 </div>
                                                             @endif
-                                                        @endif
-                                                    </div>
+                                                        </div>
+                                                        <div class="form-row" id="durations">
+                                                            @if ($applicationRound->actual_end_time != null)
+                                                                @include('hr.application.meeting-duration')
+                                                            @endif
+                                                        </div>
+                                                    @endif
                                                 @endif
                                                 @if ($applicationRound->round->name == 'Resume Screening')
                                                     <div class="form-row">
