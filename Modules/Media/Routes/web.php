@@ -17,11 +17,11 @@ Route::resource('media', 'MediaController')
     'media'=> 'media'
 ])
 ->names([
-        'index' => 'media.index',
-        'show' => 'media.show',
-        'create' => 'media.create',
-        'store' => 'media.store',
-        'update' => 'media.update',
-        'edit' => 'media.edit',
-        'destroy' => 'media.destroy',
+    'index' => 'media.index',
+    'show' => 'media.show',
+    'create' => 'media.create',
+    'store' => 'media.store',
+    'update' => 'media.update',
+    'edit' => 'media.edit',
+    'destroy' => 'media.destroy',
 ]);
