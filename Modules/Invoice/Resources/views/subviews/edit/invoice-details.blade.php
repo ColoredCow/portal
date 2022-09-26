@@ -58,6 +58,15 @@
                         </span>
                     </div>
                 </div>
+                <div class="form-group" v-if="this.client.type == 'indian'">
+                    <div class="d-flex">
+                        <label for="client_id" class="mr-5">total amount:</label>
+                        <span>
+                            {{ $invoice->display_amount . " + " . $invoice->gst ." ₹". " = " }} <span id="totalAmount">{{$invoice->total_amount }}</span><span> ₹ </span>
+                        </span>
+                        <span class="d-none checkIcon"><i class="fa fa-check text-success rounded-circle ml-1"></i></span>
+                    </div>
+                </div>
 
                 <div class="form-group">
                     <div class="d-flex">
@@ -116,7 +125,7 @@
                 <div class="form-group" v-if="this.client.type == 'indian'">
                     <div class="d-flex">
                         <label for="tds" class="mr-4 pt-1 field-required">TDS:</label>
-                        <input type="text" name="tds"  class = "form-control w-272 ml-auto" v-model='tds' required="required">
+                        <input type="text" id="tds" name="tds"  class = "form-control w-272 ml-auto" v-model='tds' required="required">
                     </div>
                 </div>
 
@@ -124,6 +133,13 @@
                     <div class="d-flex">
                         <label for="tds_percentage" class="mr-4 pt-1 field-required">TDS %:</label>
                         <input type="text" class = "form-control w-272 ml-auto" name="tds_percentage" v-model='tdsPercentage' required="required">
+                    </div>
+                </div>
+
+                <div class="form-group" v-if="this.client.type == 'indian'">
+                    <div class="d-flex">
+                        <label for="client_id" class="mr-5">total amount:</label>
+                        <span id="totalPaidAmount"></span>
                     </div>
                 </div>
 
@@ -174,7 +190,7 @@
                         </span>
                     </label>
                 @endif
-            </div> 
+            </div>
         </div>
         <div>
             @include('invoice::modals.payment-received')
@@ -206,6 +222,13 @@
         },
 
         changePaidAmountListener() {
+            let totalPaidAmount = this.amountPaid + " + " + $("#tds").val() + " = " + (parseInt(this.amountPaid) + parseFloat($("#tds").val()));
+            document.getElementById("totalPaidAmount").innerText = totalPaidAmount;
+            $(".checkIcon").addClass("d-none");
+            console.log($("#totalAmount").text().trim(), (totalPaidAmount.split(/\=/)[1]).trim(), $("#totalAmount").text().trim() == (totalPaidAmount.split(/\=/)[1]).trim())
+            if ($("#totalAmount").text().trim() == (totalPaidAmount.split(/\=/)[1]).trim()) {
+                $(".checkIcon").removeClass("d-none");
+            }
             var emailBody = $("#emailBody").text();
             emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
             tinymce.get("emailBody").setContent(emailBody, { format: "html" });
@@ -258,7 +281,7 @@
         updatePaymentAmountDetails(filtered_number_list) {
             let totalNumbersInList =  filtered_number_list.length
             var emailBody = $("#emailBody").text();
-           
+
             for (var index = 0; index < totalNumbersInList; index++) {
                 if (this.client.type == 'indian') {
                     if (index == totalNumbersInList - 1) {
@@ -269,7 +292,7 @@
                     }
                     continue;
                 }
-                
+
                 if (index == 0) {
                     this.amountPaid = filtered_number_list[index]
                     $('#amountPaid').val(this.amountPaid)
@@ -294,7 +317,7 @@
             clientId:"{{ $invoice->client_id  }}",
             projectId:"{{ $invoice->project_id }}",
             client:@json( $invoice->client),
-            amountPaidText:"|*amount_paid*|",  
+            amountPaidText:"|*amount_paid*|",
             currentExchangeRate: "{{ $currencyService->getCurrentRatesInINR() }}",
             currencyTransactionCharge:"{{ $invoice->currency_transaction_charge ? : $invoice->currency }}",
             comments:`{{ $invoice->comments }}`,
