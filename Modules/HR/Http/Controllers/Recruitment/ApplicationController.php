@@ -163,7 +163,7 @@ abstract class ApplicationController extends Controller
         $job = $application->job;
         $approveMailTemplate = Setting::getApplicationApprovedEmail();
         $offerLetterTemplate = Setting::getOfferLetterTemplate();
-        $resumeData = DB::table('hr_applications')->select(['hr_applications.resume'])->where('hr_applications.hr_job_id', '=', $job->id)->where('is_desired_resume', '=', 1)->get();
+        $desiredResume = DB::table('hr_applications')->select(['hr_applications.resume'])->where('hr_applications.hr_job_id', '=', $job->id)->where('is_desired_resume', '=', 1)->get();
         $attr = [
             'applicant' => $application->applicant,
             'application' => $application,
@@ -174,7 +174,7 @@ abstract class ApplicationController extends Controller
             'offer_letter' => $application->offer_letter,
             'approveMailTemplate' => $approveMailTemplate,
             'offerLetterTemplate' => $offerLetterTemplate,
-            'resumeData' => $resumeData,
+            'desiredResume' => $desiredResume,
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],

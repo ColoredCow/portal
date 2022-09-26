@@ -155,7 +155,7 @@ class JobController extends Controller
 
         ApplicationMeta::create([
             'hr_application_id' => $application->id,
-            'key' => 'resume-flag',
+            'key' => 'reasons_for_desired_resume',
             'value' => $request->get('body'),
 
         ]);
@@ -169,7 +169,7 @@ class JobController extends Controller
             ->join('hr_jobs', 'hr_applications.hr_job_id', '=', 'hr_jobs.id')
             ->join('hr_applicants', 'hr_applicants.id', '=', 'hr_applications.hr_applicant_id')
             ->where('hr_applications.hr_job_id', '=', $request->id)
-            ->where('hr_application_meta.key', '=', 'resume-flag')
+            ->where('hr_application_meta.key', '=', 'reasons_for_desired_resume')
             ->get();
 
         return view('hr.application.resume-table')->with([
