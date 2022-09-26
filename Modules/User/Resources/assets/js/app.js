@@ -5,7 +5,14 @@
  * **/
 
 
-
-$(document).ready(function() {
-
+ $(document).ready(function () {
+    $("#unmarried").click(function () {
+		$("#spouse").addClass("d-none");
+	});
+    $("#married").click(function () {
+		$("#spouse").removeClass("d-none");
+	});
+    $("#divorced").click(function () {
+		$("#spouse").addClass("d-none");
+	});
 });
