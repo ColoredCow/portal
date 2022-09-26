@@ -50,7 +50,7 @@ class RevenueReportService
         $currency_chages = [
             $exchangeMonth => $exchangeRate['avg_rate']
         ];
-        
+
         return $currency_chages;
     }
 
