@@ -43,7 +43,7 @@ abstract class ApplicationController extends Controller
         $this->service->markInterviewFinished($ApplicationRound);
 
         return response()->json([
-            'status' => 200, 'actual_end_time' => $ApplicationRound->actual_end_time->format('H:i:s'), 'html' => view('hr.application.meeting', ['applicationRound'=>$ApplicationRound])->render()
+            'status' => 200, 'actual_end_time' => $ApplicationRound->actual_end_time->format('H:i:s'), 'html' => view('hr.application.meeting')->with(['applicationRound'=>$ApplicationRound])->render()
         ]);
     }
 
