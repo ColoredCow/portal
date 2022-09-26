@@ -1,6 +1,12 @@
 <?php
 
 return [
+    'office_locations' => [
+        'gurgaon' => 'Gurgaon',
+        'tehri' => 'Tehri',
+        'ranchi' => 'Ranchi',
+        'dwarahat' => 'Dwarahat'
+    ],
     'gsuite' => [
         'service-account-impersonate' => env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'),
         'client-hd' => env('GOOGLE_CLIENT_HD', ''),

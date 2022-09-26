@@ -19,6 +19,7 @@ Vue.use(Laue);
 // vue toast registration
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
+import moment from "moment";
 const options = {
 	timeout: 2000,
 };
@@ -118,6 +119,7 @@ $(document).ready(() => {
 	}, 2000);
 
 	$("#job_title").on("change", function(event) {
+
 		let opportunityId = $(this).find(":selected").attr("id");
 		$("#opportunityId").attr("value", opportunityId);
 	});
@@ -155,6 +157,7 @@ $(document).ready(() => {
 	});
 
 	$("body").on("change", ".custom-file-input", function() {
+
 		var fileName = $(this).val().split("\\").pop();
 		$(this)
 			.siblings(".custom-file-label")
@@ -208,6 +211,7 @@ $(document).ready(() => {
 
 $(document).ready(function() {
 	$("#domainformModal").on("hidden.bs.modal", function() {
+
 		$(this).find("form").trigger("reset");
 		$("#domainerror").addClass("d-none");
 	});
@@ -227,7 +231,9 @@ $(document).ready(function() {
 			error: function(response) {
 				if (response.responseJSON.errors.name) {
 					let text = response.responseJSON.errors.name[0];
-					$("#domainerror").html(text).removeClass("d-none");
+					$("#domainerror")
+						.html(text)
+						.removeClass("d-none");
 					return false;
 				}
 			},
@@ -241,11 +247,13 @@ if (document.getElementById("page_hr_applicant_edit")) {
 		data: {
 			showResumeFrame: false,
 			showEvaluationFrame: false,
+
 			applicationJobRounds: document.getElementById("action_type") ?
 				JSON.parse(
 					document.getElementById("action_type").dataset
 						.applicationJobRounds
 				) : {},
+
 			selectedNextRound: "",
 			nextRoundName: "",
 			selectedAction: "round",
@@ -261,8 +269,10 @@ if (document.getElementById("page_hr_applicant_edit")) {
 				this.showEvaluationFrame = !this.showEvaluationFrame;
 			},
 			getApplicationEvaluation: function(applicationRoundID, roundId) {
+
 				let roundName = $("#applicationRoundName" + roundId)[0]
 					.innerText;
+
 				document.getElementById(
 					"roundName"
 				).innerText = `Evaluation\u00A0\u00A0•\u00A0\u00A0${roundName}`;
@@ -274,9 +284,10 @@ if (document.getElementById("page_hr_applicant_edit")) {
 					axios
 						.get("/hr/evaluation/" + applicationRoundID)
 						.then(function(response) {
-							$(
-								"#page_hr_applicant_edit #application_evaluation_body"
-							).html(response.data);
+
+							$("#page_hr_applicant_edit #application_evaluation_body").html(
+								response.data
+							);
 						})
 						.catch(function(error) {
 							alert("Error fetching application evaluation!");
@@ -288,7 +299,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			onSelectNextRound: function(event) {
 				this.selectedAction = event.target.value;
 				this.selectedActionOption =
-					event.target.options[event.target.options.selectedIndex];
+          event.target.options[event.target.options.selectedIndex];
 			},
 			takeAction: function() {
 				switch (this.selectedAction) {
@@ -298,14 +309,11 @@ if (document.getElementById("page_hr_applicant_edit")) {
 							"#action_type option:checked"
 						);
 					}
-					this.selectedNextRound =
-						this.selectedActionOption.dataset.nextRoundId;
-					this.nextRoundName =
-						this.selectedActionOption.innerText;
+
+					this.selectedNextRound = this.selectedActionOption.dataset.nextRoundId;
+					this.nextRoundName = this.selectedActionOption.innerText;
 					loadTemplateMail("confirm", (res) => {
-						$("#confirmMailToApplicantSubject").val(
-							res.subject
-						);
+						$("#confirmMailToApplicantSubject").val(res.subject);
 						tinymce
 							.get("confirmMailToApplicantBody")
 							.setContent(res.body, { format: "html" });
@@ -425,14 +433,13 @@ if (document.getElementById("finance_report")) {
 		computed: {
 			convertedUSDSentAmount: function() {
 				let convertedAmount =
-					parseFloat(this.sentAmountUSD) *
-					parseFloat(this.conversionRateUSD);
+          parseFloat(this.sentAmountUSD) * parseFloat(this.conversionRateUSD);
 				return isNaN(convertedAmount) ? 0 : convertedAmount.toFixed(2);
 			},
 			totalINREstimated: function() {
 				return (
 					parseFloat(this.sentAmountINR) +
-					parseFloat(this.convertedUSDSentAmount)
+          parseFloat(this.convertedUSDSentAmount)
 				);
 			},
 		},
@@ -565,9 +572,7 @@ $(document).ready(function() {
 				$("#errors").empty();
 				for (let error in errors) {
 					$("#errors").append(
-						"<li class='text-danger ml-2'>" +
-						errors[error] +
-						"</li>"
+						"<li class='text-danger ml-2'>" + errors[error] + "</li>"
 					);
 				}
 			},
@@ -602,9 +607,7 @@ $(document).ready(function() {
 				$("#editErrors").empty();
 				for (let error in errors) {
 					$("#editErrors").append(
-						"<li class='text-danger ml-2'>" +
-						errors[error] +
-						"</li>"
+						"<li class='text-danger ml-2'>" + errors[error] + "</li>"
 					);
 				}
 			},
@@ -657,12 +660,9 @@ if (document.getElementById("show_and_save_book")) {
 			book: {},
 			number_of_copies: 1,
 			routes: {
-				index: document.getElementById("show_book").dataset.indexRoute ||
-					"",
-				fetch: document.getElementById("book_form").dataset.actionRoute ||
-					"",
-				store: document.getElementById("show_book").dataset.storeRoute ||
-					"",
+				index: document.getElementById("show_book").dataset.indexRoute || "",
+				fetch: document.getElementById("book_form").dataset.actionRoute || "",
+				store: document.getElementById("show_book").dataset.storeRoute || "",
 			},
 			buttons: {
 				disableSubmitButton: false,
@@ -685,9 +685,7 @@ if (document.getElementById("show_and_save_book")) {
 			},
 
 			submitBookForm: function() {
-				let formData = new FormData(
-					document.getElementById("book_form")
-				);
+				let formData = new FormData(document.getElementById("book_form"));
 				if (this.compressedFile) {
 					formData.append(
 						"book_image",
@@ -727,10 +725,9 @@ if (document.getElementById("show_and_save_book")) {
 				}
 				this.buttons.disableSaveButton = true;
 				this.book.number_of_copies = this.number_of_copies;
-				this.book["on_kindle"] = document.getElementById("on_kindle")
-					.checked ?
-					1 :
-					0;
+				this.book["on_kindle"] = document.getElementById("on_kindle").checked
+					? 1
+					: 0;
 				axios.post(this.routes.store, this.book).then((response) => {
 					this.buttons.disableSaveButton = false;
 
@@ -903,8 +900,7 @@ if (document.getElementById("books_category")) {
 
 		methods: {
 			showEditMode: function(index) {
-				this.categoryNameToChange[index] =
-					this.categories[index]["name"];
+				this.categoryNameToChange[index] = this.categories[index]["name"];
 				this.$set(this.categories[index], "editMode", true);
 			},
 
@@ -1070,9 +1066,7 @@ if (document.getElementById("show_book_info")) {
 					this.isBorrowed = true;
 					this.borrowers = response.data.borrowers;
 				} else {
-					alert(
-						"Sorry ! No more copies of this book available right now."
-					);
+					alert("Sorry ! No more copies of this book available right now.");
 				}
 			},
 
@@ -1162,12 +1156,9 @@ if (document.getElementById("roles_permission_table")) {
 			updatePermissionModal: function(index) {
 				let permissions = this.roles[index].permissions;
 				this.currentRoleIndex = index;
-				this.permissionInputs.map(
-					(checkbox) => (checkbox.checked = false)
-				);
+				this.permissionInputs.map((checkbox) => (checkbox.checked = false));
 				permissions.forEach(
-					(permission) =>
-						(this.permissionInputs[permission.id].checked = true)
+					(permission) => (this.permissionInputs[permission.id].checked = true)
 				);
 			},
 			updatePermissions: function() {
@@ -1190,14 +1181,10 @@ if (document.getElementById("roles_permission_table")) {
 				);
 				let route = `${this.updateRoute}/${roleID}`;
 				axios.put(route, {
-					permissions: JSON.parse(
-						JSON.stringify(selectedPermissions)
-					),
+					permissions: JSON.parse(JSON.stringify(selectedPermissions)),
 					roleID: roleID,
 				});
-				document
-					.getElementById("update_role_permissions_modal")
-					.click();
+				document.getElementById("update_role_permissions_modal").click();
 			},
 		},
 		mounted: function() {
@@ -1239,9 +1226,7 @@ if (document.getElementById("user_roles_table")) {
 				}
 				this.currentUserIndex = index;
 				this.roleInputs.map((checkbox) => (checkbox.checked = false));
-				roles.forEach(
-					(role) => (this.roleInputs[role.id].checked = true)
-				);
+				roles.forEach((role) => (this.roleInputs[role.id].checked = true));
 			},
 
 			updateRoles: function() {
@@ -1320,7 +1305,7 @@ $(document).ready(function() {
 
 		if (
 			$("#segment-general-information > span")[0].innerText ==
-			"General Information"
+      "General Information"
 		) {
 			$(".evaluation-score input").each(function() {
 				if ($(this).is(":checked")) {
@@ -1461,14 +1446,16 @@ function barChart() {
 
 	var data = {
 		labels: cData.label,
-		datasets: [{
-			label: "Count",
-			data: cData.data,
-			backgroundColor: "#67A7E2",
-			borderColor: "#67A7E2",
-			borderWidth: 1,
-			pointHoverRadius: 7,
-		}, ],
+		datasets: [
+			{
+				label: "Count",
+				data: cData.data,
+				backgroundColor: "#67A7E2",
+				borderColor: "#67A7E2",
+				borderWidth: 1,
+				pointHoverRadius: 7,
+			},
+		],
 	};
 	var options = {
 		responsive: true,
@@ -1476,8 +1463,7 @@ function barChart() {
 			callbacks: {
 				afterBody: function(context) {
 					console.log(context);
-					return `Verified Applications: ${cData.afterBody[context[0].index]
-					}`;
+					return `Verified Applications: ${cData.afterBody[context[0].index]}`;
 				},
 			},
 			displayColors: false,
@@ -1495,13 +1481,11 @@ function barChart() {
 			display: false,
 		},
 		scales: {
-			yAxes: [{
-				ticks: {
-					stepSize: 1,
-					suggestedMin: 0.5,
-					suggestedMax: 5.5,
+			yAxes: [
+				{
+					ticks: { stepSize: 1, suggestedMin: 0.5, suggestedMax: 5.5 },
 				},
-			}, ],
+			],
 		},
 
 		elements: {
@@ -1977,9 +1961,7 @@ $(".opt").on("click", function() {
 		contentType: "application/json",
 		success: function(response) {
 			$("#option1subject").val(response.subject);
-			tinymce
-				.get("option1body")
-				.setContent(response.body, { format: "html" });
+			tinymce.get("option1body").setContent(response.body, { format: "html" });
 		},
 	});
 
@@ -1991,9 +1973,23 @@ $(".opt").on("click", function() {
 		contentType: "application/json",
 		success: function(response) {
 			$("#option2subject").val(response.subject);
-			tinymce
-				.get("option2body")
-				.setContent(response.body, { format: "html" });
+			tinymce.get("option2body").setContent(response.body, { format: "html" });
+		},
+	});
+});
+
+$(document).on("click", ".finish_interview", function(e) {
+	e.preventDefault();
+	var actualEndTime = $(".finish_interview").val();
+	var duration = moment().format("YYYY/MM/DD H:m:s");
+	$.ajax({
+		type: "GET",
+		url: "/hr/recruitment/finishinterview",
+		data: { documentId: actualEndTime, duration: duration },
+		dataType: "json",
+		success: function(response) {
+			$("#meet_time").hide();
+			$("#durations").append(response.html);
 		},
 	});
 });

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Modules\Invoice\Services\CurrencyService;
 use Modules\Invoice\Services\InvoiceService;
+use Modules\Revenue\Entities\RevenueProceed;
 
 class RevenueReportService
 {
@@ -79,26 +80,49 @@ class RevenueReportService
 
     private function getParticularAmountForCommissionReceived(array $particular, Object $startDate, Object $endDate): array
     {
-        return ['total' => 0];
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
     private function getParticularAmountForCashBack(array $particular, Object $startDate, Object $endDate): array
     {
-        return ['total' => 0];
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
     private function getParticularAmountForDiscountReceived(array $particular, Object $startDate, Object $endDate): array
     {
-        return ['total' => 0];
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
     private function getParticularAmountForInterestOnFd(array $particular, Object $startDate, Object $endDate): array
     {
-        return ['total' => 0];
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
     private function getParticularAmountForForeignExchangeLoss(array $particular, Object $startDate, Object $endDate): array
     {
-        return ['total' => 0];
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
+    }
+
+    private function getAmountsForRevenueProceeds($category, $startDate, $endDate)
+    {
+        $revenues = RevenueProceed::where('category', $category)
+            ->where('received_at', '>=', $startDate)
+            ->where('received_at', '<=', $endDate)
+            ->get();
+
+        $totalAmount = 0;
+        $results = [];
+
+        foreach ($revenues as $revenue) {
+            $amount = $revenue->amount;
+            $year = substr($revenue->year, -2);
+            $month = sprintf('%02d', $revenue->month);
+            $dateKey = $month . '-' . $year;
+            $totalAmount += $amount;
+            $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
+        }
+        $results['total'] = $totalAmount;
+
+        return $results;
     }
 }
