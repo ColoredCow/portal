@@ -1137,9 +1137,9 @@ $("#tagEditModal").on("show.bs.modal", function (e) {
 	const newId = editForm.find("input.hidden");
 	const value = newId.attr("value");
 	const action = value.replace("id", tag.id);
-
+	
 	editForm.attr("action", action);
-
+	
 	editForm.find("select[media_tag_name ='media_tag_name']").val(tag.media_tag_name);
 });
 
@@ -1150,6 +1150,7 @@ $(document).ready(function(){
 		var fName = document.getElementById("choices-multiple").value;
 		let name = fName;
 		$("#write_here").html(name);
+		$("#exampleModal").modal("hide");
 		return false;
 	});
 });
