@@ -88,7 +88,7 @@ class RevenueReportService
         foreach ($invoices as $invoice) {
             $dateKey = $invoice->sent_on->format('m-y');
             if ($exchangeMonth == $dateKey) {
-                $exchangeDollor = $this->getAvgCurrencyRates();
+                $exchangeDollor = $exchangeRates[$dateKey];
             } else {
                 $exchangeDollor = app(CurrencyService::class)->getCurrentRatesInINR();
             }
