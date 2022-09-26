@@ -2,16 +2,17 @@
 
 namespace Modules\HR\Services;
 
-use Module;
 use App\Models\Tag;
-use Modules\HR\Entities\Job;
-use Modules\User\Entities\User;
+use Carbon\Carbon;
+use Module;
+use Modules\HR\Contracts\ApplicationServiceContract;
 use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Application;
-use Modules\HR\Contracts\ApplicationServiceContract;
+use Modules\HR\Entities\Job;
 use Modules\HR\Events\CustomMailTriggeredForApplication;
 use Modules\HR\Http\Requests\ApplicantMetaRequest;
 use Modules\HR\Entities\ApplicantMeta;
+use Modules\User\Entities\User;
 
 class ApplicationService implements ApplicationServiceContract
 {
@@ -142,5 +143,12 @@ class ApplicationService implements ApplicationServiceContract
                 );
             }
         }
+
+    public function markInterviewFinished($data)
+    {
+        $meetDate = config('timezone');
+        $meetDuration = Carbon::parse($meetDate);
+        $data->actual_end_time = $meetDuration;
+        $data->save();
     }
 }

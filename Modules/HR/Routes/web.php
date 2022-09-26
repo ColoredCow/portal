@@ -93,6 +93,7 @@ Route::middleware('auth')->group(function () {
             Route::get('{application}/save-offer-letter', 'JobApplicationController@saveOfferLetter');
             Route::post('{application}/sendmail', 'JobApplicationController@sendApplicationMail')->name('application.custom-email');
             Route::post('/teaminteraction', 'JobApplicationController@generateTeamInteractionEmail');
+            Route::get('/finishinterview', 'JobApplicationController@markInterviewFinished')->name('markInterviewFinished');
             Route::get('/onHoldEmail', 'JobApplicationController@generateOnHoldEmail');
 
             Route::resource('internship', 'InternshipApplicationController')
