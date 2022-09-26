@@ -118,7 +118,7 @@ class ApplicantController extends Controller
         $hr_applicant_email = $request->get('hr_applicant_email');
         $this->service->store($request);
 
-        return redirect()->route('hr.applicant.form-submitted', [$hr_applicant_id, $hr_applicant_email]);
+        return redirect()->route('hr.applicant.form-submitted', [$hr_applicant_id,$hr_applicant_email]);
     }
 
     public function formSubmit($id, $email)
