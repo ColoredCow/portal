@@ -64,7 +64,7 @@
                               </div>
 
                               <div class="form-check">
-                                  <input class="form-control-small" type="radio" name="marital_status" id="divorced" value="divorced" {{ $user->profile->marital_status == "Divorced" ? "checked" :'' }} />
+                                  <input class="form-control-small" type="radio" name="marital_status" id="divorced" value="Divorced" {{ $user->profile->marital_status == "Divorced" ? "checked" :'' }} />
                                   <label class="form-check-label" for="marital_status">Divorced</label>
                               </div>
                           </div>
@@ -77,8 +77,6 @@
                           <label for="spouse_name">Spouse</label>
                           <input type="text" class="form-control" id="spouse_name" name="spouse_name" value="{{ $user->profile && $user->profile->spouse_name ? $user->profile->spouse_name : "" }}">
                       </div>
-                     
-
                       <div class="form-group">
                           <label for="date_of_joining">Date of joining</label>
                           <input type="text" class="form-control" id="date_of_joining" name="date_of_joining" required value="{{ $user->profile && $user->profile->date_of_joining ? $user->profile->date_of_joining : "" }}">
@@ -89,13 +87,8 @@
                           <div class="form-group">
                               <label for="father_name">Father</label>
                               <input type="text" class="form-control" id="father_name" name="father_name" required value="{{ $user->profile && $user->profile->father_name ? $user->profile->father_name : "" }}">
-                          </div>
-
+                            </div>
                       </div>
-                      <!-- <div class="form-group">
-                    <label for="marital_status">Marital Status</label>
-                    <input type="text" class="form-control" id="marital_status" name="marital_status" required value="{{ $user->profile && $user->profile->marital_status ? $user->profile->marital_status : "" }}">
-                </div> -->
                       <div class="form-group">
                           <label for="current_location">Current Location</label>
                           <input type="text" class="form-control" id="current_location" name="current_location" required value="{{ $user->profile && $user->profile->current_location ? $user->profile->current_location : "" }}">

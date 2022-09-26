@@ -32,6 +32,18 @@ class Project extends Model implements Auditable
         return new ProjectFactory();
     }
 
+    public function scopeIsAMC($query, $isAmc)
+    {
+        $query->where('is_amc', $isAmc);
+    }
+
+    public function scopeLinkedToTeamMember($query, $userId)
+    {
+        return $query->whereHas('getTeamMembers', function ($query) use ($userId) {
+            $query->where('team_member_id', $userId);
+        });
+    }
+
     public function teamMembers()
     {
         return $this->belongsToMany(User::class, 'project_team_members', 'project_id', 'team_member_id')

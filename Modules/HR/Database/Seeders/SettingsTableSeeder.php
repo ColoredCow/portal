@@ -106,5 +106,15 @@ class SettingsTableSeeder extends Seeder
             'setting_key' => 'hr_team_interaction_round_body',
             'setting_value' => '<div>Hello |*APPLICANT NAME*|,</div><div> </div><div>We are very pleased to inform you that you have been selected for Team Interaction Round at ColoredCow. For the proceedings, we would like to invite you to our office at |*OFFICE LOCATION*| on |*DATE SELECTED*| at |*TIME*|.</div><div> </div><div>Your presence would be awaited. In case you have any questions, feel free to reach out.</div><div> </div><div>Thanks,</div><div>HR Team,</div><div>ColoredCow</div> ',
         ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'send_for_approval_subject',
+            'setting_value' => 'Application sent for approval',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'send_for_approval_body',
+            'setting_value' => '<div>Hi |ASSIGNEE NAME|,</div><div><br/> </div><div>The |APPLICATION TYPE| application of |APPLICANT NAME| for |JOB TITLE| is sent for your approval. Please take a look and perform the proceedings.</div><div></br> </div><div>Click <a href="|APPLICATION LINK|">Here</a> to view the application.</div><div></br> </div><div>Thanks,</div><div>HR Team,</div><div>ColoredCow</div> ',
+        ]);
     }
 }
