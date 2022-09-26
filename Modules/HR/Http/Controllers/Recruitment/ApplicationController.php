@@ -11,11 +11,12 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Modules\HR\Emails\Recruitment\Application\ApplicationHandover;
 use Modules\HR\Emails\Recruitment\Application\JobChanged;
 use Modules\HR\Emails\Recruitment\Application\RoundNotConducted;
-use Modules\HR\Emails\Recruitment\Application\ApplicationHandover;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationMeta;
+use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\Round;
 use Modules\HR\Entities\University;
@@ -34,6 +35,16 @@ abstract class ApplicationController extends Controller
     public function __construct(ApplicationService $service)
     {
         $this->service = $service;
+    }
+
+    public function markInterviewFinished(Request $request)
+    {
+        $ApplicationRound = ApplicationRound::find($request->documentId);
+        $this->service->markInterviewFinished($ApplicationRound);
+
+        return response()->json([
+            'status' => 200, 'actual_end_time' => $ApplicationRound->actual_end_time->format('H:i:s'), 'html' => view('hr.application.meeting-duration')->with(['applicationRound' => $ApplicationRound])->render(),
+        ]);
     }
 
     /**
@@ -68,8 +79,8 @@ abstract class ApplicationController extends Controller
             'search' => request()->get('search'),
             'tags' => request()->get('tags'),
             'assignee' => request()->get('assignee'), // TODO
-            'round' =>str_replace('-', ' ', request()->get('round')),
-            'roundFilters' => request()->get('roundFilters')
+            'round' => str_replace('-', ' ', request()->get('round')),
+            'roundFilters' => request()->get('roundFilters'),
         ];
         $loggedInUserId = auth()->id();
         $applications = Application::join('hr_application_round', function ($join) {
@@ -303,7 +314,7 @@ abstract class ApplicationController extends Controller
     {
         $applicationRound = $application->latestApplicationRound;
         $applicationRound->update([
-            'scheduled_person_id' => auth()->user()->id
+            'scheduled_person_id' => auth()->user()->id,
         ]);
 
         $status = 'Successful Assigned to ' . auth()->user()->name;

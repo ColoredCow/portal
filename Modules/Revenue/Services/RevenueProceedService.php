@@ -8,11 +8,19 @@ use Illuminate\Support\Str;
 
 class RevenueProceedService
 {
-    public function index()
+    public function index($filters)
     {
-        $revenueProceedData = RevenueProceed::orderby('name')->get();
+        $filters = [
+            'year' => $filters['year'] ?? null,
+        ];
 
-        return $revenueProceedData;
+        $revenueProceeds = RevenueProceed::orderby('name')->applyFilters($filters)
+        ->paginate(config('constants.pagination_size'));
+
+        return [
+            'revenueProceedData'=> $revenueProceeds,
+            'filters' => $filters,
+        ];
     }
 
     public function store(Request $request)
@@ -20,34 +28,30 @@ class RevenueProceedService
         $revenueProceed = new RevenueProceed;
 
         $revenueProceed->name = $request['name'];
-        $revenueProceed->category = Str::slug($request['category']);
+
         $revenueProceed->currency = $request['currency'];
         $revenueProceed->amount = $request['amount'];
-        $revenueProceed->month = $request['month'];
-        $revenueProceed->recieved_at = $request['recieved_at'];
-        $revenueProceed->year = $request['year'];
+        $revenueProceed->category = Str::snake($request['category']);
+        $revenueProceed->received_at = $request['received_at'];
+        $revenueProceed->month = $revenueProceed->received_at->month;
+        $revenueProceed->year = $revenueProceed->received_at->year;
+
         $revenueProceed->notes = $request['notes'];
         $revenueProceed->save();
 
         return $revenueProceed;
     }
 
-    public function show($id)
-    {
-        return view('revenue::index');
-    }
-
     public function update(Request $request, $id)
     {
         $revenueProceed = RevenueProceed::find($id);
-
         $revenueProceed->name = $request['name'];
-        $revenueProceed->category = Str::slug($request['category']);
-        $revenueProceed->currency = $request['currency'];
-        $revenueProceed->month = $request['month'];
-        $revenueProceed->year = $request['year'];
         $revenueProceed->amount = $request['amount'];
-        $revenueProceed->recieved_at = $request['recieved_at'];
+        $revenueProceed->currency = $request['currency'];
+        $revenueProceed->category = Str::snake($request['category']);
+        $revenueProceed->received_at = $request['received_at'];
+        $revenueProceed->month = $revenueProceed->received_at->month;
+        $revenueProceed->year = $revenueProceed->received_at->year;
         $revenueProceed->notes = $request['notes'];
         $revenueProceed->save();
 
@@ -57,5 +61,13 @@ class RevenueProceedService
     public function delete($id)
     {
         return RevenueProceed::find($id)->delete();
+    }
+
+    public function defaultFilters()
+    {
+        return [
+            'year' => now()->format('Y'),
+            'month' => now()->format('m'),
+        ];
     }
 }

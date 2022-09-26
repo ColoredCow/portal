@@ -114,7 +114,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
                     @can('library_books.view')
-                        <a class="dropdown-item" href="{{ route('books.index') }}">Library</a>
+                        <a class="dropdown-item" href="{{ route('books.index') }}">Books</a>
                     @endcan
                     @can('weeklydoses.view')
                         <a class="dropdown-item" href="{{ route('weeklydoses') }}">WeeklyDose</a>
