@@ -33,7 +33,7 @@
 
 <script>
 export default {
-	props: ["roles", "updateRoute", "permissions"],
+	props: ["role", "updateRoute", "permissions"],
 
 	data(){
 		return {
