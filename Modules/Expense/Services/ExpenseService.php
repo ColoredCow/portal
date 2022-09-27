@@ -36,10 +36,10 @@ class ExpenseService
         $expense = Expense::where('id', $id)->get();
         $expenseFile = ExpenseFile::where('expense_id', $id)->get();
 
-        return compact('expense','expenseFile');
+        return compact('expense', 'expenseFile');
     }
 
-    public function update( $data, $id)
+    public function update($data, $id)
     {
         Expense::find($id)->update($data);
         

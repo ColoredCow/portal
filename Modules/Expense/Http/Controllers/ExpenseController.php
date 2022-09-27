@@ -33,11 +33,11 @@ class ExpenseController extends Controller
     }
 
     public function edit($id)
-    {        
-        return view('expense::edit',$this->service->edit($id));
+    {
+        return view('expense::edit', $this->service->edit($id));
     }
     
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         $this->service->update($request->all(), $id);
 

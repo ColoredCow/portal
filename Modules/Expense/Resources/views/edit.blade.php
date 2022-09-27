@@ -4,7 +4,7 @@
     <div class="container" id="expenses">
         <br/>
         <div class="d-flex justify-content-between mb-2">
-            <h4 class="mb-1 pb-1 fz-28">Edit</h4>
+            <h4 class="mb-1 pb-1 fz-28">Editn Expense</h4>
         </div>
         <div class="card">
             <form action="{{ route('expense.update',$expense[0]['id']) }}" method="POST" enctype="multipart/form-data">
