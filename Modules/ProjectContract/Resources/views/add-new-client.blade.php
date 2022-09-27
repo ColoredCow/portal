@@ -2,8 +2,9 @@
 
 @section('content')
 <div class=" ml-15">
-    <span class=""><h1>Add New Contract</h1></span>
-</div><br>
+    <h1>Add New Contract</h1>   
+</div>
+<br>
 <form action="{{ route('projectcontract.store')}}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="container">
@@ -43,7 +44,7 @@
                         </div>
                         <div class="form-group">
                             <label class="field-required">Attributes:</label>
-                            <span data-toggle="tooltip" data-placement="right" title="Address, Summary, Authority Phone Number, Authority Email, Authority Designation." class="ml-2">
+                            <span data-toggle="tooltip" data-placement="right" title="You can details like Address, Summary, Authority Phone Number, Authority Email, Authority Designation." class="ml-2">
                                 <i class="fa fa-question-circle"></i>&nbsp;
                             </span>
                             <textarea id="attributes" name="attributes" rows="4" cols="50" placeholder="Address, Summary, Authority Phone Number, Authority Email, Authority Designation."></textarea>
