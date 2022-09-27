@@ -38,7 +38,7 @@ class RecurringExpenseController extends Controller
         'amount' => 'required',
         ]);
 
-        $this->service->store(request()->all());
+        $this->service->store($validated);
 
         return redirect()->route('expense.recurring.index');
     }

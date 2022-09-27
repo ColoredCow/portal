@@ -38,24 +38,27 @@
         </li>
     @endif
 
-    @if ((Module::checkStatus('Client') &&
-        auth()->user()->can('clients.view')) ||
-        (Module::checkStatus('Project') &&
-            auth()->user()->can('projects.view')))
-        <li class="nav-item dropdown">
-            <a id="navbarDropdown_pm" class="nav-link dropdown-toggle" href="#" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>CRM<span class="caret"></span>
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown_finance">
-                @can('clients.view')
-                    <a class="dropdown-item" href="{{ route('client.index') }}">Clients</a>
-                @endcan
-                @can('projects.view')
-                    <a class="dropdown-item" href="{{ route('project.index') }}">Projects</a>
-                @endcan
-            </div>
-        </li>
-    @endif
+        @if ((Module::checkStatus('Client') &&
+            auth()->user()->can('clients.view')) ||
+            (Module::checkStatus('Project') &&
+                auth()->user()->can('projects.view')))
+            <li class="nav-item dropdown">
+                <a id="navbarDropdown_pm" class="nav-link dropdown-toggle" href="#" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>CRM<span class="caret"></span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown_finance">
+                    @can('clients.view')
+                        <a class="dropdown-item" href="{{ route('client.index') }}">Clients</a>
+                    @endcan
+                    @can('projects.view')
+                        <a class="dropdown-item" href="{{ route('project.index') }}">Projects</a>
+                    @endcan
+                    @can('projectscontract.view')
+                        <a class="dropdown-item" href="{{ route('projectcontract.index') }}">Project Contract</a>
+                    @endcan
+                </div>
+            </li>
+        @endif
 
     @can('task.view')
         <li class="nav-item">

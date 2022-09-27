@@ -13,6 +13,8 @@
 
 Route::prefix('expense')->group(function () {
     Route::get('/', 'ExpenseController@index')->name('expense.index');
+    Route::get('create', 'ExpenseController@create')->name('expense.create');
+    Route::post('/', 'ExpenseController@store')->name('expense.store');
 
     Route::prefix('recurring')->group(function () {
         Route::get('/', 'RecurringExpenseController@index')->name('expense.recurring.index');
