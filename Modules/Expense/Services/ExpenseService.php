@@ -58,7 +58,7 @@ class ExpenseService
 
     public function delete($id)
     {
-        Expense::find($id)->delete($id);
-        ExpenseFile::where('expense_id', $id)->delete($id);
+        Expense::find($id)->delete();
+        ExpenseFile::where('expense_id', $id)->delete();
     }
 }
