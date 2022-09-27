@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 use Modules\HR\Emails\Recruitment\Application\ApplicationHandover;
 use Modules\HR\Emails\Recruitment\Application\JobChanged;
 use Modules\HR\Emails\Recruitment\Application\RoundNotConducted;
+use Modules\HR\Entities\ApplicantMeta;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationMeta;
 use Modules\HR\Entities\ApplicationRound;
@@ -149,6 +150,15 @@ abstract class ApplicationController extends Controller
         foreach ($applications->items() as $application) {
             $openApplicationCountForJob = Application::where('hr_job_id', $application->hr_job_id)->isOpen()->count();
             $attr['openApplicationsCountForJobs'][$application->job->title] = $openApplicationCountForJob;
+        }
+
+        $attr['applicantId'] = [];
+        $applications = Application::get('hr_applicant_id');
+        foreach ($applications as $application) {
+            $applicantID = ApplicantMeta::where('hr_applicant_id', $application->hr_applicant_id)->first();
+            if($applicantID) {
+                $attr['applicantId'] = $applicantID;
+            }
         }
 
         return view('hr.application.index')->with($attr);
