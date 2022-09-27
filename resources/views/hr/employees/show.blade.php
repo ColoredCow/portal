@@ -15,7 +15,8 @@
                 @endif
             </div>
             <hr class='bg-dark mx-4 pb-0.5'>
-            <div class="font-weight-bold fz-24 pl-5 mt-5 mb-3 d-flex justify-content-inline">{{__('Current FTE: ')}}<div class=" ml-1 {{ $employee->user ? ($employee->user->fte > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->fte :'NA' }}</div></div>
+            <div class="font-weight-bold fz-24 pl-5 mt-5 mb-3 d-flex justify-content-inline">{{__('Current FTE: ')}}<div class=" ml-1 {{ $employee->user ? ($employee->user->ftes['main'] > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->ftes['main']  :'NA' }}</div></div>
+            <div class="font-weight-bold fz-24 pl-5 mt-5 mb-3 d-flex justify-content-inline">{{__('FTE(AMC): ')}}<div class=" ml-1 {{ $employee->user ? ($employee->user->ftes['amc'] > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->ftes['amc']  :'NA' }}</div></div>
             <div class="font-weight-bold fz-24 pl-5 mt-5 mb-3">Project Details</div>
             <div class="mx-5">
                 <table class="table">
@@ -41,7 +42,10 @@
                             @foreach($employee->user->activeProjectTeamMembers as $activeProjectTeamMember)
                                 @if($activeProjectTeamMember->project->status == 'active')
                                     <tr>
-                                        <td class="c-pointer"><div class="ml-7"><a href={{ route('project.show', $activeProjectTeamMember->project) }}>{{$activeProjectTeamMember->project->name}}</a></div></td>
+                                        <td class="c-pointer"><div class="ml-7"><a href={{ route('project.show', $activeProjectTeamMember->project) }}>{{$activeProjectTeamMember->project->name}} @if($activeProjectTeamMember->project->is_amc)
+                                            <div class="badge badge-pill badge-success mr-1  mt-1">AMC</div>
+                                        @endif
+                                        </a></div></td>
                                         <td><div>{{$activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), today(config('constants.timezone.indian'))->endOfMonth()))}}</div></td>
                                         <td><div>{{$activeProjectTeamMember->current_actual_effort}}</div></td>
                                         <td><div><div class="{{$activeProjectTeamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$activeProjectTeamMember->velocity}}</div></td>
