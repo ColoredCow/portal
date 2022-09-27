@@ -6,7 +6,6 @@
 @endif
 <form action="{{route('hr.applicant.store-approved-applicants-details')}}" enctype="multipart/form-data" method="POST">
     @csrf
-    {{-- @dd($applicantMeta) --}}
     <div class="container col-sm-6">
         <div class="card">
             <div class="card-body">
@@ -45,7 +44,7 @@
                     <div class="col-md-6 form-group">
                         <label for="preferred_name" class="fz-14 leading-none text-secondary mb-1">Preferred Name</label>
                         <p class="fz-14 leading-none text-secondary mb-1">Other name that you prefer. If not applicable, write NA.</p>
-                        <input type="text" class="form-control" name="preferred_name">
+                        <input type="text" class="form-control" name="preferred_name" value={{$applicant['Preferred Name']['value'] ?? ""}}>
                         <span class="text-danger">
                             @error('preferred_name')
                                 {{$message}}
@@ -55,7 +54,7 @@
                     <div class="col-md-4 form-group">
                         <label for="date_of_birth" class="field-required fz-14 leading-none text-secondary mb-1">Date Of Birth</label>
                         <p class="fz-14 leading-none text-secondary mb-1">Format- MM/DD/YYYY</p>
-                        <input type="date" class="form-control w-300" name="date_of_birth" required="required">
+                        <input type="date" class="form-control w-300" name="date_of_birth" required="required" value={{$applicant['Date Of Birth']['value'] ?? ""}}>
                         <span class="text-danger">
                             @error('date_of_birth')
                                 {{$message}}
@@ -73,7 +72,7 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="father_name" class="field-required fz-14 leading-none text-secondary mb-1">Father's Name</label>
-                        <input type="text" class="form-control w-300 mt-3" name="father_name" required="required">
+                        <input type="text" class="form-control w-300 mt-3" name="father_name" required="required" value={{$applicant['Father Name']['value'] ?? ""}}>
                         <span class="text-danger">
                             @error('father_name')
                                 {{$message}}
@@ -82,7 +81,7 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="mother_name" class="field-required fz-14 leading-none text-secondary mb-1">Mother's Name</label>
-                        <input type="text" class="form-control w-300 mt-3" name="mother_name" required="required">
+                        <input type="text" class="form-control w-300 mt-3" name="mother_name" required="required" value={{$applicant['Mother Name']['value'] ?? ""}}>
                         <span class="text-danger">
                             @error('mother_name')
                                 {{$message}}
@@ -91,7 +90,7 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="current_address" class="field-required  fz-14 leading-none text-secondary mb-1">Current Address</label>
-                        <input type="text" class="form-control w-300 mt-3" name="current_address" required="required">
+                        <input type="text" class="form-control w-300 mt-3" name="current_address" required="required" value={{$applicant['Current Address']['value'] ?? ""}}>
                         <span class="text-danger">
                             @error('current_address')
                                 {{$message}}
@@ -101,7 +100,7 @@
                     <div class="col-md-4 form-group">
                         <label for="permanent_address" class="field-required  fz-14 leading-none text-secondary mb-1">Permanent Address</label>
                         <p class=" fz-14 leading-none text-secondary mb-1">As per Address Proof</p>
-                        <input type="text" class="form-control w-300" name="permanent_address" required="required">
+                        <input type="text" class="form-control w-300" name="permanent_address" required="required" value={{$applicant['Permanent Address']['value'] ?? ""}}>
                         <span class="text-danger">
                             @error('permanent_address')
                                 {{$message}}
@@ -111,7 +110,7 @@
                     <div class="col-md-4 form-group">
                         <label for="emergency_contact_number" class="field-required  fz-14 leading-none text-secondary mb-1">Emergency Contact Number</label>
                         <p class=" fz-14 leading-none text-secondary mb-1">Other than personal contact number</p>
-                        <input type="number" class="form-control w-300" name="emergency_contact_number" required="required">
+                        <input type="number" class="form-control w-300" name="emergency_contact_number" required="required" value={{$applicant['Emergency Contact Number']['value'] ?? ""}}>
                         <span class="text-danger">
                             @error('emergency_contact_number')
                                 {{$message}}
@@ -120,7 +119,7 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="blood_group" class="field-required fz-14 leading-none text-secondary mb-1">Blood Group</label>
-                        <input type="text" class="form-control w-300 mt-3" name="blood_group" required="required">
+                        <input type="text" class="form-control w-300 mt-3" name="blood_group" required="required" value={{$applicant['Blood Group']['value'] ?? ""}}>
                         <span class="text-danger">
                             @error('blood_group')
                                 {{$message}}
@@ -129,7 +128,7 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="illness" class="field-required fz-14 leading-none text-secondary mb-1">Any illness related from past, that you would like to share?</label>
-                        <input type="text" class="form-control w-300 mt-1" name="illness" required="required">
+                        <input type="text" class="form-control w-300 mt-1" name="illness" required="required" value={{$applicant['Illness']['value'] ?? ""}}>
                         <span class="text-danger">
                             @error('illness')
                                 {{$message}}
@@ -140,8 +139,7 @@
                         <label for="head_shot_image" class="field-required fz-14 leading-none text-secondary mb-1">Upload a head shot image</label>
                         <div class="d-flex">
                             <div class="custom-file mb-3">
-                                <input type="file" name="head_shot_image" class="custom-file-input"
-                                    required="required">
+                                <input type="file" name="head_shot_image" class="custom-file-input" required="required" value={{$applicant['Head shot image']['value'] ?? ""}}>
                                 <label for="customFile" class="custom-file-label overflow-hidden w-300">Add File</label>
                             </div>
                         </div>
@@ -165,8 +163,7 @@
                         <p class="fz-14 leading-none text-secondary mb-1">(Both Front and Back)</p>
                         <div class="d-flex">
                             <div class="custom-file mb-3">
-                                <input type="file" name="aadhar_card_scanned" class="custom-file-input"
-                                    required="required">
+                                <input type="file" name="aadhar_card_scanned" class="custom-file-input" required="required">
                                 <label for="customFile" class="custom-file-label overflow-hidden w-300">Add File</label>
                             </div>
                         </div>
@@ -190,8 +187,7 @@
                         </label>
                         <div class="d-flex">
                             <div class="custom-file mb-3">
-                                <input type="file" name="scanned_copy_pan_card" class="custom-file-input"
-                                    required="required">
+                                <input type="file" name="scanned_copy_pan_card" class="custom-file-input" required="required">
                                 <label for="customFile" class="custom-file-label overflow-hidden w-300 mt-2">Add File</label>
                             </div>
                         </div>
@@ -214,7 +210,7 @@
                 <div class="form-row">
                     <div class="col-md-4 form-group">
                         <label for="acc_holder_name" class="field-required fz-14 leading-none text-secondary mb-1">Account Holder Name</label>
-                        <input type="text" class="form-control w-300" name="acc_holder_name" required="required">
+                        <input type="text" class="form-control w-300" name="acc_holder_name" required="required" value={{$applicant['Account Holder Name']['value'] ?? ""}}>
                         <span class="text-danger">
                             @error('scanned_copy_pan_card')
                                 {{$message}}
@@ -223,7 +219,7 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="bank_name" class="field-required fz-14 leading-none text-secondary mb-1">Bank Name</label>
-                        <input type="text" class="form-control w-300" name="bank_name" required="required">
+                        <input type="text" class="form-control w-300" name="bank_name" required="required" value={{$applicant['Bank Name']['value'] ?? ""}}>
                         <span class="text-danger">
                             @error('bank_name')
                                 {{$message}}
@@ -266,7 +262,7 @@
                     <div class="col-md-3 form-group">
                         <label for="uan_number" class="field-required fz-14 leading-none text-secondary mb-1 mt-2">PF account/ UAN Number</label>
                         <p class="fz-14 leading-none text-secondary mb-1">Please write NA if there is no pf account yet.</p>
-                        <input type="number" class="form-control w-300" name="uan_number" required="required">
+                        <input type="number" class="form-control w-300" name="uan_number" required="required" value={{$applicant['PF account/ UAN Number']['value'] ?? ""}}>
                         <span class="text-danger">
                                 @error('uan_number')
                                     {{$message}}
@@ -275,7 +271,6 @@
                     </div>
                     <input type="hidden" name="hr_applicant_id" value={{$hr_applicant_id}}>
                     <input type="hidden" name="hr_applicant_email" value={{$hr_applicant_email}}>
-                    {{-- @dd($hr_applicant_email) --}}
                 </div>
             </div>
         </div>
