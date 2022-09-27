@@ -139,7 +139,7 @@
                         <label for="head_shot_image" class="field-required fz-14 leading-none text-secondary mb-1">Upload a head shot image</label>
                         <div class="d-flex">
                             <div class="custom-file mb-3">
-                                <input type="file" name="head_shot_image" class="custom-file-input" required="required" value={{$applicant['Head shot image']['value'] ?? ""}}>
+                                <input type="file" name="head_shot_image" class="custom-file-input" required="required">
                                 <label for="customFile" class="custom-file-label overflow-hidden w-300">Add File</label>
                             </div>
                         </div>
