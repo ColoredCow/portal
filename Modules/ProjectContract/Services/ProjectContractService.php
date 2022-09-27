@@ -9,7 +9,7 @@ class ProjectContractService
 {
     public function index()
     {
-        return ProjectContractMeta::with('client')->orderBy('updated_at', 'desc')->get();
+        return ProjectContractMeta::with('client')->orderBy('created_at', 'desc')->get();
     }
 
     public function store(ProjectContractRequest $request)
