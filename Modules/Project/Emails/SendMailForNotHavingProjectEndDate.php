@@ -30,7 +30,7 @@ class SendMailForNotHavingProjectEndDate extends Mailable
     public function build()
     {
         return $this
-        ->from('anshikagupta45612@gmail.com')
+        ->from(config('constants.hr.default.email'), config('constants.hr.default.name'))
         ->to($this->project->client->keyAccountManager->email)
         ->subject('ColoredCow Portal - Fixed Budget Project is not having an end date')
         ->view('project::mail.not-having-project-end-date')

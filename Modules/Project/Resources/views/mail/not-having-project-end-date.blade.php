@@ -1,6 +1,7 @@
 <div>
-	<p>Hello {{ $project->client->keyAccountManager->name }},</p>
-	<p>We found some fixed-budget projects which arenot having any end-date. Please update these projects:</p>
+	<p>Hi, {{ $project->client->keyAccountManager->name }}</p>
+	<p>There are some fixed-budget projects which are not having any project end-date where you are assigned as a key account manager, please update these projects:
+	</p>
 	<table class="table">
 		<thead>
 			<tr>
@@ -16,7 +17,7 @@
 		</tbody>
 		</table>
 	<br>
-	<p>Thanks,</p> <br>
-	<p>Portal Team</p> <br>
+	<p>Thanks,</p>
+	<p>Portal Team</p>
 	<p>ColoredCow</p>
 </div>
