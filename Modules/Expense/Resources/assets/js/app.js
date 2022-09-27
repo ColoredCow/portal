@@ -1,7 +1,18 @@
 $(function() {
+	$(".add_btn").on("click", function(e) {
+	  var update =$(".documents:first").clone();
+	  update.find("input[type='file']").val("");
+	  $(".documents:last").after(update);
+	});
+});
+$("body").on("click", ".remove_btn", function() {
+	var closest = $(this).closest(".documents").remove();
+});
+
+$(function() {
 	$(".text-underline").on("click", function(e) {
 	  var frm =$(".parent:first").clone();
-	  frm.find("input").val("");
+	  frm.find("input[type='file']").val("");
 	  $(".parent:last").after(frm);
 	});
 });

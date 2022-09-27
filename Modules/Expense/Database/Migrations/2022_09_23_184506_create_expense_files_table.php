@@ -14,6 +14,7 @@ class CreateExpenseFilesTable extends Migration
     public function up()
     {
         Schema::create('expense_files', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('expense_id');
             $table->string('file_path');
             $table->string('file_type')->nullable();

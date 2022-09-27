@@ -33,6 +33,32 @@ class ExpenseService
 
     public function edit(int $id)
     {
-        return Expense::find($id);
+        $expense = Expense::where('id', $id)->get();
+        $expenseFile = ExpenseFile::where('expense_id', $id)->get();
+
+        return compact('expense','expenseFile');
+    }
+
+    public function update( $data, $id)
+    {
+        Expense::find($id)->update($data);
+        
+        foreach ($data['documents'] as $key => $file) {
+            ExpenseFile::find($key)->update($data);
+            $documentFile = $file['file'];
+            $path = 'app/public/expenseDocument';
+            $imageName = $documentFile->getClientOriginalName();
+            $fullpath = $documentFile->move(storage_path($path), $imageName);
+            ExpenseFile::where('id', $key)->update([
+                'file_path' => $fullpath,
+                'file_type' => $file['type']
+            ]);
+        }
+    }
+
+    public function delete($id)
+    {
+        Expense::find($id)->delete($id);
+        ExpenseFile::where('expense_id', $id)->delete($id);
     }
 }
