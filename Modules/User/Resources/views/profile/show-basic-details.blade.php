@@ -55,23 +55,23 @@
                           <label for="marital_status">Marital Status</label>
                           <div class="card border border-dark">
                               <div class="form-check">
-                                  <input class="form-control-small" type="radio" name="marital_status" id="unmarried" value="Unmarried" {{ $user->profile->marital_status == "Unmarried" ? "checked" :'' }} />
+                                  <input class="form-control-small" type="radio" name="marital_status" id="unmarried" value="Unmarried" {{ $user->profile && $user->profile->marital_status && $user->profile->marital_status == "Unmarried" ? "checked" :'' }} />
                                   <label class="form-check-label" for="marital_status">Unmarried</label>
                               </div>
                               <div class="form-check">
-                                  <input class="form-control-small" type="radio" name="marital_status" id="married" value="Married" {{ $user->profile->marital_status == "Married" ? "checked" :'' }} />
+                                  <input class="form-control-small" type="radio" name="marital_status" id="married" value="Married" {{ $user->profile && $user->profile->marital_status && $user->profile->marital_status == "Married" ? "checked" :'' }} />
                                   <label class="form-check-label" for="marital_status">Married</label>
                               </div>
 
                               <div class="form-check">
-                                  <input class="form-control-small" type="radio" name="marital_status" id="divorced" value="Divorced" {{ $user->profile->marital_status == "Divorced" ? "checked" :'' }} />
+                                  <input class="form-control-small" type="radio" name="marital_status" id="divorced" value="Divorced" {{ $user->profile && $user->profile->marital_status &&  $user->profile->marital_status == "Divorced" ? "checked" :'' }} />
                                   <label class="form-check-label" for="marital_status">Divorced</label>
                               </div>
                           </div>
                       </div>
-                      @if($user->profile->marital_status == "Married")
+                      @if($user->profile && $user->profile->marital_status &&  $user->profile->marital_status == "Married")
                       <div class="form-group" id="spouse">
-                      @else($user->profile->marital_status != "Married") 
+                      @else($user->profile && $user->profile->marital_status &&  $user->profile->marital_status != "Married") 
                       <div class="form-group d-none" id="spouse">
                       @endif
                           <label for="spouse_name">Spouse</label>
@@ -135,18 +135,19 @@
                   <label class="font-weight-bold" for="">Email:</label>
                   <span>{{ $user->email }}</span>
               </div>
-              <div class="form-group">
+               <div class="form-group">
                   <label class="font-weight-bold" for="">Gender:</label>
-                  <span>{{ $user->profile->gender }}</span>
+                  <span>{{ $user->profile && $user->profile->gender ? $user->profile->gender : "" }}</span>
               </div>
               <div class="form-group">
                   <label class="font-weight-bold" for="">Date of birth:</label>
-                  <span>{{ $user->profile->date_of_birth }}</span>
+                  <span>{{ $user->profile && $user->profile->date_of_birth ? $user->profile->date_of_birth : "" }}</span>
               </div>
               <div class="form-group">
                   <label class="font-weight-bold" for="">Date of joining:</label>
-                  <span>{{ $user->profile->date_of_joining }}</span>
+                  <span>{{ $user->profile && $user->profile->date_of_joining ? $user->profile->date_of_joining : "" }}</span>
               </div>
+
 
               @includeWhen($user->profile, 'user::profile.subviews.show-user-profile-info')
           </div>
