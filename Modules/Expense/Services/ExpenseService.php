@@ -42,7 +42,7 @@ class ExpenseService
     public function update($data, $id)
     {
         Expense::find($id)->update($data);
-        
+
         foreach ($data['documents'] as $key => $file) {
             ExpenseFile::find($key)->update($data);
             $documentFile = $file['file'];

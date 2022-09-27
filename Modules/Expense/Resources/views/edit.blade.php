@@ -73,34 +73,33 @@
                         </div>
                     </div>
                     <hr> 
-                    <div class="documents">
-                        @foreach ($expenseFile as $document )
-                        <div class="row mb-3 bg bg-grey pt-2">
-                            <div class="col-5">
-                                <label for="document"> {{ __('Upload Document') }}</label>
-                                <div class="custom-file mb-3">
-                                    <input type="file" id="document_file" name="documents[{{$document->id}}][file]" class="custom-file-input">
-                                    <label for="customFile0" value="}" class="custom-file-label overflow-hidden">Choose file</label>
+                    @foreach ($expenseFile as $document )
+                        <div class="documents">
+                            <div class="row mb-3 bg bg-grey pt-2">
+                                <div class="col-5">
+                                    <label for="document"> {{ __('Upload Document') }}</label>
+                                    <div class="custom-file mb-3">
+                                        <input type="file" id="document_file" name="documents[{{$document->id}}][file]" class="custom-file-input">
+                                        <label for="customFile0" value="}" class="custom-file-label overflow-hidden">Choose file</label>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <label for="document"> {{ __('Document Type') }}</label>
+                                    <select class="form-control" name="documents[{{$document->id}}][type]">
+                                        <option value="">Select Type</option>
+                                        @foreach (config('expense.type_of_documents') as $key => $value)
+                                            <option value="{{ $key }}" {{ $document['file_type'] == $key ? 'selected' : '' }}>
+                                                {{ $value }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-1 mt-5 mr-1">
+                                    <button type="button" id="remove" 
+                                    class="btn btn-danger btn-sm remove_btn mt-1 ml-2 text-white fz-14">Remove</button>
                                 </div>
                             </div>
-                            <div class="col-5">
-                                <label for="document"> {{ __('Document Type') }}</label>
-                                <select class="form-control" name="documents[{{$document->id}}][type]">
-                                    <option value="">Select Type</option>
-                                    @foreach (config('expense.type_of_documents') as $key => $value)
-                                        <option value="{{ $key }}" {{ $document['file_type'] == $key ? 'selected' : '' }}>
-                                            {{ $value }}</option>
-                                    @endforeach
-
-                                </select>
-                            </div>
-                            <div class="col-1 mt-5 mr-1">
-                                <button type="button" id="remove" 
-                                class="btn btn-danger btn-sm remove_btn mt-1 ml-2 text-white fz-14">Remove</button>
-                            </div>
                         </div>
-                        @endforeach
-                    </div>
+                    @endforeach
                     <div>
                         <span class="text-underline add_btn btn" id="add">Add More Documents</span>
                     </div>
