@@ -19,6 +19,7 @@
 		:permissions = "{{ json_encode($permissions)  }}"
 		:update-route="{{ json_encode( route('permissions.module.index', ['module' => 'roles'])) }}"
 	/>
+</div>
 	<div class="modal fade" id="rolesModal" tabindex="-1" role="dialog" aria-labelledby="rolesModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
