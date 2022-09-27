@@ -156,7 +156,7 @@ abstract class ApplicationController extends Controller
         $applications = Application::get('hr_applicant_id');
         foreach ($applications as $application) {
             $applicantID = ApplicantMeta::where('hr_applicant_id', $application->hr_applicant_id)->first();
-            if($applicantID) {
+            if ($applicantID) {
                 $attr['applicantId'] = $applicantID;
             }
         }
