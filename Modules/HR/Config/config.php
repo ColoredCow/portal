@@ -36,7 +36,7 @@ return [
             'solution-architect' => 'Solution Architect',
             'finance-lead' => 'Finance Lead',
             'quality-analyst' => 'Quality Analyst',
-            'ceo' => 'CEO'
+            'chief-executive-officer' => 'Chief Executive Officer'
         ],
 
     ],

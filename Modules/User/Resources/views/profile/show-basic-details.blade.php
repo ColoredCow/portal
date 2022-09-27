@@ -27,7 +27,11 @@
                 </div>
                 <div class="form-group">
                     <label for="designation">Designation</label>
-                    <input type="text" class="form-control" id="designation" name="designation" required value="{{ $user->employee && $user->employee->designation ? $user->employee->designation : "" }}">
+                    <select class="form-control" name="designationId">
+                        @foreach ($designations as $designation )
+                        <option {{$designation['id'] == $user->employee->designation_id ? "selected" : ""}} value="{{ $designation['id'] }}">{{$designation['designation']}}</option>
+                        @endforeach
+                    </select>   
                 </div>
                 <div class="form-group">
                     <label>Domain</label>

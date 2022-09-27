@@ -44,7 +44,7 @@
     </div>
     <table class="table table-striped table-bordered">
         <thead class="thead-dark">
-        <tr class="sticky-top">
+        <tr>
             <th>{{ __('Designation') }}</th>
             <th>{{ __('Edit') }}</th>
             <th>{{ __('Delete') }}</th>
@@ -69,4 +69,3 @@
 </div>
 @include('hr.designations.edit')
 @endsection
-

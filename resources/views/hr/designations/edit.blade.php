@@ -1,4 +1,4 @@
-div<div class="modal fade" id="designationEditFormModal" tabindex="-1" role="dialog" aria-labelledby="designationEditFormModalLabel" aria-hidden="true">
+<div class="modal fade" id="designationEditFormModal" tabindex="-1" role="dialog" aria-labelledby="designationEditFormModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,9 +11,9 @@ div<div class="modal fade" id="designationEditFormModal" tabindex="-1" role="dia
                 <form action="{{ route('designation.edit', "id") }}" method="get" id="designationEditForm" >
                     @csrf
                     <div class="form-group">
-                        <input value="{{ route('designation.edit', "id") }}" type="hidden" class="hidden" aria-hidden="true" name="routePlaceHolder"/>
-                        <label for="designationfield">name<strong class="text-danger">*</strong></label>
-                        <input type="text" name="name" class="form-control" placeholder="change the designation" required name="name"> 
+                        <input value="{{ route('designation.edit', "id") }}" type="hidden" class="hidden" aria-hidden="true" name="routePlaceHolder">
+                        <label class="field-required" for="designationfield">name</label>
+                        <input type="text" name="designation" class="form-control" required>
                     </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save changes</button>  
@@ -22,5 +22,3 @@ div<div class="modal fade" id="designationEditFormModal" tabindex="-1" role="dia
         </div>
     </div>
 </div>
-
-

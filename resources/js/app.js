@@ -1894,7 +1894,7 @@ $("#designationEditFormModal").on("show.bs.modal", function (e) {
 
 	editForm.attr("action", action);
 
-	editForm.find("select[name='name']").val(designation.name);
+	editForm.find("input[name='designation']").val(designation.designation);
 
 });
 
