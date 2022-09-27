@@ -15,11 +15,12 @@ class RevenueProceedController extends Controller
         $this->service = $service;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $revenueProceedData = $this->service->index();
+        $filters = $request->all();
+        $filters = $filters ?: $this->service->defaultFilters();
 
-        return view('revenue::index')->with('revenueProceeds', $revenueProceedData);
+        return view('revenue::index', $this->service->index($filters));
     }
 
     public function store(Request $request)
