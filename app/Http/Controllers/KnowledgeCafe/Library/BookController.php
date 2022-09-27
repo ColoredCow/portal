@@ -34,10 +34,11 @@ class BookController extends Controller
             $books = auth()->user()->booksInWishlist;
         } elseif (request()->has('borrowedBook')) {
             $books = auth()->user()->booksBorrower;
+        } elseif (request()->has('category_name')) {
+            $books = Book::getByCategoryName($searchCategory);
         } else {
             $books = Book::getList($searchString);
         }
-        $books = $searchCategory ? Book::getByCategoryName($searchCategory) : Book::getList($searchString);
         $loggedInUser = auth()->user();
         $books->load('wishers');
         $books->load('borrowers');
