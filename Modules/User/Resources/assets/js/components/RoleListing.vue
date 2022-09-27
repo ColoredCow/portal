@@ -16,7 +16,7 @@
 						<div class="text-muted fz-14">{{ role.description }}</div>
 					</td>
 					<td>
-						<button v-if="role.name != 'super-admin'" v-on:click="removeRole(index)" class="btn btn-danger" id="disablebtn">Delete</button>
+						<button v-if="role.id != '1'" v-on:click="removeRole(index)" class="btn btn-danger" id="disablebtn">Delete</button>
 					</td>
 					<td>
 						<span>Assigned: {{ role.permissions.length }}</span>
@@ -33,7 +33,7 @@
 
 <script>
 export default {
-	props: ["role", "updateRoute", "permissions"],
+	props: ["roles", "updateRoute", "permissions"],
 
 	data(){
 		return {
