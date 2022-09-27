@@ -30,19 +30,19 @@ class DesignationController extends Controller
 
     public function edit(JobDesignationRequest $request, $id)
     {
-        $HrJobDesignation = HrJobDesignation::find($id);
+        $hrJobDesignation = HrJobDesignation::find($id);
 
-        $HrJobDesignation->designation = $request['name'];
-        $HrJobDesignation->slug = Str::slug($request['name']);
-        $HrJobDesignation->save();
+        $hrJobDesignation->designation = $request['name'];
+        $hrJobDesignation->slug = Str::slug($request['name']);
+        $hrJobDesignation->save();
 
         return redirect()->back();
     }
 
     public function destroy(HrJobDesignation $request, $id)
     {
-        $HrJobDesignation = $request->find($id);
-        $HrJobDesignation->delete();
+        $hrJobDesignation = $request->find($id);
+        $hrJobDesignation->delete();
 
         return redirect()->back();
     }

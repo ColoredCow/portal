@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container"><br>
     <div class="d-flex justify-content-between">
         <div>
             <h2 class="mb-3">New Designations</h2>
         </div>
         <div>
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#designationformModal"> Add Desingnation</button>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#designationformModal"><i class="fa fa-plus mr-1"></i> Add Desingnation</button>
         </div>
     </div>
     <div class="d-none alert alert-success " id="successMessage" role="alert">
@@ -19,7 +19,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="designationformModalLabel">Designation Name </h5> 
+                    <h5 class="modal-title" id="designationformModalLabel">Designation Name</h5> 
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -52,9 +52,7 @@
         @foreach ($designations as $designation)
         <tr>
             <td>
-                <span class="d-flex text-justify-center">
-                {{$designation->designation}}
-                </span>
+                <span class="d-flex text-justify-center"value="{{$designation->slug}}">{{ Str::title(str_replace('-', ' ', $designation->designation)) }}</span>
             </td>
             <td>
              <button type="button" class="pr-1 btn btn-link" data-toggle="modal" data-target="#designationEditFormModal" data-json="{{$designation}}" ><i class="text-success fa fa-edit fa-lg"></i></button>
