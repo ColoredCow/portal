@@ -40,7 +40,8 @@ export default {
 			currentUserIndex: 0,
 			roleInputs: [],
 			allRoles: this.roles,
-			selectedRole:{}
+			selectedRole:{},
+			// rolelocal: this.roles,
 		};
 	},
 
@@ -66,9 +67,9 @@ export default {
 		},
 
 		removeRole: async function(index) {
-			let id = this.roles[index]["id"];
+			let id = this.allRoles[index]["id"];
 			let route = `DeleteRoles/${id}`;
-			this.roles.splice(index, 1);
+			this.allRoles.splice(index, 1);
 		}
 	}
 };
