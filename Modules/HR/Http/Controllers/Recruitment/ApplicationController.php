@@ -7,6 +7,7 @@ use App\Models\Setting;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
@@ -178,6 +179,7 @@ abstract class ApplicationController extends Controller
         $approveMailTemplate = str_replace('|LINK|', config('app.url') . '/viewForm/' . $application->applicant->id . '/' . encrypt($application->applicant->email), $approveMailTemplate);
 
         $offerLetterTemplate = Setting::getOfferLetterTemplate();
+        $desiredResume = DB::table('hr_applications')->select(['hr_applications.resume'])->where('hr_applications.hr_job_id', '=', $job->id)->where('is_desired_resume', '=', 1)->get();
         $attr = [
             'applicant' => $application->applicant,
             'application' => $application,
@@ -188,6 +190,7 @@ abstract class ApplicationController extends Controller
             'offer_letter' => $application->offer_letter,
             'approveMailTemplate' => $approveMailTemplate,
             'offerLetterTemplate' => $offerLetterTemplate,
+            'desiredResume' => $desiredResume,
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],
@@ -330,14 +333,17 @@ abstract class ApplicationController extends Controller
         return redirect()->back()->with('status', 'Your request has successfully been sent');
     }
 
-    public function acceptHandoverRequest(Application $application)
+    public function acceptHandoverRequest(Request $request, Application $application)
     {
+        $scheduledPersonId = $request->get('user');
+
         $applicationRound = $application->latestApplicationRound;
         $applicationRound->update([
-            'scheduled_person_id' => auth()->user()->id,
+            'scheduled_person_id' => $scheduledPersonId,
         ]);
+        $scheduledUser = User::where('id', $scheduledPersonId)->first()->name;
 
-        $status = 'Successful Assigned to ' . auth()->user()->name;
+        $status = 'Successful Assigned to ' . $scheduledUser;
 
         return redirect(route('applications.job.index'))->with('status', $status);
     }
