@@ -25,7 +25,7 @@ class MediaRequest extends FormRequest
     {
         return [
             'event_name' => 'required',
-            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'file' => 'required',
             'description' => 'required',
         ];
     }

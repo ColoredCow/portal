@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'name' => 'Media'
+    'name' => 'Media',
+    'path' => 'public/media'
 ];

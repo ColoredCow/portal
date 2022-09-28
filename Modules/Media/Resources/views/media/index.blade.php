@@ -5,12 +5,6 @@
 @section('link', route('media.index'))
 @section('content')
 
-@if(session('message'))
-<div class="alert alert-{{ session('status') }} alert-dismissible fade show" role="alert">
-    <strong>{{ session('message') }}</strong>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
 <div class="container">
     <div class="row my-2">
         <div class="col-lg-12 d-flex justify-content-between align-items-center mx-auto">
@@ -79,7 +73,14 @@
         <div class="col-lg-3 mb-3">
             <div class="card shadow">
                 <a href="{{ route('media.show', $row->id) }}">
-                    <img src="{{ asset('storage/media/'.$row->img_url) }}" class="card-img-top img-fluid ">
+                    @if(pathinfo($row->file_url, PATHINFO_EXTENSION) == 'mp4' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'mpeg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'mov' ||  pathinfo($row->file_url, PATHINFO_EXTENSION) == 'avi'  )
+                        <video class="container" controls>
+                            <source src="{{asset('storage/media/'.$row->file_url)}}" type="video/mp4">
+                        </video>
+                    @endif
+                    @if(pathinfo($row->file_url, PATHINFO_EXTENSION) == 'jpg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'jpeg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'png' )
+                        <img src="{{ asset('storage/media/'.$row->file_url) }}" class="card-img-top img-fluid ">
+                    @endif
                 </a>
                 <div class="card-body">
                     <p>

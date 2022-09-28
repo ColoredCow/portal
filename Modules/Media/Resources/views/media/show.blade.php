@@ -9,7 +9,14 @@
 <div class="row my-4">
     <div class="col-lg-4 mx-auto">
         <div class="card shadow">
-            <img src="{{ asset('storage/media/'.$media->img_url) }}" class="img-fluid card-img-top">
+            @if(pathinfo($media->file_url, PATHINFO_EXTENSION) == 'mp4' || pathinfo($media->file_url, PATHINFO_EXTENSION) == 'mpeg' || pathinfo($media->file_url, PATHINFO_EXTENSION) == 'mov' ||  pathinfo($media->file_url, PATHINFO_EXTENSION) == 'avi'  )
+            <video class="container" controls>
+                <source src="{{asset('storage/media/'.$media->file_url)}}" type="video/mp4">
+            </video>
+            @endif
+            @if(pathinfo($media->file_url, PATHINFO_EXTENSION) == 'jpg' || pathinfo($media->file_url, PATHINFO_EXTENSION) == 'jpeg' || pathinfo($media->file_url, PATHINFO_EXTENSION) == 'png' )
+                <img src="{{ asset('storage/media/'.$media->file_url) }}" class="card-img-top img-fluid ">
+            @endif
             <div class="card-body p-5">
                 <div class="d-flex justify-content-between align-items-center">
                     <p>
@@ -18,7 +25,7 @@
                         </td>
                     </p>
                     <p class="lead">
-                        {{ \Carbon\Carbon::parse($media->created_at)->diffForHumans() }}
+                        {{ $time }}
                     </p>
                 </div>
                 <p class="fw-bold text-secondary">Event Name - {{ $media->event_name }}</p>

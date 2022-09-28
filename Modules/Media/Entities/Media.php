@@ -11,7 +11,7 @@ class Media extends Model
     protected $table = 'media';
     protected $fillable = [
         'event_name',
-        'img_url',
+        'file_url',
         'uploaded_by',
         'description'
     ];
