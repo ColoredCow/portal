@@ -117,4 +117,10 @@ class Job extends Model
             'internship',
         ]);
     }
+    
+    public function Applicant()
+    {
+        return $this->hasMany(Applicant::class, 'jobs_id');
+    }
+    
 }

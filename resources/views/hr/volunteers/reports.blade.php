@@ -1,26 +1,31 @@
 @extends('layouts.app')
-
 @section('content')
-
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <br>
-            @include('hr.volunteers.menu')
-            <br><br>
-        </div>
-        <div class="col-md-12">
-            @include('status', ['errors' => $errors->all()])
-        </div>
-        <div class="col-md-12">
-            <h1>Volunteering Reports</h1>
-        </div>
-        <div class="col-md-12">
-            <img src="/images/volunteer-reports-min.png" alt="volunteer reports" class="w-full">
-        </div>
-    </div>
-    <div class="row">
+    <h1 class="text-center">Reports Vol</h1>
+    <br>
+    <div class="d-flex justify-content-start row flex-wrap">
 
+        <div class="col-md-4">
+            <div class="card h-75 mx-6 mt-5 mb-5 ">
+                <a class="card-body no-transition" href="{{ route('volunteers.applicationcount') }}" >
+                    <br><h2 class="text-center">Daily Application Count</h2><br>
+                </a>
+            </div>
+        </div>
+     <div class="col-md-4">
+        <div class="card h-75 mx-6 mt-5 mb-5 ">
+            <a class="card-body no-transition" >
+                <br><h2 class="text-center">Job Role Engagement</h2><br>   
+            </a>
+        </div>
     </div>
-</div>
+
+    <div class="col-md-4">
+        <div class="card h-75 mx-6 mt-5 mb-5 ">
+            <a class="card-body no-transition"  >
+                <br><h2 class="text-center">Rejected Applications</h2><br>
+            </a>
+        </div>
+    </div>
+
 @endsection

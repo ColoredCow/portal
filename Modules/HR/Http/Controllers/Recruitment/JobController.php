@@ -2,15 +2,19 @@
 
 namespace Modules\HR\Http\Controllers\Recruitment;
 
+use Modules\HR\Entities\Application;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\HrJobDomain as EntitiesHrJobDomain;
 use Modules\HR\Entities\Job;
+use Carbon\Carbon;
+use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Round;
 use Modules\HR\Http\Requests\Recruitment\JobRequest;
 use Modules\HR\Http\Requests\Recruitment\JobDomainRequest;
 use Modules\User\Entities\User;
 use Illuminate\Support\Str;
+use Psy\Command\WhereamiCommand;
 use Request;
 
 class JobController extends Controller
@@ -142,5 +146,61 @@ class JobController extends Controller
         $hrJobDomains->save();
 
         return redirect()->back();
+    }
+
+    private function getVerifiedApplicationsCount()
+    {
+        $from = config('hr.verified_application_date.start_date');
+        $currentDate = Carbon::today(config('constants.timezone.indian'));
+
+        return Application::whereBetween('created_at', [$from, $currentDate])
+            ->where('is_verified', 1)->count();
+    }
+
+    public function findApplicant(){
+        $jobs = Job::where('type', 'volunteer')->get('id');
+        //dd($jobs);
+        
+         $data=array();
+          foreach ($jobs as $job)
+          {
+            
+            $data[]=$job->id;
+            
+          }
+        $todayCount = Application::whereDate('created_at', now())->whereIn('hr_job_id',$data)
+        ->count();
+        $record = Application::select(
+            \DB::raw('COUNT(*) as count'),
+            \DB::raw('MONTHNAME(created_at) as month_created_at'),
+            \DB::raw('DATE(created_at) as date_created_at')
+        )
+        ->where('created_at', '>', Carbon::now()->subDays(23))
+        ->whereIn('hr_job_id',$data)
+        ->groupBy('date_created_at', 'month_created_at')
+        ->orderBy('date_created_at', 'ASC')
+        ->get();
+
+        $data = [];
+        $verifiedApplicationCount = $this->getVerifiedApplicationsCount();
+        foreach ($record as $row) {
+            $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
+            $data['data'][] = (int) $row->count;
+            $verifiedApplications = Application::where('is_verified', 1)->whereDate('created_at', '=', date(new Carbon($row->date_created_at)))->count();
+            $data['afterBody'][] = $verifiedApplications;
+        }
+        $data['chartData'] = json_encode($data);
+
+        return view('hr.volunteers.reportresult')->with([
+        'chartData' => $data['chartData'],
+        'todayCount' => $todayCount,
+        'verifiedApplicationsCount' => $verifiedApplicationCount]);
+
+        
+
+        
+        
+        
+        
     }
 }

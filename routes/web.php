@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
+use App\Http\Controllers\HR\Volunteers\ReportsController;
+use Modules\HR\Http\Controllers\Recruitment\JobController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -35,7 +37,9 @@ Route::middleware('auth')->group(function () {
     Route::prefix('hr')->namespace('HR')->group(function () {
         Route::prefix('volunteers')->namespace('Volunteers')->group(function () {
             Route::get('reports', 'ReportsController@index')->name('volunteers.reports');
+            //Route::get('reportscount', 'ReportsController@Show')->name('volunteers.dailyapplicationscount');
             Route::get('campaigns', 'CampaignsController@index')->name('volunteers.campaigns');
+            
             Route::resource('opportunities', 'VolunteerOpportunityController')
                 ->only(['index', 'store', 'update', 'edit'])
                 ->names([
@@ -165,3 +169,4 @@ Route::middleware('auth')->group(function () {
     Route::get('user/wishlist-books', 'UserBookController@booksInWishlist');
     Route::get('user/projects', 'UserController@projects');
 });
+Route::get('reportserCard', [JobController::class,'findApplicant'])->name('volunteers.applicationcount');
