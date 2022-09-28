@@ -63,7 +63,7 @@ class MediaController extends Controller
         return view('media::media.show')->with([
             'media' => $media,
             'time' => $time
-        ]);    
+        ]);
     }
 
     /**
