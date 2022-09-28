@@ -136,7 +136,7 @@ return [
             'approved' => [
                 'label' => 'approved',
                 'title' => 'Approved',
-                'class' => 'badge',
+                'class' => 'badge badge-success',
             ],
             'onboarded' => [
                 'label' => 'onboarded',
