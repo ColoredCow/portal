@@ -125,11 +125,6 @@
             <span class="font-weight-bold fz-xl-14 text-dark">
                 <span>
                     <i class="fa fa-flag mr-1"></i>{{ $application->latestApplicationRound->round->isTrialRound() ? optional($application->latestApplicationRound->trialRound)->name : $application->latestApplicationRound->round->name }}</span><br>
-                        @if ($applicantId != null)
-                            @if ($application->status == 'approved' && $application->hr_applicant_id == $applicantId->hr_applicant_id) 
-                                <span class="font-weight-bold fz-xl-14 text-dark fa fa-flag mr-1"> Submitted Offer Letter Details</span>
-                            @endif
-                        @endif
                 @if ($application->latestApplicationRound->scheduled_date &&
                     $application->latestApplicationRound->round->name != 'Resume Screening')
                     <p class="ml-3">
@@ -148,6 +143,11 @@
             @if (!in_array($application->status, ['in-progress', 'new']))
                 <span
                     class="{{ config("constants.hr.status.$application->status.class") }} badge-pill mr-1 mb-1 fz-12">{{ config("constants.hr.status.$application->status.title") }}</span>
+            @endif
+            @if ($applicantId != null)
+                @if ($application->hr_applicant_id == $applicantId->hr_applicant_id) 
+                    <span class="{{ config("constants.hr.status.submitted-offer-letter-details.class") }} badge-pill mr-1 mb-1 fz-12"> Submitted Offer Letter Details</span>
+                @endif
             @endif
             @if (!$application->latestApplicationRound->scheduled_date &&
                 $application->latestApplicationRound->round->name != 'Telephonic Interview' &&

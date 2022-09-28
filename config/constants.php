@@ -136,12 +136,17 @@ return [
             'approved' => [
                 'label' => 'approved',
                 'title' => 'Approved',
-                'class' => 'badge badge-success',
+                'class' => 'badge',
             ],
             'onboarded' => [
                 'label' => 'onboarded',
                 'title' => 'Onboarded',
                 'class' => 'badge badge-success',
+            ],
+            'submitted-offer-letter-details' => [
+                'label' => 'submitted-offer-letter-details',
+                'title' => 'Submitted Offer Letter Details',
+                'class' => 'badge badge-light',
             ],
 
             'custom-mail' => [
