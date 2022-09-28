@@ -1344,7 +1344,7 @@
                                                                 <option value="onboard">Onboard</option>
                                                             </select>
                                                             <button type="button" class="btn btn-success ml-2"
-                                                                @click="takeAction()">Take
+                                                                @click="takeAction()" id="takeAction">Take
                                                                 action</button>
 
                                                         @endif
