@@ -29,7 +29,7 @@ class ReportsController extends Controller
         $req->report_start_date = $req->report_start_date ?? carbon::now()->startOfMonth() == $req->report_end_date = $req->report_end_date ?? Carbon::today();
 
         $todayCount = Applicant::whereDate('created_at', '=', Carbon::today())
-        ->count();
+            ->count();
 
         $record = Applicant::select(
             \DB::raw('COUNT(*) as count'),
@@ -52,9 +52,10 @@ class ReportsController extends Controller
         $data['chartData'] = json_encode($data);
 
         return view('hr.recruitment.reports')->with([
-        'chartData' => $data['chartData'],
-        'todayCount' => $todayCount,
-        'verifiedApplicationsCount' => $verifiedApplicationCount]);
+            'chartData' => $data['chartData'],
+            'todayCount' => $todayCount,
+            'verifiedApplicationsCount' => $verifiedApplicationCount
+        ]);
     }
 
     private function getVerifiedApplicationsCount()
@@ -69,16 +70,16 @@ class ReportsController extends Controller
     public function showReportCard()
     {
         $todayCount = Applicant::whereDate('created_at', now())
-        ->count();
+            ->count();
         $record = Applicant::select(
             \DB::raw('COUNT(*) as count'),
             \DB::raw('MONTHNAME(created_at) as month_created_at'),
             \DB::raw('DATE(created_at) as date_created_at')
         )
-        ->where('created_at', '>', Carbon::now()->subDays(23))
-        ->groupBy('date_created_at', 'month_created_at')
-        ->orderBy('date_created_at', 'ASC')
-        ->get();
+            ->where('created_at', '>', Carbon::now()->subDays(23))
+            ->groupBy('date_created_at', 'month_created_at')
+            ->orderBy('date_created_at', 'ASC')
+            ->get();
 
         $data = [];
         $verifiedApplicationCount = $this->getVerifiedApplicationsCount();
@@ -105,7 +106,7 @@ class ReportsController extends Controller
         $applicationCount = [];
         $totalApplicationCount = 0;
         foreach ($jobs as $job) {
-            if (! empty($filters)) {
+            if (!empty($filters)) {
                 $count = Application::whereBetween('created_at', $filters)->where('hr_job_id', $job->id)->count();
             } else {
                 $count = Application::where('hr_job_id', $job->id)->count();
@@ -129,12 +130,12 @@ class ReportsController extends Controller
         $rejected_reason_start_date = $request->rejected_reason_start_date ?? today()->subYear();
         $rejected_reason_end_date = $request->rejected_reason_end_date ?? today();
         $Rejection = HRRejectionReason::select(\DB::Raw('reason_title as label'), \DB::Raw('COUNT(id) as count'))
-        ->groupBy('reason_title')
-        ->get();
+            ->groupBy('reason_title')
+            ->get();
         $data = HRRejectionReason::select(\DB::Raw('reason_title as label'), \DB::Raw('COUNT(id) as count'))
-        ->whereDate('created_at', '>=', $rejected_reason_start_date)
-        ->whereDate('created_at', '<=', $rejected_reason_end_date)
-        ->groupBy('reason_title');
+            ->whereDate('created_at', '>=', $rejected_reason_start_date)
+            ->whereDate('created_at', '<=', $rejected_reason_end_date)
+            ->groupBy('reason_title');
         $reasonsList = $Rejection->pluck('label')->toArray();
         $applicationCountArray = $data->pluck('count')->toArray();
         foreach ($reasonsList as $index => $reason) {
@@ -156,24 +157,24 @@ class ReportsController extends Controller
         $round_wise_rejection_start_date = $request->round_wise_rejection_start_date ?? today()->subYears(4);
         $round_wise_rejection_end_date = $request->round_wise_rejection_end_date ?? today();
         $rejectionRounds = \DB::table('hr_application_round')
-        ->whereDate('conducted_date', '>=', $round_wise_rejection_start_date)
-        ->whereDate('conducted_date', '<=', $round_wise_rejection_end_date)
-        ->select('hr_round_id', \DB::raw('count(*) as count'))
-        ->join('hr_applications', 'hr_applications.id', '=', 'hr_application_round.hr_application_id')
-        ->where('round_status', '=', 'rejected')
-        ->whereIn('hr_application_id', function ($query) {
-            $query->from('hr_applications')
-            ->select('id')
-            ->where('status', '=', 'rejected');
-        })
-        ->where('hr_applications.status', '=', 'rejected')
-        ->groupBy('hr_round_id')
-        ->get();
+            ->whereDate('conducted_date', '>=', $round_wise_rejection_start_date)
+            ->whereDate('conducted_date', '<=', $round_wise_rejection_end_date)
+            ->select('hr_round_id', \DB::raw('count(*) as count'))
+            ->join('hr_applications', 'hr_applications.id', '=', 'hr_application_round.hr_application_id')
+            ->where('round_status', '=', 'rejected')
+            ->whereIn('hr_application_id', function ($query) {
+                $query->from('hr_applications')
+                    ->select('id')
+                    ->where('status', '=', 'rejected');
+            })
+            ->where('hr_applications.status', '=', 'rejected')
+            ->groupBy('hr_round_id')
+            ->get();
         $rounds = Round::select('name as title', 'id')->get();
         $round = $rounds->pluck('title')->toArray();
         $count = $rejectionRounds->pluck('count')->toArray();
         $chartData = [
-            'totalapplication'=> $round,
+            'totalapplication' => $round,
             'count' => $count,
         ];
 
@@ -189,7 +190,7 @@ class ReportsController extends Controller
         $roundWiseRejectionsData = $this->roundWiseRejectionsData($request);
         $rejectedApplicationData = [
             'rejectedReasonsData' => $rejectedReasonsData,
-            'roundWiseRejectionsData'=> $roundWiseRejectionsData,
+            'roundWiseRejectionsData' => $roundWiseRejectionsData,
             'dataToFilterTab' => $dataToFilterTab,
         ];
 

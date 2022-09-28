@@ -40,7 +40,8 @@ class JobController extends Controller
         $jobs = Job::with([
             'applications' => function ($query) {
                 $query->isOpen()->get();
-            }])
+            }
+        ])
             ->latest()
             ->appends(Request::except('page'));
 
@@ -157,29 +158,28 @@ class JobController extends Controller
             ->where('is_verified', 1)->count();
     }
 
-    public function findApplicant(){
+    public function findApplicant()
+    {
         $jobs = Job::where('type', 'volunteer')->get('id');
         //dd($jobs);
-        
-         $data=array();
-          foreach ($jobs as $job)
-          {
-            
-            $data[]=$job->id;
-            
-          }
-        $todayCount = Application::whereDate('created_at', now())->whereIn('hr_job_id',$data)
-        ->count();
+
+        $data = array();
+        foreach ($jobs as $job) {
+
+            $data[] = $job->id;
+        }
+        $todayCount = Application::whereDate('created_at', now())->whereIn('hr_job_id', $data)
+            ->count();
         $record = Application::select(
             \DB::raw('COUNT(*) as count'),
             \DB::raw('MONTHNAME(created_at) as month_created_at'),
             \DB::raw('DATE(created_at) as date_created_at')
         )
-        ->where('created_at', '>', Carbon::now()->subDays(23))
-        ->whereIn('hr_job_id',$data)
-        ->groupBy('date_created_at', 'month_created_at')
-        ->orderBy('date_created_at', 'ASC')
-        ->get();
+            ->where('created_at', '>', Carbon::now()->subDays(23))
+            ->whereIn('hr_job_id', $data)
+            ->groupBy('date_created_at', 'month_created_at')
+            ->orderBy('date_created_at', 'ASC')
+            ->get();
 
         $data = [];
         $verifiedApplicationCount = $this->getVerifiedApplicationsCount();
@@ -192,15 +192,9 @@ class JobController extends Controller
         $data['chartData'] = json_encode($data);
 
         return view('hr.volunteers.reportresult')->with([
-        'chartData' => $data['chartData'],
-        'todayCount' => $todayCount,
-        'verifiedApplicationsCount' => $verifiedApplicationCount]);
-
-        
-
-        
-        
-        
-        
+            'chartData' => $data['chartData'],
+            'todayCount' => $todayCount,
+            'verifiedApplicationsCount' => $verifiedApplicationCount
+        ]);
     }
 }
