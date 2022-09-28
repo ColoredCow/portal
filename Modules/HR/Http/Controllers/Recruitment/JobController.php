@@ -165,7 +165,6 @@ class JobController extends Controller
 
         $data = array();
         foreach ($jobs as $job) {
-
             $data[] = $job->id;
         }
         $todayCount = Application::whereDate('created_at', now())->whereIn('hr_job_id', $data)

@@ -28,5 +28,4 @@ class ReportsController extends Controller
         return Application::whereBetween('created_at', [$from, $currentDate])
             ->where('is_verified', 1)->count();
     }
-
 }
