@@ -11,12 +11,14 @@
             <div class="d-flex justify-content-between mx-5 align-items-end">
                 <div class="col">
                     <div class="mt-2"><h1>{{$employee->name}}</h1></div>
-                    <div class="row ml-1">
-                       <span class="font-weight-bold">Designation:</span><p>{{$employee->hrJobDesignatioin->designation}}</p>
-                    </div> 
-                    <div class="row ml-1">
-                        <span class="font-weight-bold">Domain:</span><p>{{$employee->hrJobDomain->domain}}</p>            
-                    </div>
+                    @if ($employee->designation_id && $employee->domain_id != null)
+                        <div class="row ml-1">
+                            <span class="font-weight-bold">Designation:</span><p>{{$employee->hrJobDesignatioin->designation}}</p>
+                        </div> 
+                        <div class="row ml-1">
+                            <span class="font-weight-bold">Domain:</span><p>{{$employee->hrJobDomain->domain}}</p>            
+                        </div>
+                    @endif
                 </div>
                 @if(optional($employee->user()->withTrashed())->first()->avatar)
                     <img src="{{ $employee->user()->withTrashed()->first()->avatar }}" class="w-100 h-100 rounded-circle">
