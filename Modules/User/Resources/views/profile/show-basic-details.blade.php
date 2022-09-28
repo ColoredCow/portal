@@ -78,6 +78,9 @@
             <div class="form-group">
                 <label class="font-weight-bold" for="">Designation:</label>
                 <span>{{ $user->employee->designation }}</span>
+                @foreach ($designations as $designation )
+                    <span>{{ $user->employee->designation_id == $designation['id'] ? $designation['designation'] : "" }}</span>
+                @endforeach
             </div>
             <div class="form-group">
                 <label class="font-weight-bold" for="">Domain:</label>
