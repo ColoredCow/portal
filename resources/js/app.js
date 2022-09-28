@@ -20,7 +20,6 @@ Vue.use(Laue);
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import { ajax } from "jquery";
-import moment from "moment";
 const options = {
 	timeout: 2000,
 };
@@ -215,8 +214,6 @@ $(document).ready(() => {
 
 $(document).ready(function () {
 	$("#domainformModal").on("hidden.bs.modal", function () {
-$(document).ready(function() {
-	$("#domainformModal").on("hidden.bs.modal", function() {
 		$(this)
 			.find("form")
 			.trigger("reset");
@@ -286,7 +283,6 @@ if (document.getElementById("page_hr_applicant_edit")) {
 					axios
 						.get("/hr/evaluation/" + applicationRoundID)
 						.then(function (response) {
-						.then(function(response) {
 							$("#page_hr_applicant_edit #application_evaluation_body").html(
 								response.data
 							);
@@ -392,9 +388,6 @@ if (document.getElementById("client_form")) {
 				document.getElementById("emails").value == ""
 					? []
 					: document.getElementById("emails").value.split(","),
-        document.getElementById("emails").value == ""
-        	? []
-        	: document.getElementById("emails").value.split(","),
 		},
 		methods: {
 			toggleActive: function() {
@@ -429,8 +422,6 @@ if (document.getElementById("finance_report")) {
 			conversionRateUSD:
 				document.getElementById("conversion_rate_usd").dataset
 					.conversionRateUsd || 0,
-        document.getElementById("conversion_rate_usd").dataset
-        	.conversionRateUsd || 0,
 		},
 		computed: {
 			convertedUSDSentAmount: function() {
@@ -559,7 +550,6 @@ $(document).ready(function() {
 		e.preventDefault();
 		let form = $("#addNewSegmentForm");
 		$("#createNewSegment").on("hidden.bs.modal", function () {
-		$("#createNewSegment").on("hidden.bs.modal", function() {
 			$(this)
 				.find("form")
 				.trigger("reset");
@@ -597,7 +587,6 @@ $(document).ready(function() {
 		e.preventDefault();
 		let form = $("#editSegmentForm");
 		$("#editSegmentModal").on("hidden.bs.modal", function () {
-		$("#editSegmentModal").on("hidden.bs.modal", function() {
 			$(this)
 				.find("form")
 				.trigger("reset");
@@ -663,7 +652,6 @@ $(".hr_round_guide").on("click", ".save-guide", function() {
  *
  */
 $(window).on("load", function () {
-$(window).on("load", function() {
 	$("#preloader")
 		.removeClass("d-block")
 		.addClass(" d-none ");
@@ -1445,7 +1433,6 @@ require("./finance/payment");
  */
 
 $(document).ready(function () {
-$(document).ready(function() {
 	$(document).on("click", ".show-comment", showCommentBlock);
 	$(document).on("click", ".section-toggle", sectionToggle);
 	$(document).on("click", "#saveFollowUp", saveFollowUp);
@@ -1914,23 +1901,6 @@ $("#job_start_date").on("change", function () {
 			});
 		}
 	});
-$(".status").on("change", function() {
-	$("#spinner").removeClass("d-none");
-	if (this.checked) {
-		$.ajax({
-			url: "completed/change-status/" + this.dataset.id,
-			method: "GET",
-			success: function(res) {
-				location.reload(true);
-			},
-			error: function(err) {
-				alert("there is some problem");
-			},
-			complete: function(data) {
-				$("#spinner").addClass("d-none");
-			},
-		});
-	}
 });
 
 $(".pending").on("change", function() {
@@ -1949,16 +1919,14 @@ $(".pending").on("change", function() {
 		},
 	});
 });
+
 $(document).ready(function () {
 	$("#requisitionModal").on("hidden.bs.modal", function () {
-$(document).ready(function() {
-	$("#requisitionModal").on("hidden.bs.modal", function() {
 		$(this)
 			.find("form")
 			.trigger("reset");
 	});
 	$("#requisitionForm").on("submit", function (e) {
-	$("#requisitionForm").on("submit", function(e) {
 		e.preventDefault();
 		$("#formSpinner").removeClass("d-none");
 		let form = $("#requisitionForm");
@@ -1968,7 +1936,6 @@ $(document).ready(function() {
 			url: form.attr("action"),
 			data: form.serialize(),
 			success: function (response) {
-			success: function(response) {
 				$("#requisitionModal").modal("hide");
 				$("#successMessage").toggleClass("d-none");
 				$("#successMessage").fadeToggle(4000);
@@ -1977,10 +1944,6 @@ $(document).ready(function() {
 				alert("there is some problem");
 			},
 			complete: function (response) {
-			error: function(response) {
-				alert("there is some problem");
-			},
-			complete: function(response) {
 				$("#formSpinner").addClass("d-none");
 			},
 		});
@@ -1988,7 +1951,6 @@ $(document).ready(function() {
 });
 
 $("#job_start_date").on("change", function () {
-$("#job_start_date").on("change", function() {
 	let startDate = $("#job_start_date").val();
 	$("#job_end_date").attr("min", startDate);
 });
@@ -2011,35 +1973,20 @@ $(document).ready(function() {
  * Operations
  *
  */
+
 $(document).ready(function () {
 	$(".deletebtn").on("click", function () {
 		$("#officelocationDeleteModal").modal("show");
 		var id = $(this).data("id");
 
 		$("#delete_id").val(id);
-/*
- * HR Module JS code end
- */
-
-// fix for tinymce and bootstrap modal
-$(document).on("focusin", function(e) {
-	if ($(event.target).closest(".mce-window").length) {
-		e.stopImmediatePropagation();
-	}
-});
-
-$(document).ready(function() {
-	$("#holdSendMailToApplicant").on("click", function(event) {
-		var $optionContainer = $("#optionContainer");
-		if ($(this).is(":checked")) {
-			$optionContainer.removeClass("d-none");
-		} else {
-			$optionContainer.addClass("d-none");
-		}
 	});
+	
+	console.log(id);
 
 	$(document).on("click", "#deleteLocationBtn", function (e) {
 		e.preventDefault();
+
 		var id = $("#delete_id").val();
 
 		$.ajax({
@@ -2070,9 +2017,7 @@ $(document).ready(function () {
 		$("#location_id").val(location);
 		$("#capacity_id").val(capacity);
 		$("#id").val(id);
-		// console.log(centerHead);
 	});
-
 
 	$("#editformID").on("click", "#editLocationBtn", function (e) {
 		e.preventDefault();
@@ -2092,101 +2037,16 @@ $(document).ready(function () {
 			data: $("#editformID").serialize(),
 			success: function (response) {
 				$("#officelocationEditModal").modal("hide");
-				// toastr.success("data updated successfully");
-				// location.reload();
+				toastr.success("data updated successfully");
+				location.reload();
 			},
 			error: function (error) {
 				alert("data not updated");
 			},
 		});
-	$.ajax({
-		url: form.attr("action"),
-		type: form.attr("method"),
-		data: form.serialize(),
-		success: function(response) {
-			$("#edit").modal("hide");
-			$("#edit").on("hidden.bs.modal", function(e) {
-				$("#successMessage").toggleClass("d-none");
-				$("#successMessage").fadeToggle(5000);
-			});
-		},
-		error: function(response) {
-			$("#profile-details-error").removeClass("d-none");
-			$("#successMessage").addClass("d-none");
-			let errors = response.responseJSON.errors;
-			$(".profile-details-error").empty();
-			for (let error in errors) {
-				$(".profile-details-error").append(
-					"<li class='text-danger ml-2'>" + errors[error] + "</li>"
-				);
-			}
-		},
 	});
 });
 
-$("#updateEmail").on("click", function() {
-	let formData = {
-		location: $("#location").val(),
-		date: $("#date").val(),
-		timing: $("#timing").val(),
-		applicant_name: $("#applicantName").text(),
-	};
-	var originUrl = window.location.origin;
-	$.ajax({
-		url: originUrl + "/hr/recruitment/teaminteraction",
-		type: "POST",
-		data: formData,
-		success: function(response) {
-			$("#InteractionError").addClass("d-none");
-			$("#confirmMailToApplicantSubject").val(response.subject);
-			tinymce
-				.get("confirmMailToApplicantBody")
-				.setContent(response.body, { format: "html" });
-			$("#interactionsuccess").toggleClass("d-none");
-			$("#interactionsuccess").fadeToggle(6000);
-			$("#confirmMailToApplicantBlock").removeClass("d-none");
-			var toggleIcon = $("#previewMailToApplicant").data("toggle-icon");
-			if (toggleIcon && !$(".fa-eye-slash ").hasClass("d-none")) {
-				$(".toggle-icon").toggleClass("d-none");
-			}
-		},
-		error: function(response) {
-			$("#InteractionError").removeClass("d-none");
-			let errors = response.responseJSON.errors;
-			$("#errors").empty();
-			for (let error in errors) {
-				$("#errors").append(
-					"<li class='text-danger ml-2'>" + errors[error] + "</li>"
-				);
-			}
-			$("#confirmMailToApplicantBlock").addClass("d-none");
-		},
-	});
-});
-$("#interactionErrorModalCloseBtn").click(function() {
-	$("#InteractionError").toggleClass("d-none");
-});
-
-$(".opt").on("click", function() {
-	let formData = {
-		setting_key_subject: $(this).data("key-subject"),
-		setting_key_body: $(this).data("key-body"),
-		applicant_name: $("#applicantName").text(),
-		job_title: $("#jobTitle").text(),
-	};
-
-	var originUrl = window.location.origin;
-	$.ajax({
-		url: originUrl + "/hr/recruitment/onHoldEmail",
-		type: "GET",
-		data: formData,
-		contentType: "application/json",
-		success: function(response) {
-			$("#option1subject").val(response.subject);
-			tinymce.get("option1body").setContent(response.body, { format: "html" });
-		},
-	});
-});
 $(document).ready(function () {
 
 	$("#addform").on("submit", function (e) {
@@ -2211,31 +2071,5 @@ $(document).ready(function () {
 				alert("data not saved");
 			},
 		});
-	var originUrl = window.location.origin;
-	$.ajax({
-		url: originUrl + "/hr/recruitment/onHoldEmail",
-		type: "GET",
-		data: formData,
-		contentType: "application/json",
-		success: function(response) {
-			$("#option2subject").val(response.subject);
-			tinymce.get("option2body").setContent(response.body, { format: "html" });
-		},
-	});
-});
-
-$(document).on("click", ".finish_interview", function(e) {
-	e.preventDefault();
-	var actualEndTime = $(".finish_interview").val();
-	var duration = moment().format("YYYY/MM/DD H:m:s");
-	$.ajax({
-		type: "GET",
-		url: "/hr/recruitment/finishinterview",
-		data: { documentId: actualEndTime, duration: duration },
-		dataType: "json",
-		success: function(response) {
-			$("#meet_time").hide();
-			$("#durations").append(response.html);	
-		},
 	});
 });
