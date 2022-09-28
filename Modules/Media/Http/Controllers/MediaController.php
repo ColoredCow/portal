@@ -60,6 +60,7 @@ class MediaController extends Controller
     public function show(Media $media)
     {
         $time = \Carbon\Carbon::parse($media->created_at)->diffForHumans();
+
         return view('media::media.show')->with([
             'media' => $media,
             'time' => $time
