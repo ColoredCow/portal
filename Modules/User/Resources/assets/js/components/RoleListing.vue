@@ -4,7 +4,7 @@
 			<thead class="thead-dark">
 				<tr>
 					<th>Role</th>
-					<th>Correction</th>
+					<th>Delete Role</th>
 					<th>Permissions</th>
 					<th>Actions</th>
 				</tr>
@@ -16,7 +16,7 @@
 						<div class="text-muted fz-14">{{ role.description }}</div>
 					</td>
 					<td>
-						<button v-if="role.id != '1'" v-on:click="removeRole(index)" class="btn btn-danger" id="disablebtn">Delete</button>
+						<button v-if="role.name != 'super-admin'" v-on:click="removeRole(index)" class="btn btn-danger" id="disablebtn">Delete</button>
 					</td>
 					<td>
 						<span>Assigned: {{ role.permissions.length }}</span>
@@ -41,7 +41,6 @@ export default {
 			roleInputs: [],
 			allRoles: this.roles,
 			selectedRole:{},
-			// rolelocal: this.roles,
 		};
 	},
 
@@ -69,6 +68,7 @@ export default {
 		removeRole: async function(index) {
 			let id = this.allRoles[index]["id"];
 			let route = `DeleteRoles/${id}`;
+			let response = await axios.delete(route);
 			this.allRoles.splice(index, 1);
 		}
 	}
