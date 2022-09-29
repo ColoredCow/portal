@@ -18,7 +18,7 @@
                 <div class="modal-body">
                     <form id="batchDetailsForm" action="{{ route('requisition.storeBatchDetails') }}" method="post">
                         @csrf
-                        <input type="hidden" id="batchId" name="batchId" value="{{$member->id}}">
+                        <input type="hidden" id="batchId" name="batchId" value="{{optional($member)->id}}">
                         <select id="choices-multiple" class="form-control"  name="teamMembers[]" placeholder="Select Team Members" multiple>
                             @foreach ($employees as $employee)
                                 <option value="{{ $employee->id }}">{{ $employee->name }}</option>

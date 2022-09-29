@@ -29,14 +29,13 @@ class RequisitionController extends Controller
     public function index(JobRequisition $jobRequisition)
     {
         $requisitions = $this->service->index();
+        $batchMember = $requisitions->first();
         $employees = Employee::all();
-        foreach ($requisitions as $requisition) {
             return view('hr.requisition.index')->with([
                 'requisitions' => $requisitions,
                 'employees' => $employees,
-                'member' => $requisition,
+                'member' => $batchMember,
             ]);
-        }
     }
 
     public function store(Request $request)

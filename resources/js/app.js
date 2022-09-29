@@ -1742,7 +1742,7 @@ $(".status").on("change", function () {
 			url: "completed/change-status/" + this.dataset.id,
 			method: "GET",
 			success: function (res) {
-		        $("#mymodal").modal();
+				$("#mymodal").modal() + this.dataset.id;
 			},
 			error: function (err) {
 				alert("there is some problem");
