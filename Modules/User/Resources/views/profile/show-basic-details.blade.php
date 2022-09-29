@@ -34,7 +34,7 @@
                     <select name="center_head" class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" id="center_head_id" required>
                       <option value ="" selected> All OfficeLocation</option>
                       @foreach ( $officelocations as $officelocation )
-                        <option value ="{{ $officelocation->id }}"> {{$officelocation->location}}</option>
+                        <option value ="{{ $officelocation->id }}">{{$officelocation->location}}</option>
                         
                       @endforeach
                     </select>
