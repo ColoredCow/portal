@@ -12,7 +12,7 @@
  */
 
 use App\Http\Controllers\HR\Volunteers\ReportsController;
-use Modules\HR\Http\Controllers\Recruitment\JobController;
+use Modules\HR\Http\Controllers\Recruitment\ApplicantController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -169,4 +169,4 @@ Route::middleware('auth')->group(function () {
     Route::get('user/wishlist-books', 'UserBookController@booksInWishlist');
     Route::get('user/projects', 'UserController@projects');
 });
-Route::get('reportserCard', [JobController::class, 'findApplicant'])->name('volunteers.applicationcount');
+Route::get('Daily-Applications', [ApplicantController::class, 'findVolunteerApplicant'])->name('volunteers.applicationcount');
