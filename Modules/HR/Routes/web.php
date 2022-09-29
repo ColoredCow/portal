@@ -140,7 +140,7 @@ Route::middleware('auth')->group(function () {
         ]);
         Route::post('/delete/{id}', 'HrJobDesignationController@destroy')->name('designation.delete');
         Route::get('/{id}/edit', 'HrJobDesignationController@edit')->name('designation.edit');
-        Route::post('/store', 'HrJobDesignationController@storeDesignation')->name('hr-job-designation.storeJobDesignation'); 
+        Route::post('/store', 'HrJobDesignationController@storeDesignation')->name('hr-job-designation.storeJobDesignation');
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');
