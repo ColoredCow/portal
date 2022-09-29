@@ -4,8 +4,10 @@ namespace Modules\Project\Services;
 
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Support\Arr;
 use Modules\User\Entities\User;
 use Modules\Client\Entities\Client;
+use Illuminate\Support\Facades\Auth;
 use Modules\Project\Entities\Project;
 use Illuminate\Support\Facades\Storage;
 use Modules\Project\Entities\ProjectMeta;
@@ -13,6 +15,8 @@ use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\EffortTracking\Services\EffortTrackingService;
+use Modules\Project\Entities\ProjectBillingDetail;
+use Modules\Project\Contracts\ProjectServiceContract;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -35,6 +39,24 @@ class ProjectService implements ProjectServiceContract
             'projectsCount' => $projectsCount,
             'totalMonths' => $totalMonths
         ];
+        $showAllProjects = Arr::get($data, 'projects', 'my-projects') != 'my-projects';
+
+        $memberId = Auth::id();
+
+        $projectClauseClosure = function ($query) use ($filters, $showAllProjects, $memberId) {
+            $query->applyFilter($filters);
+            $showAllProjects ? $query : $query->linkedToTeamMember($memberId);
+        };
+
+        $projectsData = Client::query()
+        ->with('projects', $projectClauseClosure)
+        ->whereHas('projects', $projectClauseClosure)
+        ->orderBy('name')
+        ->paginate(config('constants.pagination_size'));
+
+        $tabCounts = $this->getListTabCounts($filters, $showAllProjects, $memberId);
+
+        return array_merge(['clients' => $projectsData], $tabCounts);
     }
 
     public function create()
