@@ -44,7 +44,6 @@
         
                 <div class='form-group mr-4 mt-1 w-168'>
                     <select class="form-control bg-light" name="year" onchange="document.getElementById('FilterForm').submit();">
-                        {{-- <option {{ request()->input('year') == '' ? "selected=selected" : '' }} value="{{$currentYear}}">{{$currentYear}}</option> --}}
                         @php $year = now()->year; @endphp
                         @while ($year != 1999)
                             <option {{ request()->input('year') == $year ? "selected=selected" : '' }} value="{{ $year }}">
