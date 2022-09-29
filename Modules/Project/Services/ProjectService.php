@@ -24,66 +24,39 @@ class ProjectService implements ProjectServiceContract
     {
         $filters = [
             'status' => $data['status'] ?? 'active',
-            'name' => $data['name'] ?? null,
+            'is_amc' => $data['is_amc'] ?? 0
         ];
-        $data['projects'] = $data['projects'] ?? 'my-projects';
 
-        $clients = null;
-
-        if ($data['projects'] == 'all-projects') {
-            $clients = Client::query()->with('projects', function ($query) use ($filters) {
-                $query->applyFilter($filters)->orderBy('name', 'asc');
-            })->whereHas('projects', function ($query) use ($filters) {
-                $query->applyFilter($filters);
-            })->orderBy('name')->paginate(config('constants.pagination_size'));
-
-            $filters['status'] = 'active';
-            $activeProjectsCount = Project::query()->applyFilter($filters)->count();
-
-            $filters['status'] = 'halted';
-            $haltedProjectsCount = Project::query()->applyFilter($filters)->count();
-
-            $filters['status'] = 'inactive';
-            $inactiveProjectsCount = Project::query()->applyFilter($filters)->count();
-        } else {
-            $userId = auth()->user()->id;
-
-            $clients = Client::query()->with('projects', function ($query) use ($userId, $filters) {
-                $query->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
-                    $query->where('team_member_id', $userId);
-                });
-            })->whereHas('projects', function ($query) use ($userId, $filters) {
-                $query->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
-                    $query->where('team_member_id', $userId);
-                });
-            })->orderBy('name')->paginate(config('constants.pagination_size'));
-
-            $filters['status'] = 'active';
-            $activeProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
-                $query->where('team_member_id', $userId);
-            })->count();
-
-            $filters['status'] = 'halted';
-            $haltedProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
-                $query->where('team_member_id', $userId);
-            })->count();
-
-            $filters['status'] = 'inactive';
-            $inactiveProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
-                $query->where('team_member_id', $userId);
-            })->count();
+        if ($nameFilter = $data['name'] ?? false) {
+            $filters['name'] = $nameFilter;
         }
         $currentMonth = $data['month'] ?? Carbon::now()->format('F');
         $currentYear = $data['year'] ?? Carbon::now()->format('Y');
         $totalMonths = (new EffortTrackingService)->getTotalMonthsFilterParameter($currentMonth, $currentYear);
-        
+
         return [
-            'clients' => $clients->appends($data),
-            'activeProjectsCount' => $activeProjectsCount,
-            'inactiveProjectsCount' => $inactiveProjectsCount,
-            'haltedProjectsCount' => $haltedProjectsCount,
+            'clients' => $clients,
+            'projectsCount' => $projectsCount,
             'totalMonths' => $totalMonths
         ];
+        $showAllProjects = Arr::get($data, 'projects', 'my-projects') != 'my-projects';
+
+        $memberId = Auth::id();
+
+        $projectClauseClosure = function ($query) use ($filters, $showAllProjects, $memberId) {
+            $query->applyFilter($filters);
+            $showAllProjects ? $query : $query->linkedToTeamMember($memberId);
+        };
+
+        $projectsData = Client::query()
+        ->with('projects', $projectClauseClosure)
+        ->whereHas('projects', $projectClauseClosure)
+        ->orderBy('name')
+        ->paginate(config('constants.pagination_size'));
+
+        $tabCounts = $this->getListTabCounts($filters, $showAllProjects, $memberId);
+
+        return array_merge(['clients' => $projectsData], $tabCounts);
     }
 
     public function create()
