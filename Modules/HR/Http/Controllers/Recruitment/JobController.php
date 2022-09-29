@@ -149,19 +149,9 @@ class JobController extends Controller
         return redirect()->back();
     }
 
-    private function getVerifiedApplicationsCount()
-    {
-        $from = config('hr.verified_application_date.start_date');
-        $currentDate = Carbon::today(config('constants.timezone.indian'));
-
-        return Application::whereBetween('created_at', [$from, $currentDate])
-            ->where('is_verified', 1)->count();
-    }
-
     public function findApplicant()
     {
         $jobs = Job::where('type', 'volunteer')->get('id');
-        //dd($jobs);
 
         $data = array();
         foreach ($jobs as $job) {
@@ -181,7 +171,6 @@ class JobController extends Controller
             ->get();
 
         $data = [];
-        $verifiedApplicationCount = $this->getVerifiedApplicationsCount();
         foreach ($record as $row) {
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
             $data['data'][] = (int) $row->count;
@@ -192,8 +181,7 @@ class JobController extends Controller
 
         return view('hr.volunteers.reportresult')->with([
             'chartData' => $data['chartData'],
-            'todayCount' => $todayCount,
-            'verifiedApplicationsCount' => $verifiedApplicationCount
+            'todayCount' => $todayCount
         ]);
     }
 }

@@ -90,7 +90,7 @@ class ReportsController extends Controller
             $verifiedApplications = Application::where('is_verified', 1)->whereDate('created_at', '=', date(new Carbon($row->date_created_at)))->count();
             $data['afterBody'][] = $verifiedApplications;
         }
-        dd($data);
+
         $data['chartData'] = json_encode($data);
         return view('hr.recruitment.reports')->with([
             'chartData' => $data['chartData'],

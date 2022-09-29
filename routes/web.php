@@ -38,7 +38,6 @@ Route::middleware('auth')->group(function () {
     Route::prefix('hr')->namespace('HR')->group(function () {
         Route::prefix('volunteers')->namespace('Volunteers')->group(function () {
             Route::get('reports', 'ReportsController@index')->name('volunteers.reports');
-            //Route::get('reportscount', 'ReportsController@Show')->name('volunteers.dailyapplicationscount');
             Route::get('campaigns', 'CampaignsController@index')->name('volunteers.campaigns');
 
             Route::resource('opportunities', 'VolunteerOpportunityController')
