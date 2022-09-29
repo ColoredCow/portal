@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectTeamMember;
 use Illuminate\Database\Eloquent\Collection;
+use Modules\EffortTracking\Services\EffortTrackingService;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -57,10 +58,14 @@ class ProjectService implements ProjectServiceContract
                 })->count();
             });
         }
+        $currentMonth = $data['month'] ?? Carbon::now()->format('F');
+        $currentYear = $data['year'] ?? Carbon::now()->format('Y');
+        $totalMonths = (new EffortTrackingService)->getTotalMonthsFilterParameter($currentMonth, $currentYear);
 
         return [
             'clients' => $clients,
             'projectsCount' => $projectsCount,
+            'totalMonths' => $totalMonths
         ];
     }
 
