@@ -25,7 +25,7 @@ class ApplicantController extends Controller
 
     protected $service;
 
-    public function __construct(ApplicationServiceContract $service,ApplicantService $applicantService)
+    public function __construct(ApplicationServiceContract $service, ApplicantService $applicantService)
     {
         $this->service = $service;
         $this->service = $applicantService;
