@@ -392,35 +392,22 @@
                 <div class="img-center"><img src="{{ public_path() . '/images/coloredcow.png' }}" alt="" align="right" height="50" width="250"></div>
                 <p>___________________________________________________________________________________________________</p>
                 <p>IN WITNESS WHEREOF, this Agreement has been entered into the day and year first above written.</p>
-                <p>______________________________________________________________________________________________</p>
+                <p>___________________________________________________________________________________________________</p>
                 <br><br><br><br>
                 <div>
-                <div class="box1"><pre>  For Coloredcow Consulting 
-                                         Private Limited
-
-
-
-
-
-
-
-                                          ____________________________
-                                          Name: Mr. Mohit Sharma
-                                          (HR, Admin)
-                </pre></div>
-                <div class="box2"><pre>  (Employee Name)
-
-
-
-
-
-
-
-
-
-                                            ______________________
-                    
-                </pre></div>
+                <div class="box1">
+                    <div>  For Coloredcow Consulting Private Limited</div>
+                    <br><br><br><br><br><br><br><br>
+                    <div> ____________________________</div>
+                    <div> Name: Mr. Mohit Sharma</div>
+                    <div> (HR, Admin)</div>
+                </div>
+                <div class="box2">
+                    <div>  (Employee Name) </div>
+                    <br><br><br><br><br><br><br><br>
+                    </b>
+                    <div>______________________</div>    
+                </div>
                 </div>
                 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                 <p class="font-color mt-6">ColoredCow Consulting Pvt. Ltd | +91 9818571035 | <span href="mailto">contact@coloredcow.com</span> | F-61 Suncity,</p>

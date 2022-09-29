@@ -38,7 +38,7 @@
                         <span class="text-danger">
                             @error('name')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-6 form-group">
@@ -48,7 +48,7 @@
                         <span class="text-danger">
                             @error('preferred_name')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-4 form-group">
@@ -58,7 +58,7 @@
                         <span class="text-danger">
                             @error('date_of_birth')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-4 form-group">
@@ -67,7 +67,7 @@
                         <span class="text-danger">
                             @error('contact_number')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-4 form-group">
@@ -76,7 +76,7 @@
                         <span class="text-danger">
                             @error('father_name')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-4 form-group">
@@ -85,7 +85,7 @@
                         <span class="text-danger">
                             @error('mother_name')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-4 form-group">
@@ -94,7 +94,7 @@
                         <span class="text-danger">
                             @error('current_address')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-4 form-group">
@@ -104,7 +104,7 @@
                         <span class="text-danger">
                             @error('permanent_address')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-4 form-group">
@@ -114,7 +114,7 @@
                         <span class="text-danger">
                             @error('emergency_contact_number')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-4 form-group">
@@ -123,7 +123,7 @@
                         <span class="text-danger">
                             @error('blood_group')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-4 form-group">
@@ -132,7 +132,7 @@
                         <span class="text-danger">
                             @error('illness')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-4 form-group">
@@ -146,7 +146,7 @@
                         <span class="text-danger">
                             @error('head_shot_image')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-4 form-group">
@@ -155,7 +155,7 @@
                         <span class="text-danger">
                             @error('aadhar_card_number')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-4 form-group">
@@ -170,7 +170,7 @@
                         <span class="text-danger">
                             @error('aadhar_card_scanned')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-4 form-group">
@@ -179,7 +179,7 @@
                         <span class="text-danger">
                             @error('pan_card_number')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-3 form-group">
@@ -194,7 +194,7 @@
                         <span class="text-danger">
                             @error('scanned_copy_pan_card')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                 </div>
@@ -214,7 +214,7 @@
                         <span class="text-danger">
                             @error('scanned_copy_pan_card')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-4 form-group">
@@ -223,7 +223,7 @@
                         <span class="text-danger">
                             @error('bank_name')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-3 form-group">
@@ -232,7 +232,7 @@
                         <span class="text-danger">
                             @error('acc_number')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-4 form-group">
@@ -241,7 +241,7 @@
                         <span class="text-danger">
                             @error('ifsc_code')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-4 form-group">
@@ -256,7 +256,7 @@
                         <span class="text-danger">
                             @error('passbook_first_page_img')
                                 {{$message}}
-                                @enderror
+                            @enderror
                         </span>
                     </div>
                     <div class="col-md-3 form-group">
@@ -264,13 +264,13 @@
                         <p class="fz-14 leading-none text-secondary mb-1">Please write NA if there is no pf account yet.</p>
                         <input type="number" class="form-control w-300" name="uan_number" required="required" value={{$applicant['PF account/ UAN Number']['value'] ?? ""}}>
                         <span class="text-danger">
-                                @error('uan_number')
-                                    {{$message}}
-                                @enderror
+                            @error('uan_number')
+                                {{$message}}
+                            @enderror
                         </span>
                     </div>
-                    <input type="hidden" name="hr_applicant_id" value={{$hr_applicant_id}}>
-                    <input type="hidden" name="hr_applicant_email" value={{$hr_applicant_email}}>
+                    <input type="hidden" name="hr_applicant_id" value={{$hrApplicantId}}>
+                    <input type="hidden" name="hr_applicant_email" value={{$hrApplicantEmail}}>
                 </div>
             </div>
         </div>
@@ -278,7 +278,7 @@
     <div class="container">
         <div class="form-row">
             <div class="form-group col-md-12">
-                <button type="submit"  href="{{route('hr.applicant.form-submitted',[$hr_applicant_id , $hr_applicant_email])}}" class="btn btn-success round-submit" id="formSubmit">Submit</button>
+                <button type="submit"  href="{{route('hr.applicant.applicant-onboarding-form',[$hrApplicantId , $hrApplicantEmail])}}" class="btn btn-success round-submit" id="formSubmit">Submit</button>
                 <button type="reset" value="Reset" class="btn btn-danger float-right">Clear form</button>
             </div>
         </div>

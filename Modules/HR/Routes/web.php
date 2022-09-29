@@ -137,6 +137,6 @@ Route::middleware('auth')->group(function () {
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');
 Route::get('/viewForm/{id}/{email}', 'Recruitment\ApplicantController@viewForm')->name('hr.applicant.view-form');
-Route::post('/store', 'Recruitment\ApplicantController@storeApprovedApplicantDetails')->name('hr.applicant.store-approved-applicants-details');
-Route::get('/formSubmitted/{id}/{email}', 'Recruitment\ApplicantController@formSubmit')->name('hr.applicant.form-submitted');
-Route::get('/showDetails/{id}', 'Recruitment\ApplicantController@showFormDetails')->name('hr.applicant.show-applicant-form-details');
+Route::post('/storeApprovedApplicantDetails', 'Recruitment\ApplicantController@storeApprovedApplicantDetails')->name('hr.applicant.store-approved-applicants-details');
+Route::get('/formSubmitted/{id}/{email}', 'Recruitment\ApplicantController@formSubmit')->name('hr.applicant.applicant-onboarding-form');
+Route::get('/showApplicantFormDetails/{id}', 'Recruitment\ApplicantController@showOnboardingFormDetails')->name('hr.applicant.show-onboarding-applicant-form-details');
