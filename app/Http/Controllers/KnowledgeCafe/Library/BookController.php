@@ -37,11 +37,6 @@ class BookController extends Controller
         } else {
             $books = $searchCategory ? Book::getByCategoryName($searchCategory) : Book::getList($searchString);
         }
-
-
-        
-        
-
         $loggedInUser = auth()->user();
         $books->load('wishers');
         $books->load('borrowers');
