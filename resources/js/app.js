@@ -2073,3 +2073,20 @@ $(document).ready(function () {
 		});
 	});
 });
+
+$("#responseModal").on("submit",function(e){
+	e.preventDefault();
+	let form = $("#responseForm");
+	let button = $("#responseBtn");
+
+	$.ajax({
+		url: form.attr("action"),
+		type: form.attr("method"),
+		data: form.serialize(),
+		success: function(response) {
+			$("#responseModal").modal("hide");
+			Vue.$toast.success("Resume flagged Succesfully!");
+		},
+	});
+});
+
