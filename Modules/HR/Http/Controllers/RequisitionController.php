@@ -31,11 +31,11 @@ class RequisitionController extends Controller
         $requisitions = $this->service->index();
         $batchMember = $requisitions->first();
         $employees = Employee::all();
-            return view('hr.requisition.index')->with([
-                'requisitions' => $requisitions,
-                'employees' => $employees,
-                'member' => $batchMember,
-            ]);
+        return view('hr.requisition.index')->with([
+            'requisitions' => $requisitions,
+            'employees' => $employees,
+            'member' => $batchMember,
+        ]);
     }
 
     public function store(Request $request)
