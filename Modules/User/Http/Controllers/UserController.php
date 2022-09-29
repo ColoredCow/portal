@@ -67,10 +67,4 @@ class UserController extends ModuleBaseController
         $this->service->delete($user);
     }
 
-    public function storeRoles(RoleRequest $role)
-    {
-        $this->service->$role;
-
-        return redirect()->back();
-    }
 }
