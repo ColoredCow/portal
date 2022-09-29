@@ -149,39 +149,5 @@ class JobController extends Controller
         return redirect()->back();
     }
 
-    public function findApplicant()
-    {
-        $jobs = Job::where('type', 'volunteer')->get('id');
-
-        $data = array();
-        foreach ($jobs as $job) {
-            $data[] = $job->id;
-        }
-        $todayCount = Application::whereDate('created_at', now())->whereIn('hr_job_id', $data)
-            ->count();
-        $record = Application::select(
-            \DB::raw('COUNT(*) as count'),
-            \DB::raw('MONTHNAME(created_at) as month_created_at'),
-            \DB::raw('DATE(created_at) as date_created_at')
-        )
-            ->where('created_at', '>', Carbon::now()->subDays(23))
-            ->whereIn('hr_job_id', $data)
-            ->groupBy('date_created_at', 'month_created_at')
-            ->orderBy('date_created_at', 'ASC')
-            ->get();
-
-        $data = [];
-        foreach ($record as $row) {
-            $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
-            $data['data'][] = (int) $row->count;
-            $verifiedApplications = Application::where('is_verified', 1)->whereDate('created_at', '=', date(new Carbon($row->date_created_at)))->count();
-            $data['afterBody'][] = $verifiedApplications;
-        }
-        $data['chartData'] = json_encode($data);
-
-        return view('hr.volunteers.reportresult')->with([
-            'chartData' => $data['chartData'],
-            'todayCount' => $todayCount
-        ]);
-    }
+    
 }
