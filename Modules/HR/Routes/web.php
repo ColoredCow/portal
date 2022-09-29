@@ -133,14 +133,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/pending/{jobRequisition}', 'RequisitionController@storePending');
         Route::get('/complete', 'RequisitionController@showCompletedRequisition')->name('requisition.complete');
 
-        Route::resource('designation', 'DesignationController')
+        Route::resource('designation', 'HrJobDesignationController')
         ->only(['index', 'show'])
         ->names([
             'index' => 'designation',
         ]);
-        Route::post('/delete/{id}', 'DesignationController@destroy')->name('designation.delete');
-        Route::get('/{id}/edit', 'DesignationController@edit')->name('designation.edit');
-        Route::post('/store', 'DesignationController@storeDesignation')->name('hr-job-designation.storeJobDesignation');
+        Route::post('/delete/{id}', 'HrJobDesignationController@destroy')->name('designation.delete');
+        Route::get('/{id}/edit', 'HrJobDesignationController@edit')->name('designation.edit');
+        Route::post('/store', 'HrJobDesignationController@storeDesignation')->name('hr-job-designation.storeJobDesignation'); 
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');

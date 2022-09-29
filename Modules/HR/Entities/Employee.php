@@ -19,7 +19,7 @@ class Employee extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function hrJobDesignatioin()
+    public function hrJobDesignation()
     {
         return $this->belongsTo(HrJobDesignation::class, 'designation_id');
     }

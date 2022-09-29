@@ -34,7 +34,7 @@
                 </td>
                 <td>
                     @if ($employee->designation_id)
-                        {{ $employee->hrJobDesignatioin->designation }}
+                        {{ $employee->hrJobDesignation->designation }}
                     @else
                         -
                     @endif
