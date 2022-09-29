@@ -30,8 +30,8 @@
                                     aria-controls="nav-pre-trial" aria-selected="false">Pre-Trial</a>
                             </div>
                         </nav>
-                        <div  id="nav-tabContent">
-                            <div class=" {{ $application->latestApplicationRound->round->isTrialRound() ? 'show active' : '' }}"
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade {{ $application->latestApplicationRound->round->isTrialRound() ? 'show active' : '' }}"
                                 id="nav-trial" role="tabpanel" aria-labelledby="nav-trial-tab">
                                 <br>
                                 @foreach ($application->trialApplicationRounds as $applicationRound)
@@ -312,7 +312,7 @@
                                     ])
                                 @endforeach
                             </div>
-                            <div class=" {{ $application->latestApplicationRound->round->isTrialRound() ? '' : 'show active' }}"
+                            <div class="tab-pane fade {{ $application->latestApplicationRound->round->isTrialRound() ? '' : 'show active' }}"
                                 id="nav-pre-trial" role="tabpanel" aria-labelledby="nav-pre-trial-tab">
                                 <br>
                                 @foreach ($application->applicationRoundsExceptTrial as $applicationRound)
@@ -699,7 +699,7 @@
                                                     </div>
                                                     <div class="form-row d-flex justify-content-end">
                                                         <button type="button" class="btn btn-info btn-sm round-submit"
-                                                            data-action="update">Update feedback702</button>
+                                                            data-action="update">Update feedback</button>
                                                     </div>
                                                 </div>
                                                 @php
@@ -1220,7 +1220,7 @@
                                             @php
                                                 $showFooter = false;
                                                 if ($loop->last) {
-                                                    if (in_array($applicationRound->application->status, [config('constants.hr.status.sent-for-approval.label')])) {
+                                                    if (in_array($applicationRound->application->status, [config('constants.hr.status.sent-for-approval.label'), config('constants.hr.status.approved.label')])) {
                                                         $showFooter = true;
                                                     } elseif (in_array($applicationRound->round_status, [null, config('constants.hr.status.rejected.label')])) {
                                                         $showFooter = true;
@@ -1245,8 +1245,7 @@
                                                                 <option value="onboard">Onboard</option>
                                                             </select>
                                                             <button type="button" class="btn btn-success ml-2"
-                                                                @click="takeAction()">Take action
-                                                            </button>
+                                                                @click="takeAction()">Take action</button>
                                                         @endif
                                                         <!-- Button trigger modal -->
                                                         <button type="button" class="btn btn-primary p-0 px-1 py-1 ml-2"
@@ -1258,11 +1257,11 @@
                                                             {{-- @if ($applicantOpenApplications->count() > 1) --}}
                                                             <button type="button" class="btn btn-outline-danger ml-2"
                                                                 id="rejectApplication"
-                                                                @click="rejectApplication()">Reject
-                                                            </button>
+                                                                @click="rejectApplication()">Reject</button>
                                                             @include('hr.application.rejection-modal', [
                                                                 'currentApplication' => $application,
-                                                                'allApplications' => $applicantOpenApplications,])
+                                                                'allApplications' => $applicantOpenApplications,
+                                                            ])
                                                             {{-- @else --}}
                                                             {{-- <button type="button" class="btn btn-outline-danger ml-2 round-submit" data-action="reject" data-toggle="modal" data-target="#application_reject_modal">Reject</button> --}}
                                                             {{-- @endif --}}
