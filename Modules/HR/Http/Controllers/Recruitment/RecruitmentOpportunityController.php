@@ -21,7 +21,7 @@ class RecruitmentOpportunityController extends JobController
     {
         $this->authorize('list', Job::class);
 
-        $jobs = Job::with('applications', 'applications.applicant')
+        $jobs = Job::with('applications', 'applications.applicant', 'jobRequisition')
             ->typeRecruitment()
             ->latest()
             ->paginate(config('constants.pagination_size'))

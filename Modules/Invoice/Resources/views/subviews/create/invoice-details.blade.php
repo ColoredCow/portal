@@ -56,7 +56,7 @@
                         <div class="custom-file mb-3">
                             <input type="file" id="invoice_file" name="invoice_file" class="custom-file-input"
                                 required="required">
-                            <label for="customFile0" class="custom-file-label">Choose file</label>
+                            <label for="customFile0" class="custom-file-label overflow-hidden">Choose file</label>
                         </div>
                     </div>
                 </div>

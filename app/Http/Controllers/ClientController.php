@@ -88,13 +88,13 @@ class ClientController extends Controller
     public function update(ClientRequest $request, Client $client)
     {
         $validated = $request->validated();
-        $updated = $client->update([
+        $client->update([
             'name' => $validated['name'],
             'is_active' => isset($validated['is_active']) ? true : false,
             'gst_num' => array_key_exists('gst_num', $validated) ? $validated['gst_num'] : null,
         ]);
 
-        return redirect("/clients/$client->id/edit")->with('status', 'Client updated succesfully!');
+        return redirect("/clients/$client->id/edit")->with('status', 'Client updated successfully!');
     }
 
     /**

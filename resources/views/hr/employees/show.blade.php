@@ -2,6 +2,9 @@
 @section('content')
 
 <div class="container">
+    <br>
+        @include('hr.employees.sub-views.menu', $employee)
+    <br>
     <div class="mt-4 card">
         <div class="card-header pb-lg-5 fz-28"><div class="mt-4 ml-5">Employee Details</div></div>
         <div class="card-body">
@@ -12,7 +15,8 @@
                 @endif
             </div>
             <hr class='bg-dark mx-4 pb-0.5'>
-            <div class="font-weight-bold fz-24 pl-5 mt-5 mb-3 d-flex justify-content-inline">{{__('Current FTE: ')}}<div class=" ml-1 {{ $employee->user ? ($employee->user->fte > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->fte :'NA' }}</div></div>
+            <div class="font-weight-bold fz-24 pl-5 mt-5 mb-3 d-flex justify-content-inline">{{__('Current FTE: ')}}<div class=" ml-1 {{ $employee->user ? ($employee->user->ftes['main'] > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->ftes['main']  :'NA' }}</div></div>
+            <div class="font-weight-bold fz-24 pl-5 mt-5 mb-3 d-flex justify-content-inline">{{__('FTE(AMC): ')}}<div class=" ml-1 {{ $employee->user ? ($employee->user->ftes['amc'] > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->ftes['amc']  :'NA' }}</div></div>
             <div class="font-weight-bold fz-24 pl-5 mt-5 mb-3">Project Details</div>
             <div class="mx-5">
                 <table class="table">
@@ -20,7 +24,7 @@
                         <tr class="bg-theme-gray text-light">
                             <th scope="col" class="pb-lg-4"><div class="ml-7">Project Name</div></th>
                             <th scope="col" class="pb-lg-4">Expected Monthly Hrs.</th>
-                            <th scope="col" class= "pb-lg-4">Hours Booked <span data-toggle="tooltip" data-placement="right" title="Hours in effortsheet for the current month."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
+                            <th scope="col" class="pb-lg-4">Hours Booked <span data-toggle="tooltip" data-placement="right" title="Hours in effortsheet for the current month."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
                             <th scope="col" class="pb-lg-4">Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
                             <th scope="col" class="pb-lg-4">
                                 FTE Covered
@@ -36,13 +40,18 @@
                             <div class="fz-lg-28 text-center mt-2"><div class="mb-4">Not in any project</div></div>
                         @else
                             @foreach($employee->user->activeProjectTeamMembers as $activeProjectTeamMember)
-                                <tr>
-                                    <td class="c-pointer"><div class="ml-7"><a href={{ route('project.show', $activeProjectTeamMember->project) }}>{{$activeProjectTeamMember->project->name}}</a></div></td>
-                                    <td><div class="ml-9">{{$activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), today(config('constants.timezone.indian'))->endOfMonth()))}}</div></td>
-                                    <td><div class="ml-9">{{$activeProjectTeamMember->current_actual_effort}}</div></td>
-                                    <td><div class="ml-7"><div class="{{$activeProjectTeamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$activeProjectTeamMember->velocity}}</div></td>
-                                    <td><div class="ml-10">{{$activeProjectTeamMember->fte}}</td>
-                                </tr>
+                                @if($activeProjectTeamMember->project->status == 'active')
+                                    <tr>
+                                        <td class="c-pointer"><div class="ml-7"><a href={{ route('project.show', $activeProjectTeamMember->project) }}>{{$activeProjectTeamMember->project->name}} @if($activeProjectTeamMember->project->is_amc)
+                                            <div class="badge badge-pill badge-success mr-1  mt-1">AMC</div>
+                                        @endif
+                                        </a></div></td>
+                                        <td><div>{{$activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), today(config('constants.timezone.indian'))->endOfMonth()))}}</div></td>
+                                        <td><div>{{$activeProjectTeamMember->current_actual_effort}}</div></td>
+                                        <td><div><div class="{{$activeProjectTeamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$activeProjectTeamMember->velocity}}</div></td>
+                                        <td><div>{{$activeProjectTeamMember->fte}}</td>
+                                    </tr>
+                                @endif
                             @endforeach
                         @endif
                     </thead>

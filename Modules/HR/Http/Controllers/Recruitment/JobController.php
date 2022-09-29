@@ -2,13 +2,20 @@
 
 namespace Modules\HR\Http\Controllers\Recruitment;
 
-use Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Modules\HR\Entities\Application;
+use Modules\HR\Entities\ApplicationMeta;
+use Modules\HR\Entities\HrJobDomain as EntitiesHrJobDomain;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\Round;
+use Modules\HR\Http\Requests\Recruitment\JobDomainRequest;
 use Modules\HR\Http\Requests\Recruitment\JobRequest;
 use Modules\User\Entities\User;
+use Request;
 
 class JobController extends Controller
 {
@@ -53,6 +60,7 @@ class JobController extends Controller
         return view('hr.job.create')->with([
             'rounds' => Round::all(),
             'interviewers' => User::interviewers()->get(),
+            'domains' => EntitiesHrJobDomain::all(),
         ]);
     }
 
@@ -72,6 +80,7 @@ class JobController extends Controller
             'type' => $validated['type'],
             'start_date' => $validated['start_date'] ?? null,
             'end_date' => $validated['end_date'] ?? null,
+            'resources_required' => $validated['resources_required'],
         ]);
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities.edit', $opportunity->id) : route('recruitment.opportunities.edit', $opportunity->id);
 
@@ -91,6 +100,7 @@ class JobController extends Controller
         return view('hr.job.edit')->with([
             'job' => $opportunity,
             'interviewers' => User::interviewers()->get(),
+            'jobs' => EntitiesHrJobDomain::all(),
         ]);
     }
 
@@ -121,5 +131,49 @@ class JobController extends Controller
         $opportunity->delete();
 
         return redirect($route)->with('status', "Successfully deleted $opportunity->title!");
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Modules\HR\Http\Requests\Recruitment\JobDomainRequest  $request
+     */
+    public function storeJobdomain(JobDomainRequest $request)
+    {
+        $hrJobDomains = new EntitiesHrJobDomain();
+        $hrJobDomains->domain = $request['name'];
+        $hrJobDomains->slug = Str::slug($request['name']);
+        $hrJobDomains->save();
+
+        return redirect()->back();
+    }
+
+    public function storeResponse(HttpRequest $request)
+    {
+        $application = Application::findOrFail($request->id);
+        $application->update(['is_desired_resume' => true]);
+
+        ApplicationMeta::create([
+            'hr_application_id' => $application->id,
+            'key' => 'reasons_for_desired_resume',
+            'value' => $request->get('body'),
+
+        ]);
+    }
+
+    public function showTable(HttpRequest $request)
+    {
+        $applicationData = DB::table('hr_applications')
+            ->select(['hr_applications.resume', 'hr_application_meta.value', 'hr_jobs.title', 'hr_applicants.name'])
+            ->join('hr_application_meta', 'hr_applications.id', '=', 'hr_application_meta.hr_application_id')
+            ->join('hr_jobs', 'hr_applications.hr_job_id', '=', 'hr_jobs.id')
+            ->join('hr_applicants', 'hr_applicants.id', '=', 'hr_applications.hr_applicant_id')
+            ->where('hr_applications.hr_job_id', '=', $request->id)
+            ->where('hr_application_meta.key', '=', 'reasons_for_desired_resume')
+            ->get();
+
+        return view('hr.application.resume-table')->with([
+            'applicationData' => $applicationData,
+        ]);
     }
 }

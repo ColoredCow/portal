@@ -16,5 +16,8 @@
     "AppointmentSlots": true,
     "EffortTracking": true,
     "SalesAutomation": true,
-    "Report": true
+    "Report": true,
+    "Expense": true,
+    "Revenue": true,
+    "ProjectContract": true
 }

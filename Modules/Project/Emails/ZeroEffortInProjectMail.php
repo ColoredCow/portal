@@ -10,18 +10,17 @@ class ZeroEffortInProjectMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $projectManager;
+    public $keyAccountManagerDetails;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(array $projectManager)
+    public function __construct(array $keyAccountManagerDetails)
     {
-        $this->projectManager = $projectManager;
+        $this->keyAccountManagerDetails = $keyAccountManagerDetails;
     }
-
     /**
      * Build the message.
      *
@@ -29,10 +28,11 @@ class ZeroEffortInProjectMail extends Mailable
      */
     public function build()
     {
-        return $this
-        ->to($this->projectManager['email'])
-        ->subject('ColoredCow Portal - Some of your team members have zero effort in projects!')
-        ->view('project::mail.zero-effort-team-member-list')
-        ->with(['projectManager' => $this->projectManager]);
+        $mail = $this->subject('ColoredCow Portal - Some of your team members have zero effort in projects!');
+        foreach ($this->keyAccountManagerDetails as $project) {
+            $mail->to($project['email']);
+        }
+
+        return $mail->view('project::mail.zero-effort-team-member-list');
     }
 }

@@ -2,14 +2,11 @@
 @section('content')
 <div class="container" id="project_container">
     <br>
-    @include('hr::universities.menu', ['active' => 'universities'])
+    @include('hr::universities.menu',['active' => 'universities'])
     <br><br>
     <div class="row">
         <div class="col-md-6">
             <h1>Edit University</h1>
-        </div>
-        <div class="col-md-6">
-            <a href="{{ route('universities.create') }}" class="btn btn-success float-right">Add University</a>
         </div>
     </div>
     @include('status', ['errors' => $errors->all()])

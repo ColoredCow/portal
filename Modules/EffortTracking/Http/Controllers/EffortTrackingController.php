@@ -5,6 +5,7 @@ namespace Modules\EffortTracking\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Modules\EffortTracking\Services\EffortTrackingService;
 use Modules\Project\Entities\Project;
+use Illuminate\Http\Request;
 
 class EffortTrackingController extends Controller
 {
@@ -19,10 +20,23 @@ class EffortTrackingController extends Controller
      * Show the specified resource.
      * @param Project $project
      */
-    public function show(Project $project)
+    public function show(Request $request, Project $project)
     {
-        $data = $this->service->show($project);
+        $data = $this->service->show($request->all(), $project);
 
         return view('efforttracking::show')->with($data);
+    }
+
+    /**
+     * Refresh the efforts of the project team members.
+     * @param Project $project
+     */
+    public function getEffortForProject(Project $project)
+    {
+        if ($this->service->getEffortForProject($project)) {
+            return response()->json(['message' => 'Effort updated successfully'], 200);
+        }
+
+        return response()->json(['message' => 'Error occurred'], 404);
     }
 }

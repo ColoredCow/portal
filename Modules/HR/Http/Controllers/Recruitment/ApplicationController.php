@@ -7,18 +7,23 @@ use App\Models\Setting;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Modules\HR\Emails\Recruitment\Application\ApplicationHandover;
 use Modules\HR\Emails\Recruitment\Application\JobChanged;
 use Modules\HR\Emails\Recruitment\Application\RoundNotConducted;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationMeta;
+use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Job;
+use Modules\HR\Entities\Round;
 use Modules\HR\Entities\University;
 use Modules\HR\Http\Requests\Recruitment\ApplicationRequest;
 use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
+use Modules\HR\Http\Requests\TeamInteractionRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
 
@@ -31,6 +36,16 @@ abstract class ApplicationController extends Controller
     public function __construct(ApplicationService $service)
     {
         $this->service = $service;
+    }
+
+    public function markInterviewFinished(Request $request)
+    {
+        $ApplicationRound = ApplicationRound::find($request->documentId);
+        $this->service->markInterviewFinished($ApplicationRound);
+
+        return response()->json([
+            'status' => 200, 'actual_end_time' => $ApplicationRound->actual_end_time->format('H:i:s'), 'html' => view('hr.application.meeting-duration')->with(['applicationRound' => $ApplicationRound])->render(),
+        ]);
     }
 
     /**
@@ -51,48 +66,28 @@ abstract class ApplicationController extends Controller
 
         session()->put([
             'previous_application_data' => request()->all(),
-            'should_skip_page' => false
+            'should_skip_page' => false,
         ]);
 
         //#TO DO: Move this logic to application service.
         $filters = [
-            'status' =>request()->get('status') ?: 'non-rejected',
+            'status' => request()->get('status') ?: 'non-rejected',
             'job-type' => $this->getApplicationType(),
             'job' => request()->get('hr_job_id'),
             'university' => request()->get('hr_university_id'),
+            'graduation_year' => request()->get('end-year'),
+            // 'sortby' => request()->get('sort_by'), Commenting, as we need to brainstorm on this feature a bit
             'search' => request()->get('search'),
             'tags' => request()->get('tags'),
             'assignee' => request()->get('assignee'), // TODO
-            'round' =>str_replace('-', ' ', request()->get('round'))
+            'round' => str_replace('-', ' ', request()->get('round')),
+            'roundFilters' => request()->get('roundFilters'),
         ];
         $loggedInUserId = auth()->id();
         $applications = Application::join('hr_application_round', function ($join) {
             $join->on('hr_application_round.hr_application_id', '=', 'hr_applications.id')
                 ->where('hr_application_round.is_latest', true);
         })->with(['applicant', 'job', 'tags', 'latestApplicationRound']);
-        foreach (array_keys(request()->all()) as $filterKeys) {
-            switch ($filterKeys) {
-                case 'start-year':
-                    $startYear = request()->all()['start-year'] ? (int) request()->all()['start-year'] : null;
-                    if ($startYear != null) {
-                        $applications = $applications->whereHas('applicant', function ($query) use ($startYear) {
-                            $query->where('graduation_year', '>=', $startYear);
-                        });
-                    }
-                    break;
-                case 'end-year':
-                    $endYear = request()->get('end-year') ? (int) request()->get('end-year') : null;
-                    if ($endYear != null) {
-                        $applications = $applications->whereHas('applicant', function ($query) use ($endYear) {
-                            $query->where('graduation_year', '<=', $endYear)
-                            ->orWhereNull('graduation_year');
-                        });
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
 
         $applications = $applications->whereHas('latestApplicationRound')
             ->applyFilter($filters)
@@ -108,8 +103,9 @@ abstract class ApplicationController extends Controller
             'applications' => $applications,
             'status' => request()->get('status'),
         ];
-        $hrRounds = ['Resume Screening', 'Introductory Call', 'Basic Technical Round', 'Detailed Technical Round', 'Team Interaction Round', 'HR Round', 'Trial Program', 'Volunteer Screening'];
+        $hrRounds = ['Resume Screening', 'Telephonic Interview', 'Introductory Call', 'Basic Technical Round', 'Detailed Technical Round', 'Team Interaction Round', 'HR Round', 'Trial Program', 'Volunteer Screening'];
         $strings = array_pluck(config('constants.hr.status'), 'label');
+        $hrRoundsCounts = [];
 
         foreach ($strings as $string) {
             $attr[camel_case($string) . 'ApplicationsCount'] = Application::applyFilter($countFilters)
@@ -120,23 +116,39 @@ abstract class ApplicationController extends Controller
                 ->count();
         }
 
+        $jobType = $this->getApplicationType();
+
         foreach ($hrRounds as $round) {
+            $applicationCount = Application::query()->filterByJobType($jobType)
+                ->whereIn('hr_applications.status', ['in-progress', 'new', 'trial-program'])
+                ->FilterByRoundName($round)
+                ->count();
+            $hrRoundsCounts[$round] = $applicationCount;
             $attr[camel_case($round) . 'Count'] = Application::applyFilter($countFilters)
-            ->where('status', config('constants.hr.status.in-progress.label'))
-            ->whereHas('latestApplicationRound', function ($subQuery) use ($round) {
-                return $subQuery->where('is_latest', true)
-                         ->whereHas('round', function ($subQuery) use ($round) {
-                             return $subQuery->where('name', $round);
-                         });
-            })
-            ->count();
+                ->where('status', config('constants.hr.status.in-progress.label'))
+                ->whereHas('latestApplicationRound', function ($subQuery) use ($round) {
+                    return $subQuery->where('is_latest', true)
+                        ->whereHas('round', function ($subQuery) use ($round) {
+                            return $subQuery->where('name', $round);
+                        });
+                })
+                ->count();
         }
+
         $attr['jobs'] = Job::all();
         $attr['universities'] = University::all();
         $attr['tags'] = Tag::orderBy('name')->get();
+        $attr['rounds'] = $hrRoundsCounts;
+        $attr['roundFilters'] = round::orderBy('name')->get();
         $attr['assignees'] = User::whereHas('roles', function ($query) {
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         })->orderby('name', 'asc')->get();
+
+        $attr['openApplicationsCountForJobs'] = [];
+        foreach ($applications->items() as $application) {
+            $openApplicationCountForJob = Application::where('hr_job_id', $application->hr_job_id)->isOpen()->count();
+            $attr['openApplicationsCountForJobs'][$application->job->title] = $openApplicationCountForJob;
+        }
 
         return view('hr.application.index')->with($attr);
     }
@@ -148,7 +160,6 @@ abstract class ApplicationController extends Controller
      */
     public function edit($id)
     {
-
         //TODO: We need to refactor the edit code and write it in the service
         $application = Application::findOrFail($id);
 
@@ -163,6 +174,7 @@ abstract class ApplicationController extends Controller
         $job = $application->job;
         $approveMailTemplate = Setting::getApplicationApprovedEmail();
         $offerLetterTemplate = Setting::getOfferLetterTemplate();
+        $desiredResume = DB::table('hr_applications')->select(['hr_applications.resume'])->where('hr_applications.hr_job_id', '=', $job->id)->where('is_desired_resume', '=', 1)->get();
         $attr = [
             'applicant' => $application->applicant,
             'application' => $application,
@@ -173,6 +185,7 @@ abstract class ApplicationController extends Controller
             'offer_letter' => $application->offer_letter,
             'approveMailTemplate' => $approveMailTemplate,
             'offerLetterTemplate' => $offerLetterTemplate,
+            'desiredResume' => $desiredResume,
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],
@@ -186,6 +199,34 @@ abstract class ApplicationController extends Controller
         }
 
         return view('hr.application.edit')->with($attr);
+    }
+
+    public function generateTeamInteractionEmail(TeamInteractionRequest $request)
+    {
+        $subject = Setting::where('module', 'hr')->where('setting_key', 'hr_team_interaction_round_subject')->first();
+        $body = Setting::where('module', 'hr')->where('setting_key', 'hr_team_interaction_round_body')->first();
+        $body->setting_value = str_replace('|*OFFICE LOCATION*|', $request->location, $body->setting_value);
+        $body->setting_value = str_replace('|*DATE SELECTED*|', date('d M Y', strtotime($request->date)), $body->setting_value);
+        $body->setting_value = str_replace('|*TIME*|', date('h:i a', strtotime($request->timing)), $body->setting_value);
+        $body->setting_value = str_replace('|*APPLICANT NAME*|', $request->applicant_name, $body->setting_value);
+
+        return response()->json([
+            'subject' => $subject->setting_value,
+            'body' => $body->setting_value,
+        ]);
+    }
+
+    public function generateOnHoldEmail(Request $request)
+    {
+        $subject = Setting::where('module', 'hr')->where('setting_key', $request->setting_key_subject)->first();
+        $body = Setting::where('module', 'hr')->where('setting_key', $request->setting_key_body)->first();
+        $body->setting_value = str_replace('|*applicant_name*|', $request->applicant_name, $body->setting_value);
+        $body->setting_value = str_replace('|*job_title*|', $request->job_title, $body->setting_value);
+
+        return response()->json([
+            'subject' => $subject->setting_value,
+            'body' => $body->setting_value,
+        ]);
     }
 
     public static function getOfferLetter(Application $application, Request $request)
@@ -261,5 +302,29 @@ abstract class ApplicationController extends Controller
         return Response::make(Storage::get($application->offer_letter), 200, [
             'content-type' => 'application/pdf',
         ]);
+    }
+
+    public function applicationHandoverRequest(Application $application)
+    {
+        $currentAssignee = $application->latestApplicationRound->scheduledPerson->email;
+        $userName = auth()->user()->name;
+        Mail::to($currentAssignee)->queue(new ApplicationHandover($application, $userName));
+
+        return redirect()->back()->with('status', 'Your request has successfully been sent');
+    }
+
+    public function acceptHandoverRequest(Request $request, Application $application)
+    {
+        $scheduledPersonId = $request->get('user');
+
+        $applicationRound = $application->latestApplicationRound;
+        $applicationRound->update([
+            'scheduled_person_id' => $scheduledPersonId,
+        ]);
+        $scheduledUser = User::where('id', $scheduledPersonId)->first()->name;
+
+        $status = 'Successful Assigned to ' . $scheduledUser;
+
+        return redirect(route('applications.job.index'))->with('status', $status);
     }
 }

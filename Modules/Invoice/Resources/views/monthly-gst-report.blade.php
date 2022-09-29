@@ -21,7 +21,7 @@
     <div>
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
-                <tr>
+                <tr class="sticky-top">
                     <th></th>
                     <th>Date</th>
                     <th>Particular</th>
@@ -61,7 +61,7 @@
             </tbody>
         </table>
     </div>
-    {!! $invoices->links() !!}
+    {{ $invoices->appends(request()->query())->links() }}
 </div>
 
 @endsection

@@ -30,7 +30,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand min-w-md-150" href="{{ url('/') }}">
                     {{ config('app.name', 'ColoredCow Portal') }}
                 </a>
                 @auth
@@ -98,7 +98,7 @@
             </div>
         @endif
 
-        <main class="py-4">
+        <main class="py-4 mx-4">
             @yield('content')
         </main>
     </div>

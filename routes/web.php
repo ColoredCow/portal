@@ -56,17 +56,6 @@ Route::middleware('auth')->group(function () {
                     'edit' => 'applications.volunteer.edit',
                 ]);
         });
-
-        Route::resource('employees', 'Employees\EmployeeController')
-            ->only(['index', 'show'])
-            ->names([
-                'index' => 'employees',
-                'show' => 'employees.show',
-        ]);
-
-        Route::get('employee/{employee}/projects/', 'Employees\EmployeeController@showProjects')->name('employees.projects');
-
-        Route::get('employee-reports', 'Employees\ReportsController@index')->name('employees.reports');
     });
 
     Route::prefix('finance')->namespace('Finance')->group(function () {
@@ -147,6 +136,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
                 Route::post('markbook', 'BookController@markBook')->name('books.toggleReadStatus');
                 Route::post('addtowishlist', 'BookController@addToUserWishList')->name('books.addToWishList');
+                Route::post('removeFromwishlist', 'BookController@removeFromUserWishList')->name('books.removeFromWishList');
                 Route::get('disablesuggestion', 'BookController@disableSuggestion')->name('books.disableSuggestion');
                 Route::get('enablesuggestion', 'BookController@enableSuggestion')->name('books.enableSuggestion');
                 Route::get('mark-as-borrowed/{book}', 'BookController@markAsBorrowed')->name('books.markAsBorrowed');

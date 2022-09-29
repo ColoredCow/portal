@@ -1,6 +1,6 @@
 <template>
     <div class="modal" tabindex="-1" role="dialog" id="update_user_roles_modal">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Roles assigned to: <strong> {{ this.user.name }}  </strong></h5>
@@ -8,7 +8,6 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-
                     <div>
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
@@ -19,10 +18,9 @@
                             </li>
                         </ul>
                     </div>
-
                     <div v-show="this.activeTile == 'portal'" class="modal-body">
                         <li v-for="(role, index) in this.roles" class="list-group-item" :key="index">
-                            <div :class=" (role.name != 'super-admin') ? 'form-check ml-3' : 'form-check'">
+                            <div class="form-check">
                                 <label class="form-check-label" style="cursor: pointer;">
                                     <input
                                         type="checkbox"
@@ -31,13 +29,13 @@
                                         :data-label="role.label"
                                         :value="role.id"
                                         @click="checkForSuperAdmin(role)"
-                                        class=""> {{ role.label }}
+                                    />
+									{{ role.label }}
                                 </label>
-                                <p class="text-muted" style="font-size:12px;">{{ role.description }}</p>
+                                <div class="text-muted fz-12 ml-3">{{ role.description }}</div>
                             </div>
                         </li>
                     </div>
-
                     <div v-show="this.activeTile == 'website'" class="modal-body">
                         <li>
                                 <label v-if="this.user.websiteUserRole" class="form-check-label">{{ this.user.websiteUserRole }}</label>
@@ -46,9 +44,7 @@
                                    <a v-if="this.user.websiteUser" :href="(this.user.websiteUser) ? this.getWebsiteUserProfileUrl() :'' ">Please click here to manage that. </a>
                                 </p>
                         </li>
-
                     </div>
-
                     <div class="modal-footer">
                         <button id="close_update_user_roles_modal" type="type" class="btn btn-light" data-dismiss="modal" aria-label="Close">Cancel</button>
                         <button @click="updateUserRoles" type="button"  class="btn btn-primary">Save</button>
@@ -104,9 +100,9 @@ export default {
 			this.roleInputs.forEach(function(checkbox) {
 				if(checkbox.checked) {
 					selectedRoles.push({
-						name:checkbox.dataset.role,
-						id:checkbox.value,
-						label:checkbox.dataset.label
+						name: checkbox.dataset.role,
+						id: checkbox.value,
+						label: checkbox.dataset.label
 					});
 				}
 			});
@@ -116,6 +112,7 @@ export default {
 			document.getElementById("close_update_user_roles_modal").click();
 
 			this.$emit("userRolesUpdated", selectedRoles);
+			this.$toast.success(" User role updated successfully!");
 		},
 
 		checkForSuperAdmin(role) {

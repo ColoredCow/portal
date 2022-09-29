@@ -3,17 +3,27 @@
 @section('content')
 
 <div class="container" id="home_page">
-    <div class="m-3 m-md-6 m-sm-6">
+    <div class="my-3 my-md-6 my-sm-6">
         <h3>Dashboard</h3>
     </div>
 
-    <div class=" card-deck dashboard_view d-flex flex-wrap justify-content-start ml-3">
-
-        @if(auth()->user()->canAny(['weeklydoses.view', 'library_books.view']))
-        <div class="mr-5 mr-md-3 pr-md-0 pr-4 mb-4 min-w-389">
-            <user-dashboard-library />
+    @if(auth()->user()->getRoleNames()->count() === 0)
+        <div class="jumbotron bg-white shadow-sm">
+            <h1 class="display-4">Hello, there!</h1>
+            <p>Welcome to ColoredCow Portal!</p>
+            <hr class="my-4">
+            <p>
+                It looks like you're brand new here and do not have access to any features! Please contact the administrator to grant you required access so that you can get rolling!
+            </p>
         </div>
-        @endif
+    @endif
+
+    <div class="card-deck dashboard_view d-flex flex-wrap justify-content-start">
+        @can('library_books.view')
+            <div class="mr-5 mr-md-3 pr-md-0 pr-4 mb-4 min-w-389">
+                <user-dashboard-library />
+            </div>
+        @endcan
 
         @can('projects.view')
         <div class="pr-5 mb-4 min-w-389">

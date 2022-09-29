@@ -17,11 +17,15 @@ class ResourcesController extends Controller
         return view('hr::guidelines-resources.index', compact('jobs'));
     }
 
-    public function show(Job $job)
+    public function show($job)
     {
+        $job = Job::find($job);
+
+        $resources = $job->resources;
+
         $categories = Category::all();
 
-        return view('hr::guidelines-resources.show', compact('categories'))->with(['job' => $job]);
+        return view('hr::guidelines-resources.show', compact('categories', 'resources', 'job'));
     }
 
     public function store(Request $request)
@@ -43,5 +47,22 @@ class ResourcesController extends Controller
         ]);
 
         return redirect()->back();
+    }
+
+    public function update(Request $request, Resource $resource)
+    {
+        $resource->update([
+            'resource_link' => $request['name'],
+            'hr_resource_category_id' => $request['category-type']
+        ]);
+
+        return redirect()->back()->with('status', 'Category updated successfully!');
+    }
+
+    public function destroy(Resource $resource)
+    {
+        $resource->delete();
+
+        return redirect()->back()->with('status', 'Category deleted successfully!');
     }
 }

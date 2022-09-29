@@ -61,6 +61,17 @@ class SettingsTableSeeder extends Seeder
         ]);
         Setting::updateOrCreate([
             'module' => 'hr',
+            'setting_key' => config('hr.templates.follow_up_email_for_scheduling_interview.subject'),
+            'setting_value' => 'Follow up email for scheduling interview ',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => config('hr.templates.follow_up_email_for_scheduling_interview.body'),
+            'setting_value' => '<div>Hello |*applicant_name*|,</div><br></div><div>Hope you are doing well and having a great time. We are reaching out to follow up on the interview scheduling process. You must have received an email for scheduling your interview for |*round_name*|. The email would have a link, that would take you to a calendar page, with available slots for booking. Pick one as per your convenience and schedule your interview.<br>If you didn\'t find an email, please check your spam folder. For further queries, write at pankaj.kandpal@coloredcow.in<br>
+            Looking forward to hearing back from you</div><div> </div><div>Thanks</div><div>HR Team,</div><div>ColoredCow</div>',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
             'setting_key' => 'applicant_verification_body',
             'setting_value' => '<div>Hello |*applicant_name*|,<br /><br /></div><p class="p1" style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #212529; font-family: Raleway, sans-serif; font-size: 14.4px; white-space: pre-wrap;">You are almost there!<br><br>To begin the screening process, please verify your email address. <br><br><a style="box-sizing: border-box; color: #007bff; text-decoration-line: none; background-color: transparent;" href="|*verification_link*|">Verification link</a></p><br>Thanks,<br/>HR Team<br />ColoredCow</div>',
         ]);
@@ -72,7 +83,38 @@ class SettingsTableSeeder extends Seeder
         Setting::updateOrCreate([
             'module' => 'hr',
             'setting_key' => 'application_on_hold_body',
-            'setting_value' => '<div>Dear |*applicant_name*|,</div><div> </div><div>Thanks for applying to ColoredCow for the position |*job_title*|.We don\'t have a relevant opening for the position right now. Your application is kept under waiting and we will reach out to you if there are any possibilities we can explore together. </div><div>Thanks,</div><div> </div><div>HR Team,</div><div>ColoredCow</div> ',
+            'setting_value' => '<div>Hey |*applicant_name*|,</div><div> </div><div>Thanks for applying to ColoredCow for the position |*job_title*|.</div><div> </div><div>We are keen to work with you. And believe that your current limitation of skill level can match ColoredCow’s desired level by training or self-learning. As you want to go for the self-learning route, for which you need 2 months. We will be more than happy to discuss your case at that time. Till then we are putting you on hold.</div><div> </div><div>Meanwhile, if at any point you want to take the training path, which happens in our Tehri office feel free to let us know.</div><div> </div><div>Thanks,</div><div>HR Team,</div><div>ColoredCow</div> ',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'application_on_hold_subject_2',
+            'setting_value' => 'Your application is put on hold',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'application_on_hold_body_2',
+            'setting_value' => '<div>Hey |*applicant_name*|,</div><div> </div><div>Thanks for applying for |*job_title*|.</div><div> </div><div>This might be an automated reply, but our gratitude towards you is absolutely immense. Rest assured that we have received your job application and are absolutely thrilled with working together.</div><div> </div><div>We have carefully reviewed your application. We’ve definitely saved your profile in our database for future reference. We believe that your bright mind and experience fit any of our roles and criteria. Don’t let it deter or demotivate you in any way, because opportunities from ColoredCow could come knocking your way in the near future too!</div><div> </div>
+            <div>Now, if you are curious to know more, read ColoredCows, Origin Story!</div><div> </div><div>Looking forward to chatting soon.</div><div> </div><div>Thanks,</div><div>ColoredCow</div><div>PS: If you are a book lover, you may find some interest in our reading list.</div> ',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'hr_team_interaction_round_subject',
+            'setting_value' => 'Congratulations for making it to the Team Interaction Round',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'hr_team_interaction_round_body',
+            'setting_value' => '<div>Hello |*APPLICANT NAME*|,</div><div> </div><div>We are very pleased to inform you that you have been selected for Team Interaction Round at ColoredCow. For the proceedings, we would like to invite you to our office at |*OFFICE LOCATION*| on |*DATE SELECTED*| at |*TIME*|.</div><div> </div><div>Your presence would be awaited. In case you have any questions, feel free to reach out.</div><div> </div><div>Thanks,</div><div>HR Team,</div><div>ColoredCow</div> ',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'send_for_approval_subject',
+            'setting_value' => 'Application sent for approval',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'send_for_approval_body',
+            'setting_value' => '<div>Hi |ASSIGNEE NAME|,</div><div><br/> </div><div>The |APPLICATION TYPE| application of |APPLICANT NAME| for |JOB TITLE| is sent for your approval. Please take a look and perform the proceedings.</div><div></br> </div><div>Click <a href="|APPLICATION LINK|">Here</a> to view the application.</div><div></br> </div><div>Thanks,</div><div>HR Team,</div><div>ColoredCow</div> ',
         ]);
     }
 }
