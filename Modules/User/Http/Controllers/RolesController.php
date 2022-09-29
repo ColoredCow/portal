@@ -7,13 +7,17 @@ use Spatie\Permission\Models\Role;
 use Modules\User\Http\Requests\RoleRequest;
 use Modules\User\services\RoleService;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class RolesController extends ModuleBaseController
 {
+    use AuthorizesRequests;
+
     protected $service;
 
     public function __construct(RoleService $service)
     {
+        $this->authorizeResource(Role::class);
         $this->service = $service;
     }
 
