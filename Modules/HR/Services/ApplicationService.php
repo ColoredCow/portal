@@ -10,8 +10,6 @@ use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\Job;
 use Modules\HR\Events\CustomMailTriggeredForApplication;
-use Modules\HR\Http\Requests\ApplicantMetaRequest;
-use Modules\HR\Entities\ApplicantMeta;
 use Modules\User\Entities\User;
 
 class ApplicationService implements ApplicationServiceContract
