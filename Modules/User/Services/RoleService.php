@@ -4,6 +4,7 @@ namespace Modules\User\Services;
 
 use Spatie\Permission\Models\Role;
 use Modules\User\Http\Requests\RoleRequest;
+
 class RoleService
 {
     /**
@@ -18,4 +19,5 @@ class RoleService
         $Role->description = $request->description;
         $Role->save();
     }
+    
 }

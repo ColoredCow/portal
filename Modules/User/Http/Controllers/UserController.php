@@ -73,5 +73,4 @@ class UserController extends ModuleBaseController
 
         return redirect()->back();
     }
-
 }
