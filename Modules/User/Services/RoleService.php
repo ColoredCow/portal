@@ -19,5 +19,4 @@ class RoleService
         $Role->description = $request->description;
         $Role->save();
     }
-    
 }
