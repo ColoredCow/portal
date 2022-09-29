@@ -52,7 +52,7 @@
         @foreach ($designations as $designation)
         <tr>
             <td>
-                <span class="d-flex text-justify-center"value="{{$designation->slug}}">{{ Str::title(str_replace('-', ' ', $designation->designation)) }}</span>
+                <span class="d-flex text-justify-center">{{ $designation->designation }}</span>
             </td>
             <td>
              <button type="button" class="pr-1 btn btn-link" data-toggle="modal" data-target="#designationEditFormModal" data-json="{{$designation}}" ><i class="text-success fa fa-edit fa-lg"></i></button>

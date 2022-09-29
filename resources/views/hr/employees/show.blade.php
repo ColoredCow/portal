@@ -13,10 +13,10 @@
                     <div class="mt-2"><h1>{{$employee->name}}</h1></div>
                     @if ($employee->designation_id && $employee->domain_id != null)
                         <div class="row ml-1">
-                            <span class="font-weight-bold">Designation:</span><p>{{$employee->hrJobDesignatioin->designation}}</p>
+                            <span class="font-weight-bold">Designation:</span>&nbsp;<p>{{$employee->hrJobDesignatioin->designation}}</p>
                         </div> 
                         <div class="row ml-1">
-                            <span class="font-weight-bold">Domain:</span><p>{{$employee->hrJobDomain->domain}}</p>            
+                            <span class="font-weight-bold">Domain:</span>&nbsp;<p>{{$employee->hrJobDomain->domain}}</p>            
                         </div>
                     @endif
                 </div>

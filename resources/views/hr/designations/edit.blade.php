@@ -13,7 +13,7 @@
                     <div class="form-group">
                         <input value="{{ route('designation.edit', "id") }}" type="hidden" class="hidden" aria-hidden="true" name="routePlaceHolder">
                         <label class="field-required" for="designationfield">name</label>
-                        <input type="text" name="designation" class="form-control" required>
+                        <input type="text" name="name" class="form-control" required>
                     </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save changes</button>  
