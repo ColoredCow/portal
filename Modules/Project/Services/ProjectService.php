@@ -4,10 +4,8 @@ namespace Modules\Project\Services;
 
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
-use Illuminate\Support\Arr;
 use Modules\User\Entities\User;
 use Modules\Client\Entities\Client;
-use Illuminate\Support\Facades\Auth;
 use Modules\Project\Entities\Project;
 use Illuminate\Support\Facades\Storage;
 use Modules\Project\Entities\ProjectMeta;
@@ -76,7 +74,7 @@ class ProjectService implements ProjectServiceContract
         $currentMonth = $data['month'] ?? Carbon::now()->format('F');
         $currentYear = $data['year'] ?? Carbon::now()->format('Y');
         $totalMonths = (new EffortTrackingService)->getTotalMonthsFilterParameter($currentMonth, $currentYear);
-        
+
         return [
             'clients' => $clients->appends($data),
             'activeProjectsCount' => $activeProjectsCount,

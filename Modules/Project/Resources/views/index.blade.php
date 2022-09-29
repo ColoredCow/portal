@@ -114,29 +114,29 @@
                                     <span class="{{ $textColor }} font-weight-bold">{{ $project->getVelocityForMonthAttribute($totalMonths, $startDate, $endDate) }}</span>
                                     </td>
                                 </tr>
-                                @endforeach
-                                @empty
-                                    <tr>
-                                        <td colspan="3">
-                                            <p class="my-4 text-left"> No
-                                                {{ config('project.status')[request()->input('status', 'active')] }}
-                                                {{ ' ' }}
-                                                {{ request()->input('is_amc', '0') == '1' ? 'AMC' : 'Main' }}
-                                                projects found.
-                                            </p>
-                                        <td>
-                                    </tr>
-                                @endforelse
-                            @else
+                            @endforeach
+                            @empty
                                 <tr>
                                     <td colspan="3">
-                                        <p class="my-4 text-left">
-                                            No
+                                        <p class="my-4 text-left"> No
                                             {{ config('project.status')[request()->input('status', 'active')] }}
                                             {{ ' ' }}
                                             {{ request()->input('is_amc', '0') == '1' ? 'AMC' : 'Main' }}
                                             projects found.
                                         </p>
+                                    <td>
+                                </tr>
+                            @endforelse
+                        @else
+                            <tr>
+                                <td colspan="3">
+                                    <p class="my-4 text-left">
+                                        No
+                                        {{ config('project.status')[request()->input('status', 'active')] }}
+                                        {{ ' ' }}
+                                        {{ request()->input('is_amc', '0') == '1' ? 'AMC' : 'Main' }}
+                                        projects found.
+                                    </p>
                             <td>
                         </tr>
                     @endcan
