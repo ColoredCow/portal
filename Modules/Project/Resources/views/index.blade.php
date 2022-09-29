@@ -93,7 +93,11 @@
                                         $textColor = $project->velocity >= 1 ? 'text-success' : 'text-danger'
                                     @endphp
                                     <a class="{{ $textColor }}" href="{{route('project.effort-tracking', $project)}}"><i class="mr-0.5 fa fa-external-link-square"></i></a>
-                                    <span class="{{ $textColor }} font-weight-bold">{{ $project->velocity . ' (' . $project->current_hours_for_month . ' Hrs.)' }}</span>
+                                    @php
+                                    $startDate = $project->client->getMonthStartDateAttribute($totalMonths);
+                                    $endDate = $project->client->getMonthEndDateAttribute($totalMonths);   
+                                    @endphp
+                                    <span class="{{ $textColor }} font-weight-bold">{{ $project->getVelocityForMonthAttribute($totalMonths, $startDate, $endDate) }}</span>
                                 </td>
                             </tr>
                         @endforeach

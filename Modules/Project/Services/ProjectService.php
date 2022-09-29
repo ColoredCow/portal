@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Entities\ProjectBillingDetail;
+use Modules\EffortTracking\Services\EffortTrackingService;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -70,12 +71,16 @@ class ProjectService implements ProjectServiceContract
                 $query->where('team_member_id', $userId);
             })->count();
         }
-
+        $currentMonth = $data['month'] ?? Carbon::now()->format('F');
+        $currentYear = $data['year'] ?? Carbon::now()->format('Y');
+        $totalMonths = (new EffortTrackingService)->getTotalMonthsFilterParameter($currentMonth, $currentYear);
+        
         return [
             'clients' => $clients->appends($data),
             'activeProjectsCount' => $activeProjectsCount,
             'inactiveProjectsCount' => $inactiveProjectsCount,
-            'haltedProjectsCount' => $haltedProjectsCount
+            'haltedProjectsCount' => $haltedProjectsCount,
+            'totalMonths' => $totalMonths
         ];
     }
 
@@ -364,5 +369,16 @@ class ProjectService implements ProjectServiceContract
         }
 
         return $projectDetails;
+    }
+    
+    public function getTotalMonthsFilterParameter($currentMonth, $currentYear)
+    {
+        $Month = intval(date('m', strtotime($currentMonth)));
+        $thisMonth = intval(Carbon::now()->format('m'));
+        $monthsDifference = ($thisMonth - $Month);
+        $totalYears = (Carbon::now()->format('Y') - $currentYear);
+        $totalMonths = $monthsDifference + ($totalYears * 12);
+
+        return $totalMonths;
     }
 }
