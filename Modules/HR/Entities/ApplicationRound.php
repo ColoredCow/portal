@@ -449,10 +449,10 @@ class ApplicationRound extends Model
         }
 
         if ($this->conducted_date) {
-            return True;
+            return TRUE;
         }
 
-        return is_null($this->round_status) || ! $this->isOnboarded();
+        return is_null($this->round_status) || $this->isOnboarded();
     }
 
     public function getPreviousApplicationRound()
