@@ -147,7 +147,5 @@ class JobController extends Controller
         $hrJobDomains->save();
 
         return redirect()->back();
-    }
-
-    
+    }   
 }
