@@ -43,7 +43,6 @@ class VolunteerApplicationController extends ApplicationController
             'jobs' => Job::where('type', 'volunteer')->get(),
         ];
 
-
         return view('hr.application.volunteer.index')->with(
             $attr
         );
@@ -59,6 +58,7 @@ class VolunteerApplicationController extends ApplicationController
         $todayCount = Application::whereIn('hr_job_id', $data)
             ->whereIn('status', $current_status)
             ->count();
+
         return $todayCount;
     }
 }
