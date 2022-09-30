@@ -18,12 +18,12 @@ class ProjectContractPolicy
     {
         return $user->hasPermissionTo('projectscontract.view');
     }
-    
+
     public function update(User $user)
     {
         return $user->hasPermissionTo('projectcontract.update');
     }
-    
+
     public function delete(User $user)
     {
         return $user->hasPermissionTo('projectcontract.delete');

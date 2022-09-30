@@ -33,7 +33,7 @@ class ProjectContractController extends Controller
 
     public function store(ProjectContractRequest $ProjectContractMeta)
     {
-        $this->authorize('viewForm', ProjectContractMeta::class);  
+        $this->authorize('viewForm', ProjectContractMeta::class);
         $this->service->store($ProjectContractMeta);
 
         return redirect(route('projectcontract.index'))->with('success', 'Project Contract created successfully');

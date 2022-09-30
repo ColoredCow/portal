@@ -41,8 +41,8 @@ class ProjectContractPermissionsTableSeeder extends Seeder
             $financeManagerRole->givePermissionTo($permission);
         }
 
-        // set permissions for project-manager role
-        $projectManagerRole = Role::where(['name' =>'project-manager'])->first();
+        // set permissions for project-manager role 
+        $projectManagerRole = Role::where(['name' => 'project-manager'])->first();
         foreach ($projectContractPermissions as $permission) {
             $projectManagerRole->givePermissionTo($permission);
         }
