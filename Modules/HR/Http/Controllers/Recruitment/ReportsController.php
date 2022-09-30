@@ -107,7 +107,7 @@ class ReportsController extends Controller
         $applicationCount = [];
         $totalApplicationCount = 0;
         foreach ($jobs as $job) {
-            if ( !empty($filters)) {
+            if (! empty($filters)) {
                 $count = Application::whereBetween('created_at', $filters)->where('hr_job_id', $job->id)->count();
             } else {
                 $count = Application::where('hr_job_id', $job->id)->count();
