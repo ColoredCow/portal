@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
+
+use Modules\HR\Http\Controllers\Recruitment\ApplicantController;
+
 Route::middleware('auth')->group(function () {
     Route::prefix('hr-new')->group(function () {
         Route::get('/hiring', 'HiringController@index')->name('hr-new.hiring');
@@ -133,4 +136,4 @@ Route::middleware('auth')->group(function () {
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');
-Route::get('reportscount', 'ReportsController@Show')->name('volunteers.dailyapplicationscount');
+//Route::get('DailyCountVolunteers', [ApplicantController::class,'findVolunteerApplicant'])->name('volunteers.dailyapplicationscount');

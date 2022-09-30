@@ -133,7 +133,7 @@ class ApplicantController extends Controller
         }
         $data['chartData'] = json_encode($data);
 
-        return view('hr.volunteers.reportresult')->with([
+        return view('hr.volunteers.daily-volunteer-application-report')->with([
             'chartData' => $data['chartData'],
             'todayCount' => $todayCount
         ]);
