@@ -11,7 +11,6 @@
 |
  */
 
-use App\Http\Controllers\HR\Volunteers\ReportsController;
 use Modules\HR\Http\Controllers\Recruitment\ApplicantController;
 
 Route::get('/', function () {

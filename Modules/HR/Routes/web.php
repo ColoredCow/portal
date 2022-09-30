@@ -11,8 +11,6 @@
 |
  */
 
-use Modules\HR\Http\Controllers\Recruitment\ApplicantController;
-
 Route::middleware('auth')->group(function () {
     Route::prefix('hr-new')->group(function () {
         Route::get('/hiring', 'HiringController@index')->name('hr-new.hiring');

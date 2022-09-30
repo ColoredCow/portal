@@ -78,8 +78,6 @@ class Applicant extends Model
         return $this->hasMany(Application::class, 'hr_applicant_id');
     }
 
-    
-
     /**
      * Get the timeline for an applicant.
      *

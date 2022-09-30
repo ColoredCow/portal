@@ -2,22 +2,15 @@
 
 namespace Modules\HR\Http\Controllers\Recruitment;
 
-use Modules\HR\Entities\Application;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
-use Modules\HR\Entities\ApplicationMeta;
 use Modules\HR\Entities\HrJobDomain as EntitiesHrJobDomain;
 use Modules\HR\Entities\Job;
-use Carbon\Carbon;
-use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Round;
 use Modules\HR\Http\Requests\Recruitment\JobDomainRequest;
 use Modules\HR\Http\Requests\Recruitment\JobRequest;
 use Modules\User\Entities\User;
 use Illuminate\Support\Str;
-use Psy\Command\WhereamiCommand;
 use Request;
 
 class JobController extends Controller
