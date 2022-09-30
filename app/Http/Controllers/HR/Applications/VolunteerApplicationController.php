@@ -38,28 +38,27 @@ class VolunteerApplicationController extends ApplicationController
             'sent_for_approval_count' => $this->getCount(['sent-for-approval']),
             'no_show_count' => $this->getCount(['no-show-reminded']),
             'closed_count' => $this->getCount(['rejected']),
-            'open_count' => $this->getCount(['new','in-progress']),
+            'open_count' => $this->getCount(['new', 'in-progress']),
             'job-type' => $this->getApplicationType(),
-            'jobs' => Job::where('type','volunteer')->get(),
+            'jobs' => Job::where('type', 'volunteer')->get(),
         ];
-        
 
-        return view('hr.application.volunteer.index')->
-            with($attr
+
+        return view('hr.application.volunteer.index')->with(
+                $attr
             );
     }
 
-    public function getCount($current_status){
-
-        $jobs = Job::where('type','volunteer')->get('id');
+    public function getCount($current_status)
+    {
+        $jobs = Job::where('type', 'volunteer')->get('id');
         $data = [];
         foreach ($jobs as $job) {
             $data[] = $job->id;
         }
         $todayCount = Application::whereIn('hr_job_id', $data)
-            ->whereIn('status',$current_status)
+            ->whereIn('status', $current_status)
             ->count();
         return $todayCount;
-
     }
 }
