@@ -45,8 +45,8 @@ class VolunteerApplicationController extends ApplicationController
 
 
         return view('hr.application.volunteer.index')->with(
-                $attr
-            );
+            $attr
+        );
     }
 
     public function getCount($current_status)
