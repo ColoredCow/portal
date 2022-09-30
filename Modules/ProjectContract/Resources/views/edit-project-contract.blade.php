@@ -5,7 +5,9 @@
     <h1>Edit Contract</h1>
 </div>
 <br>
-<form action="{{ route('projectcontract.update', $projectId->id)}}" method="POST">
+@can('projectcontract.update')
+<form action="{{ route('projectcontract.update', $project->id)}}" method="POST">
+@endcan 
     @csrf
     <div class="container">
         <div class="card">
@@ -25,7 +27,7 @@
                         <div class="form-group">
                             <label for="authority_name" class="field-required">Authority Name</label>
                             <input type="text" class="form-control" name="authority_name" id="authority_name"
-                            placeholder="Enter Authority Name" value="{{ $projectId->authority_name }}">
+                            placeholder="Enter Authority Name" value="{{ $project->authority_name }}">
                             <span class="text-danger">
                                 @error('authority_name')
                                 {{$message}}
@@ -35,7 +37,7 @@
                         <div class="form-group">
                             <label for="website_url" class="field-required">Website URL</label>
                             <input type="url" class="form-control" name="website_url" id="website_url"
-                            placeholder="Enter Website url" value="{{ $projectId->website_url }}">
+                            placeholder="Enter Website url" value="{{ $project->website_url }}">
                             <span class="text-danger">
                                 @error('website_url')
                                 {{$message}}
@@ -53,7 +55,7 @@
                     <div class="col-md-5 offset-md-1">
                         <div class="form-group">
                             <label for="contract_date_for_signing" class="field-required">Contract Date for signing</label>
-                            <input type="date" class="form-control" name="contract_date_for_signing" id="contract_date_for_signing" value="{{$projectId->contract_date_for_signing}}">
+                            <input type="date" class="form-control" name="contract_date_for_signing" id="contract_date_for_signing" value="{{$project->contract_date_for_signing}}">
                             <span class="text-danger">
                                 @error('contract_date_for_signing')
                                 {{$message}}
@@ -62,7 +64,7 @@
                         </div>
                         <div class="form-group">
                             <label for="contract_date_for_effective" class="field-required">Contract Date for Effective</label>
-                            <input type="date" class="form-control" name="contract_date_for_effective" id="contract_date_for_effective" value="{{$projectId->contract_date_for_effective}}">
+                            <input type="date" class="form-control" name="contract_date_for_effective" id="contract_date_for_effective" value="{{$project->contract_date_for_effective}}">
                             <span class="text-danger">
                                 @error('contract_date_for_effective')
                                 {{$message}}
@@ -71,7 +73,7 @@
                         </div>
                         <div class="form-group">
                             <label for="contract_expiry_date" class="field-required">Contract Expiry Date</label>
-                            <input type="date" class="form-control" name="contract_expiry_date" id="contract_expiry_date" value="{{$projectId->contract_expiry_date}}">
+                            <input type="date" class="form-control" name="contract_expiry_date" id="contract_expiry_date" value="{{$project->contract_expiry_date}}">
                             <span class="text-danger">
                                 @error('contract_expiry_date')
                                 {{$message}}
@@ -80,7 +82,7 @@
                         </div>
                         <div class="form-group">
                             <label for="logo_img" class="field-required">Logo Image</label>
-                            <input type="file" name="logo_img" value="{{$projectId->logo_img}}">
+                            <input type="file" name="logo_img" value="{{$project->logo_img}}">
                             <span class="text-danger">
                                 @error('logo_img')
                                 {{$message}}

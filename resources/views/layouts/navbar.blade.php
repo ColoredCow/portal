@@ -41,7 +41,10 @@
         @if ((Module::checkStatus('Client') &&
             auth()->user()->can('clients.view')) ||
             (Module::checkStatus('Project') &&
-                auth()->user()->can('projects.view')))
+                auth()->user()->can('projects.view')) || 
+            (Module::checkStatus('Project Contract') &&
+                auth()->user()->can('projectscontract.view'))
+            )
             <li class="nav-item dropdown">
                 <a id="navbarDropdown_pm" class="nav-link dropdown-toggle" href="#" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>CRM<span class="caret"></span>

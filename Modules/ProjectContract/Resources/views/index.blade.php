@@ -3,7 +3,9 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center">
     <h1>Project Contract</h1>
+    @can('projectcontract.view-form')
     <a class="btn btn-success" href="{{route('projectcontract.view-form')}}"><i class="fa fa-plus mr-1" ></i>Add New Contract</a>
+    @endcan
 </div>
 <br>
 @if (session('success'))
@@ -27,8 +29,7 @@
             <th class="sticky-top">Action</th>
         </tr>
         @foreach ($projects as $project)
-        <tr>
-            <td>{{$project->client->name}}</td>
+            <td><a href="{{route('projectcontract.public.show', ['id' => $project->id])}}">{{$project->client->name}}</td>
             <td><a href="{{$project->website_url}}"> <button class="btn btn-success fa fa mr-1  ">URL</button></td>
             <td>{{$project->authority_name}}</td>
             <td>{{$project->contract_date_for_signing}}</td>
@@ -36,8 +37,12 @@
             <td>{{$project->contract_expiry_date}}</td>
             <td><img src="{{ asset('storage/contractlogo/'.$project->logo_img) }}" class="w-35 h-30 rounded-circle mb-1"></td>
             <td>
+                @can('projectcontract.edit')
                 <a href="{{route('projectcontract.edit', $project->id)}}" class="pl-1 btn btn-link" ><i class="text-success fa fa-edit fa-lg"></i></a>
+                @endcan
+                @can('projectcontract.delete')
                 <a href="{{route('projectcontract.delete', $project->id)}}" class="pl-1 btn btn-link" ><i class="text-danger fa fa-trash fa-lg"></i></a>
+                @endcan
             </td>
         </tr>
         @endforeach

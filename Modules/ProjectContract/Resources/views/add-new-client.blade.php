@@ -5,7 +5,9 @@
     <h1>Add New Contract</h1>   
 </div>
 <br>
+@can('projectcontract.store')
 <form action="{{ route('projectcontract.store')}}" method="POST" enctype="multipart/form-data">
+@endcan
     @csrf
     <div class="container">
         <div class="card">

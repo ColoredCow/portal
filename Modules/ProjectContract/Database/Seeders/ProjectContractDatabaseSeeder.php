@@ -4,6 +4,7 @@ namespace Modules\ProjectContract\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Modules\ProjectContract\Entities\ProjectContractMeta;
 
 class ProjectContractDatabaseSeeder extends Seeder
 {
@@ -16,6 +17,6 @@ class ProjectContractDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call("OthersTableSeeder");
+        $this->call(ProjectContractPermissionsTableSeeder::class);
     }
 }
