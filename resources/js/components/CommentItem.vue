@@ -38,8 +38,7 @@
         props: ["comment", "editable", "bookIndex"],
         data() {
             return {
-                state:"view",
-                comment:""
+                state:"view"
 		};
 	},
         
