@@ -34,11 +34,11 @@
 </template>
 
 <script>
-	export default {
-		props: ["comment", "editable", "bookIndex"],
-		data() {
-			return {
-				state:"view"
+export default {
+	props: ["comment", "editable", "bookIndex"],
+	data() {
+		return {
+			state:"view"
 		};
 	},
 		
