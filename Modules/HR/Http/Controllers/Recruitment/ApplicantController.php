@@ -107,7 +107,7 @@ class ApplicantController extends Controller
     {
         $jobs = Job::where('type', 'volunteer')->get('id');
 
-        $data = array();
+        $data = [];
         foreach ($jobs as $job) {
             $data[] = $job->id;
         }
