@@ -15,8 +15,8 @@
                 <button class="btn btn-info ml-1">Search</button>
             </form>
         </div>
-        <div class="col-md-3">
-            <a href="{{ route('universities.create') }}" class="btn btn-success btn-block btn-lg"><i class="fa fa-plus mr-1"></i><span style="font-size:medium;"> Add New University</span></a>
+        <div class="col-md-3 font-size:medium;">
+            <a href="{{ route('universities.create') }}" class="btn btn-success btn-block btn-lg"><i class="fa fa-plus mr-1"></i> Add New University</a>
         </div>
     </div>
     @include('status', ['errors' => $errors->all()])
