@@ -48,12 +48,12 @@ class VolunteerApplicationController extends ApplicationController
         );
     }
 
-    public function getCount($current_status)
+    public function getCount($currentStatus)
     {
         $attr = Application::whereHas('Job', function ($query) {
             return $query->where('type', 'volunteer');
         })
-            ->whereIn('status', $current_status)
+            ->whereIn('status', $currentStatus)
             ->count();
 
         return $attr;
