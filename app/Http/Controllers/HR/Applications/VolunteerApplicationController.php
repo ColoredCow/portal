@@ -42,7 +42,7 @@ class VolunteerApplicationController extends ApplicationController
     {
         $todaycount = (new ApplicationService())->TodayVolunteerCount();
         $chartData = (new ApplicationService())->getVolunteerChartData();
-        
+
         return view('hr.volunteers.daily-volunteer-application-report')
             ->with([
                 'chartData' => $chartData,

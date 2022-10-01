@@ -145,7 +145,7 @@ class ApplicationService implements ApplicationServiceContract
         }
         $todayCount = Application::whereDate('created_at', now())->whereIn('hr_job_id', $data)
             ->count();
-            
+
         return $todayCount;
     }
 }
