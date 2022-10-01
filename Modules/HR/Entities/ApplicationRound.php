@@ -449,7 +449,7 @@ class ApplicationRound extends Model
         }
 
         if ($this->conducted_date) {
-            return TRUE;
+            return true;
         }
 
         return is_null($this->round_status) || $this->isOnboarded();
