@@ -17,6 +17,8 @@ class RevenueReportService
 
     protected $defaultCurrencyRates;
 
+    protected $dataKeyFormat = 'm-y';
+
     public function __construct()
     {
         $this->invoiceService = app(InvoiceService::class);
@@ -27,13 +29,12 @@ class RevenueReportService
     {
         $results = [];
 
-        $currencyAvgRates = CurrencyAvgRate::where('captured_for', '>=', $startDate)
-            ->where('captured_for', '<=', $endDate)
+        $currencyAvgRates = CurrencyAvgRate::whereDate('captured_for', '>=', $startDate)
+            ->whereDate('captured_for', '<=', $endDate)
             ->get();
-
         foreach ($currencyAvgRates as $currencyAvgRate) {
-            $key = $currencyAvgRate->captured_for->format('m-Y');
-            $currency = $currencyAvgRate->currency;
+            $key = $currencyAvgRate->captured_for->format($this->dataKeyFormat);
+            $currency = strtolower($currencyAvgRate->currency);
             $results[$key][$currency] = $currencyAvgRate->avg_rate;
         }
 
@@ -42,20 +43,21 @@ class RevenueReportService
 
     public function getAllParticulars(int $startYear, int $endYear): array
     {
-        $this->avgCurrencyRates = $this->getAvgCurrencyRates($startYear, $endYear);
         $particulars = config('report.finance.profit_and_loss.particulars.revenue');
+        $startDate = Carbon::parse($startYear . '-04-01')->startOfDay();
+        $endDate = Carbon::parse($endYear . '-03-31')->endOfDay();
+        $this->avgCurrencyRates = $this->getAvgCurrencyRates($startDate, $endDate);
+
         $results = [];
         foreach ($particulars as $key => $particular) {
-            $results[] = $this->getParticularReport($key, $particular, $startYear, $endYear);
+            $results[] = $this->getParticularReport($key, $particular, $startDate, $endDate);
         }
 
         return $results;
     }
 
-    public function getParticularReport(String $particularSlug, array $particular, int $startYear, int $endYear): array
+    public function getParticularReport(String $particularSlug, array $particular, Object $startDate, Object $endDate): array
     {
-        $startDate = Carbon::parse($startYear . '-04-01')->startOfDay();
-        $endDate = Carbon::parse($endYear . '-03-31')->endOfDay();
         $particular['amounts'] = $this->{'getParticularAmountFor' . Str::studly($particularSlug)}($particular, $startDate, $endDate);
 
         return $particular;
@@ -68,7 +70,7 @@ class RevenueReportService
         $results = [];
 
         foreach ($invoices as $invoice) {
-            $dateKey = $invoice->sent_on->format('m-y');
+            $dateKey = $invoice->sent_on->format($this->dataKeyFormat);
             $totalAmount += $invoice->amount;
             $results[$dateKey] = ($results[$dateKey] ?? 0) + $invoice->amount;
         }
@@ -85,11 +87,11 @@ class RevenueReportService
         $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'non-indian');
 
         foreach ($invoices as $invoice) {
-            $dateKey = $invoice->sent_on->format('m-y');
-            $exchangeRate = $this->avgCurrencyRates[$dateKey][$invoice->currency] ?? $this->defaultCurrencyRates;
+            $dateKey = $invoice->sent_on->format($this->dataKeyFormat);
+            $exchangeRate = $this->avgCurrencyRates[$dateKey][strtolower($invoice->currency)] ?? $this->defaultCurrencyRates;
             $amount = ($invoice->amount) * ($exchangeRate);
-            $totalAmount += $amount;
             $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
+            $totalAmount += $amount;
         }
         $results['total'] = $totalAmount;
 
@@ -140,7 +142,7 @@ class RevenueReportService
             $dateKey = $month . '-' . $year;
 
             if (strtolower($revenue->currency) != 'inr') {
-                $exchangeRate = $this->avgCurrencyRates[$dateKey][$revenue->currency] ?? $this->defaultCurrencyRates;
+                $exchangeRate = $this->avgCurrencyRates[$dateKey][strtolower($revenue->currency)] ?? $this->defaultCurrencyRates;
             }
 
             $amount = $amount * $exchangeRate;
