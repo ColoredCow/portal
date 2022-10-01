@@ -327,4 +327,5 @@ abstract class ApplicationController extends Controller
 
         return redirect(route('applications.job.index'))->with('status', $status);
     }
+
 }

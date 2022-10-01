@@ -5,6 +5,7 @@ namespace App\Http\Controllers\HR\Applications;
 use Modules\HR\Entities\Application;
 use Illuminate\Support\Facades\Request;
 use Modules\HR\Http\Controllers\Recruitment\ApplicationController;
+use Modules\HR\Services\ApplicationService;
 
 class VolunteerApplicationController extends ApplicationController
 {
@@ -36,5 +37,15 @@ class VolunteerApplicationController extends ApplicationController
         ];
 
         return view('hr.application.volunteer.index')->with($attr);
+    }
+    public function findVolunteerApplicant()
+    {
+        $todaycount = (new ApplicationService())->TodayVolunteerCount();
+        $chartData = (new ApplicationService())->getVolunteerChartData();
+        return view('hr.volunteers.daily-volunteer-application-report')
+            ->with([
+                'chartData' => $chartData,
+                'todayCount' => $todaycount
+            ]);
     }
 }
