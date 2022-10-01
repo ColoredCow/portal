@@ -50,6 +50,12 @@ class RolesTableSeeder extends Seeder
                'label'=> 'Intern',
                'guard_name' => 'web',
                'description' => 'Someone who is in training',
+            ],
+            [
+                'name' => 'project-manager',
+                'label' => 'Project Manager',
+                'guard_name' => 'web',
+                'description' => 'Someone who is in charge of the project of the company',
             ]
         ];
 
