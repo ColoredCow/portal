@@ -50,15 +50,12 @@ class VolunteerApplicationController extends ApplicationController
 
     public function getCount($current_status)
     {
-        $jobs = Job::where('type', 'volunteer')->get('id');
-        $data = [];
-        foreach ($jobs as $job) {
-            $data[] = $job->id;
-        }
-        $todayCount = Application::whereIn('hr_job_id', $data)
+        $attr = Application::whereHas('Job', function ($query) {
+            return $query->where('type', 'volunteer');
+        })
             ->whereIn('status', $current_status)
             ->count();
 
-        return $todayCount;
+        return $attr;
     }
 }
