@@ -55,7 +55,7 @@ class ExpenseService
                     'file_type' => $file['type']
                 ]);
             }
-        }else{
+        } else {
             ExpenseFile::where('expense_id', $id)->delete();
         }
     }
