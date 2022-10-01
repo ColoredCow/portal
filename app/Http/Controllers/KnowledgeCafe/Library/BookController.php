@@ -30,14 +30,18 @@ class BookController extends Controller
         $searchString = (request()->has('search')) ? request()->input('search') : false;
         $categories = BookCategory::orderBy('name')->get();
 
-        if (request()->has('wishlist')) {
-            $books = auth()->user()->booksInWishlist;
-        } elseif (request()->has('borrowedBook')) {
-            $books = auth()->user()->booksBorrower;
-        } elseif (request()->has('category_name')) {
-            $books = Book::getByCategoryName($searchCategory);
-        } else {
-            $books = Book::getList($searchString);
+        switch(request()) {
+            case request()->has('wishlist'):
+                $books = auth()->user()->booksInWishlist;
+                break;
+            case request()->has('borrowedBook'):
+                $books = auth()->user()->booksBorrower;
+                break;
+            case request()->has('categoryName'):
+                $books = Book::getByCategoryName($searchCategory);
+                break;
+            default:
+                $books = Book::getList($searchString);
         }
         $loggedInUser = auth()->user();
         $books->load('wishers');
