@@ -277,7 +277,7 @@
                                                                     data-toggle="modal"
                                                                     data-target="#round_{{ $applicationRound->id }}">Send
                                                                     mail
-                                                                s</button>
+                                                                </button>
                                                             @endif
                                                         </div>
                                                     </div>
