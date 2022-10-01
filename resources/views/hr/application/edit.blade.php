@@ -276,7 +276,8 @@
                                                                 <button type="button" class="btn btn-primary ml-auto"
                                                                     data-toggle="modal"
                                                                     data-target="#round_{{ $applicationRound->id }}">Send
-                                                                    mail</button>
+                                                                    mail
+                                                                s</button>
                                                             @endif
                                                         </div>
                                                     </div>
@@ -1159,7 +1160,8 @@
                                                         <div class="form-group col-md-12">
                                                             <button type="button" class="btn btn-theme-fog btn-sm"
                                                                 @click="getApplicationEvaluation({{ $applicationRound->id }}, {{ $applicationRound->hr_round_id }})">Application
-                                                                Evaluation</button>
+                                                                Evaluation
+                                                            </button>
                                                         </div>
                                                         @if (session('status') || ($application->marks && $application->latestApplicationRound->hr_round_id == 1))
                                                             <div class="form-row">
@@ -1182,7 +1184,8 @@
                                                         <div class="form-group col-md-12">
                                                             <button type="button" class="btn btn-theme-fog btn-sm"
                                                                 @click="getApplicationEvaluation({{ $applicationRound->id }}, {{ $applicationRound->hr_round_id }})">Application
-                                                                Evaluation</button>
+                                                                Evaluation
+                                                            </button>
                                                         </div>
                                                         @if (session('status') || ($application->marks && $application->latestApplicationRound->hr_round_id == 14))
                                                             <div class="form-row">
