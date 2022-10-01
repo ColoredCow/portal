@@ -30,7 +30,7 @@ class BookController extends Controller
         $searchString = (request()->has('search')) ? request()->input('search') : false;
         $categories = BookCategory::orderBy('name')->get();
 
-        switch(request()) {
+        switch (request()) {
             case request()->has('wishlist'):
                 $books = auth()->user()->booksInWishlist;
                 break;
