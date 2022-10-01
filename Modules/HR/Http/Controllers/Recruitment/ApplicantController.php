@@ -3,7 +3,6 @@
 namespace Modules\HR\Http\Controllers\Recruitment;
 
 use App\Imports\ApplicationImport;
-use Carbon\Carbon;
 use App\Models\Setting;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
