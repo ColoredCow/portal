@@ -56,7 +56,7 @@ class ExpenseService
                 ]);
             }
         }else{
-            ExpenseFile::where('expense_id', $id)->delete();    
+            ExpenseFile::where('expense_id', $id)->delete();
         }
     }
 
