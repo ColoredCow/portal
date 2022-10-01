@@ -13,13 +13,36 @@ class RevenueReportService
 {
     protected $invoiceService;
 
+    protected $avgCurrencyRates;
+
+    protected $defaultCurrencyRates;
+
     public function __construct()
     {
         $this->invoiceService = app(InvoiceService::class);
+        $this->defaultCurrencyRates = app(CurrencyService::class)->getCurrentRatesInINR();
+    }
+
+    private function getAvgCurrencyRates($startDate, $endDate)
+    {
+        $results = [];
+
+        $currencyAvgRates = CurrencyAvgRate::where('captured_for', '>=', $startDate)
+            ->where('captured_for', '<=', $endDate)
+            ->get();
+
+        foreach ($currencyAvgRates as $currencyAvgRate) {
+            $key = $currencyAvgRate->captured_for->format('m-Y');
+            $currency = $currencyAvgRate->currency;
+            $results[$key][$currency] = $currencyAvgRate->avg_rate;
+        }
+
+        return $results;
     }
 
     public function getAllParticulars(int $startYear, int $endYear): array
     {
+        $this->avgCurrencyRates = $this->getAvgCurrencyRates($startYear, $endYear);
         $particulars = config('report.finance.profit_and_loss.particulars.revenue');
         $results = [];
         foreach ($particulars as $key => $particular) {
@@ -36,22 +59,6 @@ class RevenueReportService
         $particular['amounts'] = $this->{'getParticularAmountFor' . Str::studly($particularSlug)}($particular, $startDate, $endDate);
 
         return $particular;
-    }
-
-    public function getAvgCurrencyRates($startDate, $endDate)
-    {
-        $exchangeRate = [];
-        $currency_chages = [];
-        $exchangeMonth = null;
-        $exchangeRates = CurrencyAvgRate::select('avg_rate', 'captured_for')->groupBy('captured_for')->get()->toArray();
-        foreach ($exchangeRates as $exchangeRate) {
-            $exchangeMonth = (date('m-y', strtotime($exchangeRate['captured_for'])));
-        }
-        $currency_chages = [
-            $exchangeMonth => $exchangeRate['avg_rate']
-        ];
-
-        return $currency_chages;
     }
 
     private function getParticularAmountForDomestic(array $particular, Object $startDate, Object $endDate): array
@@ -73,20 +80,14 @@ class RevenueReportService
 
     private function getParticularAmountForExport(array $particular, Object $startDate, Object $endDate): array
     {
-        $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'non-indian');
         $totalAmount = 0;
         $results = [];
-        $exchangeRates = $this->getAvgCurrencyRates($startDate, $endDate);
+        $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'non-indian');
 
-        // ToDo:: We need to change this logic and get the exchange rate for every month.
         foreach ($invoices as $invoice) {
             $dateKey = $invoice->sent_on->format('m-y');
-            if (isset($exchangeRates[$dateKey])) {
-                $exchangeDollor = $exchangeRates[$dateKey];
-            } else {
-                $exchangeDollor = app(CurrencyService::class)->getCurrentRatesInINR();
-            }
-            $amount = ($invoice->amount) * ($exchangeDollor);
+            $exchangeRate = $this->avgCurrencyRates[$dateKey][$invoice->currency] ?? $this->defaultCurrencyRates;
+            $amount = ($invoice->amount) * ($exchangeRate);
             $totalAmount += $amount;
             $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
         }
@@ -94,9 +95,6 @@ class RevenueReportService
 
         return $results;
     }
-
-    // ToDo:: Defining all the required particular functions below.
-    // We need to add the definition in each function to get the amount for each particular.
 
     private function getParticularAmountForCommissionReceived(array $particular, Object $startDate, Object $endDate): array
     {
@@ -133,14 +131,23 @@ class RevenueReportService
         $totalAmount = 0;
         $results = [];
 
+        $exchangeRate = 1; // For INR
+
         foreach ($revenues as $revenue) {
             $amount = $revenue->amount;
             $year = substr($revenue->year, -2);
             $month = sprintf('%02d', $revenue->month);
             $dateKey = $month . '-' . $year;
-            $totalAmount += $amount;
+
+            if (strtolower($revenue->currency) != 'inr') {
+                $exchangeRate = $this->avgCurrencyRates[$dateKey][$revenue->currency] ?? $this->defaultCurrencyRates;
+            }
+
+            $amount = $amount * $exchangeRate;
             $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
+            $totalAmount += $amount;
         }
+
         $results['total'] = $totalAmount;
 
         return $results;
