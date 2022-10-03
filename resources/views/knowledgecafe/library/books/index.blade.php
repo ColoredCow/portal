@@ -109,8 +109,8 @@
                     </div>
                 </div>
                 <div v-if="book.readers && book.readers.length">
-                    <p  class="mb-0 mt-1">Read by</p>
-                    <div  class="pl-0 pt-2 pb-3">
+                    <p class="mb-0 mt-1">Read by</p>
+                    <div class="pl-0 pt-2 pb-3">
                         <a v-for="reader in book.readers"  :href="readerIndexRoute+ '/'+ reader.id">
                         <img :src="reader.avatar" :alt="reader.name" :title="reader.name" class="reader_image mr-2 rounded-circle" data-toggle="tooltip" data-target="userDetails" data-placement="bottom">
                         </a>
