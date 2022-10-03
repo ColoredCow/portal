@@ -64,7 +64,7 @@
                     <form class="d-flex" action="{{ route('universities.destroy',$university) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <a href="{{ route('universities.edit',$university) }}" title="Edit" class="pr-1 btn btn-link"><i class="text-success fa fa-edit fa-lg"></i></a>
+                        <a href="{{ route('universities.edit',$university) }}" title="Edit" class="pr-1 btn btn-link"><i class="text-success fa ffa-lga-edit "></i></a>
                         <button type="submit" class="pl-1 btn btn-link" title="Delete"><i class="text-danger fa fa-trash fa-lg"></i></button>
                     </form>
                 </td>

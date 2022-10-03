@@ -16,6 +16,7 @@ use Modules\HR\Http\Requests\Recruitment\JobDomainRequest;
 use Modules\HR\Http\Requests\Recruitment\JobRequest;
 use Modules\User\Entities\User;
 use Request;
+use App\Models\Setting;
 
 class JobController extends Controller
 {
@@ -40,7 +41,8 @@ class JobController extends Controller
         $jobs = Job::with([
             'applications' => function ($query) {
                 $query->isOpen()->get();
-            }])
+            }
+        ])
             ->latest()
             ->appends(Request::except('page'));
 
@@ -153,18 +155,69 @@ class JobController extends Controller
         $application = Application::findOrFail($request->id);
         $application->update(['is_desired_resume' => true]);
 
-        ApplicationMeta::create([
-            'hr_application_id' => $application->id,
-            'key' => 'reasons_for_desired_resume',
-            'value' => $request->get('body'),
+        ApplicationMeta::updateOrCreate(
+            ['hr_application_id' => $application->id],
+            [
+                'key' => 'reasons_for_desired_resume',
+                'value' => $request->get('body')
+            ]
 
+        );
+    }
+
+    public function editResponse(HttpRequest $request)
+    {
+        $application = Application::findOrFail($request->id);
+        $application->update(['is_desired_resume' => false]);
+
+        ApplicationMeta::where(
+            'hr_application_id',
+            $application->id
+        )
+            ->update(['value' => $request->get('body')]);
+
+
+
+        $applicationData = DB::table('hr_applications')
+            ->select(['hr_applications.resume', 'hr_application_meta.value', 'hr_jobs.title', 'hr_applicants.name', 'hr_jobs.id'])
+            ->join('hr_application_meta', 'hr_applications.id', '=', 'hr_application_meta.hr_application_id')
+            ->join('hr_jobs', 'hr_applications.hr_job_id', '=', 'hr_jobs.id')
+            ->join('hr_applicants', 'hr_applicants.id', '=', 'hr_applications.hr_applicant_id')
+            ->where('hr_applications.hr_job_id', '=', $request->id)
+            ->where('hr_application_meta.key', '=', 'reasons_for_desired_resume')
+            ->get();
+
+        return view('hr.application.resume-table')->with([
+            'applicationData' => $applicationData,
         ]);
+    }
+
+    public function unflagResponse(HttpRequest $request)
+    {
+        $application = Application::findOrFail($request->id);
+        $application->update(['is_desired_resume' => false]);
+
+        return redirect()->back();
+    }
+
+    public function PPPeditDesiredReason(HttpRequest $request)
+    {
+
+        $applicationData = DB::table('hr_applications')
+            ->select(['hr_jobs.id'])
+            ->join('hr_jobs', 'hr_applications.hr_job_id', '=', 'hr_jobs.id')
+            ->where('hr_applications.hr_job_id', '=', $request->id)
+            ->get();
+        dd($applicationData);
+        return view('hr.application.desired-resume')->with([
+            'application' => $applicationData,
+        ]);;
     }
 
     public function showTable(HttpRequest $request)
     {
         $applicationData = DB::table('hr_applications')
-            ->select(['hr_applications.resume', 'hr_application_meta.value', 'hr_jobs.title', 'hr_applicants.name'])
+            ->select(['hr_applications.resume', 'hr_application_meta.value', 'hr_jobs.title', 'hr_applicants.name', 'hr_jobs.id'])
             ->join('hr_application_meta', 'hr_applications.id', '=', 'hr_application_meta.hr_application_id')
             ->join('hr_jobs', 'hr_applications.hr_job_id', '=', 'hr_jobs.id')
             ->join('hr_applicants', 'hr_applicants.id', '=', 'hr_applications.hr_applicant_id')
