@@ -16,7 +16,6 @@ use Modules\HR\Http\Requests\Recruitment\JobDomainRequest;
 use Modules\HR\Http\Requests\Recruitment\JobRequest;
 use Modules\User\Entities\User;
 use Request;
-use App\Models\Setting;
 
 class JobController extends Controller
 {
@@ -174,8 +173,6 @@ class JobController extends Controller
             $application->id
         )
             ->update(['value' => $request->get('body')]);
-
-
 
         $applicationData = DB::table('hr_applications')
             ->select(['hr_applications.resume', 'hr_application_meta.value', 'hr_jobs.title', 'hr_applicants.name', 'hr_jobs.id'])
