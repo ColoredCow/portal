@@ -161,7 +161,6 @@ class JobController extends Controller
                 'key' => 'reasons_for_desired_resume',
                 'value' => $request->get('body')
             ]
-
         );
     }
 
@@ -198,20 +197,6 @@ class JobController extends Controller
         $application->update(['is_desired_resume' => false]);
 
         return redirect()->back();
-    }
-
-    public function PPPeditDesiredReason(HttpRequest $request)
-    {
-
-        $applicationData = DB::table('hr_applications')
-            ->select(['hr_jobs.id'])
-            ->join('hr_jobs', 'hr_applications.hr_job_id', '=', 'hr_jobs.id')
-            ->where('hr_applications.hr_job_id', '=', $request->id)
-            ->get();
-        dd($applicationData);
-        return view('hr.application.desired-resume')->with([
-            'application' => $applicationData,
-        ]);;
     }
 
     public function showTable(HttpRequest $request)
