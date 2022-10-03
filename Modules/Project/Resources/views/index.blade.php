@@ -66,7 +66,7 @@
                 </thead>
                 <tbody>
                     @can('projects.view')
-                        @forelse($clients as $client)
+                        @forelse($data['clients'] as $client)
                             <tr class="bg-theme-warning-lighter">
                                 <td colspan=4 class="font-weight-bold">
                                     <div class="d-flex justify-content-between">
@@ -111,7 +111,6 @@
                                     $startDate = $project->client->getMonthStartDateAttribute($totalMonths);
                                     $endDate = $project->client->getMonthEndDateAttribute($totalMonths);   
                                     @endphp
-                                    @dd($project->getVelocityForMonthAttribute($totalMonths, $startDate, $endDate));
                                     <span class="{{ $textColor }} font-weight-bold">{{ $project->getVelocityForMonthAttribute($totalMonths, $startDate, $endDate) }}</span>
                                     </td>
                                 </tr>
@@ -144,6 +143,6 @@
                 </tbody>
             </table>
         </div>
-        {{ $clients->withQueryString()->links() }}
+        {{ $data['clients']->withQueryString()->links() }}
     </div>
 @endsection

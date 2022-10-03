@@ -32,11 +32,11 @@ class ProjectController extends Controller
 
         // $data ->
 
-        $data['totalMonths'];
-        $data['data'];
+        // $data['totalMonths'];
+        // $data['data'];
         
 
-        return view('project::index',$data['totalMonths']);
+        return view('project::index',$data);
     }
 
     /**
