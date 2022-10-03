@@ -37,7 +37,7 @@
 
                                 <li class="nav-item">
                                     <a href="{{route('response.unflag',$data->id)}}" class="btn btn-edit">
-                                        <i class="text-danger fa fa-trash fa-lg"></i>
+                                        <i class="text-danger fa fa-trash fa-lg" aria-hidden="true"></i>
                                 </a>
                                 </li>
                             </ul>
