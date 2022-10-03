@@ -51,7 +51,10 @@ class ProjectService implements ProjectServiceContract
         $currentYear = $data['year'] ?? Carbon::now()->format('Y');
         $totalMonths = (new EffortTrackingService)->getTotalMonthsFilterParameter($currentMonth, $currentYear);
 
-        return array_merge(['clients' => $projectsData], $tabCounts);
+        return [
+            'totalMonths' => $totalMonths,
+            'data' => array_merge(['clients' => $projectsData], $tabCounts)
+        ];
     }
 
     public function create()

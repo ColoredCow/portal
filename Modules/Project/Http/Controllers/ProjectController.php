@@ -30,7 +30,13 @@ class ProjectController extends Controller
     {
         $data = $this->service->index(request()->all());
 
-        return view('project::index', $data);
+        // $data ->
+
+        $data['totalMonths'];
+        $data['data'];
+        
+
+        return view('project::index',$data['totalMonths']);
     }
 
     /**

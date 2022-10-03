@@ -111,7 +111,7 @@
                                     $startDate = $project->client->getMonthStartDateAttribute($totalMonths);
                                     $endDate = $project->client->getMonthEndDateAttribute($totalMonths);   
                                     @endphp
-                                    @dd($totalMonths);
+                                    @dd($project->getVelocityForMonthAttribute($totalMonths, $startDate, $endDate));
                                     <span class="{{ $textColor }} font-weight-bold">{{ $project->getVelocityForMonthAttribute($totalMonths, $startDate, $endDate) }}</span>
                                     </td>
                                 </tr>
