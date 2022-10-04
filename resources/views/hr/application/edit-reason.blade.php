@@ -19,4 +19,3 @@
         </div>
     </div>
 </div>
-placeholder="{{$data->value ??='Why do you think this is a desired resume?';}}" required></textarea>
