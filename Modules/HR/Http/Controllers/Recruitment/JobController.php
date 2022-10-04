@@ -163,9 +163,9 @@ class JobController extends Controller
         );
     }
 
-    public function editResponse(HttpRequest $request)
+    public function editResponse(HttpRequest $request, $id, $hr_job_id)
     {
-        $application = Application::findOrFail($request->id);
+        $application = Application::findOrFail($id);
         $application->update(['is_desired_resume' => true]);
         ApplicationMeta::where(
             'hr_application_id',
@@ -175,20 +175,22 @@ class JobController extends Controller
 
         $applicationdata = DB::table('hr_jobs')
             ->select(['hr_jobs.title', 'hr_jobs.id'])
-            ->where('hr_jobs.id', '=', '7')
+            ->where('hr_jobs.id', '=', $hr_job_id)
             ->get();
 
-        return redirect()->route('desired.resume', [str_slug($application->job->title), $application->job->id]);
+        return redirect()->route('desired.resume', [str_slug($applicationdata[0]->title), $applicationdata[0]->id]);
     }
 
-    public function unflagResponse(HttpRequest $request)
+    public function unflagResponse($id, $hr_job_id)
     {
-        $application = Application::findorFail($request->id)
+        // dd($id, $hr_job_id);
+
+        $application = Application::findorFail($id)
             ->update(['is_desired_resume' => false]);
 
         $applicationdata = DB::table('hr_jobs')
             ->select(['hr_jobs.title', 'hr_jobs.id'])
-            ->where('hr_jobs.id', '=', '7')
+            ->where('hr_jobs.id', '=', $hr_job_id)
             ->get();
 
         return redirect()->route('desired.resume', [str_slug($applicationdata[0]->title), $applicationdata[0]->id]);

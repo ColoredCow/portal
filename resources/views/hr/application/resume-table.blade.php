@@ -37,7 +37,7 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="{{route('response.unflag',[$data->id, $data->hr_job_id])}}" class="btn btn-edit">
+                                    <a href="{{route('response.unflag', [$data->id, $data->hr_job_id])}}" class="btn btn-edit">
                                         <i class="text-danger fa fa-trash fa-lg" aria-hidden="true"></i>
                                 </a>
                                 </li>
