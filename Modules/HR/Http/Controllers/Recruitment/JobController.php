@@ -187,7 +187,7 @@ class JobController extends Controller
 
         $application = Application::findorFail($id)
             ->update(['is_desired_resume' => false]);
-        $applicationmeta = ApplicationMeta::where("hr_application_id", "=", $id)
+        $applicationmeta = ApplicationMeta::where('hr_application_id', '=', $id)
             ->where('key', '=', 'reasons_for_desired_resume')
             ->delete();
 
@@ -213,6 +213,7 @@ class JobController extends Controller
             ->select(['hr_jobs.title'])
             ->where('hr_jobs.id', '=', $request->id)
             ->get();
+
         return view('hr.application.resume-table')->with([
             'applicationData' => $applicationData,
             'title' => $applicationdata[0]->title
