@@ -173,12 +173,12 @@ class JobController extends Controller
         )
             ->update(['value' => $request->get('body')]);
 
-            $applicationdata = DB::table('hr_jobs')
+        $applicationdata = DB::table('hr_jobs')
                 ->select(['hr_jobs.title', 'hr_jobs.id'])
                 ->where('hr_jobs.id', '=', '7')
                 ->get();
-                
-        return redirect ()->route('desired.resume', [str_slug($application->job->title), $application->job->id]);
+
+        return redirect()->route('desired.resume', [str_slug($application->job->title), $application->job->id]);
     }
 
     public function unflagResponse(HttpRequest $request)
@@ -191,7 +191,7 @@ class JobController extends Controller
                 ->where('hr_jobs.id', '=', '7')
                 ->get();
 
-        return redirect ()->route('desired.resume', [str_slug($applicationdata[0]->title), $applicationdata[0]->id]);
+        return redirect()->route('desired.resume', [str_slug($applicationdata[0]->title), $applicationdata[0]->id]);
     }
 
     public function showTable(HttpRequest $request)
