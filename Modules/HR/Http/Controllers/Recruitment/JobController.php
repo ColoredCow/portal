@@ -204,7 +204,6 @@ class JobController extends Controller
         return view('hr.application.resume-table')->with([
             'applicationData' => $applicationData,
         ]);
-
     }
 
     public function showTable(HttpRequest $request)
