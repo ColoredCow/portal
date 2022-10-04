@@ -62,8 +62,7 @@
                     <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" name="center_head" id="center_head_id"required>
                     <option value =""> All Employees</option>
                     @foreach ( $centerHeads as $centerHead )
-                      <option selected value ="{{ $centerHead->id }}"> {{$centerHead->name}} </option>
-                      
+                      <option class="centerHead" value ="{{ $centerHead->id }}"> {{$centerHead->name}} </option>
                     @endforeach
                   </select>
                  </div>
