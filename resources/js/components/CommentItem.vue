@@ -67,7 +67,7 @@ export default {
 		}
 	}, 
 	mounted(){
-		this.test=this.comment
+		this.test=this.comment;
 	}
 };
 </script>
