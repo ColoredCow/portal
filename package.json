@@ -36,8 +36,6 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
-        "@babel/core": "^7.19.1",
-        "@babel/preset-env": "^7.19.1",
         "@cubejs-client/core": "^0.28.45",
         "@cubejs-client/vue": "^0.28.45",
         "axios": "^0.21.2",
@@ -47,7 +45,6 @@
         "image-compressor.js": "^1.1.3",
         "laue": "^0.2.1",
         "moment": "^2.29.4",
-        "vue-loader": "^17.0.0",
         "vue-toastification": "^1.7.14"
     },
     "lint-staged": {
