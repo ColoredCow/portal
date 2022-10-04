@@ -1,4 +1,4 @@
-<div class="modal fade" id="editReason{{$data->id}}" aria-hidden="true">
+<div class="modal fade" id="editReason{{$data->id, $data->value}}" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,7 +9,7 @@
                 @csrf
                 <div class="modal-body">
                     <textarea name="body" rows="10" class="form-control"
-                        placeholder="Why do you think this is a desired resume?" required></textarea>
+                        placeholder="{{$data->value ??='Why do you think this is a desired resume?'}}" required></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
