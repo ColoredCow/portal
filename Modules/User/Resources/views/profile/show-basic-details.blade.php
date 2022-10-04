@@ -87,7 +87,6 @@
             </div>
             <div class="form-group">
                 <label class="font-weight-bold" for="">Location:</label>
-                <span>{{ $user->locations}}</span>
                 <span>{{ $user->officelocation->location}}</span>
             </div>
 
