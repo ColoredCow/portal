@@ -9,7 +9,7 @@
                 @csrf
                 <div class="modal-body">
                     <textarea name="body" rows="10" class="form-control"
-                        placeholder="{{$data->value ??='Why do you think this is a desired resume?';}}" required></textarea>
+                        placeholder="Why do you think this is a desired resume?" value="" required>{{$data->value ??='';}}</textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -19,3 +19,4 @@
         </div>
     </div>
 </div>
+placeholder="{{$data->value ??='Why do you think this is a desired resume?';}}" required></textarea>

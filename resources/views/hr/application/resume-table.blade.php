@@ -5,7 +5,7 @@
     <div class="container">
         <div>
             <h2 class="text-primary">
-                Desired Resume for {{ $applicationData->pluck('title')->first() }}
+                Desired Resume for {{ $title }}
             </h2>
         </div>
         <br><br>
