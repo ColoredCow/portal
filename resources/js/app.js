@@ -2025,11 +2025,6 @@ $(document).ready(function () {
 		var location = $("#location_id").val();
 		var capacity = $("#capacity_id").val();
 		var id = $("#id").val();
-		$(".centerHead").each(function($val) {
-			if ($val.attr('id') == $id) {
-				this.attr('selected', 'selected');
-			}	
-		});
 
 		$("#center_head_id").val(centerHead);
 		$("#location_id").val(location);
