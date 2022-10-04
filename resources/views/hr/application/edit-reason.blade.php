@@ -1,11 +1,11 @@
-<div class="modal fade" id="editReason{{$data->hr_job_id}}" aria-hidden="true">
+<div class="modal fade" id="editReason{{$data->id}}" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Give Reason:</h3>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <form action="{{ route('response.edit', $data->hr_job_id) }}" method="POST" id="responseForm">
+            <form action="{{ route('response.edit', $data->id) }}" method="POST" id="responseForm">
                 @csrf
                 <div class="modal-body">
                     <textarea name="body" rows="10" class="form-control"

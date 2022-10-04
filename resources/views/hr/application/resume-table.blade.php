@@ -32,7 +32,7 @@
                             <ul class="nav justify-content-center">
                                 <li class="nav-item">
                                     <a href="" class="btn btn-edit" aria-hidden="true" data-toggle="modal"
-                                        data-target="#editReason{{$data->hr_job_id}}"><i class="text-success fa fa-edit fa-lga"></i></a>
+                                        data-target="#editReason{{$data->id}}"><i class="text-success fa fa-edit fa-lga"></i></a>
                                 </li>
 
                                 <li class="nav-item">
