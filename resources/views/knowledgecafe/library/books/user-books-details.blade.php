@@ -4,7 +4,7 @@
 		<div class="container">
 			<div class="mt-4 card">
 				<div class="card-header">
-					<div class="fs-1 my-2 mx-3 px-2"><h3>Personal Library of {{$user->name}}</h3></div>
+					<div class="fs-1 my-2 mx-1 px-2"><h3>Personal Library of {{$user->name}}</h3></div>
 				</div>
 				<div class="mx-5">
 					<div class="container mb-3">
