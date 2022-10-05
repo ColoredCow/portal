@@ -92,6 +92,7 @@ Route::middleware('auth')->group(function () {
                 ->only(['index', 'edit', 'update', 'store'])
                 ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update', 'store' => 'applications.job.store']);
             Route::get('{application}/get-offer-letter', 'JobApplicationController@getOfferLetter')->name('applications.getOfferLetter');
+            Route::get('{application}/save-offer-letter', 'JobApplicationController@saveOfferLetter');
             Route::post('{application}/sendmail', 'JobApplicationController@sendApplicationMail')->name('application.custom-email');
             Route::post('/teaminteraction', 'JobApplicationController@generateTeamInteractionEmail');
             Route::get('/finishinterview', 'JobApplicationController@markInterviewFinished')->name('markInterviewFinished');
@@ -135,3 +136,7 @@ Route::middleware('auth')->group(function () {
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');
+Route::get('/viewForm/{id}/{email}', 'Recruitment\ApplicantController@viewForm')->name('hr.applicant.view-form');
+Route::post('/storeApprovedApplicantDetails', 'Recruitment\ApplicantController@storeApprovedApplicantDetails')->name('hr.applicant.store-approved-applicants-details');
+Route::get('/formSubmitted/{id}/{email}', 'Recruitment\ApplicantController@formSubmit')->name('hr.applicant.applicant-onboarding-form');
+Route::get('/showApplicantFormDetails/{id}', 'Recruitment\ApplicantController@showOnboardingFormDetails')->name('hr.applicant.show-onboarding-applicant-form-details');

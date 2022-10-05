@@ -518,26 +518,34 @@ clipboard.on("success", function(e) {
 	hideTooltip(e.trigger);
 });
 
-tinymce.init({
-	selector: ".richeditor",
-	skin: "lightgray",
-	toolbar:
-    "undo redo formatselect | fontselect fontsizeselect bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-	plugins: ["advlist lists autolink link code image print"],
-	font_formats:
-    "Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;AkrutiKndPadmini=Akpdmi-n",
-	images_upload_url: "postAcceptor.php",
-	content_style: "body{font-size:14pt;}",
-	automatic_uploads: false,
-	fontsize_formats: "8pt 10pt 12pt 14pt 16pt 18pt 24pt 36pt 48pt",
-	menubar: false,
-	statusbar: false,
-	entity_encoding: "raw",
-	forced_root_block: "",
-	force_br_newlines: true,
-	force_p_newlines: false,
-	height: "280",
-	convert_urls: 0,
+function initRicheditor() {
+	tinymce.init({
+		selector: ".richeditor",
+		skin: "lightgray",
+		toolbar:
+			"undo redo formatselect | fontselect fontsizeselect bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+		plugins: ["advlist lists autolink link code image print"],
+		font_formats:
+			"Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;AkrutiKndPadmini=Akpdmi-n",
+		images_upload_url: "postAcceptor.php",
+		content_style: "body{font-size:14pt;}",
+		automatic_uploads: false,
+		fontsize_formats: "8pt 10pt 12pt 14pt 16pt 18pt 24pt 36pt 48pt",
+		menubar: false,
+		statusbar: false,
+		entity_encoding: "raw",
+		forced_root_block: "",
+		force_br_newlines: true,
+		force_p_newlines: false,
+		height: "280",
+		convert_urls: 0
+	});
+}
+
+initRicheditor();
+
+$("body").on("click", "#takeAction", function () {
+	initRicheditor();
 });
 
 $(".hr_round_guide").on("click", ".edit-guide", function() {
@@ -1834,6 +1842,23 @@ $(document).ready(function() {
  */
 
 // fix for tinymce and bootstrap modal
+
+$("body").on("click", "#offerLetter", function (e) {
+	e.preventDefault();
+	var originUrl = window.location.origin;
+	let applicationid = $("#getApplicationId").val();
+	$.ajax({
+		url: originUrl + `/hr/recruitment/${applicationid}/save-offer-letter`,
+		type: "GET",
+		success: function (response) {
+			$("#seeOfferLetter").removeClass("d-none");
+		},
+		error: function () {
+			alert("error");
+		}
+	});
+});
+
 $(document).on("focusin", function(e) {
 	if ($(event.target).closest(".mce-window").length) {
 		e.stopImmediatePropagation();
