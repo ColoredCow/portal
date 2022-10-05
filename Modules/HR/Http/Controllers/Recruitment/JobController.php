@@ -163,7 +163,7 @@ class JobController extends Controller
         );
     }
 
-    public function editResponse(HttpRequest $request, $id, $hrJobId)
+    public function editDesiredResumeReasons(HttpRequest $request, $id, $hrJobId)
     {
         $application = Application::findOrFail($id);
         $application->update(['is_desired_resume' => true]);
@@ -181,7 +181,7 @@ class JobController extends Controller
         return redirect()->route('desired.resume', [str_slug($jobData[0]->title), $jobData[0]->id]);
     }
 
-    public function unflagResponse($id, $hrJobId)
+    public function unflagDesiredResume($id, $hrJobId)
     {
         $application = Application::findorFail($id)
             ->update(['is_desired_resume' => false]);

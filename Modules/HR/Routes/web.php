@@ -86,8 +86,8 @@ Route::middleware('auth')->group(function () {
 
             Route::post('/store', 'JobController@storeJobdomain')->name('hr-job-domains.storeJobdomain');
             Route::post('/store-response/{id}', 'JobController@storeResponse')->name('response.store');
-            Route::post('/edit-response/{id}/{hr_job_id}', 'JobController@editResponse')->name('response.edit');
-            Route::get('/delete-response/{id}/{hr_job_id}', 'JobController@unflagResponse')->name('response.unflag');
+            Route::post('/edit-response/{id}/{hr_job_id}', 'JobController@editDesiredResumeReasons')->name('response.edit');
+            Route::get('/delete-response/{id}/{hr_job_id}', 'JobController@unflagDesiredResume')->name('response.unflag');
             Route::get('/desired-resume/{name}/{id}', 'JobController@showTable')->name('desired.resume');
 
             Route::resource('job', 'JobApplicationController')
