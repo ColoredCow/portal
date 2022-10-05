@@ -83,7 +83,7 @@
                                     @can('projects.update')
                                         <td class="w-33p">
                                             <div class="pl-2 pl-xl-3"><a
-                                                    href="{{ route('project.show', $project) }}">{{ $project->name }}</a></div>
+                                                href="{{ route('project.show', $project) }}">{{ $project->name }}</a></div>
                                         </td>
                                     @else
                                         <td class="w-33p">
@@ -94,24 +94,23 @@
                                         @foreach ($project->getTeamMembers ?: [] as $teamMember)
                                             <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
                                                 title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation] }} <br>    Efforts: {{ $teamMember->current_actual_effort }} Hours">
-                                    @endforeach 
-                                </td>
-                                <td>
-                                    
-                                    @if(empty($project->projectContracts->first()->contract_file_path))
+                                        @endforeach 
+                                    </td>
+                                    <td>
+                                        @if(empty($project->projectContracts->first()->contract_file_path))
                                         <span class="text-dark font-weight-bold">No Contract</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @php
-                                        $textColor = $project->velocity >= 1 ? 'text-success' : 'text-danger'
-                                    @endphp
-                                    <a class="{{ $textColor }}" href="{{route('project.effort-tracking', $project)}}"><i class="mr-0.5 fa fa-external-link-square"></i></a>
-                                    @php
-                                    $startDate = $project->client->getMonthStartDateAttribute($totalMonths);
-                                    $endDate = $project->client->getMonthEndDateAttribute($totalMonths);   
-                                    @endphp
-                                    <span class="{{ $textColor }} font-weight-bold">{{ $project->getVelocityForMonthAttribute($totalMonths, $startDate, $endDate) }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @php
+                                            $textColor = $project->velocity >= 1 ? 'text-success' : 'text-danger'
+                                        @endphp
+                                        <a class="{{ $textColor }}" href="{{route('project.effort-tracking', $project)}}"><i class="mr-0.5 fa fa-external-link-square"></i></a>
+                                        @php
+                                        $startDate = $project->client->getMonthStartDateAttribute($totalMonths);
+                                        $endDate = $project->client->getMonthEndDateAttribute($totalMonths);   
+                                        @endphp
+                                        <span class="{{ $textColor }} font-weight-bold">{{ $project->getVelocityForMonthAttribute($totalMonths, $startDate, $endDate) }}</span>
                                     </td>
                                 </tr>
                             @endforeach
