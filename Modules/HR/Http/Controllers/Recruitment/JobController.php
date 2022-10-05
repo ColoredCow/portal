@@ -207,7 +207,7 @@ class JobController extends Controller
             ->where('hr_applications.hr_job_id', '=', $request->id)
             ->where('hr_application_meta.key', '=', 'reasons_for_desired_resume')
             ->get();
-        $$jobData = DB::table('hr_jobs')
+        $jobData = DB::table('hr_jobs')
             ->select(['hr_jobs.title'])
             ->where('hr_jobs.id', '=', $request->id)
             ->get();
