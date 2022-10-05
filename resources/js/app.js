@@ -245,6 +245,38 @@ $(document).ready(function() {
 	});
 });
 
+$(document).ready(function () {
+	$("#designationformModal").on("hidden.bs.modal", function () {
+		$(this).find("form").trigger("reset");
+		$("#designationerror").addClass("d-none");
+	});
+
+	$("#designationForm").on("submit", function (e) {
+		e.preventDefault();
+		$("#designationFormSpinner").removeClass("d-none");
+		let form = $("#designationForm");
+		$.ajax({
+			type: form.attr("method"),
+			url: form.attr("action"),
+			data: form.serialize(),
+			success: function (response) {
+				$("#designationFormSpinner").addClass("d-none");
+				$("#designationformModal").modal("hide");
+				$("#successMessage").toggleClass("d-none");
+				$("#successMessage").fadeToggle(3000);
+			},
+			error: function (response) {
+				$("#designationFormSpinner").addClass("d-none");
+				if (response.responseJSON.errors.name) {
+					let text = response.responseJSON.errors.name[0];
+					$("#designationerror").html(text).removeClass("d-none");
+					return false;
+				}
+			},
+		});
+	});
+});
+
 if (document.getElementById("page_hr_applicant_edit")) {
 	new Vue({
 		el: "#page_hr_applicant_edit",
@@ -1874,6 +1906,21 @@ $(document).ready(function() {
 			$optionContainer.addClass("d-none");
 		}
 	});
+});
+
+$("#designationEditFormModal").on("show.bs.modal", function (e) {
+	const designationEdited = e.relatedTarget;
+	const designation = $(designationEdited).data("json");
+
+	const editForm = $(this).find("form");
+	const newId = editForm.find("input.hidden");
+	const value = newId.attr("value");
+	const action = value.replace("id", designation.id);
+
+	editForm.attr("action", action);
+
+	editForm.find("input[name='name']").val(designation.designation);
+
 });
 
 $("#editform").on("submit", function(e) {

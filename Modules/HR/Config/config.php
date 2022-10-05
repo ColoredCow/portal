@@ -27,6 +27,17 @@ return [
             'people-operations' => 'People Operations',
             'project-management' => 'Project Management'
         ],
+        'designation' => [
+            'project-manager' => 'Project Manager',
+            'senior-software-engineer' => 'Senior Software Engineer',
+            'software-engineer' => 'Software Engineer',
+            'product-designer' => 'Product Designer',
+            'graphics-designer' => 'Graphics Designer',
+            'solution-architect' => 'Solution Architect',
+            'finance-lead' => 'Finance Lead',
+            'quality-analyst' => 'Quality Analyst',
+            'chief-executive-officer' => 'Chief Executive Officer'
+        ],
 
     ],
 

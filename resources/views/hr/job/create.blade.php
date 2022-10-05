@@ -22,7 +22,7 @@
         <div>
             <h2 class="mb-3">New Opportunity</h2>
         </div>
-        <div>                                                   
+        <div>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#domainformModal"> Add domain</button>
         </div>
     </div>
@@ -49,7 +49,7 @@
                 </div>
             </div>
         </div>
-    </div>      
+    </div>  
     <form action="{{ $formAction }}" method="POST">
         @csrf
         <div class="card mb-3">
