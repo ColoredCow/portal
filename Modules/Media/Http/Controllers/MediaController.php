@@ -122,14 +122,10 @@ class MediaController extends Controller
 
         return redirect(route('media.index'))->with(['message', 'status' => 'Media deleted successfully!']);
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function fileUploadPost(Request $request)
+
+    public function fileUploadPost(MediaRequest $request)
     {
-        $fileName = time().'.'.$request->file->extension();
+        $fileName = time() . '.' . $request->file->extension();
 
         $path = Storage::disk('s3')->put('file', $request->file);
         $path = Storage::disk('s3')->url($path);
