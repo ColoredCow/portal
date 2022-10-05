@@ -136,6 +136,6 @@ class MediaController extends Controller
 
         return back()
             ->with(['message', 'status' => 'You have successfully upload image.'])
-            ->with('file', $path); 
+            ->with('file', $path);
     }
 }
