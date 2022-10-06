@@ -50,7 +50,7 @@ class MediaController extends Controller
         Media::create($postData);
 
         $path = Storage::disk('s3')->put('file', $request->file);
-        $path = Storage::disk('s3')->temporaryUrl($path);
+        $path = Storage::disk('s3')->url($path);
 
         return redirect(route('media.index'))
         ->with(['message', 'status' => 'You have successfully uploaded image!'])
