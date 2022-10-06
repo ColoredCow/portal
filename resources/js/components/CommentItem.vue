@@ -6,7 +6,7 @@
 				<div class="mb-3">
 					<span class="font-weight-bold">{{ (editable) ? 'You' : comment.user.name }}</span>  <span class="text-muted"> said on {{ comment.created_at }} </span>
 				</div>
-		 
+							
 				<div class="d-flex justify-content-between" v-if="editable">
 					<p class="c-pointer mx-3 text-muted " @click="enableEditMode()"><i class="fa fa-lg fa-pencil-square-o"></i></p>
 					<p class="c-pointer mx-3 text-danger " @click="deleteComment()"><i class="fa fa-lg fa-trash-o"></i></p>
@@ -71,3 +71,4 @@ export default {
 	}
 };
 </script>
+git 
