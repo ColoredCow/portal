@@ -66,8 +66,8 @@ export default {
 			this.$emit("onDeleteComment", { index:this.bookIndex, comment:this.comment} );
 		}
 	}, 
-		mounted(){
-			this.test=this.comment;
-		}
+	mounted(){
+		this.test=this.comment;
+	}
 };
 </script>
