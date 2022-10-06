@@ -38,7 +38,6 @@ class EmployeeController extends Controller
 
     public function filterEmployee(Request $request)
     {
-
         $filters = $request->all();
         $filters = $filters ?: $this->service->defaultFilters();
         $users = Role::where('name', 'employee')->first()->users()->get();
