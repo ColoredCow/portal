@@ -49,7 +49,6 @@ class MediaController extends Controller
         ];
         Media::create($postData);
 
-
         $path = Storage::disk('s3')->put('file', $request->file);
         $path = Storage::disk('s3')->temporaryUrl($path);
 
