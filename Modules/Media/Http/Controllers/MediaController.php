@@ -29,9 +29,6 @@ class MediaController extends Controller
      * Store a newly created resource in storage.
      * @param MediaRequest $request
      * @return RedirectResponse
-     * Store a newly created resource in s3.
-     * @param  string  $path
-     * @return string
      */
     public function store(MediaRequest $request)
     {
@@ -52,11 +49,12 @@ class MediaController extends Controller
         ];
         Media::create($postData);
 
+
         $path = Storage::disk('s3')->put('file', $request->file);
-        $path = Storage::disk('s3')->url($path);
+        $path = Storage::disk('s3')->temporaryUrl($path);
 
         return redirect(route('media.index'))
-        ->with(['message', 'status' => 'You have successfully upload image!'])
+        ->with(['message', 'status' => 'You have successfully uploaded image!'])
         ->with('file', $path);
     }
 
