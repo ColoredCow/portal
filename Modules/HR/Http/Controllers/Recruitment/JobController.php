@@ -40,7 +40,8 @@ class JobController extends Controller
         $jobs = Job::with([
             'applications' => function ($query) {
                 $query->isOpen()->get();
-            }])
+            }
+        ])
             ->latest()
             ->appends(Request::except('page'));
 

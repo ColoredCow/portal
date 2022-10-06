@@ -9,6 +9,12 @@ use App\Services\GSuiteUserService;
 
 class UserController extends Controller
 {
+    public function x (){
+
+        $user = new User;
+        $user->isSuperAdmin();
+        
+    }
     public function syncWithGSuite()
     {
         $this->authorize('syncWithGSuite', self::class);

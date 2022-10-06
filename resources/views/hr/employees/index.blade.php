@@ -17,6 +17,22 @@
             </div>
         </form>
     </div>
+    <div class="d-flex align-items-center justify-content-between">
+        <ul class="nav nav-pills mb-2">
+            <li class="nav-item">
+                <a class="nav-item nav-link" href="{{route('hr.employees.filterEmployees')}}"><i class="fa fa-user"></i>&nbsp;Employee</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item nav-link" href="{{route('hr.employees.filterInterns')}}"><i class="fa fa-user"></i>&nbsp;Intern</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item nav-link" href="{{route('hr.employees.filterContractors')}}"><i class="fa fa-user"></i>&nbsp;Contractors</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item nav-link" href="{{route('hr.employees.filterSupportStaff')}}"><i class="fa fa-user"></i>&nbsp;Support Staff</a>
+            </li>
+        </ul>
+    </div>
     <table class="table table-striped table-bordered">
         <thead class="thead-dark">
         <tr class="sticky-top">

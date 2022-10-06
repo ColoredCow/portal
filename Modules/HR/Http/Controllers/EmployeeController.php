@@ -9,6 +9,9 @@ use Illuminate\Routing\Controller;
 use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\Job;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Modules\User\Entities\User;
+//use vendor\spatie\laravel-permission\src\Models\Role;
+use Spatie\Permission\Models\Role;
 
 class EmployeeController extends Controller
 {
@@ -33,6 +36,70 @@ class EmployeeController extends Controller
         return view('hr.employees.index', $this->service->index($filters));
     }
 
+    public function filterEmployee(Request $request)
+    {
+
+        $filters = $request->all();
+        $filters = $filters ?: $this->service->defaultFilters();
+        $users = Role::where('name', 'employee')->first()->users()->get();
+        $data = [];
+        foreach ($users as $user) {
+            $data[] = $user->id;
+        }
+        $employees = Employee::whereIn('user_id', $data)->get();
+        return view('hr.employees.index', $this->service->index($filters))->with([
+            'employees' => $employees
+        ]);
+    }
+
+    public function filterIntern(Request $request)
+    {
+        $filters = $request->all();
+        $filters = $filters ?: $this->service->defaultFilters();
+        $users = Role::where('name', 'intern')->first()->users()->get();
+
+        $data = [];
+        foreach ($users as $user) {
+            $data[] = $user->id;
+        }
+
+        return view('hr.employees.index', $this->service->index($filters))->with([
+            'employees' => $users
+        ]);
+    }
+
+    public function filterContractor(Request $request)
+    {
+        $filters = $request->all();
+        $filters = $filters ?: $this->service->defaultFilters();
+        $users = Role::where('name', 'contractor')->first()->users()->get();
+
+        $data = [];
+        foreach ($users as $user) {
+            $data[] = $user->id;
+        }
+
+        return view('hr.employees.index', $this->service->index($filters))->with([
+            'employees' => $users
+        ]);
+    }
+
+    public function filterSupportStaff(Request $request)
+    {
+        $filters = $request->all();
+        $filters = $filters ?: $this->service->defaultFilters();
+        $users = Role::where('name', 'support-staff')->first()->users()->get();
+
+        $data = [];
+        foreach ($users as $user) {
+            $data[] = $user->id;
+        }
+
+        return view('hr.employees.index', $this->service->index($filters))->with([
+            'employees' => $users
+        ]);
+    }
+
     public function show(Employee $employee)
     {
         return view('hr.employees.show', ['employee' => $employee]);
@@ -48,7 +115,7 @@ class EmployeeController extends Controller
     {
         $domains = HrJobDomain::select('id', 'domain')->get()->toArray();
 
-        return view('hr.employees.basic-details', ['employee' => $employee, 'domains'=>$domains]);
+        return view('hr.employees.basic-details', ['employee' => $employee, 'domains' => $domains]);
     }
 
     public function showFTEdata(request $request)
