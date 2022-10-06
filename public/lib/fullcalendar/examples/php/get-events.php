@@ -36,7 +36,6 @@ $input_arrays = json_decode($json, true);
 // Accumulate an output array of event data arrays.
 $output_arrays = [];
 foreach ($input_arrays as $array) {
-
     // Convert the input array into a useful Event object
     $event = new Event($array, $time_zone);
 
