@@ -30,7 +30,7 @@ class MediaController extends Controller
      * @param MediaRequest $request
      * @return RedirectResponse
      * Store a newly created resource in s3.
-     * @param  string 
+     * @param  string
      */
     public function store(MediaRequest $request)
     {
