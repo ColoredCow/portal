@@ -29,6 +29,9 @@ class MediaController extends Controller
      * Store a newly created resource in storage.
      * @param MediaRequest $request
      * @return RedirectResponse
+     * Store a newly created resource in s3.
+     * @param  string  $path
+     * @return string
      */
     public function store(MediaRequest $request)
     {
@@ -127,5 +130,4 @@ class MediaController extends Controller
 
         return redirect(route('media.index'))->with(['message', 'status' => 'Media deleted successfully!']);
     }
-
 }
