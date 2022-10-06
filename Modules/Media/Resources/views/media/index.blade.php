@@ -31,7 +31,7 @@
                                         <h3 class="text-light fw-bold">Add New Post</h3>
                                     </div>
                                     <div class="card-body p-4">
-                                        <form action1="{{ route('file.upload.post') }}"  action2="{{ route('media.index') }}" method="POST" enctype="multipart/form-data">
+                                        <form action="{{ route('media.index') }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             <div class="my-2"><h3 class="text-secondary">Event Name</h3>
                                                 <input type="text" name="event_name" id="event_name" class="form-control @error('event_name') is-invalid @enderror" placeholder="Event_name" value="{{ old('event_name') }}">

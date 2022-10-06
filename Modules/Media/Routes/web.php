@@ -25,4 +25,3 @@ Route::resource('media', 'MediaController')
     'edit' => 'media.edit',
     'destroy' => 'media.destroy',
 ]);
-Route::post('file-upload', 'MediaController@fileUploadPost')->name('file.upload.post');
