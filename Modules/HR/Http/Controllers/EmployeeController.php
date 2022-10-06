@@ -10,8 +10,6 @@ use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\Job;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Modules\User\Entities\User;
-//use vendor\spatie\laravel-permission\src\Models\Role;
 use Spatie\Permission\Models\Role;
 
 class EmployeeController extends Controller
@@ -47,6 +45,7 @@ class EmployeeController extends Controller
             $data[] = $user->id;
         }
         $employees = Employee::whereIn('user_id', $data)->get();
+
         return view('hr.employees.index', $this->service->index($filters))->with([
             'employees' => $employees
         ]);

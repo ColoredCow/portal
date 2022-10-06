@@ -154,7 +154,7 @@ class User extends Authenticatable
 
     public function getMonthTotalEffortAttribute()
     {
-        if (!$this->projectTeamMembers->first()) {
+        if (! $this->projectTeamMembers->first()) {
             return false;
         }
 
@@ -176,7 +176,7 @@ class User extends Authenticatable
         $fte = 0;
         $fteAmc = 0;
         foreach ($this->projectTeamMembers()->with('project')->get() as $projectTeamMember) {
-            if (!$projectTeamMember->project->is_amc) {
+            if (! $projectTeamMember->project->is_amc) {
                 $fte += $projectTeamMember->fte;
             }
             if ($projectTeamMember->project->is_amc) {
