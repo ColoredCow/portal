@@ -15,6 +15,9 @@ use Modules\HR\Entities\Job;
 use Modules\HR\Events\Recruitment\ApplicantEmailVerified;
 use Modules\HR\Http\Requests\Recruitment\ApplicantRequest;
 use Modules\User\Entities\User;
+use Modules\HR\Http\Requests\ApplicantMetaRequest;
+use Modules\HR\Entities\ApplicantMeta;
+use Modules\HR\Services\ApplicantService;
 
 class ApplicantController extends Controller
 {
@@ -22,9 +25,10 @@ class ApplicantController extends Controller
 
     protected $service;
 
-    public function __construct(ApplicationServiceContract $service)
+    public function __construct(ApplicationServiceContract $service, ApplicantService $applicantService)
     {
         $this->service = $service;
+        $this->service = $applicantService;
         $this->authorizeResource(Applicant::class, null, [
             'except' => ['store', 'show', 'create'],
         ]);
@@ -100,5 +104,39 @@ class ApplicantController extends Controller
         event(new ApplicantEmailVerified($application));
 
         return view('hr.application.verification')->with(['application' => $application, 'email' => decrypt($applicantEmail)]);
+    }
+
+    public function viewForm($id, $email)
+    {
+        $hrApplicantEmail = $email;
+        $hrApplicantId = $id;
+        $applicant = ApplicantMeta::where('hr_applicant_id', $id)->get()->keyBy('key');
+
+        return view('hr.application.approved-applicants-details')->with(['hrApplicantId' => $hrApplicantId, 'hrApplicantEmail' => $hrApplicantEmail, 'applicant' => $applicant]);
+    }
+
+    public function storeApprovedApplicantDetails(ApplicantMetaRequest $request)
+    {
+        $hrApplicantId = $request->get('hr_applicant_id');
+        $hrApplicantEmail = $request->get('hr_applicant_email');
+        $this->service->storeApplicantOnboardingDetails($request);
+
+        return redirect()->route('hr.applicant.applicant-onboarding-form', [$hrApplicantId, $hrApplicantEmail]);
+    }
+
+    public function formSubmit($id, $email)
+    {
+        $hrApplicantId = $id;
+        $hrApplicantEmail = $email;
+
+        return view('hr.application.details-submitted')->with(['hrApplicantId'=>$hrApplicantId, 'hrApplicantEmail'=> $hrApplicantEmail]);
+    }
+
+    public function showOnboardingFormDetails($id)
+    {
+        $applicantMeta = ApplicantMeta::where('hr_applicant_id', $id)->get()->keyBy('key');
+        $applicant = Applicant::where('id', $id)->get();
+
+        return view('hr.application.verify-details', ['applicantMeta'=> $applicantMeta, 'applicant'=> $applicant]);
     }
 }

@@ -9,7 +9,17 @@
         <div class="card-header pb-lg-5 fz-28"><div class="mt-4 ml-5">Employee Details</div></div>
         <div class="card-body">
             <div class="d-flex justify-content-between mx-5 align-items-end">
-                <h1>{{$employee->name}}</h1>
+                <div class="col">
+                    <div class="mt-2"><h1>{{$employee->name}}</h1></div>
+                    @if ($employee->designation_id && $employee->domain_id != null)
+                        <div class="row ml-1">
+                            <span class="font-weight-bold">Designation:</span>&nbsp;<p>{{$employee->hrJobDesignation->designation}}</p>
+                        </div> 
+                        <div class="row ml-1">
+                            <span class="font-weight-bold">Domain:</span>&nbsp;<p>{{$employee->hrJobDomain->domain}}</p>            
+                        </div>
+                    @endif
+                </div>
                 @if(optional($employee->user()->withTrashed())->first()->avatar)
                     <img src="{{ $employee->user()->withTrashed()->first()->avatar }}" class="w-100 h-100 rounded-circle">
                 @endif
