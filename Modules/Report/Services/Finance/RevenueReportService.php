@@ -123,6 +123,16 @@ class RevenueReportService
         return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
+    private function getParticularAmountForStripeIndia(array $particular, Object $startDate, Object $endDate): array
+    {
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
+    }
+
+    private function getParticularAmountForStripeInternational(array $particular, Object $startDate, Object $endDate): array
+    {
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
+    }
+
     private function getAmountsForRevenueProceeds($category, $startDate, $endDate)
     {
         $revenues = RevenueProceed::where('category', $category)

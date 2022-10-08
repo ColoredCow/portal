@@ -7,6 +7,7 @@ use App\Services\EmployeeService;
 use Modules\HR\Entities\Employee;
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\HrJobDomain;
+use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\Job;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
@@ -47,8 +48,9 @@ class EmployeeController extends Controller
     public function basicDetails(Employee $employee)
     {
         $domains = HrJobDomain::select('id', 'domain')->get()->toArray();
+        $designations = HrJobDesignation::select('id', 'designation')->get()->toArray();
 
-        return view('hr.employees.basic-details', ['employee' => $employee, 'domains'=>$domains]);
+        return view('hr.employees.basic-details', ['employee' => $employee, 'domains'=>$domains, 'designations' => $designations]);
     }
 
     public function showFTEdata(request $request)
