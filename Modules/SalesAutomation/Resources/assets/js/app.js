@@ -1,14 +1,13 @@
-$(document).ready(function () {
- $("#modal").click(function(){
-    $("#editSalesAreaModal").modal("show");
-    
- });
+$(document).ready(function (){
+        $("#modal").click(function(){
+                $("#editSalesAreaModal").modal("show");
+         $("#close").click(function(){
+                $("#editSalesAreaModal").modal("hide");
+         });
+         });
 });
- $(document).ready(function () {
- $("#close").click(function(){
-    $("#editSalesAreaModal").modal("hide");
- });
-});
+       
+
 
         
     
