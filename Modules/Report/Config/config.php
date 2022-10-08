@@ -20,6 +20,16 @@ return [
                         'head' => 'Direct Income'
                     ],
 
+                    'stripe_india' => [
+                        'name' => 'Stripe India',
+                        'head' => 'Direct Income'
+                    ],
+
+                    'stripe_international' => [
+                        'name' => 'Stripe International',
+                        'head' => 'Direct Income'
+                    ],
+
                     'commission_received' => [
                         'name' => 'Commission Received',
                         'head' => 'Direct Income'
