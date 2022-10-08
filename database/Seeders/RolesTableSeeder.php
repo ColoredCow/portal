@@ -52,16 +52,16 @@ class RolesTableSeeder extends Seeder
                'description' => 'Someone who is in training',
             ],
             [
-                'name' => 'contractor',
+               'name' => 'contractor',
                'label'=> 'Contractor',
                'guard_name' => 'web',
-               'description' => 'Person responsible for handling Contracts',
+               'description' => 'Person hired on contract basis',
             ],
             [
-                'name' => 'support-staff',
+               'name' => 'support-staff',
                'label'=> 'Support Staff',
                'guard_name' => 'web',
-               'description' => 'Staff supporting the main team',
+               'description' => 'Team members not involved in project billing, but act as support system to ColoredCow',
             ]
         ];
 

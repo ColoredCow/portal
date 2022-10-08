@@ -11,6 +11,7 @@ use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\Job;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Spatie\Permission\Models\Role;
+use Modules\HR\Entities\Application;
 
 class EmployeeController extends Controller
 {
@@ -31,15 +32,18 @@ class EmployeeController extends Controller
     {
         $filters = $request->all();
         $filters = $filters ?: $this->service->defaultFilters();
+        // $users = Role::popular()->first()->users()->get();
+        $users = Role::where('name', 'employee')->first()->users()->get();
+        // dd($users);
 
         return view('hr.employees.index', $this->service->index($filters));
     }
 
-    public function filterEmployee(Request $request)
+    public function filterEmployee(Request $request, $name)
     {
         $filters = $request->all();
         $filters = $filters ?: $this->service->defaultFilters();
-        $users = Role::where('name', 'employee')->first()->users()->get();
+        $users = Role::where('name', $name)->first()->users()->get();
         $data = [];
         foreach ($users as $user) {
             $data[] = $user->id;
@@ -48,54 +52,6 @@ class EmployeeController extends Controller
 
         return view('hr.employees.index', $this->service->index($filters))->with([
             'employees' => $employees
-        ]);
-    }
-
-    public function filterIntern(Request $request)
-    {
-        $filters = $request->all();
-        $filters = $filters ?: $this->service->defaultFilters();
-        $users = Role::where('name', 'intern')->first()->users()->get();
-
-        $data = [];
-        foreach ($users as $user) {
-            $data[] = $user->id;
-        }
-
-        return view('hr.employees.index', $this->service->index($filters))->with([
-            'employees' => $users
-        ]);
-    }
-
-    public function filterContractor(Request $request)
-    {
-        $filters = $request->all();
-        $filters = $filters ?: $this->service->defaultFilters();
-        $users = Role::where('name', 'contractor')->first()->users()->get();
-
-        $data = [];
-        foreach ($users as $user) {
-            $data[] = $user->id;
-        }
-
-        return view('hr.employees.index', $this->service->index($filters))->with([
-            'employees' => $users
-        ]);
-    }
-
-    public function filterSupportStaff(Request $request)
-    {
-        $filters = $request->all();
-        $filters = $filters ?: $this->service->defaultFilters();
-        $users = Role::where('name', 'support-staff')->first()->users()->get();
-
-        $data = [];
-        foreach ($users as $user) {
-            $data[] = $user->id;
-        }
-
-        return view('hr.employees.index', $this->service->index($filters))->with([
-            'employees' => $users
         ]);
     }
 

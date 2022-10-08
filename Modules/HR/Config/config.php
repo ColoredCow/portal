@@ -111,6 +111,13 @@ return [
             'absent-interviewer' => 'Interviewer is absent',
         ],
     ],
+    'roles' => [
+        'employee' => [
+            'label' => 'employee',
+            'title' => 'Employee',
+            'class' => 'badge badge-success',
+        ]
+    ],
     'status' => [
         'new' => [
             'label' => 'new',
@@ -168,6 +175,7 @@ return [
             'class' => 'badge badge-success p-1',
         ],
     ],
+    
    'Sample-Resume' => 'https://coloredcow.com/wp-content/uploads/2022/08/sample.pdf',
     'defaults' => [
         'scheduled_person_id' => env('HR_DEFAULT_SCHEDULED_PERSON', 1),

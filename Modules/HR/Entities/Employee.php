@@ -43,6 +43,11 @@ class Employee extends Model
         return $query->whereNotNull('user_id');
     }
 
+    public function scopeOfName($query, $name)
+    {
+        return $query->whereName($name);
+    }
+
     public function getEmploymentDurationAttribute()
     {
         if (is_null($this->user_id)) {
