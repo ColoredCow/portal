@@ -16,7 +16,7 @@
             </form>
         </div>
         <div class="col-md-3">
-            <a href="{{ route('universities.create') }}" class="btn btn-success btn-block btn-lg"><i class="fa fa-plus"></i> Add New University</a>
+            <a href="{{ route('universities.create') }}" class="btn btn-success btn-block btn-lg"><i class="fa fa-plus mr-1"></i> Add New University</a>
         </div>
     </div>
     @include('status', ['errors' => $errors->all()])
