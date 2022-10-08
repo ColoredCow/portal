@@ -186,7 +186,8 @@ class Application extends Model
 
         return $query;
     }
-    public function scopePopular($query){
+    public function scopePopular($query)
+    {
         return $query->whereIn('hr_job_id',[1,19,22]);
     }
 
