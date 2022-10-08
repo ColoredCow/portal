@@ -11,7 +11,6 @@ use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\Job;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Spatie\Permission\Models\Role;
-use Modules\HR\Entities\Application;
 
 class EmployeeController extends Controller
 {

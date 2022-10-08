@@ -50,7 +50,6 @@ class ApplicationMeta extends Model
 
     public static function scopeEmployee($query)
     {
-        dd("eorks");
         return $query->where('key', config('constants.hr.roles.employee.label'));
     }
 
