@@ -19,7 +19,7 @@ class EmployeeService
         $nameD = 'support-staff';
         $foo = request('n');
         $roles = Role::all()->get('name');
-        
+
         return [
             'foo' => $foo,
             'nameA' => $nameA,
