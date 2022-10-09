@@ -48,7 +48,7 @@
 								</div>
 							</div>
 						</div>
-					<span class="mr-2 text-danger c-pointer" onclick="if(confirm('Are you sure you want to delete?'))document.getElementById('deleteSalesArea-{{ $salesArea->id }}').submit();"><i class="fa fa-trash"></i></span>
+					     <span class="mr-2 text-danger c-pointer" onclick="if(confirm('Are you sure you want to delete?'))document.getElementById('deleteSalesArea-{{ $salesArea->id }}').submit();"><i class="fa fa-trash"></i></span>
 						<form action="{{ route('sales-area.destroy', $salesArea) }}" method="POST" id="deleteSalesArea-{{ $salesArea->id }}">
 							@csrf
 							@method('DELETE')
@@ -56,7 +56,7 @@
 					</td>
 				</tr>
 			@endforeach		
-		  </thead>
+	    </thead>
 	</table>
 	{{ $salesAreas->links() }}
 @endsection
