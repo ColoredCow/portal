@@ -62,7 +62,7 @@
                     <div class="d-flex">
                         <label for="client_id" class="mr-5">total amount:</label>
                         <span>
-                            {{ $invoice->display_amount . " + " . $invoice->gst ." ₹". " = " }} <span id="totalAmount">{{$invoice->total_amount }}</span><span> ₹ </span>
+                            {{ $invoice->display_amount . " + " . $invoice->gst ." ₹". " = " }} <span id="totalAmount">{{$invoice->total_amount }} ₹ </span>
                         </span>
                         <span class="d-none checkIcon"><i class="fa fa-check text-success rounded-circle ml-1"></i></span>
                     </div>
