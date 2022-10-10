@@ -35,22 +35,38 @@
     </div>
     @endif
     <br>
+    <div class="mr-2 mt-2 mt-md-0 form-group">
+    <form action="{{route('applications.volunteer.index')}}" method="GET">
+        <label id="job">{!! __('Jobs') !!}</label><br>
+        <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" name="hr_job_id" id="job"
+            onchange="this.form.submit()">
+            <option value="" {{ request()->has('hr_job_id') ? '' : 'selected' }}>
+                {!! __('All Jobs') !!}
+            </option>
+            @foreach ($jobs as $job)
+            <option value="{{ $job->id }}" {{ request()->get('hr_job_id') == $job->id ? 'selected' : '' }}>
+                {{ $job->title }}
+            </option>
+            @endforeach
+        </select>
+    </form>
+    </div>
     <div class="d-flex align-items-center justify-content-between">
         <ul class="nav nav-pills mb-2">
             <li class="nav-item">
-                <a class="nav-item nav-link {{ $status ? 'text-info' : 'active bg-info text-white' }}" href="/{{ Request::path() }}/"><i class="fa fa-clipboard"></i>&nbsp;Open</a>
+                <a class="nav-item nav-link {{ $status ? 'text-info' : 'active bg-info text-white' }}" href="/{{ Request::path() }}/"><i class="fa fa-clipboard"></i>&nbsp;Open [{{$open_count}}]</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.sent-for-approval.label') }}"><i class="fa fa-clock-o"></i>&nbsp;{{ config('constants.hr.status.sent-for-approval.title') }}</a>
+                <a class="nav-item nav-link {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.sent-for-approval.label') }}"><i class="fa fa-clock-o"></i>&nbsp;{{ config('constants.hr.status.sent-for-approval.title') }} [{{$sent_for_approval_count}}]</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.on-hold.label') }}"><i class="fa fa-file-text-o"></i>&nbsp;{{ config('constants.hr.status.on-hold.title') }}</a>
+                <a class="nav-item nav-link {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.on-hold.label') }}"><i class="fa fa-file-text-o"></i>&nbsp;{{ config('constants.hr.status.on-hold.title') }} [{{$volunteer_on_hold_count}}]</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}"><i class="fa fa-warning"></i>&nbsp;{{ config('constants.hr.status.no-show.title') }}</a>
+                <a class="nav-item nav-link {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}"><i class="fa fa-warning"></i>&nbsp;{{ config('constants.hr.status.no-show.title') }} [{{$no_show_count}}]</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link {{ $status === 'closed' ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status=closed"><i class="fa fa-times-circle"></i>&nbsp;Closed</a>
+                <a class="nav-item nav-link {{ $status === 'closed' ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status=closed"><i class="fa fa-times-circle"></i>&nbsp;Closed [{{$closed_count}}]</a>
             </li>
         </ul>
         @if( isset($openJobsCount, $openApplicationsCount) )
