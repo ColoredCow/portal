@@ -45,7 +45,7 @@ return [
                         'head' => 'Indirect income'
                     ],
 
-                    'interest_on_fd' => [
+                    'interest_on_f_d' => [
                         'name' => 'Interest on FD',
                         'head' => 'Indirect income'
                     ],
