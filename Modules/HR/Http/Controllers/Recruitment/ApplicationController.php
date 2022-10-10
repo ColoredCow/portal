@@ -28,7 +28,6 @@ use Modules\HR\Http\Requests\TeamInteractionRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
-use Modules\HR\Emails\Recruitment\SendCertificate;
 use Modules\HR\Entities\Applicant;
 
 abstract class ApplicationController extends Controller
@@ -370,12 +369,6 @@ abstract class ApplicationController extends Controller
         ]);
     }
 
-    public function sendInternshipCertificate(Application $application, Request $request)
-    {
-        Mail::send(new SendCertificate($application));
-
-    }
-
     public function internIndex()
     {
         return view('hr::internship');
@@ -392,13 +385,14 @@ abstract class ApplicationController extends Controller
     {
         $applicantid = $request->get('id');
         Applicant::updateOrInsert(
-        [
+            [
         'id'=> $applicantid
         ],
-        [
+            [
             'start_date' => $request['start_date'],
             'end_date' => $request['end_date'],
-        ]);
+        ]
+        );
 
         return redirect()->route('hr.download.form', $applicantid);
     }
@@ -406,6 +400,7 @@ abstract class ApplicationController extends Controller
     public function downloadForm($id)
     {
         $applicant = Applicant::find($id);
+
         return view('hr::download-certificate')->with('applicants', $applicant);
     }
 }

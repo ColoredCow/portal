@@ -88,5 +88,4 @@ class FileHelper
 
         return "$dashedApplicantName-$timestamp.pdf";
     }
-
 }
