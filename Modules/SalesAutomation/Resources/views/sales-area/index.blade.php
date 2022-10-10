@@ -18,36 +18,33 @@
 				<tr>
 					<td>{{ $salesArea->name }}</td>
 					<td class="w-25p">
-						<i data-toggle="modal" data-target="#editSalesAreaModal{{ $index }}" class="fa fa-pencil mr-2 c-pointer text-primary" ></i>
-					
-						 <div class="modal fade" id="editSalesAreaModal{{ $index }}" tabindex="-1" role="dialog" aria-labelledby="editSalesAreaModalLabel" aria-hidden="true">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="editSalesAreaModalLabel">Edit Sales Area</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-									</button>
+					<form action="{{ route('sales-area.update', $salesArea) }}" method="POST">
+							@csrf
+							@method('PUT')
+							<div class="modal fade" id="editSalesAreaModal{{ $index }}" tabindex="-1" role="dialog" aria-labelledby="editSalesAreaModalLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="editSalesAreaModalLabel">Edit Sales Area</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="col-md-12">
+											<div class="form-group">
+												<label for="name">Name<span class="text-danger">*</span></label>
+												<input type="text" class="form-control" name="name" id="name" value="{{ old('name', $salesArea->name) }}" autofocus required>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+											<button type="submit" class="btn btn-primary btn-sm">Submit</button>
+										</div>
+									</div>
 								</div>
-								<div class="col-md-12">
-								 <div class="form-group">
-									<form action="{{ route('sales-area.update', $salesArea) }}" method="POST">
-		                                @csrf
-		                                @method('PUT')
-										<label for="name">Name<span class="text-danger">*</span></label>
-										<input type="text" class="form-control" name="name" id="name" value="{{ old('name', $salesArea->name) }}" autofocus required>
-								     <div class="modal-footer">
-									    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-									    <button type="submit" class="btn btn-primary">Submit</button>
-                                      </div>
-</form>
-								
-								</div>
-								</div>
-                                </div>
-</div>
 							</div>
-						</div>
+						</form>
+						<i data-toggle="modal" data-target="#editSalesAreaModal{{ $index }}" class="fa fa-pencil mr-2 c-pointer text-primary" ></i>
 					     <span class="mr-2 text-danger c-pointer" onclick="if(confirm('Are you sure you want to delete?'))document.getElementById('deleteSalesArea-{{ $salesArea->id }}').submit();"><i class="fa fa-trash"></i></span>
 						<form action="{{ route('sales-area.destroy', $salesArea) }}" method="POST" id="deleteSalesArea-{{ $salesArea->id }}">
 							@csrf
