@@ -24,6 +24,7 @@
         @php
          $params = array_merge($request,  ['wishlist' => 'booksInWishlist']);
         @endphp
+        @dd($params)
         <a class="nav-item nav-link  {{ (request()->input('wishlist','active') === 'booksInWishlist') ? 'active' : '' }}"  href="{{ route('books.index', $params)  }}"><i class="fa fa-book"></i>&nbsp;Wish listed Books({{$books->load('wishers')->count()}})</a>
     </li>
     <li class="nav-item">

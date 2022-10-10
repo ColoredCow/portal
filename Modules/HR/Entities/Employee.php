@@ -29,6 +29,11 @@ class Employee extends Model
         return $this->belongsTo(HrJobDomain::class, 'domain_id');
     }
 
+    public function scopeFilterbyrole($query, $data)
+    {
+        return $query->whereIn('user_id', $data);
+    }
+
     public function scopeStatus($query, $status)
     {
         if ($status == 'current') {

@@ -32,10 +32,22 @@ class EmployeeController extends Controller
         $filters = $request->all();
         $filters = $filters ?: $this->service->defaultFilters();
         // $users = Role::popular()->first()->users()->get();
-        $users = Role::where('name', 'employee')->first()->users()->get();
+        // $users = Role::where('name', 'employee')->first()->users()->get();
         // dd($users);
+        $name = request('name');
+        // dd($name);
 
-        return view('hr.employees.index', $this->service->index($filters));
+        $users = Role::where('name', $name)->first()->users()->get();
+        $data = [];
+        foreach ($users as $user) {
+            $data[] = $user->id;
+        }
+        $employees = Employee::filterbyrole($data)->get();
+
+        return view('hr.employees.index', $this->service->index($filters))->with([
+            'employees' => $employees,
+        ]);
+        //  return view('hr.employees.index', $this->service->index($filters));
     }
 
     public function filterEmployee(Request $request, $name)
@@ -50,7 +62,7 @@ class EmployeeController extends Controller
         $employees = Employee::whereIn('user_id', $data)->get();
 
         return view('hr.employees.index', $this->service->index($filters))->with([
-            'employees' => $employees
+            'employees' => $employees,
         ]);
     }
 

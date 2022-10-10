@@ -8,7 +8,7 @@
     <div class="d-flex">
         <h1>Employees ({{count($employees)}})</h1>
         <form id="employeeFilterForm">
-            <input type="hidden" name="status" value="{{ request()->input('status', 'current') }}">
+            <input type="hidden" name="name" value="{{ request()->input('name', 'employee') }}">
             <div class='form-group w-130' class="d-inline">
                 <select class="form-control bg-info text-white ml-3" name="status"  onchange="document.getElementById('employeeFilterForm').submit();">
                     <option {{ $filters['status'] == 'current' ? "selected=selected" : '' }} value="current">Current</option>
