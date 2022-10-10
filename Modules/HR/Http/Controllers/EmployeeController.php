@@ -41,22 +41,6 @@ class EmployeeController extends Controller
         ]);
     }
 
-    public function filterEmployee(Request $request, $name)
-    {
-        $filters = $request->all();
-        $filters = $filters ?: $this->service->defaultFilters();
-        $users = Role::where('name', $name)->first()->users()->get();
-        $data = [];
-        foreach ($users as $user) {
-            $data[] = $user->id;
-        }
-        $employees = Employee::whereIn('user_id', $data)->get();
-
-        return view('hr.employees.index', $this->service->index($filters))->with([
-            'employees' => $employees,
-        ]);
-    }
-
     public function show(Employee $employee)
     {
         return view('hr.employees.show', ['employee' => $employee]);
