@@ -86,12 +86,15 @@ Route::middleware('auth')->group(function () {
 
             Route::post('/store', 'JobController@storeJobdomain')->name('hr-job-domains.storeJobdomain');
             Route::post('/store-response/{id}', 'JobController@storeResponse')->name('response.store');
+            Route::post('/edit-response/{id}/{hr_job_id}', 'JobController@editDesiredResumeReasons')->name('response.edit');
+            Route::get('/delete-response/{id}/{hr_job_id}', 'JobController@unflagDesiredResume')->name('response.unflag');
             Route::get('/desired-resume/{name}/{id}', 'JobController@showTable')->name('desired.resume');
 
             Route::resource('job', 'JobApplicationController')
                 ->only(['index', 'edit', 'update', 'store'])
                 ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update', 'store' => 'applications.job.store']);
             Route::get('{application}/get-offer-letter', 'JobApplicationController@getOfferLetter')->name('applications.getOfferLetter');
+            Route::get('{application}/save-offer-letter', 'JobApplicationController@saveOfferLetter');
             Route::post('{application}/sendmail', 'JobApplicationController@sendApplicationMail')->name('application.custom-email');
             Route::post('/teaminteraction', 'JobApplicationController@generateTeamInteractionEmail');
             Route::get('/finishinterview', 'JobApplicationController@markInterviewFinished')->name('markInterviewFinished');
@@ -133,6 +136,19 @@ Route::middleware('auth')->group(function () {
         Route::get('/pending/{jobRequisition}', 'RequisitionController@storePending');
         Route::get('/complete', 'RequisitionController@showCompletedRequisition')->name('requisition.complete');
         Route::post('/details', 'RequisitionController@storeBatchDetails')->name('requisition.storeBatchDetails');
+
+        Route::resource('designation', 'HrJobDesignationController')
+        ->only(['index', 'show'])
+        ->names([
+            'index' => 'designation',
+        ]);
+        Route::post('/delete/{id}', 'HrJobDesignationController@destroy')->name('designation.delete');
+        Route::get('/{id}/edit', 'HrJobDesignationController@edit')->name('designation.edit');
+        Route::post('/store', 'HrJobDesignationController@storeDesignation')->name('hr-job-designation.storeJobDesignation');
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');
+Route::get('/viewForm/{id}/{email}', 'Recruitment\ApplicantController@viewForm')->name('hr.applicant.view-form');
+Route::post('/storeApprovedApplicantDetails', 'Recruitment\ApplicantController@storeApprovedApplicantDetails')->name('hr.applicant.store-approved-applicants-details');
+Route::get('/formSubmitted/{id}/{email}', 'Recruitment\ApplicantController@formSubmit')->name('hr.applicant.applicant-onboarding-form');
+Route::get('/showApplicantFormDetails/{id}', 'Recruitment\ApplicantController@showOnboardingFormDetails')->name('hr.applicant.show-onboarding-applicant-form-details');
