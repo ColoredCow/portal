@@ -10,7 +10,6 @@ use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\Job;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Spatie\Permission\Models\Role;
 
 class EmployeeController extends Controller
 {
