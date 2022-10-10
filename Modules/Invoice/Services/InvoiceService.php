@@ -322,7 +322,8 @@ class InvoiceService implements InvoiceServiceContract
     public function taxReport($filters)
     {
         return [
-            'invoices' => $this->taxReportInvoices($filters)
+            'invoices' => $this->taxReportInvoices($filters),
+            'clients' => Client::orderBy('name', 'asc')->get()
         ];
     }
 
@@ -401,7 +402,8 @@ class InvoiceService implements InvoiceServiceContract
 
     private function taxReportInvoices($filters)
     {
-        return Invoice::query()->applyFilters($filters)
+        return Invoice::query()
+            ->applyFilters($filters)
             ->orderBy('sent_on', 'desc')
             ->get();
     }

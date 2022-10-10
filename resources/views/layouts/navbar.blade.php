@@ -10,9 +10,13 @@
                     <a class="dropdown-item" href="{{ route('applications.job.index') }}">Recruitment</a>
                 @endcan
                 @can('hr_employees.view')
-                    <a class="dropdown-item" href="{{ route('employees') }}">Employees</a>
+                @php
+                    $params = array_merge(['name' => 'employee'], ['status' => 'current']);
+                @endphp
+                    <a class="dropdown-item" href="{{ route('employees',$params) }}">Employees</a>
                 @endcan
-                <a class="dropdown-item" href="{{ route('requisition') }}">Resource Requisition</a>
+                    <a class="dropdown-item" href="{{ route('requisition') }}">Resource Requisition</a>
+                    <a class="dropdown-item" href="{{ route('designation') }}">Designations</a>
                 @can('hr_volunteers_applications.view')
                     <a class="dropdown-item" href="{{ route('applications.volunteer.index') }}">Volunteers</a>
                 @endcan
@@ -38,27 +42,27 @@
         </li>
     @endif
 
-        @if ((Module::checkStatus('Client') &&
-            auth()->user()->can('clients.view')) ||
-            (Module::checkStatus('Project') &&
-                auth()->user()->can('projects.view')))
-            <li class="nav-item dropdown">
-                <a id="navbarDropdown_pm" class="nav-link dropdown-toggle" href="#" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>CRM<span class="caret"></span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown_finance">
-                    @can('clients.view')
-                        <a class="dropdown-item" href="{{ route('client.index') }}">Clients</a>
-                    @endcan
-                    @can('projects.view')
-                        <a class="dropdown-item" href="{{ route('project.index') }}">Projects</a>
-                    @endcan
-                    @can('projectscontract.view')
-                        <a class="dropdown-item" href="{{ route('projectcontract.index') }}">Project Contract</a>
-                    @endcan
-                </div>
-            </li>
-        @endif
+    @if ((Module::checkStatus('Client') &&
+        auth()->user()->can('clients.view')) ||
+        (Module::checkStatus('Project') &&
+            auth()->user()->can('projects.view')))
+        <li class="nav-item dropdown">
+            <a id="navbarDropdown_pm" class="nav-link dropdown-toggle" href="#" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>CRM<span class="caret"></span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown_finance">
+                @can('clients.view')
+                    <a class="dropdown-item" href="{{ route('client.index') }}">Clients</a>
+                @endcan
+                @can('projects.view')
+                    <a class="dropdown-item" href="{{ route('project.index') }}">Projects</a>
+                @endcan
+                @can('projectscontract.view')
+                    <a class="dropdown-item" href="{{ route('projectcontract.index') }}">Project Contract</a>
+                @endcan
+            </div>
+        </li>
+    @endif
 
     @can('task.view')
         <li class="nav-item">
