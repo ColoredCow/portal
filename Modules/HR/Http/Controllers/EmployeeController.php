@@ -32,15 +32,12 @@ class EmployeeController extends Controller
         $filters = $request->all();
         $filters = $filters ?: $this->service->defaultFilters();
         $name = request('name');
-        $users = Role::where('name', $name)->first()->users()->get();
-        $data = [];
-        foreach ($users as $user) {
-            $data[] = $user->id;
-        }
-        $employees = Employee::filterbyrole($data)->get();
+        $employeeData = Employee::whereHas('user.roles', function($query) use ($name) {
+            $query->where('name', $name);
+            })->get();
 
         return view('hr.employees.index', $this->service->index($filters))->with([
-            'employees' => $employees,
+            'employees' => $employeeData,
         ]);
     }
 
