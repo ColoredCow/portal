@@ -34,7 +34,15 @@
                             <label for="designationfield">name</label><strong class="text-danger">*</strong></label>
                             <input type="text" name="name" class="form-control"  id="name" aria-describedby="Help" placeholder="name"> 
                             <div class="d-none text-danger" name="error" id="designationerror"></div>
-                        </div>        
+                        </div> 
+                        <input type="hidden" name="domainName" id="domainName" value="">
+                        <div class='form-group'>
+                            <select name="status" class="form-control">
+                                @foreach($domains as $domain)
+                                <option value="{{$domain->domain}}">{{$domain->domain}}</option>
+                                @endforeach
+                            </select>
+                        </div>       
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary" id="designation">Save changes</button>  
                     </form>
@@ -55,7 +63,7 @@
                 <span class="d-flex text-justify-center">{{ $designation->designation }}</span>
             </td>
             <td>
-             <button type="button" class="pr-1 btn btn-link" data-toggle="modal" data-target="#designationEditFormModal" data-json="{{$designation}}" ><i class="text-success fa fa-edit fa-lg"></i></button>
+             <button type="button" class="pr-1 btn btn-link" data-toggle="modal" data-target="#designationEditFormModal{{$designation->id}}" data-json="{{$designation}}" ><i class="text-success fa fa-edit fa-lg"></i></button>
             </td>
             <td>
                 <form action="{{ route('designation.delete', ['id' => $designation->id]) }}" method="post">

@@ -34,16 +34,6 @@
                     </select>   
                 </div>
                 <div class="form-group">
-                    <label>Domain</label>
-                    <select class="form-control" name="domainId">
-                        <option value="" disabled>Select Domain</option>
-
-                        @foreach ($domains as $domain )
-                        <option {{$domain['id'] == $user->employee->domain_id ? "selected" : ""}} value="{{ $domain['id'] }}">{{$domain['domain']}}</option>
-                        @endforeach
-                    </select>    
-                </div>
-                <div class="form-group">
                     <label for="email">Email</label>
                     <input type="text" class="form-control" id="email" name="email" value="{{$user->email}}" readonly>
                 </div>
