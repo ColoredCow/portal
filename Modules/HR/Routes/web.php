@@ -123,12 +123,12 @@ Route::middleware('auth')->group(function () {
         Route::get('fte-handler/{domain_id}', 'EmployeeController@showFTEdata')->name('employees.alert');
 
         Route::resource('requisition', 'RequisitionController')
-            ->only(['index', 'show'])
+            ->only(['index', 'show', 'store'])
             ->names([
                 'index' => 'requisition',
                 'show' => 'requisition.show',
+                'store' => 'requisition.store',
             ]);
-        Route::post('store', 'RequisitionController@store')->name('requisition.store');
         Route::get('/completed/change-status/{jobRequisition}', 'RequisitionController@storecompleted');
         Route::get('/pending/{jobRequisition}', 'RequisitionController@storePending');
         Route::get('/complete', 'RequisitionController@showCompletedRequisition')->name('requisition.complete');
