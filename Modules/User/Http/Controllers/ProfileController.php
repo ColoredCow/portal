@@ -4,6 +4,7 @@ namespace Modules\User\Http\Controllers;
 
 use Modules\User\Contracts\ProfileServiceContract;
 use Modules\User\Entities\User;
+use Modules\User\Entities\UserProfile;
 use Modules\HR\Http\Requests\ProfileEditRequest;
 
 class ProfileController extends ModuleBaseController
@@ -22,19 +23,34 @@ class ProfileController extends ModuleBaseController
 
     public function update(ProfileEditRequest $request, User $user)
     {
+        // dd($user->profile);
+        //dd($user->employee);
+       // dd($user->);
+    //    dd($user->profile);
+
         $user->name = $request->name;
         $user->nickname = $request->nickName;
         $user->employee->designation = $request->designation;
         $user->employee->name = $request->name;
         $user->employee->domain_id = $request->domainId;
-        $user->profile->mobile = $request->mobile;
-        $user->profile->gender = $request->gender;
-        $user->profile->date_of_birth = $request->date_of_birth;
-        $user->profile->spouse_name = $request->spouse_name;
-        $user->profile->date_of_joining = $request->date_of_joining;
-        $user->profile->father_name = $request->father_name;
-        $user->profile->marital_status = $request->marital_status;
-        $user->profile->current_location = $request->current_location;
+        if($user->profile != null){
+            $user->profile->mobile = $request->mobile;
+            $user->profile->spouse_name = $request->spouse_name;
+            $user->profile->father_name = $request->father_name;
+            $user->profile->marital_status = $request->marital_status;
+            $user->profile->current_location = $request->current_location;
+        } else  {
+            $userProfile = new UserProfile();
+            $userProfile->user_id = $user->id;
+            $userProfile->father_name = $request->father_name;
+            $userProfile->mobile = $request->mobile;
+            $userProfile->marital_status = $request->marital_status;
+            $userProfile->spouse_name = $request->spouse_name;
+            $userProfile->current_location = $request->current_location;
+            
+            $userProfile->save();
+        }
+        
 
         $user->push();
 
