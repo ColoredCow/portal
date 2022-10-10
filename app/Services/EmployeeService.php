@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use Modules\HR\Entities\Employee;
-use Spatie\Permission\Models\Role;
 
 class EmployeeService
 {
