@@ -48,11 +48,6 @@ class ApplicationMeta extends Model
         return $query->where('key', config('constants.hr.status.onboarded.label'));
     }
 
-    public static function scopeEmployee($query)
-    {
-        return $query->where('key', config('constants.hr.roles.employee.label'));
-    }
-
     public static function newFactory()
     {
         return new HrApplicationMetaFactory();

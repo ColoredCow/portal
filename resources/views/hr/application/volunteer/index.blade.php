@@ -54,7 +54,7 @@
     <div class="d-flex align-items-center justify-content-between">
         <ul class="nav nav-pills mb-2">
             <li class="nav-item">
-                <a class="nav-item nav-link {{ $status ? 'text-info' : 'active bg-info text-white' }}" href="/{{ Request::path() }}/"><i class="fa fa-clipboard"></i>&nbsp;Open123 [{{$open_count}}]</a>
+                <a class="nav-item nav-link {{ $status ? 'text-info' : 'active bg-info text-white' }}" href="/{{ Request::path() }}/"><i class="fa fa-clipboard"></i>&nbsp;Open [{{$open_count}}]</a>
             </li>
             <li class="nav-item">
                 <a class="nav-item nav-link {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.sent-for-approval.label') }}"><i class="fa fa-clock-o"></i>&nbsp;{{ config('constants.hr.status.sent-for-approval.title') }} [{{$sent_for_approval_count}}]</a>

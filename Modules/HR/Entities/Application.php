@@ -186,10 +186,6 @@ class Application extends Model
 
         return $query;
     }
-    public function scopePopular($query)
-    {
-        return $query->whereIn('hr_job_id', [1, 19, 22]);
-    }
 
     /**
      * Apply filter on applications based on their job type.

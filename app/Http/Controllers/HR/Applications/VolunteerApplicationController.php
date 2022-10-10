@@ -42,7 +42,6 @@ class VolunteerApplicationController extends ApplicationController
             'job-type' => $this->getApplicationType(),
             'jobs' => Job::where('type', 'volunteer')->get(),
         ];
-        // dd($attr);
 
         return view('hr.application.volunteer.index')->with(
             $attr

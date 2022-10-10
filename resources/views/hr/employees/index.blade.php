@@ -17,23 +17,6 @@
             </div>
         </form>
     </div>
-    <div class="d-flex align-items-center justify-content-between">
-        <ul class="nav nav-pills mb-2">
-            <li class="nav-item">
-                {{-- <a class="nav-item nav-link {{ $roles === config('constants.hr.roles.employee.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?roles={{ config('constants.hr.roles.employee.label') }}"><i class="fa fa-clock-o"></i>&nbsp;{{ config('constants.hr.roles.employee.title') }}</a> --}}
-                <a class="nav-item nav-link" href="{{route('hr.employees.filterEmployees',$nameA)}}"><i class="fa fa-user"></i>&nbsp;Employee</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-item nav-link" href="{{route('hr.employees.filterEmployees',$nameB)}}"><i class="fa fa-user"></i>&nbsp;Intern</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-item nav-link" href="{{route('hr.employees.filterEmployees',$nameC)}}"><i class="fa fa-user"></i>&nbsp;Contractors</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-item nav-link" href="{{route('hr.employees.filterEmployees',$nameD)}}"><i class="fa fa-user"></i>&nbsp;Support Staff</a>
-            </li>
-        </ul>
-    </div>
     <table class="table table-striped table-bordered">
         <thead class="thead-dark">
         <tr class="sticky-top">

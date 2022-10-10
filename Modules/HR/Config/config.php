@@ -111,13 +111,6 @@ return [
             'absent-interviewer' => 'Interviewer is absent',
         ],
     ],
-    'roles' => [
-        'employee' => [
-            'label' => 'employee',
-            'title' => 'Employee',
-            'class' => 'badge badge-success',
-        ]
-    ],
     'status' => [
         'new' => [
             'label' => 'new',
