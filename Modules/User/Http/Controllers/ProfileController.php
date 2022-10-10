@@ -23,11 +23,6 @@ class ProfileController extends ModuleBaseController
 
     public function update(ProfileEditRequest $request, User $user)
     {
-        // dd($user->profile);
-        //dd($user->employee);
-       // dd($user->);
-    //    dd($user->profile);
-
         $user->name = $request->name;
         $user->nickname = $request->nickName;
         $user->employee->designation = $request->designation;
