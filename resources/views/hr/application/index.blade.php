@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     <div class="text-right ml-5 ml-md-0-search">
-                        <button class="btn btn-info ml-2 text-white active">Search</button>
+                        <button class="btn btn-info ml-2 text-white active fa fa-search"></button>
                     </div>
                 </div>
             </div>
