@@ -89,12 +89,17 @@ Route::middleware('auth')->group(function () {
             Route::post('/edit-response/{id}/{hr_job_id}', 'JobController@editDesiredResumeReasons')->name('response.edit');
             Route::get('/delete-response/{id}/{hr_job_id}', 'JobController@unflagDesiredResume')->name('response.unflag');
             Route::get('/desired-resume/{name}/{id}', 'JobController@showTable')->name('desired.resume');
+            Route::get('/hr-internship', 'JobApplicationController@internIndex')->name('hr.internship');
+            Route::get('/hr-internshipForm', 'JobApplicationController@internForm')->name('hr.internship.form');
+            Route::get('/hr-dwonloadForm/{id}', 'JobApplicationController@downloadForm')->name('hr.download.form');
+            Route::post('/hr-updateInternFormDetails', 'JobApplicationController@updateInternFormDetails')->name('hr.updateInternFormDetails');
 
             Route::resource('job', 'JobApplicationController')
                 ->only(['index', 'edit', 'update', 'store'])
                 ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update', 'store' => 'applications.job.store']);
             Route::get('{application}/get-offer-letter', 'JobApplicationController@getOfferLetter')->name('applications.getOfferLetter');
             Route::get('{application}/save-offer-letter', 'JobApplicationController@saveOfferLetter');
+            Route::get('/get-internship-certificate/{id}', 'JobApplicationController@getInternshipCertificate')->name('applications.getInternshipCertificate');
             Route::post('{application}/sendmail', 'JobApplicationController@sendApplicationMail')->name('application.custom-email');
             Route::post('/teaminteraction', 'JobApplicationController@generateTeamInteractionEmail');
             Route::get('/finishinterview', 'JobApplicationController@markInterviewFinished')->name('markInterviewFinished');

@@ -177,6 +177,7 @@ return [
         'max-reserved-allowed' => 3,
     ],
     'offer-letters-dir' => 'offer-letters',
+    'internship-certificate-dir' => 'internship-certificate',
     'reasons-for-rejections' => [
         'no-response' => 'No response',
         'skills-mismatch' => 'Skills mismatch',

@@ -69,4 +69,24 @@ class FileHelper
 
         return $application->offer_letter;
     }
+
+    public static function generateInternshipCertificate(Applicant $applicant, $internshipCertificatePreview = false)
+    {
+        $pdf = Pdf::loadView('hr.application.internship-certificate', compact('applicant'));
+        $fileName = self::getOfferLetterFileName($pdf, $applicant);
+        if ($internshipCertificatePreview) {
+            return $pdf->stream($fileName);
+        }
+        $fullPath = storage_path('app/' . config('constants.hr.internship-certificate-dir') . '/' . $fileName);
+        $pdf->save($fullPath);
+    }
+
+    public static function getInternshipCertificateFileName(PdfFile $file, Applicant $applicant)
+    {
+        $dashedApplicantName = str_replace(' ', '-', $applicant->name);
+        $timestamp = now()->format('Ymd');
+
+        return "$dashedApplicantName-$timestamp.pdf";
+    }
+
 }

@@ -36,6 +36,9 @@
                 @can('hr_recruitment_applications.view')
                     <a class="dropdown-item" href="{{ route('resources.index') }}">Guidelines And Resources</a>
                 @endcan
+                @can('hr.internship')
+                    <a class="dropdown-item" href="{{ route('hr.internship') }}">Internship Certificate</a>
+                @endcan
             </div>
         </li>
         @endif

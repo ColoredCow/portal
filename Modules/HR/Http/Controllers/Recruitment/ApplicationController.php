@@ -28,6 +28,8 @@ use Modules\HR\Http\Requests\TeamInteractionRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
+use Modules\HR\Emails\Recruitment\SendCertificate;
+use Modules\HR\Entities\Applicant;
 
 abstract class ApplicationController extends Controller
 {
@@ -356,5 +358,54 @@ abstract class ApplicationController extends Controller
         $status = 'Successful Assigned to ' . $scheduledUser;
 
         return redirect(route('applications.job.index'))->with('status', $status);
+    }
+
+    public function getInternshipCertificate($id)
+    {
+        $applicant = Applicant::find($id);
+        $pdf = FileHelper::generateInternshipCertificate($applicant, true);
+
+        return response()->json([
+            'pdf' => $pdf,
+        ]);
+    }
+
+    public function sendInternshipCertificate(Application $application, Request $request)
+    {
+        Mail::send(new SendCertificate($application));
+
+    }
+
+    public function internIndex()
+    {
+        return view('hr::internship');
+    }
+
+    public function internForm()
+    {
+        $applicant = Applicant::get();
+
+        return view('hr::internship-form')->with('applicants', $applicant);
+    }
+
+    public function updateInternFormDetails(Request $request)
+    {
+        $applicantid = $request->get('id');
+        Applicant::updateOrInsert(
+        [
+        'id'=> $applicantid
+        ],
+        [
+            'start_date' => $request['start_date'],
+            'end_date' => $request['end_date'],
+        ]);
+
+        return redirect()->route('hr.download.form', $applicantid);
+    }
+
+    public function downloadForm($id)
+    {
+        $applicant = Applicant::find($id);
+        return view('hr::download-certificate')->with('applicants', $applicant);
     }
 }

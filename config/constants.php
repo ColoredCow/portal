@@ -159,6 +159,7 @@ return [
             'scheduled_person_id' => env('HR_DEFAULT_SCHEDULED_PERSON', 1),
         ],
         'offer-letters-dir' => 'offer-letters',
+        'internship-certificate-dir' =>'internship-certificate',
     ],
     'finance' => [
         'invoice' => [
