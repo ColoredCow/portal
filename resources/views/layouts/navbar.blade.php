@@ -10,7 +10,10 @@
                     <a class="dropdown-item" href="{{ route('applications.job.index') }}">Recruitment</a>
                 @endcan
                 @can('hr_employees.view')
-                    <a class="dropdown-item" href="{{ route('employees') }}">Employees</a>
+                @php
+                    $params = array_merge(['name' => 'employee'], ['status' => 'current']);
+                @endphp
+                    <a class="dropdown-item" href="{{ route('employees',$params) }}">Employees</a>
                 @endcan
                     <a class="dropdown-item" href="{{ route('requisition') }}">Resource Requisition</a>
                     <a class="dropdown-item" href="{{ route('designation') }}">Designations</a>
