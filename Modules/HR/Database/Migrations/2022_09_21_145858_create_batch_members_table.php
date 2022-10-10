@@ -14,11 +14,12 @@ class CreateBatchMembersTable extends Migration
     public function up()
     {
         Schema::create('batch_members', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('batch_id');
             $table->integer('employee_id')->unsigned();
             $table->timestamps();
             $table->foreign('employee_id')->references('id')->on('employees');
+            $table->foreign('batch_id')->references('id')->on('job_requisition');
         });
     }
 
@@ -32,6 +33,7 @@ class CreateBatchMembersTable extends Migration
         Schema::dropIfExists('batch_members', function (Blueprint $table) {
             $table->dropForeign([
                 'employee_id',
+                'batch_id',
             ]);
         });
     }

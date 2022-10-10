@@ -24,4 +24,9 @@ class JobRequisition extends Model
     {
         return $this->belongsTo(Batches::class, 'batch_table_id');
     }
+
+    public function batchMembers()
+    {
+        return $this->hasmany(BatchMembers::class, 'batch_id');
+    }
 }

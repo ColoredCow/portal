@@ -14,4 +14,9 @@ class BatchMembers extends Model
     {
         return $this->belongsTo(JobRequisition::class, 'batch_id');
     }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'employee_id', 'id' );
+    }
 }

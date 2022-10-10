@@ -13,6 +13,7 @@
         <tr class="sticky-top">
             <th>Domain</th>
             <th>Job Title</th>
+            <th>Hired Batch</th>
             <th>Date</th>
             <th>Action</th>
         </tr>
@@ -22,8 +23,15 @@
                 {{ $requisition->hrJobDomain->domain}}
             </td>
             <td>
-                {{$requisition->job->title}}     
-                    
+                {{$requisition->job->title}}
+            </td>
+            <td>
+                @foreach ($requisition->batchMembers ?: [] as $teamMember)
+                    <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
+                        title="{{ $teamMember->employee->user->name }}">
+                        <img src="{{ $teamMember->employee->user->avatar }}" class="w-35 h-30 rounded-circle mb-1 mr-0.5" >
+                    </span>
+                @endforeach
             </td>
             <td>
                 <span {{ $requisition->id }}>{{$requisition->created_at}}</span>

@@ -26,7 +26,7 @@ class RequisitionController extends Controller
         $this->service = $service;
     }
 
-    public function index(JobRequisition $jobRequisition)
+    public function index()
     {
         $requisitions = $this->service->index();
         $batchMember = $requisitions->first();

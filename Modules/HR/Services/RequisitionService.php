@@ -13,6 +13,6 @@ class RequisitionService
 
     public function showCompletedRequisition()
     {
-        return JobRequisition::with('hrJobDomain', 'job', 'batches')->where('status', 'completed')->get();
+        return JobRequisition::with('hrJobDomain', 'job')->where('status', 'completed')->get();
     }
 }
