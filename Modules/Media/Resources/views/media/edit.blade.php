@@ -30,7 +30,6 @@
                     @if(pathinfo($media->file_url, PATHINFO_EXTENSION) == 'jpg' || pathinfo($media->file_url, PATHINFO_EXTENSION) == 'jpeg' || pathinfo($media->file_url, PATHINFO_EXTENSION) == 'png' )
                         <img src="{{ asset('storage/media/'.$media->file_url) }}" class="card-img-top img-fluid ">
                     @endif
-        
                     <div class="my-2"><h3 class="text-secondary">Description</h3>
                         <textarea name="description" id="description" rows="6" class="form-control" placeholder="Description" required>{{ $media->description }}</textarea>
                     </div>

@@ -8,7 +8,14 @@
         <div class="col-lg-3 mb-3">
             <div class="card shadow">
                 <a href="{{ route('media.show', $row->id) }}">
-                    <img src="{{ asset('storage/media/'.$row->img_url) }}" class="card-img-top img-fluid ">
+                    @if(pathinfo($row->file_url, PATHINFO_EXTENSION) == 'mp4' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'mpeg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'mov' ||  pathinfo($row->file_url, PATHINFO_EXTENSION) == 'avi'  )
+                    <video class="container" controls>
+                        <source src="{{asset('storage/media/'.$row->file_url)}}" type="video/mp4">
+                    </video>
+                    @endif
+                    @if(pathinfo($row->file_url, PATHINFO_EXTENSION) == 'jpg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'jpeg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'png' )
+                        <img src="{{ asset('storage/media/'.$row->file_url) }}" class="card-img-top img-fluid ">
+                    @endif
                 </a>
                 <div class="card-body">
                     <p>
@@ -27,7 +34,7 @@
             </div>
         </div>
         @empty
-        <h2 class="text-center text-secondary p-4">No post found in the database!</h2>
+        <h2 class="text-center text-secondary p-4">No post found!</h2>
         @endforelse
     </div>
 </div>
