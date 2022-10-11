@@ -16,8 +16,8 @@ class HrJobDomain extends Model
         return $query->where('slug', $slug);
     }
 
-    public function designations()
-    {
-        return $this->hasMany(HrJobDesignation::class);
-    }
+    // public function designations()
+    // {
+    //     return $this->hasMany(HrJobDesignation::class);
+    // }
 }
