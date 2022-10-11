@@ -8,7 +8,7 @@
     <div class="d-flex">
         <h1>Employees ({{count($employees)}})</h1>
         <form id="employeeFilterForm">
-            <input type="hidden" name="status" value="{{ request()->input('status', 'current') }}">
+            <input type="hidden" name="name" value="{{ request()->input('name', 'employee') }}">
             <div class='form-group w-130' class="d-inline">
                 <select class="form-control bg-info text-white ml-3" name="status"  onchange="document.getElementById('employeeFilterForm').submit();">
                     <option {{ $filters['status'] == 'current' ? "selected=selected" : '' }} value="current">Current</option>
@@ -25,6 +25,7 @@
             <th>Joined on</th>
             <th>Projects Count</th>
             <th>Current FTE</th>
+            <th>AMC FTE</th>
         </tr>
         @foreach ($employees as $employee)
             <tr>
@@ -32,8 +33,8 @@
                     <a href={{ route('employees.show', $employee->id) }}>{{ $employee->name }}</a>
                 </td>
                 <td>
-                    @if ($employee->designation)
-                        {{ $employee->designation }}
+                    @if ($employee->designation_id)
+                        {{ $employee->hrJobDesignation->designation }}
                     @else
                         -
                     @endif
@@ -56,16 +57,19 @@
                 </td>
                 <td>
                     @if ($employee->user == null)
-                        <span class="text-danger font-weight-bold">{{ $employee->user ? $employee->user->fte :'NA' }}</span>
-                    @elseif ($employee->user->fte > 1 && $employee->domain_id != null)
+                        <span class="text-danger font-weight-bold">{{ $employee->user ? $employee->user->ftes['main'] :'NA' }}</span>
+                    @elseif ($employee->user->ftes['main'] > 1 && $employee->domain_id != null)
                         <a class="text-success font-weight-bold" href={{ route('employees.alert',['domain_id' => $employee->domain_id]) }} style="text-decoration: none;">
-                            {{ $employee->user->fte }} &nbsp;&nbsp;&nbsp;<span class="text-danger"><i class="fa fa-warning fa-lg"></i></span>
+                            {{ $employee->user->ftes['main'] }} &nbsp;&nbsp;&nbsp;<span class="text-danger"><i class="fa fa-warning fa-lg"></i></span>
                         </a>
-                    @elseif ($employee->user->fte >= 1)
-                        <span class="text-success font-weight-bold">{{ $employee->user->fte }}</span>
+                    @elseif ($employee->user->ftes['main'] >= 1)
+                        <span class="text-success font-weight-bold">{{ $employee->user->ftes['main'] }}</span>
                     @else
-                        <span class="text-danger font-weight-bold">{{ $employee->user ? $employee->user->fte :'NA' }}</span>
+                        <span class="text-danger font-weight-bold">{{ $employee->user ? $employee->user->ftes['main'] :'NA' }}</span>
                     @endif
+                </td>
+                <td>
+                    <span class="{{ $employee->user ? ($employee->user->ftes['amc'] > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->ftes['amc']  :'NA' }}</span>
                 </td>
             </tr>
         @endforeach

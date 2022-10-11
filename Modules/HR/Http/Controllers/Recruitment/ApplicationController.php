@@ -7,15 +7,18 @@ use App\Models\Setting;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Modules\HR\Emails\Recruitment\Application\ApplicationHandover;
 use Modules\HR\Emails\Recruitment\Application\JobChanged;
 use Modules\HR\Emails\Recruitment\Application\RoundNotConducted;
-use Modules\HR\Emails\Recruitment\Application\ApplicationHandover;
+use Modules\HR\Entities\ApplicantMeta;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationMeta;
+use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\Round;
 use Modules\HR\Entities\University;
@@ -24,6 +27,7 @@ use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
 use Modules\HR\Http\Requests\TeamInteractionRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 abstract class ApplicationController extends Controller
 {
@@ -34,6 +38,16 @@ abstract class ApplicationController extends Controller
     public function __construct(ApplicationService $service)
     {
         $this->service = $service;
+    }
+
+    public function markInterviewFinished(Request $request)
+    {
+        $ApplicationRound = ApplicationRound::find($request->documentId);
+        $this->service->markInterviewFinished($ApplicationRound);
+
+        return response()->json([
+            'status' => 200, 'actual_end_time' => $ApplicationRound->actual_end_time->format('H:i:s'), 'html' => view('hr.application.meeting-duration')->with(['applicationRound' => $ApplicationRound])->render(),
+        ]);
     }
 
     /**
@@ -68,8 +82,8 @@ abstract class ApplicationController extends Controller
             'search' => request()->get('search'),
             'tags' => request()->get('tags'),
             'assignee' => request()->get('assignee'), // TODO
-            'round' =>str_replace('-', ' ', request()->get('round')),
-            'roundFilters' => request()->get('roundFilters')
+            'round' => str_replace('-', ' ', request()->get('round')),
+            'roundFilters' => request()->get('roundFilters'),
         ];
         $loggedInUserId = auth()->id();
         $applications = Application::join('hr_application_round', function ($join) {
@@ -138,6 +152,15 @@ abstract class ApplicationController extends Controller
             $attr['openApplicationsCountForJobs'][$application->job->title] = $openApplicationCountForJob;
         }
 
+        $attr['applicantId'] = [];
+        $applications = Application::get('hr_applicant_id');
+        foreach ($applications as $application) {
+            $applicantID = ApplicantMeta::where('hr_applicant_id', $application->hr_applicant_id)->first();
+            if ($applicantID) {
+                $attr['applicantId'] = $applicantID;
+            }
+        }
+
         return view('hr.application.index')->with($attr);
     }
 
@@ -161,7 +184,12 @@ abstract class ApplicationController extends Controller
         $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta', 'applicationRounds.followUps', 'tags']);
         $job = $application->job;
         $approveMailTemplate = Setting::getApplicationApprovedEmail();
+        $approveMailTemplate = str_replace('|APPLICANT NAME|', $application->applicant->name, $approveMailTemplate);
+        $approveMailTemplate = str_replace('|JOB TITLE|', $application->job->title, $approveMailTemplate);
+        $approveMailTemplate = str_replace('|LINK|', config('app.url') . '/viewForm/' . $application->applicant->id . '/' . encrypt($application->applicant->email), $approveMailTemplate);
+
         $offerLetterTemplate = Setting::getOfferLetterTemplate();
+        $desiredResume = DB::table('hr_applications')->select(['hr_applications.resume'])->where('hr_applications.hr_job_id', '=', $job->id)->where('is_desired_resume', '=', 1)->get();
         $attr = [
             'applicant' => $application->applicant,
             'application' => $application,
@@ -172,6 +200,7 @@ abstract class ApplicationController extends Controller
             'offer_letter' => $application->offer_letter,
             'approveMailTemplate' => $approveMailTemplate,
             'offerLetterTemplate' => $offerLetterTemplate,
+            'desiredResume' => $desiredResume,
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],
@@ -213,6 +242,21 @@ abstract class ApplicationController extends Controller
             'subject' => $subject->setting_value,
             'body' => $body->setting_value,
         ]);
+    }
+
+    public function saveOfferLetter(Application $application)
+    {
+        $offer_letter_body = Setting::getOfferLetterTemplate()['body'];
+        $job = $application->job;
+        $applicant = $application->applicant;
+        $pdf = Pdf::loadView('hr.application.draft-joining-letter', compact('applicant', 'job', 'offer_letter_body'));
+        $fileName = FileHelper::getOfferLetterFileName($pdf, $applicant);
+        $directory = 'app/public/' . config('constants.hr.offer-letters-dir');
+        if (! is_dir(storage_path($directory)) && ! file_exists(storage_path($directory))) {
+            mkdir(storage_path($directory), 0, true);
+        }
+        $fullPath = storage_path($directory . '/' . $fileName);
+        $pdf->save($fullPath);
     }
 
     public static function getOfferLetter(Application $application, Request $request)
@@ -299,14 +343,17 @@ abstract class ApplicationController extends Controller
         return redirect()->back()->with('status', 'Your request has successfully been sent');
     }
 
-    public function acceptHandoverRequest(Application $application)
+    public function acceptHandoverRequest(Request $request, Application $application)
     {
+        $scheduledPersonId = $request->get('user');
+
         $applicationRound = $application->latestApplicationRound;
         $applicationRound->update([
-            'scheduled_person_id' => auth()->user()->id
+            'scheduled_person_id' => $scheduledPersonId,
         ]);
+        $scheduledUser = User::where('id', $scheduledPersonId)->first()->name;
 
-        $status = 'Successful Assigned to ' . auth()->user()->name;
+        $status = 'Successful Assigned to ' . $scheduledUser;
 
         return redirect(route('applications.job.index'))->with('status', $status);
     }

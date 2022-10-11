@@ -22,13 +22,13 @@
                             </button>
                         </div>
                     </div>
-                    <div class="text-right ml-5 ml-md-0-search">
-                        <button class="btn btn-info ml-2 text-white active">Search</button>
+                    <div class="text-right ml-6 ml-md-0-search ">
+                        <button class="btn btn-info text-white "><i class="fa fa-search">search</i></button>
                     </div>
                 </div>
             </div>
             <div class="text-right ml-5 ml-md-0">
-                <a href="{{ route('hr.applicant.create') }}" class="btn btn-primary text-white">Add new application</a>
+                <a href="{{ route('hr.applicant.create') }}" class="btn btn-success float-right"><i class="fa fa-plus mr-1"></i>Add new application</a>
             </div>
         </div>
         <div class="md-row d-md-flex flex-md-row-reverse ml-4 ml-md-3 mt-sm-2 mt-md-0">
