@@ -47,12 +47,14 @@ class HrJobDesignationService
             'name'=>'required'
         ]
         );
-        $domain_id = DB::table('hr_job_domains')->select('id')->where('domain', $request['domain'])->first();
-        $hrJobDesignation = HrJobDesignation::find($id);
-        $hrJobDesignation->designation = $request['name'];
-        $hrJobDesignation->slug = Str::slug($request['name']);
-        $hrJobDesignation->domain_id = $domain_id->id;
-        $hrJobDesignation->save();
+        if ($request['domain'] != 'Select Domain') {
+            $domain_id = DB::table('hr_job_domains')->select('id')->where('domain', $request['domain'])->first();
+            $hrJobDesignation = HrJobDesignation::find($id);
+            $hrJobDesignation->designation = $request['name'];
+            $hrJobDesignation->slug = Str::slug($request['name']);
+            $hrJobDesignation->domain_id = $domain_id->id;
+            $hrJobDesignation->save();
+        }
     }
 
     public function destroy(HrJobDesignation $request, $id)
