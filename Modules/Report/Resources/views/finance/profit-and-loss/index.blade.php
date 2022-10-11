@@ -15,7 +15,7 @@
                     <div class="card h-75 ">
                         <a class="card-body text-decoration-none"
                             href="{{ route('reports.finance.profit-and-loss.detailed') }}">
-                            <h2 class="text-center">Detailed</h2><br>
+                            <h2 class="text-center">Detailed P&L Report</h2><br>
                         </a>
                     </div>
                 </div>
