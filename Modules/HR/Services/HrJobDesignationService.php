@@ -29,8 +29,7 @@ class HrJobDesignationService
             'name' => 'required'
         ]
         );
-        if($request['domain']=='Select Domain') {
-        }else{
+        if($request['domain']!='Select Domain') {
             $domain_id = DB::table('hr_job_domains')->select('id')->where('domain', $request['domain'])->first();
             $jobDesignation = new HrJobDesignation();
             $jobDesignation->designation = $request['name'];
