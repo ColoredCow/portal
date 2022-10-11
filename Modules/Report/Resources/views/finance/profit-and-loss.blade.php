@@ -60,10 +60,10 @@
         </div>
 
         @php
-            $lastYear = $currentYear - 1;
-            $currentYearVal = substr($currentYear, -2);
+            $startYear = request()->input('year', $currentYear);
+            $lastYear = $startYear - 1;
+            $startYearVal = substr($startYear, -2);
             $lastYearVal = substr($lastYear, -2);
-            
         @endphp
 
         <div>
@@ -82,9 +82,9 @@
                         <th>Oct-{{ $lastYearVal }}</th>
                         <th>Nov-{{ $lastYearVal }} </th>
                         <th>Dec-{{ $lastYearVal }}</th>
-                        <th>Jan-{{ $currentYearVal }} </th>
-                        <th>Feb-{{ $currentYearVal }}</th>
-                        <th>Mar-{{ $currentYearVal }}</th>
+                        <th>Jan-{{ $startYearVal }} </th>
+                        <th>Feb-{{ $startYearVal }}</th>
+                        <th>Mar-{{ $startYearVal }}</th>
                     </tr>
                 </thead>
 
@@ -104,9 +104,9 @@
                             <td>{{ $perticular['amounts']["10-$lastYearVal"] ?? 0 }}</td>
                             <td>{{ $perticular['amounts']["11-$lastYearVal"] ?? 0 }}</td>
                             <td>{{ $perticular['amounts']["12-$lastYearVal"] ?? 0 }}</td>
-                            <td>{{ $perticular['amounts']["01-$currentYearVal"] ?? 0 }}</td>
-                            <td>{{ $perticular['amounts']["02-$currentYearVal"] ?? 0 }}</td>
-                            <td>{{ $perticular['amounts']["03-$currentYearVal"] ?? 0 }}</td>
+                            <td>{{ $perticular['amounts']["01-$startYearVal"] ?? 0 }}</td>
+                            <td>{{ $perticular['amounts']["02-$startYearVal"] ?? 0 }}</td>
+                            <td>{{ $perticular['amounts']["03-$startYearVal"] ?? 0 }}</td>
                         </tr>
                     @endforeach
 
@@ -123,9 +123,9 @@
                         <td>{{ array_sum(array_column($allAmounts, "10-$lastYearVal")) }}</td>
                         <td>{{ array_sum(array_column($allAmounts, "11-$lastYearVal")) }}</td>
                         <td>{{ array_sum(array_column($allAmounts, "12-$lastYearVal")) }}</td>
-                        <td>{{ array_sum(array_column($allAmounts, "01-$currentYearVal")) }}</td>
-                        <td>{{ array_sum(array_column($allAmounts, "02-$currentYearVal")) }}</td>
-                        <td>{{ array_sum(array_column($allAmounts, "03-$currentYearVal")) }}</td>
+                        <td>{{ array_sum(array_column($allAmounts, "01-$startYearVal")) }}</td>
+                        <td>{{ array_sum(array_column($allAmounts, "02-$startYearVal")) }}</td>
+                        <td>{{ array_sum(array_column($allAmounts, "03-$startYearVal")) }}</td>
                     </tr>
 
                 </tbody>

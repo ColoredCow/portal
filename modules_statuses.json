@@ -17,5 +17,9 @@
     "EffortTracking": true,
     "SalesAutomation": true,
     "Report": true,
-    "Expense": true
+    "Expense": true,
+    "Media": true,
+    "Post": true,
+    "Revenue": true,
+    "ProjectContract": true
 }

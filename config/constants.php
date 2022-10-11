@@ -1,6 +1,12 @@
 <?php
 
 return [
+    'office_locations' => [
+        'gurgaon' => 'Gurgaon',
+        'tehri' => 'Tehri',
+        'ranchi' => 'Ranchi',
+        'dwarahat' => 'Dwarahat'
+    ],
     'gsuite' => [
         'service-account-impersonate' => env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'),
         'client-hd' => env('GOOGLE_CLIENT_HD', ''),
@@ -90,7 +96,7 @@ return [
             'new' => [
                 'label' => 'new',
                 'title' => 'New',
-                'class' => 'badge badge-info',
+                'class' => 'badge badge-success',
             ],
             'on-hold' => [
                 'label' => 'on-hold',
@@ -136,6 +142,11 @@ return [
                 'label' => 'onboarded',
                 'title' => 'Onboarded',
                 'class' => 'badge badge-success',
+            ],
+            'submitted-offer-letter-details' => [
+                'label' => 'submitted-offer-letter-details',
+                'title' => 'Submitted Offer Letter Details',
+                'class' => 'badge badge-light',
             ],
 
             'custom-mail' => [

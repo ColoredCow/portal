@@ -46,6 +46,8 @@ Route::middleware('auth')->group(function () {
             ->names(['index' => 'hr.tags.index', 'edit' => 'hr.tags.edit', 'update' => 'hr.tags.update', 'store' => 'hr.tags.store', 'destroy' => 'hr.tags.delete']);
 
         Route::prefix('recruitment')->namespace('Recruitment')->group(function () {
+            Route::get('application/{application}/handover', 'JobApplicationController@applicationHandoverRequest')->name('application.handover');
+            Route::get('application/{application}/assign-to', 'JobApplicationController@acceptHandoverRequest')->name('application.handover.confirmation');
             Route::post('{applicant}/update-university', 'ApplicantController@updateUniversity')->name('hr.applicant.update-university');
             Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
             Route::post('reports', 'ReportsController@searchBydate')->name('recruitment.report');
@@ -83,13 +85,19 @@ Route::middleware('auth')->group(function () {
             Route::get('internship/{application}/offer-letter', 'InternshipApplicationController@viewOfferLetter')->name('applications.internship.offer-letter');
 
             Route::post('/store', 'JobController@storeJobdomain')->name('hr-job-domains.storeJobdomain');
+            Route::post('/store-response/{id}', 'JobController@storeResponse')->name('response.store');
+            Route::post('/edit-response/{id}/{hr_job_id}', 'JobController@editDesiredResumeReasons')->name('response.edit');
+            Route::get('/delete-response/{id}/{hr_job_id}', 'JobController@unflagDesiredResume')->name('response.unflag');
+            Route::get('/desired-resume/{name}/{id}', 'JobController@showTable')->name('desired.resume');
 
             Route::resource('job', 'JobApplicationController')
                 ->only(['index', 'edit', 'update', 'store'])
                 ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update', 'store' => 'applications.job.store']);
             Route::get('{application}/get-offer-letter', 'JobApplicationController@getOfferLetter')->name('applications.getOfferLetter');
+            Route::get('{application}/save-offer-letter', 'JobApplicationController@saveOfferLetter');
             Route::post('{application}/sendmail', 'JobApplicationController@sendApplicationMail')->name('application.custom-email');
             Route::post('/teaminteraction', 'JobApplicationController@generateTeamInteractionEmail');
+            Route::get('/finishinterview', 'JobApplicationController@markInterviewFinished')->name('markInterviewFinished');
             Route::get('/onHoldEmail', 'JobApplicationController@generateOnHoldEmail');
 
             Route::resource('internship', 'InternshipApplicationController')
@@ -115,6 +123,32 @@ Route::middleware('auth')->group(function () {
                 'show' => 'employees.show',
             ]);
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
+        Route::get('fte-handler/{domain_id}', 'EmployeeController@showFTEdata')->name('employees.alert');
+
+        Route::resource('requisition', 'RequisitionController')
+            ->only(['index', 'show', 'store'])
+            ->names([
+                'index' => 'requisition',
+                'show' => 'requisition.show',
+                'store' => 'requisition.store',
+            ]);
+        Route::get('/completed/change-status/{jobRequisition}', 'RequisitionController@storecompleted');
+        Route::get('/pending/{jobRequisition}', 'RequisitionController@storePending');
+        Route::get('/complete', 'RequisitionController@showCompletedRequisition')->name('requisition.complete');
+        Route::post('/details', 'RequisitionController@storeBatchDetails')->name('requisition.storeBatchDetails');
+
+        Route::resource('designation', 'HrJobDesignationController')
+        ->only(['index', 'show'])
+        ->names([
+            'index' => 'designation',
+        ]);
+        Route::post('/delete/{id}', 'HrJobDesignationController@destroy')->name('designation.delete');
+        Route::get('/{id}/edit', 'HrJobDesignationController@edit')->name('designation.edit');
+        Route::post('/store', 'HrJobDesignationController@storeDesignation')->name('hr-job-designation.storeJobDesignation');
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');
+Route::get('/viewForm/{id}/{email}', 'Recruitment\ApplicantController@viewForm')->name('hr.applicant.view-form');
+Route::post('/storeApprovedApplicantDetails', 'Recruitment\ApplicantController@storeApprovedApplicantDetails')->name('hr.applicant.store-approved-applicants-details');
+Route::get('/formSubmitted/{id}/{email}', 'Recruitment\ApplicantController@formSubmit')->name('hr.applicant.applicant-onboarding-form');
+Route::get('/showApplicantFormDetails/{id}', 'Recruitment\ApplicantController@showOnboardingFormDetails')->name('hr.applicant.show-onboarding-applicant-form-details');

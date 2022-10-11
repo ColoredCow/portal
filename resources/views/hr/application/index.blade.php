@@ -22,13 +22,13 @@
                             </button>
                         </div>
                     </div>
-                    <div class="text-right ml-5 ml-md-0-search">
-                        <button class="btn btn-info ml-2 text-white active">Search</button>
+                    <div class="text-right ml-6 ml-md-0-search ">
+                        <button class="btn btn-info text-white "><i class="fa fa-search">search</i></button>
                     </div>
                 </div>
             </div>
             <div class="text-right ml-5 ml-md-0">
-                <a href="{{ route('hr.applicant.create') }}" class="btn btn-primary text-white">Add new application</a>
+                <a href="{{ route('hr.applicant.create') }}" class="btn btn-success float-right"><i class="fa fa-plus mr-1"></i>Add new application</a>
             </div>
         </div>
         <div class="md-row d-md-flex flex-md-row-reverse ml-4 ml-md-3 mt-sm-2 mt-md-0">
@@ -219,7 +219,7 @@
                     <span class="dropdown-item-text fz-12">Round wise filter</span>
                     @foreach ($roundFilters as $roundFilter)
                         @php
-                            $target =  route(request()->route()->getName(), ['roundFilters' => [$roundFilter->id]]);
+                            $target =  request()->fullUrlWithQuery(['roundFilters' => [$roundFilter->id]]);
                             $class = in_array($roundFilter->id, request()->get('roundFilters') ?? []) ? 'visible' : 'invisible';
                         @endphp
                         <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
@@ -236,7 +236,7 @@
                     <span class="dropdown-item-text fz-12">Filter by assignee</span>
                     @foreach ($assignees as $assignee)
                     @php
-                        $target = route(request()->route()->getName(), ['assignee' => [$assignee->id]]);
+                        $target = request()->fullUrlWithQuery(['assignee' => [$assignee->id]]);
                         $class = in_array($assignee->id, request()->get('assignee') ?? []) ? 'visible' : 'invisible';
                     @endphp
                     <a class="dropdown-item" href="{{ $target }}">
