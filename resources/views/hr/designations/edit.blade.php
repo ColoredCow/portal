@@ -18,7 +18,7 @@
                     <input type="hidden" name="domainName" id="domainName" value="">
                         <div class='form-group'>
                             <label class="field-required" for="designationfield">domain</label>
-                            <select name="status" class="form-control">
+                            <select name="status" class="form-control" required>
                                 @foreach($domains as $domain)
                                 <option value="{{$domain->domain}}">{{$domain->domain}}</option>
                                 @endforeach
