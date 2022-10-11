@@ -1102,6 +1102,18 @@
                                                                         @endif
                                                                     </div>
                                                                 </div>
+                                                                @if (!$desiredResume->isempty())
+                                                                <div class="form-group col-md-5">
+                                                                    <label
+                                                                        class="text-secondary fz-14 leading-none mb-0.16">Resume
+                                                                        Link</label>
+                                                                    <div>
+                                                                        <a href="{{ route('desired.resume', [str_slug($application->job->title), $application->job->id]) }}"
+                                                                            target="_blank">Sample Desired Resume
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                @endif
                                                                 @if (isset($applicant->reference))
                                                                     <div class="form-group col-md-5">
                                                                         <label
@@ -1332,8 +1344,9 @@
                                                                 <option value="onboard">Onboard</option>
                                                             </select>
                                                             <button type="button" class="btn btn-success ml-2"
-                                                                @click="takeAction()">Take
+                                                                @click="takeAction()" id="takeAction">Take
                                                                 action</button>
+
                                                         @endif
                                                         <!-- Button trigger modal -->
                                                         <button type="button" class="btn btn-primary p-0 px-1 py-1 ml-2"
@@ -1397,4 +1410,5 @@
             </div>
         </div>
     </div>
+    @include('hr.application.desired-resume')
 @endsection

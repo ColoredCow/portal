@@ -1,7 +1,7 @@
-<!-- <div class="form-group">
+<div class="form-group">
     <label class="font-weight-bold" for="">Designation:</label>
     <span>{{ Str::title($user->profile->designation) }}</span>
-</div> -->
+</div>
 
 <div class="form-group">
     <label class="font-weight-bold" for="">Mobile:</label>

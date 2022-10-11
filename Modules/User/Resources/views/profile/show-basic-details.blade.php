@@ -27,7 +27,7 @@
                       </div>
                       <div class="form-group">
                           <label for="designation">Designation</label>
-                          <input type="text" class="form-control" id="designation" name="designation" required value="{{ $user->employee && $user->employee->designation ? $user->employee->designation : "" }}">
+                          <input type="text" class="form-control" id="designation" name="designation" required value="{{ $user->profile && $user->profile->designation ? $user->profile->designation : "" }}">
                       </div>
                       <div class="form-group">
                           <label>Domain</label>
@@ -109,10 +109,6 @@
               <div class="form-group">
                   <label class="font-weight-bold" for="">Nickame:</label>
                   <span>{{ $user->nickname }}</span>
-              </div>
-              <div class="form-group">
-                  <label class="font-weight-bold" for="">Designation:</label>
-                  <span>{{ $user->employee->designation }}</span>
               </div>
               <div class="form-group">
                   <label class="font-weight-bold" for="">Domain:</label>
