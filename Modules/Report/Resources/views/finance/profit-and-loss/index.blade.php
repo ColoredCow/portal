@@ -13,7 +13,8 @@
             <div class="d-flex justify-content-start row flex-wrap">
                 <div class="col-md-3">
                     <div class="card h-75 ">
-                        <a class="card-body text-decoration-none" href="{{ route('reports.finance.profit-and-loss') }}">
+                        <a class="card-body text-decoration-none"
+                            href="{{ route('reports.finance.profit-and-loss.detailed') }}">
                             <h2 class="text-center">Detailed</h2><br>
                         </a>
                     </div>
@@ -47,7 +48,7 @@
             <div class="d-flex justify-content-start row flex-wrap">
                 <div class="col-md-3">
                     <div class="card h-75 bg-theme-gray-lighter">
-                        <a class="card-body text-decoration-none" href="{{ route('reports.finance.profit-and-loss') }}">
+                        <a class="card-body text-decoration-none" href="#">
                             <h2 class="text-center">Variance reasons</h2><br>
                         </a>
                     </div>

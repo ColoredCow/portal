@@ -12,7 +12,7 @@
             <div class="d-flex justify-content-start row flex-wrap">
                 <div class="col-md-3">
                     <div class="card h-75 ">
-                        <a class="card-body no-transition" href="{{ route('reports.finance.profit-and-loss') }}">
+                        <a class="card-body no-transition" href="{{ route('reports.finance.profit-and-loss.index') }}">
                             <h2 class="text-center">Profit and Loss</h2><br>
                         </a>
                     </div>

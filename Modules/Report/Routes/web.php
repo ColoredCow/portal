@@ -23,5 +23,10 @@ Route::prefix('report')->group(function () {
         Route::get('dashboard', 'FinanceReportController@dashboard')->name('reports.finance.dashboard');
         Route::get('profit-and-loss', 'FinanceReportController@profitAndLoss')->name('reports.finance.profit-and-loss');
         Route::get('get-report-data', 'FinanceReportController@getReportData')->name('reports.finance.get-report-data');
+
+        Route::prefix('profit-and-loss')->group(function () {
+            Route::get('/', 'ProfitAndLossReportController@index')->name('reports.finance.profit-and-loss.index');
+            Route::get('/detailed', 'ProfitAndLossReportController@detailed')->name('reports.finance.profit-and-loss.detailed');
+        });
     });
 });
