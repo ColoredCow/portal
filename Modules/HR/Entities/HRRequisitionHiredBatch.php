@@ -8,7 +8,7 @@ class HRRequisitionHiredBatch extends Model
 {
     protected $guarded = [];
 
-    protected $table = 'hr_requisiton_hired_batches';
+    protected $table = 'hr_requisition_hired_batches';
 
     public function jobRequisition()
     {
