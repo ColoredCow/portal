@@ -1274,7 +1274,7 @@
                                                                 <button type="button" class="btn btn-primary ml-auto"
                                                                     data-toggle="modal"
                                                                     data-target="#round_{{ $applicationRound->id }}">Send
-                                                                    111</button>
+                                                                    mail</button>
                                                             @endif
                                                         @elseif ($showFooter == "To_approve")
                                                                 @if ($applicationRound->mail_sent)
