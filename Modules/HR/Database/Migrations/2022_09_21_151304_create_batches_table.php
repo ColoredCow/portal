@@ -13,8 +13,9 @@ class CreateBatchesTable extends Migration
      */
     public function up()
     {
-        Schema::create('batches', function (Blueprint $table) {
+        Schema::create('hr_requisiton_hired_batches', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedBigInteger('batch_id');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ class CreateBatchesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('batches');
+        Schema::dropIfExists('hr_requisiton_hired_batches');
     }
 }

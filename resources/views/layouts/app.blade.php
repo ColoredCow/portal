@@ -108,7 +108,6 @@
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
     <script src="{{ asset('src/tinymce/js/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
 
     @yield('js_scripts')
     @yield('vue_scripts')

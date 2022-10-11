@@ -26,10 +26,10 @@
                 {{$requisition->job->title}}
             </td>
             <td>
-                @foreach ($requisition->batchMembers ?: [] as $teamMember)
+                @foreach ($requisition->hRRequisitionHiredBatchMembers ?: [] as $teamMember)
                     <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
-                        title="{{ $teamMember->employee->user->name }}">
-                        <img src="{{ $teamMember->employee->user->avatar }}" class="w-35 h-30 rounded-circle mb-1 mr-0.5" >
+                        title="{{ optional($teamMember->employee->user)->name }}">
+                        <img src="{{ optional($teamMember->employee->user)->avatar }}" class="w-35 h-30 rounded-circle mb-1 mr-0.5" >
                     </span>
                 @endforeach
             </td>

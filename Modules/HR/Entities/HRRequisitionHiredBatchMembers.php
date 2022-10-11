@@ -4,11 +4,11 @@ namespace Modules\HR\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BatchMembers extends Model
+class HRRequisitionHiredBatchMembers extends Model
 {
     protected $guarded = [];
 
-    protected $table = 'batch_members';
+    protected $table = 'hr_requisiton_hired_batch_members';
 
     public function jobRequisition()
     {

@@ -8,7 +8,7 @@ class JobRequisition extends Model
 {
     protected $guarded = [];
 
-    protected $table = 'job_Requisition';
+    protected $table = 'job_requisition';
 
     public function job()
     {
@@ -22,11 +22,11 @@ class JobRequisition extends Model
 
     public function batches()
     {
-        return $this->belongsTo(Batches::class, 'batch_table_id');
+        return $this->belongsTo(HRRequisitionHiredBatch::class, 'hired_batch_id');
     }
 
-    public function batchMembers()
+    public function hRRequisitionHiredBatchMembers()
     {
-        return $this->hasmany(BatchMembers::class, 'batch_id');
+        return $this->hasmany(HRRequisitionHiredBatchMembers::class, 'batch_id');
     }
 }

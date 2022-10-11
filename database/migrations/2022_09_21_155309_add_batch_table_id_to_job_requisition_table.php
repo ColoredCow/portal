@@ -14,8 +14,8 @@ class AddBatchTableIdToJobRequisitionTable extends Migration
     public function up()
     {
         Schema::table('job_requisition', function (Blueprint $table) {
-            $table->integer('batch_table_id')->unsigned()->nullable();
-            $table->foreign('batch_table_id')->references('id')->on('batches')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('hired_batch_id')->unsigned()->nullable();
+            $table->foreign('hired_batch_id')->references('id')->on('hr_requisiton_hired_batches')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -27,7 +27,7 @@ class AddBatchTableIdToJobRequisitionTable extends Migration
     public function down()
     {
         Schema::table('job_requisition', function (Blueprint $table) {
-            $table->dropForeign(['batch_table_id']);
+            $table->dropForeign(['hired_batch_id']);
         });
     }
 }
