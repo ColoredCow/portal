@@ -5,7 +5,7 @@
         <br>
 
         <div class="d-flex justify-content-between mb-2">
-            <h4 class="mb-1 pb-1">Finance Dashboard</h4>
+            <h4 class="mb-1 pb-1 font-muli-bold">Finance Dashboard</h4>
         </div>
 
         <div>
@@ -19,7 +19,6 @@
                 </div>
                 <div class="col-md-3">
                     <div class="card h-75 ">
-                        {{-- We need to fix the routing and file structure for this. --}}
                         <a class="card-body no-transition" href="{{ route('invoice.details') }}">
                             <h2 class="text-center">Monthly GST</h2><br>
                         </a>

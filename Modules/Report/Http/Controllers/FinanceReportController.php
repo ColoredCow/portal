@@ -43,7 +43,7 @@ class FinanceReportController extends Controller
             return $item['amounts'];
         }, $reportData);
 
-        return view('report::finance.profit-and-loss', ['reportData' => $reportData, 'currentYear' => $currentYear, 'allAmounts' => $allAmounts]);
+        return view('report::finance.profit-and-loss.index', ['reportData' => $reportData, 'currentYear' => $currentYear, 'allAmounts' => $allAmounts]);
     }
 
     public function getReportData(Request $request)
