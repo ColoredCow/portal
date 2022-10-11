@@ -31,11 +31,10 @@
                 </div>
                 <div class="mr-2 mt-2 mt-md-0 form-group">
                     <label>All Locations</label><br>
-                    <select name="center_head" class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" id="center_head_id" required>
-                      <option value ="" selected> All OfficeLocation</option>
+                    <select class="form-control" name="officelocationId">
+                        <option value="" disabled>Select OfficeLocation</option>
                       @foreach ( $officelocations as $officelocation )
-                        <option value ="{{ $officelocation->id }}">{{$officelocation->location}}</option>
-                        
+                      <option {{$officelocation['id'] == $officelocation->location ? "selected" : ""}} value="{{ $officelocation['id'] }}">{{$officelocation['location']}}</option>
                       @endforeach
                     </select>
                    </div>
@@ -46,7 +45,7 @@
 
                         @foreach ($domains as $domain )
                         <option {{$domain['id'] == $user->employee->domain_id ? "selected" : ""}} value="{{ $domain['id'] }}">{{$domain['domain']}}</option>
-                        @endforeach
+                     @endforeach
                     </select>    
                 </div>
                 <div class="form-group">
