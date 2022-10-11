@@ -39,9 +39,9 @@ class UniversityController extends Controller
     public function store(UniversityRequest $request)
     {
         $university = University::create([
-            'name'=>$request['name'],
-            'address'=>$request['address'] ?? null,
-            'rating'=>$request['rating'] ?? null
+            'name' => $request['name'],
+            'address' => $request['address'] ?? null,
+            'rating' => $request['rating'] ?? null
         ]);
 
         return redirect(route('universities.edit', $university))->with('status', 'University created successfully!');
@@ -57,9 +57,9 @@ class UniversityController extends Controller
     public function update(UniversityRequest $request, University $university)
     {
         $university->update([
-            'name'=>$request['name'],
-            'address'=>$request['address'] ?? null,
-            'rating'=>$request['rating'] ?? null
+            'name' => $request['name'],
+            'address' => $request['address'] ?? null,
+            'rating' => $request['rating'] ?? null
         ]);
 
         return redirect(route('universities.edit', $university))->with('status', 'University updated successfully!');

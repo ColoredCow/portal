@@ -35,23 +35,23 @@ class MediaController extends Controller
     public function store(MediaRequest $request)
     {
         $validated = $request->validated();
-        $path = 'public/media';
-        $imageName = time() . '.' . $request->file->extension();
+        $path = config('media.path');
+        $fileName = time() . '.' . $request->file->extension();
 
         $request->file->storeAs(
             $path,
-            $imageName,
+            $fileName,
         );
 
         $postData = [
             'event_name' => $validated['event_name'],
             'description' => $validated['description'],
-            'img_url' => $imageName,
-            'uploaded_by' => Auth()->user()->id,
+            'file_url' => $fileName,
+            'uploaded_by' => Auth()->user()->id
         ];
         Media::create($postData);
 
-        return redirect(route('media.index'))->with(['message', 'status' => 'Photo added successfully!']);
+        return redirect(route('media.index'))->with(['message', 'status' => 'Media added successfully!']);
     }
 
     /**
@@ -61,7 +61,12 @@ class MediaController extends Controller
      */
     public function show(Media $media)
     {
-        return view('media::media.show', ['media' => $media]);
+        $time = \Carbon\Carbon::parse($media->created_at)->diffForHumans();
+
+        return view('media::media.show')->with([
+            'media' => $media,
+            'time' => $time
+        ]);
     }
 
     /**
@@ -71,7 +76,7 @@ class MediaController extends Controller
      */
     public function edit(Media $media)
     {
-        return view('media::media.edit', ['Media' => $media]);
+        return view('media::media.edit', ['media' => $media]);
     }
 
     /**
@@ -82,29 +87,29 @@ class MediaController extends Controller
      */
     public function update(Request $request, Media $Media)
     {
-        $path = 'public/media';
-        $imageName = '';
+        $path = config('media.path');
+        $fileName = '';
         if ($request->hasFile('file')) {
-            $imageName = time() . '.' . $request->file->extension();
+            $fileName = time() . '.' . $request->file->extension();
             $request->file->storeAs(
                 $path,
-                $imageName,
+                $fileName,
             );
-            if ($Media->img_url) {
-                Storage::delete($path . $Media->img_url);
+            if ($Media->file_url) {
+                Storage::delete($path . $Media->file_url);
             }
         } else {
-            $imageName = $Media->img_url;
+            $fileName = $Media->file_url;
         }
         $postData = [
             'event_name' => $request->event_name,
             'description' => $request->description,
-            'img_url' => $imageName,
-            'uploaded_by' => Auth()->user()->id,
+            'file_url' => $fileName,
+            'uploaded_by' => Auth()->user()->id
         ];
         $Media->update($postData);
 
-        return redirect(route('media.index'))->with(['message', 'status' => 'Photo updated successfully!']);
+        return redirect(route('media.index'))->with(['message', 'status' => 'Media updated successfully!']);
     }
     /**
      * Remove the specified resource from storage.
@@ -113,11 +118,11 @@ class MediaController extends Controller
      */
     public function destroy(Media $media)
     {
-        $path = 'public/media';
-        Storage::delete($path . $media->img_url);
+        $path = config('media.path');
+        Storage::delete($path . $media->file_url);
         $media->delete();
 
-        return redirect(route('media.index'))->with(['message', 'status' => 'Photo deleted successfully!']);
+        return redirect(route('media.index'))->with(['message', 'status' => 'Media deleted successfully!']);
     }
 
     public function search()

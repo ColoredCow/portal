@@ -1,15 +1,10 @@
 @extends('media::layouts.master')
 @section('title', 'Media Page')
 @section('heading', 'Media')
+@section('popup', 'Add New Post')
 @section('link', route('media.index'))
 @section('content')
 
-@if(session('message'))
-<div class="alert alert-{{ session('status') }} alert-dismissible fade show" role="alert">
-    <strong>{{ session('message') }}</strong>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
 <div class="container">
     <br>
     @include('media::media.menu', ['active' => 'media'])
@@ -46,7 +41,7 @@
                             <div class="col-lg-20 mx-auto">
                                 <div class="card shadow">
                                     <div class="card-header bg-secondary">
-                                        <h3 class="text-light fw-bold ">Add New Post</h3>
+                                        <h3 class="text-light fw-bold">Add New Post</h3>
                                     </div>
                                     <div class="card-body p-4">
                                         <form action="{{ route('media.index') }}" method="POST" enctype="multipart/form-data">
@@ -104,7 +99,14 @@
                     </div>
                 </div>
                 <a href="{{ route('media.show', $row->id) }}">
-                    <img src="{{ asset('storage/media/'.$row->img_url) }}" class="card-img-top img-fluid border border-white">
+                    @if(pathinfo($row->file_url, PATHINFO_EXTENSION) == 'mp4' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'mpeg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'mov' ||  pathinfo($row->file_url, PATHINFO_EXTENSION) == 'avi'  )
+                        <video class="container" controls>
+                            <source src="{{asset('storage/media/'.$row->file_url)}}" type="video/mp4">
+                        </video>
+                    @endif
+                    @if(pathinfo($row->file_url, PATHINFO_EXTENSION) == 'jpg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'jpeg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'png' )
+                        <img src="{{ asset('storage/media/'.$row->file_url) }}" class="card-img-top img-fluid ">
+                    @endif
                 </a>
                 <div class="card-body">
                     <p>
@@ -119,7 +121,7 @@
             </div>
         </div>
         @empty
-        <h2 class="text-center text-secondary p-4">No post found in the database!</h2>
+        <h2 class="text-center text-secondary p-4">No post found!</h2>
         @endforelse
         <div class="d-flex justify-content-center">
             {{ $media->onEachSide(1)->links() }}

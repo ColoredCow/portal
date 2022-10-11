@@ -1344,8 +1344,9 @@
                                                                 <option value="onboard">Onboard</option>
                                                             </select>
                                                             <button type="button" class="btn btn-success ml-2"
-                                                                @click="takeAction()">Take
+                                                                @click="takeAction()" id="takeAction">Take
                                                                 action</button>
+
                                                         @endif
                                                         <!-- Button trigger modal -->
                                                         <button type="button" class="btn btn-primary p-0 px-1 py-1 ml-2"

@@ -16,7 +16,7 @@ class MediaTable extends Migration
         Schema::create('media', function (Blueprint $table) {
             $table->id();
             $table->string('event_name');
-            $table->string('img_url');
+            $table->string('file_url');
             $table->integer('uploaded_by')->unsigned();
             $table->timestamps();
             $table->softDeletes()->nullable();
