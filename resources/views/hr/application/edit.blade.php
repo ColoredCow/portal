@@ -1232,7 +1232,7 @@
                                                     $showFooter = "true";
                                                 }
                                             @endphp
-                                                @if ($showFooter)
+                                                @if ($showFooter=="true")
                                                 <div class="card-footer">
                                                     <div class="d-flex align-items-center">
                                                         @if ($applicationRound->showActions)
@@ -1247,11 +1247,8 @@
                                                                 <option value="approve">Approve</option>
                                                                 <option value="onboard">Onboard</option>
                                                             </select>
-                                                            @if (!$applicationRound->round_status == config('constants.hr.status.confirmed.label'))
-                                                                <button type="button" class="btn btn-success ml-2"
-                                                                    @click="takeAction()">Take action</button>
-                                                            @endif
-                                                           
+                                                            <button type="button" class="btn btn-success ml-2"
+                                                                @click="takeAction()">Take action</button>  
                                                         @endif
                                                         <!-- Button trigger modal -->
                                                         <button type="button" class="btn btn-primary p-0 px-1 py-1 ml-2"
@@ -1289,8 +1286,55 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                
+                                            @elseif ($showFooter == "To_approve") 
+                                                   @if (!$applicationRound->round_status == config('constants.hr.status.confirmed.label')) 
+                                            <div class="card-footer">
+                                                    <div class="d-flex align-items-center">
+                                                        @if ($applicationRound->showActions)
+                                                            <select name="action_type" id="action_type"
+                                                                class="form-control w-42p"
+                                                                v-on:change="onSelectNextRound($event)"
+                                                                data-application-job-rounds="{{ json_encode($application->job->exceptTrialRounds) }}">
+                                                                <option v-for="round in applicationJobRounds"
+                                                                    value="round" :data-next-round-id="round.id">Move to @{{ round.name }}</option>
+                                                                <option value="send-for-approval">Send for approval
+                                                                </option>
+                                                                <option value="approve">Approve</option>
+                                                                <option value="onboard">Onboard</option>
+                                                            </select>
+                                                            <button type="button" class="btn btn-success ml-2"
+                                                                @click="takeAction()">Take action</button>  
+                                                        @endif
+                                                        <!-- Button trigger modal -->
+                                                        <button type="button" class="btn btn-primary p-0 px-1 py-1 ml-2"
+                                                            data-toggle="modal" data-target="#ModalCenter">
+                                                            Put on Hold
+                                                        </button>
+
+                                                        @if ($loop->last && !$application->isRejected())
+                                                            {{-- @if ($applicantOpenApplications->count() > 1) --}}
+                                                            <button type="button" class="btn btn-outline-danger ml-2"
+                                                                id="rejectApplication"
+                                                                @click="rejectApplication()">Reject</button>
+                                                            @include('hr.application.rejection-modal', [
+                                                                'currentApplication' => $application,
+                                                                'allApplications' => $applicantOpenApplications,
+                                                            ])
+                                                            {{-- @else --}}
+                                                            {{-- <button type="button" class="btn btn-outline-danger ml-2 round-submit" data-action="reject" data-toggle="modal" data-target="#application_reject_modal">Reject</button> --}}
+                                                            {{-- @endif --}}
+                                                        @endif
+                                                        @if ($applicationRound->mail_sent)
+                                                            <button type="button" class="btn btn-primary ml-auto"
+                                                                data-toggle="modal"
+                                                                data-target="#round_{{ $applicationRound->id }}">Send
+                                                                mail</button>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                @endif
                                             @endif
+
                                         </div>
                                         <input type="hidden" name="action" value="updated">
                                         <input type="hidden" name="next_round" value="">
