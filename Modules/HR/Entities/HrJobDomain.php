@@ -3,7 +3,6 @@
 namespace Modules\HR\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Modules\HR\Entities\HrJobDesignation;
 
 class HrJobDomain extends Model
 {
