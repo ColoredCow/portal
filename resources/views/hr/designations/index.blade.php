@@ -32,14 +32,14 @@
                         @csrf
                         <div class="form-group">
                             <label for="designationfield">name</label><strong class="text-danger">*</strong></label>
-                            <input type="text" name="name" class="form-control"  id="name" aria-describedby="Help" placeholder="name"> 
+                            <input type="text" name="name" class="form-control"  id="name" aria-describedby="Help" placeholder="name" required> 
                             <div class="d-none text-danger" name="error" id="designationerror"></div>
                         </div> 
                         <input type="hidden" name="domainName" id="domainName" value="">
                         <div class='form-group'>
                             <label class="field-required" for="designationfield">domain</label><br>
-                            <select name="domain" class="form-control" >
-                                <option value="Select Domain"></option>
+                            <select name="domain" class="form-control" required>
+                                <option value="Select Domain">Select Domain</option>
                                 @foreach($domains as $domain)
                                 <option value="{{$domain->domain}}">{{$domain->domain}}</option>
                                 @endforeach
