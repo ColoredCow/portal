@@ -190,7 +190,7 @@ class User extends Authenticatable
             }
         }
 
-        return ['main'=>$fte, 'amc'=>$fteAmc];
+        return ['main' => $fte, 'amc' => $fteAmc];
     }
 
     public function activeProjects()

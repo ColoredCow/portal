@@ -116,5 +116,15 @@ class SettingsTableSeeder extends Seeder
             'setting_key' => 'send_for_approval_body',
             'setting_value' => '<div>Hi |ASSIGNEE NAME|,</div><div><br/> </div><div>The |APPLICATION TYPE| application of |APPLICANT NAME| for |JOB TITLE| is sent for your approval. Please take a look and perform the proceedings.</div><div></br> </div><div>Click <a href="|APPLICATION LINK|">Here</a> to view the application.</div><div></br> </div><div>Thanks,</div><div>HR Team,</div><div>ColoredCow</div> ',
         ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'approved_mail_subject',
+            'setting_value' => 'Application is approved',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'approved_mail_body',
+            'setting_value' => '<div>Dear |APPLICANT NAME|,</div><div><br> </div><div>We are pleased to inform you that you have been selected for the post of |JOB TITLE| with us and your joining with ColoredCow shall stand confirmed with effect after date of signing.</div><div><br> </div><div>The Draft copy of the Offer Letter is enclosed herewith with the details of your appointment with us. We would appreciate it if you go through it and share the acceptance with us within 3 days. Please fill out the form for the personal documents like Aadhar, PAN and bank details in order to raise an offer letter.</div><div><br></div><div>We look forward to a long term association and a rewarding career for you.</div><div><br></div><div>Please Fill your details using the following link</div><div><br></div><div><a href="|LINK|"> Fill Form</a></div><div><br></div><div>Thanks</div><div><br> </div><div>HR, Team.</div>',
+        ]);
     }
 }

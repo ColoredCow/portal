@@ -2027,6 +2027,255 @@ $(document).ready(function () {
 $(document).ready(function () {
 	$(".editbtn").on("click", function () {
 		$("#officelocationEditModal").modal("show");
+	$("#designationformModal").on("hidden.bs.modal", function () {
+		$(this).find("form").trigger("reset");
+		$("#designationerror").addClass("d-none");
+	});
+
+	$("#designationForm").on("submit", function (e) {
+		e.preventDefault();
+		$("#designationFormSpinner").removeClass("d-none");
+		let form = $("#designationForm");
+		$.ajax({
+			type: form.attr("method"),
+			url: form.attr("action"),
+			data: form.serialize(),
+			success: function (response) {
+				$("#designationFormSpinner").addClass("d-none");
+				$("#designationformModal").modal("hide");
+				$("#successMessage").toggleClass("d-none");
+				$("#successMessage").fadeToggle(3000);
+			},
+			error: function (response) {
+				$("#designationFormSpinner").addClass("d-none");
+				if (response.responseJSON.errors.name) {
+					let text = response.responseJSON.errors.name[0];
+					$("#designationerror").html(text).removeClass("d-none");
+					return false;
+				}
+			},
+		});
+	});
+});
+
+if (document.getElementById("page_hr_applicant_edit")) {
+	new Vue({
+		el: "#page_hr_applicant_edit",
+		data: {
+			showResumeFrame: false,
+			showEvaluationFrame: false,
+			applicationJobRounds: document.getElementById("action_type")
+				? JSON.parse(
+					document.getElementById("action_type").dataset.applicationJobRounds
+				)
+				: {},
+			selectedNextRound: "",
+			nextRoundName: "",
+			selectedAction: "round",
+			selectedActionOption: "",
+			nextRound: "",
+			createCalendarEvent: true,
+		},
+		methods: {
+			toggleResumeFrame: function() {
+				this.showResumeFrame = !this.showResumeFrame;
+			},
+			toggleEvaluationFrame: function() {
+				this.showEvaluationFrame = !this.showEvaluationFrame;
+			},
+			getApplicationEvaluation: function(applicationRoundID, roundId) {
+				let roundName = $("#applicationRoundName" + roundId)[0].innerText;
+				document.getElementById(
+					"roundName"
+				).innerText = `Evaluation\u00A0\u00A0•\u00A0\u00A0${roundName}`;
+
+				$("#page_hr_applicant_edit #application_evaluation_body").html(
+					"<div class=\"my-4 fz-18 text-center\">Loading...</div>"
+				);
+				if (!this.showEvaluationFrame) {
+					axios
+						.get("/hr/evaluation/" + applicationRoundID)
+						.then(function(response) {
+							$("#page_hr_applicant_edit #application_evaluation_body").html(
+								response.data
+							);
+						})
+						.catch(function(error) {
+							alert("Error fetching application evaluation!");
+						});
+				}
+				this.toggleEvaluationFrame();
+			},
+
+			onSelectNextRound: function(event) {
+				this.selectedAction = event.target.value;
+				this.selectedActionOption =
+          event.target.options[event.target.options.selectedIndex];
+			},
+			takeAction: function() {
+				switch (this.selectedAction) {
+				case "round":
+					if (!this.selectedActionOption) {
+						this.selectedActionOption = document.querySelector(
+							"#action_type option:checked"
+						);
+					}
+					this.selectedNextRound = this.selectedActionOption.dataset.nextRoundId;
+					this.nextRoundName = this.selectedActionOption.innerText;
+					loadTemplateMail("confirm", (res) => {
+						$("#confirmMailToApplicantSubject").val(res.subject);
+						tinymce
+							.get("confirmMailToApplicantBody")
+							.setContent(res.body, { format: "html" });
+					});
+					if (this.nextRoundName.trim() == "Move to Team Interaction Round") {
+						$("#sendmailform").removeClass("d-none");
+					} else {
+						$(".next-scheduled-person-container").removeClass("d-none");
+						$("#sendmailform").addClass("d-none");
+					}
+					$("#round_confirm").modal("show");
+					break;
+				case "send-for-approval":
+					$("#send_for_approval").modal("show");
+					break;
+				case "approve":
+					$("#approve_application").modal("show");
+					break;
+				case "onboard":
+					$("#onboard_applicant").modal("show");
+				}
+			},
+			rejectApplication: function() {
+				$("#application_reject_modal").modal("show");
+				loadTemplateMail("reject", (res) => {
+					$("#rejectMailToApplicantSubject").val(res.subject);
+					tinymce
+						.get("rejectMailToApplicantBody")
+						.setContent(res.body, { format: "html" });
+				});
+			},
+		},
+		mounted() {
+			this.selectedNextRound = this.applicationJobRounds[0].id;
+			this.selectedAction = "round";
+			this.nextRoundName = this.applicationJobRounds[0].name;
+		},
+	});
+}
+
+if (document.getElementById("project_container")) {
+	const projectContainer = new Vue({
+		el: "#project_container",
+		data: {
+			newStage: false,
+		},
+		methods: {
+			createProjectStage: function() {
+				this.$refs.projectStage.create();
+			},
+		},
+	});
+}
+
+if (document.getElementById("employee_projects")) {
+	const employeeProjects = new Vue({
+		el: "#employee_projects",
+		data: {},
+		methods: {},
+	});
+}
+
+if (document.getElementById("client_form")) {
+	const clientForm = new Vue({
+		el: "#client_form",
+		data: {
+			country:
+        document.getElementById("country").dataset.preSelectCountry || "",
+			isActive: document.getElementById("is_active").dataset.preSelectStatus
+				? parseInt(document.getElementById("is_active").dataset.preSelectStatus)
+				: 1,
+			newEmailName: "",
+			newEmailId: "",
+			clientEmails:
+        document.getElementById("emails").value == ""
+        	? []
+        	: document.getElementById("emails").value.split(","),
+		},
+		methods: {
+			toggleActive: function() {
+				this.isActive = !this.isActive;
+			},
+			addNewEmail: function() {
+				this.clientEmails.push(
+					this.newEmailName + " <" + this.newEmailId + ">"
+				);
+				this.newEmailName = "";
+				this.newEmailId = "";
+			},
+			removeEmail: function(item) {
+				let index = this.clientEmails.indexOf(item);
+				if (index !== -1) {
+					this.clientEmails.splice(index, 1);
+				}
+			},
+		},
+	});
+}
+
+if (document.getElementById("finance_report")) {
+	const financeReport = new Vue({
+		el: "#finance_report",
+		data: {
+			showReportTable: "received",
+			sentAmountINR:
+        document.getElementById("sent_amount_INR").dataset.sentAmount || 0,
+			sentAmountUSD:
+        document.getElementById("sent_amount_USD").dataset.sentAmount || 0,
+			conversionRateUSD:
+        document.getElementById("conversion_rate_usd").dataset
+        	.conversionRateUsd || 0,
+		},
+		computed: {
+			convertedUSDSentAmount: function() {
+				let convertedAmount =
+          parseFloat(this.sentAmountUSD) * parseFloat(this.conversionRateUSD);
+				return isNaN(convertedAmount) ? 0 : convertedAmount.toFixed(2);
+			},
+			totalINREstimated: function() {
+				return (
+					parseFloat(this.sentAmountINR) +
+          parseFloat(this.convertedUSDSentAmount)
+				);
+			},
+		},
+	});
+}
+
+$("#page_hr_applicant_edit .applicant-round-form").on(
+	"click",
+	".round-submit",
+	function() {
+		let button = $(this); // reject button
+		let form = $(this).closest(".applicant-round-form"); // <form element with class "applicant-round-form" >
+		let selectedAction = $(this).data("action"); // reject
+		const actions = ["confirm", "send-for-approval", "onboard", "approve"];
+		if (actions.includes(selectedAction)) {
+			if (!form[0].checkValidity()) {
+				form[0].reportValidity();
+				return false;
+			}
+		}
+
+		form.find("[name=\"action\"]").val(selectedAction); // setting name="action" input inside form to "reject"
+		button.prop("disabled", "disabled").addClass("disabled"); // making button disabled
+		form.submit(); // submitting the form
+	}
+);
+
+$(".date-field").datepicker({
+	dateFormat: "dd/mm/yy",
+});
 
 		var centerHead = $(this).data("centerHead");
 		var location = $(this).data("location");
@@ -2041,6 +2290,66 @@ $(document).ready(function () {
 		console.log(centerHead);
 	});
 	
+}
+
+function getProjectList(projects) {
+	let html = "";
+	for (var index = 0; index < projects.length; index++) {
+		let project = projects[index];
+		html += "<option value=\"" + project.id + "\">";
+		html += project.name;
+		html += "</option>";
+	}
+	return html;
+}
+
+function setTooltip(btn, message) {
+	$(btn)
+		.tooltip("hide")
+		.attr("data-original-title", message)
+		.tooltip("show");
+}
+
+function hideTooltip(btn) {
+	setTimeout(function() {
+		$(btn).tooltip("hide");
+	}, 1000);
+}
+
+clipboard.on("success", function(e) {
+	setTooltip(e.trigger, "Copied!");
+	hideTooltip(e.trigger);
+});
+
+function initRicheditor() {
+	tinymce.init({
+		selector: ".richeditor",
+		skin: "lightgray",
+		toolbar:
+			"undo redo formatselect | fontselect fontsizeselect bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+		plugins: ["advlist lists autolink link code image print"],
+		font_formats:
+			"Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;AkrutiKndPadmini=Akpdmi-n",
+		images_upload_url: "postAcceptor.php",
+		content_style: "body{font-size:14pt;}",
+		automatic_uploads: false,
+		fontsize_formats: "8pt 10pt 12pt 14pt 16pt 18pt 24pt 36pt 48pt",
+		menubar: false,
+		statusbar: false,
+		entity_encoding: "raw",
+		forced_root_block: "",
+		force_br_newlines: true,
+		force_p_newlines: false,
+		height: "280",
+		convert_urls: 0
+	});
+}
+
+initRicheditor();
+
+$("body").on("click", "#takeAction", function () {
+	initRicheditor();
+});
 
 	$("#editformID").on("click", "#editLocationBtn", function (e) {
 		e.preventDefault();
@@ -2096,4 +2405,214 @@ $(document).ready(function () {
 		});
 	});
 });
- 
+
+$("#job_start_date").on("change", function() {
+	let startDate = $("#job_start_date").val();
+	$("#job_end_date").attr("min", startDate);
+});
+
+$("#job_end_date").on("change", function() {
+	let endDate = $("#job_end_date").val();
+	$("#job_start_date").attr("max", endDate);
+});
+
+$(document).ready(function() {
+	var multipleCancelButton = new Choices("#choices-multiple-remove-button", {
+		removeItemButton: true,
+		maxItemCount: 9,
+		searchResultLimit: 9,
+		renderChoiceLimit: 9,
+	});
+});
+
+/*
+ * HR Module JS code end
+ */
+
+// fix for tinymce and bootstrap modal
+
+$("body").on("click", "#offerLetter", function (e) {
+	e.preventDefault();
+	var originUrl = window.location.origin;
+	let applicationid = $("#getApplicationId").val();
+	$.ajax({
+		url: originUrl + `/hr/recruitment/${applicationid}/save-offer-letter`,
+		type: "GET",
+		success: function (response) {
+			$("#seeOfferLetter").removeClass("d-none");
+		},
+		error: function () {
+			alert("error");
+		}
+	});
+});
+
+$(document).on("focusin", function(e) {
+	if ($(event.target).closest(".mce-window").length) {
+		e.stopImmediatePropagation();
+	}
+});
+
+$(document).ready(function() {
+	$("#holdSendMailToApplicant").on("click", function(event) {
+		var $optionContainer = $("#optionContainer");
+		if ($(this).is(":checked")) {
+			$optionContainer.removeClass("d-none");
+		} else {
+			$optionContainer.addClass("d-none");
+		}
+	});
+});
+
+$("#designationEditFormModal").on("show.bs.modal", function (e) {
+	const designationEdited = e.relatedTarget;
+	const designation = $(designationEdited).data("json");
+
+	const editForm = $(this).find("form");
+	const newId = editForm.find("input.hidden");
+	const value = newId.attr("value");
+	const action = value.replace("id", designation.id);
+
+	editForm.attr("action", action);
+
+	editForm.find("input[name='name']").val(designation.designation);
+
+});
+
+$("#editform").on("submit", function(e) {
+	e.preventDefault();
+	let form = $("#editform");
+	let button = $("#editBT");
+
+	$.ajax({
+		url: form.attr("action"),
+		type: form.attr("method"),
+		data: form.serialize(),
+		success: function(response) {
+			$("#edit").modal("hide");
+			$("#edit").on("hidden.bs.modal", function(e) {
+				$("#successMessage").toggleClass("d-none");
+				$("#successMessage").fadeToggle(5000);
+			});
+		},
+		error: function(response) {
+			$("#profile-details-error").removeClass("d-none");
+			$("#successMessage").addClass("d-none");
+			let errors = response.responseJSON.errors;
+			$(".profile-details-error").empty();
+			for (let error in errors) {
+				$(".profile-details-error").append(
+					"<li class='text-danger ml-2'>" + errors[error] + "</li>"
+				);
+			}
+		},
+	});
+});
+
+$("#updateEmail").on("click", function() {
+	let formData = {
+		location: $("#location").val(),
+		date: $("#date").val(),
+		timing: $("#timing").val(),
+		applicant_name: $("#applicantName").text(),
+	};
+	var originUrl = window.location.origin;
+	$.ajax({
+		url: originUrl + "/hr/recruitment/teaminteraction",
+		type: "POST",
+		data: formData,
+		success: function(response) {
+			$("#InteractionError").addClass("d-none");
+			$("#confirmMailToApplicantSubject").val(response.subject);
+			tinymce
+				.get("confirmMailToApplicantBody")
+				.setContent(response.body, { format: "html" });
+			$("#interactionsuccess").toggleClass("d-none");
+			$("#interactionsuccess").fadeToggle(6000);
+			$("#confirmMailToApplicantBlock").removeClass("d-none");
+			var toggleIcon = $("#previewMailToApplicant").data("toggle-icon");
+			if (toggleIcon && !$(".fa-eye-slash ").hasClass("d-none")) {
+				$(".toggle-icon").toggleClass("d-none");
+			}
+		},
+		error: function(response) {
+			$("#InteractionError").removeClass("d-none");
+			let errors = response.responseJSON.errors;
+			$("#errors").empty();
+			for (let error in errors) {
+				$("#errors").append(
+					"<li class='text-danger ml-2'>" + errors[error] + "</li>"
+				);
+			}
+			$("#confirmMailToApplicantBlock").addClass("d-none");
+		},
+	});
+});
+$("#interactionErrorModalCloseBtn").click(function() {
+	$("#InteractionError").toggleClass("d-none");
+});
+
+$(".opt").on("click", function() {
+	let formData = {
+		setting_key_subject: $(this).data("key-subject"),
+		setting_key_body: $(this).data("key-body"),
+		applicant_name: $("#applicantName").text(),
+		job_title: $("#jobTitle").text(),
+	};
+
+	var originUrl = window.location.origin;
+	$.ajax({
+		url: originUrl + "/hr/recruitment/onHoldEmail",
+		type: "GET",
+		data: formData,
+		contentType: "application/json",
+		success: function(response) {
+			$("#option1subject").val(response.subject);
+			tinymce.get("option1body").setContent(response.body, { format: "html" });
+		},
+	});
+
+	var originUrl = window.location.origin;
+	$.ajax({
+		url: originUrl + "/hr/recruitment/onHoldEmail",
+		type: "GET",
+		data: formData,
+		contentType: "application/json",
+		success: function(response) {
+			$("#option2subject").val(response.subject);
+			tinymce.get("option2body").setContent(response.body, { format: "html" });
+		},
+	});
+});
+
+$(document).on("click", ".finish_interview", function(e) {
+	e.preventDefault();
+	var actualEndTime = $(".finish_interview").val();
+	var duration = moment().format("YYYY/MM/DD H:m:s");
+	$.ajax({
+		type: "GET",
+		url: "/hr/recruitment/finishinterview",
+		data: { documentId: actualEndTime, duration: duration },
+		dataType: "json",
+		success: function(response) {
+			$("#meet_time").hide();
+			$("#durations").append(response.html);	
+		},
+	});
+});
+
+$("#responseModal").on("submit",function(e){
+	e.preventDefault();
+	let form = $("#responseForm");
+	let button = $("#responseBtn");
+
+	$.ajax({
+		url: form.attr("action"),
+		type: form.attr("method"),
+		data: form.serialize(),
+		success: function(response) {
+			$("#responseModal").modal("hide");
+			Vue.$toast.success("Resume flagged Succesfully!");
+		},
+	});
+});

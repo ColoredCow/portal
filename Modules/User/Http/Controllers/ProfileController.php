@@ -28,6 +28,7 @@ class ProfileController extends ModuleBaseController
         $user->employee->designation = $request->designation;
         $user->employee->name = $request->name;
         $user->employee->domain_id = $request->domainId;
+        $user->employee->designation_id = $request->designationId;
 
         $user->push();
 
