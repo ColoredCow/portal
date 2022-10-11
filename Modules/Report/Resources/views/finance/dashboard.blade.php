@@ -38,6 +38,70 @@
                         </a>
                     </div>
                 </div>
+
+                <div class="col-md-3">
+                    <div class="card h-75 ">
+                        <a class="card-body no-transition" href="{{ route('invoice.yearly-report') }}">
+                            <h2 class="text-center">Revenue by client</h2><br>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card h-75 ">
+                        <a class="card-body no-transition" href="{{ route('invoice.yearly-report') }}">
+                            <h2 class="text-center">New Business</h2><br>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card h-75 ">
+                        <a class="card-body no-transition" href="{{ route('invoice.yearly-report') }}">
+                            <h2 class="text-center">Pipeline</h2><br>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card h-75 ">
+                        <a class="card-body no-transition" href="{{ route('invoice.yearly-report') }}">
+                            <h2 class="text-center">Employees</h2><br>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card h-75 ">
+                        <a class="card-body no-transition" href="{{ route('invoice.yearly-report') }}">
+                            <h2 class="text-center">Investments</h2><br>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card h-75 ">
+                        <a class="card-body no-transition" href="{{ route('invoice.yearly-report') }}">
+                            <h2 class="text-center">Operational</h2><br>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card h-75 ">
+                        <a class="card-body no-transition" href="{{ route('invoice.yearly-report') }}">
+                            <h2 class="text-center">Competitor</h2><br>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card h-75 ">
+                        <a class="card-body no-transition" href="{{ route('invoice.yearly-report') }}">
+                            <h2 class="text-center">Cash reports</h2><br>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
 
