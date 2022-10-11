@@ -1,4 +1,4 @@
-<div class="modal fade" id="designationEditFormModal{{$designation->id}}" tabindex="-1" role="dialog" aria-labelledby="designationEditFormModalLabel" aria-hidden="true">
+<div class="modal fade" id="designationEditFormModal{{$designation->id,  $designation->designation}}" tabindex="-1" role="dialog" aria-labelledby="designationEditFormModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,12 +11,13 @@
                 <form action="{{ route('designation.edit', [$designation->id]) }}" method="get" id="designationEditForm" >
                     @csrf
                     <div class="form-group">
-                        <input value="{{ route('designation.edit', "id") }}" type="hidden" class="hidden" aria-hidden="true" name="routePlaceHolder">
+                        <input value="" type="hidden" class="hidden" aria-hidden="true" name="routePlaceHolder">
                         <label class="field-required" for="designationfield">name</label>
-                        <input type="text" name="name" class="form-control" required>
+                        <input value="{{$designation->designation}}" type="text" name="name" class="form-control" value="" required>
                     </div>
                     <input type="hidden" name="domainName" id="domainName" value="">
                         <div class='form-group'>
+                            <label class="field-required" for="designationfield">domain</label>
                             <select name="status" class="form-control">
                                 @foreach($domains as $domain)
                                 <option value="{{$domain->domain}}">{{$domain->domain}}</option>

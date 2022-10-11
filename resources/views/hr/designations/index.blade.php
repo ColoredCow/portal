@@ -63,7 +63,7 @@
                 <span class="d-flex text-justify-center">{{ $designation->designation }}</span>
             </td>
             <td>
-             <button type="button" class="pr-1 btn btn-link" data-toggle="modal" data-target="#designationEditFormModal{{$designation->id}}" data-json="{{$designation}}" ><i class="text-success fa fa-edit fa-lg"></i></button>
+             <button type="button" class="pr-1 btn btn-link" data-toggle="modal" data-target="#designationEditFormModal{{$designation->id, $designation->designation}}" data-json="{{$designation}}" ><i class="text-success fa fa-edit fa-lg"></i></button>
             </td>
             <td>
                 <form action="{{ route('designation.delete', ['id' => $designation->id]) }}" method="post">
@@ -72,8 +72,9 @@
                 </form>
             </td>
         </tr>
+        @include('hr.designations.edit')
         @endforeach
     </table>
 </div>
-@include('hr.designations.edit')
+{{-- @include('hr.designations.edit') --}}
 @endsection
