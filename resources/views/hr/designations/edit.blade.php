@@ -18,7 +18,6 @@
                     <div class='form-group'>
                         <label class="field-required" for="designationfield">domain</label>
                         <select name="domain" class="form-control" ">
-                            <option value="{{$designation->domain_id}}">Current Domain</option>
                             @foreach($domains as $domain)
                             <option value="{{$domain->id}}">{{$domain->domain}}</option>
                             @endforeach
