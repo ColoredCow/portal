@@ -1790,8 +1790,8 @@ $(".status").on("change", function() {
 		$.ajax({
 			url: "completed/change-status/" + this.dataset.id,
 			method: "GET",
-			success: function(res) {
-				location.reload(true);
+			success: function (res) {
+				$("#mymodal").modal() + this.dataset.id;
 			},
 			error: function(err) {
 				alert("there is some problem");
@@ -1801,6 +1801,12 @@ $(".status").on("change", function() {
 			},
 		});
 	}
+});
+
+$(document).ready(function(){
+	var multipleSelect = new Choices("#choices-multiple", {
+		removeItemButton: true,
+	});
 });
 
 $(".pending").on("change", function() {
