@@ -35,7 +35,7 @@
                               <option value="" disabled>Select Domain</option>
 
                               @foreach ($domains as $domain )
-                              <option {{$domain['id'] == $user->employee->domain_id ? "selected" : ""}} value="{{ $domain['id'] }}">{{$domain['domain']}}</option>
+                                <option {{$domain['id'] == $user->employee->domain_id ? "selected" : ""}} value="{{ $domain['id'] }}">{{$domain['domain']}}</option>
                               @endforeach
                           </select>
                       </div>
