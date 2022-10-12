@@ -2,7 +2,6 @@
 
 namespace Modules\HR\Services;
 
-use Illuminate\Auth\Events\Validated;
 use Modules\HR\Http\Requests\Recruitment\JobDesignationRequest;
 use Illuminate\Support\Str;
 use Modules\HR\Entities\HrJobDesignation;
