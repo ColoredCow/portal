@@ -31,7 +31,7 @@
 											</button>
 										</div>
 										<div class="col-md-12">
-											<div class="form-group">
+											<div class="form-group mt-2">
 												<label for="name">Name<span class="text-danger">*</span></label>
 												<input type="text" class="form-control" name="name" id="name" value="{{ old('name', $salesArea->name) }}" autofocus required>
 											</div>
