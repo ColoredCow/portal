@@ -47,7 +47,6 @@ class ProfileController extends ModuleBaseController
             $userProfile->save();
         }
         
-
         $user->push();
 
         return back();
