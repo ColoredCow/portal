@@ -23,38 +23,27 @@ class HrJobDesignationService
 
     public function storeDesignation(JobDesignationRequest $request)
     {
-        $validatedData = request()->validate(
-            [
-            'domain'=>'required',
-            'name' => 'required'
-        ]
-        );
-        if ($request['domain'] != 'Select Domain') {
-            $domain_id = DB::table('hr_job_domains')->select('id')->where('domain', $request['domain'])->first();
+        // $validatedData = request()->validate(
+        //     [
+        //     'domain'=>'required',
+        //     'name' => 'required'
+        // ]
+        // );
+            // $domain_id = DB::table('hr_job_domains')->select('id')->where('domain', $request['domain'])->first();
             $jobDesignation = new HrJobDesignation();
             $jobDesignation->designation = $request['name'];
             $jobDesignation->slug = Str::slug($request['name']);
-            $jobDesignation->domain_id = $domain_id->id;
+            $jobDesignation->domain_id = $request['domain'];
             $jobDesignation->save();
-        }
     }
 
     public function edit(JobDesignationRequest $request, $id)
     {
-        $validatedData = request()->validate(
-            [
-            'domain'=>'required',
-            'name'=>'required'
-        ]
-        );
-        if ($request['domain'] != 'Select Domain') {
-            $domain_id = DB::table('hr_job_domains')->select('id')->where('domain', $request['domain'])->first();
             $hrJobDesignation = HrJobDesignation::find($id);
             $hrJobDesignation->designation = $request['name'];
             $hrJobDesignation->slug = Str::slug($request['name']);
-            $hrJobDesignation->domain_id = $domain_id->id;
+            $hrJobDesignation->domain_id = $request['domain'];
             $hrJobDesignation->save();
-        }
     }
 
     public function destroy(HrJobDesignation $request, $id)
