@@ -24,11 +24,6 @@
         </div>
     @endif
 
-<!-- <div class="form-group">
-    <label class="font-weight-bold" for="">Designation:</label>
-    <span>{{ Str::title($user->profile->designation) }}</span>
-</div> -->
-
 <div class="form-group">
     <label class="font-weight-bold" for="">Current Location:</label>
     <span>{{ $user->profile->current_location }}</span>
