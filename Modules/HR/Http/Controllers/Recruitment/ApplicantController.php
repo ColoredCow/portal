@@ -28,7 +28,7 @@ class ApplicantController extends Controller
     public function __construct(ApplicationServiceContract $service, ApplicantService $applicantService)
     {
         $this->service = $service;
-        $this->service = $applicantService;
+        $this->applicantService = $applicantService;
         $this->authorizeResource(Applicant::class, null, [
             'except' => ['store', 'show', 'create'],
         ]);
@@ -119,7 +119,7 @@ class ApplicantController extends Controller
     {
         $hrApplicantId = $request->get('hr_applicant_id');
         $hrApplicantEmail = $request->get('hr_applicant_email');
-        $this->service->storeApplicantOnboardingDetails($request);
+        $this->applicantService->storeApplicantOnboardingDetails($request);
 
         return redirect()->route('hr.applicant.applicant-onboarding-form', [$hrApplicantId, $hrApplicantEmail]);
     }
