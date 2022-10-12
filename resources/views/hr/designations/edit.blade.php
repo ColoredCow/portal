@@ -20,8 +20,7 @@
                         @php
                         foreach($domains as $domain)
                             if($designation->domain_id!=NULL && $domain->id===($designation->domain_id)) $domainName = $domain->domain; 
-                            if($designation->domain_id==NULL) $domainName = ' ';
-                        endforeach   
+                            if($designation->domain_id==NULL) $domainName = ' '; 
                         @endphp 
                         <select name="domain" class="form-control" >
                             <option value="{{$designation->domain_id}}">{{$domainName}}</option>
