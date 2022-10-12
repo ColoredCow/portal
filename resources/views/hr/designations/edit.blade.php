@@ -19,8 +19,7 @@
                         <label class="field-required" for="designationfield">domain</label>
                         @php
                         foreach($domains as $domain)
-                            if($designation->domain_id!=NULL && $domain->id===($designation->domain_id)) $domainName = $domain->domain; 
-                            if($designation->domain_id==NULL) $domainName = ' '; 
+                            $domainName = $designation->domain_id!=NULL && $domain->id===($designation->domain_id) ? $domain->domain : ''; 
                         @endphp 
                         <select name="domain" class="form-control" required>
                             <option value="{{$designation->domain_id}}">{{$domainName}}</option>

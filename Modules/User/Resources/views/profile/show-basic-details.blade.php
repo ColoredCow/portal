@@ -71,14 +71,14 @@
                 @foreach ($designations as $designation )
                     <span>{{ $user->employee->designation_id == $designation['id'] ? $designation['designation'] : "" }}</span>
                     @php
-                        if($user->employee->designation_id == $designation['id'])$id=$designation['domain_id'];
+                        if($user->employee->designation_id == $designation['id']) $id =$designation['domain_id'];
                     @endphp
                 @endforeach
             </div>
             <div class="form-group">
                 <label class="font-weight-bold" for="">Domain:</label>
                 @foreach ($domains as $domain )
-                    <span>{{ $id== $domain['id'] ? $domain['domain'] : "" }}</span>
+                    <span>{{ $id == $domain['id'] ? $domain['domain'] : "" }}</span>
                 @endforeach
             </div>
             <div class="form-group">

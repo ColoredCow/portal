@@ -41,7 +41,7 @@
                             <select name="domain" class="form-control" >
                                 <option value="">Select Domain</option>
                                 @foreach($domains as $domain)
-                                <option value="{{$domain->id}}">{{$domain->domain}}</option>
+                                    <option value="{{$domain->id}}">{{$domain->domain}}</option>
                                 @endforeach
                             </select>
                         </div>   
@@ -79,5 +79,4 @@
         @endforeach
     </table>
 </div>
-{{-- @include('hr.designations.edit') --}}
 @endsection
