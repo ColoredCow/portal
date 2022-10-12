@@ -1,16 +1,8 @@
 @extends('invoice::layouts.master')
 @section('content')
-    <div class="container" id="vueContainer">
-        <br>
-        <br>
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
+<div class="container" id="vueContainer">
+    <br>
+    @includeWhen(session('success'), 'toast', ['message' => session('success')])
         <ul class="nav nav-pills mb-6">
             @php
                 $request = request()->all();
@@ -31,7 +23,8 @@
         <div class="d-flex justify-content-between mb-2">
             <h4 class="mb-1 pb-1 fz-28">Invoices</h4>
             <span>
-                <a href="{{ route('invoice.create') }}" class="btn btn-info text-white">Add Invoice</a>
+                <a href="{{ route('invoice.create-custom-invoice') }}" class="btn btn-info text-white">Custom Invoice</a>
+                <a href="{{ route('invoice.create') }}" class="btn btn-success ml-2 text-white"><i class="fa fa-plus mr-1"></i>Add Invoice</a>
             </span>
         </div>
         <br>
@@ -54,10 +47,11 @@
             </div>
         @endif
         <div>
-            @php
-                $month = now(config('constants.timezone.indian'))->subMonth()->format('m');
-                $year = now(config('constants.timezone.indian'))->subMonth()->format('Y');
+            @php    
+                $month = now()->subMonth()->format('m');
+                $year = now()->subMonth()->format('Y');
                 $monthToSubtract = 1;
+                $quarter = now()->quarter;
             @endphp
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
@@ -144,16 +138,26 @@
                             $index = 0;
                         @endphp
                         @foreach ($clientsReadyToSendInvoicesData as $client)
-                            @if ($client->getClientLevelProjectsBillableHoursForInvoice() == 0)
+                        @if ($client->getClientLevelProjectsBillableHoursForInvoice() == 0)
                                 @continue
                             @endif
                             @php
                                 $index++;
-                                $amount = config('constants.currency.' . $client->currency . '.symbol') . $client->getTotalPayableAmountForTerm($monthToSubtract, $client->clientLevelBillingProjects);
+                                $currencySymbol = config('constants.currency.' . $client->currency . '.symbol');
+                                if ($client->hasCustomInvoiceTemplate()) {
+                                    $amount = $currencySymbol . ($client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount($quarter));
+                                } else {
+                                    $amount = $currencySymbol . $client->getTotalPayableAmountForTerm($monthToSubtract, $client->clientLevelBillingProjects);
+                                }
                                 $billingStartMonth = $client->getMonthStartDateAttribute($monthToSubtract)->format('M');
                                 $billingEndMonth = $client->getMonthEndDateAttribute($monthToSubtract)->format('M');
                                 $monthName = $client->getMonthEndDateAttribute($monthToSubtract)->format('F');
                                 $termText = $billingStartMonth;
+                                if (optional($client->billingDetails)->billing_frequency == config('client.billing-frequency.quarterly.id')) {
+                                    $termText = today()->startOfQuarter()->format('M');
+                                    $billingStartMonth = today()->startOfQuarter()->addQuarter()->format('M');
+                                    $billingEndMonth = today()->endOfQuarter()->format('M');
+                                }
                                 $invoiceData = [
                                     'projectName' => $client->name . ' Projects',
                                     'billingPersonName' => optional($client->billing_contact)->name,
@@ -177,10 +181,14 @@
                                 <td>
                                     {{ $client->name . ' Projects' }}
                                 </td>
-                                <td>{{ config('constants.currency.' . $client->currency . '.symbol') . '' . $client->billingDetails->service_rates . __('/hour')}}</td>
+                                <td>{{ config('constants.currency.' . $client->currency . '.symbol') . '' . $client->billingDetails->service_rates . config('client.service-rate-terms.' . optional($client->billingDetails)->service_rate_term . '.short-label') }}</td>
                                 <td>
-                                    {{ $client->getClientLevelProjectsBillableHoursForInvoice() }}
-                                    {{-- <i class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal" data-target="#InvoiceDetailsForClient{{ $client->id }}"></i> --}}
+                                    @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
+                                        {{ __('-') }}
+                                    @else
+                                        {{ $client->getClientLevelProjectsBillableHoursForInvoice() }}
+                                        {{-- <i class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal" data-target="#InvoiceDetailsForClient{{ $client->id }}"></i> --}}
+                                    @endif
                                 </td>
                                 <td>{{ $amount }}</td>
                                 <td align="center"> <a class="btn btn-sm btn-info text-light" href="{{ $client->effort_sheet_url }}" target="_blank">{{ __('Link') }}</a></td>
@@ -211,11 +219,23 @@
                             @endif
                             @php
                                 $index++;
-                                $amount = config('constants.currency.' . $project->client->currency . '.symbol') . $project->getTotalPayableAmountForTerm($monthToSubtract);
+                                $currencySymbol = config('constants.currency.' . $project->client->currency . '.symbol');
+                                if ($project->hasCustomInvoiceTemplate()) {
+                                    $amount = $currencySymbol . $project->getTotalLedgerAmount($quarter);
+                                } else if (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
+                                    $amount = $currencySymbol . $project->getResourceBillableAmount();
+                                } else {
+                                    $amount = $currencySymbol . $project->getTotalPayableAmountForTerm($monthToSubtract);
+                                }
                                 $billingStartMonth = $project->client->getMonthStartDateAttribute($monthToSubtract)->format('M');
                                 $billingEndMonth = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('M');
                                 $monthName = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('F');
                                 $termText = $billingStartMonth;
+                                if (optional($project->client->billingDetails)->billing_frequency == config('client.billing-frequency.quarterly.id')) {
+                                    $termText = today()->startOfQuarter()->format('M');
+                                    $billingStartMonth = $termText = today()->startOfQuarter()->format('M');
+                                    $billingEndMonth  = $termText = today()->endOfQuarter()->format('M');
+                                }
                                 $invoiceData = [
                                     'projectName' => $project->name,
                                     'billingPersonName' => optional($project->client->billing_contact)->name,
@@ -239,8 +259,14 @@
                                 <td>
                                     {{ $project->name }}
                                 </td>
-                                <td>{{ config('constants.currency.' . $project->client->currency . '.symbol') . '' . $project->client->billingDetails->service_rates . __('/hour')}}</td>
-                                <td>{{ $project->getBillableHoursForMonth($monthToSubtract) }}</td>
+                                <td>{{ config('constants.currency.' . $project->client->currency . '.symbol') . '' . $project->client->billingDetails->service_rates . config('client.service-rate-terms.' . optional($project->client->billingDetails)->service_rate_term . '.short-label') }}</td>
+                                <td>
+                                    @if(optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
+                                    {{ __('-') }}
+                                    @else
+                                        {{ $project->getBillableHoursForMonth($monthToSubtract) }}
+                                    @endif
+                                </td>
                                 <td>{{ $amount }}</td>
                                 <td align="center"> <a class="btn btn-sm btn-info text-light" href="{{ $project->effort_sheet_url }}" target="_blank">{{ __('Link') }}</a></td>
                                 <td class="text-center">

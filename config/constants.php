@@ -1,6 +1,12 @@
 <?php
 
 return [
+    'office_locations' => [
+        'gurgaon' => 'Gurgaon',
+        'tehri' => 'Tehri',
+        'ranchi' => 'Ranchi',
+        'dwarahat' => 'Dwarahat'
+    ],
     'gsuite' => [
         'service-account-impersonate' => env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'),
         'client-hd' => env('GOOGLE_CLIENT_HD', ''),
@@ -90,7 +96,7 @@ return [
             'new' => [
                 'label' => 'new',
                 'title' => 'New',
-                'class' => 'badge badge-info',
+                'class' => 'badge badge-success',
             ],
             'on-hold' => [
                 'label' => 'on-hold',
@@ -136,6 +142,11 @@ return [
                 'label' => 'onboarded',
                 'title' => 'Onboarded',
                 'class' => 'badge badge-success',
+            ],
+            'submitted-offer-letter-details' => [
+                'label' => 'submitted-offer-letter-details',
+                'title' => 'Submitted Offer Letter Details',
+                'class' => 'badge badge-light',
             ],
 
             'custom-mail' => [
@@ -221,5 +232,36 @@ return [
     'website_upload_dir' => env('WEBSITE_UPLOAD_DIR'),
     'timezone' => [
         'indian' => 'Asia/Kolkata',
+    ],
+
+    'amount-to-words' => [
+        '0' => '',
+        '1' => 'one',
+        '2' => 'two',
+        '3' => 'three',
+        '4' => 'four',
+        '5' => 'five',
+        '6' => 'six',
+        '7' => 'seven',
+        '8' => 'eight',
+        '9' => 'nine',
+        '10' => 'ten',
+        '11' => 'eleven',
+        '12' => 'twelve',
+        '13' => 'thirteen',
+        '14' => 'fourteen',
+        '15' => 'fifteen',
+        '16' => 'sixteen',
+        '17' => 'seventeen',
+        '18' => 'eighteen',
+        '19' =>'nineteen',
+        '20' => 'twenty',
+        '30' => 'thirty',
+        '40' => 'forty',
+        '50' => 'fifty',
+        '60' => 'sixty',
+        '70' => 'seventy',
+        '80' => 'eighty',
+        '90' => 'ninety'
     ]
 ];

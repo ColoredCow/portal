@@ -14,6 +14,7 @@ class ProjectTeamMember extends Model
     protected $guarded = [];
 
     protected $dates = [
+        'started_on',
         'ended_on',
         'created_at',
         'updated_at',

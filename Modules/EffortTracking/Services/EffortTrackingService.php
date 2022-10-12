@@ -3,18 +3,18 @@
 namespace Modules\EffortTracking\Services;
 
 use Carbon\Carbon;
-use Exception;
 use Carbon\CarbonPeriod;
+use Exception;
+use Illuminate\Support\Str;
 use Modules\Project\Entities\Project;
+use Modules\Project\Entities\ProjectMeta;
+use Modules\Project\Entities\ProjectTeamMemberEffort;
 use Modules\User\Entities\User;
 use Revolution\Google\Sheets\Sheets;
-use Illuminate\Support\Str;
-use Modules\Project\Entities\ProjectTeamMemberEffort;
-use Modules\Project\Entities\ProjectMeta;
 
 class EffortTrackingService
 {
-    public function show($project)
+    public function show(array $data, $project)
     {
         $teamMembers = $project->getTeamMembers()->get();
         $teamMembersDetails = $this->getTeamMembersDetails($teamMembers);
@@ -22,11 +22,17 @@ class EffortTrackingService
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = now(config('constants.timezone.indian'))->subDay();
         }
-        $totalEffort = $project->current_hours_for_month;
         $workingDays = $this->getWorkingDays($project->client->month_start_date, $currentDate);
-        $startDate = $project->client->month_start_date;
-        $endDate = $project->client->month_end_date;
+        $currentDate = now(config('constants.timezone.indian'));
+        $currentMonth = $data['month'] ?? Carbon::now()->format('F');
+        $currentYear = $data['year'] ?? Carbon::now()->format('Y');
+        $totalMonths = $this->getTotalMonthsFilterParameter($currentMonth, $currentYear);
+        $startDate = $project->client->getMonthStartDateAttribute($totalMonths);
+        $endDate = $project->client->getMonthEndDateAttribute($totalMonths);
         $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
+        $totalEffort = $project->getCurrentHoursForMonthAttribute($startDate, $endDate);
+        $totalWorkingDays = count($this->getworkingDays($startDate, $endDate));
+        $daysTillToday = count($project->getWorkingDaysList($project->client->month_start_date, $currentDate));
 
         return [
             'project' => $project,
@@ -37,8 +43,22 @@ class EffortTrackingService
             'totalEffort' => $totalEffort,
             'startDate' => $startDate,
             'endDate' => $endDate,
-            'currentMonth' => now()->format('F'),
+            'currentMonth' => $currentMonth,
+            'daysTillToday' => $daysTillToday,
+            'totalMonths' => $totalMonths,
+            'currentYear' => $currentYear,
         ];
+    }
+
+    public function getTotalMonthsFilterParameter($currentMonth, $currentYear)
+    {
+        $Month = intval(date('m', strtotime($currentMonth)));
+        $thisMonth = intval(Carbon::now()->format('m'));
+        $monthsDifference = ($thisMonth - $Month);
+        $totalYears = (Carbon::now()->format('Y') - $currentYear);
+        $totalMonths = $monthsDifference + ($totalYears * 12);
+
+        return $totalMonths;
     }
 
     /**
@@ -166,10 +186,22 @@ class EffortTrackingService
 
             $sheetId = $correctedEffortsheetUrl[1];
             $sheets = new Sheets();
-            $projectMembersCount = $project->teamMembers()->count();
+            $projectMembersCount = 0;
             $lastColumn = config('efforttracking.default_last_column_in_effort_sheet');
             $columnIndex = 5;
             $projectsInSheet = [];
+
+            $range = config('efforttracking.default_start_column_in_effort_sheet') . '2:' . config('efforttracking.default_start_column_in_effort_sheet');
+            $sheet = $sheets->spreadsheet($sheetId)
+                ->range($range)
+                ->get();
+
+            foreach ($sheet as $rows) {
+                if (count($rows) == 0) {
+                    break;
+                }
+                $projectMembersCount++;
+            }
 
             try {
                 while (true) {
@@ -185,7 +217,7 @@ class EffortTrackingService
                             $projectsInSheet[] = [
                                 'id' => $subProject->id,
                                 'name' => $subProjectName,
-                                'sheetIndex' => $columnIndex - 1
+                                'sheetIndex' => $columnIndex - 1,
                             ];
                         }
                         continue;
@@ -213,7 +245,7 @@ class EffortTrackingService
                 $projectsInSheet[] = [
                     'id' => $project->id,
                     'name' => $project->name,
-                    'sheetIndex' => $sheetIndexForTotalBillableEffort
+                    'sheetIndex' => $sheetIndexForTotalBillableEffort,
                 ];
             }
 
@@ -262,7 +294,7 @@ class EffortTrackingService
                                     'project_id' => $project->id,
                                 ],
                                 [
-                                    'value' => now(config('constants.timezone.indian'))
+                                    'value' => now(config('constants.timezone.indian')),
                                 ]
                             );
                         } catch (Exception $e) {
@@ -311,7 +343,6 @@ class EffortTrackingService
                 $billableEffort -= $latestProjectTeamMemberEffort->total_effort_in_effortsheet;
             }
         }
-
         ProjectTeamMemberEffort::updateOrCreate(
             [
                 'project_team_member_id' => $projectTeamMember->id,

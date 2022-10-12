@@ -15,6 +15,9 @@
 	@include('settings.hr.offer-letter')
 	@include('settings.hr.follow-up')
 	@include('settings.hr.on-hold')
+	@include('settings.hr.team-interaction')
+	@include('settings.hr.send-for-approval')
+
 	<h4 class="mt-5">Mail templates for rounds</h4>
 	@foreach ($rounds as $index => $round)
 		@foreach ($roundMailTypes as $type)
