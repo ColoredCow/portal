@@ -18,9 +18,9 @@
                     <div class='form-group'>
                         <label class="field-required" for="designationfield">domain</label>
                         @php
-                         foreach($domains as $domain)
-                            if($domain->id===$designation->domain_id)
-                            $domainName = $domain->domain;
+                        foreach($domains as $domain)
+                            if($designation->domain_id!=NULL && $domain->id===($designation->domain_id)) $domainName = $domain->domain; 
+                        endforeach   
                         @endphp 
                         <select name="domain" class="form-control" >
                             <option value="{{$designation->domain_id}}">{{$domainName}}</option>
