@@ -62,22 +62,22 @@
                           </div>
                       </div>
                       @if($user->profile && $user->profile->marital_status &&  $user->profile->marital_status == "Married")
-                      <div class="form-group" id="spouse">
-                      @else($user->profile && $user->profile->marital_status &&  $user->profile->marital_status != "Married") 
-                      <div class="form-group d-none" id="spouse">
+                        <div class="form-group" id="spouse">
+                      @else
+                        <div class="form-group d-none" id="spouse">
                       @endif
                           <label for="spouse_name">Spouse</label>
                           <input type="text" class="form-control" id="spouse_name" name="spouse_name" value="{{ $user->profile && $user->profile->spouse_name ? $user->profile->spouse_name : "" }}">
                       </div>
                       
-                          <div class="form-group"> 
-                              <label for="gender">Mobile</label>
-                              <input type="text" class="form-control" id="mobile" name="mobile" required value="{{ $user->profile && $user->profile->mobile ? $user->profile->mobile : "" }}">
-                          </div>
-                          <div class="form-group">
-                              <label for="father_name">Father</label>
-                              <input type="text" class="form-control" id="father_name" name="father_name" required value="{{ $user->profile && $user->profile->father_name ? $user->profile->father_name : "" }}">
-                            </div>
+                      <div class="form-group"> 
+                        <label for="gender">Mobile</label>
+                        <input type="text" class="form-control" id="mobile" name="mobile" required value="{{ $user->profile && $user->profile->mobile ? $user->profile->mobile : "" }}">
+                      </div>
+                      <div class="form-group">
+                        <label for="father_name">Father</label>
+                        <input type="text" class="form-control" id="father_name" name="father_name" required value="{{ $user->profile && $user->profile->father_name ? $user->profile->father_name : "" }}">
+                      </div>
                       <div class="form-group">
                           <label for="current_location">Current Location</label>
                           <input type="text" class="form-control" id="current_location" name="current_location" required value="{{ $user->profile && $user->profile->current_location ? $user->profile->current_location : "" }}">
@@ -113,7 +113,7 @@
               <div class="form-group">
                   <label class="font-weight-bold" for="">Domain:</label>
                   @foreach ($domains as $domain )
-                  <span>{{ $user->employee->domain_id == $domain['id'] ? $domain['domain'] : "" }}</span>
+                    <span>{{ $user->employee->domain_id == $domain['id'] ? $domain['domain'] : "" }}</span>
                   @endforeach
               </div>
               <div class="form-group">
