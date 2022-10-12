@@ -24,11 +24,6 @@ class Employee extends Model
         return $this->belongsTo(HrJobDesignation::class, 'designation_id');
     }
 
-    public function hrJobDomain()
-    {
-        return $this->belongsTo(HrJobDomain::class, 'domain_id');
-    }
-
     public function scopeStatus($query, $status)
     {
         if ($status == 'current') {

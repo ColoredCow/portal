@@ -59,8 +59,8 @@
                 <td>
                     @if ($employee->user == null)
                         <span class="text-danger font-weight-bold">{{ $employee->user ? $employee->user->ftes['main'] :'NA' }}</span>
-                    @elseif ($employee->user->ftes['main'] > 1 && $employee->domain_id != null)
-                        <a class="text-success font-weight-bold" href={{ route('employees.alert',['domain_id' => $employee->domain_id]) }} style="text-decoration: none;">
+                    @elseif ($employee->user->ftes['main'] > 1 && $employee->designation_id != null)
+                        <a class="text-success font-weight-bold" href={{ route('employees.alert',['domain_id' => $employee->hrJobDesignation->domain_id]) }} style="text-decoration: none;">
                             {{ $employee->user->ftes['main'] }} &nbsp;&nbsp;&nbsp;<span class="text-danger"><i class="fa fa-warning fa-lg"></i></span>
                         </a>
                     @elseif ($employee->user->ftes['main'] >= 1)

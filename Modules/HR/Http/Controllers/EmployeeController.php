@@ -10,6 +10,7 @@ use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\Job;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
@@ -61,8 +62,10 @@ class EmployeeController extends Controller
 
     public function showFTEdata(request $request)
     {
-        $domainId = $request->domain_id;
-        $employees = Employee::where('domain_id', $domainId)->get();
+        $designationArrays = DB::table('hr_job_designation')->select('id')->where('domain_id', $request->domain_id)->get();
+        foreach ($designationArrays as $designationArray) {
+            $employees = Employee::where('designation_id', $designationArray->id)->get();
+        };
         $domainName = HrJobDomain::all();
         $jobName = Job::all();
 
