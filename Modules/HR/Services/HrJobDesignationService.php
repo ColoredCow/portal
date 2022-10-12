@@ -2,6 +2,7 @@
 
 namespace Modules\HR\Services;
 
+use Illuminate\Auth\Events\Validated;
 use Modules\HR\Http\Requests\Recruitment\JobDesignationRequest;
 use Illuminate\Support\Str;
 use Modules\HR\Entities\HrJobDesignation;
@@ -29,13 +30,13 @@ class HrJobDesignationService
         $jobDesignation->save();
     }
 
-    public function edit(JobDesignationRequest $request, $id)
+    public function edit($id)
     {
         $hrJobDesignation = HrJobDesignation::find($id);
-        $hrJobDesignation->designation = $request['name'];
-        $hrJobDesignation->slug = Str::slug($request['name']);
-        $hrJobDesignation->domain_id = $request['domain'];
-        $hrJobDesignation->save();
+        $hrJobDesignation->designation = request('name');
+        $hrJobDesignation->slug = Str::slug(request('name'));
+        $hrJobDesignation->domain_id = request('domain');
+        $hrJobDesignation->update();
     }
 
     public function destroy(HrJobDesignation $request, $id)

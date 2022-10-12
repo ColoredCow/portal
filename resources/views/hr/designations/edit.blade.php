@@ -10,8 +10,8 @@
             <div class="designation-edit modal-body">
                 <form action="{{ route('designation.edit', $designation->id) }}" method="get" id="designationEditForm" >
                     @csrf
+                    <input value="{{ route('designation.edit', $designation->id) }}" type="hidden" class="hidden" aria-hidden="true" name="routePlaceHolder">
                     <div class="form-group">
-                        <input value="{{ route('designation.edit', $designation->id) }}" type="hidden" class="hidden" aria-hidden="true" name="routePlaceHolder">
                         <label class="field-required" for="designationfield">name</label>
                         <input type="text" name="name" class="form-control" value="{{$designation->designation}}" required>
                     </div>
@@ -22,7 +22,7 @@
                             if($designation->domain_id!=NULL && $domain->id===($designation->domain_id)) $domainName = $domain->domain; 
                             if($designation->domain_id==NULL) $domainName = ' '; 
                         @endphp 
-                        <select name="domain" class="form-control" >
+                        <select name="domain" class="form-control" required>
                             <option value="{{$designation->domain_id}}">{{$domainName}}</option>
                             @foreach($domains as $domain)
                             <option value="{{$domain->id}}">{{$domain->domain}}</option>
@@ -30,7 +30,7 @@
                         </select>
                     </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>  
+                    <button type="submit" class="btn btn-primary"id="editBtn" >Save changes</button>  
                 </form>
             </div>
         </div>

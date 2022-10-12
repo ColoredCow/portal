@@ -1913,22 +1913,50 @@ $(document).ready(function() {
 	});
 });
 
-$("#designationEditFormModal").on("show.bs.modal", function (e) {
-	const designationEdited = e.relatedTarget;
-	const designation = $(designationEdited).data("json");
+// $("#designationEditFormModal").on("show.bs.modal", function (e) {
+// 	const designationEdited = e.relatedTarget;
+// 	const designation = $(designationEdited).data("json");
 
-	const editForm = $(this).find("form");
-	const newId = editForm.find("input.hidden");
-	const value = newId.attr("value");
-	const action = value.replace("id", designation.id);
+// 	const editForm = $(this).find("form");
+// 	const newId = editForm.find("input.hidden");
+// 	const value = newId.attr("value");
+// 	const action = value.replace("id", designation.id);
 
-	editForm.attr("action", action);
+// 	editForm.attr("action", action);
 
-	editForm.find("input[name='name']").val(designation.designation);
-	editForm.find("value[domain='domain']").val(designation.domain_id);
+// 	editForm.find("input[name='name']").val(designation.designation);
+// 	editForm.find("value[domain='domain']").val(designation.domain_id);
 
-});
+// });
+// $("#designationEditForm").on("submit", function(e) {
+// 	e.preventDefault();
+// 	let form = $("#designationEditForm");
+// 	let button = $("#editBtn");
 
+// 	$.ajax({
+// 		url: form.attr("action"),
+// 		type: form.attr("method"),
+// 		data: form.serialize(),
+// 		success: function(response) {
+// 			$("#designationEditFormModal").modal("hide");
+// 			$("#designationEditFormModal").on("hidden.bs.modal", function(e) {
+// 				$("#successMessage").toggleClass("d-none");
+// 				$("#successMessage").fadeToggle(5000);
+// 			});
+// 		},
+// 		// error: function(response) {
+// 		// 	$("#profile-details-error").removeClass("d-none");
+// 		// 	$("#successMessage").addClass("d-none");
+// 		// 	let errors = response.responseJSON.errors;
+// 		// 	$(".profile-details-error").empty();
+// 		// 	for (let error in errors) {
+// 		// 		$(".profile-details-error").append(
+// 		// 			"<li class='text-danger ml-2'>" + errors[error] + "</li>"
+// 		// 		);
+// 		// 	}
+// 		// },
+// 	});
+// });
 $("#editform").on("submit", function(e) {
 	e.preventDefault();
 	let form = $("#editform");
