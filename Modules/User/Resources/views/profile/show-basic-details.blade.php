@@ -34,16 +34,6 @@
                     </select>   
                 </div>
                 <div class="form-group">
-                    <label>Domain</label>
-                    <select class="form-control" name="domainId">
-                        <option value="" disabled>Select Domain</option>
-
-                        @foreach ($domains as $domain )
-                        <option {{$domain['id'] == $user->employee->domain_id ? "selected" : ""}} value="{{ $domain['id'] }}">{{$domain['domain']}}</option>
-                        @endforeach
-                    </select>    
-                </div>
-                <div class="form-group">
                     <label for="email">Email</label>
                     <input type="text" class="form-control" id="email" name="email" value="{{$user->email}}" readonly>
                 </div>
@@ -80,12 +70,15 @@
                 <span>{{ $user->employee->designation }}</span>
                 @foreach ($designations as $designation )
                     <span>{{ $user->employee->designation_id == $designation['id'] ? $designation['designation'] : "" }}</span>
+                    @php
+                        if($user->employee->designation_id == $designation['id']) $id = $designation['domain_id'];
+                    @endphp
                 @endforeach
             </div>
             <div class="form-group">
                 <label class="font-weight-bold" for="">Domain:</label>
                 @foreach ($domains as $domain )
-                    <span>{{ $user->employee->domain_id == $domain['id'] ? $domain['domain'] : "" }}</span>
+                    <span>{{ $id == $domain['id'] ? $domain['domain'] : "" }}</span>
                 @endforeach
             </div>
             <div class="form-group">
