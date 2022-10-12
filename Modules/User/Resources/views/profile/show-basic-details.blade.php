@@ -71,7 +71,7 @@
                 @foreach ($designations as $designation )
                     <span>{{ $user->employee->designation_id == $designation['id'] ? $designation['designation'] : "" }}</span>
                     @php
-                        if($user->employee->designation_id == $designation['id']) $id =$designation['domain_id'];
+                        if($user->employee->designation_id == $designation['id']) $id = $designation['domain_id'];
                     @endphp
                 @endforeach
             </div>
