@@ -48,7 +48,6 @@ class ProfileController extends ModuleBaseController
         }
         
         $user->push();
-        
         return back();
     }
 }
