@@ -2053,6 +2053,11 @@ $(document).ready(function () {
 					$("#designationerror").html(text).removeClass("d-none");
 					return false;
 				}
+				if (response.responseJSON.errors.domain) {
+					let text = response.responseJSON.errors.domain[0];
+					$("#domainerror").html(text).removeClass("d-none");
+					return false;
+				}
 			},
 		});
 	});
@@ -2380,6 +2385,196 @@ $("body").on("click", "#takeAction", function () {
 });
 
 $(document).ready(function () {
+}
+function roundWiseRejectionsGraph() {
+	var value = $("#myGraph").data("target");
+	var cData = value;
+	var ctx = $("#myGraph");
+	var data = {
+		labels: cData.totalapplication,
+		datasets: [
+			{
+				label: [],
+				data: cData.count,
+				backgroundColor: ["rgba(52, 144, 220)"],
+				datacolor: ["rgba(52,144,220)"],
+				borderColor: ["rgba(52, 144, 220)"],
+				borderWidth: 10,
+			},
+		],
+	};
+	var myBar = new Chart(ctx, {
+		type: "bar",
+		data: data,
+		options: {
+			categoryPercentage: 1.0,
+			barPercentage: 0.8,
+			maintainAspectRatio: true,
+			indexAxis: "y",
+			scales: {
+				x: {
+					min: 0,
+					max: 100,
+					ticks: {
+						stepSize: 5,
+					},
+				},
+			},
+			plugins: {
+				legend: {
+					labels: {
+						boxWidth: 0,
+					},
+				},
+			},
+			hover: {
+				mode: false,
+			},
+			animation: {
+				duration: 1,
+				onProgress: function() {
+					var chart = this;
+					var ctx = chart.ctx;
+					ctx.textAlign = "top";
+					// ctx.textBaseline = "middle";
+					ctx.font = "13px Arial";
+					this.data.datasets.forEach(function(dataset, i) {
+						var meta = chart.getDatasetMeta(i);
+						meta.data.forEach(function(bar, index) {
+							var data = dataset.data[index];
+							ctx.fillText(data, bar.x + 5, bar.y);
+						});
+					});
+				},
+			},
+		},
+	});
+}
+
+function rejectedReasonsGraph() {
+	var value = $("#myBarGraph").data("target");
+	var cData = value;
+	var ctx = $("#myBarGraph");
+	var data = {
+		labels: cData.reason,
+		datasets: [
+			{
+				label: [],
+				data: cData.Applicationcounts,
+				backgroundColor: ["rgba(52, 144, 220)"],
+				borderColor: ["rgba(52, 144, 220)"],
+				borderWidth: 10,
+			},
+		],
+	};
+	var myBar = new Chart(ctx, {
+		type: "bar",
+		data: data,
+		options: {
+			tooltip: {
+				enabled: true,
+				callbacks: {
+					label: function(tooltipItem) {
+						return tooltipItem.dataset.data;
+					},
+				},
+			},
+			indexAxis: "y",
+			scales: {
+				x: {
+					min: 0,
+					max: 100,
+					ticks: {
+						stepSize: 5,
+					},
+				},
+			},
+			plugins: {
+				legend: {
+					labels: {
+						boxWidth: 0,
+					},
+				},
+			},
+			hover: {
+				mode: false,
+			},
+			animation: {
+				duration: 1,
+				onProgress: function() {
+					var chart = this;
+					var ctx = chart.ctx;
+					ctx.textAlign = "top";
+					ctx.textBaseline = "middle";
+					ctx.font = "13px Arial";
+					this.data.datasets.forEach(function(dataset, i) {
+						var meta = chart.getDatasetMeta(i);
+						meta.data.forEach(function(bar, index) {
+							var data = dataset.data[index];
+							ctx.fillText(data, bar.x + 5, bar.y);
+						});
+					});
+				},
+			},
+		},
+	});
+}
+
+$(function() {
+	$(".reject-reason").on("click", function() {
+		let reasonCheckboxInput = $(this);
+		let reasonCommentInput = reasonCheckboxInput
+			.closest(".rejection-reason-block")
+			.find("input[type=\"text\"]");
+		if (reasonCheckboxInput.is(":checked")) {
+			reasonCommentInput.show().focus();
+		} else {
+			reasonCommentInput.hide();
+		}
+	});
+});
+
+$(".status").on("change", function() {
+	$("#spinner").removeClass("d-none");
+	if (this.checked) {
+		$.ajax({
+			url: "completed/change-status/" + this.dataset.id,
+			method: "GET",
+			success: function (res) {
+				$("#mymodal").modal() + this.dataset.id;
+			},
+			error: function(err) {
+				alert("there is some problem");
+			},
+			complete: function(data) {
+				$("#spinner").addClass("d-none");
+			},
+		});
+	}
+});
+
+$(document).ready(function(){
+	var multipleSelect = new Choices("#choices-multiple", {
+		removeItemButton: true,
+	});
+});
+
+$(".pending").on("change", function() {
+	$("#completeSpinner").removeClass("d-none");
+	$.ajax({
+		url: "pending/" + this.dataset.id,
+		method: "GET",
+		success: function(res) {
+			location.reload(true);
+		},
+		error: function(err) {
+			alert("there is some problem");
+		},
+		complete: function(data) {
+			$("#completeSpinner").addClass("d-none");
+		},
+	});
+});
 
 	$("#addform").on("submit", function (e) {
 		e.preventDefault();
@@ -2462,21 +2657,6 @@ $(document).ready(function() {
 			$optionContainer.addClass("d-none");
 		}
 	});
-});
-
-$("#designationEditFormModal").on("show.bs.modal", function (e) {
-	const designationEdited = e.relatedTarget;
-	const designation = $(designationEdited).data("json");
-
-	const editForm = $(this).find("form");
-	const newId = editForm.find("input.hidden");
-	const value = newId.attr("value");
-	const action = value.replace("id", designation.id);
-
-	editForm.attr("action", action);
-
-	editForm.find("input[name='name']").val(designation.designation);
-
 });
 
 $("#editform").on("submit", function(e) {

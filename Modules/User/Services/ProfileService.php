@@ -21,6 +21,7 @@ class ProfileService implements ProfileServiceContract
 
         return ['user' => $user, 'section' => $section, 'domains' =>$domains, 'officelocations' => $officelocation];
         $designation = HrJobDesignation::select('id', 'designation')->get()->toArray();
+        $designation = HrJobDesignation::select('id', 'designation', 'domain_id')->get()->toArray();
 
         return ['user' => $user, 'section' => $section, 'domains' =>$domains, 'designations' => $designation];
     }
