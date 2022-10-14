@@ -1,7 +1,7 @@
 <?php
 
 return [
-    
+
     'name' => 'HR',
     'working-staff' => [
         'staff-type' => [
