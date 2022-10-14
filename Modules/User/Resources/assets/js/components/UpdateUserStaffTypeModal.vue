@@ -30,7 +30,7 @@
 	</template>
 
 <script>
-	export default {
+export default {
 
 	props: ["user", "config", "stafftypes"],
 	data() {
@@ -65,5 +65,5 @@
 
 
 
-	};
+};
 </script>
