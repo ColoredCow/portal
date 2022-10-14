@@ -13,7 +13,7 @@
         git commit -m 'commit message'        # commit the changes
         git push origin branchname     # push your local branch to GitHub and then create a Pull Request
         ```
-2. [link for sample database dump](https://drive.google.com/file/d/1LQ2Cqd9dbY8G1WqsbfmF2D5h8rMarKjm/view?usp=sharing)
+2. [Click here to download sample database](https://drive.google.com/file/d/1LQ2Cqd9dbY8G1WqsbfmF2D5h8rMarKjm/view?usp=sharing)
 **Note: For creating migrations and seeders**
 
 When you are working in specified module, create migrations/seeders in the specified module instead of the main portal module.
