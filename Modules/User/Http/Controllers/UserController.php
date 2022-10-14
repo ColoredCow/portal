@@ -5,7 +5,6 @@ namespace Modules\User\Http\Controllers;
 use Modules\User\Entities\User;
 use Modules\User\Contracts\UserServiceContract;
 use Modules\User\Http\Requests\UpdateUserRolesRequest;
-use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends ModuleBaseController
 {

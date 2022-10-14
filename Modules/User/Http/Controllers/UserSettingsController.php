@@ -4,7 +4,6 @@ namespace Modules\User\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
-use Modules\HR\Entities\Employee;
 use Modules\User\Entities\User;
 
 class UserSettingsController extends ModuleBaseController
