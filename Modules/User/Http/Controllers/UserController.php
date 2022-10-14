@@ -67,5 +67,4 @@ class UserController extends ModuleBaseController
         $this->authorize('delete', $user);
         $this->service->delete($user);
     }
-    
 }
