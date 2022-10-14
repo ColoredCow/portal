@@ -1,7 +1,8 @@
 @extends('user::layouts.master')
 @section('content')
 
-<div class="container" id="vueContainer">
+<div class="container" id="vueContainer" data-users ="{{ json_encode($users) }}">
+	
     @includeWhen(session('success'), 'toast', ['message' => session('success')])
 	@include('user::layouts.navbar')
 	<h4>User Management</h4>
@@ -16,4 +17,5 @@
 		:config="{{ json_encode(['website_url' => config('website.url')]) }}"
 	/>
 </div>
+@include('settings.permissions.update-staff-type-modal')
 @endsection

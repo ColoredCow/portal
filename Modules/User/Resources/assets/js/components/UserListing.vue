@@ -42,7 +42,15 @@
 
                         <div >
                             <button v-show="userPermissions['can-assign-roles']" class="btn btn-sm btn-outline-info mr-4" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">Manage user roles</button>
-                            <button v-show="userPermissions['can-delete'] && user.id !== authUser.id" type="button" class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#deleteUserModal" @click="setIndex(index)">Remove user</button>
+                            <button v-show="userPermissions['can-delete'] && user.id !== authUser.id" type="button" class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#deleteUserModal" @click="setIndex(index)">
+								<i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+							</button>
+							<button v-show="userPermissions['can-assign-roles']" class="btn btn-edit btn-outline-dark" data-toggle="modal" data-target="#update_staff_type_modal" @click="updateUserRolesModal(index)">
+								<i class="fa fa-cog fa-lg" aria-hidden="true"></i>
+							</button>
+
+
+							
                         </div>
                     </td>
                 </tr>
@@ -67,6 +75,12 @@
 		</div>
 
         <user-role-update-modal
+            :user="this.selectedUser"
+            :updateRoute="this.updateRoute"
+            :config="config"
+            @userRolesUpdated="this.onUserRoleUpdated"
+        />
+		<user-staff-type-update-modal
             :user="this.selectedUser"
             :updateRoute="this.updateRoute"
             :config="config"
