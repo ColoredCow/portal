@@ -1,5 +1,24 @@
   <!-- Modal -->
 
+<<<<<<< HEAD
+=======
+                        @foreach ($domains as $domain )
+                        <option {{$domain['id'] == $user->employee->domain_id ? "selected" : ""}} value="{{ $domain['id'] }}">{{$domain['domain']}}</option>
+                     @endforeach
+                    </select>    
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" id="email" name="email" value="{{$user->email}}" readonly>
+                </div>
+                <div class="form-group">  
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>  
+        </div>
+
+>>>>>>> 43b6d9c31949c7a9a9b34f59dd099b2ea468b8ec
   <div class="modal fade" id="edit" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
           <div class="modal-content">
@@ -93,11 +112,48 @@
 
       </div>
   </div>
+<<<<<<< HEAD
 
   <div class="d-none alert alert-success " id="successMessage" role="alert">
       <strong>Changes Saved Successfully!</strong>
   </div>
 
+=======
+
+  <div class="d-none alert alert-success " id="successMessage" role="alert">
+      <strong>Changes Saved Successfully!</strong>
+  </div> 
+  
+<div class="d-flex justify-content-between">
+    <div class="d-flex">
+        <div class="rounded w-200 mr-10">
+            <img class="rounded w-100p" src="{{ $user->avatar }}" alt="">
+        </div>
+        <div>
+            <div class="form-group">
+                <label class="font-weight-bold" for=""> Name:</label>
+                <span>{{ $user->name }}</span>
+            </div>
+            <div class="form-group">
+                <label class="font-weight-bold" for=""> Nickame:</label>
+                <span>{{ $user->nickname }}</span>
+            </div>
+            <div class="form-group">
+                <label class="font-weight-bold" for=""> Designation:</label>
+                <span>{{ $user->employee->designation }}</span>
+                @foreach ($designations as $designation )
+                    <span>{{ $user->employee->designation_id == $designation['id'] ? $designation['designation'] : "" }}</span>
+                @endforeach
+            </div>
+            <div class="form-group">
+                <label class="font-weight-bold" for=""> Location:</label>
+                <span>{{ $user->officelocation->location}}</span>
+            </div>
+
+            <div class="form-group">
+                <label class="font-weight-bold" for=""> Domain:</label>
+                @foreach ($domains as $domain )
+>>>>>>> 43b6d9c31949c7a9a9b34f59dd099b2ea468b8ec
   <div class="d-flex justify-content-between">
       <div class="d-flex">
           <div class="rounded w-200 mr-10">
