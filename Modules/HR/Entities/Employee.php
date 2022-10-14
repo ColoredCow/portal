@@ -75,4 +75,16 @@ class Employee extends Model
     {
         return $this->hasMany(EmployeeSalary::class);
     }
+
+    public function getDesignationAttribute() 
+    {
+        $user = User::first();
+        return $user->employee->hrJobDesignation->designation;
+    }
+
+    public function getDomainAttribute() 
+    {
+        $user = User::first();
+        return $user->employee->hrJobDomain->domain;
+    }
 }
