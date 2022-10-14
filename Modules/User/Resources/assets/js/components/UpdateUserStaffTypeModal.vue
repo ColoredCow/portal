@@ -29,41 +29,41 @@
 	</div>
 	</template>
 
-	<script>
-	export default {
+<script>
+export default {
 
-	props: ["user", "config", "stafftypes"],
-	data() {
-		return {
-			StaffType: "",
-			typeOfStaff: "",
-
-
-		};
-
-	},
-
-	methods: {
-		onChange(e) {
-			this.StaffType = (e.target.value);
-		},
-
-		updateStaffType() {
-
-			axios.post("/user/add-staff-type", { typeOfStaff: this.StaffType, id: this.user.id })
-				.then((response) => {
-					console.log("success");
-					window.location.reload(); //since we are not using vue-router
-					this.destroyFormModal();
-				})
-				.catch(error => {
-					console.log("err", error);
-				});
-		},
-
-	}
-
+props: ["user", "config", "stafftypes"],
+data() {
+	return {
+		StaffType: "",
+		typeOfStaff: "",
 
 
 	};
-	</script>
+
+},
+
+methods: {
+	onChange(e) {
+		this.StaffType = (e.target.value);
+	},
+
+	updateStaffType() {
+
+		axios.post("/user/add-staff-type", { typeOfStaff: this.StaffType, id: this.user.id })
+			.then((response) => {
+				console.log("success");
+				window.location.reload(); //since we are not using vue-router
+				this.destroyFormModal();
+			})
+			.catch(error => {
+				console.log("err", error);
+			});
+	},
+
+}
+
+
+
+};
+</script>
