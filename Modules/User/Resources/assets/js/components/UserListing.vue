@@ -6,7 +6,7 @@
         <table class="table table-bordered table-striped">
 			<thead class="thead-dark">
 				<tr>
-					<th width="20%">User Name</th>
+					<th width="20%">User Name </th>
 					<th width="35%">User Roles</th>
 					<th>Actions</th>
 				</tr>
@@ -47,6 +47,7 @@
 							</button>
 							<button v-show="userPermissions['can-assign-roles']" class="btn btn-edit btn-outline-dark" data-toggle="modal" data-target="#update_staff_type_modal" @click="updateUserRolesModal(index)">
 								<i class="fa fa-cog fa-lg" aria-hidden="true"></i>
+								
 							</button>
 
 
@@ -82,16 +83,14 @@
         />
 		<user-staff-type-update-modal
             :user="this.selectedUser"
-            :updateRoute="this.updateRoute"
-            :config="config"
-            @userRolesUpdated="this.onUserRoleUpdated"
+			:stafftypes="stafftypes"
         />
     </div>
 </template>
 
 <script>
 export default {
-	props:["users", "updateRoute", "userPermissions", "config", "authUser"],
+	props:["users", "updateRoute", "userPermissions", "config", "authUser","stafftypes"],
 
 	data(){
 		return {

@@ -39,8 +39,6 @@
 				</td>
 			</tr>
 		</table>
-		@include('settings.permissions.update-staff-type-modal')
-		@include('settings.permissions.update-user-roles-modal')
 	</div>
 </div>
 @endsection

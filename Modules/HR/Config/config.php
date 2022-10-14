@@ -8,7 +8,7 @@ return [
             'employee' => 'Employee',
             'intern' => 'Intern',
             'contractor' => 'Contractor',
-            'support-staff' => 'Support Staff',
+            'supportstaff' => 'Support Staff',
         ],
     ],
     'applicationEvaluation' => [
