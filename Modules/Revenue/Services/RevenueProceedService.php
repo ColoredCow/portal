@@ -28,7 +28,6 @@ class RevenueProceedService
         $revenueProceed = new RevenueProceed;
 
         $revenueProceed->name = $request['name'];
-
         $revenueProceed->currency = $request['currency'];
         $revenueProceed->amount = $request['amount'];
         $revenueProceed->category = Str::snake($request['category']);

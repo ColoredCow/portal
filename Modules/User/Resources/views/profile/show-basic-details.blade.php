@@ -46,9 +46,9 @@
     </div>
 </div>
 
-<div class="d-none alert alert-success " id="successMessage" role="alert">
-    <strong>Changes Saved Successfully!</strong>
-</div>
+  <div class="d-none alert alert-success " id="successMessage" role="alert">
+      <strong>Changes Saved Successfully!</strong>
+  </div>
 
 <div class="d-flex justify-content-between">
     <div class="d-flex">
@@ -91,4 +91,3 @@
         <button class="btn btn-info" data-toggle="modal" id="editProfileBtn" data-target="#edit">Edit</button>
     </div>
 </div>
-
