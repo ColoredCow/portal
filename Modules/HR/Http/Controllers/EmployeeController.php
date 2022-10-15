@@ -53,7 +53,7 @@ class EmployeeController extends Controller
     {
         $domains = HrJobDomain::select('id', 'domain')->get()->toArray();
         $designations = HrJobDesignation::select('id', 'designation')->get()->toArray();
-        $domainIndex='';
+        $domainIndex = '';
 
         return view('hr.employees.basic-details', ['domainIndex'=>$domainIndex, 'employee' => $employee, 'domains'=>$domains, 'designations' => $designations]);
     }
