@@ -37,10 +37,7 @@ export default {
 		return {
 			StaffType: "",
 			typeOfStaff: "",
-
-
 		};
-
 	},
 
 	methods: {
@@ -52,7 +49,6 @@ export default {
 
 			axios.post("/user/add-staff-type", { typeOfStaff: this.StaffType, id: this.user.id })
 				.then((response) => {
-					console.log("success");
 					window.location.reload(); //since we are not using vue-router
 					this.destroyFormModal();
 				})
@@ -62,8 +58,5 @@ export default {
 		},
 
 	}
-
-
-
 };
 </script>

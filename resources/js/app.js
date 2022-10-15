@@ -1284,7 +1284,6 @@ if (document.getElementById("user_roles_table")) {
 			},
 
 			updateRoles: function() {
-				console.log("working");
 				let selectedRoles = [];
 				if (this.users) {
 					let userID = this.users[this.currentUserIndex].id;

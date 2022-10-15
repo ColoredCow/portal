@@ -48,10 +48,7 @@
 							<button v-show="userPermissions['can-assign-roles']" class="btn btn-edit btn-outline-dark" data-toggle="modal" data-target="#update_staff_type_modal" @click="updateUserRolesModal(index)">
 								<i class="fa fa-cog fa-lg" aria-hidden="true"></i>
 								
-							</button>
-
-
-							
+							</button>						
                         </div>
                     </td>
                 </tr>
