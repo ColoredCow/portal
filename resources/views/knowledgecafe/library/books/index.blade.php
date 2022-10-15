@@ -9,7 +9,7 @@
     <br>
     <div class="row">
         <div class="col-6">
-            <h1>Books</h1>
+            <h1>Books({{count($books)}})</h1>
         </div>
         @can('library_books.create')
             <div class="col-6">
