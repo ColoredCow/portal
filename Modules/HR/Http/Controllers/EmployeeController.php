@@ -62,6 +62,7 @@ class EmployeeController extends Controller
 
     public function showFTEdata(request $request)
     {
+        $employee = Employee::all();
         $designationArrays = DB::table('hr_job_designation')->select('id')->where('domain_id', $request->domain_id)->get();
         foreach ($designationArrays as $designationArray) {
             $employee = Employee::where('designation_id', $designationArray->id)->get();
