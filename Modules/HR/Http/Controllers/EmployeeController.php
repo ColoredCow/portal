@@ -64,10 +64,11 @@ class EmployeeController extends Controller
     {
         $employee = Employee::all();
         $designationArrays = DB::table('hr_job_designation')->select('id')->where('domain_id', $request->domain_id)->get();
+        $data = [];
         foreach ($designationArrays as $designationArray) {
-            $employee = Employee::where('designation_id', $designationArray->id)->get();
+            $data[] = $designationArray->id;
         }
-        // dd($request->domain_id);
+        $employee = Employee::whereIn('designation_id', $data)->get();
         $domainName = HrJobDomain::all();
         $jobName = Job::all();
 
