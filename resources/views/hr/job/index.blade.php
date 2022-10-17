@@ -8,6 +8,13 @@
     <br><br>
     <div class="d-flex justify-content-between align-items-center">
         <h1>{{ $type == 'volunteer' ? 'Projects' : 'Opportunities' }}</h1>
+        <div class="col-md-4">
+            <form class="offset-md-5 col-md-12 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">
+                <input type="hidden" name="status" class="form-control" id="search" value="">
+                <input type="text" name="search" class="form-control" id="search" placeholder="Search Opportunity">
+                <button class="btn btn-info ml-1">Search</button>
+            </form>
+        </div>
         <a href="{{ route('recruitment.opportunities.create') }}" class="btn btn-success"><i class="fa fa-plus mr-1"></i>New Opportunity</a>
     </div>
     <table class="table table-striped table-bordered">
