@@ -225,7 +225,6 @@
             let totalPaidAmount = this.amountPaid + " + " + $("#tds").val() + " = " + (parseInt(this.amountPaid) + parseFloat($("#tds").val()));
             document.getElementById("totalPaidAmount").innerText = totalPaidAmount;
             $(".checkIcon").addClass("d-none");
-            console.log($("#totalAmount").text().trim(), (totalPaidAmount.split(/\=/)[1]).trim(), $("#totalAmount").text().trim() == (totalPaidAmount.split(/\=/)[1]).trim())
             if ($("#totalAmount").text().trim() == (totalPaidAmount.split(/\=/)[1]).trim()) {
                 $(".checkIcon").removeClass("d-none");
             }
