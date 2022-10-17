@@ -34,18 +34,20 @@ class MediaController extends Controller
     {
         $validated = $request->validated();
         $path = config('media.path');
-        $fileName = time() . '.' . $request->file->extension();
-
-        $request->file->storeAs(
-            $path,
-            $fileName,
-        );
-
+        foreach ($validated['file_url'] as $file) {
+            $fileName = time() . '.' . $file->extension();
+            $files[] = $fileName;
+    
+            $file->storeAs(
+                $path,
+                $fileName,
+            );
+        }   
         $postData = [
             'event_name' => $validated['event_name'],
             'description' => $validated['description'],
-            'file_url' => $fileName,
-            'uploaded_by' => Auth()->user()->id
+            'file_url' => json_encode($files),
+            'uploaded_by' => Auth()->user()->id,
         ];
         Media::create($postData);
 

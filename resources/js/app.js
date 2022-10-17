@@ -2061,3 +2061,18 @@ $("#responseModal").on("submit",function(e){
 	});
 });
 
+$('#addFiles').click(function() {
+	var htmlData = `
+		<div class="fileContainer d-flex flex-col mb-2">
+			<div class="d-flex">
+				<input type="file" name="file_url[]" id="file_url" accept="image/*" class=" myfrm form-control @error('file') is-invalid @enderror">
+				<button class="btn btn-danger ml-2 deleteFile" type="button">Remove</button>
+			</div>
+		</div>
+	`;
+	$('.increament').append(htmlData);
+});
+$('.deleteFile').click(function() {
+	console.log("delete", $(this).closest('.fileContainer'));
+	$(this).closest('.fileContainer').remove();
+});

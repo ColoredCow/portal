@@ -1,7 +1,7 @@
 @extends('media::layouts.master')
 @section('title', 'Media Page')
-@section('heading', 'Media')
-@section('popup', 'Add New Post')
+@section('heading', 'Media Gallery')
+@section('popup', 'Add New Media')
 @section('link', route('media.index'))
 @section('content')
 
@@ -18,20 +18,18 @@
         <div class="modal fade" id="photoGallery" tabindex="-1" role="dialog" aria-labelledby="photoGalleryLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row my-3">
-                            <div class="col-lg-20 mx-auto">
+                    <div class="modal-content">
+                        <!-- <div class="row my-3"> -->
+                            <!-- <div class="col-lg-20 mx-auto"> -->
                                 <div class="card shadow">
-                                    <div class="card-header bg-secondary">
-                                        <h3 class="text-light fw-bold">Add New Post</h3>
+                                    <div class="modal-header bg-secondary">
+                                        <h3 class="text-light fw-bold">Add New Media</h3>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
                                     <div class="card-body p-4">
-                                        <form action="{{ route('media.index') }}" method="POST" enctype="multipart/form-data">
+                                        <form action="{{ route('media.store') }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             <div class="my-2"><h3 class="text-secondary">Event Name</h3>
                                                 <input type="text" name="event_name" id="event_name" class="form-control @error('event_name') is-invalid @enderror" placeholder="Event_name" value="{{ old('event_name') }}">
@@ -40,10 +38,18 @@
                                                 @enderror
                                             </div>
                                             <div class="my-2"><h3 class="text-secondary">File Upload</h3>
-                                                <input type="file" name="file" id="file" accept="image/*" class="form-control @error('file') is-invalid @enderror">
-                                                @error('file')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
+                                                <div class="input-group xpress control-group lst increament">
+                                                    <div class="fileContainer d-flex flex-col mb-2">
+                                                        <div class="d-flex">
+                                                            <input type="file" name="file_url[]" id="file_url" accept="image/*" class=" myfrm form-control @error('file') is-invalid @enderror">
+                                                            <button class="btn btn-danger ml-2 deleteFile" type="button">Remove</button>
+                                                        </div>
+                                                        @error('file')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <button id="addFiles" class="btn btn-success mt-3" type="button">Add</button>
                                             </div>
                                             <div class="my-2"><h3 class="text-secondary">Description</h3>
                                                 <textarea name="description" id="description" rows="6" class="form-control @error('description') is-invalid @enderror" placeholder="Description">{{ old('description') }}</textarea>
@@ -84,7 +90,8 @@
                 </a>
                 <div class="card-body">
                     <p>
-                        <td class="">
+                        <td>
+                            <span>Uploaded By:</span>
                             <img src="{{auth()->user()->avatar}}" alt="{{auth()->user()->name}}" class="w-25 h-25 rounded-circle" data-toggle="tooltip" data-placement="top" title="{{auth()->user()->name}}">
                         </td>
                     </p>

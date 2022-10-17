@@ -25,7 +25,7 @@ class MediaRequest extends FormRequest
     {
         return [
             'event_name' => 'required',
-            'file' => 'required',
+            'file_url' => 'required|array',
             'description' => 'required',
         ];
     }
