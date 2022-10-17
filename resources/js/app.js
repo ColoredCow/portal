@@ -96,7 +96,7 @@ Vue.component(
 );
 
 if (Vue) {
-	Vue.filter("str_limit", function(value, size) {
+	Vue.filter("str_limit", function (value, size) {
 		if (!value) return "";
 		value = value.toString();
 
@@ -114,11 +114,11 @@ if (document.getElementById("vueContainer")) {
 }
 
 $(document).ready(() => {
-	setTimeout(function() {
+	setTimeout(function () {
 		$("#statusAlert").alert("close");
 	}, 2000);
 
-	$("#job_title").on("change", function(event) {
+	$("#job_title").on("change", function (event) {
 		let opportunityId = $(this)
 			.find(":selected")
 			.attr("id");
@@ -134,12 +134,12 @@ $(document).ready(() => {
 	}
 	$("[data-toggle=\"tooltip\"]").tooltip();
 
-	$(".status-close").on("click", function() {
+	$(".status-close").on("click", function () {
 		let wrapper = $(this).closest(".alert");
 		wrapper.fadeOut(500);
 	});
 
-	$(".client_edit_form_submission_btn").on("click", function() {
+	$(".client_edit_form_submission_btn").on("click", function () {
 		if (!$("#edit_client_info_form")[0].checkValidity()) {
 			$("#edit_client_info_form")[0].reportValidity();
 			return false;
@@ -148,7 +148,7 @@ $(document).ready(() => {
 		$("#edit_client_info_form").submit();
 	});
 
-	$(".prospect_edit_form_submission_btn").on("click", function() {
+	$(".prospect_edit_form_submission_btn").on("click", function () {
 		if (!$("#edit_prospect_info_form")[0].checkValidity()) {
 			$("#edit_prospect_info_form")[0].reportValidity();
 			return false;
@@ -157,7 +157,7 @@ $(document).ready(() => {
 		$("#edit_prospect_info_form").submit();
 	});
 
-	$("body").on("change", ".custom-file-input", function() {
+	$("body").on("change", ".custom-file-input", function () {
 		var fileName = $(this)
 			.val()
 			.split("\\")
@@ -167,7 +167,7 @@ $(document).ready(() => {
 			.addClass("selected")
 			.html(fileName);
 	});
-	$("#addChannel").on("submit", function(e) {
+	$("#addChannel").on("submit", function (e) {
 		e.preventDefault();
 		let form = $("#addChannel");
 		let button = $("#channelButton");
@@ -175,12 +175,12 @@ $(document).ready(() => {
 			url: form.attr("action"),
 			type: form.attr("method"),
 			data: form.serialize(),
-			success: function(response) {
+			success: function (response) {
 				$("#channelName").modal("hide");
 				$("#success").toggleClass("d-none");
 				$("#success").fadeToggle(5000);
 			},
-			error: function(response) {
+			error: function (response) {
 				$("#errorMessage").toggleClass("d-none");
 			},
 		});
@@ -201,7 +201,7 @@ $(document).ready(() => {
 		rejectedReasonsGraph();
 	}
 
-	$("#save-btn-action").on("click", function() {
+	$("#save-btn-action").on("click", function () {
 		this.disabled = true;
 		if (!this.form.checkValidity()) {
 			this.disabled = false;
@@ -212,27 +212,27 @@ $(document).ready(() => {
 	});
 });
 
-$(document).ready(function() {
-	$("#domainformModal").on("hidden.bs.modal", function() {
+$(document).ready(function () {
+	$("#domainformModal").on("hidden.bs.modal", function () {
 		$(this)
 			.find("form")
 			.trigger("reset");
 		$("#domainerror").addClass("d-none");
 	});
 
-	$("#domainForm").on("submit", function(e) {
+	$("#domainForm").on("submit", function (e) {
 		e.preventDefault();
 		let form = $("#domainForm");
 		$.ajax({
 			type: form.attr("method"),
 			url: form.attr("action"),
 			data: form.serialize(),
-			success: function(response) {
+			success: function (response) {
 				$("#domainformModal").modal("hide");
 				$("#successMessage").toggleClass("d-none");
 				$("#successMessage").fadeToggle(3000);
 			},
-			error: function(response) {
+			error: function (response) {
 				if (response.responseJSON.errors.name) {
 					let text = response.responseJSON.errors.name[0];
 					$("#domainerror")
@@ -296,13 +296,13 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			createCalendarEvent: true,
 		},
 		methods: {
-			toggleResumeFrame: function() {
+			toggleResumeFrame: function () {
 				this.showResumeFrame = !this.showResumeFrame;
 			},
-			toggleEvaluationFrame: function() {
+			toggleEvaluationFrame: function () {
 				this.showEvaluationFrame = !this.showEvaluationFrame;
 			},
-			getApplicationEvaluation: function(applicationRoundID, roundId) {
+			getApplicationEvaluation: function (applicationRoundID, roundId) {
 				let roundName = $("#applicationRoundName" + roundId)[0].innerText;
 				document.getElementById(
 					"roundName"
@@ -314,58 +314,58 @@ if (document.getElementById("page_hr_applicant_edit")) {
 				if (!this.showEvaluationFrame) {
 					axios
 						.get("/hr/evaluation/" + applicationRoundID)
-						.then(function(response) {
+						.then(function (response) {
 							$("#page_hr_applicant_edit #application_evaluation_body").html(
 								response.data
 							);
 						})
-						.catch(function(error) {
+						.catch(function (error) {
 							alert("Error fetching application evaluation!");
 						});
 				}
 				this.toggleEvaluationFrame();
 			},
 
-			onSelectNextRound: function(event) {
+			onSelectNextRound: function (event) {
 				this.selectedAction = event.target.value;
 				this.selectedActionOption =
-          event.target.options[event.target.options.selectedIndex];
+					event.target.options[event.target.options.selectedIndex];
 			},
-			takeAction: function() {
+			takeAction: function () {
 				switch (this.selectedAction) {
-				case "round":
-					if (!this.selectedActionOption) {
-						this.selectedActionOption = document.querySelector(
-							"#action_type option:checked"
-						);
-					}
-					this.selectedNextRound = this.selectedActionOption.dataset.nextRoundId;
-					this.nextRoundName = this.selectedActionOption.innerText;
-					loadTemplateMail("confirm", (res) => {
-						$("#confirmMailToApplicantSubject").val(res.subject);
-						tinymce
-							.get("confirmMailToApplicantBody")
-							.setContent(res.body, { format: "html" });
-					});
-					if (this.nextRoundName.trim() == "Move to Team Interaction Round") {
-						$("#sendmailform").removeClass("d-none");
-					} else {
-						$(".next-scheduled-person-container").removeClass("d-none");
-						$("#sendmailform").addClass("d-none");
-					}
-					$("#round_confirm").modal("show");
-					break;
-				case "send-for-approval":
-					$("#send_for_approval").modal("show");
-					break;
-				case "approve":
-					$("#approve_application").modal("show");
-					break;
-				case "onboard":
-					$("#onboard_applicant").modal("show");
+					case "round":
+						if (!this.selectedActionOption) {
+							this.selectedActionOption = document.querySelector(
+								"#action_type option:checked"
+							);
+						}
+						this.selectedNextRound = this.selectedActionOption.dataset.nextRoundId;
+						this.nextRoundName = this.selectedActionOption.innerText;
+						loadTemplateMail("confirm", (res) => {
+							$("#confirmMailToApplicantSubject").val(res.subject);
+							tinymce
+								.get("confirmMailToApplicantBody")
+								.setContent(res.body, { format: "html" });
+						});
+						if (this.nextRoundName.trim() == "Move to Team Interaction Round") {
+							$("#sendmailform").removeClass("d-none");
+						} else {
+							$(".next-scheduled-person-container").removeClass("d-none");
+							$("#sendmailform").addClass("d-none");
+						}
+						$("#round_confirm").modal("show");
+						break;
+					case "send-for-approval":
+						$("#send_for_approval").modal("show");
+						break;
+					case "approve":
+						$("#approve_application").modal("show");
+						break;
+					case "onboard":
+						$("#onboard_applicant").modal("show");
 				}
 			},
-			rejectApplication: function() {
+			rejectApplication: function () {
 				$("#application_reject_modal").modal("show");
 				loadTemplateMail("reject", (res) => {
 					$("#rejectMailToApplicantSubject").val(res.subject);
@@ -390,7 +390,7 @@ if (document.getElementById("project_container")) {
 			newStage: false,
 		},
 		methods: {
-			createProjectStage: function() {
+			createProjectStage: function () {
 				this.$refs.projectStage.create();
 			},
 		},
@@ -410,29 +410,29 @@ if (document.getElementById("client_form")) {
 		el: "#client_form",
 		data: {
 			country:
-        document.getElementById("country").dataset.preSelectCountry || "",
+				document.getElementById("country").dataset.preSelectCountry || "",
 			isActive: document.getElementById("is_active").dataset.preSelectStatus
 				? parseInt(document.getElementById("is_active").dataset.preSelectStatus)
 				: 1,
 			newEmailName: "",
 			newEmailId: "",
 			clientEmails:
-        document.getElementById("emails").value == ""
-        	? []
-        	: document.getElementById("emails").value.split(","),
+				document.getElementById("emails").value == ""
+					? []
+					: document.getElementById("emails").value.split(","),
 		},
 		methods: {
-			toggleActive: function() {
+			toggleActive: function () {
 				this.isActive = !this.isActive;
 			},
-			addNewEmail: function() {
+			addNewEmail: function () {
 				this.clientEmails.push(
 					this.newEmailName + " <" + this.newEmailId + ">"
 				);
 				this.newEmailName = "";
 				this.newEmailId = "";
 			},
-			removeEmail: function(item) {
+			removeEmail: function (item) {
 				let index = this.clientEmails.indexOf(item);
 				if (index !== -1) {
 					this.clientEmails.splice(index, 1);
@@ -448,23 +448,23 @@ if (document.getElementById("finance_report")) {
 		data: {
 			showReportTable: "received",
 			sentAmountINR:
-        document.getElementById("sent_amount_INR").dataset.sentAmount || 0,
+				document.getElementById("sent_amount_INR").dataset.sentAmount || 0,
 			sentAmountUSD:
-        document.getElementById("sent_amount_USD").dataset.sentAmount || 0,
+				document.getElementById("sent_amount_USD").dataset.sentAmount || 0,
 			conversionRateUSD:
-        document.getElementById("conversion_rate_usd").dataset
-        	.conversionRateUsd || 0,
+				document.getElementById("conversion_rate_usd").dataset
+					.conversionRateUsd || 0,
 		},
 		computed: {
-			convertedUSDSentAmount: function() {
+			convertedUSDSentAmount: function () {
 				let convertedAmount =
-          parseFloat(this.sentAmountUSD) * parseFloat(this.conversionRateUSD);
+					parseFloat(this.sentAmountUSD) * parseFloat(this.conversionRateUSD);
 				return isNaN(convertedAmount) ? 0 : convertedAmount.toFixed(2);
 			},
-			totalINREstimated: function() {
+			totalINREstimated: function () {
 				return (
 					parseFloat(this.sentAmountINR) +
-          parseFloat(this.convertedUSDSentAmount)
+					parseFloat(this.convertedUSDSentAmount)
 				);
 			},
 		},
@@ -474,7 +474,7 @@ if (document.getElementById("finance_report")) {
 $("#page_hr_applicant_edit .applicant-round-form").on(
 	"click",
 	".round-submit",
-	function() {
+	function () {
 		let button = $(this); // reject button
 		let form = $(this).closest(".applicant-round-form"); // <form element with class "applicant-round-form" >
 		let selectedAction = $(this).data("action"); // reject
@@ -496,7 +496,7 @@ $(".date-field").datepicker({
 	dateFormat: "dd/mm/yy",
 });
 
-$("#form_invoice").on("change", "#client_id", function() {
+$("#form_invoice").on("change", "#client_id", function () {
 	let form = $(this).closest("form");
 	let client_id = $(this).val();
 	if (!client_id) {
@@ -515,7 +515,7 @@ function updateClientProjects(form, client_id) {
 	$.ajax({
 		url: "/clients/" + client_id + "/get-projects",
 		method: "GET",
-		success: function(res) {
+		success: function (res) {
 			form.find("#project_ids").html(getProjectList(res));
 		},
 	});
@@ -540,12 +540,12 @@ function setTooltip(btn, message) {
 }
 
 function hideTooltip(btn) {
-	setTimeout(function() {
+	setTimeout(function () {
 		$(btn).tooltip("hide");
 	}, 1000);
 }
 
-clipboard.on("success", function(e) {
+clipboard.on("success", function (e) {
 	setTooltip(e.trigger, "Copied!");
 	hideTooltip(e.trigger);
 });
@@ -580,16 +580,16 @@ $("body").on("click", "#takeAction", function () {
 	initRicheditor();
 });
 
-$(".hr_round_guide").on("click", ".edit-guide", function() {
+$(".hr_round_guide").on("click", ".edit-guide", function () {
 	let container = $(this).closest(".hr_round_guide");
 	container.find(".btn-guide, .guide-container").toggleClass("d-none");
 });
 
-$(document).ready(function() {
-	$("#addNewSegmentForm").submit(function(e) {
+$(document).ready(function () {
+	$("#addNewSegmentForm").submit(function (e) {
 		e.preventDefault();
 		let form = $("#addNewSegmentForm");
-		$("#createNewSegment").on("hidden.bs.modal", function() {
+		$("#createNewSegment").on("hidden.bs.modal", function () {
 			$(this)
 				.find("form")
 				.trigger("reset");
@@ -599,14 +599,14 @@ $(document).ready(function() {
 			type: form.attr("method"),
 			url: form.attr("action"),
 			data: form.serialize(),
-			success: function(response) {
+			success: function (response) {
 				$("#createNewSegment").modal("hide");
-				$("#createNewSegment").on("hidden.bs.modal", function(e) {
+				$("#createNewSegment").on("hidden.bs.modal", function (e) {
 					$("#segmentsuccess").toggleClass("d-none");
 					$("#segmentsuccess").fadeToggle(6000);
 				});
 			},
-			error: function(response) {
+			error: function (response) {
 				$("#segmentError").removeClass("d-none");
 				let errors = response.responseJSON.errors;
 				$("#errors").empty();
@@ -618,15 +618,15 @@ $(document).ready(function() {
 			},
 		});
 	});
-	$("#segmentModalCloseBtn").click(function() {
+	$("#segmentModalCloseBtn").click(function () {
 		$("#segmentError").toggleClass("d-none");
 	});
 });
-$(document).ready(function() {
-	$("#editSegmentForm").submit(function(e) {
+$(document).ready(function () {
+	$("#editSegmentForm").submit(function (e) {
 		e.preventDefault();
 		let form = $("#editSegmentForm");
-		$("#editSegmentModal").on("hidden.bs.modal", function() {
+		$("#editSegmentModal").on("hidden.bs.modal", function () {
 			$(this)
 				.find("form")
 				.trigger("reset");
@@ -636,14 +636,14 @@ $(document).ready(function() {
 			type: form.attr("method"),
 			url: form.attr("action"),
 			data: form.serialize(),
-			success: function(response) {
+			success: function (response) {
 				$("#editSegmentModal").modal("hide");
-				$("#editSegmentModal").on("hidden.bs.modal", function(e) {
+				$("#editSegmentModal").on("hidden.bs.modal", function (e) {
 					$("#editSegmentSuccess").toggleClass("d-none");
 					$("#editSegmentSuccess").fadeToggle(6000);
 				});
 			},
-			error: function(response) {
+			error: function (response) {
 				$("#editSegmentError").removeClass("d-none");
 				let errors = response.responseJSON.errors;
 				$("#editErrors").empty();
@@ -655,12 +655,12 @@ $(document).ready(function() {
 			},
 		});
 	});
-	$("#editSegmentModalClose").click(function() {
+	$("#editSegmentModalClose").click(function () {
 		$("#editSegmentError").toggleClass("d-none");
 	});
 });
 
-$(".hr_round_guide").on("click", ".save-guide", function() {
+$(".hr_round_guide").on("click", ".save-guide", function () {
 	let container = $(this).closest(".hr_round_guide");
 	let form = container.find("form");
 	let button = $(this);
@@ -668,13 +668,13 @@ $(".hr_round_guide").on("click", ".save-guide", function() {
 		method: form.attr("method"),
 		url: form.attr("action"),
 		data: form.serialize() + "&guidelines=" + tinyMCE.activeEditor.getContent(),
-		beforeSend: function() {
+		beforeSend: function () {
 			button
 				.prop("disabled", true)
 				.find(".item")
 				.toggleClass("d-none");
 		},
-		success: function(res) {
+		success: function (res) {
 			button
 				.prop("disabled", false)
 				.find(".item")
@@ -691,7 +691,7 @@ $(".hr_round_guide").on("click", ".save-guide", function() {
  * Knowledge Cafe
  *
  */
-$(window).on("load", function() {
+$(window).on("load", function () {
 	$("#preloader")
 		.removeClass("d-block")
 		.addClass(" d-none ");
@@ -716,7 +716,7 @@ if (document.getElementById("show_and_save_book")) {
 			},
 		},
 		methods: {
-			onFileSelected: function(e) {
+			onFileSelected: function (e) {
 				let file = e.target.files[0];
 				if (!file) {
 					return;
@@ -724,13 +724,13 @@ if (document.getElementById("show_and_save_book")) {
 				this.compressedFile = null;
 				let image = new ImageCompressor(file, {
 					quality: 0.1,
-					success: function(result) {
+					success: function (result) {
 						this.compressedFile = result;
 					},
 				});
 			},
 
-			submitBookForm: function() {
+			submitBookForm: function () {
 				let formData = new FormData(document.getElementById("book_form"));
 				if (this.compressedFile) {
 					formData.append("book_image", compressedFile, compressedFile.name);
@@ -761,7 +761,7 @@ if (document.getElementById("show_and_save_book")) {
 				});
 			},
 
-			saveBookToRecords: function() {
+			saveBookToRecords: function () {
 				if (!this.book) {
 					alert("Error in saving records");
 				}
@@ -796,9 +796,9 @@ if (document.getElementById("books_listing")) {
 				? JSON.parse(document.getElementById("books_table").dataset.categories)
 				: [],
 			updateRoute:
-        document.getElementById("books_table").dataset.indexRoute || "",
+				document.getElementById("books_table").dataset.indexRoute || "",
 			categoryIndexRoute:
-        document.getElementById("books_table").dataset.categoryIndexRoute || "",
+				document.getElementById("books_table").dataset.categoryIndexRoute || "",
 			categoryInputs: [],
 			currentBookIndex: 0,
 			newCategory: "",
@@ -815,7 +815,7 @@ if (document.getElementById("books_listing")) {
 				: "",
 		},
 		methods: {
-			updateCategoryMode: function(index) {
+			updateCategoryMode: function (index) {
 				let categories = this.books[index]["categories"];
 				if (!categories) {
 					return false;
@@ -827,11 +827,11 @@ if (document.getElementById("books_listing")) {
 				);
 			},
 
-			updateCategory: function() {
+			updateCategory: function () {
 				let selectedCategory = [];
 				let bookID = this.books[this.currentBookIndex]["id"];
 
-				this.categoryInputs.forEach(function(checkbox) {
+				this.categoryInputs.forEach(function (checkbox) {
 					if (checkbox.checked) {
 						selectedCategory.push({
 							name: checkbox.dataset.category,
@@ -852,7 +852,7 @@ if (document.getElementById("books_listing")) {
 				document.getElementById("close_update_category_modal").click();
 			},
 
-			addNewCategory: async function() {
+			addNewCategory: async function () {
 				if (!this.newCategory) {
 					alert("Please enter category name");
 					return false;
@@ -872,7 +872,7 @@ if (document.getElementById("books_listing")) {
 				}
 			},
 
-			deleteBook: async function(index) {
+			deleteBook: async function (index) {
 				let bookID = this.books[index]["id"];
 				let route = `${this.updateRoute}/${bookID}`;
 				let response = await axios.delete(route);
@@ -880,22 +880,22 @@ if (document.getElementById("books_listing")) {
 				$("#exampleModal").modal("hide");
 			},
 
-			searchBooks: function() {
+			searchBooks: function () {
 				window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
 			},
 
-			searchBooksByCategoryName: function() {
+			searchBooksByCategoryName: function () {
 				window.location.href = `${this.updateRoute}?category_name=${this.sortKeys}`;
-			},	
+			},
 
-			strLimit: function(str, length) {
+			strLimit: function (str, length) {
 				if (!str) {
 					return "";
 				}
 				return str.length > length ? str.substring(0, length) + "..." : str;
 			},
 
-			updateCopiesCount: function(index) {
+			updateCopiesCount: function (index) {
 				var new_count = parseInt(
 					prompt(
 						"Number of copies of this book",
@@ -911,7 +911,7 @@ if (document.getElementById("books_listing")) {
 			},
 		},
 
-		mounted: function() {
+		mounted: function () {
 			let categoryInputContainer = document.querySelector(
 				"#update_category_modal"
 			);
@@ -937,18 +937,18 @@ if (document.getElementById("books_category")) {
 				: [],
 			categoryNameToChange: [],
 			indexRoute:
-        document.getElementById("category_container").dataset.indexRoute || "",
+				document.getElementById("category_container").dataset.indexRoute || "",
 			newCategoryName: "",
 			newCategoryMode: "",
 		},
 
 		methods: {
-			showEditMode: function(index) {
+			showEditMode: function (index) {
 				this.categoryNameToChange[index] = this.categories[index]["name"];
 				this.$set(this.categories[index], "editMode", true);
 			},
 
-			updateCategoryName: function(index) {
+			updateCategoryName: function (index) {
 				this.$set(
 					this.categories[index],
 					"name",
@@ -963,7 +963,7 @@ if (document.getElementById("books_category")) {
 				this.$toast.success("Updated category for books");
 			},
 
-			deleteCategory: async function(index) {
+			deleteCategory: async function (index) {
 				let confirmDelete = confirm("Are you sure ?");
 
 				if (!confirmDelete) {
@@ -976,14 +976,14 @@ if (document.getElementById("books_category")) {
 				this.categories.splice(index, 1);
 			},
 
-			updateNewCategoryMode: function(mode) {
+			updateNewCategoryMode: function (mode) {
 				if (mode != "add") {
 					this.newCategoryName = "";
 				}
 				this.newCategoryMode = mode;
 			},
 
-			addNewCategory: async function() {
+			addNewCategory: async function () {
 				if (!this.newCategoryName) {
 					alert("Please enter category name");
 					return false;
@@ -1062,7 +1062,7 @@ if (document.getElementById("show_book_info")) {
 				: [],
 		},
 		methods: {
-			markBook: async function(read) {
+			markBook: async function (read) {
 				let response = await axios.post(this.route, {
 					book_id: this.book.id,
 					is_read: read,
@@ -1074,7 +1074,7 @@ if (document.getElementById("show_book_info")) {
 				this.readers = response.data.readers;
 			},
 
-			addToBookAMonth: async function(action) {
+			addToBookAMonth: async function (action) {
 				let response = await axios.post(this.bookAMonthStoreRoute);
 				this.isBookAMonth = true;
 				if (!response.data) {
@@ -1082,7 +1082,7 @@ if (document.getElementById("show_book_info")) {
 				}
 			},
 
-			removeFromBookAMonth: async function(action) {
+			removeFromBookAMonth: async function (action) {
 				let response = await axios.post(this.bookAMonthDestroyRoute);
 				this.isBookAMonth = false;
 				if (!response.data) {
@@ -1090,7 +1090,7 @@ if (document.getElementById("show_book_info")) {
 				}
 			},
 
-			addToWishlist: async function(action) {
+			addToWishlist: async function (action) {
 				let response = await axios.post(this.addToWishlistRoute, {
 					book_id: this.book.id,
 				});
@@ -1100,7 +1100,7 @@ if (document.getElementById("show_book_info")) {
 				}
 			},
 
-			removeFromWishlist: async function(action) {
+			removeFromWishlist: async function (action) {
 				let response = await axios.post(this.removeFromWishlistRoute, {
 					book_id: this.book.id,
 				});
@@ -1110,7 +1110,7 @@ if (document.getElementById("show_book_info")) {
 				}
 			},
 
-			borrowTheBook: async function() {
+			borrowTheBook: async function () {
 				if (this.borrowers.length < this.book.number_of_copies) {
 					let response = await axios.get(this.borrowBookRoute);
 					this.isBorrowed = true;
@@ -1120,7 +1120,7 @@ if (document.getElementById("show_book_info")) {
 				}
 			},
 
-			putTheBookBackToLibrary: async function() {
+			putTheBookBackToLibrary: async function () {
 				let response = await axios.get(this.putBackBookRoute);
 				this.isBorrowed = false;
 				this.borrowers = response.data.borrowers;
@@ -1198,13 +1198,13 @@ if (document.getElementById("roles_permission_table")) {
 				)
 				: [],
 			updateRoute:
-        document.getElementById("roles_permission_table").dataset.updateRoute ||
-        "",
+				document.getElementById("roles_permission_table").dataset.updateRoute ||
+				"",
 			currentRoleIndex: 0,
 			permissionInputs: [],
 		},
 		methods: {
-			updatePermissionModal: function(index) {
+			updatePermissionModal: function (index) {
 				let permissions = this.roles[index].permissions;
 				this.currentRoleIndex = index;
 				this.permissionInputs.map((checkbox) => (checkbox.checked = false));
@@ -1212,11 +1212,11 @@ if (document.getElementById("roles_permission_table")) {
 					(permission) => (this.permissionInputs[permission.id].checked = true)
 				);
 			},
-			updatePermissions: function() {
+			updatePermissions: function () {
 				let selectedPermissions = [];
 				let roleID = this.roles[this.currentRoleIndex]["id"];
 
-				this.permissionInputs.forEach(function(checkbox) {
+				this.permissionInputs.forEach(function (checkbox) {
 					if (checkbox.checked) {
 						selectedPermissions.push({
 							name: checkbox.dataset.permission,
@@ -1238,7 +1238,7 @@ if (document.getElementById("roles_permission_table")) {
 				document.getElementById("update_role_permissions_modal").click();
 			},
 		},
-		mounted: function() {
+		mounted: function () {
 			let permissionInputContainer = document.querySelector(
 				"#update_role_permissions_modal"
 			);
@@ -1263,12 +1263,12 @@ if (document.getElementById("user_roles_table")) {
 				? JSON.parse(document.getElementById("user_roles_table").dataset.roles)
 				: "",
 			updateRoute:
-        document.getElementById("user_roles_table").dataset.updateRoute || "",
+				document.getElementById("user_roles_table").dataset.updateRoute || "",
 			currentUserIndex: 0,
 			roleInputs: [],
 		},
 		methods: {
-			updateUserRolesModal: function(index) {
+			updateUserRolesModal: function (index) {
 				let roles = this.users[index]["roles"];
 				if (!roles) {
 					return false;
@@ -1278,13 +1278,13 @@ if (document.getElementById("user_roles_table")) {
 				roles.forEach((role) => (this.roleInputs[role.id].checked = true));
 			},
 
-			updateRoles: function() {
+			updateRoles: function () {
 				let selectedRoles = [];
 				if (this.users) {
 					let userID = this.users[this.currentUserIndex].id;
 				}
 
-				this.roleInputs.forEach(function(checkbox) {
+				this.roleInputs.forEach(function (checkbox) {
 					if (checkbox.checked) {
 						selectedRoles.push({
 							name: checkbox.dataset.role,
@@ -1302,7 +1302,7 @@ if (document.getElementById("user_roles_table")) {
 				document.getElementById("close_update_user_roles_modal").click();
 			},
 
-			formatRoles: function(user) {
+			formatRoles: function (user) {
 				let roleNames = [];
 				for (var i in user.roles) {
 					let roleName = user.roles[i].label;
@@ -1316,7 +1316,7 @@ if (document.getElementById("user_roles_table")) {
 				return roleNames.join(", ");
 			},
 		},
-		mounted: function() {
+		mounted: function () {
 			let roleInputContainer = document.querySelector(
 				"#update_user_roles_modal"
 			);
@@ -1336,21 +1336,21 @@ require("./finance/payment");
 /*
  * HR Module JS code start
  */
-$(document).ready(function() {
+$(document).ready(function () {
 	$(document).on("click", ".show-comment", showCommentBlock);
 	$(document).on("click", ".section-toggle", sectionToggle);
 	$(document).on("click", "#saveFollowUp", saveFollowUp);
 	$(document).on("change", ".section-toggle-checkbox", sectionToggleCheckbox);
-	$(document).on("click", ".show-evaluation-stage", function() {
+	$(document).on("click", ".show-evaluation-stage", function () {
 		$(".evaluation-stage").addClass("d-none");
 		var target = $(this).data("target");
 		$(target).removeClass("d-none");
 
 		if (
 			$("#segment-general-information > span")[0].innerText ==
-      "General Information"
+			"General Information"
 		) {
-			$(".evaluation-score input").each(function() {
+			$(".evaluation-score input").each(function () {
 				if ($(this).is(":checked")) {
 					let evaluationParameterName = this.name.replace(/_/g, "-");
 					console.log(evaluationParameterName);
@@ -1378,10 +1378,10 @@ $(document).ready(function() {
 	);
 });
 
-$(function() {
+$(function () {
 	$("#categoryName")
 		.keyup(check_save)
-		.each(function() {
+		.each(function () {
 			check_save();
 		});
 });
@@ -1488,7 +1488,7 @@ function saveFollowUp() {
 }
 
 function datePickerChart() {
-	$("#EndDate").change(function() {
+	$("#EndDate").change(function () {
 		var startDate = document.getElementById("StartDate").value;
 		var endDate = document.getElementById("EndDate").value;
 		if (Date.parse(endDate) <= Date.parse(startDate)) {
@@ -1520,7 +1520,7 @@ function barChart() {
 		responsive: true,
 		tooltips: {
 			callbacks: {
-				afterBody: function(context) {
+				afterBody: function (context) {
 					console.log(context);
 					return `Verified Applications: ${cData.afterBody[context[0].index]}`;
 				},
@@ -1588,7 +1588,7 @@ function HorizontalBarChart() {
 			tooltip: {
 				enabled: true,
 				callbacks: {
-					label: function(tooltipItem) {
+					label: function (tooltipItem) {
 						return tooltipItem.dataset.data;
 					},
 				},
@@ -1615,15 +1615,15 @@ function HorizontalBarChart() {
 			},
 			animation: {
 				duration: 1,
-				onProgress: function() {
+				onProgress: function () {
 					var chart = this;
 					var ctx = chart.ctx;
 					ctx.textAlign = "top";
 					ctx.textBaseline = "middle";
 					ctx.font = "13px Arial";
-					this.data.datasets.forEach(function(dataset, i) {
+					this.data.datasets.forEach(function (dataset, i) {
 						var meta = chart.getDatasetMeta(i);
-						meta.data.forEach(function(bar, index) {
+						meta.data.forEach(function (bar, index) {
 							var data = dataset.data[index];
 							if (data == "0") {
 								data = "";
@@ -1682,15 +1682,15 @@ function roundWiseRejectionsGraph() {
 			},
 			animation: {
 				duration: 1,
-				onProgress: function() {
+				onProgress: function () {
 					var chart = this;
 					var ctx = chart.ctx;
 					ctx.textAlign = "top";
 					// ctx.textBaseline = "middle";
 					ctx.font = "13px Arial";
-					this.data.datasets.forEach(function(dataset, i) {
+					this.data.datasets.forEach(function (dataset, i) {
 						var meta = chart.getDatasetMeta(i);
-						meta.data.forEach(function(bar, index) {
+						meta.data.forEach(function (bar, index) {
 							var data = dataset.data[index];
 							ctx.fillText(data, bar.x + 5, bar.y);
 						});
@@ -1724,7 +1724,7 @@ function rejectedReasonsGraph() {
 			tooltip: {
 				enabled: true,
 				callbacks: {
-					label: function(tooltipItem) {
+					label: function (tooltipItem) {
 						return tooltipItem.dataset.data;
 					},
 				},
@@ -1751,15 +1751,15 @@ function rejectedReasonsGraph() {
 			},
 			animation: {
 				duration: 1,
-				onProgress: function() {
+				onProgress: function () {
 					var chart = this;
 					var ctx = chart.ctx;
 					ctx.textAlign = "top";
 					ctx.textBaseline = "middle";
 					ctx.font = "13px Arial";
-					this.data.datasets.forEach(function(dataset, i) {
+					this.data.datasets.forEach(function (dataset, i) {
 						var meta = chart.getDatasetMeta(i);
-						meta.data.forEach(function(bar, index) {
+						meta.data.forEach(function (bar, index) {
 							var data = dataset.data[index];
 							ctx.fillText(data, bar.x + 5, bar.y);
 						});
@@ -1770,8 +1770,8 @@ function rejectedReasonsGraph() {
 	});
 }
 
-$(function() {
-	$(".reject-reason").on("click", function() {
+$(function () {
+	$(".reject-reason").on("click", function () {
 		let reasonCheckboxInput = $(this);
 		let reasonCommentInput = reasonCheckboxInput
 			.closest(".rejection-reason-block")
@@ -1784,49 +1784,49 @@ $(function() {
 	});
 });
 
-$(".status").on("change", function() {
+$(".status").on("change", function () {
 	$("#spinner").removeClass("d-none");
 	if (this.checked) {
 		$.ajax({
 			url: "completed/change-status/" + this.dataset.id,
 			method: "GET",
-			success: function(res) {
+			success: function (res) {
 				location.reload(true);
 			},
-			error: function(err) {
+			error: function (err) {
 				alert("there is some problem");
 			},
-			complete: function(data) {
+			complete: function (data) {
 				$("#spinner").addClass("d-none");
 			},
 		});
 	}
 });
 
-$(".pending").on("change", function() {
+$(".pending").on("change", function () {
 	$("#completeSpinner").removeClass("d-none");
 	$.ajax({
 		url: "pending/" + this.dataset.id,
 		method: "GET",
-		success: function(res) {
+		success: function (res) {
 			location.reload(true);
 		},
-		error: function(err) {
+		error: function (err) {
 			alert("there is some problem");
 		},
-		complete: function(data) {
+		complete: function (data) {
 			$("#completeSpinner").addClass("d-none");
 		},
 	});
 });
 
-$(document).ready(function() {
-	$("#requisitionModal").on("hidden.bs.modal", function() {
+$(document).ready(function () {
+	$("#requisitionModal").on("hidden.bs.modal", function () {
 		$(this)
 			.find("form")
 			.trigger("reset");
 	});
-	$("#requisitionForm").on("submit", function(e) {
+	$("#requisitionForm").on("submit", function (e) {
 		e.preventDefault();
 		$("#formSpinner").removeClass("d-none");
 		let form = $("#requisitionForm");
@@ -1835,32 +1835,32 @@ $(document).ready(function() {
 			type: form.attr("method"),
 			url: form.attr("action"),
 			data: form.serialize(),
-			success: function(response) {
+			success: function (response) {
 				$("#requisitionModal").modal("hide");
 				$("#successMessage").toggleClass("d-none");
 				$("#successMessage").fadeToggle(4000);
 			},
-			error: function(response) {
+			error: function (response) {
 				alert("there is some problem");
 			},
-			complete: function(response) {
+			complete: function (response) {
 				$("#formSpinner").addClass("d-none");
 			},
 		});
 	});
 });
 
-$("#job_start_date").on("change", function() {
+$("#job_start_date").on("change", function () {
 	let startDate = $("#job_start_date").val();
 	$("#job_end_date").attr("min", startDate);
 });
 
-$("#job_end_date").on("change", function() {
+$("#job_end_date").on("change", function () {
 	let endDate = $("#job_end_date").val();
 	$("#job_start_date").attr("max", endDate);
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
 	var multipleCancelButton = new Choices("#choices-multiple-remove-button", {
 		removeItemButton: true,
 		maxItemCount: 9,
@@ -1891,14 +1891,14 @@ $("body").on("click", "#offerLetter", function (e) {
 	});
 });
 
-$(document).on("focusin", function(e) {
+$(document).on("focusin", function (e) {
 	if ($(event.target).closest(".mce-window").length) {
 		e.stopImmediatePropagation();
 	}
 });
 
-$(document).ready(function() {
-	$("#holdSendMailToApplicant").on("click", function(event) {
+$(document).ready(function () {
+	$("#holdSendMailToApplicant").on("click", function (event) {
 		var $optionContainer = $("#optionContainer");
 		if ($(this).is(":checked")) {
 			$optionContainer.removeClass("d-none");
@@ -1923,7 +1923,7 @@ $("#designationEditFormModal").on("show.bs.modal", function (e) {
 
 });
 
-$("#editform").on("submit", function(e) {
+$("#editform").on("submit", function (e) {
 	e.preventDefault();
 	let form = $("#editform");
 	let button = $("#editBT");
@@ -1932,14 +1932,14 @@ $("#editform").on("submit", function(e) {
 		url: form.attr("action"),
 		type: form.attr("method"),
 		data: form.serialize(),
-		success: function(response) {
+		success: function (response) {
 			$("#edit").modal("hide");
-			$("#edit").on("hidden.bs.modal", function(e) {
+			$("#edit").on("hidden.bs.modal", function (e) {
 				$("#successMessage").toggleClass("d-none");
 				$("#successMessage").fadeToggle(5000);
 			});
 		},
-		error: function(response) {
+		error: function (response) {
 			$("#profile-details-error").removeClass("d-none");
 			$("#successMessage").addClass("d-none");
 			let errors = response.responseJSON.errors;
@@ -1953,7 +1953,7 @@ $("#editform").on("submit", function(e) {
 	});
 });
 
-$("#updateEmail").on("click", function() {
+$("#updateEmail").on("click", function () {
 	let formData = {
 		location: $("#location").val(),
 		date: $("#date").val(),
@@ -1965,7 +1965,7 @@ $("#updateEmail").on("click", function() {
 		url: originUrl + "/hr/recruitment/teaminteraction",
 		type: "POST",
 		data: formData,
-		success: function(response) {
+		success: function (response) {
 			$("#InteractionError").addClass("d-none");
 			$("#confirmMailToApplicantSubject").val(response.subject);
 			tinymce
@@ -1979,7 +1979,7 @@ $("#updateEmail").on("click", function() {
 				$(".toggle-icon").toggleClass("d-none");
 			}
 		},
-		error: function(response) {
+		error: function (response) {
 			$("#InteractionError").removeClass("d-none");
 			let errors = response.responseJSON.errors;
 			$("#errors").empty();
@@ -1992,11 +1992,11 @@ $("#updateEmail").on("click", function() {
 		},
 	});
 });
-$("#interactionErrorModalCloseBtn").click(function() {
+$("#interactionErrorModalCloseBtn").click(function () {
 	$("#InteractionError").toggleClass("d-none");
 });
 
-$(".opt").on("click", function() {
+$(".opt").on("click", function () {
 	let formData = {
 		setting_key_subject: $(this).data("key-subject"),
 		setting_key_body: $(this).data("key-body"),
@@ -2010,7 +2010,7 @@ $(".opt").on("click", function() {
 		type: "GET",
 		data: formData,
 		contentType: "application/json",
-		success: function(response) {
+		success: function (response) {
 			$("#option1subject").val(response.subject);
 			tinymce.get("option1body").setContent(response.body, { format: "html" });
 		},
@@ -2022,14 +2022,14 @@ $(".opt").on("click", function() {
 		type: "GET",
 		data: formData,
 		contentType: "application/json",
-		success: function(response) {
+		success: function (response) {
 			$("#option2subject").val(response.subject);
 			tinymce.get("option2body").setContent(response.body, { format: "html" });
 		},
 	});
 });
 
-$(document).on("click", ".finish_interview", function(e) {
+$(document).on("click", ".finish_interview", function (e) {
 	e.preventDefault();
 	var actualEndTime = $(".finish_interview").val();
 	var duration = moment().format("YYYY/MM/DD H:m:s");
@@ -2038,14 +2038,14 @@ $(document).on("click", ".finish_interview", function(e) {
 		url: "/hr/recruitment/finishinterview",
 		data: { documentId: actualEndTime, duration: duration },
 		dataType: "json",
-		success: function(response) {
+		success: function (response) {
 			$("#meet_time").hide();
-			$("#durations").append(response.html);	
+			$("#durations").append(response.html);
 		},
 	});
 });
 
-$("#responseModal").on("submit",function(e){
+$("#responseModal").on("submit", function (e) {
 	e.preventDefault();
 	let form = $("#responseForm");
 	let button = $("#responseBtn");
@@ -2054,14 +2054,14 @@ $("#responseModal").on("submit",function(e){
 		url: form.attr("action"),
 		type: form.attr("method"),
 		data: form.serialize(),
-		success: function(response) {
+		success: function (response) {
 			$("#responseModal").modal("hide");
 			Vue.$toast.success("Resume flagged Succesfully!");
 		},
 	});
 });
 
-$('#addFiles').click(function() {
+$('#addFiles').click(function () {
 	var htmlData = `
 		<div class="fileContainer d-flex flex-col mb-2">
 			<div class="d-flex">
@@ -2072,7 +2072,7 @@ $('#addFiles').click(function() {
 	`;
 	$('.increament').append(htmlData);
 });
-$('.deleteFile').click(function() {
+$('.deleteFile').click(function () {
 	console.log("delete", $(this).closest('.fileContainer'));
 	$(this).closest('.fileContainer').remove();
 });

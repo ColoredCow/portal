@@ -16,7 +16,8 @@ class Media extends Model
         'description'
     ];
 
-    public function setFileurlAttribute($value){
+    public function setFileurlAttribute($value)
+    {
         $this->attributes['file_url'] = json_encode($value);
     }
 }

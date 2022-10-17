@@ -37,12 +37,12 @@ class MediaController extends Controller
         foreach ($validated['file_url'] as $file) {
             $fileName = time() . '.' . $file->extension();
             $files[] = $fileName;
-    
+
             $file->storeAs(
                 $path,
                 $fileName,
             );
-        }   
+        }
         $postData = [
             'event_name' => $validated['event_name'],
             'description' => $validated['description'],
