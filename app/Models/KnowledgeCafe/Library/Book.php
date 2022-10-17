@@ -97,7 +97,6 @@ class Book extends Model
     {
         return $this->belongsToMany(User::class, 'book_wishlist', 'library_book_id', 'user_id');
     }
-    
 
     public function addToWishlist()
     {

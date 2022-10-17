@@ -33,6 +33,7 @@ class BookController extends Controller
         switch (request()) {
             case request()->has('wishlist'):
                 $books = auth()->user()->booksInWishlist;
+                
                 break;
             case request()->has('borrowedBook'):
                 $books = auth()->user()->booksBorrower;
@@ -43,10 +44,14 @@ class BookController extends Controller
             default:
                 $books = Book::getList($searchString);
         }
-        $booksWishlistCount = auth()->user()->booksInWishlist->count();
-        $borrowed=auth()->user()->booksBorrower->count();
         $loggedInUser = auth()->user();
-        return view('knowledgecafe.library.books.index', compact('books', 'booksWishlistCount','borrowed', 'loggedInUser', 'categories'));
+        $booksWishlist=auth()->user()->booksInWishlist->count();
+        $borrowedbooks=auth()->user()->booksBorrower->count();
+        
+        $books->load('wishers');
+        $books->load('borrowers');
+
+        return view('knowledgecafe.library.books.index', compact('books', 'booksWishlist','loggedInUser','borrowedbooks', 'categories'));
     }
 
     /**
