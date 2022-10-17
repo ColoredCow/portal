@@ -64,7 +64,7 @@ class EmployeeController extends Controller
     {
         $designationArrays = DB::table('hr_job_designation')->select('id')->where('domain_id', $request->domain_id)->get();
         foreach ($designationArrays as $designationArray) {
-            $employees = Employee::where('designation_id', $designationArray->id)->get();
+            $employee = Employee::where('designation_id', $designationArray->id)->get();
         }
         // dd($request->domain_id);
         $domainName = HrJobDomain::all();
@@ -72,7 +72,7 @@ class EmployeeController extends Controller
 
         return view('hr.employees.fte-handler')->with([
             'domainName' => $domainName,
-            'employees' => $employees,
+            'employees' => $employee,
             'jobName' => $jobName
         ]);
     }

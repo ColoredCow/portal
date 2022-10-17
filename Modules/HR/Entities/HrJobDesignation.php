@@ -19,4 +19,9 @@ class HrJobDesignation extends Model
     {
         return $this->belongsTo(HrJobDomain::class);
     }
+
+    public function employees()
+    {
+        return $this->hasMany(Employee::class);
+    }
 }
