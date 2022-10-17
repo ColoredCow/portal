@@ -19,4 +19,14 @@ class JobRequisition extends Model
     {
         return $this->belongsTo(HrJobDomain::class, 'domain_id');
     }
+
+    public function batches()
+    {
+        return $this->belongsTo(HRRequisitionHiredBatch::class, 'hired_batch_id');
+    }
+
+    public function hRRequisitionHiredBatchMembers()
+    {
+        return $this->hasmany(HRRequisitionHiredBatchMembers::class, 'batch_id');
+    }
 }

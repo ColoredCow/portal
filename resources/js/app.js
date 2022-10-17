@@ -272,6 +272,11 @@ $(document).ready(function () {
 					$("#designationerror").html(text).removeClass("d-none");
 					return false;
 				}
+				if (response.responseJSON.errors.domain) {
+					let text = response.responseJSON.errors.domain[0];
+					$("#domainerror").html(text).removeClass("d-none");
+					return false;
+				}
 			},
 		});
 	});
