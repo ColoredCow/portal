@@ -4,6 +4,7 @@ namespace Modules\User\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
+use Modules\User\Entities\User;
 
 class UserSettingsController extends ModuleBaseController
 {
@@ -20,5 +21,11 @@ class UserSettingsController extends ModuleBaseController
         );
 
         return redirect()->back()->with('status', 'Saved Successfully!');
+    }
+    public function addStaffType(Request $request)
+    {
+        $chosenEmployee = User::find($request->id)->employee;
+        $chosenEmployee->staff_type = $request->typeOfStaff;
+        $chosenEmployee->save();
     }
 }
