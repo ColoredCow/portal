@@ -29,7 +29,6 @@ class BookController extends Controller
         $searchCategory = $request->category_name ?? false;
         $searchString = (request()->has('search')) ? request()->input('search') : false;
         $categories = BookCategory::orderBy('name')->get();
-    
         switch (request()) {
             case request()->has('wishlist'):
                 $books = auth()->user()->booksInWishlist;
@@ -48,40 +47,50 @@ class BookController extends Controller
         $booksborrowed=auth()->user()->booksBorrower->count();
         $books->load('wishers');
         $books->load('borrowers');
-        return view('knowledgecafe.library.books.index', compact('books','loggedInUser','booksborrowed', 'booksWishlist','categories'));
+        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'booksborrowed', 'booksWishlist', 'categories'));
     }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\View\View
      */
-    public function create(){
+    public function create()
+    {
         return view('knowledgecafe.library.books.create');
     }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  BookRequest  $request
      */
-    public function store(BookRequest $request){
+    public function store(BookRequest $request)
+    {
         $validatedData = $request->validated();
         $ISBN = isset($validatedData['isbn']) ? $validatedData['isbn'] : null;
         $stored = Book::firstOrCreate(['isbn' => $ISBN], $validatedData);
-        return response()->json(['error' => false]);}
+
+        return response()->json(['error' => false]);
+    }
+
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\KnowledgeCafe\Library\Book  $book
      * @return \Illuminate\View\View
      */
-    public function show(Book $book){
+    public function show(Book $book)
+    {
         $isBookAMonth = $book->bookAMonths()
             ->inCurrentYear()
             ->inCurrentMonth()
             ->where('user_id', auth()->user()->id)
             ->get()
             ->isNotEmpty();
-        return view('knowledgecafe.library.books.show', compact('book', 'isBookAMonth'));}
+
+        return view('knowledgecafe.library.books.show', compact('book', 'isBookAMonth'));
+    }
+
     /**
      * Update the specified resource in storage.
      *
