@@ -7,7 +7,7 @@
     <br><br>
     <div class= "card">
         <div class="card-body">
-            @include('user::profile.show-basic-details',['user'=>$employee->user])
+            @include('user::profile.show-basic-details',['domainIndex' =>  $domainIndex, 'user'=>$employee->user])
         </div>
     </div>
 </div>

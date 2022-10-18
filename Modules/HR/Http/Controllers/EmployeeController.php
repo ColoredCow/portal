@@ -55,7 +55,7 @@ class EmployeeController extends Controller
         $designations = HrJobDesignation::select('id', 'designation')->get()->toArray();
         $domainIndex = '';
 
-        return view('hr.employees.basic-details', ['domainIndex'=>$domainIndex, 'employee' => $employee, 'domains'=>$domains, 'designations' => $designations]);
+        return view('hr.employees.basic-details', ['domainIndex' => $domainIndex, 'employee' => $employee, 'domains' => $domains, 'designations' => $designations]);
     }
 
     public function showFTEdata(request $request)
