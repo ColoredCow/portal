@@ -4,6 +4,18 @@
  * require('./../../../../resources/js/bootstrap');
  * **/
 
+
+$(document).ready(function () {
+	$("#unmarried").click(function () {
+		$("#spouse").addClass("d-none");
+	});
+	$("#married").click(function () {
+		$("#spouse").removeClass("d-none");
+	});
+	$("#divorced").click(function () {
+		$("#spouse").addClass("d-none");
+	});
+});
 $(document).ready(function() {
 	$("#addPancard").click(function(){
 		document.getElementById("fileName").innerHTML="Upload Your Pan Card";

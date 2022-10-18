@@ -17,11 +17,12 @@
     <label class="font-weight-bold" for="">Marital Status:</label>
     <span>{{ $user->profile->marital_status }}</span>
 </div>
-
-<div class="form-group">
-    <label class="font-weight-bold" for="">Designation:</label>
-    <span>{{ Str::title($user->profile->designation) }}</span>
-</div>
+    @if($user->profile->marital_status == "Married")
+        <div class="form-group">
+            <label class="font-weight-bold" for="">Spouse Name:</label>
+            <span>{{ $user->profile->spouse_name }}</span>
+        </div>
+    @endif
 
 <div class="form-group">
     <label class="font-weight-bold" for="">Current Location:</label>

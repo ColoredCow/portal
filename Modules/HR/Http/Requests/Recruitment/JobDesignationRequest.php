@@ -25,6 +25,7 @@ class JobDesignationRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:hr_job_designation,designation',
+            'domain' => 'required',
         ];
     }
     public function messages()
@@ -32,6 +33,7 @@ class JobDesignationRequest extends FormRequest
         return [
             'name.required' => 'Designation name is required',
             'name.unique'  => 'Designation field is already taken',
+            'domain.required' => 'Select a domain',
         ];
     }
 }
