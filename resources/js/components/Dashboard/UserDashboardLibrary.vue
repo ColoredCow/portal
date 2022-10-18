@@ -22,10 +22,8 @@
         <li class="nav-item">
           <a
             id="recommend"
-            class="nav-link c-pointer"style="
-            padding-bottom: 20px;
-            padding-top: 20px;"
-            @click="setActiveTile('recommend')"
+            class="nav-link c-pointer"
+            
            >Recommend</a
           >
         </li>
