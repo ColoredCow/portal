@@ -488,7 +488,4 @@ class ApplicationRound extends Model
 
         return $timeDiffer;
     }
-
-    
-
 }
