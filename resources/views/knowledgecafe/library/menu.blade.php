@@ -30,6 +30,6 @@
         @php
           $params = array_merge($request,  ['borrowedBook' => 'markedAsBorrowed']);
         @endphp
-        <a class="nav-item nav-link {{ (request()->input('borrowedBook','active') === 'markedAsBorrowed') ? 'active' : '' }}"  href="{{ route('books.index', $params)  }}"><i class="fa fa-book"></i>&nbsp;Borrowed Books({{$borrowedbooks}})</a>
+        <a class="nav-item nav-link {{ (request()->input('borrowedBook','active') === 'markedAsBorrowed') ? 'active' : '' }}"  href="{{ route('books.index', $params)  }}"><i class="fa fa-book"></i>&nbsp;Borrowed Books({{$booksborrowed}})</a>
     </li>
 </ul>
