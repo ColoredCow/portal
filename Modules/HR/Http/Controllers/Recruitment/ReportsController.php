@@ -204,10 +204,10 @@ class ReportsController extends Controller
         $rounds = Round::get('id');
         $aveg=[];
         // dd($rounds);
-        foreach($rounds as $round){
+        foreach ($rounds as $round){
             $timeDiff = [];
             $application_rounds = ApplicationRound::where('hr_round_id', $round->id)->whereNotNull('scheduled_date')->whereNotNull('scheduled_end')->get();
-            foreach($application_rounds as $application_round){
+            foreach ($application_rounds as $application_round){
                 $scheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->scheduled_date);
                 $scheduleEnd = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->scheduled_end);
                 $timeDiff[] = $scheduleEnd->diffInMinutes($scheduleDate);
@@ -216,8 +216,7 @@ class ReportsController extends Controller
             $aveg[] = array_sum($timeDiff)/(count($timeDiff)==0?1:count($timeDiff));
 
         }
-        // dd($aveg); 
-        
+        // dd($aveg);        
          
         
         // foreach($application_rounds as $application_round){
