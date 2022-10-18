@@ -25,7 +25,7 @@ class ApplicationRoundController extends Controller
         if (array_key_exists('round_evaluation', $request->validated())) {
             $round->updateOrCreateEvaluation($request->validated()['round_evaluation']);
         }
-        
+
         return redirect()->back()->with('status', 'Application updated successfully!');
     }
 
