@@ -11,6 +11,8 @@ use Modules\HR\Entities\Application;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\Round;
 use Modules\HR\Entities\HRRejectionReason;
+use Modules\HR\Entities\ApplicationRound;
+
 
 class ReportsController extends Controller
 {
@@ -183,8 +185,53 @@ class ReportsController extends Controller
         return $roundWiseGraph;
     }
 
+    public function rejectedApplications(Request $request)
+    {
+        $dataToFilterTab = ['date_filter_input' => $request->date_filter_input];
+        $rejectedReasonsData = $this->rejectedReasonsData($request);
+        $roundWiseRejectionsData = $this->roundWiseRejectionsData($request);
+        $rejectedApplicationData = [
+            'rejectedReasonsData' => $rejectedReasonsData,
+            'roundWiseRejectionsData'=> $roundWiseRejectionsData,
+            'dataToFilterTab' => $dataToFilterTab,
+        ];
+
+        return view('hr.recruitment.rejected-applications', $rejectedApplicationData);
+    }
+
     public function applicationRoundsDurationData(Request $request)
     {
+        $rounds = Round::get('id');
+        $aveg=[];
+        // dd($rounds);
+        foreach($rounds as $round){
+            $timeDiff = [];
+            $application_rounds = ApplicationRound::where('hr_round_id', $round->id)->whereNotNull('scheduled_date')->whereNotNull('scheduled_end')->get();
+            foreach($application_rounds as $application_round){
+                $scheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->scheduled_date);
+                $scheduleEnd = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->scheduled_end);
+                $timeDiff[] = $scheduleEnd->diffInMinutes($scheduleDate);
+    
+            }
+            $aveg[] = array_sum($timeDiff)/(count($timeDiff)==0?1:count($timeDiff));
+
+        }
+        // dd($aveg); 
+        
+         
+        
+        // foreach($application_rounds as $application_round){
+        //     $scheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->scheduled_date);
+        //     $scheduleEnd = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->scheduled_end);
+        //     $timeDiff[] = $scheduleEnd->diffInMinutes($scheduleDate);
+
+        // }
+
+        // $scheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->scheduled_date);
+        // $scheduleEnd = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->scheduled_end);
+        // $timeDiff = $scheduleEnd->diffInMinutes($scheduleDate);
+
+        // dd($timeDiff);
         //round wise rejection graph sql query
         $round_wise_rejection_start_date = $request->round_wise_rejection_start_date ?? today()->subYears(4);
         $round_wise_rejection_end_date = $request->round_wise_rejection_end_date ?? today();
@@ -207,7 +254,7 @@ class ReportsController extends Controller
         $count = $rejectionRounds->pluck('count')->toArray();
         $chartData = [
             'totalapplication'=> $round,
-            'count' => $count,
+            'count' => $aveg,
         ];
 
         $roundWiseGraph = json_encode($chartData);
@@ -215,29 +262,16 @@ class ReportsController extends Controller
         return $roundWiseGraph;
     }
 
-    public function rejectedApplications(Request $request)
-    {
-        $dataToFilterTab = ['date_filter_input' => $request->date_filter_input];
-        $rejectedReasonsData = $this->rejectedReasonsData($request);
-        $roundWiseRejectionsData = $this->roundWiseRejectionsData($request);
-        $rejectedApplicationData = [
-            'rejectedReasonsData' => $rejectedReasonsData,
-            'roundWiseRejectionsData'=> $roundWiseRejectionsData,
-            'dataToFilterTab' => $dataToFilterTab,
-        ];
-
-        return view('hr.recruitment.rejected-applications', $rejectedApplicationData);
-    }
-
     public function ApplicationRoundsDuration(Request $request)
     {
         $dataToFilterTab = ['date_filter_input' => $request->date_filter_input];
         $roundWiseRejectionsData = $this->applicationRoundsDurationData($request);
         $rejectedApplicationData = [
-            'roundWiseRejectionsData'=> $roundWiseRejectionsData,
+            'durationData'=> $roundWiseRejectionsData,
             'dataToFilterTab' => $dataToFilterTab,
         ];
 
         return view('hr.recruitment.application-rounds-duration', $rejectedApplicationData);
     }
+
 }

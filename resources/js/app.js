@@ -197,6 +197,9 @@ $(document).ready(() => {
 	if ($("#myGraph").length) {
 		roundWiseRejectionsGraph();
 	}
+	if ($("#myGraphDuration").length) {
+		applicationRoundsDurationGraph();
+	}
 	if ($("#myBarGraph").length) {
 		rejectedReasonsGraph();
 	}
@@ -1640,6 +1643,71 @@ function HorizontalBarChart() {
 			},
 		},
 	});
+}
+function applicationRoundsDurationGraph(){
+	var value = $("#myGraphDuration").data("target");
+	var cData = value;
+	var ctx = $("#myGraphDuration");
+	var data = {
+		labels: cData.totalapplication,
+		datasets: [
+			{
+				label: [],
+				data: cData.count,
+				backgroundColor: ["rgba(52, 144, 220)"],
+				datacolor: ["rgba(52,144,220)"],
+				borderColor: ["rgba(52, 144, 220)"],
+				borderWidth: 10,
+			},
+		],
+	};
+	var myBar = new Chart(ctx, {
+		type: "bar",
+		data: data,
+		options: {
+			categoryPercentage: 1.0,
+			barPercentage: 0.8,
+			maintainAspectRatio: true,
+			indexAxis: "y",
+			scales: {
+				x: {
+					min: 0,
+					max: 100,
+					ticks: {
+						stepSize: 5,
+					},
+				},
+			},
+			plugins: {
+				legend: {
+					labels: {
+						boxWidth: 0,
+					},
+				},
+			},
+			hover: {
+				mode: false,
+			},
+			animation: {
+				duration: 1,
+				onProgress: function() {
+					var chart = this;
+					var ctx = chart.ctx;
+					ctx.textAlign = "top";
+					// ctx.textBaseline = "middle";
+					ctx.font = "13px Arial";
+					this.data.datasets.forEach(function(dataset, i) {
+						var meta = chart.getDatasetMeta(i);
+						meta.data.forEach(function(bar, index) {
+							var data = dataset.data[index];
+							ctx.fillText(data, bar.x + 5, bar.y);
+						});
+					});
+				},
+			},
+		},
+	});
+
 }
 function roundWiseRejectionsGraph() {
 	var value = $("#myGraph").data("target");

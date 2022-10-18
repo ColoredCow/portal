@@ -24,8 +24,8 @@
             </div>
           </span>
         </div>
-        <div class="card-body chart-data" data-target="{{ $roundWiseRejectionsData }}">
-          <canvas id="myGraph" data-target="{{ $roundWiseRejectionsData }}"width="500%" height="280px"></canvas>
+        <div class="card-body chart-data" data-target="{{ $durationData }}">
+          <canvas id="myGraphDuration" data-target="{{ $durationData }}"width="500%" height="280px"></canvas>
         </div>
       </div>
   </div>
