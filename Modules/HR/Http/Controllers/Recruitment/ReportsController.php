@@ -211,10 +211,8 @@ class ReportsController extends Controller
                 $scheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->scheduled_date);
                 $scheduleEnd = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->scheduled_end);
                 $timeDiff[] = $scheduleEnd->diffInMinutes($scheduleDate);
-    
             }
             $aveg[] = array_sum($timeDiff)/(count($timeDiff)==0?1:count($timeDiff));
-
         }
         // dd($aveg);
          
@@ -272,5 +270,4 @@ class ReportsController extends Controller
 
         return view('hr.recruitment.application-rounds-duration', $rejectedApplicationData);
     }
-
 }
