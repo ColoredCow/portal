@@ -183,6 +183,38 @@ class ReportsController extends Controller
         return $roundWiseGraph;
     }
 
+    public function applicationRoundsDurationData(Request $request)
+    {
+        //round wise rejection graph sql query
+        $round_wise_rejection_start_date = $request->round_wise_rejection_start_date ?? today()->subYears(4);
+        $round_wise_rejection_end_date = $request->round_wise_rejection_end_date ?? today();
+        $rejectionRounds = \DB::table('hr_application_round')
+        ->whereDate('conducted_date', '>=', $round_wise_rejection_start_date)
+        ->whereDate('conducted_date', '<=', $round_wise_rejection_end_date)
+        ->select('hr_round_id', \DB::raw('count(*) as count'))
+        ->join('hr_applications', 'hr_applications.id', '=', 'hr_application_round.hr_application_id')
+        ->where('round_status', '=', 'rejected')
+        ->whereIn('hr_application_id', function ($query) {
+            $query->from('hr_applications')
+            ->select('id')
+            ->where('status', '=', 'rejected');
+        })
+        ->where('hr_applications.status', '=', 'rejected')
+        ->groupBy('hr_round_id')
+        ->get();
+        $rounds = Round::select('name as title', 'id')->get();
+        $round = $rounds->pluck('title')->toArray();
+        $count = $rejectionRounds->pluck('count')->toArray();
+        $chartData = [
+            'totalapplication'=> $round,
+            'count' => $count,
+        ];
+
+        $roundWiseGraph = json_encode($chartData);
+
+        return $roundWiseGraph;
+    }
+
     public function rejectedApplications(Request $request)
     {
         $dataToFilterTab = ['date_filter_input' => $request->date_filter_input];
@@ -195,5 +227,17 @@ class ReportsController extends Controller
         ];
 
         return view('hr.recruitment.rejected-applications', $rejectedApplicationData);
+    }
+
+    public function ApplicationRoundsDuration(Request $request)
+    {
+        $dataToFilterTab = ['date_filter_input' => $request->date_filter_input];
+        $roundWiseRejectionsData = $this->applicationRoundsDurationData($request);
+        $rejectedApplicationData = [
+            'roundWiseRejectionsData'=> $roundWiseRejectionsData,
+            'dataToFilterTab' => $dataToFilterTab,
+        ];
+
+        return view('hr.recruitment.application-rounds-duration', $rejectedApplicationData);
     }
 }

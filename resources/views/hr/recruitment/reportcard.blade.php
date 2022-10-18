@@ -28,4 +28,12 @@
         </div>
     </div>
 
+    <div class="col-md-4">
+        <div class="card h-75 mx-6 mt-5 mb-5 ">
+            <a class="card-body no-transition" href="{{ route('recruitment.application-rounds') }}" >
+                <br><h2 class="text-center">Roundwise interview duration</h2><br>
+            </a>
+        </div>
+    </div>
+
 @endsection
