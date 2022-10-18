@@ -12,8 +12,6 @@ use Modules\HR\Entities\Job;
 use Modules\HR\Entities\Round;
 use Modules\HR\Entities\HRRejectionReason;
 use Modules\HR\Entities\ApplicationRound;
-
-
 class ReportsController extends Controller
 {
     /**
