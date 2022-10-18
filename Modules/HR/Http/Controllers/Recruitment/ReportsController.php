@@ -201,7 +201,7 @@ class ReportsController extends Controller
     public function applicationRoundsDurationData(Request $request)
     {
         $rounds = Round::get('id');
-        $aveg=[];
+        $aveg = [];
         // dd($rounds);
         foreach ($rounds as $round) {
             $timeDiff = [];
@@ -211,11 +211,9 @@ class ReportsController extends Controller
                 $scheduleEnd = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->scheduled_end);
                 $timeDiff[] = $scheduleEnd->diffInMinutes($scheduleDate);
             }
-            $aveg[] = array_sum($timeDiff)/(count($timeDiff)==0?1:count($timeDiff));
+            $aveg[] = array_sum($timeDiff) / (count($timeDiff) == 0 ? 1 : count($timeDiff));
         }
         // dd($aveg);
-         
-        
         // foreach($application_rounds as $application_round){
         //     $scheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->scheduled_date);
         //     $scheduleEnd = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->scheduled_end);
