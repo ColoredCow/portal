@@ -207,12 +207,13 @@ class ReportsController extends Controller
             $timeDiff = [];
             $application_rounds = ApplicationRound::where('hr_round_id', $round->id)->whereNotNull('scheduled_date')->whereNotNull('scheduled_end')->get();
             foreach ($application_rounds as $application_round) {
-                $scheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->scheduled_date);
-                $scheduleEnd = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->scheduled_end);
+                $scheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->scheduled_end);
+                $scheduleEnd = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->actual_end_time);
                 $timeDiff[] = $scheduleEnd->diffInMinutes($scheduleDate);
             }
             $aveg[] = array_sum($timeDiff) / (count($timeDiff) == 0 ? 1 : count($timeDiff));
         }
+
         // dd($aveg);
         // foreach($application_rounds as $application_round){
         //     $scheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->scheduled_date);
@@ -227,25 +228,25 @@ class ReportsController extends Controller
 
         // dd($timeDiff);
         //round wise rejection graph sql query
-        $round_wise_rejection_start_date = $request->round_wise_rejection_start_date ?? today()->subYears(4);
-        $round_wise_rejection_end_date = $request->round_wise_rejection_end_date ?? today();
-        $rejectionRounds = \DB::table('hr_application_round')
-        ->whereDate('conducted_date', '>=', $round_wise_rejection_start_date)
-        ->whereDate('conducted_date', '<=', $round_wise_rejection_end_date)
-        ->select('hr_round_id', \DB::raw('count(*) as count'))
-        ->join('hr_applications', 'hr_applications.id', '=', 'hr_application_round.hr_application_id')
-        ->where('round_status', '=', 'rejected')
-        ->whereIn('hr_application_id', function ($query) {
-            $query->from('hr_applications')
-            ->select('id')
-            ->where('status', '=', 'rejected');
-        })
-        ->where('hr_applications.status', '=', 'rejected')
-        ->groupBy('hr_round_id')
-        ->get();
+        // $round_wise_rejection_start_date = $request->start_date ?? today()->subYears(4);
+        // $round_wise_rejection_end_date = $request->end_date ?? today();
+        // $Rounds = \DB::table('hr_application_round')
+        // ->whereDate('conducted_date', '>=', $round_wise_rejection_start_date)
+        // ->whereDate('conducted_date', '<=', $round_wise_rejection_end_date)
+        // ->select('hr_round_id', \DB::raw('count(*) as count'))
+        // ->join('hr_applications', 'hr_applications.id', '=', 'hr_application_round.hr_application_id')
+        // ->where('round_status', '=', 'rejected')
+        // ->whereIn('hr_application_id', function ($query) {
+        //     $query->from('hr_applications')
+        //     ->select('id')
+        //     ->where('status', '=', 'rejected');
+        // })
+        // ->where('hr_applications.status', '=', 'rejected')
+        // ->groupBy('hr_round_id')
+        // ->get();
         $rounds = Round::select('name as title', 'id')->get();
         $round = $rounds->pluck('title')->toArray();
-        $count = $rejectionRounds->pluck('count')->toArray();
+        // $count = $Rounds->pluck('count')->toArray();
         $chartData = [
             'totalapplication'=> $round,
             'count' => $aveg,

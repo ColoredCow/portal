@@ -1659,6 +1659,7 @@ function applicationRoundsDurationGraph(){
 				borderColor: ["rgba(52, 144, 220)"],
 				borderWidth: 10,
 			},
+		
 		],
 	};
 	var myBar = new Chart(ctx, {
@@ -1672,9 +1673,9 @@ function applicationRoundsDurationGraph(){
 			scales: {
 				x: {
 					min: 0,
-					max: 100,
+					max: 90,
 					ticks: {
-						stepSize: 5,
+						stepSize: 15,
 					},
 				},
 			},
