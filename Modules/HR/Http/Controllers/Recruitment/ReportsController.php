@@ -204,7 +204,7 @@ class ReportsController extends Controller
         $aveg = [];
         foreach ($rounds as $round) {
             $timeDiff = [];
-            $application_rounds = ApplicationRound::where('hr_round_id', $round->id)->whereNotNull('scheduled_date')->whereNotNull('scheduled_end')->get();
+            $application_rounds = ApplicationRound::where('hr_round_id', $round->id)->whereNotNull('actual_end_time')->whereNotNull('scheduled_end')->get();
             foreach ($application_rounds as $application_round) {
                 $scheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->scheduled_end);
                 $scheduleEnd = Carbon::createFromFormat('Y-m-d H:i:s', $application_round->actual_end_time);
