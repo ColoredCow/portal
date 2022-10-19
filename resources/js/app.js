@@ -1691,20 +1691,20 @@ function applicationRoundsDurationGraph(){
 			},
 			animation: {
 				duration: 1,
-				onProgress: function() {
-					var chart = this;
-					var ctx = chart.ctx;
-					ctx.textAlign = "top";
-					// ctx.textBaseline = "middle";
-					ctx.font = "13px Arial";
-					this.data.datasets.forEach(function(dataset, i) {
-						var meta = chart.getDatasetMeta(i);
-						meta.data.forEach(function(bar, index) {
-							var data = dataset.data[index];
-							ctx.fillText(data, bar.x + 5, bar.y);
-						});
-					});
-				},
+				// onProgress: function() {
+				// 	var chart = this;
+				// 	var ctx = chart.ctx;
+				// 	ctx.textAlign = "top";
+				// 	// ctx.textBaseline = "middle";
+				// 	ctx.font = "13px Arial";
+				// 	this.data.datasets.forEach(function(dataset, i) {
+				// 		var meta = chart.getDatasetMeta(i);
+				// 		meta.data.forEach(function(bar, index) {
+				// 			var data = dataset.data[index];
+				// 			ctx.fillText(data, bar.x + 5, bar.y);
+				// 		});
+				// 	});
+				// },
 			},
 		},
 	});
