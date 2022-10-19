@@ -22,7 +22,7 @@
         <li class="nav-item">
           <a
             id="recommend"
-            class="nav-link c-pointer pb-[20px] pt-[20px]"
+            class="nav-link c-pointer py-5"
            >Recommend</a
           >
         </li>
