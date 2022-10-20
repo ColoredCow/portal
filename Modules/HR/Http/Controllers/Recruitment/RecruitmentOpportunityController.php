@@ -11,7 +11,7 @@ class RecruitmentOpportunityController extends JobController
     {
         return 'recruitment';
     }
-
+    
     /**
      * Display a listing of the resource.
      *
@@ -31,6 +31,7 @@ class RecruitmentOpportunityController extends JobController
                 ->paginate(config('constants.pagination_size'))
                 ->appends(Request::except('page'));
         }
+        
         return view('hr.job.index')->with([
             'jobs' => $jobs,
             'type' => 'recruitment',
