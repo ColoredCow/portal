@@ -14,6 +14,8 @@ class ProfitAndLossReportController extends Controller
 
     protected $service;
 
+    protected $test;
+
     public function __construct(ProfitAndLossReportService $service)
     {
         $this->service = $service;
