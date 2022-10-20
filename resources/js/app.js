@@ -338,6 +338,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			},
 			takeAction: function() {
 				switch (this.selectedAction) {
+
 				case "round":
 					if (!this.selectedActionOption) {
 						this.selectedActionOption = document.querySelector(
@@ -348,6 +349,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 					this.nextRoundName = this.selectedActionOption.innerText;
 					loadTemplateMail("confirm", (res) => {
 						$("#confirmMailToApplicantSubject").val(res.subject);
+					
 						tinymce
 							.get("confirmMailToApplicantBody")
 							.setContent(res.body, { format: "html" });
@@ -359,7 +361,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 						$("#sendmailform").addClass("d-none");
 					}
 					$("#round_confirm").modal("show");
-					break;
+
 				case "send-for-approval":
 					$("#send_for_approval").modal("show");
 					break;
@@ -381,6 +383,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			},
 		},
 		mounted() {
+		
 			this.selectedNextRound = this.applicationJobRounds[0].id;
 			this.selectedAction = "round";
 			this.nextRoundName = this.applicationJobRounds[0].name;
@@ -493,7 +496,8 @@ $("#page_hr_applicant_edit .applicant-round-form").on(
 
 		form.find("[name=\"action\"]").val(selectedAction); // setting name="action" input inside form to "reject"
 		button.prop("disabled", "disabled").addClass("disabled"); // making button disabled
-		form.submit(); // submitting the form
+		form.submit();// submitting the form
+		window.location.href = "http://portal.test/hr/recruitment/job";
 	}
 );
 

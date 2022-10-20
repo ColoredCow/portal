@@ -87,7 +87,7 @@
                 <div class="form-row mt-2">
                     <div class="form-group col-md-12">
                         <input type="hidden" name="next_round" id="next_round" :value="selectedNextRound">
-                        <button type="button" class="btn btn-success px-4 round-submit" data-action="confirm">Confirm</button>
+                        <button type="button" class="btn btn-success px-4 round-submit" data-action="confirm">Conrm</button>
                     </div>
                 </div>
             </div>
