@@ -21,9 +21,9 @@ class RecruitmentOpportunityController extends JobController
     {
         $this->authorize('list', Job::class);
         $search = request()->query('title') ?? '';
-        if($search != '') {
+        if ($search != '') {
             $jobs = Job::where('title', 'LIKE', "%$search%")
-                    ->paginate(config('constants.pagination_size'));
+                ->paginate(config('constants.pagination_size'));
         } else {
             $jobs = Job::with('applications', 'applications.applicant', 'jobRequisition')
                 ->typeRecruitment()
