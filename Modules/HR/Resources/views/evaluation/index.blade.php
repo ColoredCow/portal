@@ -31,7 +31,7 @@
             @foreach ($roundWithSegments as $key=>$round )    
             @if(sizeOf($round[key($round)]))
                 <div class="accordion" id="accordion">
-                    <div class="accordion-header">
+                <div class="accordion-header c-pointer" data-toggle="collapse" data-target="#segmentCollapse_{{ $key }}">
                         <div class="card bg-Glidden-willow-springs">
                             <div class="form-row">
                                 <div class="form-group col-md-11 p-3">
@@ -40,9 +40,6 @@
                                     </h4> 
                                 </div>   
                                 <div class="form-group col-md p-3">
-                                    <div class="icon-arrow-down position-relative ml-3 c-pointer" data-toggle="collapse" data-target="#segmentCollapse_{{ $key }}">
-                                        <i class="fa fa-arrow-down"></i>
-                                    </div>
                                 </div>    
                             </div>
                         </div> 
