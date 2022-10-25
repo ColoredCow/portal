@@ -40,10 +40,10 @@
                                     </h4> 
                                 </div>   
                                 <div class="form-group col-md p-3">
-                                </div>    
-                            </div>
-                        </div> 
-                    </div>
+                            </div>    
+                        </div>
+                    </div> 
+                </div>
                     <div id="segmentCollapse_{{ $key }}" class="collapse <?php echo($count == 0 ? 'show' : ' ')?>" aria-labelledby="headingOne">
                         <div class="accordion-body">
                             <table class="table table-striped table-bordered">
