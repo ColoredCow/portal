@@ -197,7 +197,7 @@ $(document).ready(() => {
 	if ($("#myGraph").length) {
 		roundWiseRejectionsGraph();
 	}
-	if ($("#myGraphDuration").length) {
+	if ($("#applicationInterviewDuration").length) {
 		applicationRoundsDurationGraph();
 	}
 	if ($("#myBarGraph").length) {
@@ -1645,9 +1645,9 @@ function HorizontalBarChart() {
 	});
 }
 function applicationRoundsDurationGraph(){
-	var value = $("#myGraphDuration").data("target");
+	var value = $("#applicationInterviewDuration").data("target");
 	var cData = value;
-	var ctx = $("#myGraphDuration");
+	var ctx = $("#applicationInterviewDuration");
 	var data = {
 		labels: cData.totalapplication,
 		datasets: [
