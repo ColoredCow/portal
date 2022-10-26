@@ -23,7 +23,8 @@ class BookController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+
+    public function index(Request $request, Book $book)
     {
         $this->authorize('list', Book::class);
         $searchCategory = $request->category_name ?? false;
@@ -47,7 +48,12 @@ class BookController extends Controller
         $books->load('wishers');
         $books->load('borrowers');
 
-        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories'));
+        $bookID = $request->book_id;
+        $value = $books->First();
+        $review = $value->comments()
+        ->get()->count();
+
+        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories', 'review'));
     }
 
     /**
@@ -82,6 +88,8 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
+        $review = $book->comments()
+        ->get()->count();
         $isBookAMonth = $book->bookAMonths()
             ->inCurrentYear()
             ->inCurrentMonth()
@@ -89,7 +97,7 @@ class BookController extends Controller
             ->get()
             ->isNotEmpty();
 
-        return view('knowledgecafe.library.books.show', compact('book', 'isBookAMonth'));
+        return view('knowledgecafe.library.books.show', compact('book', 'isBookAMonth', 'review'));
     }
 
     /**
