@@ -4,7 +4,7 @@
 
   <ul class="nav nav-pills justify-content-center" id="myTab" role="tablist">
     <li class="nav-item">
-      <a class="nav-link {{ request('date_filter_input') == 'roundWiseRejectionDateFilterValue' || !request()->has('date_filter_input')  ?  'active' : ' ' }}" id="roundWiseReasonsTab" data-toggle="tab" href="#round-wise-rejections" role="tab" aria-controls="round-wise-rejections" aria-selected="false">Application Rounds Duration</a>
+      <title class="nav-link {{ request('date_filter_input') == 'roundWiseRejectionDateFilterValue' || !request()->has('date_filter_input')  ?  'active' : ' ' }}" id="roundWiseReasonsTab" data-toggle="tab" href="#round-wise-rejections" role="tab" aria-controls="round-wise-rejections" aria-selected="false">Application Rounds Duration</title>
     </li>
   </ul><br>
 
