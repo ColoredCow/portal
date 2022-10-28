@@ -33,9 +33,9 @@
             </div>
             <div class="card-footer px-5 py-3 d-flex justify-content-end">
                 <div>
-                    <a href="@yield('link')" class="btn btn-secondary float-right mr-17">@yield('link_text')</a>
+                    <a href="@yield('link')" class="btn btn-secondary float-right mr-2">@yield('link_text')</a>
                 </div>
-                <a href="{{ route('media.edit', $media->id) }}" class="btn btn-success float-right mr-2">Edit</a>
+                <a href="{{ route('media.edit', $media->id) }}" class="btn btn-success float-right mr-2 ">Edit</a>
                 <form action="{{ route('media.destroy', $media->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
