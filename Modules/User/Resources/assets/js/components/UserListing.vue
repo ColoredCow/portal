@@ -4,12 +4,13 @@
 			<input type="text" class="form-control" v-model="search" placeholder="Search User Name">
 		</div>
 		<div class="row">
-			<div class="col-12 col sm-12">
+			<div class="col-12 col sm-12 col md-12">
+
         <table class="table table-bordered table-striped">
 			<thead class="thead-dark">
 				<tr>
 					<th>User Name</th>
-					<th >User Roles</th>
+					<th>User Roles</th>
 					<th>Actions</th>
 				</tr>
 			</thead>
@@ -42,10 +43,11 @@
                             </div>
                         </div>
 
-                        <div >
-                            <button v-show="userPermissions['can-assign-roles']" class="btn btn-sm btn-outline-info mr-4 mb-1" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">Manage user roles</button>
-                            <button v-show="userPermissions['can-delete'] && user.id !== authUser.id" type="button" class="btn btn-sm btn-outline-danger mb-1 " data-toggle="modal" data-target="#deleteUserModal" @click="setIndex(index)">Remove user</button>
-                        </div>
+                        <div class="mr-4">
+                            <button v-show="userPermissions['can-assign-roles']" class="btn btn-sm btn-outline-info mt-md-1 mr-lg-2" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">Manage user roles</button>
+                            <button v-show="userPermissions['can-delete'] && user.id !== authUser.id" type="button" class="btn btn-sm btn-outline-danger mt-md-1 px-md-4 mt-sm-1 px-4" data-toggle="modal" data-target="#deleteUserModal" @click="setIndex(index)">Remove user</button>
+						</div>
+                        
                     </td>
                 </tr>
             </tbody>
