@@ -85,13 +85,13 @@
                     <h4 class="d-inline-block">
                         <label for="name" class="font-weight-bold">Start Date:</label>
                     </h4>
-                    <span class="text-capitalize_date ml-2 fz-lg-22">{{ optional($project->start_date)->format('d M Y')}}</span>
+                    <span class="text-capitalize ml-2 fz-lg-22">{{ optional($project->start_date)->format('d M Y')}}</span>
                 </div>
                 <div class="form-group col-md-6 pl-4">
                     <h4 class="d-inline-block">
                         <label for="name" class="font-weight-bold mb-6 mr-4 mt-2">End Date:</label>
                    </h4>
-                    <span class="text-capitalized ml-2 fz-lg-22">{{ optional($project->end_date)->format('d M Y')}}</span>
+                    <span class="text-capitalize ml-2 fz-lg-22">{{ optional($project->end_date)->format('d M Y')}}</span>
                 </div>
                 <div id= "project_detail_form" class="collapse show">
                     <div class="card-body">
@@ -133,7 +133,7 @@
                                                 <th>Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
                                             </tr>
                                         </thead>
-                                        @if($project->TeamMembers->first() ==null)
+                                        @if($project->TeamMembers->first() == null)
                                             </table>
                                             <div class="fz-lg-28 text-center mt-4">No member in the project</div>
                                         @else
