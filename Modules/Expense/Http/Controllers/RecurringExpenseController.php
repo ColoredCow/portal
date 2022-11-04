@@ -29,10 +29,10 @@ class RecurringExpenseController extends Controller
         return view('expense::recurring.create', ['countries' => Country::all()]);
     }
 
-    public function store(recurringExpenseRequest $request)
+    public function store(recurringExpenseRequest $request, $data)
     {
-        $validated = $request->validate();
-        
+        $validated = $request->validate($data);
+
         $this->service->store($validated);
 
         return redirect()->route('expense.recurring.index');
