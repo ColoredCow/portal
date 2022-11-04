@@ -111,7 +111,7 @@
                 <div class="form-row ">
                     <div class="form-group col-lg-12 pl-4">
                         <h4 class="d-inline-block ">
-                            <label for="name" class="font-weight-bold">Team Members( {{count($project->getTeamMembers)}} )</label>
+                            <label for="name" class="font-weight-bold">Team Members({{count($project->getTeamMembers)}})</label>
                         </h4>
                        <div class="fz-14 float-right mr-3 mt-1">
                             <strong>Timeline:</strong>{{ (Carbon\Carbon::parse($project->client->month_start_date)->format('dS M')) }}                       
