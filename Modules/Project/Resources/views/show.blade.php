@@ -85,13 +85,13 @@
                     <h4 class="d-inline-block">
                         <label for="name" class="font-weight-bold">Start Date:</label>
                     </h4>
-                    <span class="text-capitalize ml-2 fz-lg-22">{{ optional($project->start_date)->format('d M Y') }}</span>
+                    <span class="text-capitalize_date ml-2 fz-lg-22">{{ optional($project->start_date)->format('d M Y')}}</span>
                 </div>
                 <div class="form-group col-md-6 pl-4">
                     <h4 class="d-inline-block">
                         <label for="name" class="font-weight-bold mb-6 mr-4 mt-2">End Date:</label>
                    </h4>
-                    <span class="text-capitalized_date ml-2 fz-lg-22">{{ optional($project->end_date)->format('d M Y')}}</span>
+                    <span class="text-capitalized ml-2 fz-lg-22">{{ optional($project->end_date)->format('d M Y')}}</span>
                 </div>
                 <div id= "project_detail_form" class="collapse show">
                     <div class="card-body">
@@ -111,7 +111,7 @@
                 <div class="form-row ">
                     <div class="form-group col-lg-12 pl-4">
                         <h4 class="d-inline-block ">
-                            <label for="name" class="font-weight-bold">Team Members:{{ count($project->getTeamMembers) }}</label>
+                            <label for="name" class="font-weight-bold">Team Members( {{count($project->getTeamMembers)}} )</label>
                         </h4>
                        <div class="fz-14 float-right mr-3 mt-1">
                             <strong>Timeline:</strong>{{ (Carbon\Carbon::parse($project->client->month_start_date)->format('dS M')) }}                       
