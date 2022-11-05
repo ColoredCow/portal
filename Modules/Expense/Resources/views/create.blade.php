@@ -7,7 +7,7 @@
             <h4 class="mb-1 pb-1 fz-28">Add New Expense</h4>
         </div>
         <div class="card">
-            <form action="{{ route('expense.store') }}" method="POST">
+            <form action="{{ route('expense.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="card-header">
                     <span>Expenses Details</span>
@@ -65,12 +65,40 @@
                             <label for="location" class="field-required">Location</label>
                             <select class="form-control" name="location">
                                 <option value="">Select Location</option>
-                                @foreach (config('constants.office_locations') as $key => $value)
-                                    <option value="{{ $key }}">{{ $value }}</option>
+                                @foreach (config('constants.office_locations') as $office => $location)
+                                    <option value="{{ $office }}">{{ $location }}</option>
                                 @endforeach
-
                             </select>
                         </div>
+                    </div>
+                    <hr> 
+                    <div class="parent">
+                        <div class="row mb-3 bg bg-grey pt-2">
+                            <div class="col-5">
+                                
+                                <label class="field-required" for="document"> {{ __('Upload Document') }}</label>
+                                <div class="custom-file mb-3">
+                                    <input type="file" id="document_file" name="documents[][file]" class="custom-file-input" required>
+                                    <label for="customFile0" class="custom-file-label overflow-hidden">Choose file</label>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <label class="field-required" for="document"> {{ __('Document Type') }}</label>
+                                <select class="form-control" name="documents[][type]" required>
+                                    <option value="">Select Type</option>
+                                    @foreach (config('expense.type_of_documents') as $key => $value)
+                                        <option value="{{ $key }}">{{ $value }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                            <div class="col-1 mt-5 mr-1">
+                                <button type="button" id="remove" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-underline btn" id="add">Add More Documents</span>
                     </div>
                 </div>
                 <div class="card-footer">
