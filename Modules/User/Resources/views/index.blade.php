@@ -4,9 +4,7 @@
 <div class="container" id="vueContainer">
     @includeWhen(session('success'), 'toast', ['message' => session('success')])
 	@include('user::layouts.navbar')
-	<div class="ml-3">
-	<h4>User Management</h4>
-	</div>
+	<h4 class="ml-3">User Management</h4>
 	<user-listing
 		:users="{{ json_encode($users) }}"
 		:update-route="{{ json_encode( route('user.update-roles')) }}"
