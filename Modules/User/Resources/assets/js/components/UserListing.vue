@@ -5,7 +5,6 @@
 		</div>
 		<div class="row">
 			<div class="col-12 col sm-12 col md-12">
-
         <table class="table table-bordered table-striped">
 			<thead class="thead-dark">
 				<tr>
@@ -30,7 +29,6 @@
                     <td>
                         <span>{{ formatRoles(user) }}<span v-if="user.websiteUserRole">, {{user.websiteUserRole}}</span></span>
                     </td>
-
                     <td>
                         <div class="dropdown d-none">
                             <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -42,12 +40,10 @@
                                 <a v-show="userPermissions['can-delete']" class="dropdown-item text-danger"  @click="removeUser(index)"  ref="#">Remove this user</a>
                             </div>
                         </div>
-
                         <div class="mr-4">
                             <button v-show="userPermissions['can-assign-roles']" class="btn btn-sm btn-outline-info mt-md-1 mr-lg-2" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">Manage user roles</button>
                             <button v-show="userPermissions['can-delete'] && user.id !== authUser.id" type="button" class="btn btn-sm btn-outline-danger mt-md-1 px-md-4 mt-sm-1 px-4" data-toggle="modal" data-target="#deleteUserModal" @click="setIndex(index)">Remove user</button>
-						</div>
-                        
+						</div> 
                     </td>
                 </tr>
             </tbody>
