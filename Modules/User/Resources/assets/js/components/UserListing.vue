@@ -8,8 +8,12 @@
         <table class="table table-bordered table-striped">
 			<thead class="thead-dark">
 				<tr>
+
 					<th>User Name</th>
 					<th>User Roles</th>
+
+
+
 					<th>Actions</th>
 				</tr>
 			</thead>
@@ -73,12 +77,16 @@
             :config="config"
             @userRolesUpdated="this.onUserRoleUpdated"
         />
+		<user-staff-type-update-modal
+            :user="this.selectedUser"
+			:stafftypes="stafftypes"
+        />
     </div>
 </template>
 
 <script>
 export default {
-	props:["users", "updateRoute", "userPermissions", "config", "authUser"],
+	props:["users", "updateRoute", "userPermissions", "config", "authUser","stafftypes"],
 
 	data(){
 		return {
