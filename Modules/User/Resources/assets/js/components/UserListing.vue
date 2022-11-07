@@ -4,7 +4,7 @@
 			<input type="text" class="form-control" v-model="search" placeholder="Search User Name">
 		</div>
 		<div class="row">
-			<div class="col-12 col sm-12 col md-12">
+			<div class="col-12">
         <table class="table table-bordered table-striped">
 			<thead class="thead-dark">
 				<tr>
