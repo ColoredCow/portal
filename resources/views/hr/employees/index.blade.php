@@ -7,7 +7,7 @@
     <br><br>
     <div class="d-flex">
         <h1>{{request()->get('name')}} ({{count($employees)}})</h1>
-        <form id="employeeFilterForm">
+        <form id="employeeFilterForm" class ="d-md-flex justify-content-between ml-md-3">
             <input type="hidden" name="status" value="{{ request()->input('status', 'current') }}">
             <div class='form-group w-130' class="d-inline">
                 <select class="form-control bg-info text-white ml-3" name="status"  onchange="document.getElementById('employeeFilterForm').submit();">
@@ -15,6 +15,10 @@
                     <option {{ $filters['status'] == 'previous' ? "selected=selected" : '' }} value="previous">Previous</option>
                 </select>
             </div>
+            <div class="d-flex align-items-center ml-35">
+                    <input type="text" name="employeename" class="form-control" id="name" placeholder="Enter the Employee" value="{{ request()->get('employeename') }}">
+                    <button class="btn btn-info ml-2 text-white">Search</button>
+                </div>
             <input type="hidden" name="name" value="{{ request()->input('name', 'Employee') }}">
         </form>
     </div>
@@ -53,7 +57,7 @@
                     @if($employee->user == null)
                         0
                     @else
-                        {{count($employee->user->activeProjectTeamMembers)}}
+                        {{$employee-> Count}}
                     @endif
                 </td>
                 <td>
