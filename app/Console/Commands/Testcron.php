@@ -43,7 +43,7 @@ class Testcron extends Command
     public function handle()
     {
         $comment_id = comment::pluck('commentable_id');
-        $user_id = DB::table('book_readers')->whereNotIn("library_book_id", $comment_id)->pluck('user_id');
+        $user_id = DB::table('book_readers')->whereNotIn('library_book_id', $comment_id)->pluck('user_id');
         $book_id = DB::table('book_readers')->where('user_id', $user_id)->pluck('library_book_id');
         $book_title = Book::wherenull('deleted_at')->orwhere('id', $book_id)->pluck('title')->toArray();
         $user_name = USER::wherenull('deleted_at')->orwhere('id', $user_id)->pluck('name')->toArray();
@@ -67,7 +67,7 @@ class Testcron extends Command
                 });
             }
         }
-        
+
         return 0;
     }
 }
