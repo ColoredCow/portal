@@ -17,7 +17,6 @@
 		<tbody>
 			<tr>
 				<td>
-
 					@if(is_array($key1))
 					@foreach ($key1 as $key)
 					<li>{{$key}}</li>
