@@ -9,7 +9,6 @@ use App\Models\KnowledgeCafe\Library\Book;
 use App\Models\Comment;
 use Illuminate\Support\Facades\DB;
 
-
 class Testcron extends Command
 {
     /**
@@ -68,6 +67,7 @@ class Testcron extends Command
                 });
             }
         }
+        
         return 0;
     }
 }
