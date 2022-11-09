@@ -46,13 +46,11 @@ class Testcron extends Command
         $comment_id = comment::pluck('commentable_id');
         $user_id = DB::table('book_readers')->whereNotIn("library_book_id", $comment_id)->pluck('user_id');
         $book_id = DB::table('book_readers')->where('user_id', $user_id)->pluck('library_book_id');
-        $yamlValues = Book::wherenull('deleted_at')->orwhere('id', $book_id)->pluck('title')->toArray();
-        $yamlKeys = USER::wherenull('deleted_at')->orwhere('id', $user_id)->pluck('name')->toArray();
-
+        $book_title = Book::wherenull('deleted_at')->orwhere('id', $book_id)->pluck('title')->toArray();
+        $user_name = USER::wherenull('deleted_at')->orwhere('id', $user_id)->pluck('name')->toArray();
         $yamlMap = [];
-        // dd($yamlMap);
-        foreach (array_unique($yamlKeys) as $key => $ykey) {
-            $temp = array_values(array_intersect_key($yamlValues, array_intersect($yamlKeys, [$ykey])));
+        foreach (array_unique($user_name) as $key => $ykey) {
+            $temp = array_values(array_intersect_key($book_title, array_intersect($user_name, [$ykey])));
             if (count($temp) > 1) {
                 $yamlMap[$ykey] = $temp;
             } else {
@@ -70,5 +68,6 @@ class Testcron extends Command
                 });
             }
         }
+        return 0;
     }
 }
