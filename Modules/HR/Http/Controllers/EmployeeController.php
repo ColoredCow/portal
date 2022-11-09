@@ -35,17 +35,17 @@ class EmployeeController extends Controller
         $filters = $request->all();
         $filters = $filters ?: $this->service->defaultFilters();
         $name = request('name');
-        $employeeData= Employee::where('staff_type', $name)
-        ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
-        ->selectRaw('employees.*, team_member_id, count(team_member_id) as Count')
-        ->groupBy('employees.user_id')
-        ->orderby('Count', 'desc')
-        ->get();
-        if ($search != '') {
-            $employeeData = Employee::where('name', 'LIKE', "%$search%")
+        $employeeData = Employee::where('staff_type', $name)
             ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
             ->selectRaw('employees.*, team_member_id, count(team_member_id) as Count')
+            ->groupBy('employees.user_id')
+            ->orderby('Count', 'desc')
             ->get();
+        if ($search != '') {
+            $employeeData = Employee::where('name', 'LIKE', "%$search%")
+                ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
+                ->selectRaw('employees.*, team_member_id, count(team_member_id) as Count')
+                ->get();
         }
 
         return view('hr.employees.index', $this->service->index($filters))->with([
@@ -70,7 +70,7 @@ class EmployeeController extends Controller
         $designations = HrJobDesignation::select('id', 'designation')->get()->toArray();
         $domainIndex = '';
 
-        return view('hr.employees.basic-details', ['domainIndex'=>$domainIndex, 'employee' => $employee, 'domains'=>$domains, 'designations' => $designations]);
+        return view('hr.employees.basic-details', ['domainIndex' => $domainIndex, 'employee' => $employee, 'domains' => $domains, 'designations' => $designations]);
     }
 
     public function showFTEdata(request $request)
