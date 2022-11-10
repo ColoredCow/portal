@@ -37,7 +37,7 @@ class EmployeeController extends Controller
         $employeeData = Employee::where('staff_type', $name)
             ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
             ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
-            ->WhereNull('project_team_members.ended_on')
+            ->whereNull('project_team_members.ended_on')
             ->groupBy('employees.user_id')
             ->orderby('project_count', 'desc')
             ->get();
