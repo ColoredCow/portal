@@ -37,9 +37,6 @@ class BookController extends Controller
             case request()->has('borrowedBook'):
                 $books = auth()->user()->booksBorrower;
                 break;
-            case request()->has('readers'):
-                $books = auth()->user()->books;
-                break;
             case request()->has('categoryName'):
                 $books = Book::getByCategoryName($searchCategory);
                 break;
@@ -49,7 +46,6 @@ class BookController extends Controller
         $loggedInUser = auth()->user();
         $books->load('wishers');
         $books->load('borrowers');
-        $books->load('readers');
 
         return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories'));
     }
