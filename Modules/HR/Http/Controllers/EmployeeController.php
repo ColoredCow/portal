@@ -36,14 +36,14 @@ class EmployeeController extends Controller
         $name = request('name');
         $employeeData = Employee::where('staff_type', $name)
             ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
-            ->selectRaw('employees.*, team_member_id, count(team_member_id) as Count')
+            ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
             ->groupBy('employees.user_id')
-            ->orderby('Count', 'desc')
+            ->orderby('project_count', 'desc')
             ->get();
         if ($search != '') {
             $employeeData = Employee::where('name', 'LIKE', "%$search%")
                 ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
-                ->selectRaw('employees.*, team_member_id, count(team_member_id) as Count')
+                ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
                 ->get();
         }
 

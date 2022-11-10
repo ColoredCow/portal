@@ -57,7 +57,7 @@
                     @if($employee->user == null)
                         0
                     @else
-                        {{$employee-> Count}}
+                        {{$employee-> project_count}}
                     @endif
                 </td>
                 <td>
