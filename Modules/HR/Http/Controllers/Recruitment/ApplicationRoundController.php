@@ -26,7 +26,9 @@ class ApplicationRoundController extends Controller
             $round->updateOrCreateEvaluation($request->validated()['round_evaluation']);
         }
 
-        return redirect()->back()->with('status', 'Application updated successfully!');
+        $routeName = $round->application->job->type == 'internship' ? 'applications.internship.index' : 'applications.job.index';
+
+        return redirect()->route($routeName)->with('status', 'Application updated successfully!');
     }
 
     /**

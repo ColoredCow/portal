@@ -43,8 +43,8 @@ class BookController extends Controller
                 $books = Book::getList($searchString);
         }
         $loggedInUser = auth()->user();
-        $booksWishlist=auth()->user()->booksInWishlist->count();
-        $booksborrowed=auth()->user()->booksBorrower->count();
+        $booksWishlist = auth()->user()->booksInWishlist->count();
+        $booksborrowed = auth()->user()->booksBorrower->count();
         $books->load('wishers');
         $books->load('borrowers');
         return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'booksborrowed', 'booksWishlist', 'categories'));
@@ -270,7 +270,7 @@ class BookController extends Controller
         $bookID = request()->book_id;
         $book = Book::find($bookID);
         $isAdded = $book ? $book->addToWishlist() : true;
-     
+
         return response()->json([
             'isAdded' => $isAdded,
         ]);
