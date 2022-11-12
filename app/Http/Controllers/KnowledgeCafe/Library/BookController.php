@@ -147,7 +147,7 @@ class BookController extends Controller
             $ISBN = $validated['isbn'];
         }
 
-        if (!$ISBN || strlen($ISBN) < 13) {
+        if (! $ISBN || strlen($ISBN) < 13) {
             return response()->json([
                 'error' => true,
                 'message' => 'Invalid ISBN : ' . $ISBN,
@@ -165,7 +165,7 @@ class BookController extends Controller
 
         $book = BookServices::getBookDetails($ISBN);
 
-        if (!isset($book['items'])) {
+        if (! isset($book['items'])) {
             return response()->json([
                 'error' => true,
                 'message' => 'Invalid ISBN : ' . $ISBN,
