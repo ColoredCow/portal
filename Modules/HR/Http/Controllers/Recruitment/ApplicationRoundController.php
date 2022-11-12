@@ -89,6 +89,6 @@ class ApplicationRoundController extends Controller
             'conducted_by' => auth()->id(),
         ]);
 
-        return redirect()->back()->with('status', 'Follow up successful!');
+    return redirect()->back()->with('status', 'Follow up successful!');
     }
 }
