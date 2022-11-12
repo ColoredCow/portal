@@ -354,6 +354,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
             this.nextRoundName = this.selectedActionOption.innerText;
             loadTemplateMail("confirm", (res) => {
               $("#confirmMailToApplicantSubject").val(res.subject);
+
               tinymce
                 .get("confirmMailToApplicantBody")
                 .setContent(res.body, { format: "html" });
@@ -365,7 +366,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
               $("#sendmailform").addClass("d-none");
             }
             $("#round_confirm").modal("show");
-            break;
+
           case "send-for-approval":
             $("#send_for_approval").modal("show");
             break;
@@ -500,6 +501,7 @@ $("#page_hr_applicant_edit .applicant-round-form").on(
     form.find('[name="action"]').val(selectedAction); // setting name="action" input inside form to "reject"
     button.prop("disabled", "disabled").addClass("disabled"); // making button disabled
     form.submit(); // submitting the form
+    window.location.href = "http://portal.test/hr/recruitment/job";
   }
 );
 
