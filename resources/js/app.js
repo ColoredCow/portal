@@ -26,17 +26,17 @@ const options = {
 Vue.use(Toast, options);
 
 /**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+* Next, we will create a fresh Vue application instance and attach it to
+* the page. Then, you may begin adding components to this application
+* or customize the JavaScript scaffolding to fit your unique needs.
+*/
 
 //Vue.component('user-listing', require('./../../Modules/User/Resources/assets/js/components/UserListing.vue').default);
 //Vue.component('user-listing', require('./components/UserListing.vue').default);
 
 /**
- *  Module Vue Components
- */
+*  Module Vue Components
+*/
 require("./../../Modules/User/Resources/assets/js/vueComponents.js");
 require("./../../Modules/Salary/Resources/assets/js/vueComponents.js");
 // require("./../../Modules/Prospect/Resources/assets/js/vueComponents.js");
@@ -132,7 +132,7 @@ $(document).ready(() => {
 			updateClientProjects(form, client_id);
 		}
 	}
-	$('[data-toggle="tooltip"]').tooltip();
+	$("[data-toggle=\"tooltip\"]").tooltip();
 
 	$(".status-close").on("click", function() {
 		let wrapper = $(this).closest(".alert");
@@ -245,15 +245,13 @@ $(document).ready(function() {
 	});
 });
 
-$(document).ready(function() {
-	$("#designationformModal").on("hidden.bs.modal", function() {
-		$(this)
-			.find("form")
-			.trigger("reset");
+$(document).ready(function () {
+	$("#designationformModal").on("hidden.bs.modal", function () {
+		$(this).find("form").trigger("reset");
 		$("#designationerror").addClass("d-none");
 	});
 
-	$("#designationForm").on("submit", function(e) {
+	$("#designationForm").on("submit", function (e) {
 		e.preventDefault();
 		$("#designationFormSpinner").removeClass("d-none");
 		let form = $("#designationForm");
@@ -261,26 +259,22 @@ $(document).ready(function() {
 			type: form.attr("method"),
 			url: form.attr("action"),
 			data: form.serialize(),
-			success: function(response) {
+			success: function (response) {
 				$("#designationFormSpinner").addClass("d-none");
 				$("#designationformModal").modal("hide");
 				$("#successMessage").toggleClass("d-none");
 				$("#successMessage").fadeToggle(3000);
 			},
-			error: function(response) {
+			error: function (response) {
 				$("#designationFormSpinner").addClass("d-none");
 				if (response.responseJSON.errors.name) {
 					let text = response.responseJSON.errors.name[0];
-					$("#designationerror")
-						.html(text)
-						.removeClass("d-none");
+					$("#designationerror").html(text).removeClass("d-none");
 					return false;
 				}
 				if (response.responseJSON.errors.domain) {
 					let text = response.responseJSON.errors.domain[0];
-					$("#domainerror")
-						.html(text)
-						.removeClass("d-none");
+					$("#domainerror").html(text).removeClass("d-none");
 					return false;
 				}
 			},
@@ -296,8 +290,8 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			showEvaluationFrame: false,
 			applicationJobRounds: document.getElementById("action_type")
 				? JSON.parse(
-						document.getElementById("action_type").dataset.applicationJobRounds
-					)
+					document.getElementById("action_type").dataset.applicationJobRounds
+				)
 				: {},
 			selectedNextRound: "",
 			nextRoundName: "",
@@ -320,7 +314,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 				).innerText = `Evaluation\u00A0\u00A0•\u00A0\u00A0${roundName}`;
 
 				$("#page_hr_applicant_edit #application_evaluation_body").html(
-					'<div class="my-4 fz-18 text-center">Loading...</div>'
+					"<div class=\"my-4 fz-18 text-center\">Loading...</div>"
 				);
 				if (!this.showEvaluationFrame) {
 					axios
@@ -344,36 +338,36 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			},
 			takeAction: function() {
 				switch (this.selectedAction) {
-					case "round":
-						if (!this.selectedActionOption) {
-							this.selectedActionOption = document.querySelector(
-								"#action_type option:checked"
-							);
-						}
-						this.selectedNextRound = this.selectedActionOption.dataset.nextRoundId;
-						this.nextRoundName = this.selectedActionOption.innerText;
-						loadTemplateMail("confirm", (res) => {
-							$("#confirmMailToApplicantSubject").val(res.subject);
-							tinymce
-								.get("confirmMailToApplicantBody")
-								.setContent(res.body, { format: "html" });
-						});
-						if (this.nextRoundName.trim() == "Move to Team Interaction Round") {
-							$("#sendmailform").removeClass("d-none");
-						} else {
-							$(".next-scheduled-person-container").removeClass("d-none");
-							$("#sendmailform").addClass("d-none");
-						}
-						$("#round_confirm").modal("show");
-						break;
-					case "send-for-approval":
-						$("#send_for_approval").modal("show");
-						break;
-					case "approve":
-						$("#approve_application").modal("show");
-						break;
-					case "onboard":
-						$("#onboard_applicant").modal("show");
+				case "round":
+					if (!this.selectedActionOption) {
+						this.selectedActionOption = document.querySelector(
+							"#action_type option:checked"
+						);
+					}
+					this.selectedNextRound = this.selectedActionOption.dataset.nextRoundId;
+					this.nextRoundName = this.selectedActionOption.innerText;
+					loadTemplateMail("confirm", (res) => {
+						$("#confirmMailToApplicantSubject").val(res.subject);
+						tinymce
+							.get("confirmMailToApplicantBody")
+							.setContent(res.body, { format: "html" });
+					});
+					if (this.nextRoundName.trim() == "Move to Team Interaction Round") {
+						$("#sendmailform").removeClass("d-none");
+					} else {
+						$(".next-scheduled-person-container").removeClass("d-none");
+						$("#sendmailform").addClass("d-none");
+					}
+					$("#round_confirm").modal("show");
+					break;
+				case "send-for-approval":
+					$("#send_for_approval").modal("show");
+					break;
+				case "approve":
+					$("#approve_application").modal("show");
+					break;
+				case "onboard":
+					$("#onboard_applicant").modal("show");
 				}
 			},
 			rejectApplication: function() {
@@ -497,7 +491,7 @@ $("#page_hr_applicant_edit .applicant-round-form").on(
 			}
 		}
 
-		form.find('[name="action"]').val(selectedAction); // setting name="action" input inside form to "reject"
+		form.find("[name=\"action\"]").val(selectedAction); // setting name="action" input inside form to "reject"
 		button.prop("disabled", "disabled").addClass("disabled"); // making button disabled
 		form.submit(); // submitting the form
 	}
@@ -536,7 +530,7 @@ function getProjectList(projects) {
 	let html = "";
 	for (var index = 0; index < projects.length; index++) {
 		let project = projects[index];
-		html += '<option value="' + project.id + '">';
+		html += "<option value=\"" + project.id + "\">";
 		html += project.name;
 		html += "</option>";
 	}
@@ -581,13 +575,13 @@ function initRicheditor() {
 		force_br_newlines: true,
 		force_p_newlines: false,
 		height: "280",
-		convert_urls: 0,
+		convert_urls: 0
 	});
 }
 
 initRicheditor();
 
-$("body").on("click", "#takeAction", function() {
+$("body").on("click", "#takeAction", function () {
 	initRicheditor();
 });
 
@@ -699,9 +693,9 @@ $(".hr_round_guide").on("click", ".save-guide", function() {
 });
 
 /**
- * Knowledge Cafe
- *
- */
+* Knowledge Cafe
+*
+*/
 $(window).on("load", function() {
 	$("#preloader")
 		.removeClass("d-block")
@@ -815,8 +809,8 @@ if (document.getElementById("books_listing")) {
 			newCategory: "",
 			loggedInUser: document.getElementById("books_table").dataset.loggedInUser
 				? JSON.parse(
-						document.getElementById("books_table").dataset.loggedInUser
-					)
+					document.getElementById("books_table").dataset.loggedInUser
+				)
 				: {},
 			searchKey: document.getElementById("search_input")
 				? document.getElementById("search_input").dataset.value
@@ -876,7 +870,7 @@ if (document.getElementById("books_listing")) {
 					await this.bookCategories.push(response.data.category);
 					this.newCategory = "";
 					let allCheckboxes = document.querySelectorAll(
-						'#update_category_modal input[type="checkbox"]'
+						"#update_category_modal input[type=\"checkbox\"]"
 					);
 					let lastCheckbox = allCheckboxes[allCheckboxes.length - 1];
 					this.categoryInputs[lastCheckbox.value] = lastCheckbox;
@@ -897,7 +891,7 @@ if (document.getElementById("books_listing")) {
 
 			searchBooksByCategoryName: function() {
 				window.location.href = `${this.updateRoute}?category_name=${this.sortKeys}`;
-			},
+			},	
 
 			strLimit: function(str, length) {
 				if (!str) {
@@ -927,7 +921,7 @@ if (document.getElementById("books_listing")) {
 				"#update_category_modal"
 			);
 			let allCategoryInputs = categoryInputContainer.querySelectorAll(
-				'input[type="checkbox"]'
+				"input[type=\"checkbox\"]"
 			);
 			allCategoryInputs.forEach(
 				(checkbox) => (this.categoryInputs[checkbox.value] = checkbox)
@@ -943,8 +937,8 @@ if (document.getElementById("books_category")) {
 			categories: document.getElementById("category_container").dataset
 				.categories
 				? JSON.parse(
-						document.getElementById("category_container").dataset.categories
-					)
+					document.getElementById("category_container").dataset.categories
+				)
 				: [],
 			categoryNameToChange: [],
 			indexRoute:
@@ -1036,7 +1030,7 @@ if (document.getElementById("show_book_info")) {
 			bookAMonthDestroyRoute: document.getElementById("show_book_info").dataset
 				.bookAMonthDestroyRoute
 				? document.getElementById("show_book_info").dataset
-						.bookAMonthDestroyRoute
+					.bookAMonthDestroyRoute
 				: "",
 			addToWishlistRoute: document.getElementById("show_book_info").dataset
 				.addToWishlistRoute
@@ -1045,7 +1039,7 @@ if (document.getElementById("show_book_info")) {
 			removeFromWishlistRoute: document.getElementById("show_book_info").dataset
 				.removeFromWishlistRoute
 				? document.getElementById("show_book_info").dataset
-						.removeFromWishlistRoute
+					.removeFromWishlistRoute
 				: "",
 			putBackBookRoute: document.getElementById("show_book_info").dataset
 				.putBackBookRoute
@@ -1198,15 +1192,15 @@ if (document.getElementById("roles_permission_table")) {
 		data: {
 			roles: document.getElementById("roles_permission_table").dataset.roles
 				? JSON.parse(
-						document.getElementById("roles_permission_table").dataset.roles
-					)
+					document.getElementById("roles_permission_table").dataset.roles
+				)
 				: [],
 			permissions: document.getElementById("roles_permission_table").dataset
 				.permissions
 				? JSON.parse(
-						document.getElementById("roles_permission_table").dataset
-							.permissions
-					)
+					document.getElementById("roles_permission_table").dataset
+						.permissions
+				)
 				: [],
 			updateRoute:
 				document.getElementById("roles_permission_table").dataset.updateRoute ||
@@ -1254,7 +1248,7 @@ if (document.getElementById("roles_permission_table")) {
 				"#update_role_permissions_modal"
 			);
 			let allPermissionInputs = permissionInputContainer.querySelectorAll(
-				'input[type="checkbox"]'
+				"input[type=\"checkbox\"]"
 			);
 			allPermissionInputs.forEach(
 				(checkbox) => (this.permissionInputs[checkbox.value] = checkbox)
@@ -1332,7 +1326,7 @@ if (document.getElementById("user_roles_table")) {
 				"#update_user_roles_modal"
 			);
 			let allRoleInputs = roleInputContainer.querySelectorAll(
-				'input[type="checkbox"]'
+				"input[type=\"checkbox\"]"
 			);
 			allRoleInputs.forEach(
 				(checkbox) => (this.roleInputs[checkbox.value] = checkbox)
@@ -1345,8 +1339,8 @@ require("./finance/invoice");
 require("./finance/payment");
 
 /*
- * HR Module JS code start
- */
+* HR Module JS code start
+*/
 $(document).ready(function() {
 	$(document).on("click", ".show-comment", showCommentBlock);
 	$(document).on("click", ".section-toggle", sectionToggle);
@@ -1480,7 +1474,7 @@ function loadTemplateMail(status, successCallback) {
 function saveFollowUp() {
 	var form = $(this).closest("form");
 	if ($("#followUpAndReject").is(":checked")) {
-		var followUpComments = form.find('[name="comments"]').val();
+		var followUpComments = form.find("[name=\"comments\"]").val();
 		$(document)
 			.find("#followUpCommentForReject")
 			.val(followUpComments);
@@ -1786,7 +1780,7 @@ $(function() {
 		let reasonCheckboxInput = $(this);
 		let reasonCommentInput = reasonCheckboxInput
 			.closest(".rejection-reason-block")
-			.find('input[type="text"]');
+			.find("input[type=\"text\"]");
 		if (reasonCheckboxInput.is(":checked")) {
 			reasonCommentInput.show().focus();
 		} else {
@@ -1801,7 +1795,7 @@ $(".status").on("change", function() {
 		$.ajax({
 			url: "completed/change-status/" + this.dataset.id,
 			method: "GET",
-			success: function(res) {
+			success: function (res) {
 				$("#mymodal").modal() + this.dataset.id;
 			},
 			error: function(err) {
@@ -1814,7 +1808,7 @@ $(".status").on("change", function() {
 	}
 });
 
-$(document).ready(function() {
+$(document).ready(function(){
 	var multipleSelect = new Choices("#choices-multiple", {
 		removeItemButton: true,
 	});
@@ -1887,24 +1881,24 @@ $(document).ready(function() {
 });
 
 /*
- * HR Module JS code end
- */
+* HR Module JS code end
+*/
 
 // fix for tinymce and bootstrap modal
 
-$("body").on("click", "#offerLetter", function(e) {
+$("body").on("click", "#offerLetter", function (e) {
 	e.preventDefault();
 	var originUrl = window.location.origin;
 	let applicationid = $("#getApplicationId").val();
 	$.ajax({
 		url: originUrl + `/hr/recruitment/${applicationid}/save-offer-letter`,
 		type: "GET",
-		success: function(response) {
+		success: function (response) {
 			$("#seeOfferLetter").removeClass("d-none");
 		},
-		error: function() {
+		error: function () {
 			alert("error");
-		},
+		}
 	});
 });
 
@@ -2042,12 +2036,12 @@ $(document).on("click", ".finish_interview", function(e) {
 		dataType: "json",
 		success: function(response) {
 			$("#meet_time").hide();
-			$("#durations").append(response.html);
+			$("#durations").append(response.html);	
 		},
 	});
 });
 
-$("#responseModal").on("submit", function(e) {
+$("#responseModal").on("submit",function(e){
 	e.preventDefault();
 	let form = $("#responseForm");
 	let button = $("#responseBtn");
