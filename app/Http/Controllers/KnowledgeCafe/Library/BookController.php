@@ -237,8 +237,8 @@ class BookController extends Controller
     public function getBooksCount()
     {
         $books = (request()->has('cat')) ?
-            Book::getByCategoryName(request()->input('cat'))->count() :
-            Book::count();
+        Book::getByCategoryName(request()->input('cat'))->count() :
+        Book::count();
 
         return $books;
     }
@@ -251,8 +251,8 @@ class BookController extends Controller
             $pageNumber = 1;
         }
         $books = (request()->has('cat')) ?
-            Book::getByCategoryName(request()->input('cat')) :
-            Book::with(['categories'])->orderBy('title')->skip(($pageNumber - 1) * 50)->take(50)->get();
+        Book::getByCategoryName(request()->input('cat')) :
+        Book::with(['categories'])->orderBy('title')->skip(($pageNumber - 1) * 50)->take(50)->get();
 
         $data = [];
         foreach ($books as $index => $book) {
