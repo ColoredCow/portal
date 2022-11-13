@@ -29,6 +29,7 @@ class BookController extends Controller
         $searchCategory = $request->category_name ?? false;
         $searchString = (request()->has('search')) ? request()->input('search') : false;
         $categories = BookCategory::orderBy('name')->get();
+
         switch (request()) {
             case request()->has('wishlist'):
                 $books = auth()->user()->booksInWishlist;
@@ -43,13 +44,12 @@ class BookController extends Controller
                 $books = Book::getList($searchString);
         }
         $loggedInUser = auth()->user();
-        $booksWishlist = auth()->user()->booksInWishlist->count();
-        $booksborrowed = auth()->user()->booksBorrower->count();
         $books->load('wishers');
         $books->load('borrowers');
 
-        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'booksborrowed', 'booksWishlist', 'categories'));
+        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories'));
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -147,7 +147,7 @@ class BookController extends Controller
             $ISBN = $validated['isbn'];
         }
 
-        if (! $ISBN || strlen($ISBN) < 13) {
+        if (!$ISBN || strlen($ISBN) < 13) {
             return response()->json([
                 'error' => true,
                 'message' => 'Invalid ISBN : ' . $ISBN,
@@ -165,7 +165,7 @@ class BookController extends Controller
 
         $book = BookServices::getBookDetails($ISBN);
 
-        if (! isset($book['items'])) {
+        if (!isset($book['items'])) {
             return response()->json([
                 'error' => true,
                 'message' => 'Invalid ISBN : ' . $ISBN,
@@ -237,8 +237,8 @@ class BookController extends Controller
     public function getBooksCount()
     {
         $books = (request()->has('cat')) ?
-        Book::getByCategoryName(request()->input('cat'))->count() :
-        Book::count();
+            Book::getByCategoryName(request()->input('cat'))->count() :
+            Book::count();
 
         return $books;
     }
@@ -251,8 +251,8 @@ class BookController extends Controller
             $pageNumber = 1;
         }
         $books = (request()->has('cat')) ?
-        Book::getByCategoryName(request()->input('cat')) :
-        Book::with(['categories'])->orderBy('title')->skip(($pageNumber - 1) * 50)->take(50)->get();
+            Book::getByCategoryName(request()->input('cat')) :
+            Book::with(['categories'])->orderBy('title')->skip(($pageNumber - 1) * 50)->take(50)->get();
 
         $data = [];
         foreach ($books as $index => $book) {
@@ -270,7 +270,7 @@ class BookController extends Controller
     {
         $bookID = request()->book_id;
         $book = Book::find($bookID);
-        $isAdded = $book ? $book->addToWishlist() : true;
+        $isAdded = $book ? $book->addToWishlist() : false;
 
         return response()->json([
             'isAdded' => $isAdded,
