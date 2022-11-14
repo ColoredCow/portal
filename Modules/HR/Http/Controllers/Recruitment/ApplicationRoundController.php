@@ -29,9 +29,9 @@ class ApplicationRoundController extends Controller
         $routeName = $round->application->job->type == 'internship' ? 'applications.internship.index' : 'applications.job.index';
         $var = $request->validated();
         if ($var['action'] == 'update' || $var == 'schedule-update') {
-            return redirect()->back()->with('status', 'success');
+        return redirect()->back()->with('status', 'success');
         } else {
-            return (redirect()->route($routeName)->with('status', 'Application updated successfully!'));
+        return redirect()->route($routeName)->with('status', 'Application updated successfully!');
         }
     }
 
