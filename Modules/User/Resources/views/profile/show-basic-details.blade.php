@@ -77,7 +77,7 @@
             <div class="form-group">
                 <label class="font-weight-bold" for="">Domain:</label>
                 @foreach ($domains as $domain )
-                    <span>{{ $domainIndex == $domain['id'] ? $domain['domain'] : "" }}</span>
+                    <span>{{ $domains == $domain['id'] ? $domain['domain'] : "" }}</span>
                 @endforeach
             </div>
             <div class="form-group">
