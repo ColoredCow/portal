@@ -12,7 +12,7 @@ use Modules\Project\Console\SendEffortSummaryCommand;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\Project\Console\GoogleChat\SendDailyEffortSummaryForProjectsOnGoogleChat;
 use Modules\Project\Console\GoogleChat\RemindProjectMembersToUpdateEffortOnGoogleChat;
-use App\Console\Commands\Testcron;
+use App\Console\Commands\SendMailBook;
 
 class Kernel extends ConsoleKernel
 {
@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
         FixedBudgetProject::class,
         SendDailyEffortSummaryForProjectsOnGoogleChat::class,
         RemindProjectMembersToUpdateEffortOnGoogleChat::class,
-        Testcron::class,
+        SendMailBook::class,
     ];
 
     /**
