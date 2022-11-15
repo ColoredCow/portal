@@ -29,6 +29,7 @@ class BookController extends Controller
         $searchCategory = $request->category_name ?? false;
         $searchString = (request()->has('search')) ? request()->input('search') : false;
         $categories = BookCategory::orderBy('name')->get();
+
         switch (request()) {
             case request()->has('wishlist'):
                 $books = auth()->user()->booksInWishlist;
@@ -49,6 +50,7 @@ class BookController extends Controller
         $books->load('borrowers');
 
         return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'booksborrowed', 'booksWishlist', 'categories'));
+    
     }
     /**
      * Show the form for creating a new resource.
