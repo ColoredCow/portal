@@ -35,7 +35,6 @@ class ApplicationRoundController extends Controller
         }
     }
 
-
     /**
      * Send email to the applicant for current round.
      *
