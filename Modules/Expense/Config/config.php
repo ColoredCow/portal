@@ -12,5 +12,11 @@ return [
         'subscription' =>  'Subscription',
         'telephone-internet-bill' => 'Telephone or internet bill',
         'other' =>  'other'
+    ],
+
+    'type_of_documents' => [
+        'bill' => 'Bill',
+        'reciept' => 'Reciept',
+        'others' => 'Others'
     ]
 ];
