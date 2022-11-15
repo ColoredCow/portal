@@ -50,7 +50,6 @@ class BookController extends Controller
         $books->load('borrowers');
 
         return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'booksborrowed', 'booksWishlist', 'categories'));
-    
     }
     /**
      * Show the form for creating a new resource.
@@ -149,7 +148,7 @@ class BookController extends Controller
             $ISBN = $validated['isbn'];
         }
 
-        if (! $ISBN || strlen($ISBN) < 13) {
+        if (!$ISBN || strlen($ISBN) < 13) {
             return response()->json([
                 'error' => true,
                 'message' => 'Invalid ISBN : ' . $ISBN,
@@ -167,7 +166,7 @@ class BookController extends Controller
 
         $book = BookServices::getBookDetails($ISBN);
 
-        if (! isset($book['items'])) {
+        if (!isset($book['items'])) {
             return response()->json([
                 'error' => true,
                 'message' => 'Invalid ISBN : ' . $ISBN,
@@ -239,8 +238,8 @@ class BookController extends Controller
     public function getBooksCount()
     {
         $books = (request()->has('cat')) ?
-        Book::getByCategoryName(request()->input('cat'))->count() :
-        Book::count();
+            Book::getByCategoryName(request()->input('cat'))->count() :
+            Book::count();
 
         return $books;
     }
@@ -253,8 +252,8 @@ class BookController extends Controller
             $pageNumber = 1;
         }
         $books = (request()->has('cat')) ?
-        Book::getByCategoryName(request()->input('cat')) :
-        Book::with(['categories'])->orderBy('title')->skip(($pageNumber - 1) * 50)->take(50)->get();
+            Book::getByCategoryName(request()->input('cat')) :
+            Book::with(['categories'])->orderBy('title')->skip(($pageNumber - 1) * 50)->take(50)->get();
 
         $data = [];
         foreach ($books as $index => $book) {
