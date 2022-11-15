@@ -51,6 +51,7 @@ class BookController extends Controller
 
         return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'booksborrowed', 'booksWishlist', 'categories'));
     }
+    
     /**
      * Show the form for creating a new resource.
      *
