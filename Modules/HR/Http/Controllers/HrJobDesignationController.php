@@ -9,7 +9,6 @@ use Modules\HR\Entities\HrJobDesignation;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 
-
 class HrJobDesignationController extends Controller
 {
     use AuthorizesRequests;
