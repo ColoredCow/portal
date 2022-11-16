@@ -7,7 +7,7 @@
 	<p>Dear, {{ $name }}</p>
 	<p>Thanks for using our services! We hope you’re like that all books :)</p>
 	<p>We’d like to ask for a favor – could you share your experience with this book? </p>
-	<p>It will take you about 4 minutes to complete our survey, but it’ll be invaluable to us for improving our services.</p>
+	<p>It will take you about few minutes to complete our survey, but it’ll be invaluable to us for improving our services.</p>
 	<table class="table">
 		<thead>
 			<tr>

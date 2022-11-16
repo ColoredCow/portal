@@ -2,15 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Services\BookServices;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
-use Modules\User\Entities\User;
-use App\Models\KnowledgeCafe\Library\Book;
-use App\Models\Comment;
-use Illuminate\Support\Facades\DB;
-
-
+use App\Services\BookServices;
 class SendMailBook extends Command
 {
     /**
@@ -46,6 +39,7 @@ class SendMailBook extends Command
     {
         $service = app(BookServices::class);
         $BookDetails = $service->SendMailUncommentedUsers();
-        return $this->execute($BookDetails, $service);
+
+        return $this->$BookDetails;
     }
 }
