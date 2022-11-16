@@ -7,10 +7,9 @@
             <h2 class="mb-3">New Designations</h2>
         </div>
         <div class="col-md-5">
-            <form class="d-flex">
-                <input type="hidden" name="status" class="form-control">
+            <form class="d-flex" method="GET" action="{{route('hr-job-designation.searchDesignation')}}">
                 <input type="text" name="search" class="form-control" placeholder="Search Desingnation">
-                <button class="btn btn-info ml-1">Search</button>
+                <button type="submit" class="btn btn-info ml-1" >Search</button>
             </form>
         </div>
         <div>

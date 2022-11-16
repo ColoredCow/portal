@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\HR\Services\HrJobDesignationService;
 use Modules\HR\Entities\HrJobDesignation;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Request;
+
 
 class HrJobDesignationController extends Controller
 {
@@ -46,5 +48,10 @@ class HrJobDesignationController extends Controller
         $this->service->destroy($request, $id);
 
         return redirect()->back();
+    }
+
+    public function searchDesignation(Request $request)
+    {
+    $searchDesignation = $request->input('search');
     }
 }
