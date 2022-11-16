@@ -52,6 +52,6 @@ class HrJobDesignationController extends Controller
 
     public function searchDesignation(Request $request)
     {
-    $searchDesignation = $request->input('search');
+        $searchDesignation = $request->input('search');
     }
 }
