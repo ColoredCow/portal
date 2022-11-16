@@ -6,6 +6,13 @@
         <div>
             <h2 class="mb-3">New Designations</h2>
         </div>
+        <div class="col-md-5">
+            <form class="d-flex">
+                <input type="hidden" name="status" class="form-control">
+                <input type="text" name="search" class="form-control" placeholder="Search Desingnation">
+                <button class="btn btn-info ml-1">Search</button>
+            </form>
+        </div>
         <div>
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#designationformModal"><i class="fa fa-plus mr-1"></i> Add Desingnation</button>
         </div>
