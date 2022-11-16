@@ -76,20 +76,20 @@ class BookServices
         $book_id = DB::table('book_readers')->where('user_id', $user_id)->pluck('library_book_id');
         $book_title = Book::wherenull('deleted_at')->orwhere('id', $book_id)->pluck('title')->toArray();
         $user_name = USER::wherenull('deleted_at')->orwhere('id', $user_id)->pluck('name')->toArray();
-        $Id = [];
+        $all_user_book = [];
         foreach (array_unique($user_name) as $key => $values) {
             $temp = array_values(array_intersect_key($book_title, array_intersect($user_name, [$values])));
             if (count($temp) > 1) {
-                $Id[$values] = $temp;
+                $all_user_book[$values] = $temp;
             } else {
-                $Id[$values] = $temp[0];
+                $all_user_book[$values] = $temp[0];
             }
         }
 
-        foreach ($Id as $key => $value) {
+        foreach ($all_user_book as $key => $value) {
             $email = User::where('name', $key)->select('email')->pluck('email')->toArray();
             foreach ($email as $mail) {
-                $data = ['name' => $key, 'key1' => $value];
+                $data = ['name' => $key, 'allbooks' => $value];
                 Mail::send('emails.mailsend', $data, function ($message) use ($mail) {
                     $message->to($mail);
                     $message->subject('Feedback_on_Book');

@@ -12,14 +12,14 @@ class SendMailBook extends Command
      *
      * @var string
      */
-    protected $signature = 'sendmail:cron';
+    protected $name = 'sendmail:cron';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'send mail to all users by runnig this command';
+    protected $message = 'send mail to all users who had not comments on books even they have read';
 
     /**
      * Create a new command instance.
