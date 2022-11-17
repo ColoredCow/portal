@@ -1,6 +1,7 @@
 <?php
 
 namespace Modules\HR\Policies;
+
 use Modules\HR\Entities\HrJobDesignation;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Modules\User\Entities\User;
