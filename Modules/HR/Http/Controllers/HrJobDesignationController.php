@@ -21,11 +21,11 @@ class HrJobDesignationController extends Controller
         $this->service = $service;
     }
 
-    public function index()
-    {
+    public function index(Request $request)
+    {   
         $this->authorize(HrJobDesignation::class);
 
-        return view('hr.designations.index', $this->service->index(request()->all()));
+        return view('hr.designations.index', $this->service->index($request));
     }
 
     public function storeDesignation(JobDesignationRequest $request)
@@ -47,10 +47,5 @@ class HrJobDesignationController extends Controller
         $this->service->destroy($request, $id);
 
         return redirect()->back();
-    }
-
-    public function searchDesignation(Request $request)
-    {
-        $searchDesignation = $request->input('search');
     }
 }
