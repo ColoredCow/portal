@@ -22,7 +22,7 @@ class HrJobDesignationController extends Controller
     }
 
     public function index(Request $request)
-    {   
+    {
         $this->authorize(HrJobDesignation::class);
 
         return view('hr.designations.index', $this->service->index($request));
