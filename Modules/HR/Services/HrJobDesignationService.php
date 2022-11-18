@@ -13,7 +13,7 @@ class HrJobDesignationService
     public function index(Request $request)
     {
         $searchDesignation = $request->input('search');
-        $designationfilter = HrJobDesignation::where('designation','LIKE', $searchDesignation)->get();
+        $designationfilter = HrJobDesignation::where('designation','LIKE',$searchDesignation)->get();
         if ($searchDesignation == null) {
             $designations = HrJobDesignation::all();
         } else {
