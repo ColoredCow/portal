@@ -12,32 +12,32 @@ class JobRequisitionPolicy
 
     public function view(User $user, JobRequisition $JobRequisition)
     {
-        return $user->hasPermissionTo('job_requisition.view');
+        return $user->hasPermissionTo('hr_job_requisition.view');
     }
 
     public function create(User $user)
     {
-        return $user->hasPermissionTo('job_requisition.create');
+        return $user->hasPermissionTo('hr_job_requisition.create');
     }
 
     public function update(User $user, JobRequisition $JobRequisition)
     {
-        return $user->hasPermissionTo('job_requisition.update');
+        return $user->hasPermissionTo('hr_job_requisition.update');
     }
 
     public function delete(User $user, JobRequisition $JobRequisition)
     {
-        return $user->hasPermissionTo('job_requisition.delete');
+        return $user->hasPermissionTo('hr_job_requisition.delete');
     }
 
     public function list(User $user)
     {
-        return $user->hasPermissionTo('job_requisition.view');
+        return $user->hasPermissionTo('hr_job_requisition.view');
     }
 
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('job_requisition.view');
+        return $user->hasPermissionTo('hr_job_requisition.view');
     }
     /**
      * Create a new policy instance.

@@ -15,9 +15,13 @@
                 @endphp
                     <a class="dropdown-item" href="{{ route('employees',$params) }}">Working Staff</a>
                 @endcan
+                @can('hr_job_requisition.view')
                     <a class="dropdown-item" href="{{ route('requisition') }}">Resource Requisition</a>
+                @endcan
+                @can('hr_job_designation.view')
                     <a class="dropdown-item" href="{{ route('designation') }}">Designations</a>
-                @can('hr_volunteers_applications.view')
+                @endcan
+                    @can('hr_volunteers_applications.view')
                     <a class="dropdown-item" href="{{ route('applications.volunteer.index') }}">Volunteers</a>
                 @endcan
                 @can('hr_recruitment_applications.view')

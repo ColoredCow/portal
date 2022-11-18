@@ -108,16 +108,16 @@ class HRPermissionsTableSeeder extends Seeder
             ['name' => 'hr_settings.delete'],
         ];
         $hrDesignationPermissions = [
-            ['name' => 'hr_designations.create'],
-            ['name' => 'hr_designations.view'],
-            ['name' => 'hr_designations.update'],
-            ['name' => 'hr_designations.delete'],
+            ['name' => 'hr_designation.create'],
+            ['name' => 'hr_designation.view'],
+            ['name' => 'hr_designation.update'],
+            ['name' => 'hr_designation.delete'],
         ];
         $jobRequistionPermissions = [
-            ['name' => 'job_requistions.create'],
-            ['name' => 'job_requistions.view'],
-            ['name' => 'job_requistions.update'],
-            ['name' => 'job_requistions.delete'],
+            ['name' => 'hr_job_requisition.create'],
+            ['name' => 'hr_job_requisition.view'],
+            ['name' => 'hr_job_requisition.update'],
+            ['name' => 'hr_job_requisition.delete'],
         ];
         $allHrPermissions = array_merge(
             $hrUniversitiesPermissions,
