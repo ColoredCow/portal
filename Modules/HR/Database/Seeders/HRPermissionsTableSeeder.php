@@ -113,11 +113,11 @@ class HRPermissionsTableSeeder extends Seeder
             ['name' => 'hr_designations.update'],
             ['name' => 'hr_designations.delete'],
         ];
-        $hrRequistionPermissions = [
-            ['name' => 'hr_Requistions.create'],
-            ['name' => 'hr_Requistions.view'],
-            ['name' => 'hr_Requistions.update'],
-            ['name' => 'hr_Requistions.delete'],
+        $jobRequistionPermissions = [
+            ['name' => 'job_requistions.create'],
+            ['name' => 'job_requistions.view'],
+            ['name' => 'job_requistions.update'],
+            ['name' => 'job_requistions.delete'],
         ];
         $allHrPermissions = array_merge(
             $hrUniversitiesPermissions,
@@ -135,7 +135,7 @@ class HRPermissionsTableSeeder extends Seeder
             $hrVolunteersCampaignsPermissions,
             $hrSettingsPermissions,
             $hrDesignationPermissions,
-            $hrRequistionPermissions,
+            $jobRequistionPermissions,
         );
         foreach ($allHrPermissions as $permission) {
             Permission::updateOrCreate($permission);
