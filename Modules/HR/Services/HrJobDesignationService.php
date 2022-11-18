@@ -13,11 +13,11 @@ class HrJobDesignationService
     public function index(Request $request)
     {
         $searchDesignation = $request->input('search');
-        $design = HrJobDesignation::where('designation', $searchDesignation)->get();
+        $designationfilter = HrJobDesignation::where('designation','LIKE', $searchDesignation)->get();
         if ($searchDesignation == null) {
             $designations = HrJobDesignation::all();
         } else {
-            $designations = $design;
+            $designations = $designationfilter;
         }
         $domains = HrJobDomain::all();
 
