@@ -11,7 +11,7 @@ use Modules\HR\Policies\EmployeePolicy;
 use Modules\HR\Policies\UniversityPolicy;
 use Modules\HR\Policies\Recruitment\JobPolicy;
 use Modules\HR\Policies\HrJobDesignationPolicy;
-use Modules\Hr\Policies\JobRequisitionPolicy;
+use Modules\HR\Policies\JobRequisitionPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider;
 
 class HRAuthServiceProvider extends AuthServiceProvider
