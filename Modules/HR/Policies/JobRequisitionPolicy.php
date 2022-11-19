@@ -30,11 +30,6 @@ class JobRequisitionPolicy
         return $user->hasPermissionTo('hr_job_requisition.delete');
     }
 
-    public function list(User $user)
-    {
-        return $user->hasPermissionTo('hr_job_requisition.view');
-    }
-
     public function viewAny(User $user)
     {
         return $user->hasPermissionTo('hr_job_requisition.view');
