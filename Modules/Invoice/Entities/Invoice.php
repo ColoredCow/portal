@@ -196,6 +196,9 @@ class Invoice extends Model implements Auditable
     {
         $invoiceStartMonthNumber = $this->sent_on->subMonth()->month;
         $currentMonthNumber = today(config('constants.timezone.indian'))->month;
+        if (optional($this->client->billingDetails)->billing_date > today()->day) {
+            $currentMonthNumber -= 1;
+        }
         $termStartDate = $this->client->getMonthStartDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
         $termEndDate = $this->client->getMonthEndDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
         $term = $termStartDate->format('M') . ' - ' . $termEndDate->format('M');
