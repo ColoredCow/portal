@@ -8,7 +8,6 @@ use Vision\Request\Image\LocalImage;
 use Vision\Vision;
 use Illuminate\Support\Facades\Mail;
 use Modules\User\Entities\User;
-use App\Models\KnowledgeCafe\Library\Book;
 use App\Models\Comment;
 use Illuminate\Support\Facades\DB;
 
@@ -92,6 +91,7 @@ class BookServices
                 });
             }
         }
+
         return 0;
     }
 }
