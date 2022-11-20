@@ -26,7 +26,7 @@ class BookServices
         ]);
         $book = json_decode($res->getBody(), true);
 
-        if (!isset($book['items'])) {
+        if (! isset($book['items'])) {
             $res = $client->request('GET', 'https://www.googleapis.com/books/v1/volumes?q=ISBN:' . $isbn, [
                 'timeout' => 5.0,
             ]);
@@ -34,7 +34,7 @@ class BookServices
             $book = json_decode($res->getBody(), true);
         }
 
-        if (!isset($book['items'])) {
+        if (! isset($book['items'])) {
             return 'please try again';
         }
 
@@ -79,7 +79,7 @@ class BookServices
             $user_book = USER::find($user['id'])->books;
             foreach ($user_book as $book) {
                 array_push($each_user_books, [$book->title]);
-            };
+            }
 
             foreach ($user_id as $user_details) {
                 $email = $user_details["email"];
