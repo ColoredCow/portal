@@ -62,7 +62,6 @@ class Book extends Model
     {
         return $this->belongsToMany(User::class, 'book_readers', 'library_book_id', 'user_id');
     }
-
     public function markAsRead()
     {
         $this->readers()->attach(auth()->user());
@@ -174,4 +173,8 @@ class Book extends Model
     {
         return $this->hasMany(BookAMonth::class, 'library_book_id');
     }
+
+    // public function users(){
+    //     return $this->belongsToMany(User::class, 'book_readers');
+    // }
 }

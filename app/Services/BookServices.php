@@ -27,7 +27,7 @@ class BookServices
         ]);
         $book = json_decode($res->getBody(), true);
 
-        if (! isset($book['items'])) {
+        if (!isset($book['items'])) {
             $res = $client->request('GET', 'https://www.googleapis.com/books/v1/volumes?q=ISBN:' . $isbn, [
                 'timeout' => 5.0,
             ]);
@@ -35,7 +35,7 @@ class BookServices
             $book = json_decode($res->getBody(), true);
         }
 
-        if (! isset($book['items'])) {
+        if (!isset($book['items'])) {
             return 'please try again';
         }
 
@@ -72,31 +72,26 @@ class BookServices
     public function SendMailUncommentedUsers()
     {
         $comment_id = comment::pluck('commentable_id');
-        $user_id = DB::table('book_readers')->whereNotIn('library_book_id', $comment_id)->pluck('user_id');
-        $book_id = DB::table('book_readers')->where('user_id', $user_id)->pluck('library_book_id');
-        $book_title = Book::wherenull('deleted_at')->orwhere('id', $book_id)->pluck('title')->toArray();
-        $user_name = USER::wherenull('deleted_at')->orwhere('id', $user_id)->pluck('name')->toArray();
-        $all_user_book = [];
-        foreach (array_unique($user_name) as $key => $values) {
-            $temp = array_values(array_intersect_key($book_title, array_intersect($user_name, [$values])));
-            if (count($temp) > 1) {
-                $all_user_book[$values] = $temp;
-            } else {
-                $all_user_book[$values] = $temp[0];
-            }
-        }
+        $user_table = DB::table('book_readers')->whereNotIn('library_book_id', $comment_id)->distinct()->pluck('user_id');
+        $user_id = USER::wherenull('deleted_at')->orwhere('id', $user_table)->get()->toArray();
 
-        foreach ($all_user_book as $key => $value) {
-            $email = User::where('name', $key)->select('email')->pluck('email')->toArray();
-            foreach ($email as $mail) {
-                $data = ['name' => $key, 'allbooks' => $value];
-                Mail::send('emails.mailsend', $data, function ($message) use ($mail) {
-                    $message->to($mail);
+        foreach ($user_id as $user) {
+            $each_user_books = array();
+            $user_book = USER::find($user['id'])->books;
+            foreach ($user_book as $book) {
+                array_push($each_user_books, [$book->title]);
+            };
+
+            foreach ($user_id as $user_details) {
+                $email = $user_details["email"];
+                $reader_name = $user_details["name"];
+                $data = ['name' => $reader_name, 'allbook' => $each_user_books];
+                Mail::send('emails.mailsend', $data, function ($message) use ($email) {
+                    $message->to($email);
                     $message->subject('Feedback_on_Book');
                 });
             }
         }
-
         return 0;
     }
 }

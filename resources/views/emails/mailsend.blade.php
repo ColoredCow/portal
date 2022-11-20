@@ -17,13 +17,11 @@
 		<tbody>
 			<tr>
 				<td>
-					@if(is_array($allbooks))
-					@foreach ($allbooks as $books)
+					@foreach ($allbook as $keys)
+					@foreach ($keys as $books)
 					<li>{{$books}}</li>
 					@endforeach
-					@else
-					{{$allbooks}}
-					@endif
+					@endforeach
 				</td>
 			</tr>
 		</tbody>

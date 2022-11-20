@@ -193,4 +193,8 @@ class User extends Authenticatable
 
         return $projects;
     }
+
+    // public function books(){
+    //     return $this->belongsToMany(Book::class, 'book_readers');
+    // }
 }

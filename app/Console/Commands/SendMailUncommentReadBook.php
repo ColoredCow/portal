@@ -1,18 +1,17 @@
 <?php
-
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Services\BookServices;
 
-class SendMailBook extends Command
+class SendMailUncommentReadBook extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $name = 'sendmail:cron';
+    protected $name = 'sendmail:to-Users-Uncomment-Readbook';
 
     /**
      * The console command description.
