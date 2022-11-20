@@ -154,7 +154,7 @@ class User extends Authenticatable
 
     public function getMonthTotalEffortAttribute()
     {
-        if (!$this->projectTeamMembers->first()) {
+        if (! $this->projectTeamMembers->first()) {
             return false;
         }
 

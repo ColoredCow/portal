@@ -75,15 +75,15 @@ class BookServices
         $user_id = USER::wherenull('deleted_at')->orwhere('id', $user_table)->get()->toArray();
 
         foreach ($user_id as $user) {
-            $each_user_books = array();
+            $each_user_books = [];
             $user_book = USER::find($user['id'])->books;
             foreach ($user_book as $book) {
                 array_push($each_user_books, [$book->title]);
             }
 
             foreach ($user_id as $user_details) {
-                $email = $user_details["email"];
-                $reader_name = $user_details["name"];
+                $email = $user_details['email'];
+                $reader_name = $user_details['name'];
                 $data = ['name' => $reader_name, 'allbook' => $each_user_books];
                 Mail::send('emails.mailsend', $data, function ($message) use ($email) {
                     $message->to($email);
