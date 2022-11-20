@@ -194,4 +194,3 @@ class User extends Authenticatable
         return $projects;
     }
 }
-
