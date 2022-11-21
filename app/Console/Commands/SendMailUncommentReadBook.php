@@ -19,7 +19,7 @@ class SendMailUncommentReadBook extends Command
      *
      * @var string
      */
-    protected $message = 'send mail to all users who had not comments on books even they have read';
+    protected $description = 'send mail to all users who had not comments on books even they have read';
 
     /**
      * Create a new command instance.
