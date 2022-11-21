@@ -87,7 +87,7 @@ class BookServices
             Mail::send('emails.mailsend', $data, function ($message) use ($email) {
                 $message->to($email);
                 $message->subject('Feedback_on_Book');
-            });            
+            });
         }
 
         return 0;
