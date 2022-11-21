@@ -81,7 +81,7 @@ class BookServices
             foreach ($user_book as $book) {
                 array_push($each_user_books, [$book->title]);
             }
-
+            
                 $email = $user['email'];
                 $reader_name = $user['name'];
                 $data = ['name' => $reader_name, 'allbook' => $each_user_books];
