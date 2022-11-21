@@ -39,7 +39,7 @@ class SendMailUncommentReadBook extends Command
     public function handle()
     {
         $service = app(BookServices::class);
-        $BookDetails = $service->SendMailUncommentedUsers();
+        $BookDetails = $service->SendMailUncommentedReadbookUser();
 
         return $this->$BookDetails;
     }

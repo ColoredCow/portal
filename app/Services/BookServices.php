@@ -68,11 +68,11 @@ class BookServices
 
         return $description;
     }
-    public function SendMailUncommentedUsers()
+    public function SendMailUncommentedReadbookUser()
     {
         $comment_id = comment::pluck('commentable_id');
-        $user_table = DB::table('book_readers')->whereNotIn('library_book_id', $comment_id)->distinct()->pluck('user_id');
-        $user_id = USER::wherenull('deleted_at')->orwhere('id', $user_table)->get()->toArray();
+        $reader_id = DB::table('book_readers')->whereNotIn('library_book_id', $comment_id)->distinct()->pluck('user_id');
+        $user_id = USER::wherenull('deleted_at')->orwhere('id', $reader_id)->get()->toArray();
 
         foreach ($user_id as $user) {
             $each_user_books = [];
