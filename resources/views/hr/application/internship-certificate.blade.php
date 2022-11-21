@@ -4,14 +4,15 @@ body {
 }
 
 .certificate-container {
-    padding: 50px;
-    width: 1024px;
+    padding: 5px;
+    width: 10px;
 }
-.certificate {
-    border: 20px solid #0C5280;
-    padding: 25px;
-    height: 600px;
+.background{
+    background-image: url("/images/Border.png");
     position: relative;
+    padding-bottom: 150px;
+    background-repeat: no-repeat;
+    background-size: 1950px; 
 }
 
 .certificate:after {
@@ -32,8 +33,26 @@ body {
 
 .certificate-title {
     text-align: center;
-    color: rgb(77, 5, 5);
-    font-size: 20px;
+    color: rgb(148, 0, 0);
+    font-size: 30px;
+}
+
+.image-leaf{
+    background-image: url('/images/leaf.png');
+    margin-left: 10px;
+    height: 150px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 1000px;
+}
+
+.centered {
+    position: absolute;
+    color: rgb(194, 167, 0);
+    text-align: center;
+    margin-top: 40px;
+    padding-left: 30px;
+    font-size: 30px;
 }
 
 .certificate-body {
@@ -41,7 +60,6 @@ body {
 }
 
 h1 {
-
     font-weight: 400;
     font-size: 48px;
     color: #0C5280;
@@ -53,12 +71,19 @@ h1 {
 
 .certificate-content {
     margin: 0 auto;
-    width: 750px;
+    width: 550px;
+
 }
 
 .about-certificate {
-    width: 380px;
-    margin: 0 auto;
+    width: 10px;
+    margin:  auto;
+}
+
+.topic-title{
+    margin: auto;
+    width: 550px;
+    margin-top: 15px;
 }
 
 .topic-description {
@@ -67,6 +92,7 @@ h1 {
 }
 .img-center{
     text-align: center;
+    margin-top: 100px;
 }
 
 .name{
@@ -76,28 +102,27 @@ h1 {
 
 .text-left{
     text-align: left;
-    overflow-wrap: break-word;
+    padding-left: 70px;
 }
 </style>
-<div class = "background"></div>
+<div class="background">
 <div class="certificate-container">
     <div class="certificate">
         <div class="water-mark-overlay"></div>
         <div class="center">
             <div class="img-center"><img src="{{ public_path() . '/images/coloredcow.png' }}" alt="" align="right" height="50" width="250"></div>
         </div><br>
-        <div class="name">
-           <h1>{{$applicant->name}}</h1>
-        </div>
         <div class="certificate-body">
-            <p class="certificate-title"><strong>Internship Certificate
-                of Completion 
-                <div class="certificate-title"> from {{ date('d-M-y', strtotime($applicant->start_date)) }} To {{ date('d-M-y', strtotime($applicant->end_date)) }}</strong></div>
+            <p class="certificate-title"><strong>Internship Certificate</strong><br>
+                <strong> Completion</strong> 
+                <div class="image-leaf">
+                    <div class="centered"><strong>{{$applicant->name}}</strong></div>
+                </div>
             </p><br>
             <div class="certificate-content">
                 <div class="about-certificate">
                     ColoredCow is glad to certify that <strong>{{$applicant->name}}</strong> successfully
-                    completed his internship .
+                    completed his internship from {{ date('d-M-y', strtotime($applicant->start_date)) }} To {{ date('d-M-y', strtotime($applicant->end_date)) }}</strong></div>
                 </p>
                 </div>
                 <p class="topic-title">
@@ -107,11 +132,14 @@ h1 {
                 <div class="text-center">
                     <p class="topic-description text-muted">ColoredCow recognizes her desire to learn and wishes her great success!</p><br>
                 </div>
-                <div  class="text-left">Satendra rawat</div>
-                <div  class="text-left">Sr. Software Engineer,</div>
-                <div  class="text-left"> Center Head</div>
-                <div  class="text-left">ColoredCow (Tehri)</div>
+                <div class="text-left"><img src="{{ public_path() . '/images/Stamp.png' }}"alt="" align="left" height="80" width="80">
+                <div>Satendra rawat</div>
+                <div>Sr.Software Engineer,</div>
+                <div> Center Head</div>
+                <div>ColoredCow (Tehri)</div>
+                </div>
             </div>
         </div>
     </div>
+</div>
 </div>
