@@ -26,7 +26,7 @@ class BookServices
         ]);
         $book = json_decode($res->getBody(), true);
 
-        if (!isset($book['items'])) {
+        if (! isset($book['items'])) {
             $res = $client->request('GET', 'https://www.googleapis.com/books/v1/volumes?q=ISBN:' . $isbn, [
                 'timeout' => 5.0,
             ]);
@@ -34,7 +34,7 @@ class BookServices
             $book = json_decode($res->getBody(), true);
         }
 
-        if (!isset($book['items'])) {
+        if (! isset($book['items'])) {
             return 'please try again';
         }
 
