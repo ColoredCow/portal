@@ -81,13 +81,15 @@ class BookServices
                 array_push($each_user_books, [$book->title]);
             }
 
-            $email = $user['email'];
-            $reader_name = $user['name'];
-            $data = ['name' => $reader_name, 'allbook' => $each_user_books];
-            Mail::send('emails.mailsend', $data, function ($message) use ($email) {
-                $message->to($email);
-                $message->subject('Feedback_on_Book');
-            });
+            if($each_user_books){
+                $email = $user['email'];
+                $reader_name = $user['name'];
+                $data = ['name' => $reader_name, 'allbook' => $each_user_books];
+                Mail::send('emails.mailsend', $data, function ($message) use ($email) {
+                    $message->to($email);
+                    $message->subject('Feedback_on_Book');
+                });
+            }
         }
 
         return 0;
