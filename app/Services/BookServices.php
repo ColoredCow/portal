@@ -74,6 +74,7 @@ class BookServices
         $reader_id = DB::table('book_readers')->whereNotIn('library_book_id', $comment_id)->distinct()->pluck('user_id');
         $user_details = USER::wherenull('deleted_at')->orwhere('id', $reader_id)->get()->toArray();
 
+       
         foreach ($user_details as $user) {
             $each_user_books = [];
             $user_book = USER::find($user['id'])->books;
@@ -81,15 +82,13 @@ class BookServices
                 array_push($each_user_books, [$book->title]);
             }
 
-            foreach ($user_details as $keys) {
-                $email = $keys['email'];
-                $reader_name = $keys['name'];
+                $email = $user['email'];
+                $reader_name = $user['name'];
                 $data = ['name' => $reader_name, 'allbook' => $each_user_books];
                 Mail::send('emails.mailsend', $data, function ($message) use ($email) {
                     $message->to($email);
                     $message->subject('Feedback_on_Book');
-                });
-            }
+                });            
         }
 
         return 0;
