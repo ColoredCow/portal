@@ -72,18 +72,18 @@ class BookServices
     {
         $comment_id = comment::pluck('commentable_id');
         $reader_id = DB::table('book_readers')->whereNotIn('library_book_id', $comment_id)->distinct()->pluck('user_id');
-        $user_id = USER::wherenull('deleted_at')->orwhere('id', $reader_id)->get()->toArray();
+        $user_details = USER::wherenull('deleted_at')->orwhere('id', $reader_id)->get()->toArray();
 
-        foreach ($user_id as $user) {
+        foreach ($user_details as $user) {
             $each_user_books = [];
             $user_book = USER::find($user['id'])->books;
             foreach ($user_book as $book) {
                 array_push($each_user_books, [$book->title]);
             }
 
-            foreach ($user_id as $user_details) {
-                $email = $user_details['email'];
-                $reader_name = $user_details['name'];
+            foreach ($user_details as $keys) {
+                $email = $keys['email'];
+                $reader_name = $keys['name'];
                 $data = ['name' => $reader_name, 'allbook' => $each_user_books];
                 Mail::send('emails.mailsend', $data, function ($message) use ($email) {
                     $message->to($email);
