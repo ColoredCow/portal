@@ -58,7 +58,7 @@ class ProjectService implements ProjectServiceContract
     public function store($data)
     {
         $techStack = $data['project_stack'];
-        $techStack = implode(',' ,$techStack);
+        $techStack = implode(',', $techStack);
 
         $project = Project::create([
             'name' => $data['name'],
