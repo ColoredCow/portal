@@ -40,10 +40,10 @@ class ProjectService implements ProjectServiceContract
         };
 
         $projectsData = Client::query()
-        ->with('projects', $projectClauseClosure)
-        ->whereHas('projects', $projectClauseClosure)
-        ->orderBy('name')
-        ->paginate(config('constants.pagination_size'));
+            ->with('projects', $projectClauseClosure)
+            ->whereHas('projects', $projectClauseClosure)
+            ->orderBy('name')
+            ->paginate(config('constants.pagination_size'));
 
         $tabCounts = $this->getListTabCounts($filters, $showAllProjects, $memberId);
 
@@ -139,7 +139,7 @@ class ProjectService implements ProjectServiceContract
     public function updateProjectData($data, $project)
     {
         $updateSection = $data['update_section'] ?? '';
-        if (! $updateSection) {
+        if (!$updateSection) {
             return false;
         }
 
@@ -160,6 +160,9 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectDetails($data, $project)
     {
+        $techStack = $data['project_stack'];
+        $techStack = implode(',', $techStack);
+
         $isProjectUpdated = $project->update([
             'name' => $data['name'],
             'client_id' => $data['client_id'],
@@ -172,7 +175,7 @@ class ProjectService implements ProjectServiceContract
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
             'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
             'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
-            'Techstacks' => $data['project_stack'],
+            'techstacks' => $techStack,
         ]);
 
         if ($data['billing_level'] ?? null) {
@@ -191,7 +194,7 @@ class ProjectService implements ProjectServiceContract
         if ($data['status'] == 'active') {
             $project->client->update(['status' => 'active']);
         } else {
-            if (! $project->client->projects()->where('status', 'active')->exists()) {
+            if (!$project->client->projects()->where('status', 'active')->exists()) {
                 $project->client->update(['status' => 'inactive']);
             }
             $project->getTeamMembers()->update(['ended_on' => now()]);
@@ -222,7 +225,7 @@ class ProjectService implements ProjectServiceContract
                     $member->update($tempArray);
                 }
             }
-            if (! $flag) {
+            if (!$flag) {
                 $member->update(['ended_on' => Carbon::now()]);
             }
         }
@@ -244,7 +247,7 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectRepositories($data, $project)
     {
-        if (! isset($data['url'])) {
+        if (!isset($data['url'])) {
             $project->repositories()->delete();
 
             return;
@@ -281,7 +284,7 @@ class ProjectService implements ProjectServiceContract
         $numberOfWorkingDays = 0;
         $weekend = ['Saturday', 'Sunday'];
         foreach ($period as $date) {
-            if (! in_array($date->format('l'), $weekend)) {
+            if (!in_array($date->format('l'), $weekend)) {
                 $numberOfWorkingDays++;
             }
         }
@@ -312,10 +315,10 @@ class ProjectService implements ProjectServiceContract
             $user = $project->client->keyAccountManager;
             if ($user) {
                 $keyAccountManagersDetails[$user->id][] = [
-                'project' =>$project,
-                'email' =>$user->email,
-                'name' =>$user->name,
-            ];
+                    'project' => $project,
+                    'email' => $user->email,
+                    'name' => $user->name,
+                ];
             }
         }
 
@@ -352,7 +355,7 @@ class ProjectService implements ProjectServiceContract
                     $projectDetails[] = [
                         'projects' => $project,
                         'name' => $teamMember->name,
-                        'email' =>$teamMember->email,
+                        'email' => $teamMember->email,
                     ];
                 }
             }

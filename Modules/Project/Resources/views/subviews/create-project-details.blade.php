@@ -56,13 +56,13 @@
                 <input type="url" class="form-control" name="google_chat_webhook_url" id="google_chat_webhook_url" placeholder="Enter Google Chat Webhook URL" value="{{ old('google_chat_webhook_url') }}">
             </div>
             <div class="form-group offset-md-1 col-md-5">
-                <label class="field-required">TechStack
+                <label for="project stack" class="field-required">TechStack </label>
                 <select name="project_stack[]" id="choices-multiple" class="form-control" multiple placeholder="select tech">
                     @foreach (config('project.stack') as $project_stack)
                     <option>{{ $project_stack }}</option>
                     @endforeach
                 </select>
-                </label>
+
             </div>
             <div class="form-group offset col-md-2" v-if="projectType === 'fixed-budget'">
                 <label for="start_date">Start Date</label>
