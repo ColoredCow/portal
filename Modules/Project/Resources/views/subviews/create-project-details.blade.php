@@ -11,7 +11,7 @@
                 <select name="client_id" id="client_id" class="form-control" required="required">
                     <option value="">Select client</option>
                     @foreach ($clients as $client)
-                    <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
+                        <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -26,7 +26,7 @@
                 <select v-model="projectType" name="project_type" id="project_type" class="form-control" required>
                     <option value="">Select project type</option>
                     @foreach (config('project.type') as $key => $project_type)
-                    <option value="{{ $key }}" {{ old('project_type') == $key ? 'selected' : '' }}>{{ $project_type }}</option>
+                        <option value="{{ $key }}" {{ old('project_type') == $key ? 'selected' : '' }}>{{ $project_type }}</option>
                     @endforeach
                 </select>
             </div>
@@ -44,8 +44,8 @@
                 <select name="billing_level" id="billing_level" class="form-control" required="required">
                     <option value="">{{ __('Select Billing Level') }}</option>
                     @foreach (config('project.meta_keys.billing_level.value') as $key => $billingLevel)
-                    <option value="{{ $key }}">{{ $billingLevel['label'] }}
-                    </option>
+                        <option value="{{ $key }}">{{ $billingLevel['label'] }}
+                        </option>
                     @endforeach
                 </select>
             </div>
