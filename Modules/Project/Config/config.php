@@ -38,5 +38,6 @@ return [
             'key' => 'last_updated_at',
             'value' => 'Last refreshed at',
         ]
-    ]
+    ],
+    'stack' => ['C', 'C++', ' C#', 'Java', 'Flask','Elixir', 'Angular', 'Mongodb', 'Koa','Phoenix', 'ExpressJS', 'Asp .NET', 'Spring Boot', 'Django','Ruby on Rails','CakePHP', 'Javascript', 'bootstrap','Laravel','React-js', 'Tailwind', 'PHP', 'SQL', 'HTML', 'CSS', 'Python', 'Swift', 'Golang (Go)', 'R', 'TypeScript', 'Shell', 'PowerShell', 'Perl', 'Haskell', 'Kotlin', 'Visual Basic .NET', 'Delphi'],
 ];

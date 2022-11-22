@@ -55,6 +55,7 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
+        // dd("jgkjgk");
         $validated = $request->validated();
         $project = Project::create([
             'name' => $validated['name'],
@@ -63,7 +64,7 @@ class ProjectController extends Controller
             'status' => $validated['status'],
             'invoice_email' => $validated['invoice_email'],
         ]);
-
+        
         return redirect(route('projects.edit', $project->id))->with('status', 'Project created successfully!');
     }
 

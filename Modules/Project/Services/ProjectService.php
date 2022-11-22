@@ -56,7 +56,10 @@ class ProjectService implements ProjectServiceContract
     }
 
     public function store($data)
-    {
+    {   
+        $techStack=$data['project_stack'];
+        $techStack=implode(',',$techStack);
+
         $project = Project::create([
             'name' => $data['name'],
             'client_id' => $data['client_id'],
@@ -70,6 +73,7 @@ class ProjectService implements ProjectServiceContract
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
             'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
+            'techstacks' => $techStack,
         ]);
 
         if ($data['billing_level'] ?? null) {
@@ -168,6 +172,7 @@ class ProjectService implements ProjectServiceContract
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
             'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
             'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
+            'Techstacks' => $data['project_stack'],
         ]);
 
         if ($data['billing_level'] ?? null) {
