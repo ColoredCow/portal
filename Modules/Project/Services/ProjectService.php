@@ -309,9 +309,9 @@ class ProjectService implements ProjectServiceContract
             $user = $project->client->keyAccountManager;
             if ($user) {
                 $keyAccountManagersDetails[$user->id][] = [
-                'project' => $project,
-                'email' => $user->email,
-                'name' => $user->name,
+                'project' =>$project,
+                'email' =>$user->email,
+                'name' =>$user->name,
             ];
             }
         }
@@ -349,7 +349,7 @@ class ProjectService implements ProjectServiceContract
                     $projectDetails[] = [
                         'projects' => $project,
                         'name' => $teamMember->name,
-                        'email' => $teamMember->email,
+                        'email' =>$teamMember->email,
                     ];
                 }
             }

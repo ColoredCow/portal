@@ -38,5 +38,5 @@ return [
             'key' => 'last_updated_at',
             'value' => 'Last refreshed at',
         ]
-    ],
+    ]
 ];
