@@ -11,7 +11,7 @@
                 <select name="client_id" id="client_id" class="form-control" required="required">
                     <option value="">Select client</option>
                     @foreach ($clients as $client)
-                        <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
+                    <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -26,7 +26,7 @@
                 <select v-model="projectType" name="project_type" id="project_type" class="form-control" required>
                     <option value="">Select project type</option>
                     @foreach (config('project.type') as $key => $project_type)
-                        <option value="{{ $key }}" {{ old('project_type') == $key ? 'selected' : '' }}>{{ $project_type }}</option>
+                    <option value="{{ $key }}" {{ old('project_type') == $key ? 'selected' : '' }}>{{ $project_type }}</option>
                     @endforeach
                 </select>
             </div>
@@ -44,8 +44,8 @@
                 <select name="billing_level" id="billing_level" class="form-control" required="required">
                     <option value="">{{ __('Select Billing Level') }}</option>
                     @foreach (config('project.meta_keys.billing_level.value') as $key => $billingLevel)
-                        <option value="{{ $key }}">{{ $billingLevel['label'] }}
-                        </option>
+                    <option value="{{ $key }}">{{ $billingLevel['label'] }}
+                    </option>
                     @endforeach
                 </select>
             </div>
@@ -56,13 +56,14 @@
                 <input type="url" class="form-control" name="google_chat_webhook_url" id="google_chat_webhook_url" placeholder="Enter Google Chat Webhook URL" value="{{ old('google_chat_webhook_url') }}">
             </div>
             <div class="form-group offset-md-1 col-md-5">
-                <label for="project stack" class="field-required">TechStack </label>
-                <select name="project_stack[]" id="choices-multiple" class="form-control" multiple placeholder="select tech">
-                    @foreach (config('project.stack') as $project_stack)
-                    <option>{{ $project_stack }}</option>
-                    @endforeach
-                </select>
-
+                <label for="techstacks" class="field-required">Techstacks</label>
+                <input type="text" class="form-control" name="techstacks" id="techstacks" placeholder="Enter the techstacks" required="required" value="{{ old('techstacks') }}">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group offset-md-1 col-md-5">
+                <input type="checkbox" id="isamc" name="is_amc" value="true">
+                <label for="is_amc">AMC</label><br>
             </div>
             <div class="form-group offset col-md-2" v-if="projectType === 'fixed-budget'">
                 <label for="start_date">Start Date</label>
@@ -72,12 +73,7 @@
                 <label for="end_date">End Date</label>
                 <input type="date" class="form-control" name="end_date" id="endDate" value="{{ old('start_date') }}">
             </div>
-            <div class="form-group offset-md-1 col-md-5">
-                <input type="checkbox" id="isamc" name="is_amc" value="true">
-                <label for="is_amc">AMC</label><br>
-            </div>
         </div>
-
         <div class="form-row">
             <div class="form-group col-md-5" v-if="projectType ==='fixed-budget'">
                 <label for="total_estimated_hours">{{ __('Total Estimated Hours') }}</label>

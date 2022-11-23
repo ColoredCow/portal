@@ -63,7 +63,7 @@ class ProjectRequest extends FormRequest
                     'start_date' => 'nullable|date',
                     'end_date' => 'nullable|date',
                     'is_amc' => 'nullable',
-                    'project_stack' => 'required|array',
+                    'techstacks' => 'required|string',
                 ];
                 break;
 
@@ -71,8 +71,8 @@ class ProjectRequest extends FormRequest
                 if ($this->project_team_member) {
                     $rules = [
                         'project_team_member' => ['array',
-                            new TeamMemberDesignationRule(),
-                            new TeamMemberRule(),
+                        new TeamMemberDesignationRule(),
+                        new TeamMemberRule(),
                         ]
                     ];
                 }
