@@ -127,12 +127,12 @@ class Project extends Model implements Auditable
         });
     }
 
-    public function getVelocityForMonthAttribute($monthToSubtract, $startDate = null, $endDate = null)
+    public function getVelocityForMonthAttribute($monthToSubtract=1 , $startDate = null, $endDate = null)
     {
         $startDate = $startDate ?? $this->client->month_start_date;
         $endDate = $endDate ?? $this->client->month_end_date;
 
-        return $this->getExpectedHoursInMonthAttribute($startDate, $endDate) ? round($this->getCurrentHoursForMonthAttribute() / ($this->getExpectedHoursInMonthAttribute($startDate, $endDate)), 2) : 0;
+        return $this->getExpectedHoursInMonthAttribute($startDate, $endDate) ? round($this->getHoursBookedForMonth($monthToSubtract, $startDate, $endDate) / ($this->getExpectedHoursInMonthAttribute($startDate, $endDate)), 2) : 0;
     }
 
     public function getCurrentHoursForMonthAttribute()
