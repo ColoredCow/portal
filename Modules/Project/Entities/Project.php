@@ -127,7 +127,7 @@ class Project extends Model implements Auditable
         });
     }
 
-    public function getVelocityForMonthAttribute($monthToSubtract = 1, $startDate = null, $endDate = null)
+    public function getVelocityForMonthAttribute($monthToSubtract, $startDate = null, $endDate = null)
     {
         $startDate = $startDate ?? $this->client->month_start_date;
         $endDate = $endDate ?? $this->client->month_end_date;
