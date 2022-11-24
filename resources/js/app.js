@@ -577,11 +577,11 @@ function initRicheditor() {
 		height: "280",
 		convert_urls: 0
 	});
-	document.addEventListener('focusin', function(e) {
+	document.addEventListener("focusin", function(e) {
 		if (e.target.closest(".mce-window") !== null) {
-		e.stopImmediatePropagation();
+			e.stopImmediatePropagation();
 		}
-		});
+	});
 
 }
 
