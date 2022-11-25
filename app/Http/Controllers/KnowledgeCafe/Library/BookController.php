@@ -87,8 +87,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        $review = $book->comments()
-        ->get()->count();
+        $review = $book->comments()->get()->count();
         $isBookAMonth = $book->bookAMonths()
             ->inCurrentYear()
             ->inCurrentMonth()
