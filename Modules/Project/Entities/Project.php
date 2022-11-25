@@ -131,12 +131,10 @@ class Project extends Model implements Auditable
     {
         $startDate = $startDate ?? $this->client->month_start_date;
         $endDate = $endDate ?? $this->client->month_end_date;
-        
         $currentmonth = today(config('constants.timezone.indian'));
         $currentmonth = $currentmonth->format('m');
         $currentyear = today(config('constants.timezone.indian'));
         $currentyear = $currentyear->format('y');
-
         $usermonth = $startDate->format('m');
         $useryear = $startDate->format('y');
         
