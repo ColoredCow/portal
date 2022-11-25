@@ -137,13 +137,13 @@ class Project extends Model implements Auditable
         $currentyear = $currentyear->format('y');
         $usermonth = $startDate->format('m');
         $useryear = $startDate->format('y');
-        
+
         if (($currentmonth == $usermonth) && ($currentyear == $useryear)) {
             return $this->getExpectedHoursInMonthAttribute($startDate, $endDate) ? round($this->getHoursBookedForMonth($monthToSubtract, $startDate, $endDate) / ($this->getCurrentExpectedHoursAttribute()), 2) : 0;
         } else {
             return $this->getExpectedHoursInMonthAttribute($startDate, $endDate) ? round($this->getHoursBookedForMonth($monthToSubtract, $startDate, $endDate) / ($this->getExpectedHoursInMonthAttribute($startDate, $endDate)), 2) : 0;
         }
-    }
+    }  
 
     public function getCurrentHoursForMonthAttribute()
     {
