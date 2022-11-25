@@ -129,6 +129,7 @@ class Project extends Model implements Auditable
 
     public function getVelocityForMonthAttribute($monthToSubtract, $startDate = null, $endDate = null)
     {
+        dd($monthToSubtract);
         $startDate = $startDate ?? $this->client->month_start_date;
         $endDate = $endDate ?? $this->client->month_end_date;
         
