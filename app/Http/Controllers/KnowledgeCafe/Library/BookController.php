@@ -49,8 +49,7 @@ class BookController extends Controller
 
         $bookID = $request->book_id;
         $value = $books->First();
-        $review = $value->comments()
-        ->get()->count();
+        $review = $value->comments()->get()->count();
 
         return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories', 'review'));
     }
