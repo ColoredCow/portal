@@ -97,16 +97,25 @@ class Project extends Model implements Auditable
 
     public function getExpectedHoursInMonthAttribute($startDate = null, $endDate = null)
     {
-        $StartDate = $startDate ?? $this->client->month_start_date;
-        $EndDate = $endDate ?? $this->client->month_end_date;
-        $daysInMonth = count($this->getWorkingDaysList($StartDate, $EndDate));
+        $startDate = $startDate ?? $this->client->month_start_date;
+        $endDate = $endDate ?? $this->client->month_end_date;
+        $currentdate = today(config('constants.timezone.indian'));
+        $currentmonth = today(config('constants.timezone.indian'));
+        $currentmonth = $currentmonth->format('m');
+        $currentyear = today(config('constants.timezone.indian'));
+        $currentyear = $currentyear->format('y');       
+        $usermonth = $startDate->format('m');
+        $useryear = $startDate->format('y');
+        if (($currentmonth == $usermonth) && ($currentyear == $useryear)) {
+            $endDate = $currentdate;         
+         }
+        $daysInMonth = count($this->getWorkingDaysList($startDate, $endDate))-1;
         $teamMembers = $this->getTeamMembers()->get();
         $currentExpectedEffort = 0;
 
         foreach ($teamMembers as $teamMember) {
             $currentExpectedEffort += $teamMember->daily_expected_effort * $daysInMonth;
         }
-
         return round($currentExpectedEffort, 2);
     }
 
@@ -129,20 +138,9 @@ class Project extends Model implements Auditable
 
     public function getVelocityForMonthAttribute($monthToSubtract, $startDate = null, $endDate = null)
     {
-        $startDate = $startDate ?? $this->client->month_start_date;
-        $endDate = $endDate ?? $this->client->month_end_date;
-        $currentmonth = today(config('constants.timezone.indian'));
-        $currentmonth = $currentmonth->format('m');
-        $currentyear = today(config('constants.timezone.indian'));
-        $currentyear = $currentyear->format('y');
-        $usermonth = $startDate->format('m');
-        $useryear = $startDate->format('y');
-
-        if (($currentmonth == $usermonth) && ($currentyear == $useryear)) {
-            return $this->getExpectedHoursInMonthAttribute($startDate, $endDate) ? round($this->getHoursBookedForMonth($monthToSubtract, $startDate, $endDate) / ($this->getCurrentExpectedHoursAttribute()), 2) : 0;
-        } else {
-            return $this->getExpectedHoursInMonthAttribute($startDate, $endDate) ? round($this->getHoursBookedForMonth($monthToSubtract, $startDate, $endDate) / ($this->getExpectedHoursInMonthAttribute($startDate, $endDate)), 2) : 0;
-        }
+         $startDate = $startDate ?? $this->client->month_start_date;
+         $endDate = $endDate ?? $this->client->month_end_date;
+         return $this->getExpectedHoursInMonthAttribute($startDate, $endDate) ? round($this->getHoursBookedForMonth($monthToSubtract, $startDate, $endDate) / ($this->getExpectedHoursInMonthAttribute($startDate, $endDate)), 2) : 0;
     }
 
     public function getCurrentHoursForMonthAttribute()

@@ -31,7 +31,6 @@
                 </h2>
             </div>
         </div>
-
         <form action="{{ route('project.effort-tracking', $project) }}" id="FilterForm" method= "GET">
             <div class="d-flex">
                 <div class='form-group mr-4 ml-1 mt-1 w-168'>
