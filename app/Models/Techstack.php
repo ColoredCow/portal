@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Techstack extends Model
 {
     use HasFactory;
-    protected $table="techstacks";
-    protected $primarykey="techstacks_id";
+    protected $table = 'techstacks';
+    protected $primarykey = 'techstacks_id';
     protected $fillable = ['name'];
-}
+ }

@@ -47,7 +47,7 @@ class ProjectService implements ProjectServiceContract
         ->paginate(config('constants.pagination_size'));
 
         $client_tech = Project::select('name', 'techstacks')->get();
-        $tech = array();
+        $tech = [];
         foreach ($client_tech as $key) {
 
             $tech[$key['name']] = $key['techstacks'];
@@ -117,8 +117,9 @@ class ProjectService implements ProjectServiceContract
 
     public function getClients_techstacks()
     {
-        $total_Tech =array(Techstack::pluck('name')) ;
-       $total_client = array(Client::where('status', 'active')->orderBy('name'));
+        $total_Tech = [Techstack::pluck('name')];;
+        $total_client = [Client::where('status', 'active')->orderBy('name')];
+
         return array_merge($total_client,$total_Tech);
     }
 
