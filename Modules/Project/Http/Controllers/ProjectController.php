@@ -41,8 +41,8 @@ class ProjectController extends Controller
         $clients_tech = $this->service->getClients_techstacks();
         $clients = $clients_tech[0];
         $total_tech_stack = $clients_tech[1];
-        
-        return view('project::create',compact('clients', 'total_tech_stack'));
+
+        return view('project::create', compact('clients', 'total_tech_stack'));
     }
 
     /**

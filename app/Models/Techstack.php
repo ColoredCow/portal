@@ -11,4 +11,4 @@ class Techstack extends Model
     protected $table = 'techstacks';
     protected $primarykey = 'techstacks_id';
     protected $fillable = ['name'];
- }
+}
