@@ -27,6 +27,7 @@ class ProjectRequest extends FormRequest
     {
         $rules = [];
         $request = $this->create_project ?? $this->update_section;
+        
         switch ($request) {
             case 'project_details':
                 $rules = [
