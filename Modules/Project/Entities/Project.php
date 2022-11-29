@@ -97,9 +97,9 @@ class Project extends Model implements Auditable
 
     public function getExpectedHoursInMonthAttribute($startDate = null, $endDate = null)
     {
-        $startDate = $startDate ?? $this->client->month_start_date;
-        $endDate = $endDate ?? $this->client->month_end_date;
-        $daysInMonth = count($this->getWorkingDaysList($startDate, $endDate));
+        $StartDate = $startDate ?? $this->client->month_start_date;
+        $EndDate = $endDate ?? $this->client->month_end_date;
+        $daysInMonth = count($this->getWorkingDaysList($StartDate, $EndDate));
         $teamMembers = $this->getTeamMembers()->get();
         $currentExpectedEffort = 0;
 
