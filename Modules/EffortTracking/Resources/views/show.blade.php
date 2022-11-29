@@ -27,7 +27,7 @@
                 </h2>
                 @endif
                 <h2 class="fz-18 leading-22" id="projectVelocity">Velocity: 
-                    <span>{{ $project->getVelocityForMonthAttribute($monthToSubtract=null, $startDate , $endDate ) }}</span>
+                   <span>{{ $project->getVelocityForMonthAttribute($totalMonths, $startDate, $endDate) }}</span>
                 </h2>
             </div>
         </div>
