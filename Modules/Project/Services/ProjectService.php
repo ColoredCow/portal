@@ -16,6 +16,7 @@ use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Entities\ProjectBillingDetail;
 use Modules\Project\Contracts\ProjectServiceContract;
+use App\Models\Techstack;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -45,14 +46,21 @@ class ProjectService implements ProjectServiceContract
         ->orderBy('name')
         ->paginate(config('constants.pagination_size'));
 
+        $client_tech = Project::select('name', 'techstacks')->get();
+        $tech = array();
+        foreach ($client_tech as $key) {
+
+            $tech[$key['name']] = $key['techstacks'];
+        }
+
         $tabCounts = $this->getListTabCounts($filters, $showAllProjects, $memberId);
 
-        return array_merge(['clients' => $projectsData], $tabCounts);
+        return array_merge(['clients' => $projectsData], ['tech' => $tech], $tabCounts);
     }
 
     public function create()
     {
-        return $this->getClients();
+        return $this->getClients_techstacks();
     }
 
     public function store($data)
@@ -70,7 +78,7 @@ class ProjectService implements ProjectServiceContract
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
             'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
-            'techstacks' => $data['techstacks'],
+            'techstacks' => json_encode($data['project_stack']),
         ]);
 
         if ($data['billing_level'] ?? null) {
@@ -84,7 +92,6 @@ class ProjectService implements ProjectServiceContract
                 ]
             );
         }
-
         $project->client->update(['status' => 'active']);
         $this->saveOrUpdateProjectContract($data, $project);
     }
@@ -108,9 +115,11 @@ class ProjectService implements ProjectServiceContract
         return $counts;
     }
 
-    public function getClients()
+    public function getClients_techstacks()
     {
-        return Client::where('status', 'active')->orderBy('name')->get();
+        $total_Tech =array(Techstack::pluck('name')) ;
+       $total_client = array(Client::where('status', 'active')->orderBy('name'));
+        return array_merge($total_client,$total_Tech);
     }
 
     public function getTeamMembers()
@@ -169,7 +178,6 @@ class ProjectService implements ProjectServiceContract
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
             'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
             'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
-            'techstacks' => $data['techstacks'],
         ]);
 
         if ($data['billing_level'] ?? null) {

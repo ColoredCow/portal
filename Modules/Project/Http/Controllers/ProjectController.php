@@ -38,9 +38,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $clients = $this->service->getClients();
-
-        return view('project::create')->with('clients', $clients);
+        $clients = $this->service->getClients_techstacks();
+        return view('project::create')->with('clients', $clients[0])->with('total_tech_stack', $clients[1]);
     }
 
     /**

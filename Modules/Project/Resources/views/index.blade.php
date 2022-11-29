@@ -102,9 +102,13 @@
                                         @endforeach
                                     </td>
                                     <td class="text-center">
-                                        @if (empty($project->projectContracts->first()->contract_file_path))
-                                            <span class="badge badge-pill badge-secondary">No Contract</span>
+                                    @foreach ($tech as $key=>$value)
+                                        @if ($project->name==$key)
+                                            @foreach (json_decode($value) as $tech_name)
+                                                <span class="badge badge-pill badge-secondary">{{ $tech_name }}</span>
+                                            @endforeach
                                         @endif
+                                    @endforeach
                                     </td>
                                     <td class="w-20p">
                                         @php

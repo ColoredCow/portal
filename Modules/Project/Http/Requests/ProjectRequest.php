@@ -27,7 +27,6 @@ class ProjectRequest extends FormRequest
     {
         $rules = [];
         $request = $this->create_project ?? $this->update_section;
-
         switch ($request) {
             case 'project_details':
                 $rules = [
@@ -63,7 +62,7 @@ class ProjectRequest extends FormRequest
                     'start_date' => 'nullable|date',
                     'end_date' => 'nullable|date',
                     'is_amc' => 'nullable',
-                    'techstacks' => 'required|string',
+                    'project_stack' => 'required|array'
                 ];
                 break;
 

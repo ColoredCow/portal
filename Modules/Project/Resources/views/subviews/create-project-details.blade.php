@@ -61,7 +61,11 @@
             </div>
             <div class="form-group offset-md-1 col-md-5">
                 <label for="techstacks" class="field-required">Techstacks</label>
-                <input type="text" class="form-control" name="techstacks" id="techstacks" placeholder="Enter the techstacks" required="required" value="{{ old('techstacks') }}">
+                <select name="project_stack[]" id="choices-multiple" class="form-control" multiple placeholder="select tech">
+                    @foreach ($total_tech_stack as $tech)
+                    <option>{{ $tech }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
         <div class="form-row">
