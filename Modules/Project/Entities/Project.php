@@ -99,15 +99,12 @@ class Project extends Model implements Auditable
     {
         $startDate = $startDate ?? $this->client->month_start_date;
         $endDate = $endDate ?? $this->client->month_end_date;
-        $currentdate = today(config('constants.timezone.indian'));
-        $currentmonth = today(config('constants.timezone.indian'));
-        $currentmonth = $currentmonth->format('m');
-        $currentyear = today(config('constants.timezone.indian'));
-        $currentyear = $currentyear->format('y');
-        $usermonth = $startDate->format('m');
-        $useryear = $startDate->format('y');
-        if (($currentmonth == $usermonth) && ($currentyear == $useryear)) {
-            $endDate = $currentdate;
+        $currentMonth = today()->format('m');
+        $currentYear = today()->format('y');
+        $projectMonth = $startDate->format('m');
+        $projectYear = $startDate->format('y');
+        if (($currentMonth == $projectMonth) && ($currentYear == $projectYear)) {
+            $endDate = today();
         }
         $daysInMonth = count($this->getWorkingDaysList($startDate, $endDate)) - 1;
         $teamMembers = $this->getTeamMembers()->get();
