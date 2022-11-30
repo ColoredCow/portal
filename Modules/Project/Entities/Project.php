@@ -116,6 +116,7 @@ class Project extends Model implements Auditable
         foreach ($teamMembers as $teamMember) {
             $currentExpectedEffort += $teamMember->daily_expected_effort * $daysInMonth;
         }
+        
         return round($currentExpectedEffort, 2);
     }
 
