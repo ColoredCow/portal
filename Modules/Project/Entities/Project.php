@@ -109,14 +109,14 @@ class Project extends Model implements Auditable
         if (($currentmonth == $usermonth) && ($currentyear == $useryear)) {
             $endDate = $currentdate;
         }
-        $daysInMonth = count($this->getWorkingDaysList($startDate, $endDate))-1;
+        $daysInMonth = count($this->getWorkingDaysList($startDate, $endDate)) - 1;
         $teamMembers = $this->getTeamMembers()->get();
         $currentExpectedEffort = 0;
 
         foreach ($teamMembers as $teamMember) {
             $currentExpectedEffort += $teamMember->daily_expected_effort * $daysInMonth;
         }
-        
+
         return round($currentExpectedEffort, 2);
     }
 
