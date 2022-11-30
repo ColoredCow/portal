@@ -102,12 +102,8 @@
                                         @endforeach
                                     </td>
                                     <td class="text-center">
-                                    @foreach ($tech as $key=>$value)
-                                        @if ($project->name==$key)
-                                            @foreach (json_decode($value) as $tech_name)
-                                                <span class="badge badge-pill badge-secondary">{{ $tech_name }}</span>
-                                            @endforeach
-                                        @endif
+                                    @foreach (json_decode($project['techstacks']) as$tech_name )
+                                        <span class="badge badge-pill badge-secondary">{{ $tech_name }}</span>
                                     @endforeach
                                     </td>
                                     <td class="w-20p">
