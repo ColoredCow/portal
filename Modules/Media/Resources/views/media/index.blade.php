@@ -1,6 +1,6 @@
 @extends('media::layouts.master')
 @section('title', 'Media Page')
-@section('heading', 'Media')
+@section('heading', 'Media Gallery')
 @section('popup', 'Add New Post')
 @section('link', route('media.index'))
 @section('content')
@@ -9,7 +9,7 @@
     <div class="row my-2">
         <div class="col-lg-12 d-flex justify-content-between align-items-center mx-auto">
             <div>
-                <h1>@yield('heading')</h1>
+                <h1>@yield('heading') ({{count($media)}})</h1>
             </div>
         <div>
         <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#photoGallery">
@@ -18,18 +18,11 @@
         <div class="modal fade" id="photoGallery" tabindex="-1" role="dialog" aria-labelledby="photoGalleryLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row my-3">
-                            <div class="col-lg-20 mx-auto">
-                                <div class="card shadow">
-                                    <div class="card-header bg-secondary">
-                                        <h3 class="text-light fw-bold">Add New Post</h3>
-                                    </div>
+                    <div class="card-header bg-secondary">
+                                        <h3 class="text-light fw-bold">Add New Post<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                         <span aria-hidden="true">&times;</span>
+                                        </button> 
+                                 </div>
                                     <div class="card-body p-4">
                                         <form action="{{ route('media.index') }}" method="POST" enctype="multipart/form-data">
                                             @csrf
@@ -40,7 +33,7 @@
                                                 @enderror
                                             </div>
                                             <div class="my-2"><h3 class="text-secondary">File Upload</h3>
-                                                <input type="file" name="file" id="file" accept="image/*" class="form-control @error('file') is-invalid @enderror">
+                                                <input type="file" name="file[]" id="file" accept="image/*" class="form-control @error('file') is-invalid @enderror" multiple>
                                                 @error('file')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -78,14 +71,13 @@
                             <source src="{{asset('storage/media/'.$row->file_url)}}" type="video/mp4">
                         </video>
                     @endif
-                    @if(pathinfo($row->file_url, PATHINFO_EXTENSION) == 'jpg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'jpeg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'png' )
+                    @if(pathinfo($row->file_url, PATHINFO_EXTENSION) == 'jpg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'jpeg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'PNG' )
                         <img src="{{ asset('storage/media/'.$row->file_url) }}" class="card-img-top img-fluid ">
                     @endif
                 </a>
                 <div class="card-body">
-                    <p>
-                        <td class="">
-                            <img src="{{auth()->user()->avatar}}" alt="{{auth()->user()->name}}" class="w-25 h-25 rounded-circle" data-toggle="tooltip" data-placement="top" title="{{auth()->user()->name}}">
+                    <p>Uploaded By
+                        <td class=""> <img src="{{auth()->user()->avatar}}" alt="{{auth()->user()->name}}" class="w-25 h-25 rounded-circle" data-toggle="tooltip" data-placement="top" title="{{auth()->user()->name}}">
                         </td>
                     </p>
                     <p class="card-title fw-bold text-secondary">Event Name - {{ $row->event_name }}</p>

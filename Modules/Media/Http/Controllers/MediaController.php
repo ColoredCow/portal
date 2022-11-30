@@ -31,15 +31,19 @@ class MediaController extends Controller
      * @return RedirectResponse
      */
     public function store(MediaRequest $request)
-    {
-        $validated = $request->validated();
-        $path = config('media.path');
-        $fileName = time() . '.' . $request->file->extension();
+    {   
+        $files=$request->file;
+        if($files)
+        {
 
-        $request->file->storeAs(
-            $path,
-            $fileName,
-        );
+        $names=[];
+
+foreach ($files as $file) {
+    $validated = $request->validated();
+    $path = config('media.path');
+    $fileName = $file->getClientOriginalName();
+    $file->move($path, $fileName);
+    array_push($names, $fileName);
 
         $postData = [
             'event_name' => $validated['event_name'],
@@ -48,7 +52,8 @@ class MediaController extends Controller
             'uploaded_by' => Auth()->user()->id
         ];
         Media::create($postData);
-
+    }
+}
         return redirect(route('media.index'))->with(['message', 'status' => 'Media added successfully!']);
     }
 

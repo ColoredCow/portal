@@ -2,5 +2,5 @@
 
 return [
     'name' => 'Media',
-    'path' => 'public/media'
+    'path' => 'storage/media/'
 ];
