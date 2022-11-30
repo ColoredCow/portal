@@ -52,7 +52,7 @@ class MediaController extends Controller
                 Media::create($postData);
             }
         }
-        
+
         return redirect(route('media.index'))->with(['message', 'status' => 'Media added successfully!']);
     }
 
