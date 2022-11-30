@@ -32,9 +32,9 @@ class MediaController extends Controller
      */
     public function store(MediaRequest $request)
     {
-        $files=$request->file;
-        if($files) {
-            $names=[];
+        $files = $request->file;
+        if ($files) {
+            $names = [];
 
             foreach ($files as $file) {
                 $validated = $request->validated();
@@ -52,6 +52,7 @@ class MediaController extends Controller
                 Media::create($postData);
             }
         }
+        
         return redirect(route('media.index'))->with(['message', 'status' => 'Media added successfully!']);
     }
 
