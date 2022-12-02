@@ -115,9 +115,11 @@ class ProjectService implements ProjectServiceContract
         return Client::where('status', 'active')->orderBy('name')->get();
     }
 
-    public function gettechstacks(){
+    public function gettechstacks()
+    {
         $total_tech_stack = Project::pluck('techstacks')->toArray();
-        $unique_tech_stacks = array_unique(explode(',',implode(",", $total_tech_stack)));
+        $unique_tech_stacks = array_unique(explode(',', implode(",", $total_tech_stack)));
+
         return $unique_tech_stacks;
     }
 
@@ -366,11 +368,3 @@ class ProjectService implements ProjectServiceContract
         return $projectDetails;
     }
 }
-
-// public function getClients_techstacks()
-// {
-//     $total_Tech = [Project::pluck('techstacks')];
-//     $total_client = [Client::where('status', 'active')->orderBy('name')];
-
-//     return array_merge($total_client, $total_Tech);
-// }

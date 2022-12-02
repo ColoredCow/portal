@@ -40,7 +40,7 @@ class ProjectController extends Controller
     {
         $clients = $this->service->getClients();
         $techstacks = $this->service->getTechstacks();
-        return view('project::create')->with('clients', $clients)->with('techstacks',$techstacks);
+        return view('project::create')->with('clients', $clients)->with('techstacks', $techstacks);
     }
 
     /**
