@@ -63,7 +63,7 @@ class ProjectRequest extends FormRequest
                     'start_date' => 'nullable|date',
                     'end_date' => 'nullable|date',
                     'is_amc' => 'nullable',
-                    'project_stack' => 'required|array'
+                    'project_name' => 'required|string'
                 ];
                 break;
 

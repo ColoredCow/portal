@@ -60,12 +60,14 @@
                     value="{{ old('google_chat_webhook_url') }}">
             </div>
             <div class="form-group offset-md-1 col-md-5">
-                <label for="techstacks" class="field-required">Techstacks</label>
-                <select name="project_stack[]" id="choices-multiple" class="form-control" multiple placeholder="select tech">
-                    @foreach ($total_tech_stack as $tech)
-                    <option>{{ $tech }}</option>
-                    @endforeach
-                </select>
+                <label for="project_name" class="field-required">Techstacks</label>
+                <input class="form-control" name="project_name" list="techstacks" class="form_contrl"  placeholder="Enter project name"
+                    required="required" >
+                <datalist id="techstacks"  id="choices-multiple" multiple>
+                @foreach ($techstacks as $tech)
+                    <option >{{$tech}}</option>
+                @endforeach
+                    </datalist>
             </div>
         </div>
         <div class="form-row">

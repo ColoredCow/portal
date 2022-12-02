@@ -16,7 +16,6 @@ use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Entities\ProjectBillingDetail;
 use Modules\Project\Contracts\ProjectServiceContract;
-use App\Models\Techstack;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -46,24 +45,19 @@ class ProjectService implements ProjectServiceContract
         ->orderBy('name')
         ->paginate(config('constants.pagination_size'));
 
-        $client_tech = Project::select('name', 'techstacks')->get();
-        $tech = [];
-        foreach ($client_tech as $key) {
-            $tech[$key['name']] = $key['techstacks'];
-        }
-
         $tabCounts = $this->getListTabCounts($filters, $showAllProjects, $memberId);
 
-        return array_merge(['clients' => $projectsData], ['tech' => $tech], $tabCounts);
+        return array_merge(['clients' => $projectsData], $tabCounts);
     }
 
     public function create()
     {
-        return $this->getClients_techstacks();
+        return $this->getClients();
     }
 
     public function store($data)
     {
+        // dd($data);
         $project = Project::create([
             'name' => $data['name'],
             'client_id' => $data['client_id'],
@@ -77,7 +71,8 @@ class ProjectService implements ProjectServiceContract
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
             'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
-            'techstacks' => json_encode($data['project_stack']),
+            'techstacks' => $data['project_name'],
+
         ]);
 
         if ($data['billing_level'] ?? null) {
@@ -91,6 +86,7 @@ class ProjectService implements ProjectServiceContract
                 ]
             );
         }
+
         $project->client->update(['status' => 'active']);
         $this->saveOrUpdateProjectContract($data, $project);
     }
@@ -114,12 +110,15 @@ class ProjectService implements ProjectServiceContract
         return $counts;
     }
 
-    public function getClients_techstacks()
+    public function getClients()
     {
-        $total_Tech = [Techstack::pluck('name')];
-        $total_client = [Client::where('status', 'active')->orderBy('name')];
+        return Client::where('status', 'active')->orderBy('name')->get();
+    }
 
-        return array_merge($total_client, $total_Tech);
+    public function gettechstacks(){
+        $total_tech_stack = Project::pluck('techstacks')->toArray();
+        $unique_tech_stacks = array_unique(explode(',',implode(",", $total_tech_stack)));
+        return $unique_tech_stacks;
     }
 
     public function getTeamMembers()
@@ -178,6 +177,7 @@ class ProjectService implements ProjectServiceContract
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
             'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
             'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
+            'techstacks' => json_encode($data['project_stack']),
         ]);
 
         if ($data['billing_level'] ?? null) {
@@ -366,3 +366,11 @@ class ProjectService implements ProjectServiceContract
         return $projectDetails;
     }
 }
+
+// public function getClients_techstacks()
+// {
+//     $total_Tech = [Project::pluck('techstacks')];
+//     $total_client = [Client::where('status', 'active')->orderBy('name')];
+
+//     return array_merge($total_client, $total_Tech);
+// }

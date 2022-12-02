@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddUserToTechStack extends Migration
+class AddTechstacksToProjects extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddUserToTechStack extends Migration
     public function up()
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->json('techstacks');
+            $table->string('techstacks');
         });
     }
 
