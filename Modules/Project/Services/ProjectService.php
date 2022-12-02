@@ -118,7 +118,7 @@ class ProjectService implements ProjectServiceContract
     public function gettechstacks()
     {
         $total_tech_stack = Project::pluck('techstacks')->toArray();
-        $unique_tech_stacks = array_unique(explode(',', implode(",", $total_tech_stack)));
+        $unique_tech_stacks = array_unique(explode(',', implode(',', $total_tech_stack)));
 
         return $unique_tech_stacks;
     }
