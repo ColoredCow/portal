@@ -117,8 +117,8 @@ class InvoiceService implements InvoiceServiceContract
     public function defaultFilters()
     {
         return [
-            'year' => now()->format('Y'),
-            'month' => now()->format('m'),
+            'year' => null,
+            'month' => null,
             'status' => 'sent',
             'client_id' => '',
         ];
