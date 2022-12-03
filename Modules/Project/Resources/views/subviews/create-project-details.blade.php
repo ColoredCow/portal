@@ -1,3 +1,4 @@
+
 <div id="create_project_details_form">
     <div class="card-body">
         <input type="hidden" name="create_project" value="create_project">
@@ -63,11 +64,11 @@
                 <label for="project_name" class="field-required">Techstacks</label>
                 <input class="form-control" name="project_name" list="techstacks" class="form_contrl"  placeholder="Enter project name"
                     required="required" >
-                <datalist id="techstacks"  id="choices-multiple" multiple>
+                <datalist id="techstacks">
                 @foreach ($techstacks as $tech)
                     <option >{{$tech}}</option>
-                @endforeach
-                    </datalist>
+                    @endforeach
+                </datalist>
             </div>
         </div>
         <div class="form-row">
