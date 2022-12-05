@@ -11,8 +11,6 @@ class Project extends Model
 
     protected $table = 'projects_old';
 
-    protected $casts = ['techstacks' => 'array'];
-
     /**
      * Get the client that owns the project.
      */
