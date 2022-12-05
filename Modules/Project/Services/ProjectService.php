@@ -170,7 +170,7 @@ class ProjectService implements ProjectServiceContract
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
             'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
             'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
-            'techstacks' => json_encode($data['project_stack']),
+            'techstacks' => $data['project_stack'],
         ]);
 
         if ($data['billing_level'] ?? null) {
