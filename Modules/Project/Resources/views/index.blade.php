@@ -102,16 +102,12 @@
                                         @endforeach
                                     </td>
                                     <td class="text-center">
-                            @foreach ($client->projects as $tech_names )
-                                @if ($project->name == $tech_names['name'])
                                     @php
-                                        $project_tech=explode(',',$tech_names['techstacks'])
+                                        $project_tech=explode(',',$project['techstacks'])
                                     @endphp
                                     @foreach ($project_tech as $tech )
                                         <span class="badge badge-pill badge-secondary">{{ $tech }}</span>
                                     @endforeach
-                                @endif
-                            @endforeach
                                     </td>
                                     <td class="w-20p">
                                         @php
