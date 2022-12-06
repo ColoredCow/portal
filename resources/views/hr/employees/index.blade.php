@@ -35,7 +35,8 @@
         @foreach ($employees as $employee)
             <tr>
                 <td>
-                    <a href={{ route('employees.show', $employee->id) }}>{{ $employee->name }}</a>
+                    <div><a href={{ route('employees.show', $employee->id) }}>{{ $employee->name }}</a></div>
+                    <small><a href="">Work History</a></small>
                 </td>
                 <td>
                     @if ($employee->designation_id)
