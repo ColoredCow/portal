@@ -86,4 +86,9 @@ class EmployeeController extends Controller
             'jobName' => $jobName
         ]);
     }
+
+    public function workhistory()
+    {
+        return view('hr.employees.workhistory');
+    }
 }
