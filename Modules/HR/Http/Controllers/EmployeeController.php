@@ -87,7 +87,8 @@ class EmployeeController extends Controller
         ]);
     }
 
-    public function workhistory(){
+    public function workhistory()
+    {
         return view('hr.employees.workhistory');
     }
 }

@@ -117,7 +117,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/employee-basic-details/{employee}/', 'EmployeeController@basicDetails')->name('employees.basic.details');
         Route::resource('employees', 'EmployeeController')
-            ->only(['index', 'show',])
+            ->only(['index', 'show'])
             ->names([
                 'index' => 'employees',
                 'show' => 'employees.show',
