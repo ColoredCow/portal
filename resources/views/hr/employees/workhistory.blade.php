@@ -14,11 +14,14 @@
     </tr>
   </thead>
   <tbody>
+    @foreach ($employees_project_client as $project_client)      
     <tr>
-      <td class="text-center">Paar</td>
-      <td class="text-center">Smrita chkarvati</td>
+      <td class="text-center">{{ $project_client->project->name }}</td>
+      <td class="text-center">{{ $project_client->project->client->name }}</td>
       <td class="text-center">React-js,js</td>
     </tr>
+    @endforeach
+
   
   </tbody>
 </table>	   
