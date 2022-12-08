@@ -18,7 +18,7 @@
     <tr>
       <td class="text-center">{{ $project_client->project->name }}</td>
       <td class="text-center">{{ $project_client->project->client->name }}</td>
-      <td class="text-center">React-js,js</td>
+      <td class="text-center"></td>
     </tr>
     @endforeach
 
