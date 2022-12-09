@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
 <div class="container">
 
     <div><h1>Work History</h1></div>
@@ -14,10 +13,10 @@
     </tr>
   </thead>
   <tbody>
-    @foreach ($employees_project_client as $project_client)      
+    @foreach ($employees_project_client as $project_client)   
     <tr>
-      <td class="text-center">{{ $project_client->project->name }}</td>
-      <td class="text-center">{{ $project_client->project->client->name }}</td>
+      <td><a href="{{route('project.edit', $project_client  )}}">{{ $project_client->project['name'] }}</a></td>    
+      <td class="text-center">{{ $project_client->project->client['name'] }}</td>
       <td class="text-center"></td>
     </tr>
     @endforeach
