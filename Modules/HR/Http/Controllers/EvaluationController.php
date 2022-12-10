@@ -159,6 +159,7 @@ class EvaluationController extends Controller
 
     public function show($applicationRoundId)
     {
+        $parameter = Parameter::all();
         $applicationRound = ApplicationRound::find($applicationRoundId)->load('application.applicant');
 
         $segmentList = [];
@@ -169,6 +170,8 @@ class EvaluationController extends Controller
 
         return view('hr.application.evaluation-form')
             ->with([
+                
+                'parameter' => $parameter,
                 'segment' => $segmentList,
                 'applicationRound' => $applicationRound,
                 'employees' => Employee::active()

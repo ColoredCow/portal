@@ -5,4 +5,3 @@
 @foreach ($resumeFeeling['parameters'] as $parameter)
     @includeWhen(sizeof($parameter['children']), 'hr::evaluation.evaluation-form.resume-screening.parameter', ['parameter' => $parameter, 'parent' => []])
 @endforeach
-
