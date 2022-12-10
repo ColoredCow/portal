@@ -170,7 +170,6 @@ class EvaluationController extends Controller
 
         return view('hr.application.evaluation-form')
             ->with([
-                
                 'parameter' => $parameter,
                 'segment' => $segmentList,
                 'applicationRound' => $applicationRound,
