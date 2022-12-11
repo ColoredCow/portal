@@ -45,7 +45,7 @@
             </div>
         </div>
     @endif
-    @foreach ($parameter['children'] as $childParameter)   
+    @foreach ($parameter['children'] as $childParameter)
         @include('hr::evaluation.evaluation-form.resume-screening.parameter', ['parameter' => $childParameter, 'parent' => $parameter])
     @endforeach
 </div>

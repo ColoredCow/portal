@@ -375,11 +375,10 @@ if (document.getElementById("page_hr_applicant_edit")) {
 				loadTemplateMail("reject", (res) => {
 					$("#rejectMailToApplicantSubject").val(res.subject);
 					tinymce
-					 	.get("rejectMailToApplicantBody")
+						.get("rejectMailToApplicantBody")
 						.setContent(res.body, { format: "html" });
 				});
 			},
-			
 		},
 		mounted() {
 			this.selectedNextRound = this.applicationJobRounds[0].id;
