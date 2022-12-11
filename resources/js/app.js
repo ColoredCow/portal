@@ -371,7 +371,6 @@ if (document.getElementById("page_hr_applicant_edit")) {
 				}
 			},
 			rejectApplication: function() {
-				console.log("hello");
 				$("#application_reject_modal").modal("show");
 				loadTemplateMail("reject", (res) => {
 					$("#rejectMailToApplicantSubject").val(res.subject);
@@ -389,37 +388,6 @@ if (document.getElementById("page_hr_applicant_edit")) {
 		},
 	});
 }
-
-// document.getElementById("sample") 
-// {
-// 	console.log('hello')
-// 	new Vue({
-// 		method:{
-// 			rejectApplication: function() {
-// 				console.log("hell");
-// 				$("#application_reject_modal").modal("show");
-// 				loadTemplateMail("reject", (res) => {
-// 					$("#rejectMailToApplicantSubject").val(res.subject);
-// 					tinymce
-// 						 .get("rejectMailToApplicantBody")
-// 						.setContent(res.body, { format: "html" });
-// 				});
-// 			}
-// 		}
-// 	});
-// }
-
-// function rejectApplication()
-// {
-// 		console.log("hello");
-// 		$("#application_reject_modal").modal("show");
-// 		loadTemplateMail("reject", (res) => {
-// 			$("#rejectMailToApplicantSubject").val(res.subject);
-// 			tinymce
-// 				 .get("rejectMailToApplicantBody")
-// 				.setContent(res.body, { format: "html" });
-// 		});	
-// }
 
 if (document.getElementById("project_container")) {
 	const projectContainer = new Vue({

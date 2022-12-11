@@ -99,14 +99,7 @@ class Project extends Model implements Auditable
     {
         $startDate = $startDate ?? $this->client->month_start_date;
         $endDate = $endDate ?? $this->client->month_end_date;
-        $currentMonth = today()->format('m');
-        $currentYear = today()->format('y');
-        $projectMonth = $startDate->format('m');
-        $projectYear = $startDate->format('y');
-        if (($currentMonth == $projectMonth) && ($currentYear == $projectYear)) {
-            $endDate = today();
-        }
-        $daysInMonth = count($this->getWorkingDaysList($startDate, $endDate)) - 1;
+        $daysInMonth = count($this->getWorkingDaysList($startDate, $endDate));
         $teamMembers = $this->getTeamMembers()->get();
         $currentExpectedEffort = 0;
 
