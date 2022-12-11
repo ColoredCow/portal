@@ -1,6 +1,6 @@
 @extends('project::layouts.master')
-@section('content')  
-<div class="container" id="view_edit_project">
+@section('content')
+    <div class="container" id="view_edit_project">
         <br>
         <a href="{{ URL::previous() }}"
             class="text-theme-body text-decoration-none mb-2 mb-xl-4 d-inline-flex align-items-center">

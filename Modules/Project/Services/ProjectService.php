@@ -151,7 +151,7 @@ class ProjectService implements ProjectServiceContract
 
             case 'project_financial_details':
                 return $this->updateProjectFinancialDetails($data, $project);
-  
+
             case 'project_techstack':
                 return $this->updateProjecttechstack($data, $project);
         }
