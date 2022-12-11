@@ -11,7 +11,6 @@
 <div class="{{ "$parentName $parentOptionName $leftMargin $showParameter" }}  ">
     <div class="row my-3">
         <div class="col-12">
-            
             <strong class="mb-1 d-block">{{ $parameter['name'] }}</strong>
             <div class="form-check form-check-inline">
                 @foreach ($parameter['option_detail'] ?? [] as $index => $option)
