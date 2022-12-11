@@ -151,6 +151,9 @@ class ProjectService implements ProjectServiceContract
 
             case 'project_financial_details':
                 return $this->updateProjectFinancialDetails($data, $project);
+
+            case 'project_techstack':
+                return $this->updateProjecttechstack($data, $project);
         }
     }
 
@@ -255,6 +258,22 @@ class ProjectService implements ProjectServiceContract
                     'project_id' => $project->id,
                     'url' => $url,
                 ],
+            );
+        }
+    }
+
+    private function updateProjecttechstack($data, $project)
+    {
+        $techstacks = array_diff_key($data, array_flip(['_token', 'update_section', 'name']));
+        foreach ($techstacks as $key=>$value) {
+            ProjectMeta::updateOrCreate(
+                [
+                    'key' => $key,
+                    'project_id' => $project->id,
+                ],
+                [
+                    'value' => $value,
+                ]
             );
         }
     }
