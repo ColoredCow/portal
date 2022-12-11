@@ -3,6 +3,7 @@
 namespace Modules\Project\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\Project\Entities\Project;
 
 class ProjectMeta extends Model
 {

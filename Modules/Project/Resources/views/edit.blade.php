@@ -1,6 +1,6 @@
 @extends('project::layouts.master')
-@section('content')
-    <div class="container" id="view_edit_project">
+@section('content')  
+<div class="container" id="view_edit_project">
         <br>
         <a href="{{ URL::previous() }}"
             class="text-theme-body text-decoration-none mb-2 mb-xl-4 d-inline-flex align-items-center">
@@ -31,6 +31,10 @@
                     <a class="nav-link" data-toggle="pill" data-target="#projectFinancialDetails" type="button"
                         role="tab" aria-selected="false">Project Financial Details</a>
                 </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-toggle="pill" data-target="#projecttechstack" type="button"
+                        role="tab" aria-selected="false">Project Tech-Stack</a>
+                </li>
             </ul>
             @include('status', ['errors' => $errors->all()])
             <div class="tab-content">
@@ -48,6 +52,9 @@
 
                 <div class="tab-pane fade mb-5" id="projectFinancialDetails" role="tabpanel">
                     @include('project::subviews.edit-project-financial-details')
+                </div>
+                <div class="tab-pane fade mb-5" id="projecttechstack" role="tabpanel">
+                    @include('project::subviews.edit-project-techstack-details')
                 </div>
             </div>
         </div>

@@ -11,6 +11,7 @@ use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\Job;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Project\Entities\ProjectTeamMember;
+use Modules\Project\Entities\ProjectMeta;
 
 class EmployeeController extends Controller
 {
@@ -92,6 +93,12 @@ class EmployeeController extends Controller
     {
         $employees_project_client = ProjectTeamMember::where('team_member_id', $employee->user_id)->get();
 
-        return view('hr.employees.workhistory', compact('employees_project_client'));
+        $meta = [];
+        foreach($employees_project_client as $projectTeamMember) {
+            $projectId = $projectTeamMember->project_id;
+            $meta[$projectId][] = ProjectMeta::where('project_id', $projectId)->get()->pluck('value', 'key');
+        }
+
+        return view('hr.employees.workhistory', compact('employees_project_client','meta'));
     }
 }
