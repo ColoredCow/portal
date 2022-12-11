@@ -93,12 +93,12 @@ class EmployeeController extends Controller
     {
         $employees_project_client = ProjectTeamMember::where('team_member_id', $employee->user_id)->get();
 
-        $meta = [];
-        foreach($employees_project_client as $projectTeamMember) {
-            $projectId = $projectTeamMember->project_id;
-            $meta[$projectId][] = ProjectMeta::where('project_id', $projectId)->get()->pluck('value', 'key');
+        $all_techstacks = [];
+        foreach($employees_project_client as $value) {
+            $projectId = $value->project_id;
+            $all_techstacks[$projectId][] = ProjectMeta::where('project_id', $projectId)->get()->pluck('value', 'key');
         }
 
-        return view('hr.employees.workhistory', compact('employees_project_client','meta'));
+        return view('hr.employees.workhistory', compact('employees_project_client','all_techstacks'));
     }
 }

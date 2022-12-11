@@ -18,14 +18,14 @@
       <td class="text-center">{{ $project->project->client['name'] }}</td>
       <td class="text-center  ">
      
-          @foreach ($meta[$project["project_id"]] as $k )
+          @foreach ($all_techstacks[$project["project_id"]] as $techstacks )
           <div class="row "> 
-          @forelse($k as $reply)
+          @forelse($techstacks as $techstack)
           <div class="ml-3 col-2">  
-          <p>{{ $reply }}</p>
+          <p>{{ $techstack }}</p>
           </div>  
             @empty
-          <p class=" col-12">No replies</p>
+          <p class=" col-12">Not Avaliable</p>
           @endforelse
           </div>
               @endforeach
