@@ -12,7 +12,7 @@
     </tr>
   </thead>
   <tbody>
-    @foreach ($employees_project_client as $project)
+    @foreach($employees_project_client as $project)
     <tr>
       <td class="text-center"><a href="{{route('project.edit', $project->project  )}}">{{ $project->project['name'] }}</a></td>    
       <td class="text-center">{{ $project->project->client['name'] }}</td>
