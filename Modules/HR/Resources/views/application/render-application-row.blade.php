@@ -48,11 +48,11 @@
                         class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a>
                     @else
                         <a href="{{ route('applications.internship.edit', $application->id) }}"
-                            class="btn-sm btn-primary text-decoration-none " target="_self">Evaluate</a>
+                            class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a>
                     @endif
                 @else
                     <a data-target="#evaluation{{ $application->id }}" role="button"
-                        class="btn-sm btn-primary text-decoration-none c-pointer" data-toggle="modal">Evaluate</a>
+                        class="btn-sm btn-primary text-decoration-none" data-toggle="modal">Evaluate</a>
                     <div class="modal fade" id="evaluation{{ $application->id }}" tabindex="-1" role="dialog"
                         aria-labelledby="confirmation" aria-hidden="true">
                         <div class="modal-dialog" role="document">
