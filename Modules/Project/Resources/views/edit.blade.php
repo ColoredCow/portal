@@ -32,7 +32,7 @@
                         role="tab" aria-selected="false">Project Financial Details</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-toggle="pill" data-target="#projecttechstack" type="button"
+                    <a class="nav-link" data-toggle="pill" data-target="#projectTechstack" type="button"
                         role="tab" aria-selected="false">Project Tech-Stack</a>
                 </li>
             </ul>
@@ -53,7 +53,7 @@
                 <div class="tab-pane fade mb-5" id="projectFinancialDetails" role="tabpanel">
                     @include('project::subviews.edit-project-financial-details')
                 </div>
-                <div class="tab-pane fade mb-5" id="projecttechstack" role="tabpanel">
+                <div class="tab-pane fade mb-5" id="projectTechstack" role="tabpanel">
                     @include('project::subviews.edit-project-techstack-details')
                 </div>
             </div>

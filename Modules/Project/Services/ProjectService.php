@@ -153,7 +153,7 @@ class ProjectService implements ProjectServiceContract
                 return $this->updateProjectFinancialDetails($data, $project);
 
             case 'project_techstack':
-                return $this->updateProjecttechstack($data, $project);
+                return $this->updateProjectTechstack($data, $project);
         }
     }
 
@@ -262,10 +262,10 @@ class ProjectService implements ProjectServiceContract
         }
     }
 
-    private function updateProjecttechstack($data, $project)
+    private function updateProjectTechstack($data, $project)
     {
-        $techstacks = array_diff_key($data, array_flip(['_token', 'update_section', 'name']));
-        foreach ($techstacks as $key=>$value) {
+        $Techstacks = array_diff_key($data, array_flip(['_token', 'update_section', 'name']));
+        foreach ($Techstacks as $key=>$value) {
             ProjectMeta::updateOrCreate(
                 [
                     'key' => $key,

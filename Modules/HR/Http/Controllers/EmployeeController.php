@@ -89,16 +89,16 @@ class EmployeeController extends Controller
         ]);
     }
 
-    public function workhistory(Employee $employee)
+    public function employeeWorkHistory(Employee $employee)
     {
-        $employees_project_client = ProjectTeamMember::where('team_member_id', $employee->user_id)->get();
+        $employeesDetails = ProjectTeamMember::where('team_member_id', $employee->user_id)->get();
 
-        $all_techstacks = [];
-        foreach ($employees_project_client as $value) {
-            $projectId = $value->project_id;
-            $all_techstacks[$projectId][] = ProjectMeta::where('project_id', $projectId)->get()->pluck('value', 'key');
+        $allTechStacks = [];
+        foreach ($employeesDetails as $details) {
+            $projectId = $details->project_id;
+            $allTechStacks[$projectId][] = ProjectMeta::where('project_id', $projectId)->get()->pluck('value', 'key');
         }
 
-        return view('hr.employees.workhistory', compact('employees_project_client', 'all_techstacks'));
+        return view('hr.employees.employee-work-history', compact('employeesDetails', 'allTechStacks'));
     }
 }

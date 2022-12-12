@@ -1,4 +1,4 @@
-<form action="{{ route('project.update', $project) }}" method="POST" id="updateProjecttechstack" enctype="multipart/form-data">
+<form action="{{ route('project.update', $project) }}" method="POST" id="updateProjectTechstack" enctype="multipart/form-data">
     <div class="card">
 
         <div id="project_techstack_form">

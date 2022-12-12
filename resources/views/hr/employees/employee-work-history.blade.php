@@ -12,16 +12,16 @@
     </tr>
   </thead>
   <tbody>
-    @foreach($employees_project_client as $project)
+    @foreach($employeesDetails as $details)
     <tr>
-      <td class="text-center"><a href="{{route('project.edit', $project->project  )}}">{{ $project->project['name'] }}</a></td>    
-      <td class="text-center">{{ $project->project->client['name'] }}</td>
+      <td class="text-center"><a href="{{route('project.edit', $details->project  )}}">{{ $details->project['name'] }}</a></td>    
+      <td class="text-center">{{ $details->project->client['name'] }}</td>
       <td class="text-center  ">
-          @foreach ($all_techstacks[$project["project_id"]] as $techstacks )
+          @foreach ($allTechStacks[$details["project_id"]] as $TechStacks )
             <div class="row "> 
-              @forelse($techstacks as $techstack)
+              @forelse($TechStacks as $tech)
               <div class="ml-3 col-2">  
-                <p>{{ $techstack }}</p>
+                <p>{{ $tech }}</p>
               </div>  
               @empty
                 <p class=" col-12">Not Avaliable</p>
