@@ -18,9 +18,9 @@
       <td class="text-center">{{ $details->project->client['name'] }}</td>
       <td class="text-center  ">
           @foreach ($allTechStacks[$details["project_id"]] as $TechStacks )
-            <div class="row "> 
+            <div class="row justify-content-md-center "> 
               @forelse($TechStacks as $tech)
-              <div class="ml-3 col-2">  
+              <div class="ml-3 col col-lg-2">  
                 <p>{{ $tech }}</p>
               </div>  
               @empty

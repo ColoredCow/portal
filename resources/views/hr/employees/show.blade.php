@@ -10,7 +10,8 @@
         <div class="card-body">
             <div class="d-flex justify-content-between mx-5 align-items-end">
                 <div class="col">
-                    <div class="mt-2"><h1>{{$employee->name}}</h1></div>
+                    <div class="mt-2"><h1>{{$employee->name}}</h1>
+                     <span class="ml-1"><a href={{ route('employees.employeeWorkHistory', $employee->id) }}>Work History</a></span></div>
                     @if ($employee->designation_id && $employee->domain_id != null)
                         <div class="row ml-1">
                             <span class="font-weight-bold">Designation:</span>&nbsp;<p>{{$employee->hrJobDesignation->designation}}</p>

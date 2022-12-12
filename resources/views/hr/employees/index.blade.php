@@ -36,7 +36,6 @@
             <tr>
                 <td>
                     <div><a href={{ route('employees.show', $employee->id) }}>{{ $employee->name }}</a></div>
-                    <small><a href={{ route('employees.employeeWorkHistory', $employee->id) }}>Work History</a></small>
                 </td>
                 <td>
                     @if ($employee->designation_id)
