@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button type="submit" v-on:click="updateProjectForm('updateProjecttechstack')" class="btn btn-primary save-btn">Save</button>
+                <button type="submit" v-on:click="updateProjectForm('updateProjectTechstack')" class="btn btn-primary save-btn">Save</button>
            </div>  
         
     </div>
