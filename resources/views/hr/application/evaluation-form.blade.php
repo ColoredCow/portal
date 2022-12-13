@@ -1,4 +1,16 @@
-<form method="POST" action="/hr/evaluation/{{ $applicationRound->id }}">
+{{-- <script src="{{ asset('js/app.js') }}">
+                            $("label[for=resume-looks-good-no]").click(function(){ 
+                                console.log("hihi");
+                                $("#rejectButton").removeClass("d-none"); 
+                                $("#nextButton").addClass("d-none");
+                            });
+</script> --}}
+{{-- @push('scripts')
+    <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
+    @stack('page-scripts')
+@endpush --}}
+
+<form method="POST" action="/hr/evaluation/{{ $applicationRound->id }}>
     @method('PATCH')
     @csrf
     {{-- TODO: We can utilize this code in the future if needed --}}
@@ -36,25 +48,25 @@
                     {{-- TODO: save form on click using AJAX --}}
                     <button class="btn btn-success show-evaluation-stage" id="nextButton" data-target="#evaluationStage2"
                         type="button" >Next</button>
-                        
-                    <button type="button" class="btn btn-outline-danger ml-2 d-none" id="rejectApplications" onClick="rejectApplication()" >
+                    <button type="button" class="btn btn-outline-danger ml-2 d-none show-evaluation-stage1" id="rejectButton" @click="rejectApplication()">
                         Reject</button>
-
                         <script type="text/javascript">
-                            function  rejectApplication()
-                            {
-                                $("#application_reject_modal").modal("show");
-                                loadTemplateMail("reject", (res) => {
-                                    $("#rejectMailToApplicantSubject").val(res.subject);
-                                    tinymce
-                                        .get("rejectMailToApplicantBody")
-                                        .setContent(res.body, { format: "html" });
-                                });
-                            }
-                            $("label[for=resume-looks-good-no]").click(function(){ $("#rejectApplications").removeClass("d-none"); });
-                            $("label[for=resume-looks-good-no]").click(function(){ $("#nextButton").addClass("d-none"); });
+                            // function  rejectApplication()    
+                            // {
+                            //     $("#application_reject_modal").modal("show");
+                            //     loadTemplateMail("reject", (res) => {
+                            //         $("#rejectMailToApplicantSubject").val(res.subject);
+                            //         tinymce
+                            //             .get("rejectMailToApplicantBody")
+                            //             .setContent(res.body, { format: "html" });
+                            //     });
+                            // }
+                            $("label[for=resume-looks-good-no]").click(function(){ 
+                                $("#rejectButton").removeClass("d-none"); 
+                                $("#nextButton").addClass("d-none");
+                            });
                         </script>
-                </div>    
+                </div>
             </div>
         </div>
         <div class="d-none evaluation-stage" id="evaluationStage2">
@@ -85,5 +97,6 @@
                 </div>
             </div>
         </div>
-    @endif
-</form>
+        @endif
+    </form>
+    
