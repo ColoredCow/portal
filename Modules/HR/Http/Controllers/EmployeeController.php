@@ -98,7 +98,7 @@ class EmployeeController extends Controller
         $allTechStacks = [];
         foreach ($employeesDetails as $details) {
             $projectId = $details->project_id;
-            $allTechStacks[$projectId][] = ProjectMeta::where('project_id', $projectId)->whereIn('key',config('hr.working-staff.project-tech'))->get();
+            $allTechStacks[$projectId][] = ProjectMeta::where('project_id', $projectId)->whereIn('key', config('hr.working-staff.project-tech'))->get();
         }
 
         return view('hr.employees.employee-work-history', compact('employeesDetails', 'allTechStacks'));
