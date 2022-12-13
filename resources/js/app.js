@@ -371,11 +371,6 @@ if (document.getElementById("page_hr_applicant_edit")) {
 				}
 			},
 			rejectApplication: function() {
-				console.log("hihhi");
-				// $("label[for=resume-looks-good-no]").click(function(){ 
-				// 	$("#rejectButton").removeClass("d-none"); 
-				// 	$("#nextButton").addClass("d-none");
-				// });
 				$("#application_reject_modal").modal("show");
 				loadTemplateMail("reject", (res) => {
 					$("#rejectMailToApplicantSubject").val(res.subject);
@@ -383,7 +378,6 @@ if (document.getElementById("page_hr_applicant_edit")) {
 						.get("rejectMailToApplicantBody")
 						.setContent(res.body, { format: "html" });
 				});
-
 			},
 		},
 		mounted() {
@@ -2063,10 +2057,25 @@ $("#responseModal").on("submit",function(e){
 	});
 });
 
+
+
+
+
+// $(document).on("change", ".abcd", function() {
+// 	$("label[for=resume-looks-good-no]").click(function(){ 
+// 		$("#rejectButton").removeClass("d-none"); 
+// 		$("#nextButton").addClass("d-none");
+// 	});
+
+// });
+
 $(document).on("click", ".show-evaluation-stage1", function() {
-	console.log("hello");
-	// $("#nextButton").addClass("d-none");
-	// $("rejectButton").removeClass("d-none");
+	// console.log("hello56474383839");
+
+	// $("label[for=resume-looks-good-no]").click(function(){ 
+	// 	$("#rejectButton").removeClass("d-none"); 
+	// 	$("#nextButton").addClass("d-none");
+	// });
 
 	$("#application_reject_modal").modal("show");
 	loadTemplateMail("reject", (res) => {
@@ -2077,21 +2086,35 @@ $(document).on("click", ".show-evaluation-stage1", function() {
 	});
 });
 
-// if (document.getElementById("rejectButton")) {
-// 	new Vue({
-// 		methods: {
-// 			rejectApplication: function() {
-// 				$("#application_reject_modal").modal("show");
-//                     loadTemplateMail("reject", (res) => {
-//                     $("#rejectMailToApplicantSubject").val(res.subject);
-//                         tinymce
-//                        .get("rejectMailToApplicantBody")
-//                        .setContent(res.body, { format: "html" });
-//                     });
-// 			}
-// 		},
-// 	});
+// $(document).on("change", ".section-toggle-checkbox", sectionToggleCheckbox);
+// 	$(document).on("click", ".show-evaluation-stage", function() {
+// 		$(".evaluation-stage").addClass("d-none");
+// 		var target = $(this).data("target");
+// 		$(target).removeClass("d-none");
+
+// if (document.getElementById("label[for=resume-looks-good-no]")) {
+
+// 	$("label[for=resume-looks-good-no]").click(function(){ 
+// 		$("#rejectButton").removeClass("d-none"); 
+// 		$("#nextButton").addClass("d-none");
+// 	});	
+
+	// new Vue({
+	// 	methods: {
+	// 		rejectApplication: function() {
+	// 			$("#application_reject_modal").modal("show");
+    //                 loadTemplateMail("reject", (res) => {
+    //                 $("#rejectMailToApplicantSubject").val(res.subject);
+    //                     tinymce
+    //                    .get("rejectMailToApplicantBody")
+    //                    .setContent(res.body, { format: "html" });
+    //                 });
+	// 		}
+	// 	},
+	// });
 // }
+
+
 
 
 // function  rejectApplication()    

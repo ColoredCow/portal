@@ -48,8 +48,14 @@
                     {{-- TODO: save form on click using AJAX --}}
                     <button class="btn btn-success show-evaluation-stage" id="nextButton" data-target="#evaluationStage2"
                         type="button" >Next</button>
-                    <button type="button" class="btn btn-outline-danger ml-2 d-none show-evaluation-stage1" id="rejectButton" @click="rejectApplication()">
-                        Reject</button>
+                        {{-- @if ($option["name"]=="No"){ --}}
+                            <button type="button" class="btn btn-outline-danger ml-2 d-none show-evaluation-stage1" id="rejectButton" @click="rejectApplication()">
+                                Reject</button>
+                        {{-- } --}}
+                        {{-- @endif --}}
+                        {{-- @dump($option["name"]);     --}}
+
+                        {{-- @endif --}}
                         <script type="text/javascript">
                             // function  rejectApplication()    
                             // {
@@ -61,11 +67,11 @@
                             //             .setContent(res.body, { format: "html" });
                             //     });
                             // }
-                            $("label[for=resume-looks-good-no]").click(function(){ 
-                                $("#rejectButton").removeClass("d-none"); 
-                                $("#nextButton").addClass("d-none");
-                            });
-                        </script>
+                                $("label[for=resume-looks-good-no]").click(function(){ 
+                                    $("#rejectButton").removeClass("d-none"); 
+                                    $("#nextButton").addClass("d-none");
+                                });
+                        </script> 
                 </div>
             </div>
         </div>
