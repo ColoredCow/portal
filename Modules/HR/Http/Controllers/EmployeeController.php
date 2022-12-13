@@ -12,6 +12,7 @@ use Modules\HR\Entities\Job;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Entities\ProjectMeta;
+use config;
 
 class EmployeeController extends Controller
 {
@@ -91,14 +92,15 @@ class EmployeeController extends Controller
 
     public function employeeWorkHistory(Employee $employee)
     {
+        // dd($employee); 
         $employeesDetails = ProjectTeamMember::where('team_member_id', $employee->user_id)->get();
-
+ 
         $allTechStacks = [];
         foreach ($employeesDetails as $details) {
             $projectId = $details->project_id;
-            $allTechStacks[$projectId][] = ProjectMeta::where('project_id', $projectId)->get()->pluck('value', 'key');
-        }
-
+                $allTechStacks[$projectId][] = ProjectMeta::where('project_id', $projectId)->whereIn('key',config('hr.working-staff.project-tech'))->get();
+            }
+        
         return view('hr.employees.employee-work-history', compact('employeesDetails', 'allTechStacks'));
     }
 }
