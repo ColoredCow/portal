@@ -91,7 +91,7 @@ class EmployeeController extends Controller
 
     public function employeeWorkHistory(Employee $employee)
     {
-      $employeesDetails = ProjectTeamMember::where('team_member_id', $employee->user_id)->get();
+        $employeesDetails = ProjectTeamMember::where('team_member_id', $employee->user_id)->get();
 
         $allTechStacks = [];
         foreach ($employeesDetails as $details) {
