@@ -2,8 +2,8 @@
 @section('content')
 <div class="container">
     <div><h1>Work History</h1></div>
-    <div class="container">
-  <table class="table table-bordered justify-content-center m-5 p-3 mb-2 bg-white text-dark">
+    <div >
+  <table class="table table-bordered table-striped w-auto justify-content-center m-5 p-3 mb-2 bg-white text-dark">
   <thead class="bg-secondary text-white  align-self-center text-center">
     <tr>
       <th class=" text-center align-middle" rowspan="2" scope="col">Projects</th>
@@ -20,15 +20,15 @@
   <tbody>
     @foreach($employeesDetails as $details)
     <tr>
-      <td class="text-center"><a href="{{route('project.edit', $details->project  )}}">{{ $details->project['name'] }}</a></td>   
-      <td class="text-center">{{ $details->project->client['name'] }}</td>
+      <td class="text-center "><a href="{{route('project.edit', $details->project  )}}">{{ $details->project['name'] }}</a></td>   
+      <td class="text-center ">{{ $details->project->client['name'] }}</td>
         @foreach ($allTechStacks[$details["project_id"]] as $TechStacks )
            @if (count($TechStacks)==0)
                <td colspan="4" class="text-center">Not Avaliable</td>
            @else
               @foreach($TechStacks as $tech)
                 @if ($tech['value'])
-                  <td class="text-center">{{ $tech['value'] }}</td>
+                  <td class="text-center ">{{ $tech['value'] }}</td>
                 @else
                 <td class="text-center">Not Avaliable</td>
                 @endif
