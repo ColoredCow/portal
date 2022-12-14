@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
-<div class="table-responsive ">
+<div class="table-responsive container">
     <div><h1>Work History</h1></div>
-    <div>
+    <div class="container-fluid">
   <table class="table table-bordered table-striped w-auto justify-content-center m-5 p-3 mb-2 bg-white text-dark">
   <thead class="bg-secondary text-white  align-self-center text-center">
     <tr>
@@ -24,7 +24,7 @@
       <td class="text-center ">{{ $details->project->client['name'] }}</td>
         @foreach ($allTechStacks[$details["project_id"]] as $TechStacks )
            @if (count($TechStacks)==0)
-               <td colspan="4" class="text-center">Not Avaliable</td>
+           <td class="text-center " colspan="4">Not Avaliable</td>
            @else
               @foreach($TechStacks as $tech)
                 @if ($tech['value'])
