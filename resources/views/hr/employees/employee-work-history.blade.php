@@ -3,12 +3,12 @@
 <div class="container-fluid ">
     <div class="ml-6"><h1>Work History</h1></div>
     <div class="table-responsive">
-  <table class="table table-bordered table-striped w-auto justify-content-center m-5 p-3 mb-2 bg-white text-dark w-full">
+  <table class="table table-bordered table-striped  mb-2 bg-white text-dark w-full">
   <thead class="bg-secondary text-white  align-self-center text-center">
     <tr>
-      <th class=" text-center align-middle" rowspan="2" scope="col">Projects</th>
-      <th class="text-center align-middle" rowspan="2" scope="col">Clients</th>
-      <th class="text-center align-middle" colspan="4"scope="col">TechStacks</th>
+      <th class="align-middle "style="width:1%"  rowspan="2" scope="col">Projects</th>
+      <th class="align-middle" style="width:1%"  rowspan="2" scope="col">Clients</th>
+      <th class="align-middle"  colspan="4" scope="col">TechStacks</th>
     </tr>
     <tr>
       <th>Language</th>
