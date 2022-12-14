@@ -23,8 +23,8 @@
       <td class="text-center"><a href="{{route('project.edit', $details->project  )}}">{{ $details->project['name'] }}</a></td>   
       <td class="text-center">{{ $details->project->client['name'] }}</td>
         @foreach ($allTechStacks[$details["project_id"]] as $TechStacks )
-           @if (empty($TechStacks))
-               <span class="text-center">Not Avaliable</span>
+           @if (count($TechStacks)==0)
+               <td colspan="4" class="text-center">Not Avaliable</td>
            @else
               @foreach($TechStacks as $tech)
                 @if ($tech['value'])
