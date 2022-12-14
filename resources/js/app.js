@@ -2061,7 +2061,7 @@ $(document).on("click", ".show-evaluation-stage1", function() {
 	loadTemplateMail("reject", (res) => {
 		$("#rejectMailToApplicantSubject").val(res.subject);
 		tinymce
-		.get("rejectMailToApplicantBody")
-		.setContent(res.body, { format: "html" });
+			.get("rejectMailToApplicantBody")
+			.setContent(res.body, { format: "html" });
 	});
 });
