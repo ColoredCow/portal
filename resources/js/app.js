@@ -2059,9 +2059,9 @@ $("#responseModal").on("submit",function(e){
 $(document).on("click", ".show-evaluation-stage1", function() {
 	$("#application_reject_modal").modal("show");
 	loadTemplateMail("reject", (res) => {
-	$("#rejectMailToApplicantSubject").val(res.subject);
-	tinymce
-	.get("rejectMailToApplicantBody")
-	.setContent(res.body, { format: "html" });
+		$("#rejectMailToApplicantSubject").val(res.subject);
+		tinymce
+		.get("rejectMailToApplicantBody")
+		.setContent(res.body, { format: "html" });
 	});
 });
