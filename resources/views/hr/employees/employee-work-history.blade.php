@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
-<div class="container">
+<div class="table-responsive ">
     <div><h1>Work History</h1></div>
-    <div >
+    <div>
   <table class="table table-bordered table-striped w-auto justify-content-center m-5 p-3 mb-2 bg-white text-dark">
   <thead class="bg-secondary text-white  align-self-center text-center">
     <tr>
