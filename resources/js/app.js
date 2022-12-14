@@ -1350,7 +1350,6 @@ $(document).ready(function() {
 		$(".evaluation-stage").addClass("d-none");
 		var target = $(this).data("target");
 		$(target).removeClass("d-none");
-
 		if (
 			$("#segment-general-information > span")[0].innerText ==
       "General Information"
@@ -2057,26 +2056,7 @@ $("#responseModal").on("submit",function(e){
 	});
 });
 
-
-
-
-
-// $(document).on("change", ".abcd", function() {
-// 	$("label[for=resume-looks-good-no]").click(function(){ 
-// 		$("#rejectButton").removeClass("d-none"); 
-// 		$("#nextButton").addClass("d-none");
-// 	});
-
-// });
-
 $(document).on("click", ".show-evaluation-stage1", function() {
-	// console.log("hello56474383839");
-
-	// $("label[for=resume-looks-good-no]").click(function(){ 
-	// 	$("#rejectButton").removeClass("d-none"); 
-	// 	$("#nextButton").addClass("d-none");
-	// });
-
 	$("#application_reject_modal").modal("show");
 	loadTemplateMail("reject", (res) => {
 	$("#rejectMailToApplicantSubject").val(res.subject);
@@ -2085,81 +2065,3 @@ $(document).on("click", ".show-evaluation-stage1", function() {
 	.setContent(res.body, { format: "html" });
 	});
 });
-
-// $(document).on("change", ".section-toggle-checkbox", sectionToggleCheckbox);
-// 	$(document).on("click", ".show-evaluation-stage", function() {
-// 		$(".evaluation-stage").addClass("d-none");
-// 		var target = $(this).data("target");
-// 		$(target).removeClass("d-none");
-
-// if (document.getElementById("label[for=resume-looks-good-no]")) {
-
-// 	$("label[for=resume-looks-good-no]").click(function(){ 
-// 		$("#rejectButton").removeClass("d-none"); 
-// 		$("#nextButton").addClass("d-none");
-// 	});	
-
-	// new Vue({
-	// 	methods: {
-	// 		rejectApplication: function() {
-	// 			$("#application_reject_modal").modal("show");
-    //                 loadTemplateMail("reject", (res) => {
-    //                 $("#rejectMailToApplicantSubject").val(res.subject);
-    //                     tinymce
-    //                    .get("rejectMailToApplicantBody")
-    //                    .setContent(res.body, { format: "html" });
-    //                 });
-	// 		}
-	// 	},
-	// });
-// }
-
-
-
-
-// function  rejectApplication()    
-// {{
-//                                 $("#application_reject_modal").modal("show");
-//                                 loadTemplateMail("reject", (res) => {
-//                                     $("#rejectMailToApplicantSubject").val(res.subject);
-//                                     tinymce
-//                                         .get("rejectMailToApplicantBody")
-//                                         .setContent(res.body, { format: "html" });
-//                                 });
-//                             }
-//                             $("label[for=resume-looks-good-no]").onclick(function(){ 
-//                                 $("#rejectButton").removeClass("d-none"); 
-//                                 $("#nextButton").addClass("d-none");
-//                             });
-// }
-
-// export default {
-// 	init() {
-// 	  // JavaScript to be fired on all pages
-  
-// 	  // vanilla JS
-// 	  document.getElementById('rejectButton').addEventListener('click', function() {
-// 			$("#application_reject_modal").modal("show");
-// 			loadTemplateMail("reject", (res) => {
-// 			$("#rejectMailToApplicantSubject").val(res.subject);
-// 			tinymce
-// 			.get("rejectMailToApplicantBody")
-// 			.setContent(res.body, { format: "html" });
-// 		});
-// 	});
-	  
-// 	  // jQuery
-// 	  $('#rejectButton').click(function() {
-// 		$("#application_reject_modal").modal("show");
-// 			loadTemplateMail("reject", (res) => {
-// 			$("#rejectMailToApplicantSubject").val(res.subject);
-// 			tinymce
-// 			.get("rejectMailToApplicantBody")
-// 			.setContent(res.body, { format: "html" });
-// 		});
-// 	  });
-// 	},
-// 	// finalize() {
-// 	//   // JavaScript to be fired on all pages, after page specific JS is fired
-// 	// },
-//   };

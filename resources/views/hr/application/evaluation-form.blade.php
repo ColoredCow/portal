@@ -1,15 +1,3 @@
-{{-- <script src="{{ asset('js/app.js') }}">
-                            $("label[for=resume-looks-good-no]").click(function(){ 
-                                console.log("hihi");
-                                $("#rejectButton").removeClass("d-none"); 
-                                $("#nextButton").addClass("d-none");
-                            });
-</script> --}}
-{{-- @push('scripts')
-    <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
-    @stack('page-scripts')
-@endpush --}}
-
 <form method="POST" action="/hr/evaluation/{{ $applicationRound->id }}>
     @method('PATCH')
     @csrf
@@ -50,27 +38,9 @@
                         type="button" >Next</button>
                         {{-- @if ($option["name"]=="No"){ --}}
                             <button type="button" class="btn btn-outline-danger ml-2 d-none show-evaluation-stage1" id="rejectButton" @click="rejectApplication()">
-                                Reject</button>
-                        {{-- } --}}
-                        {{-- @endif --}}
-                        {{-- @dump($option["name"]);     --}}
-
-                        {{-- @endif --}}
-                        <script type="text/javascript">
-                            // function  rejectApplication()    
-                            // {
-                            //     $("#application_reject_modal").modal("show");
-                            //     loadTemplateMail("reject", (res) => {
-                            //         $("#rejectMailToApplicantSubject").val(res.subject);
-                            //         tinymce
-                            //             .get("rejectMailToApplicantBody")
-                            //             .setContent(res.body, { format: "html" });
-                            //     });
-                            // }
-                                $("label[for=resume-looks-good-no]").click(function(){ 
-                                    $("#rejectButton").removeClass("d-none"); 
-                                    $("#nextButton").addClass("d-none");
-                                });
+                                Reject</button> 
+                       <script type="text/javascript">                           
+                                $("label[for=resume-looks-good-no]").click(function(){$("#rejectButton").removeClass("d-none");$("#nextButton").addClass("d-none");});
                         </script> 
                 </div>
             </div>
