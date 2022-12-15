@@ -36,12 +36,8 @@
                     {{-- TODO: save form on click using AJAX --}}
                     <button class="btn btn-success show-evaluation-stage" id="nextButton" data-target="#evaluationStage2"
                         type="button" >Next</button>
-                        {{-- @if ($option["name"]=="No"){ --}}
-                            <button type="button" class="btn btn-outline-danger ml-2 d-none show-evaluation-stage1" id="rejectButton" @click="rejectApplication()">
-                                Reject</button> 
-                       <script type="text/javascript">                           
-                                $("label[for=resume-looks-good-no]").click(function(){$("#rejectButton").removeClass("d-none");$("#nextButton").addClass("d-none");});
-                        </script> 
+                    <button class="btn btn-outline-danger ml-2 d-none reject-button" id="rejectButton" @click="rejectApplication()"
+                        type="button">Reject</button>
                 </div>
             </div>
         </div>

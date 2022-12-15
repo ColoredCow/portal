@@ -282,6 +282,27 @@ $(document).ready(function () {
 	});
 });
 
+$("body").on('click',"label[for='resume-looks-good-no']",function(){
+	$("#rejectButton").removeClass("d-none");
+	$("#nextButton").addClass("d-none");
+});
+
+$(document).on("click",".reject-button",function()
+{
+	rejectApplication();
+});
+
+function rejectApplication()
+{
+		$("#application_reject_modal").modal("show");
+		loadTemplateMail("reject", (res) => {
+			$("#rejectMailToApplicantSubject").val(res.subject);
+			tinymce
+				.get("rejectMailToApplicantBody")
+				.setContent(res.body, { format: "html" });
+		});
+}
+
 if (document.getElementById("page_hr_applicant_edit")) {
 	new Vue({
 		el: "#page_hr_applicant_edit",
@@ -371,13 +392,14 @@ if (document.getElementById("page_hr_applicant_edit")) {
 				}
 			},
 			rejectApplication: function() {
-				$("#application_reject_modal").modal("show");
-				loadTemplateMail("reject", (res) => {
-					$("#rejectMailToApplicantSubject").val(res.subject);
-					tinymce
-						.get("rejectMailToApplicantBody")
-						.setContent(res.body, { format: "html" });
-				});
+				rejectApplication();
+				// $("#application_reject_modal").modal("show");
+				// loadTemplateMail("reject", (res) => {
+				// 	$("#rejectMailToApplicantSubject").val(res.subject);
+				// 	tinymce
+				// 		.get("rejectMailToApplicantBody")
+				// 		.setContent(res.body, { format: "html" });
+				// });
 			},
 		},
 		mounted() {
@@ -2053,15 +2075,5 @@ $("#responseModal").on("submit",function(e){
 			$("#responseModal").modal("hide");
 			Vue.$toast.success("Resume flagged Succesfully!");
 		},
-	});
-});
-
-$(document).on("click", ".show-evaluation-stage1", function() {
-	$("#application_reject_modal").modal("show");
-	loadTemplateMail("reject", (res) => {
-		$("#rejectMailToApplicantSubject").val(res.subject);
-		tinymce
-			.get("rejectMailToApplicantBody")
-			.setContent(res.body, { format: "html" });
 	});
 });
