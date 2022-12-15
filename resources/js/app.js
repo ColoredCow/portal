@@ -393,13 +393,6 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			},
 			rejectApplication: function() {
 				rejectApplication();
-				// $("#application_reject_modal").modal("show");
-				// loadTemplateMail("reject", (res) => {
-				// 	$("#rejectMailToApplicantSubject").val(res.subject);
-				// 	tinymce
-				// 		.get("rejectMailToApplicantBody")
-				// 		.setContent(res.body, { format: "html" });
-				// });
 			},
 		},
 		mounted() {
