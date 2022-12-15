@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('content')
-<div class="container-fluid ">
+<div class="container" >
     <div class="ml-6"><h1>Work History</h1></div>
     <div class="table-responsive">
-  <table class="table table-bordered table-striped  mb-2 bg-white text-dark w-full">
-  <thead class="bg-secondary text-white  align-self-center text-center">
+  <table class="table table-bordered table-striped   bg-white text-dark w-full">
+  <thead class="bg-secondary text-white text-center  align-middle "style="width:1%">
     <tr>
       <th class="align-middle "style="width:1%"  rowspan="2" scope="col">Projects</th>
       <th class="align-middle" style="width:1%"  rowspan="2" scope="col">Clients</th>
