@@ -10,7 +10,6 @@ return [
             'contractor' => 'Contractor',
             'supportstaff' => 'Support Staff',
         ],
-       'project-tech' => ['language', 'framework', 'database', 'hosting'],
     ],
     'applicationEvaluation' => [
         'cut-off-score-resume-screening' => 6,
