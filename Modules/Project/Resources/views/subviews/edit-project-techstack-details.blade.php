@@ -1,7 +1,7 @@
 <form action="{{ route('project.update', $project) }}" method="POST" id="updateProjectTechstack" enctype="multipart/form-data">
     <div class="card">
 
-        <div id="project_techstack_form">
+        <div id="project_Techstack_Form">
             @csrf
             <input type="hidden" value="project_techstack" name="update_section">
             <div class="form-group row m-5">
