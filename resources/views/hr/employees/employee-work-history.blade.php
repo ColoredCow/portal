@@ -27,7 +27,7 @@
           $value='Not_Available';
         @endphp
         <tr>
-          <td class="text-center "><a href="{{route('project.edit', $details->project  )}}">{{ $data['name']}}</a></td>
+          <td class="text-center "><a href="{{route('project.edit', $data  )}}">{{ $data['name']}}</a></td>
           <td class="text-center ">{{ $data->client['name'] }}</td>
           @if(!count($projectmeta)==0)
           <td class="text-center"> {{$projectmeta['language'] ?? $value}}</td>
