@@ -282,7 +282,7 @@ $(document).ready(function () {
 	});
 });
 
-$("body").on('click',"label[for='resume-looks-good-no']",function(){
+$("body").on("click","label[for='resume-looks-good-no']",function(){
 	$("#rejectButton").removeClass("d-none");
 	$("#nextButton").addClass("d-none");
 });
