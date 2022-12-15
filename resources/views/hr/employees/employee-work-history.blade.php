@@ -10,7 +10,7 @@
         <tr>
           <th class="align-middle w-25" rowspan="2" scope="col">Projects</th>
           <th class="align-middle w-50" rowspan="2" scope="col">Clients</th>
-          <th class="align-middle w-50" colspan="4" scope="col">TechStack</th>
+          <th class="align-middle w-50" colspan="4" scope="col">Techstack</th>
         </tr>
         <tr>
           <th class="w-25">Language</th>
