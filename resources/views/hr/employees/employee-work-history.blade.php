@@ -2,7 +2,7 @@
 @section('content')
 <div class="container" >
     <div class="ml-6"><h1>Work History</h1></div>
-    <div class="table-responsive">
+    <div>
   <table class="table table-bordered table-striped   bg-white text-dark w-full">
   <thead class="bg-secondary text-white text-center  align-middle "style="width:1%">
     <tr>
