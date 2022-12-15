@@ -11,7 +11,6 @@ use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\Job;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Project\Entities\ProjectTeamMember;
-use Modules\Project\Entities\ProjectMeta;
 
 class EmployeeController extends Controller
 {
