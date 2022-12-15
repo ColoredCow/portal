@@ -297,9 +297,9 @@ function rejectApplication()
 	$("#application_reject_modal").modal("show");
 	loadTemplateMail("reject", (res) => {
 		$("#rejectMailToApplicantSubject").val(res.subject);
-			tinymce
-				.get("rejectMailToApplicantBody")
-				.setContent(res.body, { format: "html" });
+		tinymce
+			.get("rejectMailToApplicantBody")
+			.setContent(res.body, { format: "html" });
 	});
 }
 
