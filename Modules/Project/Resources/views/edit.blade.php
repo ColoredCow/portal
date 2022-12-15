@@ -33,7 +33,7 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     <a class="nav-link" data-toggle="pill" data-target="#projectTechstack" type="button"
-                        role="tab" aria-selected="false">Project Tech-Stack</a>
+                        role="tab" aria-selected="false">Project TechStack</a>
                 </li>
             </ul>
             @include('status', ['errors' => $errors->all()])

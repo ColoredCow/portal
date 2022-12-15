@@ -264,8 +264,8 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectTechstack($data, $project)
     {
-        $Techstacks = array_diff_key($data, array_flip(['_token', 'update_section', 'name']));
-        foreach ($Techstacks as $key=>$value) {
+        $Techstack = array_diff_key($data, array_flip(['_token', 'update_section', 'name']));
+        foreach ($Techstack as $key=>$value) {
             ProjectMeta::updateOrCreate(
                 [
                     'key' => $key,
