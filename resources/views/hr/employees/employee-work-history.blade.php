@@ -22,20 +22,20 @@
       <tbody>
         @foreach($employeesDetails as $details)
         @php
-          $data=$details->project;
-          $projectmeta= $data->meta->pluck('value', 'key');
-          $value='Not_Available';
+          $data = $details->project;
+          $projectmeta = $data->meta->pluck('value', 'key');
+          $placeholder ='Not Available';
         @endphp
         <tr>
           <td class="text-center "><a href="{{route('project.edit', $data  )}}">{{ $data['name']}}</a></td>
           <td class="text-center ">{{ $data->client['name'] }}</td>
           @if(!count($projectmeta)==0)
-          <td class="text-center"> {{$projectmeta['language'] ?? $value}}</td>
-          <td class="text-center"> {{$projectmeta['database'] ?? $value}}</td>
-          <td class="text-center"> {{$projectmeta['framework'] ?? $value}}</td>
-          <td class="text-center"> {{$projectmeta['hosting'] ?? $value}}</td>
+          <td class="text-center"> {{$projectmeta['language'] ?? $placeholder}}</td>
+          <td class="text-center"> {{$projectmeta['database'] ?? $placeholder}}</td>
+          <td class="text-center"> {{$projectmeta['framework'] ?? $placeholder}}</td>
+          <td class="text-center"> {{$projectmeta['hosting'] ?? $placeholder}}</td>
           @else
-          <td class="text-center" colspan="4">{{$value}}</td>
+          <td class="text-center" colspan="4">{{$placeholder}}</td>
           @endif
         </tr>
         @endforeach
