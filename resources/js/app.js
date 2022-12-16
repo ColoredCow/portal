@@ -287,6 +287,11 @@ $("body").on("click","label[for='resume-looks-good-no']",function(){
 	$("#nextButton").addClass("d-none");
 });
 
+$("body").on("click","label[for='resume-looks-good-yes']",function(){
+	$("#nextButton").removeClass("d-none");
+	$("#rejectButton").addClass("d-none");
+});
+
 $(document).on("click",".reject-button",function()
 {
 	rejectApplication();
