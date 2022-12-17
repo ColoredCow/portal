@@ -285,7 +285,7 @@ $(document).ready(function () {
 $("body").on("click","label[for='resume-looks-good-no']",function(){
 	$("#rejectButton").removeClass("d-none");
 	$("#nextButton").addClass("d-none");
-	$('.resume-looks-good-no').hide();
+	$(".resume-looks-good-no").hide();
 });
 
 $("body").on("click","label[for='resume-looks-good-yes']",function(){
