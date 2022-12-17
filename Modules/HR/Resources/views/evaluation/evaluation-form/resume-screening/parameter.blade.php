@@ -8,11 +8,12 @@
     }
     $leftMargin = sizeof($parent) ? 'ml-4' : '';
 @endphp
+{{-- @dump($parameter['name']);  --}}
 <div class="{{ "$parentName $parentOptionName $leftMargin $showParameter" }}  ">
     <div class="row my-3">
         <div class="col-12">
-            <strong class="mb-1 d-block">{{ $parameter['name'] }}</strong>
-            <div class="form-check form-check-inline">
+            <strong class="mb-1 d-block" >{{ $parameter['name'] }}</strong>
+            <div class="form-check form-check-inline" id="hero">
                 @foreach ($parameter['option_detail'] ?? [] as $index => $option)
                     @php
                         $checked = isset($parameter['evaluation_detail']['option']) && $parameter['evaluation_detail']['option'] == $option['name'] ? 'checked' : '';
@@ -26,6 +27,7 @@
         </div>
     </div>
     {{-- TODO: hardcoded block below. need to make dynamic --}}
+
     @if ($parameter['name'] == 'Proceed to next round?')
         <div class="row my-4">
             <div class="col-12">
@@ -44,6 +46,7 @@
             </div>
         </div>
     @endif
+    
     @foreach ($parameter['children'] as $childParameter)
         @include('hr::evaluation.evaluation-form.resume-screening.parameter', ['parameter' => $childParameter, 'parent' => $parameter])
     @endforeach

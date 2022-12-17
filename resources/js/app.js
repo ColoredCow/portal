@@ -285,6 +285,7 @@ $(document).ready(function () {
 $("body").on("click","label[for='resume-looks-good-no']",function(){
 	$("#rejectButton").removeClass("d-none");
 	$("#nextButton").addClass("d-none");
+	$('.resume-looks-good-no').hide();
 });
 
 $("body").on("click","label[for='resume-looks-good-yes']",function(){
@@ -292,8 +293,7 @@ $("body").on("click","label[for='resume-looks-good-yes']",function(){
 	$("#rejectButton").addClass("d-none");
 });
 
-$(document).on("click",".reject-button",function()
-{
+$(document).on("click",".reject-button",function(){
 	rejectApplication();
 });
 
