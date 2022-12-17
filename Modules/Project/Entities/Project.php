@@ -72,7 +72,7 @@ class Project extends Model implements Auditable
 
     public function getTeamMembers()
     {
-        return $this->hasMany(ProjectTeamMember::class)->whereNULL('ended_on');
+        return $this->hasMany(ProjectTeamMember::class);
     }
 
     public function getTeamMembersGroupedByEngagement()
