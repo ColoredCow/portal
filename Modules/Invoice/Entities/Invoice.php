@@ -29,7 +29,7 @@ class Invoice extends Model implements Auditable
         }
 
         if (is_array($status)) {
-            return $query->whereIn( $this->getTable( ) . '.status', $status);
+            return $query->whereIn($this->getTable() . '.status', $status);
         }
 
         return $query;
@@ -81,7 +81,7 @@ class Invoice extends Model implements Auditable
     }
 
     public function scopeApplyFilters($query, $filters)
-    { 
+    {
         if ($year = Arr::get($filters, 'year', '')) {
             $query = $query->year($year);
         }

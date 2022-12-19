@@ -36,7 +36,7 @@ class InvoiceService implements InvoiceServiceContract
             'status' => $filters['status'] ?? null,
         ];
         if ($invoiceStatus == 'sent') {
-            $invoices = Invoice::query()->applyFilters($filters)->leftjoin('clients', 'invoices.client_id', '=' , 'clients.id')
+            $invoices = Invoice::query()->applyFilters($filters)->leftjoin('clients', 'invoices.client_id', '=', 'clients.id')
             ->select('invoices.*', 'clients.name')
             ->orderBy('name', 'asc')->orderBy('sent_on', 'desc')
             ->get();
