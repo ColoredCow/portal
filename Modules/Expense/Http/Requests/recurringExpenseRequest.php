@@ -4,7 +4,7 @@ namespace Modules\Expense\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class recurringExpenseRequest extends FormRequest
+class RecurringExpenseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -35,9 +35,9 @@ class recurringExpenseRequest extends FormRequest
     {
         return [
             'name.required' => 'name is required',
-             'amount.required'=>'amount is required',
-             'currency.required'=>'currency is required',
-             'frequency.required'=>'frequency is required',
+            'amount.required'=>'amount is required',
+            'currency.required'=>'currency is required',
+            'frequency.required'=>'frequency is required',
         ];
     }
 }
