@@ -35,10 +35,10 @@ class InvoiceService implements InvoiceServiceContract
             'year' => $filters['year'] ?? null,
             'status' => $filters['status'] ?? null,
         ];
-
         if ($invoiceStatus == 'sent') {
-            $invoices = Invoice::query()->applyFilters($filters)
-            ->orderBy('client_id', 'desc')->orderBy('sent_on', 'desc')
+            $invoices = Invoice::query()->applyFilters($filters)->leftjoin('clients', 'invoices.client_id', '=' , 'clients.id')
+            ->select('invoices.*', 'clients.name')
+            ->orderBy('name', 'asc')->orderBy('sent_on', 'desc')
             ->get();
             $clientsReadyToSendInvoicesData = [];
             $projectsReadyToSendInvoicesData = [];
