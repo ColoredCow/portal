@@ -31,6 +31,7 @@ class RecurringExpenseRequest extends FormRequest
             'amount' => 'required|integer',
         ];
     }
+
     public function messages()
     {
         return [
