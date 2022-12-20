@@ -43,7 +43,7 @@ class MediaController extends Controller
                 $file->move($path, $fileName);
                 array_push($names, $fileName);
 
-                $postData = [
+            $postData = [
             'event_name' => $validated['event_name'],
             'description' => $validated['description'],
             'file_url' => $fileName,

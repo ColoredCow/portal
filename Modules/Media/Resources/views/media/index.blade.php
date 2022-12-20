@@ -19,39 +19,37 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="card-header bg-secondary">
-                                        <h3 class="text-light fw-bold">Add New Post<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                         <span aria-hidden="true">&times;</span>
-                                        </button> 
-                                 </div>
-                                    <div class="card-body p-4">
-                                        <form action="{{ route('media.index') }}" method="POST" enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="my-2"><h3 class="text-secondary">Event Name</h3>
-                                                <input type="text" name="event_name" id="event_name" class="form-control @error('event_name') is-invalid @enderror" placeholder="Event_name" value="{{ old('event_name') }}">
-                                                @error('event_name')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                            <div class="my-2"><h3 class="text-secondary">File Upload</h3>
-                                                <input type="file" name="file[]" id="file" accept="image/*" class="form-control @error('file') is-invalid @enderror" multiple>
-                                                @error('file')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                            <div class="my-2"><h3 class="text-secondary">Description</h3>
-                                                <textarea name="description" id="description" rows="6" class="form-control @error('description') is-invalid @enderror" placeholder="Description">{{ old('description') }}</textarea>
-                                                @error('description')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                            <div class="my-2">
-                                                <input type="submit" value="Add Post" class="btn btn-success float-right">
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div> 
-                        </div>
+                        <h3 class="text-light fw-bold">Add New Post
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <form action="{{ route('media.index') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="my-2"><h3 class="text-secondary">Event Name</h3>
+                                <input type="text" name="event_name" id="event_name" class="form-control @error('event_name') is-invalid @enderror" placeholder="Event_name" value="{{ old('event_name') }}">
+                                @error('event_name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="my-2"><h3 class="text-secondary">File Upload</h3>
+                                <input type="file" name="file[]" id="file" accept="image/*" class="form-control @error('file') is-invalid @enderror" multiple>
+                                @error('file')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="my-2"><h3 class="text-secondary">Description</h3>
+                                <textarea name="description" id="description" rows="6" class="form-control @error('description') is-invalid @enderror" placeholder="Description">{{ old('description') }}</textarea>
+                                @error('description')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="my-2">
+                                <input type="submit" value="Add Post" class="btn btn-success float-right">
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -71,14 +69,13 @@
                             <source src="{{asset('storage/media/'.$row->file_url)}}" type="video/mp4">
                         </video>
                     @endif
-                    @if(pathinfo($row->file_url, PATHINFO_EXTENSION) == 'jpg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'jpeg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'PNG' )
+                    @if(pathinfo($row->file_url, PATHINFO_EXTENSION) == 'jpg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'jpeg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'png' )
                         <img src="{{ asset('storage/media/'.$row->file_url) }}" class="card-img-top img-fluid ">
                     @endif
                 </a>
                 <div class="card-body">
                     <p>Uploaded By
-                        <td class=""> <img src="{{auth()->user()->avatar}}" alt="{{auth()->user()->name}}" class="w-25 h-25 rounded-circle" data-toggle="tooltip" data-placement="top" title="{{auth()->user()->name}}">
-                        </td>
+                    <img src="{{auth()->user()->avatar}}" alt="{{auth()->user()->name}}" class="w-25 h-25 rounded-circle" data-toggle="tooltip" data-placement="top" title="{{auth()->user()->name}}">
                     </p>
                     <p class="card-title fw-bold text-secondary">Event Name - {{ $row->event_name }}</p>
                     <p class="text-secondary">Description - {{ Str::limit($row->description, 10) }}</p>
