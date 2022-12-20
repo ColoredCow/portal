@@ -81,7 +81,7 @@ class JobController extends Controller
             'type' => $validated['type'],
             'start_date' => $validated['start_date'] ?? null,
             'end_date' => $validated['end_date'] ?? null,
-            'resources_required' => $validated['resources_required'],
+            // 'resources_required' => $validated['resources_required'], // ToDo: Improve this logic to handle requisition in future, currently, its breaking the job opporunity publishing flow
         ]);
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities.edit', $opportunity->id) : route('recruitment.opportunities.edit', $opportunity->id);
 
