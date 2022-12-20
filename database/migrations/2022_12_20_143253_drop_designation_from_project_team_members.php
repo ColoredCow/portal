@@ -14,7 +14,7 @@ class DropDesignationFromProjectTeamMembers extends Migration
     public function up()
     {
         Schema::table('project_team_members', function (Blueprint $table) {
-            $table->dropColumn('designation'); 
+            $table->dropColumn('designation');
         });
     }
 

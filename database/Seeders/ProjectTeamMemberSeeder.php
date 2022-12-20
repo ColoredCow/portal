@@ -19,6 +19,6 @@ class ProjectTeamMemberSeeder extends Seeder
         $jobDesignations= HrJobDesignation::all()->pluck('id', 'slug');
         foreach ($projectTeamMembers as $projectTeamMember) {
             $projectTeamMember->update(['designation_id'=>$jobDesignations[$projectTeamMember->designation]]);
-            }
+        }
     }
 }
