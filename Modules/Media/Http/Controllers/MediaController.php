@@ -43,11 +43,11 @@ class MediaController extends Controller
                 $file->move($path, $fileName);
                 array_push($names, $fileName);
 
-            $postData = [
-            'event_name' => $validated['event_name'],
-            'description' => $validated['description'],
-            'file_url' => $fileName,
-            'uploaded_by' => Auth()->user()->id
+                $postData = [
+                'event_name' => $validated['event_name'],
+                'description' => $validated['description'],
+                'file_url' => $fileName,
+                'uploaded_by' => Auth()->user()->id
         ];
                 Media::create($postData);
             }
@@ -103,7 +103,7 @@ class MediaController extends Controller
         } else {
             $fileName = $Media->file_url;
         }
-  
+
         $postData = [
             'event_name' => $request->event_name,
             'description' => $request->description,
