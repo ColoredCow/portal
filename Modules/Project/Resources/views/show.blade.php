@@ -133,7 +133,7 @@
                                                 <th>Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
                                             </tr>
                                         </thead>
-                                        @if($project->teamMembers->first() != null)
+                                        @if($project->teamMembers->first() == null)
                                             </table>
                                             <div class="fz-lg-28 text-center mt-4">No member in the project</div>
                                         @else
