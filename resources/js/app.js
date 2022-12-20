@@ -282,16 +282,28 @@ $(document).ready(function () {
 	});
 });
 
-$("body").on("click","label[for='resume-looks-good-no']",function(){
+$("body").on("click","#resume-looks-good-no",function(){
 	$("#rejectButton").removeClass("d-none");
 	$("#nextButton").addClass("d-none");
 	$(".resume-looks-good-no").hide();
 });
 
-$("body").on("click","label[for='resume-looks-good-yes']",function(){
+$("body").on("click","#resume-looks-good-yes",function(){
 	$("#nextButton").removeClass("d-none");
 	$("#rejectButton").addClass("d-none");
 });
+
+// $("body").on("click","label[for='resume-looks-good-no']",function(){
+// 	$("#rejectButton").removeClass("d-none");
+// 	$("#nextButton").addClass("d-none");
+// 	$(".resume-looks-good-no").hide();
+// 	// console.log($("#label[0]"));
+// });
+
+// $("body").on("click","label[for='resume-looks-good-yes']",function(){
+// 	$("#nextButton").removeClass("d-none");
+// 	$("#rejectButton").addClass("d-none");
+// });
 
 $(document).on("click",".reject-button",function(){
 	rejectApplication();

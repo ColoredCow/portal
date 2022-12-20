@@ -13,14 +13,15 @@
     <div class="row my-3">
         <div class="col-12">
             <strong class="mb-1 d-block" >{{ $parameter['name'] }}</strong>
-            <div class="form-check form-check-inline" id="hero">
+            <div class="form-check form-check-inline" id ="xyz">
                 @foreach ($parameter['option_detail'] ?? [] as $index => $option)
                     @php
                         $checked = isset($parameter['evaluation_detail']['option']) && $parameter['evaluation_detail']['option'] == $option['name'] ? 'checked' : '';
                         $optionName = "$parameterName-" . \Str::slug($option['name'] ?? '' );
                     @endphp
+                    {{-- @dump($optionName); --}}
                     <input class="toggle-button section-toggle" type="radio" name="evaluation[{{ $parameter['id'] }}][option_id]" id="{{ $optionName }}" data-target-parent="{{ $parameterName }}" data-target-option="{{ $optionName }}" value="{{ $option['id'] }}" {{ $checked }}>
-                    <label for="{{ $optionName }}" class="btn btn-outline-primary btn-sm px-2 mr-2 shadow-sm fz-14">{{ $option['name'] }}</label>
+                    <label for="{{ $optionName }}" id="{{$optionName}}" class="btn btn-outline-primary btn-sm px-2 mr-2 shadow-sm fz-14">{{ $option['name'] }}</label>
                 @endforeach
                 <input type="hidden" name="evaluation[{{ $parameter['id'] }}][evaluation_id]" value="{{ $parameter['id'] }}">
             </div>
@@ -46,7 +47,7 @@
             </div>
         </div>
     @endif
-    
+
     @foreach ($parameter['children'] as $childParameter)
         @include('hr::evaluation.evaluation-form.resume-screening.parameter', ['parameter' => $childParameter, 'parent' => $parameter])
     @endforeach
