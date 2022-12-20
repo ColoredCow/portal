@@ -16,7 +16,7 @@ use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Entities\ProjectBillingDetail;
 use Modules\Project\Contracts\ProjectServiceContract;
-
+use Modules\HR\Entities\HrJobDesignation;
 class ProjectService implements ProjectServiceContract
 {
     public function index(array $data = [])
@@ -119,7 +119,8 @@ class ProjectService implements ProjectServiceContract
 
     public function getDesignations()
     {
-        return config('project.designation');
+        $designations = HrJobDesignation::all()->pluck('designation', 'id');   
+        return $designations;
     }
 
     public function getProjectTeamMembers(Project $project)
@@ -227,7 +228,7 @@ class ProjectService implements ProjectServiceContract
                 ProjectTeamMember::create([
                     'project_id' => $project->id,
                     'team_member_id' => $teamMemberData['team_member_id'],
-                    'designation' => $teamMemberData['designation'],
+                    'designation_id' => $teamMemberData['designation'],
                     'daily_expected_effort' => $teamMemberData['daily_expected_effort'] ?? config('efforttracking.minimum_expected_hours'),
                     'started_on' => $teamMemberData['started_on'] ?? now(),
                     'ended_on' => $teamMemberData['ended_on'],
