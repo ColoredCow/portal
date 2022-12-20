@@ -183,8 +183,8 @@ class ProjectService implements ProjectServiceContract
         }
 
         $this->saveOrUpdateProjectContract($data, $project);
-        if ($data['status'] == 'active' || 'halted') {
-            $project->client->update(['status' => 'active' , 'halted']);
+        if ($data['status'] == 'active' || $data['status'] == 'halted') {
+            $project->client->update(['status' => 'active', 'halted']);
         } else {
             if (! $project->client->projects()->where('status', 'active', 'halted')->exists()) {
                 $project->client->update(['status' => 'inactive']);
