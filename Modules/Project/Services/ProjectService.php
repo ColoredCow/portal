@@ -121,6 +121,7 @@ class ProjectService implements ProjectServiceContract
     public function getDesignations()
     {
         $designations = HrJobDesignation::all()->pluck('designation', 'id');
+
         return $designations;
     }
 
