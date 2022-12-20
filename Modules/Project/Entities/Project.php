@@ -82,7 +82,7 @@ class Project extends Model implements Auditable
 
     public function getInactiveTeamMembers()
     {
-        return $this->hasMany(ProjectTeamMember::class)->whereNull('ended_on')->orderBy('ended_on', 'DESC');
+        return $this->hasMany(ProjectTeamMember::class)->whereNotNull('ended_on')->orderBy('ended_on', 'DESC');
     }
 
     public function getAllTeamMembers()
