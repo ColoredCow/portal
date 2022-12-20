@@ -17,6 +17,7 @@ use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Entities\ProjectBillingDetail;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\HR\Entities\HrJobDesignation;
+
 class ProjectService implements ProjectServiceContract
 {
     public function index(array $data = [])
@@ -119,7 +120,7 @@ class ProjectService implements ProjectServiceContract
 
     public function getDesignations()
     {
-        $designations = HrJobDesignation::all()->pluck('designation', 'id'); 
+        $designations = HrJobDesignation::all()->pluck('designation', 'id');
         return $designations;
     }
 
