@@ -19,7 +19,7 @@
                         $checked = isset($parameter['evaluation_detail']['option']) && $parameter['evaluation_detail']['option'] == $option['name'] ? 'checked' : '';
                         $optionName = "$parameterName-" . \Str::slug($option['name'] ?? '' );
                     @endphp
-                    {{-- @dump($optionName); --}}
+                    
                     <input class="toggle-button section-toggle" type="radio" name="evaluation[{{ $parameter['id'] }}][option_id]" id="{{ $optionName }}" data-target-parent="{{ $parameterName }}" data-target-option="{{ $optionName }}" value="{{ $option['id'] }}" {{ $checked }}>
                     <label for="{{ $optionName }}" id="{{$optionName}}" class="btn btn-outline-primary btn-sm px-2 mr-2 shadow-sm fz-14">{{ $option['name'] }}</label>
                 @endforeach
