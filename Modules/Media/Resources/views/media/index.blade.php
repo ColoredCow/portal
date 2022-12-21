@@ -69,7 +69,7 @@
                             <source src="{{asset('storage/media/'.$row->file_url)}}" type="video/mp4">
                         </video>
                     @endif
-                    @if(pathinfo($row->file_url, PATHINFO_EXTENSION) == 'jpg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'jpeg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'png' )
+                    @if(pathinfo($row->file_url, PATHINFO_EXTENSION) == 'jpg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'jpeg' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'PNG' || pathinfo($row->file_url, PATHINFO_EXTENSION) == 'png')
                         <img src="{{ asset('storage/media/'.$row->file_url) }}" class="card-img-top img-fluid ">
                     @endif
                 </a>
