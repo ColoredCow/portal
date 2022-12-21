@@ -21,14 +21,18 @@ class ApplicationRoundController extends Controller
      */
     public function update(ApplicationRoundRequest $request, ApplicationRound $round)
     {
-        $round->_update($request->validated());
+        $validatedData = $request->validated();
+        $round->_update($validatedData);
         if (array_key_exists('round_evaluation', $request->validated())) {
             $round->updateOrCreateEvaluation($request->validated()['round_evaluation']);
         }
 
         $routeName = $round->application->job->type == 'internship' ? 'applications.internship.index' : 'applications.job.index';
-
-        return redirect()->route($routeName)->with('status', 'Application updated successfully!');
+        if ($validatedData['action'] == 'update' || $validatedData['action'] == 'schedule-update') {
+            return redirect()->back()->with('status', 'success');
+        } else {
+            return redirect()->route($routeName)->with('status', 'Application updated successfully!');
+        }
     }
 
     /**

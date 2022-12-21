@@ -23,6 +23,7 @@
           <a
             id="recommend"
             class="nav-link c-pointer py-3"
+            @click="setActiveTile('recommend')"
            >Recommend</a
           >
         </li>

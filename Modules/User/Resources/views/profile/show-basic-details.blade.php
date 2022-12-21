@@ -2,7 +2,6 @@
 <div class="modal fade" id="edit" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-          
           <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel"><strong>Edit Profile</strong></h5>
               <button type="button" class="close" data-dismiss="modal"><b>&times;</b></button>
@@ -47,9 +46,9 @@
     </div>
 </div>
 
-<div class="d-none alert alert-success " id="successMessage" role="alert">
-    <strong>Changes Saved Successfully!</strong>
-</div>
+  <div class="d-none alert alert-success " id="successMessage" role="alert">
+      <strong>Changes Saved Successfully!</strong>
+  </div>
 
 <div class="d-flex justify-content-between">
     <div class="d-flex">
@@ -71,14 +70,14 @@
                 @foreach ($designations as $designation )
                     <span>{{ $user->employee->designation_id == $designation['id'] ? $designation['designation'] : "" }}</span>
                     @php
-                        if($user->employee->designation_id == $designation['id']) $id = $designation['domain_id'];
+                        if($user->employee->designation_id == $designation['id']) $domainIndex = $designation['domain_id'];
                     @endphp
                 @endforeach
             </div>
             <div class="form-group">
                 <label class="font-weight-bold" for="">Domain:</label>
                 @foreach ($domains as $domain )
-                    <span>{{ $id == $domain['id'] ? $domain['domain'] : "" }}</span>
+                    <span>{{ $domainIndex == $domain['id'] ? $domain['domain'] : "" }}</span>
                 @endforeach
             </div>
             <div class="form-group">
@@ -92,4 +91,3 @@
         <button class="btn btn-info" data-toggle="modal" id="editProfileBtn" data-target="#edit">Edit</button>
     </div>
 </div>
-

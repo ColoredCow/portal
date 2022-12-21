@@ -29,6 +29,25 @@ class ExpenseController extends Controller
     {
         $this->service->store($request->all());
 
-        return redirect()->route('expense::index');
+        return redirect()->route('expense.index');
+    }
+
+    public function edit($id)
+    {
+        return view('expense::edit', $this->service->edit($id));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $this->service->update($request->all(), $id);
+
+        return redirect()->route('expense.index');
+    }
+
+    public function delete($id)
+    {
+        $this->service->delete($id);
+
+        return redirect()->route('expense.index');
     }
 }

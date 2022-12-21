@@ -696,14 +696,14 @@ class InvoiceService implements InvoiceServiceContract
             if (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
                 $amount = $project->getResourceBillableAmount() + $project->getTotalLedgerAmount();
             } else {
-                $amount = $project->getBillableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate);
+                $amount = $project->getBillableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate) + optional($project->client->billingDetails)->bank_charges;
                 $gst = $project->getTaxAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate);
             }
         } else {
             if (optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
                 $amount = $client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount();
             } else {
-                $amount = $client->getBillableAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate);
+                $amount = $client->getBillableAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate) + optional($client->billingDetails)->bank_charges;
                 $gst = $client->getTaxAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate);
             }
         }

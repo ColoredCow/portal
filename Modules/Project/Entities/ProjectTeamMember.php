@@ -93,4 +93,13 @@ class ProjectTeamMember extends Model
 
         return round($this->current_actual_effort / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
     }
+
+    public function getBorderColorClassAttribute()
+    {
+        if ($this->current_expected_effort == 0 && $this->current_actual_effort == 0) {
+            return '';
+        }
+
+        return $this->current_actual_effort >= $this->current_expected_effort ? 'border border-success' : 'border border-danger';
+    }
 }

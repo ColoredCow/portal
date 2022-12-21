@@ -11,12 +11,16 @@
                 @endcan
                 @can('hr_employees.view')
                 @php
-                    $params = array_merge(['name' => 'employee'], ['status' => 'current']);
+                    $params = array_merge(['name' => 'Employee'], ['status' => 'current']);
                 @endphp
-                    <a class="dropdown-item" href="{{ route('employees',$params) }}">Employees</a>
+                    <a class="dropdown-item" href="{{ route('employees',$params) }}">Working Staff</a>
                 @endcan
+                @can('hr_job_requisition.view')
                     <a class="dropdown-item" href="{{ route('requisition') }}">Resource Requisition</a>
+                @endcan
+                @can('hr_job_designation.view')
                     <a class="dropdown-item" href="{{ route('designation') }}">Designations</a>
+                @endcan
                 @can('hr_volunteers_applications.view')
                     <a class="dropdown-item" href="{{ route('applications.volunteer.index') }}">Volunteers</a>
                 @endcan

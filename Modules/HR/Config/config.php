@@ -1,7 +1,16 @@
 <?php
 
 return [
+
     'name' => 'HR',
+    'working-staff' => [
+        'staff-type' => [
+            'employee' => 'Employee',
+            'intern' => 'Intern',
+            'contractor' => 'Contractor',
+            'supportstaff' => 'Support Staff',
+        ],
+    ],
     'applicationEvaluation' => [
         'cut-off-score-resume-screening' => 6,
         'cut-off-score-telephonic-interview' => 5,
