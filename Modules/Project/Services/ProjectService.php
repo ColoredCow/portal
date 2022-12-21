@@ -230,7 +230,7 @@ class ProjectService implements ProjectServiceContract
                 ProjectTeamMember::create([
                     'project_id' => $project->id,
                     'team_member_id' => $teamMemberData['team_member_id'],
-                    'designation_id' => $teamMemberData['designation'],
+                    'designations_id' => $teamMemberData['designation'],
                     'daily_expected_effort' => $teamMemberData['daily_expected_effort'] ?? config('efforttracking.minimum_expected_hours'),
                     'started_on' => $teamMemberData['started_on'] ?? now(),
                     'ended_on' => $teamMemberData['ended_on'],
