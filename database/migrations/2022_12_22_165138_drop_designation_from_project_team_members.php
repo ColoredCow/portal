@@ -17,9 +17,9 @@ class DropDesignationFromProjectTeamMembers extends Migration
     {
         $this->moveData();
         Schema::table('project_team_members', function (Blueprint $table) {
-            $table->dropColumn('desingation');
+            $table->dropColumn('designation');
         });
-        
+
     }
     private function moveData()
     {
@@ -38,7 +38,7 @@ class DropDesignationFromProjectTeamMembers extends Migration
     public function down()
     {
         Schema::table('project_team_members', function (Blueprint $table) {
-            $table->string('desingation')->nullable();
+            $table->string('designation')->nullable();
         });
     }
 }
