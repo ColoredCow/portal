@@ -13,9 +13,9 @@ class DropEmployeesDesignationColumn extends Migration
      */
     public function up()
     {
-        // Schema::table('employees', function (Blueprint $table) {
-        //     $table->dropColumn('designation');
-        // });
+        Schema::table('employees', function (Blueprint $table) {
+            $table->dropColumn('designation');
+        });
     }
 
     /**
