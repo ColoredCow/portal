@@ -12,7 +12,7 @@ class AddDesignationIdToProjectTeamMembersTable extends Migration
      * @return void
      */
     public function up()
-    { 
+    {
         Schema::table('project_team_members', function (Blueprint $table) {
             $table->unsignedBigInteger('designation_id')->nullable();
             $table->foreign('designation_id')->references('id')->on('hr_job_designation');
