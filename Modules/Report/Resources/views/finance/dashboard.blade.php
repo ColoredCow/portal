@@ -44,7 +44,7 @@
                         </a>
                     </div>
                 </div>
-    
+
                 <div class="col-md-3">
                     <div class="card h-75 bg-theme-gray-lighter">
                         <a class="card-body text-decoration-none" href="#">
@@ -52,7 +52,7 @@
                         </a>
                     </div>
                 </div>
-    
+
                 <div class="col-md-3">
                     <div class="card h-75 bg-theme-gray-lighter">
                         <a class="card-body text-decoration-none" href="#">
@@ -60,7 +60,7 @@
                         </a>
                     </div>
                 </div>
-    
+
                 <div class="col-md-3">
                     <div class="card h-75 bg-theme-gray-lighter">
                         <a class="card-body text-decoration-none" href="#">
@@ -68,7 +68,7 @@
                         </a>
                     </div>
                 </div>
-    
+
                 <div class="col-md-3">
                     <div class="card h-75 bg-theme-gray-lighter">
                         <a class="card-body text-decoration-none" href="#">
@@ -76,7 +76,7 @@
                         </a>
                     </div>
                 </div>
-    
+
                 <div class="col-md-3">
                     <div class="card h-75 bg-theme-gray-lighter">
                         <a class="card-body text-decoration-none" href="#">
@@ -84,7 +84,7 @@
                         </a>
                     </div>
                 </div>
-    
+
                 <div class="col-md-3">
                     <div class="card h-75 bg-theme-gray-lighter">
                         <a class="card-body text-decoration-none" href="#">
@@ -92,7 +92,7 @@
                         </a>
                     </div>
                 </div>
-    
+
                 <div class="col-md-3">
                     <div class="card h-75 bg-theme-gray-lighter">
                         <a class="card-body text-decoration-none" href="#">
@@ -100,7 +100,7 @@
                         </a>
                     </div>
                 </div>
-    
+
                 <div class="col-md-3">
                     <div class="card h-75 bg-theme-gray-lighter">
                         <a class="card-body text-decoration-none" href="#">
