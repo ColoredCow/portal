@@ -109,7 +109,9 @@ class ProjectService implements ProjectServiceContract
 
     public function getClients()
     {
-        return Client::where('status', 'inactive')->orderBy('name')->get();
+        return Client::where('status', 'active')
+                       ->orWhere('status', 'inactive')
+                       ->orderBy('name')->get();
     }
 
     public function getTeamMembers()
