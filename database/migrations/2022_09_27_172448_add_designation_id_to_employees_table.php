@@ -27,8 +27,8 @@ class AddDesignationIdToEmployeesTable extends Migration
     public function down()
     {
         Schema::table('employees', function (Blueprint $table) {
-            $table->dropForeign(['designation_id']);
-            $table->dropColumn(['designation_id']);
+            $table->dropForeign('designation_id');
+
         });
     }
 }

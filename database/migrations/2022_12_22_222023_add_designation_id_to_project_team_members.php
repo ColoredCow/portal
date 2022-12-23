@@ -18,7 +18,7 @@ class AddDesignationIdToProjectTeamMembers extends Migration
             $table->foreign('designation_id')->references('id')->on('hr_job_designation');
         });
     }
-   
+
     /**
      * Reverse the migrations.
      *

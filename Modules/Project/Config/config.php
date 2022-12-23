@@ -8,20 +8,13 @@ return [
         'halted' => 'Halted'
     ],
     'designation' => [
+        'project_manager' => 'Project Manager',
         'developer' => 'Developer',
         'designer' => 'Designer',
         'tester' => 'Tester(QA)',
-        'project_manager' => 'Project Manager',
         'solution_architect' => 'Solution Architect',
         'customer_support' => 'Customer Support',
-        'senior_software_engineer' => 'Senior Software Engineer',
-        'software_engineer' => 'Software Engineer',
-        'product_designer' => 'Product Designer',
-        'graphics_designer' => 'Graphics Designer',
-        'finance_lead' => 'Finance Lead',
-        'quality_analyst' => 'Quality Analyst',
-        'chief_executive_officer' => 'Chief Executive Officer',
-        'consultant' => 'Consultant',
+        'consultant' => 'Consultant'
     ],
     'type' => [
         'monthly-billing' => 'Monthly Billing',
