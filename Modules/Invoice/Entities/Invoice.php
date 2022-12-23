@@ -192,7 +192,7 @@ class Invoice extends Model implements Auditable
     {
         return $this->amount + $this->gst;
     }
-    
+
     public function getTotalAmountInInrAttribute()
     {
         if ($this->currency == config('constants.countries.india.currency')) {

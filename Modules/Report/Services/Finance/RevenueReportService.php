@@ -183,17 +183,17 @@ class RevenueReportService
         $data['previous_period_total_amount'] = 0;
         $activeClientsNameList = Client::status('active')->pluck('name')->toArray();
         $data['clients_name'] = $activeClientsNameList;
-        
+
         for ($index = 0; $index < sizeof($activeClientsNameList); $index++) {
             $data['current_period_client_data'][$index] = 0;
             $data['previous_period_client_data'][$index] = 0;
         }
-        
+
         foreach ($currentPeriodInvoiceDetails as $invoice) {
             $data['current_period_total_amount'] += round($invoice->total_amount_in_inr, 2);
             $data['current_period_client_data'][array_search($invoice->client->name, $activeClientsNameList, )] += round($invoice->total_amount_in_inr, 2);
         }
-        
+
         foreach ($previousPeriodInvoiceDetails as $invoice) {
             $data['previous_period_total_amount'] += round($invoice->total_amount_in_inr, 2);
             $data['previous_period_client_data'][array_search($invoice->client->name, $activeClientsNameList)] += round($invoice->total_amount_in_inr, 2);

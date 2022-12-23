@@ -15,7 +15,6 @@ class ReportDataService
 
     private function revenueTrend()
     {
-        
         $defaultStartDate = today()->startOfMonth();
         $defaultEndDate = today()->endOfMonth();
         $defaultPreviousStartDate = today()->subMonth()->startOfMonth();
@@ -28,7 +27,7 @@ class ReportDataService
             'previous_period_end_date' => $defaultPreviousEndDate
         ];
         $filters = array_merge($defaultFilters, request()->all());
-        
+
         $reportData = app(RevenueReportService::class)->getClientWiseRevenue($filters);
 
         return [
