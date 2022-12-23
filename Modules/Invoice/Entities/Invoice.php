@@ -219,7 +219,7 @@ class Invoice extends Model implements Auditable
         }
         $monthDifference = $currentMonthNumber - $invoiceStartMonthNumber;
         if ($monthDifference < 0) {
-           $monthDifference = ($currentMonthNumber + 12) - $invoiceStartMonthNumber;
+            $monthDifference = ($currentMonthNumber + 12) - $invoiceStartMonthNumber;
         }
         $termStartDate = $this->client->getMonthStartDateAttribute($monthDifference);
         $termEndDate = $this->client->getMonthEndDateAttribute($monthDifference);
