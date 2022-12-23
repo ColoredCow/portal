@@ -16,14 +16,14 @@ class DropDesignationFromProjectTeamMembers extends Migration
     public function up()
     {
         $this->moveData();
-
-        if (Schema::hasColumn('project_team_members', 'designation')==true){
-            Schema::table('project_team_members', function ($table) {
+        Schema::table('project_team_members', function (Blueprint $table) {
+            if (Schema::hasColumn('project_team_members', 'designation')==true) {
                 $table->dropColumn('designation');
-            });
         }
+
+        });
     }
-    private function moveData()
+    public function moveData()
     {
         $projectTeamMembers = ProjectTeamMember::all();
         $jobDesignations = HrJobDesignation::all()->pluck('id', 'slug');

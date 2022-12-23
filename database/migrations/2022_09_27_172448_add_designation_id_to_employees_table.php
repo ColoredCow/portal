@@ -13,10 +13,10 @@ class AddDesignationIdToEmployeesTable extends Migration
      */
     public function up()
     {
-        // Schema::table('employees', function (Blueprint $table) {
-        //     $table->unsignedBigInteger('designation_id')->nullable()->after('name');
-        //     $table->foreign('designation_id')->references('id')->on('hr_job_designation');
-        // });
+        Schema::table('employees', function (Blueprint $table) {
+            $table->unsignedBigInteger('designation_id')->nullable()->after('name');
+            $table->foreign('designation_id')->references('id')->on('hr_job_designation');
+        });
     }
 
     /**
@@ -27,7 +27,8 @@ class AddDesignationIdToEmployeesTable extends Migration
     public function down()
     {
         Schema::table('employees', function (Blueprint $table) {
-            $table->dropForeign('designation_id');
+            $table->dropForeign(['designation_id']);
+            $table->dropColumn(['designation_id']);
         });
     }
 }
