@@ -4,10 +4,12 @@ namespace Modules\Report\Services\Finance;
 
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Modules\Client\Entities\Client;
 use Modules\Invoice\Services\CurrencyService;
 use Modules\Invoice\Services\InvoiceService;
 use Modules\Revenue\Entities\RevenueProceed;
 use Modules\Invoice\Entities\CurrencyAvgRate;
+use Modules\Invoice\Entities\Invoice;
 
 class RevenueReportService
 {
@@ -163,5 +165,40 @@ class RevenueReportService
         $results['total'] = $totalAmount;
 
         return $results;
+    }
+
+    public function getClientWiseRevenue($filters)
+    {
+        $currentPeriodStartDate = $filters['current_period_start_date'];
+        $previousPeriodStartDate = $filters['previous_period_start_date'];
+        $currentPeriodEndDate = $filters['current_period_end_date'];
+        $previousPeriodEndDate = $filters['previous_period_end_date'];
+        $currentPeriodInvoiceDetails = Invoice::with('client')
+            ->whereBetween('sent_on', [$currentPeriodStartDate, $currentPeriodEndDate])
+            ->get();
+        $previousPeriodInvoiceDetails = Invoice::with('client')
+            ->whereBetween('sent_on', [$previousPeriodStartDate, $previousPeriodEndDate])
+            ->get();
+        $data['current_period_total_amount'] = 0;
+        $data['previous_period_total_amount'] = 0;
+        $activeClientsNameList = Client::status('active')->pluck('name')->toArray();
+        $data['clients_name'] = $activeClientsNameList;
+        
+        for ($index = 0; $index < sizeof($activeClientsNameList); $index++) {
+            $data['current_period_client_data'][$index] = 0;
+            $data['previous_period_client_data'][$index] = 0;
+        }
+        
+        foreach ($currentPeriodInvoiceDetails as $invoice) {
+            $data['current_period_total_amount'] += round($invoice->total_amount_in_inr, 2);
+            $data['current_period_client_data'][array_search($invoice->client->name, $activeClientsNameList, )] += round($invoice->total_amount_in_inr, 2);
+        }
+        
+        foreach ($previousPeriodInvoiceDetails as $invoice) {
+            $data['previous_period_total_amount'] += round($invoice->total_amount_in_inr, 2);
+            $data['previous_period_client_data'][array_search($invoice->client->name, $activeClientsNameList)] += round($invoice->total_amount_in_inr, 2);
+        }
+
+        return $data;
     }
 }

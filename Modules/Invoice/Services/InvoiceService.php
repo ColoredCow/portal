@@ -279,7 +279,7 @@ class InvoiceService implements InvoiceServiceContract
 
     public function dashboard()
     {
-        return Invoice::status('sent')->get();
+        return Invoice::with('client')->all();
     }
 
     private function setInvoiceNumber($invoice, $sent_date)

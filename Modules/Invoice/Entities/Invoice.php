@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Invoice\Contracts\CurrencyServiceContract;
 
 class Invoice extends Model implements Auditable
 {
@@ -190,6 +191,19 @@ class Invoice extends Model implements Auditable
     public function getTotalAmountAttribute()
     {
         return $this->amount + $this->gst;
+    }
+    
+    public function getTotalAmountInInrAttribute()
+    {
+        if ($this->currency == config('constants.countries.india.currency')) {
+            return $this->getTotalAmountAttribute();
+        }
+
+        if ($this->conversion_rate) {
+            return $this->getTotalAmountAttribute() * $this->conversion_rate;
+        }
+
+        return $this->getTotalAmountAttribute() * app(CurrencyServiceContract::class)->getCurrentRatesInINR();
     }
 
     public function getTermAttribute()
