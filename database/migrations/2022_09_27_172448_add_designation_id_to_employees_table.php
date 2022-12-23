@@ -28,7 +28,6 @@ class AddDesignationIdToEmployeesTable extends Migration
     {
         Schema::table('employees', function (Blueprint $table) {
             $table->dropForeign('designation_id');
-
         });
     }
 }
