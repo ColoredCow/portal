@@ -115,9 +115,7 @@ class ProjectService implements ProjectServiceContract
 
         foreach ($counts as $key => $tabFilters) {
             $query = Project::query()->applyFilter($tabFilters);
-            $counts[$key] = $showAllProjects
-                ? $query->count()
-                : $query->linkedToTeamMember($userId)->count();
+            $counts[$key] = $showAllProjects ? $query->count() : $query->linkedToTeamMember($userId)->count();
         }
         return $counts;
     }
