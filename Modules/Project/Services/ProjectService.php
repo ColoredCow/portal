@@ -44,9 +44,7 @@ class ProjectService implements ProjectServiceContract
         ->whereHas('projects', $projectClauseClosure)
         ->orderBy('name')
         ->paginate(config('constants.pagination_size'));
-
         $tabCounts = $this->getListTabCounts($filters, $showAllProjects, $memberId);
-
         return array_merge(['clients' => $projectsData], $tabCounts);
     }
 
