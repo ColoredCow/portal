@@ -47,10 +47,12 @@ class ProjectService implements ProjectServiceContract
         $tabCounts = $this->getListTabCounts($filters, $showAllProjects, $memberId);
         return array_merge(['clients' => $projectsData], $tabCounts);
     }
+
     public function create()
     {
         return $this->getClients();
     }
+
     public function store($data)
     {
         $project = Project::create([
@@ -79,6 +81,7 @@ class ProjectService implements ProjectServiceContract
                 ]
             );
         }
+
         $project->client->update(['status' => 'active']);
         $this->saveOrUpdateProjectContract($data, $project);
     }
@@ -91,12 +94,14 @@ class ProjectService implements ProjectServiceContract
             'haltedProjectsCount' => array_merge($filters, ['status' => 'halted']),
             'inactiveProjectsCount' => array_merge($filters, ['status' => 'inactive'])
         ];
+
         foreach ($counts as $key => $tabFilters) {
             $query = Project::query()->applyFilter($tabFilters);
             $counts[$key] = $showAllProjects
                 ? $query->count()
                 : $query->linkedToTeamMember($userId)->count();
         }
+
         return $counts;
     }
 
@@ -138,6 +143,7 @@ class ProjectService implements ProjectServiceContract
         if (! $updateSection) {
             return false;
         }
+
         switch ($updateSection) {
             case 'project_details':
                 return $this->updateProjectDetails($data, $project);
@@ -171,6 +177,7 @@ class ProjectService implements ProjectServiceContract
             'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
             'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
         ]);
+
         if ($data['billing_level'] ?? null) {
             ProjectMeta::updateOrCreate(
                 [
@@ -187,11 +194,12 @@ class ProjectService implements ProjectServiceContract
         if ($data['status'] == 'active') {
             $project->client->update(['status' => 'active']);
         } else {
-        if (! $project->client->projects()->where('status', 'active')->exists()) {
-            $project->client->update(['status' => 'inactive']);
+            if (! $project->client->projects()->where('status', 'active')->exists()) {
+                $project->client->update(['status' => 'inactive']);
             }
             $project->getTeamMembers()->update(['ended_on' => now()]);
         }
+
         return $isProjectUpdated;
     }
 
@@ -208,17 +216,17 @@ class ProjectService implements ProjectServiceContract
         $projectTeamMembers = $project->getTeamMembers;
         $teamMembersData = $data['project_team_member'] ?? [];
         foreach ($projectTeamMembers as $member) {
-        $flag = false;
-        foreach ($teamMembersData as $teamMemberData) {
-        if ($member->id == $teamMemberData['project_team_member_id']) {
-            $flag = true;
-            $tempArray = $teamMemberData;
-            unset($tempArray['project_team_member_id']);
-            $member->update($tempArray);
-        }
-        }
-        if (! $flag) {
-            $member->update(['ended_on' => Carbon::now()]);
+            $flag = false;
+            foreach ($teamMembersData as $teamMemberData) {
+                if ($member->id == $teamMemberData['project_team_member_id']) {
+                    $flag = true;
+                    $tempArray = $teamMemberData;
+                    unset($tempArray['project_team_member_id']);
+                    $member->update($tempArray);
+                }
+            }
+            if (! $flag) {
+                $member->update(['ended_on' => Carbon::now()]);
             }
         }
 
@@ -241,6 +249,7 @@ class ProjectService implements ProjectServiceContract
     {
         if (! isset($data['url'])) {
             $project->repositories()->delete();
+
             return;
         }
 
@@ -278,6 +287,7 @@ class ProjectService implements ProjectServiceContract
         $client = Client::find($clientID);
         $clientProjectsCount = $client->projects->count() ?: 0;
         $clientProjectsCount = $clientProjectsCount + 1;
+
         return sprintf('%03s', $clientProjectsCount);
     }
 
@@ -293,6 +303,7 @@ class ProjectService implements ProjectServiceContract
                 $numberOfWorkingDays++;
             }
         }
+
         return $numberOfWorkingDays;
     }
 
@@ -325,6 +336,7 @@ class ProjectService implements ProjectServiceContract
             ];
             }
         }
+
         return $keyAccountManagersDetails;
     }
 
@@ -343,6 +355,7 @@ class ProjectService implements ProjectServiceContract
                 ];
             }
         }
+
         return $projectsData;
     }
 
@@ -362,6 +375,7 @@ class ProjectService implements ProjectServiceContract
                 }
             }
         }
+
         return $projectDetails;
     }
 }
