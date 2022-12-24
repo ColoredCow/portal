@@ -10,7 +10,7 @@
                 <h3>
                     Current Month Invoices
                 </h3>
-                <canvas class="w-full" id="financeReportRevenueTrends" style="width:38em !important"></canvas>
+                <canvas class="w-full" id="financeReportRevenueTrends"></canvas>
             </div>
         </div>
 
