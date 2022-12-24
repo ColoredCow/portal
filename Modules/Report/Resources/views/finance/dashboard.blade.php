@@ -8,7 +8,7 @@
         <div>
             <div class="mt-4 container">
                 <h3>
-                    Current Month Invoices
+                    Invoice Details
                 </h3>
                 <canvas class="w-full" id="financeReportRevenueTrends"></canvas>
             </div>
