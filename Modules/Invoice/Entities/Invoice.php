@@ -194,13 +194,22 @@ class Invoice extends Model implements Auditable
 
     public function getTermAttribute()
     {
+        if (optional($this->client->billingDetails)->billing_date == 1) {
+            return $this->sent_on->subMonth()->format('F');
+        }
+
         $invoiceStartMonthNumber = $this->sent_on->subMonth()->month;
         $currentMonthNumber = today(config('constants.timezone.indian'))->month;
         if (optional($this->client->billingDetails)->billing_date > today()->day) {
             $currentMonthNumber -= 1;
         }
-        $termStartDate = $this->client->getMonthStartDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
-        $termEndDate = $this->client->getMonthEndDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
+        $monthDifference = $currentMonthNumber - $invoiceStartMonthNumber;
+        if ($monthDifference < 0) {
+            $monthDifference = ($currentMonthNumber + 12) - $invoiceStartMonthNumber;
+        }
+        $termStartDate = $this->client->getMonthStartDateAttribute($monthDifference);
+        $termEndDate = $this->client->getMonthEndDateAttribute($monthDifference);
+
         $term = $termStartDate->format('M') . ' - ' . $termEndDate->format('M');
 
         if ($termStartDate->format('M') == $termEndDate->format('M')) {
