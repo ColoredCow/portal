@@ -184,7 +184,7 @@ class RevenueReportService
         $activeClientsNameList = Client::status('active')->pluck('name')->toArray();
         $data['clients_name'] = $activeClientsNameList;
 
-        for ($index = 0; $index < sizeof($activeClientsNameList); $index++) {
+        for ($index = 0; $index < count($activeClientsNameList); $index++) {
             $data['current_period_client_data'][$index] = 0;
             $data['previous_period_client_data'][$index] = 0;
         }
