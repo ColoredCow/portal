@@ -187,8 +187,8 @@ class ProjectService implements ProjectServiceContract
         if ($data['status'] == 'active') {
             $project->client->update(['status' => 'active']);
         } else {
-            if (! $project->client->projects()->where('status', 'active')->exists()) {
-                $project->client->update(['status' => 'inactive']);
+        if (! $project->client->projects()->where('status', 'active')->exists()) {
+            $project->client->update(['status' => 'inactive']);
             }
             $project->getTeamMembers()->update(['ended_on' => now()]);
         }
@@ -208,17 +208,17 @@ class ProjectService implements ProjectServiceContract
         $projectTeamMembers = $project->getTeamMembers;
         $teamMembersData = $data['project_team_member'] ?? [];
         foreach ($projectTeamMembers as $member) {
-            $flag = false;
-            foreach ($teamMembersData as $teamMemberData) {
-                if ($member->id == $teamMemberData['project_team_member_id']) {
-                    $flag = true;
-                    $tempArray = $teamMemberData;
-                    unset($tempArray['project_team_member_id']);
-                    $member->update($tempArray);
-                }
-            }
-            if (! $flag) {
-                $member->update(['ended_on' => Carbon::now()]);
+        $flag = false;
+        foreach ($teamMembersData as $teamMemberData) {
+        if ($member->id == $teamMemberData['project_team_member_id']) {
+            $flag = true;
+            $tempArray = $teamMemberData;
+            unset($tempArray['project_team_member_id']);
+            $member->update($tempArray);
+        }
+        }
+        if (! $flag) {
+            $member->update(['ended_on' => Carbon::now()]);
             }
         }
 
