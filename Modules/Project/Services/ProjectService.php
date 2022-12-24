@@ -52,7 +52,6 @@ class ProjectService implements ProjectServiceContract
     {
         return $this->getClients();
     }
-
     public function store($data)
     {
         $project = Project::create([
@@ -101,7 +100,6 @@ class ProjectService implements ProjectServiceContract
                 ? $query->count()
                 : $query->linkedToTeamMember($userId)->count();
         }
-
         return $counts;
     }
 
@@ -249,7 +247,6 @@ class ProjectService implements ProjectServiceContract
     {
         if (! isset($data['url'])) {
             $project->repositories()->delete();
-
             return;
         }
 
@@ -287,7 +284,6 @@ class ProjectService implements ProjectServiceContract
         $client = Client::find($clientID);
         $clientProjectsCount = $client->projects->count() ?: 0;
         $clientProjectsCount = $clientProjectsCount + 1;
-
         return sprintf('%03s', $clientProjectsCount);
     }
 
@@ -303,7 +299,6 @@ class ProjectService implements ProjectServiceContract
                 $numberOfWorkingDays++;
             }
         }
-
         return $numberOfWorkingDays;
     }
 
@@ -336,7 +331,6 @@ class ProjectService implements ProjectServiceContract
             ];
             }
         }
-
         return $keyAccountManagersDetails;
     }
 
@@ -355,7 +349,6 @@ class ProjectService implements ProjectServiceContract
                 ];
             }
         }
-
         return $projectsData;
     }
 
@@ -375,7 +368,6 @@ class ProjectService implements ProjectServiceContract
                 }
             }
         }
-
         return $projectDetails;
     }
 }
