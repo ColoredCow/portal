@@ -4,10 +4,12 @@ namespace Modules\Report\Services\Finance;
 
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Modules\Client\Entities\Client;
 use Modules\Invoice\Services\CurrencyService;
 use Modules\Invoice\Services\InvoiceService;
 use Modules\Revenue\Entities\RevenueProceed;
 use Modules\Invoice\Entities\CurrencyAvgRate;
+use Modules\Invoice\Entities\Invoice;
 
 class RevenueReportService
 {
@@ -163,5 +165,36 @@ class RevenueReportService
         $results['total'] = $totalAmount;
 
         return $results;
+    }
+
+    public function getClientWiseRevenue($filters)
+    {
+        $currentPeriodInvoiceDetails = Invoice::with('client')
+            ->whereBetween('sent_on', [$filters['current_period_start_date'], $filters['current_period_end_date']])
+            ->get();
+        $previousPeriodInvoiceDetails = Invoice::with('client')
+            ->whereBetween('sent_on', [$filters['previous_period_start_date'], $filters['previous_period_end_date']])
+            ->get();
+        $data['current_period_total_amount'] = 0;
+        $data['previous_period_total_amount'] = 0;
+        $data['clients_name'] = Client::status('active')->pluck('name')->toArray();
+        $numberOfActiveClients = count($data['clients_name']);
+
+        for ($index = 0; $index < $numberOfActiveClients; $index++) {
+            $data['current_period_client_data'][$index] = 0;
+            $data['previous_period_client_data'][$index] = 0;
+        }
+
+        foreach ($currentPeriodInvoiceDetails as $invoice) {
+            $data['current_period_total_amount'] += round($invoice->total_amount_in_inr, 2);
+            $data['current_period_client_data'][array_search($invoice->client->name, $data['clients_name'], )] += round($invoice->total_amount_in_inr, 2);
+        }
+
+        foreach ($previousPeriodInvoiceDetails as $invoice) {
+            $data['previous_period_total_amount'] += round($invoice->total_amount_in_inr, 2);
+            $data['previous_period_client_data'][array_search($invoice->client->name, $data['clients_name'])] += round($invoice->total_amount_in_inr, 2);
+        }
+
+        return $data;
     }
 }
