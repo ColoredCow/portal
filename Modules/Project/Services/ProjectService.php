@@ -66,22 +66,16 @@ class ProjectService implements ProjectServiceContract
         $project = Project::create([
             'name' => $data['name'],
             'client_id' => $data['client_id'],
-            'client_project_id' => $this->getClientProjectID(
-                $data['client_id']
-            ),
+            'client_project_id' => $this->getClientProjectID($data['client_id']),
             'status' => 'active',
             'start_date' => $data['start_date'] ?? null,
             'end_date' => $data['end_date'] ?? null,
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
-            'google_chat_webhook_url' =>
-                $data['google_chat_webhook_url'] ?? null,
+            'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
             'type' => $data['project_type'],
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
-            'monthly_estimated_hours' =>
-                $data['monthly_estimated_hours'] ?? null,
-            'is_amc' => array_key_exists('is_amc', $data)
-                ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN)
-                : 0,
+            'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
+            'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
         ]);
 
         if ($data['billing_level'] ?? null) {
@@ -200,16 +194,12 @@ class ProjectService implements ProjectServiceContract
             'status' => $data['status'],
             'type' => $data['project_type'],
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
-            'monthly_estimated_hours' =>
-                $data['monthly_estimated_hours'] ?? null,
+            'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
             'start_date' => $data['start_date'] ?? null,
             'end_date' => $data['end_date'] ?? null,
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
-            'google_chat_webhook_url' =>
-                $data['google_chat_webhook_url'] ?? null,
-            'is_amc' => array_key_exists('is_amc', $data)
-                ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN)
-                : 0,
+            'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
+            'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
         ]);
 
         if ($data['billing_level'] ?? null) {
@@ -228,8 +218,7 @@ class ProjectService implements ProjectServiceContract
         if ($data['status'] == 'active') {
             $project->client->update(['status' => 'active']);
         } else {
-            if (
-                !$project->client
+            if (!$project->client
                     ->projects()
                     ->where('status', 'active')
                     ->exists()
@@ -274,13 +263,10 @@ class ProjectService implements ProjectServiceContract
                     'project_id' => $project->id,
                     'team_member_id' => $teamMemberData['team_member_id'],
                     'designation' => $teamMemberData['designation'],
-                    'daily_expected_effort' =>
-                        $teamMemberData['daily_expected_effort'] ??
-                        config('efforttracking.minimum_expected_hours'),
+                    'daily_expected_effort' => $teamMemberData['daily_expected_effort'] ?? config('efforttracking.minimum_expected_hours'),
                     'started_on' => $teamMemberData['started_on'] ?? now(),
                     'ended_on' => $teamMemberData['ended_on'],
-                    'billing_engagement' =>
-                        $teamMemberData['billing_engagement'],
+                    'billing_engagement' => $teamMemberData['billing_engagement'],
                 ]);
             }
         }
