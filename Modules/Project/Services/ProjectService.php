@@ -197,7 +197,6 @@ class ProjectService implements ProjectServiceContract
             }
             $project->getTeamMembers()->update(['ended_on' => now()]);
         }
-
         return $isProjectUpdated;
     }
 
