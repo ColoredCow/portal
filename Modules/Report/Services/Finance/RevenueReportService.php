@@ -177,7 +177,7 @@ class RevenueReportService
             ->get();
         $data['current_period_total_amount'] = 0;
         $data['previous_period_total_amount'] = 0;
-        $data['clients_name'] = Client::status('active')->pluck('name')->toArray();;
+        $data['clients_name'] = Client::status('active')->pluck('name')->toArray();
         $numberOfActiveClients = count($data['clients_name']);
 
         for ($index = 0; $index < $numberOfActiveClients; $index++) {
