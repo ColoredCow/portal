@@ -46,7 +46,7 @@ function financeReportRevenueTrendsReport(reportsData) {
 			responsive: true,
 			title: {
 				display: true,
-				text: 'Total revenue this month: Rs. ' + currentPeriodTotalRevenue
+				text: "Total revenue this month: Rs. " + currentPeriodTotalRevenue
 			},
 			scales: {
 				yAxes: [
