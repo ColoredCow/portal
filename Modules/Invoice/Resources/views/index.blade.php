@@ -85,7 +85,7 @@
                     @if((request()->invoice_status == 'sent' || $invoiceStatus == 'sent') && $invoices->isNotEmpty())
                         @foreach ($invoices as $invoice)
                             @php
-                                $invoiceYear = $invoice->sent_on->subMonth()->year;
+                                $invoiceYear = $invoice->client->billingDetails->billing_date == 1 ? $invoice->sent_on->subMonth()->year : $invoice->sent_on->year;
                                 $invoiceData = [
                                     'projectName' => optional($invoice->project)->name ?: ($invoice->client->name . 'Projects'),
                                     'billingPersonName' => optional($invoice->client->billing_contact)->name,
@@ -151,6 +151,7 @@
                                 }
                                 $billingStartMonth = $client->getMonthStartDateAttribute($monthToSubtract)->format('M');
                                 $billingEndMonth = $client->getMonthEndDateAttribute($monthToSubtract)->format('M');
+                                $billingEndMonthYear = $client->getMonthEndDateAttribute($monthToSubtract)->format('Y');
                                 $monthName = $client->getMonthEndDateAttribute($monthToSubtract)->format('F');
                                 $termText = $billingStartMonth;
                                 if (optional($client->billingDetails)->billing_frequency == config('client.billing-frequency.quarterly.id')) {
@@ -164,9 +165,9 @@
                                     'billingPersonFirstName' => optional($client->billing_contact)->first_name,
                                     'billingPersonEmail' => optional($client->billing_contact)->email,
                                     'senderEmail' => config('invoice.mail.send-invoice.email'),
-                                    'invoiceNumber' => str_replace('-', '', $client->next_invoice_number),
+                                    'invoiceNumber' => $client->next_invoice_number,
                                     'totalAmount' => $amount,
-                                    'year' => $year,
+                                    'year' => $billingEndMonthYear,
                                     'term' => $billingStartMonth != $billingEndMonth ? $termText . ' - ' . $billingEndMonth : $monthName,
                                     'emailSubject' => $sendInvoiceEmailSubject,
                                     'emailBody' => $sendInvoiceEmailBody,
@@ -219,6 +220,7 @@
                             @endif
                             @php
                                 $index++;
+                               
                                 $currencySymbol = config('constants.currency.' . $project->client->currency . '.symbol');
                                 if ($project->hasCustomInvoiceTemplate()) {
                                     $amount = $currencySymbol . $project->getTotalLedgerAmount($quarter);
@@ -229,6 +231,7 @@
                                 }
                                 $billingStartMonth = $project->client->getMonthStartDateAttribute($monthToSubtract)->format('M');
                                 $billingEndMonth = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('M');
+                                $billingEndMonthYear = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('Y');
                                 $monthName = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('F');
                                 $termText = $billingStartMonth;
                                 if (optional($project->client->billingDetails)->billing_frequency == config('client.billing-frequency.quarterly.id')) {
@@ -244,7 +247,7 @@
                                     'senderEmail' => config('invoice.mail.send-invoice.email'),
                                     'invoiceNumber' => str_replace('-', '', $project->next_invoice_number),
                                     'totalAmount' => $amount,
-                                    'year' => $year,
+                                    'year' => $billingEndMonthYear,
                                     'term' => $billingStartMonth != $billingEndMonth ? $termText . ' - ' . $billingEndMonth : $monthName,
                                     'emailSubject' => $sendInvoiceEmailSubject,
                                     'emailBody' => $sendInvoiceEmailBody,

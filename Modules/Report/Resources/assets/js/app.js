@@ -14,47 +14,63 @@ $(function() {
 function financeReportRevenueTrendsReport(reportsData) {
 	const canvasElementId = "financeReportRevenueTrends";
 	const labels = reportsData.labels;
-
-	const data = {
+	const currentPeriodTotalRevenue = reportsData.data.current_period_total_amount;
+	const previousPeriodTotalRevenue = reportsData.data.previous_period_total_amount;
+	const chartData = {
 		labels: labels,
 		datasets: [
 			{
-				label: "Revenue Trends",
+				label: "Previous Month Amount",
 				backgroundColor: "rgb(255, 99, 132)",
 				borderColor: "rgb(255, 99, 132)",
-				data: reportsData.data,
+				data: reportsData.data.previous_period_client_data,
 			},
+			{
+				label: "Current Month Amount",
+				backgroundColor: "rgb(193, 242, 1)",
+				borderColor: "rgb(193, 242, 1)",
+				data: reportsData.data.current_period_client_data,
+			}
+
 		],
 	};
 
-	const config = {
+	const chartConfig = {
 		type: reportsData.graph_type || "bar",
-		data: data,
+		data: chartData,
 		options: {
+			categoryPercentage: 1.0,
+			barPercentage: 0.8,
+			maintainAspectRatio: true,
+			indexAxis: "y",
 			responsive: true,
+			title: {
+				display: true,
+				text: "Total revenue this month: Rs. " + currentPeriodTotalRevenue
+			},
 			scales: {
-				xAxes: [
-					{
-						barPercentage: 0.4,
-						scaleLabel: {
-							display: true,
-							labelString: "months",
-						},
-					},
-				],
 				yAxes: [
 					{
+						barPercentage: 0.3,
 						scaleLabel: {
 							display: true,
-							labelString: "Rs (In Lacks)",
-						},
+							labelString: "Amount (In Rs)",
+						}
 					},
 				],
+				xAxes: [
+					{
+						scaleLabel: {
+							display: false,
+							labelString: "Client",
+						}
+					},
+				]
 			},
-		},
+		}
 	};
 
-	new Chart(canvasElementId, config);
+	new Chart(canvasElementId, chartConfig);
 }
 
 function getData(params, callback) {

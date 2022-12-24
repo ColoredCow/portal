@@ -15,51 +15,24 @@ class ReportDataService
 
     private function revenueTrend()
     {
-        $currentYear = date('m') > 03 ? date('Y') + 1 : date('Y');
+        $defaultStartDate = today()->startOfMonth();
+        $defaultEndDate = today()->endOfMonth();
+        $defaultPreviousStartDate = today()->subMonth()->startOfMonth();
+        $defaultPreviousEndDate = today()->subMonth()->endOfMonth();
         $defaultFilters = [
             'transaction' => 'revenue',
-            'year' => $currentYear,
+            'current_period_start_date' => $defaultStartDate,
+            'current_period_end_date' => $defaultEndDate,
+            'previous_period_start_date' => $defaultPreviousStartDate,
+            'previous_period_end_date' => $defaultPreviousEndDate
         ];
-
         $filters = array_merge($defaultFilters, request()->all());
-        $reportData = app(ProfitAndLossReportService::class)->profitAndLoss($filters);
 
-        $monthlyData = [];
-
-        foreach ($reportData as $revenueHead) {
-            foreach ($revenueHead['amounts'] as $key => $amount) {
-                $monthlyData[$key] = ($monthlyData[$key] ?? 0) + $amount;
-            }
-        }
-        unset($monthlyData['total']);
-
-        /**
-         * Will plan and see if we should move this to DB or config in the next PR.
-         */
-        $labels = [
-            '04-22' => 'April (2022)',
-            '05-22' => 'May (2022)',
-            '06-22' => 'June (2022)',
-            '07-22' => 'July (2022)',
-            '08-22' => 'August (2022)',
-            '09-22' => 'September (2022)',
-            '10-22' => 'October (2022)',
-            '11-22' => 'November (2022)',
-            '12-22' => 'December (2022)',
-            '01-23' => 'January (2023)',
-            '02-23' => 'February (2023)',
-            '03-23' => 'March (2023)',
-          ];
-
-        $data = [];
-
-        foreach ($labels as $key => $label) {
-            $data[] = $monthlyData[$key] ?? 0;
-        }
+        $reportData = app(RevenueReportService::class)->getClientWiseRevenue($filters);
 
         return [
-            'labels' => array_values($labels),
-            'data' => $data
+            'labels' => $reportData['clients_name'],
+            'data' => $reportData
         ];
     }
 }
