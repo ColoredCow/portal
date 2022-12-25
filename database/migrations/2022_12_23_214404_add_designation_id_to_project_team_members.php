@@ -27,8 +27,8 @@ class AddDesignationIdToProjectTeamMembers extends Migration
     public function down()
     {
         Schema::table('project_team_members', function (Blueprint $table) {
-            $table->dropForeign(['designation_id']);
-            $table->dropColumn(['designation_id']);
+            $table->dropForeign('designation_id');
+            $table->dropColumn('designation_id');
         });
     }
 }

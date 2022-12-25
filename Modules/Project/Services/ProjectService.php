@@ -226,17 +226,15 @@ class ProjectService implements ProjectServiceContract
         }
 
         foreach ($teamMembersData as $teamMemberData) {
-            if ($teamMemberData['project_team_member_id'] == null) {
                 ProjectTeamMember::create([
                     'project_id' => $project->id,
                     'team_member_id' => $teamMemberData['team_member_id'],
-                    'designation_id' => $teamMemberData['designation'],
+                    'designation_id' => $teamMemberData['designation_id'],
                     'daily_expected_effort' => $teamMemberData['daily_expected_effort'] ?? config('efforttracking.minimum_expected_hours'),
+                    'billing_engagement' => $teamMemberData['billing_engagement'],
                     'started_on' => $teamMemberData['started_on'] ?? now(),
                     'ended_on' => $teamMemberData['ended_on'],
-                    'billing_engagement' => $teamMemberData['billing_engagement'],
                 ]);
-            }
         }
     }
 

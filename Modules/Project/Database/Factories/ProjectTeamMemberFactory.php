@@ -5,6 +5,7 @@ namespace Modules\Project\Database\Factories;
 use Carbon\Carbon;
 use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\HR\Entities\HrJobDesignation;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\User\Entities\User;
 
@@ -31,6 +32,7 @@ class ProjectTeamMemberFactory extends Factory
             'team_member_id' => function () {
                 return User::factory()->create()->id;
             },
+            'designation_id' => HrJobDesignation::factory()->create()->first()->id,
             'daily_expected_effort' => '8',
             'started_on' => Carbon::today()->subDays(10)
         ];
