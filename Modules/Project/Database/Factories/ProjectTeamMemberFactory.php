@@ -5,7 +5,6 @@ namespace Modules\Project\Database\Factories;
 use Carbon\Carbon;
 use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Modules\HR\Entities\HrJobDesignation;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\User\Entities\User;
 
