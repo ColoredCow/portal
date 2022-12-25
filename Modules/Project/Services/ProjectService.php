@@ -23,37 +23,30 @@ class ProjectService implements ProjectServiceContract
     {
         $filters = [
             'status' => $data['status'] ?? 'active',
-            'is_amc' => $data['is_amc'] ?? 0,
+            'is_amc' => $data['is_amc'] ?? 0
         ];
 
         if ($nameFilter = $data['name'] ?? false) {
             $filters['name'] = $nameFilter;
         }
 
-        $showAllProjects =
-            Arr::get($data, 'projects', 'my-projects') != 'my-projects';
+        $showAllProjects = Arr::get($data, 'projects', 'my-projects') != 'my-projects';
 
         $memberId = Auth::id();
 
-        $projectClauseClosure = function ($query) use (
-            $filters,
-            $showAllProjects,
-            $memberId
-        ) {
+        $projectClauseClosure = function ($query) use ($filters, $showAllProjects, $memberId) {
             $query->applyFilter($filters);
             $showAllProjects ? $query : $query->linkedToTeamMember($memberId);
         };
 
         $projectsData = Client::query()
-            ->with('projects', $projectClauseClosure)
-            ->whereHas('projects', $projectClauseClosure)
-            ->orderBy('name')
-            ->paginate(config('constants.pagination_size'));
-        $tabCounts = $this->getListTabCounts(
-            $filters,
-            $showAllProjects,
-            $memberId
-        );
+        ->with('projects', $projectClauseClosure)
+        ->whereHas('projects', $projectClauseClosure)
+        ->orderBy('name')
+        ->paginate(config('constants.pagination_size'));
+
+        $tabCounts = $this->getListTabCounts($filters, $showAllProjects, $memberId);
+
         return array_merge(['clients' => $projectsData], $tabCounts);
     }
 
@@ -61,6 +54,7 @@ class ProjectService implements ProjectServiceContract
     {
         return $this->getClients();
     }
+
     public function store($data)
     {
         $project = Project::create([
@@ -85,7 +79,7 @@ class ProjectService implements ProjectServiceContract
                     'project_id' => $project->id,
                 ],
                 [
-                    'value' => $data['billing_level'],
+                    'value' => $data['billing_level']
                 ]
             );
         }
@@ -97,44 +91,30 @@ class ProjectService implements ProjectServiceContract
     private function getListTabCounts($filters, $showAllProjects, $userId)
     {
         $counts = [
-            'mainProjectsCount' => array_merge($filters, [
-                'status' => 'active',
-                'is_amc' => false,
-            ]),
-            'AMCProjectCount' => array_merge($filters, [
-                'status' => 'active',
-                'is_amc' => true,
-            ]),
-            'haltedProjectsCount' => array_merge($filters, [
-                'status' => 'halted',
-            ]),
-            'inactiveProjectsCount' => array_merge($filters, [
-                'status' => 'inactive',
-            ]),
+            'mainProjectsCount' => array_merge($filters, ['status' => 'active', 'is_amc' => false]),
+            'AMCProjectCount' => array_merge($filters, ['status' => 'active', 'is_amc' => true]),
+            'haltedProjectsCount' => array_merge($filters, ['status' => 'halted']),
+            'inactiveProjectsCount' => array_merge($filters, ['status' => 'inactive'])
         ];
 
         foreach ($counts as $key => $tabFilters) {
             $query = Project::query()->applyFilter($tabFilters);
-            $counts[$key] = $showAllProjects ? $query->count() : $query->linkedToTeamMember($userId)->count();
+            $counts[$key] = $showAllProjects
+                ? $query->count()
+                : $query->linkedToTeamMember($userId)->count();
         }
+
         return $counts;
     }
 
     public function getClients($status = 'active')
     {
         if ($status == 'active') {
-            $client = Client::where('status', 'active')
-                ->orderBy('name')
-                ->get();
+            $client = Client::where('status', 'active')->orderBy('name')->get();
         } elseif ($status == 'inactive') {
-            $client = Client::where('status', 'inactive')
-                ->orderBy('name')
-                ->get();
+            $client = Client::where('status', 'inactive')->orderBy('name')->get();
         } else {
-            $client = Client::where('status', 'active')
-                ->orWhere('status', 'inactive')
-                ->orderBy('name')
-                ->get();
+            $client = Client::where('status', 'active')->orWhere('status', 'inactive')->orderBy('name')->get();
         }
         return $client;
     }
@@ -207,7 +187,7 @@ class ProjectService implements ProjectServiceContract
                     'project_id' => $project->id,
                 ],
                 [
-                    'value' => $data['billing_level'],
+                    'value' => $data['billing_level']
                 ]
             );
         }
@@ -216,15 +196,12 @@ class ProjectService implements ProjectServiceContract
         if ($data['status'] == 'active') {
             $project->client->update(['status' => 'active']);
         } else {
-            if (! $project->client
-                    ->projects()
-                    ->where('status', 'active')
-                    ->exists()
-            ) {
+            if (! $project->client->projects()->where('status', 'active')->exists()) {
                 $project->client->update(['status' => 'inactive']);
             }
             $project->getTeamMembers()->update(['ended_on' => now()]);
         }
+
         return $isProjectUpdated;
     }
 
@@ -274,6 +251,7 @@ class ProjectService implements ProjectServiceContract
     {
         if (! isset($data['url'])) {
             $project->repositories()->delete();
+
             return;
         }
 
@@ -281,19 +259,19 @@ class ProjectService implements ProjectServiceContract
         $urlIds = [];
         foreach ($projectRepositoriesUrl as $url) {
             $urlIds[] = $url;
-            ProjectRepository::where('project_id', $project->id)
-                ->whereNotIn('url', $urlIds)
-                ->delete();
-            ProjectRepository::updateOrCreate([
-                'project_id' => $project->id,
-                'url' => $url,
-            ]);
+            ProjectRepository::where('project_id', $project->id)->whereNotIn('url', $urlIds)->delete();
+            ProjectRepository::updateOrCreate(
+                [
+                    'project_id' => $project->id,
+                    'url' => $url,
+                ],
+            );
         }
     }
 
     private function updateProjectTechstack($data, $project)
     {
-        foreach ($data as $key => $value) {
+        foreach ($data as $key=>$value) {
             ProjectMeta::updateOrCreate(
                 [
                     'key' => $key,
@@ -311,6 +289,7 @@ class ProjectService implements ProjectServiceContract
         $client = Client::find($clientID);
         $clientProjectsCount = $client->projects->count() ?: 0;
         $clientProjectsCount = $clientProjectsCount + 1;
+
         return sprintf('%03s', $clientProjectsCount);
     }
 
@@ -326,6 +305,7 @@ class ProjectService implements ProjectServiceContract
                 $numberOfWorkingDays++;
             }
         }
+
         return $numberOfWorkingDays;
     }
 
@@ -345,32 +325,27 @@ class ProjectService implements ProjectServiceContract
 
     public function getMailDetailsForKeyAccountManagers()
     {
-        $zeroEffortProject = ProjectTeamMember::where(
-            'daily_expected_effort',
-            0
-        )->get('project_id');
+        $zeroEffortProject = ProjectTeamMember::where('daily_expected_effort', 0)->get('project_id');
         $projects = Project::whereIn('id', $zeroEffortProject)->get();
         $keyAccountManagersDetails = [];
         foreach ($projects as $project) {
             $user = $project->client->keyAccountManager;
             if ($user) {
                 $keyAccountManagersDetails[$user->id][] = [
-                    'project' => $project,
-                    'email' => $user->email,
-                    'name' => $user->name,
-                ];
+                'project' =>$project,
+                'email' =>$user->email,
+                'name' =>$user->name,
+            ];
             }
         }
+
         return $keyAccountManagersDetails;
     }
 
     public function getMailDetailsForProjectKeyAccountManagers()
     {
         $currenttime = Carbon::today(config('constants.timezone.indian'));
-        $projects = Project::wheretype('fixed-budget')
-            ->wherestatus('active')
-            ->where('end_date', '<', $currenttime)
-            ->get();
+        $projects = Project::wheretype('fixed-budget')->wherestatus('active')->where('end_date', '<', $currenttime)->get();
         $projectsData = [];
         foreach ($projects as $project) {
             $user = $project->client->keyAccountManager;
@@ -382,29 +357,27 @@ class ProjectService implements ProjectServiceContract
                 ];
             }
         }
+
         return $projectsData;
     }
 
     public function getMailDetailsForZeroExpectedHours()
     {
         $zeroEffortProjectsIds = ProjectTeamMember::where('daily_expected_effort', 0)->pluck('project_id');
-        $projectsWithZeroEffort = Project::with(['teamMembers'])
-            ->whereIn('id', $zeroEffortProjectsIds)
-            ->get();
+        $projectsWithZeroEffort = Project::with(['teamMembers'])->whereIn('id', $zeroEffortProjectsIds)->get();
         $projectDetails = [];
         foreach ($projectsWithZeroEffort as $project) {
             foreach ($project->teamMembers as $teamMember) {
-                if (
-                    $teamMember->getOriginal('pivot_daily_expected_effort') == 0
-                ) {
+                if ($teamMember->getOriginal('pivot_daily_expected_effort') == 0) {
                     $projectDetails[] = [
                         'projects' => $project,
                         'name' => $teamMember->name,
-                        'email' => $teamMember->email,
+                        'email' =>$teamMember->email,
                     ];
                 }
             }
         }
+
         return $projectDetails;
     }
 }
