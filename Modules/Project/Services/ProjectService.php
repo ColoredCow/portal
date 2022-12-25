@@ -226,7 +226,7 @@ class ProjectService implements ProjectServiceContract
         }
 
         foreach ($teamMembersData as $teamMemberData) {
-                ProjectTeamMember::create([
+            ProjectTeamMember::create([
                     'project_id' => $project->id,
                     'team_member_id' => $teamMemberData['team_member_id'],
                     'designation_id' => $teamMemberData['designation_id'],

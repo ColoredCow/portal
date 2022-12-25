@@ -27,7 +27,6 @@ class DropDesignationFromProjectTeamMembers extends Migration
         foreach ($projectTeamMembers as $projectTeamMember) {
             $projectTeamMember->update(['designation_id'=>$jobDesignations[$projectTeamMember->designation]]);
         }
-        
     }
 
     /**
