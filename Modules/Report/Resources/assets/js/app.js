@@ -10,7 +10,7 @@ $(function() {
 		);
 	}
 	if ($("#clientWiseReportRevenueTrends").length) {
-		const clientId = $("#clientSelectBox option:selected").val()
+		const clientId = $("#clientSelectBox option:selected").val();
 		getData(
 			{ type: "revenue-trend-client-wise", filters: {"client_id": clientId} },
 			clientWiseRevenueTrendsReport
