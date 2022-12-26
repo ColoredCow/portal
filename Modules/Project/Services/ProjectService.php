@@ -144,7 +144,6 @@ class ProjectService implements ProjectServiceContract
     {
         $updateSection = $data['update_section'] ?? '';
         if (! $updateSection) {
-            
             return false;
         }
 
