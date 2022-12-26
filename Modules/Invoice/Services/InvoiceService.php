@@ -35,11 +35,11 @@ class InvoiceService implements InvoiceServiceContract
             'year' => $filters['year'] ?? null,
             'status' => $filters['status'] ?? null,
         ];
-
         if ($invoiceStatus == 'sent') {
-            $invoices = Invoice::query()->applyFilters($filters)
-                ->orderBy('sent_on', 'desc')
-                ->get();
+            $invoices = Invoice::query()->applyFilters($filters)->leftjoin('clients', 'invoices.client_id', '=', 'clients.id')
+            ->select('invoices.*', 'clients.name')
+            ->orderBy('name', 'asc')->orderBy('sent_on', 'desc')
+            ->get();
             $clientsReadyToSendInvoicesData = [];
             $projectsReadyToSendInvoicesData = [];
         } else {
@@ -117,8 +117,8 @@ class InvoiceService implements InvoiceServiceContract
     public function defaultFilters()
     {
         return [
-            'year' => now()->format('Y'),
-            'month' => now()->format('m'),
+            'year' => null,
+            'month' => null,
             'status' => 'sent',
             'client_id' => '',
         ];

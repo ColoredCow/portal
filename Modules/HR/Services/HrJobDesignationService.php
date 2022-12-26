@@ -5,13 +5,20 @@ namespace Modules\HR\Services;
 use Modules\HR\Http\Requests\Recruitment\JobDesignationRequest;
 use Illuminate\Support\Str;
 use Modules\HR\Entities\HrJobDesignation;
+use Illuminate\Http\Request;
 use Modules\HR\Entities\HrJobDomain;
 
 class HrJobDesignationService
 {
-    public function index()
+    public function index(Request $request)
     {
-        $designations = HrJobDesignation::all();
+        $searchDesignation = $request->input('search');
+        $designationfilter = HrJobDesignation::where('designation', 'LIKE', $searchDesignation)->get();
+        if ($searchDesignation == null) {
+            $designations = HrJobDesignation::all();
+        } else {
+            $designations = $designationfilter;
+        }
         $domains = HrJobDomain::all();
 
         return [

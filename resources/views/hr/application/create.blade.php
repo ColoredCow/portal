@@ -21,7 +21,7 @@
                 <button data-toggle="modal" data-target="#excelImport" class="btn btn-primary text-white">Import excel
                     file</button>
                 <button class="btn btn-success" data-toggle="modal" data-target="#channelName" id="channelNameButton"><i
-                        class="fa fa-plus mr-1"></i>Add Book</button>
+                        class="fa fa-plus mr-1"></i>Add Channel</button>
                 <div class="modal fade" id="channelName" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog" role="document">

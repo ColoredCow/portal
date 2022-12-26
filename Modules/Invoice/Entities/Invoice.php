@@ -26,11 +26,11 @@ class Invoice extends Model implements Auditable
     public function scopeStatus($query, $status)
     {
         if (is_string($status)) {
-            return $query->where('status', $status);
+            return $query->where($this->getTable() . '.status', $status);
         }
 
         if (is_array($status)) {
-            return $query->whereIn('status', $status);
+            return $query->whereIn($this->getTable() . '.status', $status);
         }
 
         return $query;
@@ -38,12 +38,12 @@ class Invoice extends Model implements Auditable
 
     public function scopeYear($query, $year)
     {
-        return $query->whereYear('sent_on', $year);
+        return $query->whereYear($this->getTable() . '.sent_on', $year);
     }
 
     public function scopeMonth($query, $month)
     {
-        return $query->whereMonth('sent_on', $month);
+        return $query->whereMonth($this->getTable() . '.sent_on', $month);
     }
 
     public function scopeCountry($query, $country)
@@ -66,7 +66,7 @@ class Invoice extends Model implements Auditable
 
     public function scopeClient($query, $clientId)
     {
-        return $query->where('client_id', $clientId);
+        return $query->where($this->getTable() . '.client_id', $clientId);
     }
     public function scopeInvoiceInaYear($query, $invoiceYear)
     {

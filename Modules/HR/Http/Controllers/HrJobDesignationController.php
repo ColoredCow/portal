@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\HR\Services\HrJobDesignationService;
 use Modules\HR\Entities\HrJobDesignation;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Request;
 
 class HrJobDesignationController extends Controller
 {
@@ -20,11 +21,11 @@ class HrJobDesignationController extends Controller
         $this->service = $service;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize(HrJobDesignation::class);
 
-        return view('hr.designations.index', $this->service->index(request()->all()));
+        return view('hr.designations.index', $this->service->index($request));
     }
 
     public function storeDesignation(JobDesignationRequest $request)
