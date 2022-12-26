@@ -2,18 +2,56 @@
 
 namespace Modules\Report\Services\Finance;
 
+use Modules\Client\Entities\Client;
+
 class ReportDataService
 {
+    protected $service;
+
+    public function __construct(RevenueReportService $service)
+    {
+        $this->service = $service;
+    }
+
     public function getData($type, $filters)
     {
         if ($type == 'revenue-trend') {
-            return $this->revenueTrend();
+            return $this->revenueTrend($filters);
+        } elseif ($type == 'revenue-trend-client-wise') {
+            return $this->revenueTrendForClient($filters);
         }
 
         return $filters;
     }
 
-    private function revenueTrend()
+    public function getDataForClientRevenueReportPage(array $data)
+    {
+        $selectedClient = isset($data['client_id']) ? Client::find($data['client_id']) : Client::orderBy('name')->first();
+
+        return [
+            'selectedClient' => $selectedClient,
+            'clients' => Client::orderBy('name')->get()
+        ];
+    }
+
+    private function revenueTrendForClient($filters)
+    {
+        $client = Client::find($filters['client_id']);
+        $defaultStartDate = $client->created_at ?? $client->invoices()->orderBy('sent_on')->first()->sent_on;
+        $defaultEndDate = today();
+
+        $filters['start_date'] = $defaultStartDate;
+        $filters['end_date'] = $defaultEndDate;
+
+        $reportData = $this->service->getRevenueReportDataForClient($filters, $client);
+
+        return [
+            'labels' => $reportData['months'],
+            'data' => $reportData
+        ];
+    }
+
+    private function revenueTrend($filters)
     {
         $defaultStartDate = today()->startOfMonth();
         $defaultEndDate = today()->endOfMonth();
@@ -28,11 +66,11 @@ class ReportDataService
         ];
         $filters = array_merge($defaultFilters, request()->all());
 
-        $reportData = app(RevenueReportService::class)->getClientWiseRevenue($filters);
+        $reportData = $this->service->getRevenueGroupedByClient($filters);
 
         return [
             'labels' => $reportData['clients_name'],
-            'data' => $reportData
+            'data' => $reportData,
         ];
     }
 }
