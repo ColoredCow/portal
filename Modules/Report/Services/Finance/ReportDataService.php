@@ -6,6 +6,13 @@ use Modules\Client\Entities\Client;
 
 class ReportDataService
 {
+    protected $service;
+
+    public function __construct(RevenueReportService $service)
+    {
+        $this->service = $service;
+    }
+
     public function getData($type, $filters)
     {
         if ($type == 'revenue-trend') {
@@ -17,6 +24,15 @@ class ReportDataService
         return $filters;
     }
 
+    function getDataForClientRevenueReportPage(array $data) {
+        $selectedClient = isset($data['client_id']) ? Client::find($data['client_id']) : Client::orderBy('name')->first();
+
+        return [
+            'selectedClient' => $selectedClient,
+            'clients' => Client::orderBy('name')->get()
+        ];
+    }
+
     private function revenueTrendForClient($filters)
     {
         $client = Client::find($filters['client_id']);
@@ -26,7 +42,7 @@ class ReportDataService
         $filters['start_date'] = $defaultStartDate;
         $filters['end_date'] = $defaultEndDate;
 
-        $reportData = app(RevenueReportService::class)->getRevenueForClient($filters, $client);
+        $reportData = $this->service->getRevenueReportDataForClient($filters, $client);
 
         return [
             'labels' => $reportData['months'],
@@ -49,7 +65,7 @@ class ReportDataService
         ];
         $filters = array_merge($defaultFilters, request()->all());
 
-        $reportData = app(RevenueReportService::class)->getRevenueGroupedByClient($filters);
+        $reportData = $this->service->getRevenueGroupedByClient($filters);
 
         return [
             'labels' => $reportData['clients_name'],

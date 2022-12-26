@@ -14,10 +14,12 @@ class FinanceReportController extends Controller
     use AuthorizesRequests;
 
     protected $service;
+    protected $reportDataService;
 
     public function __construct(ProfitAndLossReportService $service)
     {
         $this->service = $service;
+        $this->reportDataService = app(ReportDataService::class);
     }
 
     public function dashboard()
@@ -27,12 +29,9 @@ class FinanceReportController extends Controller
 
     public function clientWiseInvoiceDashboard(Request $request)
     {
-        $selectedClient = $request->has('client_id') ? Client::find($request->get('client_id')) : Client::orderBy('name')->first();
+        $data = $this->reportDataService->getDataForClientRevenueReportPage($request->all());
 
-        return view('report::finance.client-wise-revenue.index', [
-            'selectedClient' => $selectedClient,
-            'clients' => Client::orderBy('name')->get()
-        ]);
+        return view('report::finance.client-wise-revenue.index', $data);
     }
 
     public function getReportData(Request $request)
@@ -40,6 +39,6 @@ class FinanceReportController extends Controller
         $type = $request->type;
         $filters = $request->filters;
 
-        return app(ReportDataService::class)->getData($type, json_decode($filters, true));
+        return $this->reportDataService->getData($type, json_decode($filters, true));
     }
 }

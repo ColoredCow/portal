@@ -198,7 +198,7 @@ class RevenueReportService
         return $data;
     }
 
-    public function getRevenueForClient($filters, $client)
+    public function getRevenueReportDataForClient($filters, $client)
     {
         $clientInvoiceDetails = Invoice::where('client_id', $client->id)
             ->whereBetween('sent_on', [$filters['start_date'], $filters['end_date']])
