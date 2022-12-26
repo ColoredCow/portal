@@ -197,14 +197,14 @@ class RevenueReportService
 
         return $data;
     }
-    
+
     public function getRevenueForClient($filters, $client)
     {
         $clientInvoiceDetails = Invoice::where('client_id', $client->id)
             ->whereBetween('sent_on', [$filters['start_date'], $filters['end_date']])
             ->orderby('sent_on')
             ->get();
-        
+
         $amountMonthWise = [];
         $totalAmount = 0;
 

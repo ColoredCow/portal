@@ -26,7 +26,7 @@ class ReportDataService
 
         $filters['start_date'] = $defaultStartDate;
         $filters['end_date'] = $defaultEndDate;
-        
+
         $reportData = app(RevenueReportService::class)->getRevenueForClient($filters, $client);
 
         return [
