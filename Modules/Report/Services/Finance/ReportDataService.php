@@ -24,7 +24,7 @@ class ReportDataService
         return $filters;
     }
 
-    function getDataForClientRevenueReportPage(array $data)
+    public function getDataForClientRevenueReportPage(array $data)
     {
         $selectedClient = isset($data['client_id']) ? Client::find($data['client_id']) : Client::orderBy('name')->first();
 
