@@ -46,8 +46,8 @@
                 </div>
 
                 <div class="col-md-3">
-                    <div class="card h-75 bg-theme-gray-lighter">
-                        <a class="card-body text-decoration-none" href="#">
+                    <div class="card h-75">
+                        <a class="card-body no-transition" href="{{ route('reports.finance.dashboard.client') }}">
                             <h2 class="text-center">Revenue by client</h2><br>
                         </a>
                     </div>
