@@ -46,7 +46,7 @@ class ProjectService implements ProjectServiceContract
         ->paginate(config('constants.pagination_size'));
 
         $tabCounts = $this->getListTabCounts($filters, $showAllProjects, $memberId);
-
+        
         return array_merge(['clients' => $projectsData], $tabCounts);
     }
 
@@ -200,7 +200,7 @@ class ProjectService implements ProjectServiceContract
             }
             $project->getTeamMembers()->update(['ended_on' => now()]);
         }
-
+        
         return $isProjectUpdated;
     }
 
@@ -250,7 +250,7 @@ class ProjectService implements ProjectServiceContract
     {
         if (! isset($data['url'])) {
             $project->repositories()->delete();
-
+            
             return;
         }
 
@@ -288,7 +288,7 @@ class ProjectService implements ProjectServiceContract
         $client = Client::find($clientID);
         $clientProjectsCount = $client->projects->count() ?: 0;
         $clientProjectsCount = $clientProjectsCount + 1;
-
+        
         return sprintf('%03s', $clientProjectsCount);
     }
 
@@ -304,7 +304,7 @@ class ProjectService implements ProjectServiceContract
                 $numberOfWorkingDays++;
             }
         }
-
+        
         return $numberOfWorkingDays;
     }
 
@@ -337,7 +337,7 @@ class ProjectService implements ProjectServiceContract
             ];
             }
         }
-
+        
         return $keyAccountManagersDetails;
     }
 
@@ -356,7 +356,7 @@ class ProjectService implements ProjectServiceContract
                 ];
             }
         }
-
+        
         return $projectsData;
     }
 
@@ -376,7 +376,7 @@ class ProjectService implements ProjectServiceContract
                 }
             }
         }
-
+        
         return $projectDetails;
     }
 }
