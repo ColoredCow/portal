@@ -110,7 +110,7 @@ class ProjectService implements ProjectServiceContract
     public function getClients($status = 'active')
     {
         if ($status == 'all') {
-            $client = Client::where('status', 'active')->orWhere('status', 'inactive')->orderBy('name')->get();
+            $client = Client::orderBy('name')->get();
         } else {
             $client = Client::where('status', $status)->orderBy('name')->get();
         }
