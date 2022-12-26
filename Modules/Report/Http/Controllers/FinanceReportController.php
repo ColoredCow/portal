@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Report\Services\Finance\ReportDataService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Modules\Client\Entities\Client;
 use Modules\Report\Services\Finance\ProfitAndLossReportService;
 
 class FinanceReportController extends Controller
