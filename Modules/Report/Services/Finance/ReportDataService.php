@@ -11,7 +11,7 @@ class ReportDataService
     {
         if ($type == 'revenue-trend') {
             return $this->revenueTrend($filters);
-        } else if ($type == 'revenue-trend-client-wise') {
+        } elseif ($type == 'revenue-trend-client-wise') {
             return $this->revenueTrendForClient($filters);
         }
 
@@ -34,8 +34,7 @@ class ReportDataService
         ];
     }
 
-    private function revenueTrend($filters)
-    {
+    private function revenueTrend($filters) {
         $defaultStartDate = today()->startOfMonth();
         $defaultEndDate = today()->endOfMonth();
         $defaultPreviousStartDate = today()->subMonth()->startOfMonth();
