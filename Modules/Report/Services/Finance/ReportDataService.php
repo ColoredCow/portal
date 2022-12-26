@@ -2,7 +2,6 @@
 
 namespace Modules\Report\Services\Finance;
 
-use Carbon\Carbon;
 use Modules\Client\Entities\Client;
 
 class ReportDataService
