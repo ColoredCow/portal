@@ -18,7 +18,8 @@ class ReportDataService
         return $filters;
     }
 
-    private function revenueTrendForClient($filters) {
+    private function revenueTrendForClient($filters)
+    {
         $client = Client::find($filters['client_id']);
         $defaultStartDate = $client->created_at ?? $client->invoices()->orderBy('sent_on')->first()->sent_on;
         $defaultEndDate = today();
@@ -34,7 +35,8 @@ class ReportDataService
         ];
     }
 
-    private function revenueTrend($filters) {
+    private function revenueTrend($filters)
+    {
         $defaultStartDate = today()->startOfMonth();
         $defaultEndDate = today()->endOfMonth();
         $defaultPreviousStartDate = today()->subMonth()->startOfMonth();
