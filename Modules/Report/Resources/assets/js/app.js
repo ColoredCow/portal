@@ -9,6 +9,13 @@ $(function() {
 			financeReportRevenueTrendsReport
 		);
 	}
+	if ($("#clientWiseReportRevenueTrends").length) {
+		const clientId = $("#clientSelectBox option:selected").val()
+		getData(
+			{ type: "revenue-trend-client-wise", filters: {'client_id': clientId} },
+			clientWiseRevenueTrendsReport
+		);
+	}
 });
 
 function financeReportRevenueTrendsReport(reportsData) {
@@ -63,6 +70,60 @@ function financeReportRevenueTrendsReport(reportsData) {
 						scaleLabel: {
 							display: false,
 							labelString: "Client",
+						}
+					},
+				]
+			},
+		}
+	};
+
+	new Chart(canvasElementId, chartConfig);
+}
+
+function clientWiseRevenueTrendsReport(reportsData) {
+	const canvasElementId = "clientWiseReportRevenueTrends";
+	const labels = reportsData.labels;
+	const currentPeriodTotalRevenue = reportsData.data.total_amount;
+	const chartData = {
+		labels: labels,
+		datasets: [
+			{
+				label: "Amount for month",
+				backgroundColor: "rgb(255, 99, 132)",
+				borderColor: "rgb(0,0,0)",
+				data: reportsData.data.amount,
+			}
+		],
+	};
+
+	const chartConfig = {
+		type: reportsData.graph_type || "bar",
+		data: chartData,
+		options: {
+			categoryPercentage: 1.0,
+			barPercentage: 0.8,
+			maintainAspectRatio: true,
+			indexAxis: "y",
+			responsive: true,
+			title: {
+				display: true,
+				text: "Total revenue: Rs. " + currentPeriodTotalRevenue
+			},
+			scales: {
+				yAxes: [
+					{
+						barPercentage: 0.3,
+						scaleLabel: {
+							display: true,
+							labelString: "Amount (In Rs)",
+						}
+					},
+				],
+				xAxes: [
+					{
+						scaleLabel: {
+							display: true,
+							labelString: "Month",
 						}
 					},
 				]

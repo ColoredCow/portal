@@ -2,18 +2,39 @@
 
 namespace Modules\Report\Services\Finance;
 
+use Carbon\Carbon;
+use Modules\Client\Entities\Client;
+
 class ReportDataService
 {
     public function getData($type, $filters)
     {
         if ($type == 'revenue-trend') {
-            return $this->revenueTrend();
+            return $this->revenueTrend($filters);
+        } else if ($type == 'revenue-trend-client-wise') {
+            return $this->revenueTrendForClient($filters);
         }
 
         return $filters;
     }
 
-    private function revenueTrend()
+    private function revenueTrendForClient($filters) {
+        $client = Client::find($filters['client_id']);
+        $defaultStartDate = $client->created_at ?? $client->invoices()->orderBy('sent_on')->first()->sent_on;
+        $defaultEndDate = today();
+
+        $filters['start_date'] = $defaultStartDate;
+        $filters['end_date'] = $defaultEndDate;
+        
+        $reportData = app(RevenueReportService::class)->getRevenueForClient($filters, $client);
+
+        return [
+            'labels' => $reportData['months'],
+            'data' => $reportData
+        ];
+    }
+
+    private function revenueTrend($filters)
     {
         $defaultStartDate = today()->startOfMonth();
         $defaultEndDate = today()->endOfMonth();
@@ -28,11 +49,11 @@ class ReportDataService
         ];
         $filters = array_merge($defaultFilters, request()->all());
 
-        $reportData = app(RevenueReportService::class)->getClientWiseRevenue($filters);
+        $reportData = app(RevenueReportService::class)->getRevenueGroupedByClient($filters);
 
         return [
             'labels' => $reportData['clients_name'],
-            'data' => $reportData
+            'data' => $reportData,
         ];
     }
 }

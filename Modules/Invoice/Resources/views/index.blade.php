@@ -138,7 +138,7 @@
                             $index = 0;
                         @endphp
                         @foreach ($clientsReadyToSendInvoicesData as $client)
-                        @if ($client->getClientLevelProjectsBillableHoursForInvoice() == 0)
+                            @if ($client->getClientLevelProjectsBillableHoursForInvoice() == 0)
                                 @continue
                             @endif
                             @php

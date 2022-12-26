@@ -167,7 +167,7 @@ class RevenueReportService
         return $results;
     }
 
-    public function getClientWiseRevenue($filters)
+    public function getRevenueGroupedByClient($filters)
     {
         $currentPeriodInvoiceDetails = Invoice::with('client')
             ->whereBetween('sent_on', [$filters['current_period_start_date'], $filters['current_period_end_date']])
@@ -196,5 +196,28 @@ class RevenueReportService
         }
 
         return $data;
+    }
+    
+    public function getRevenueForClient($filters, $client)
+    {
+        $clientInvoiceDetails = Invoice::where('client_id', $client->id)
+            ->whereBetween('sent_on', [$filters['start_date'], $filters['end_date']])
+            ->orderby('sent_on')
+            ->get();
+        
+        $amountMonthWise = [];
+        $totalAmount = 0;
+
+        foreach ($clientInvoiceDetails as $invoice) {
+            $invoiceAmount = round($invoice->total_amount_in_inr, 2);
+            $totalAmount += $invoiceAmount;
+            $amountMonthWise[$invoice->sent_on->format('M-Y')] = ($amountMonthWise[$invoice->sent_on->format('m-Y')] ?? 0) + $invoiceAmount;
+        }
+
+        return [
+            'months' => array_keys($amountMonthWise),
+            'amount' => array_values($amountMonthWise),
+            'total_amount' => round($totalAmount, 2)
+        ];
     }
 }
