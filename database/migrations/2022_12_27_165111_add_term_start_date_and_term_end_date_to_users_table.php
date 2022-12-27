@@ -29,6 +29,6 @@ class AddTermStartDateAndTermEndDateToUsersTable extends Migration
         Schema::table('invoices', function (Blueprint $table) {
             $table->dropColumn('term_start_date');
             $table->dropColumn('term_end_date');
-         });
+        });
     }
 }
