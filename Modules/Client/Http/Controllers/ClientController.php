@@ -2,6 +2,7 @@
 
 namespace Modules\Client\Http\Controllers;
 
+use App\Models\Country;
 use Modules\Client\Entities\Client;
 use Modules\Client\Contracts\ClientServiceContract;
 use Modules\Client\Http\Requests\ClientFormsRequest;
@@ -33,8 +34,9 @@ class ClientController extends ModuleBaseController
     public function create()
     {
         $this->authorize('create', Client::class);
+        $countries = Country::all();
 
-        return view('client::create', $this->service->create());
+        return view('client::create', $this->service->create(), compact('countries'));
     }
 
     /**

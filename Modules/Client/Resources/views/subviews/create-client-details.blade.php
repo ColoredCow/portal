@@ -18,7 +18,8 @@
         </div>
     </div>
     <br>
-    <div class="form-row">
+    <div class="form-row" action="{{url('/')}}/ClientController@store" method="posts">
+        @csrf
             <div class=" col-md-5 ">
                 <div class="form-check-inline mr-0 form-group">
                     <input type="checkbox" 
@@ -58,7 +59,17 @@
                 @endforeach
             </select>
         </div>
-
+        <div class="form-group col-md-5">
+            <label for="country_id">Country
+                <span data-toggle="tooltip" data-placement="right" title="If this client came via a channel partner then link that client from here."><i class="fa fa-question-circle"></i>&nbsp;</span>
+            </label>
+            <select name="country_id" id="country_id" class="form-coutrol">
+                <option value="">Select Country</option>
+                @foreach ($countries as $country )
+                    <option value="{{$country->id}}">{{$country->name}}</option>
+                @endforeach
+            </select>
+        </div>
     </div>
 
 </div>
