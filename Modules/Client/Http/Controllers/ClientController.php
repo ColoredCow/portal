@@ -34,9 +34,8 @@ class ClientController extends ModuleBaseController
     public function create()
     {
         $this->authorize('create', Client::class);
-        $countries = Country::all();
 
-        return view('client::create', $this->service->create(), compact('countries'));
+        return view('client::create', $this->service->create());
     }
 
     /**
