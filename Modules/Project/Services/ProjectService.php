@@ -5,18 +5,18 @@ namespace Modules\Project\Services;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Arr;
-use Modules\User\Entities\User;
-use Modules\Client\Entities\Client;
 use Illuminate\Support\Facades\Auth;
-use Modules\Project\Entities\Project;
 use Illuminate\Support\Facades\Storage;
-use Modules\Project\Entities\ProjectMeta;
+use Modules\Client\Entities\Client;
+use Modules\Project\Contracts\ProjectServiceContract;
+use Modules\Project\Entities\Project;
+use Modules\Project\Entities\ProjectBillingDetail;
 use Modules\Project\Entities\ProjectContract;
+use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectTeamMember;
-use Modules\Project\Entities\ProjectBillingDetail;
-use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\HR\Entities\HrJobDesignation;
+use Modules\User\Entities\User;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -24,7 +24,7 @@ class ProjectService implements ProjectServiceContract
     {
         $filters = [
             'status' => $data['status'] ?? 'active',
-            'is_amc' => $data['is_amc'] ?? 0
+            'is_amc' => $data['is_amc'] ?? 0,
         ];
 
         if ($nameFilter = $data['name'] ?? false) {
@@ -41,10 +41,10 @@ class ProjectService implements ProjectServiceContract
         };
 
         $projectsData = Client::query()
-        ->with('projects', $projectClauseClosure)
-        ->whereHas('projects', $projectClauseClosure)
-        ->orderBy('name')
-        ->paginate(config('constants.pagination_size'));
+            ->with('projects', $projectClauseClosure)
+            ->whereHas('projects', $projectClauseClosure)
+            ->orderBy('name')
+            ->paginate(config('constants.pagination_size'));
 
         $tabCounts = $this->getListTabCounts($filters, $showAllProjects, $memberId);
 
@@ -80,7 +80,7 @@ class ProjectService implements ProjectServiceContract
                     'project_id' => $project->id,
                 ],
                 [
-                    'value' => $data['billing_level']
+                    'value' => $data['billing_level'],
                 ]
             );
         }
@@ -95,22 +95,28 @@ class ProjectService implements ProjectServiceContract
             'mainProjectsCount' => array_merge($filters, ['status' => 'active', 'is_amc' => false]),
             'AMCProjectCount' => array_merge($filters, ['status' => 'active', 'is_amc' => true]),
             'haltedProjectsCount' => array_merge($filters, ['status' => 'halted']),
-            'inactiveProjectsCount' => array_merge($filters, ['status' => 'inactive'])
+            'inactiveProjectsCount' => array_merge($filters, ['status' => 'inactive']),
         ];
 
         foreach ($counts as $key => $tabFilters) {
             $query = Project::query()->applyFilter($tabFilters);
             $counts[$key] = $showAllProjects
-                ? $query->count()
-                : $query->linkedToTeamMember($userId)->count();
+            ? $query->count()
+            : $query->linkedToTeamMember($userId)->count();
         }
 
         return $counts;
     }
 
-    public function getClients()
+    public function getClients($status = 'active')
     {
-        return Client::where('status', 'active')->orderBy('name')->get();
+        if ($status == 'all') {
+            $client = Client::orderBy('name')->get();
+        } else {
+            $client = Client::where('status', $status)->orderBy('name')->get();
+        }
+
+        return $client;
     }
 
     public function getTeamMembers()
@@ -154,6 +160,9 @@ class ProjectService implements ProjectServiceContract
 
             case 'project_financial_details':
                 return $this->updateProjectFinancialDetails($data, $project);
+
+            case 'project_techstack':
+                return $this->updateProjectTechstack($data, $project);
         }
     }
 
@@ -180,13 +189,13 @@ class ProjectService implements ProjectServiceContract
                     'project_id' => $project->id,
                 ],
                 [
-                    'value' => $data['billing_level']
+                    'value' => $data['billing_level'],
                 ]
             );
         }
 
         $this->saveOrUpdateProjectContract($data, $project);
-        if ($data['status'] == 'active') {
+        if ($data['status'] == 'active' || $data['status'] == 'halted') {
             $project->client->update(['status' => 'active']);
         } else {
             if (! $project->client->projects()->where('status', 'active')->exists()) {
@@ -260,6 +269,21 @@ class ProjectService implements ProjectServiceContract
         }
     }
 
+    private function updateProjectTechstack($data, $project)
+    {
+        foreach ($data as $key => $value) {
+            ProjectMeta::updateOrCreate(
+                [
+                    'key' => $key,
+                    'project_id' => $project->id,
+                ],
+                [
+                    'value' => $value,
+                ]
+            );
+        }
+    }
+
     private function getClientProjectID($clientID)
     {
         $client = Client::find($clientID);
@@ -308,10 +332,10 @@ class ProjectService implements ProjectServiceContract
             $user = $project->client->keyAccountManager;
             if ($user) {
                 $keyAccountManagersDetails[$user->id][] = [
-                'project' =>$project,
-                'email' =>$user->email,
-                'name' =>$user->name,
-            ];
+                    'project' => $project,
+                    'email' => $user->email,
+                    'name' => $user->name,
+                ];
             }
         }
 
@@ -348,7 +372,7 @@ class ProjectService implements ProjectServiceContract
                     $projectDetails[] = [
                         'projects' => $project,
                         'name' => $teamMember->name,
-                        'email' =>$teamMember->email,
+                        'email' => $teamMember->email,
                     ];
                 }
             }
