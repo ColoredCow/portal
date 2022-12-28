@@ -49,7 +49,7 @@ class ClientService implements ClientServiceContract
     public function create()
     {
         $countries = Country::all();
-        
+
         return [
             'keyAccountManagers' => $this->getKeyAccountManagers(),
             'channelPartners' => $this->getChannelPartners(),
@@ -60,13 +60,12 @@ class ClientService implements ClientServiceContract
 
     public function edit($client, $section)
     {
-        if (!$section || $section == 'client-details') {
+        if (! $section || $section == 'client-details') {
             return [
                 'channelPartners' => $this->getChannelPartners(),
                 'parentOrganisations' => $this->getParentOrganisations(),
                 'client' => $client,
-                'section' =>
-                    $section ?: config('client.default-client-form-stage'),
+                'section' => $section ?: config('client.default-client-form-stage'),
             ];
         }
 
@@ -91,9 +90,7 @@ class ClientService implements ClientServiceContract
             return [
                 'client' => $client,
                 'section' => $section,
-                'clientBillingAddress' => $this->getClientBillingAddress(
-                    $client
-                ),
+                'clientBillingAddress' => $this->getClientBillingAddress($client),
                 'keyAccountManagers' => $this->getKeyAccountManagers(),
                 'clientBillingDetail' => $client->billingDetails,
             ];
@@ -140,8 +137,7 @@ class ClientService implements ClientServiceContract
         }
 
         return [
-            'route' =>
-                $data['submit_action'] == 'next' ? $nextStage : $defaultRoute,
+            'route' => $data['submit_action'] == 'next' ? $nextStage : $defaultRoute,
         ];
     }
 
@@ -152,10 +148,7 @@ class ClientService implements ClientServiceContract
 
     public function getAll($status = 'active')
     {
-        return Client::status($status)
-            ->with('projects')
-            ->orderBy('name')
-            ->get();
+        return Client::status($status)->with('projects')->orderBy('name')->get();
     }
 
     public function store($data)
@@ -243,13 +236,8 @@ class ClientService implements ClientServiceContract
 
     private function updateBillingDetails($data, $client)
     {
-        $client->update([
-            'key_account_manager_id' => $data['key_account_manager_id'],
-        ]);
-        ClientBillingDetail::updateOrCreate(
-            ['client_id' => $client->id],
-            $data
-        );
+        $client->update(['key_account_manager_id' => $data['key_account_manager_id']]);
+        ClientBillingDetail::updateOrCreate(['client_id' => $client->id], $data);
 
         return true;
     }
@@ -266,10 +254,7 @@ class ClientService implements ClientServiceContract
 
     public function getClientBillingAddress($client)
     {
-        $addresses = $client
-            ->addresses()
-            ->with('country')
-            ->get();
+        $addresses = $client->addresses()->with('country')->get();
         if ($addresses->isEmpty()) {
             return;
         }
