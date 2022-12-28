@@ -29,7 +29,6 @@ class ClientService implements ClientServiceContract
             return $value->isTopLevel();
         });
 
-
         /* Filter all the status (active/Inactive clients which
          * does not have a parent with different status) */
 
@@ -44,7 +43,7 @@ class ClientService implements ClientServiceContract
     public function create()
     {
         $countries = Country::all();
-        
+
         return [
             'keyAccountManagers' => $this->getKeyAccountManagers(),
             'channelPartners' => $this->getChannelPartners(),
