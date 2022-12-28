@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Modules\HR\Database\Seeders\HRDatabaseSeeder;
 
-
 class DatabaseSeeder extends Seeder
 {
     /**

@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
 
-
 class ProjectDatabaseSeeder extends Seeder
 {
     /**
