@@ -22,7 +22,7 @@ $(function () {
 				button.siblings(".fa-spinner").toggleClass("d-none");
 			},
 		});
-	});;
+	});
 });
 
 $(document).on("click", "#add_task", (e) => {

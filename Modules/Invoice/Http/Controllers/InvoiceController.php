@@ -95,12 +95,12 @@ class InvoiceController extends Controller
         $invoiceNumber = $data['invoiceNumber'];
         $pdf = $this->showInvoicePdf($data);
 
-        return $pdf->inline(str_replace('-', '', $invoiceNumber) . '.pdf');
+        return $pdf->inline($invoiceNumber . '.pdf');
     }
 
     public function showInvoicePdf($data)
     {
-        $data['invoiceNumber'] = substr($data['invoiceNumber'], 0, -5);
+        $data['invoiceNumber'] = $data['invoiceNumber'];
         $pdf = App::make('snappy.pdf.wrapper');
 
         $template = config('invoice.templates.invoice.clients.' . optional($data['client'])->name) ?: 'invoice-template';
