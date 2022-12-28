@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
         if (! app()->environment('production')) {
             $this->call(UsersTableSeeder::class);
         }
-        
         // books
         $this->call(BooksPermissionsSeeder::class);
         $this->call(BookCategoriesTableSeeder::class);
