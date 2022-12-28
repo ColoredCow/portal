@@ -44,11 +44,12 @@ class ClientService implements ClientServiceContract
     public function create()
     {
         $countries = Country::all();
+        
         return [
             'keyAccountManagers' => $this->getKeyAccountManagers(),
             'channelPartners' => $this->getChannelPartners(),
             'parentOrganisations' => $this->getParentOrganisations(),
-            'countries' => $countries
+            'countries' => $countries,
         ];
     }
 

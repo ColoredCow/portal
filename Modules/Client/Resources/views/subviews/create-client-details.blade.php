@@ -45,8 +45,6 @@
                     </label>
                 </div>
             </div>
-     
-        
 
         <div class="form-group offset-md-1 col-md-5">
             <label for="key_account_manager_id">Parent organisation
