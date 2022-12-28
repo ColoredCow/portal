@@ -5,6 +5,8 @@ namespace Modules\Project\Database\Seeders;
 use Illuminate\Database\Seeder;
 use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
+use Modules\HR\Database\Seeders\HRDatabaseSeeder;
+
 
 class ProjectDatabaseSeeder extends Seeder
 {
@@ -22,7 +24,7 @@ class ProjectDatabaseSeeder extends Seeder
                 ->for($client)
                 ->create();
         }
-
+        $this->call(HRDatabaseSeeder::class);
         $this->call(ProjectPermissionsTableSeeder::class);
         $this->call(ProjectTeamMemberDatabaseSeeder::class);
         $this->call(ProjectTeamMembersEffortDatabaseSeeder::class);

@@ -37,15 +37,20 @@ return [
             'project-management' => 'Project Management'
         ],
         'designation' => [
-            'project-manager' => 'Project Manager',
-            'senior-software-engineer' => 'Senior Software Engineer',
-            'software-engineer' => 'Software Engineer',
-            'product-designer' => 'Product Designer',
-            'graphics-designer' => 'Graphics Designer',
-            'solution-architect' => 'Solution Architect',
-            'finance-lead' => 'Finance Lead',
-            'quality-analyst' => 'Quality Analyst',
-            'chief-executive-officer' => 'Chief Executive Officer'
+            'developer' => 'Developer',
+            'designer' => 'Designer',
+            'tester' => 'Tester(QA)',
+            'consultant' => 'Consultant',
+            'finance_lead' => 'Finance Lead',
+            'project_manager' => 'Project Manager',
+            'quality_analyst' => 'Quality Analyst',
+            'product_designer' => 'Product Designer',
+            'customer_support' => 'Customer Support',
+            'graphics_designer' => 'Graphics Designer',
+            'software_engineer' => 'Software Engineer',
+            'solution_architect' => 'Solution Architect',
+            'senior_software_engineer' => 'Senior Software Engineer',
+            'chief_executive_officer' => 'Chief Executive Officer'
         ],
 
     ],

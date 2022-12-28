@@ -7,6 +7,7 @@ use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\User\Entities\User;
+use Modules\HR\Entities\HrJobDesignation;
 
 class ProjectTeamMemberFactory extends Factory
 {
@@ -31,6 +32,7 @@ class ProjectTeamMemberFactory extends Factory
             'team_member_id' => function () {
                 return User::factory()->create()->id;
             },
+            'designation_id' => HrJobDesignation::where('designation',array_rand(config('project.designation')))->first()->id, 
             'daily_expected_effort' => '8',
             'started_on' => Carbon::today()->subDays(10)
         ];
