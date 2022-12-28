@@ -15,15 +15,15 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // roles
-        $this->call(HRDatabaseSeeder::class);
         $this->call(RolesTableSeeder::class);
         $this->call(CountriesTableSeeder::class);
         if (! app()->environment('production')) {
             $this->call(UsersTableSeeder::class);
         }
-
+        
         // books
         $this->call(BooksPermissionsSeeder::class);
         $this->call(BookCategoriesTableSeeder::class);
+        $this->call(HRDatabaseSeeder::class);
     }
 }
