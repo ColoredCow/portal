@@ -20,14 +20,14 @@ class ResumeScreeningEvaluationSeeder extends Seeder
             $evaluationParametersList =
                 [
                 [
-                    'id' => 1,
+                    // 'id' => 1,
                     'name' => 'Resume looks good?',
                     'segment_id' => 1,
                     'marks' => 1,
                 ],
 
                 [
-                    'id' => 2,
+                    // 'id' => 2,
                     'name' => 'Seems expensive?',
                     'segment_id' => 1,
                     'marks' => 1,
@@ -35,7 +35,7 @@ class ResumeScreeningEvaluationSeeder extends Seeder
                 ],
 
                 [
-                    'id' => 3,
+                    // 'id' => 3,
                     'name' => 'Looks ambitious?',
                     'segment_id' => 1,
                     'marks' => 1,
@@ -43,7 +43,7 @@ class ResumeScreeningEvaluationSeeder extends Seeder
                 ],
 
                 [
-                    'id' => 4,
+                    // 'id' => 4,
                     'name' => 'Proceed to next round?',
                     'segment_id' => 1,
                     'marks' => 1,
@@ -51,7 +51,7 @@ class ResumeScreeningEvaluationSeeder extends Seeder
                 ],
 
                 [
-                    'id' => 5,
+                    // 'id' => 5,
                     'name' => 'Possible fitment for hills?',
                     'segment_id' => 1,
                     'marks' => 1,
