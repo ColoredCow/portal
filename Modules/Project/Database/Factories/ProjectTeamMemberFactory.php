@@ -32,7 +32,7 @@ class ProjectTeamMemberFactory extends Factory
             'team_member_id' => function () {
                 return User::factory()->create()->id;
             },
-            'designation_id' => HrJobDesignation::where('designation', array_rand(config('project.designation')))->first()->id, 
+            'designation_id' => HrJobDesignation::where('designation', array_rand(config('project.designation')))->first()->id,
             'daily_expected_effort' => '8',
             'started_on' => Carbon::today()->subDays(10)
         ];
