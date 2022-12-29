@@ -228,9 +228,9 @@ class InvoiceService implements InvoiceServiceContract
         ];
     }
 
-    public function delete($invoiceId)
+    public function delete($invoice)
     {
-        return $invoiceId->delete();
+        return $invoice->delete();
     }
 
     public function getUnpaidInvoices()
