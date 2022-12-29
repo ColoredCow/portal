@@ -2,12 +2,12 @@
 
 namespace Modules\Invoice\Http\Controllers;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
-use Modules\Invoice\Entities\Invoice;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Modules\Invoice\Entities\Invoice;
 
 class InvoiceController extends Controller
 {
@@ -55,7 +55,7 @@ class InvoiceController extends Controller
     {
         $this->authorize('invoiceDetails', Invoice::class);
         $filters = $request->all();
-        if (! $filters) {
+        if (!$filters) {
             return redirect(route('invoice.details', $this->service->defaultGstReportFilters()));
         }
 
@@ -90,7 +90,7 @@ class InvoiceController extends Controller
             'sent_on' => today(config('constants.timezone.indian')),
             'due_on' => today(config('constants.timezone.indian'))->addDays(6),
             'period_start_date' => $request->period_start_date,
-            'period_end_date' => $request->period_end_date
+            'period_end_date' => $request->period_end_date,
         ]);
         $invoiceNumber = $data['invoiceNumber'];
         $pdf = $this->showInvoicePdf($data);
@@ -141,7 +141,7 @@ class InvoiceController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     * @param int $id
+     * @param Invoice $invoice
      */
     public function destroy(Invoice $invoice)
     {
@@ -162,7 +162,7 @@ class InvoiceController extends Controller
     {
         $this->authorize('taxReport', Invoice::class);
         $filters = $request->all();
-        if (! $filters) {
+        if (!$filters) {
             return redirect(route('invoice.tax-report', $this->service->defaultTaxReportFilters()));
         }
 
