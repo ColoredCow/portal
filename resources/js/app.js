@@ -282,28 +282,21 @@ $(document).ready(function () {
 	});
 });
 
-$("body").on("click","#resume-looks-good-no",function(){
-	$("#rejectButton").removeClass("d-none");
-	$("#nextButton").addClass("d-none");
-	$(".resume-looks-good-no").hide();
-});
+$(document).on("click","#viewReject",function(){
+	
+		$("body").on("click",`label[for='${$("#NO").data("target")}-no']`,function(){
+			$("#rejectButton").removeClass("d-none");
+			$("#nextButton").addClass("d-none");
 
-$("body").on("click","#resume-looks-good-yes",function(){
-	$("#nextButton").removeClass("d-none");
-	$("#rejectButton").addClass("d-none");
-});
+		});
 
-// $("body").on("click","label[for='resume-looks-good-no']",function(){
-// 	$("#rejectButton").removeClass("d-none");
-// 	$("#nextButton").addClass("d-none");
-// 	$(".resume-looks-good-no").hide();
-// 	// console.log($("#label[0]"));
-// });
+		$("body").on("click",`label[for='${$("#NO").data("target")}-yes']`,function(){
+			$("#nextButton").removeClass("d-none");
+			$("#rejectButton").addClass("d-none");
 
-// $("body").on("click","label[for='resume-looks-good-yes']",function(){
-// 	$("#nextButton").removeClass("d-none");
-// 	$("#rejectButton").addClass("d-none");
-// });
+		});
+	}
+);
 
 $(document).on("click",".reject-button",function(){
 	rejectApplication();
