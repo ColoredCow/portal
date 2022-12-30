@@ -260,8 +260,6 @@ class EvaluationController extends Controller
     {
         $optionList = [];
 
-        // dump($options);
-
         foreach ($options as $option) {
             if ($option) {
                 $optionList[] = [
@@ -271,6 +269,7 @@ class EvaluationController extends Controller
                 ];
             }
         }
+        
         return $optionList;
     }
 
