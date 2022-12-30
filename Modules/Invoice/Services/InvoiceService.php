@@ -228,7 +228,7 @@ class InvoiceService implements InvoiceServiceContract
         ];
     }
 
-    public function delete($invoice)
+    public function delete(Invoice $invoice)
     {
         return $invoice->delete();
     }
