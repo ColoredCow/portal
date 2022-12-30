@@ -141,11 +141,11 @@ class InvoiceController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     * @param int $id
+     * @param Invoice $invoice
      */
-    public function destroy($id)
+    public function destroy(Invoice $invoice)
     {
-        return $this->service->delete($id);
+        return $this->service->delete($invoice);
     }
 
     public function getInvoiceFile(Request $request, $invoiceID)
