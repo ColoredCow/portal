@@ -284,19 +284,18 @@ $(document).ready(function () {
 
 $(document).on("click","#viewReject",function(){
 	
-		$("body").on("click",`label[for='${$("#NO").data("target")}-no']`,function(){
-			$("#rejectButton").removeClass("d-none");
-			$("#nextButton").addClass("d-none");
+	$("body").on("click",`label[for='${$("#NO").data("target")}-no']`,function(){
+		$("#rejectButton").removeClass("d-none");
+		$("#nextButton").addClass("d-none");
 
-		});
+	});
 
-		$("body").on("click",`label[for='${$("#NO").data("target")}-yes']`,function(){
-			$("#nextButton").removeClass("d-none");
-			$("#rejectButton").addClass("d-none");
+	$("body").on("click",`label[for='${$("#NO").data("target")}-yes']`,function(){
+		$("#nextButton").removeClass("d-none");
+		$("#rejectButton").addClass("d-none");
 
-		});
-	}
-);
+	});
+});
 
 $(document).on("click",".reject-button",function(){
 	rejectApplication();
