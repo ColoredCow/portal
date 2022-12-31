@@ -47,7 +47,7 @@ class Lifecycle_of_mail extends Command
             $total_no_application = $application_dates->count();
             if($difference_days>config('hr.time-period.outdated')){
                 Mail::send('emails.send-application-lifecycle', ['no_of_application'=>$total_no_application], function ($messge) use($email) {
-                    $messge->to($email)->subject('this is my job');
+                    $messge->to($email)->subject('Application Life-Cycle');
                 });
             }
      }
