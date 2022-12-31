@@ -45,12 +45,12 @@ class Lifecycle_of_mail extends Command
         foreach ($application_dates as $date) {
             $difference_days = $date->diffInDays(now());
             if ($difference_days > config('hr.time-period.outdated')) {
-                $exceed_date_application_no+=1;
+                $exceed_date_application_no += 1;
             }
         }
-        
-        return (Mail::send('emails.send-application-lifecycle', ['no_of_application' => $exceed_date_application_no], function ($messge) use ($email) {
+
+        return Mail::send('emails.send-application-lifecycle', ['no_of_application' => $exceed_date_application_no], function ($messge) use ($email) {
             $messge->to($email)->subject('Application Life-Cycle');
-        }));
+        });
     }
 }
