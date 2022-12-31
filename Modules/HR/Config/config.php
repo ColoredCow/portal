@@ -15,6 +15,9 @@ return [
         'cut-off-score-resume-screening' => 6,
         'cut-off-score-telephonic-interview' => 5,
     ],
+    'time-period'=>[
+        'outdated'=>15
+    ],
     'opportunities' => [
         'job' => [
             'title' => 'Job',
