@@ -41,7 +41,7 @@ class Lifecycle_of_mail extends Command
     {
         $email = 'hr@coloredcow.com';
         $application_dates= Application::whereIn('status', ['new', 'in_progress'])->pluck('created_at');
-         foreach($application_dates as $date){
+        foreach($application_dates as $date){
             $difference_days = $date->diffInDays(now());
             $total_no_application = $application_dates->count();
             if($difference_days>config('hr.time-period.outdated')){
@@ -50,6 +50,5 @@ class Lifecycle_of_mail extends Command
                 });
             }
      }
-        return 0;
     }
 }
