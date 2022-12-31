@@ -2,7 +2,6 @@
 
 namespace Modules\HR\Emails;
 
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use Modules\HR\Entities\Application;
