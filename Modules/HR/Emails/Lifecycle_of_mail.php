@@ -50,6 +50,7 @@ class Lifecycle_of_mail extends Command
                 });
             }
         }
+
         return 0;
     }
 }
