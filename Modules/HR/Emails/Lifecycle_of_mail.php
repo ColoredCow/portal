@@ -41,16 +41,16 @@ class Lifecycle_of_mail extends Command
     {
         $email = 'hr@coloredcow.com';
         $application_dates = Application::whereIn('status', ['new', 'in_progress'])->pluck('created_at');
+        $exceed_date_application_no = 0;
         foreach ($application_dates as $date) {
             $difference_days = $date->diffInDays(now());
-            $total_no_application = $application_dates->count();
             if ($difference_days > config('hr.time-period.outdated')) {
-                Mail::send('emails.send-application-lifecycle', ['no_of_application'=>$total_no_application], function ($messge) use ($email) {
-                    $messge->to($email)->subject('Application Life-Cycle');
-                });
+                $exceed_date_application_no+=1;
             }
         }
-
-        return 0;
+        
+        return (Mail::send('emails.send-application-lifecycle', ['no_of_application' => $exceed_date_application_no], function ($messge) use ($email) {
+            $messge->to($email)->subject('Application Life-Cycle');
+        }));
     }
 }
