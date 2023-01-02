@@ -49,6 +49,6 @@ class LifeCycleOfMail extends Command
             }
         }
 
-        return Mail::to(config('hr.applications-life-cycle.email'))->queue(new NotifyExpiredLifeCycleEmail($expiredApplicationNumber)); 
+        return Mail::to(config('hr.applications-life-cycle.email'))->queue(new NotifyExpiredLifeCycleEmail($expiredApplicationNumber));
     }
 }
