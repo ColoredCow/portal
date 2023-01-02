@@ -20,17 +20,17 @@
                          <form method="POST" action="{{ route('roles.add-roles') }}" id="create-form">
                              @csrf
                              <div class="mb-3">
-                                 <label for="name" class="form-label">Name<strong class="text-danger">*</strong></label>
+                                 <label for="name" class="form-label">Name<strong class="text-danger"></strong></label>
                                  <input type="text" class="form-control" name="name" required>
                              </div>
                              <div class="mb-3">
                                  <label for="name" class="form-label">Label<strong
-                                         class="text-danger">*</strong></label>
+                                         class="text-danger"></strong></label>
                                  <input type="text" class="form-control"name="label" required>
                              </div>
                              <div class="mb-3">
                                  <label for="name" class="form-label">Guard Name<strong
-                                         class="text-danger">*</strong></label>
+                                         class="text-danger"></strong></label>
                                  <input type="text" class="form-control"name="guard_name" required>
                              </div>
                              <div class="mb-3">

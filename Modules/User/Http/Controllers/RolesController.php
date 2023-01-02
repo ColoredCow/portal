@@ -44,7 +44,7 @@ class RolesController extends ModuleBaseController
         return redirect()->back();
     }
 
-	public function deleteRoles($id)
+    public function deleteRoles($id)
     {
         Role::find($id)->delete();
     }
