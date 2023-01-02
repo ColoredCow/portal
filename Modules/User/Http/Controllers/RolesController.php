@@ -11,7 +11,7 @@ use Modules\User\Services\addRoleModel;
 
 class RolesController extends ModuleBaseController
 {
-    /**
+    /*
      * Display a listing of the resource.
      */
     use AuthorizesRequests;
