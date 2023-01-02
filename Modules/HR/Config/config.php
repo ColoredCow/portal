@@ -18,7 +18,7 @@ return [
     'time-period'=>[
         'outdated'=>15
     ],
-    'applications-life-cycle' => [  
+    'applications-life-cycle' => [
     'email' => 'hr@coloredcow.com'
     ],
     'opportunities' => [

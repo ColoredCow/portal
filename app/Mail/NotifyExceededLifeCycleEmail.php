@@ -18,7 +18,7 @@ class NotifyExpiredLifeCycleEmail extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public function __construct( $expiredApplicationNumber)
+    public function __construct($expiredApplicationNumber)
     {
         $this->expiredApplicationNumber = $expiredApplicationNumber;
     }
