@@ -2,11 +2,13 @@
 
 namespace Modules\HR\Emails;
 
+use App\Mail\NotifyExpiredLifeCycleEmail;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
 use Modules\HR\Entities\Application;
+use Illuminate\Support\Facades\Mail;
 
-class Lifecycle_of_mail extends Command
+
+class LifeCycleOfMail extends Command
 {
     /**
      * The name and signature of the console command.
@@ -39,18 +41,15 @@ class Lifecycle_of_mail extends Command
      */
     public function handle()
     {
-        $email = 'hr@coloredcow.com';
-        $application_dates = Application::whereIn('status', ['new', 'in_progress'])->pluck('created_at');
-        $exceed_date_application_no = 0;
-        foreach ($application_dates as $date) {
+        $dates = Application::whereIn('status', ['new', 'in_progress'])->pluck('created_at');
+        $expiredApplicationNumber = 0;
+        foreach ($dates as $date) { 
             $difference_days = $date->diffInDays(now());
             if ($difference_days > config('hr.time-period.outdated')) {
-                $exceed_date_application_no += 1;
+                $expiredApplicationNumber += 1;
             }
         }
-
-        return Mail::send('emails.send-application-lifecycle', ['no_of_application' => $exceed_date_application_no], function ($messge) use ($email) {
-            $messge->to($email)->subject('Application Life-Cycle');
-        });
+        return (Mail::to(config('hr.applications-life-cycle.email'))->queue(new NotifyExpiredLifeCycleEmail($expiredApplicationNumber)));
+        
     }
 }

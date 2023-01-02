@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use Modules\HR\Emails\Lifecycle_of_mail;
+use Modules\HR\Emails\LifeCycleOfMail;
 use Illuminate\Console\Scheduling\Schedule;
 use Modules\Project\Console\SyncEffortsheet;
 use Modules\Project\Console\ZeroEffortInProject;
@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
         FixedBudgetProject::class,
         SendDailyEffortSummaryForProjectsOnGoogleChat::class,
         RemindProjectMembersToUpdateEffortOnGoogleChat::class,
-        Lifecycle_of_mail::class,
+        LifecyCleOfMail::class,
 
     ];
 

@@ -18,6 +18,9 @@ return [
     'time-period'=>[
         'outdated'=>15
     ],
+    'applications-life-cycle' => [  
+    'email' => 'hr@coloredcow.com'
+    ],
     'opportunities' => [
         'job' => [
             'title' => 'Job',
