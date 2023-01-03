@@ -7,20 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class NotifyExpiredLifeCycleEmail extends Mailable implements ShouldQueue
+class ApplicationLifeCycleNotifcationEmail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $expiredApplicationNumber;
+    public $expiredApplicationTotalNumber;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($expiredApplicationNumber)
+    public function __construct($expiredApplicationTotalNumber)
     {
-        $this->expiredApplicationNumber = $expiredApplicationNumber;
+        $this->expiredApplicationTotalNumber = $expiredApplicationTotalNumber;
     }
     /**
      * Build the message.
