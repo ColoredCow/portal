@@ -39,7 +39,7 @@
   <br>
   
   <div class="row">
-    <div class="col-4">Aadhar Card</div>
+    <div class="col-4">Adhar Card</div>
     <div class="col-4"><a href="#"> View </a></div>
     <div class="col-4"><a href="#" id="addAadhar" data-toggle="modal" data-target="#uploadFile"> Upload New </a></div>
   </div>
