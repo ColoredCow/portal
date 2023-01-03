@@ -19,7 +19,7 @@ return [
         'outdated'=>15
     ],
     'applications-life-cycle' => [
-    'email' => env('HR_DEFAULT_FROM_EMAIL','hr@coloredcow.com')
+    'email' => env('HR_DEFAULT_FROM_EMAIL', 'hr@coloredcow.com')
     ],
     'opportunities' => [
         'job' => [

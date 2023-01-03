@@ -40,7 +40,6 @@ class LifeCycleOfMail extends Command
      */
     public function handle()
     {
-        dd(config('hr.applications-life-cycle.email'));
         $dates = Application::whereIn('status', ['new', 'in_progress'])->pluck('created_at');
         $expiredApplicationTotalNumber = 0;
         foreach ($dates as $date) {
