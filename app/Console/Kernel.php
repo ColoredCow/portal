@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
         FixedBudgetProject::class,
         SendDailyEffortSummaryForProjectsOnGoogleChat::class,
         RemindProjectMembersToUpdateEffortOnGoogleChat::class,
-        LifecyCleOfMail::class,
+        LifeCycleOfMail::class,
 
     ];
 
