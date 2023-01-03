@@ -31,7 +31,6 @@ class Kernel extends ConsoleKernel
         SendDailyEffortSummaryForProjectsOnGoogleChat::class,
         RemindProjectMembersToUpdateEffortOnGoogleChat::class,
         LifeCycleOfMail::class,
-
     ];
 
     /**
