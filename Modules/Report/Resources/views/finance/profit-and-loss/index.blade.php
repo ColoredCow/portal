@@ -26,23 +26,24 @@
                         </a>
                     </div>
                 </div>
-                <div class="card h-75 bg-theme-gray-lighter">
+                <div class="col-md-3">
+                  <div class="card h-75 bg-theme-gray-lighter">
                     <a class="card-body text-decoration-none" href="#">
                         <h2 class="text-center">Big ticket changes </h2><br>
                     </a>
+                  </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card h-75 bg-theme-gray-lighter">
-                    <a class="card-body text-decoration-none" href="#">
-                        <h2 class="text-center">Location wise profitability</h2><br>
-                    </a>
+                <div class="col-md-3">
+                   <div class="card h-75 bg-theme-gray-lighter">
+                       <a class="card-body text-decoration-none" href="#">
+                           <h2 class="text-center">Location wise profitability</h2><br>
+                       </a>
+                   </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <h3> Budget </h3>
+        <h3> Budget </h3>
     <div>
         <div class="d-flex justify-content-start row flex-wrap">
             <div class="col-md-3">
@@ -53,6 +54,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    </div>
     </div>
     </div>
 @endsection
