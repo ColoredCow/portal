@@ -18,7 +18,7 @@ return [
     'time-period'=>[
         'outdated'=>15
     ],
-    'applications-life-cycle' => [
+    'applications-lifecycle' => [
     'email' => env('HR_DEFAULT_FROM_EMAIL', 'hr@coloredcow.com')
     ],
     'opportunities' => [
