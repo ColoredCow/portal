@@ -5,9 +5,9 @@ namespace Modules\User\Http\Controllers;
 use Modules\User\Entities\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use Modules\User\Http\Requests\roleRequest;
+use Modules\User\Http\Requests\RoleRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Modules\User\Services\addRoleModel;
+use Modules\User\Services\RoleService;
 
 class RolesController extends ModuleBaseController
 {
@@ -18,11 +18,12 @@ class RolesController extends ModuleBaseController
 
     protected $service;
 
-    public function __construct(addRoleModel $service)
+    public function __construct(RoleService $service)
     {
         $this->authorizeResource(Role::class);
         $this->service = $service;
     }
+
     public function index()
     {
         $this->authorize('viewAny', User::class);
@@ -37,9 +38,12 @@ class RolesController extends ModuleBaseController
     {
         return Role::all();
     }
-    public function addRoles(roleRequest $request)
+
+    public function addRoles(RoleRequest $request)
     {
-        $this->service->addRoles($request);
+        $validated = $request->validated();
+        $this->service->addRoles($validated);
+        dd($this->service->addRoles($validated));
 
         return redirect()->back();
     }

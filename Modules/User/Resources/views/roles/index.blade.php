@@ -22,16 +22,11 @@
                              <div class="mb-3">
                                  <label for="name" class="form-label">Name<strong class="text-danger"></strong></label>
                                  <input type="text" class="form-control" name="name" required>
-                             </div>
-                             <div class="mb-3">
-                                 <label for="name" class="form-label">Label<strong
-                                         class="text-danger"></strong></label>
-                                 <input type="text" class="form-control"name="label" required>
-                             </div>
+                             </div> 
                              <div class="mb-3">
                                  <label for="name" class="form-label">Guard Name<strong
                                          class="text-danger"></strong></label>
-                                 <input type="text" class="form-control"name="guard_name" required>
+                                 <input type="text" class="form-control" name="guard_name" value="web" readonly>
                              </div>
                              <div class="mb-3">
                                  <label for="description" class="form-label">Description</label>

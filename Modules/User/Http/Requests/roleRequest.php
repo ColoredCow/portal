@@ -4,8 +4,12 @@ namespace Modules\User\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class roleRequest extends FormRequest
+class RoleRequest extends FormRequest
 {
+	public function authorize()
+    {
+        return true;
+    }
     /**
      * Get the validation rules that apply to the request.
      *
@@ -13,14 +17,11 @@ class roleRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+		return [
             'name' => 'required|string|unique:roles,name',
+			'guard_name' => 'required|string|unique:roles,guard_name',
+			'description' => 'required|string|unique:roles,description',
         ];
     }
-    public function messages()
-    {
-        return [
-            'name.unique'  => 'Role is already taken',
-        ];
-    }
+   
 }

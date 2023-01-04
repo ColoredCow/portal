@@ -82,7 +82,7 @@ export default {
 
 		deleteRole: async function(index) {
 			let id = this.allRoles[index]["id"];
-			let route = `DeleteRoles/${id}`;
+			let route = `delete-roles/${id}`;
 			let response = await axios.delete(route);
 			this.allRoles.splice(index, 1);
 			this.$toast.success("Role removed successfully!");
