@@ -43,6 +43,6 @@ class ApplicationLifeCycleEmailTrigger extends Command
     {
         $expiredApplicationTotalNumber = Application::whereIn('status', ['new', 'in_progress'])->where('created_at', '<', Carbon::now()->subDays(config('hr.time-period.outdated')))->count();
 
-        return Mail::to(config('hr.applications-life-cycle.email'))->queue(new ApplicationLifeCycleNotifcationEmail($expiredApplicationTotalNumber));
+        return Mail::to(config('hr.applications-lifecycle.email'))->queue(new ApplicationLifeCycleNotifcationEmail($expiredApplicationTotalNumber));
     }
 }
