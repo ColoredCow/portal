@@ -16,9 +16,9 @@ return [
         'cut-off-score-telephonic-interview' => 5,
     ],
     'time-period'=>[
-        'outdated'=>15
+        'application_lifecycle_days' => env('APPLICATION_LIFECYCLE_DAYS',15)
     ],
-    'applications-lifecycle' => [
+    'application_lifecycle' => [
     'email' => env('HR_DEFAULT_FROM_EMAIL', 'hr@coloredcow.com')
     ],
     'opportunities' => [
