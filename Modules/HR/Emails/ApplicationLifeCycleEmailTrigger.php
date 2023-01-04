@@ -22,7 +22,7 @@ class ApplicationLifeCycleEmailTrigger extends Command
      *
      * @var string
      */
-    protected $description = 'Streamline job application life cycle';
+    protected $description = 'Streamline job application lifecycle';
 
     /**
      * Create a new command instance.
