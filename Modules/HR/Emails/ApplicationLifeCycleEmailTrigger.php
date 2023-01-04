@@ -3,18 +3,19 @@
 namespace Modules\HR\Emails;
 
 use App\Mail\ApplicationLifeCycleNotifcationEmail;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Modules\HR\Entities\Application;
 use Illuminate\Support\Facades\Mail;
 
-class LifeCycleOfMail extends Command
+class ApplicationLifeCycleEmailTrigger extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'application:lifecycle';
+    protected $signature = 'hr:application-lifecycle-email';
 
     /**
      * The console command description.
@@ -40,14 +41,7 @@ class LifeCycleOfMail extends Command
      */
     public function handle()
     {
-        $dates = Application::whereIn('status', ['new', 'in_progress'])->pluck('created_at');
-        $expiredApplicationTotalNumber = 0;
-        foreach ($dates as $date) {
-            $difference_days = $date->diffInDays(now());
-            if ($difference_days > config('hr.time-period.outdated')) {
-                $expiredApplicationTotalNumber += 1;
-            }
-        }
+        $expiredApplicationTotalNumber = Application::whereIn('status', ['new', 'in_progress'])->where('created_at', '<', Carbon::now()->subDays(config('hr.time-period.outdated')))->count();
 
         return Mail::to(config('hr.applications-life-cycle.email'))->queue(new ApplicationLifeCycleNotifcationEmail($expiredApplicationTotalNumber));
     }
