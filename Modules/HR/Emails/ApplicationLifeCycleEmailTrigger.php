@@ -45,6 +45,6 @@ class ApplicationLifeCycleEmailTrigger extends Command
         ->where('created_at', '<', Carbon::now()->subDays(config('hr.time-period.application_lifecycle_days')))
         ->count();
 
-        return Mail::to(config('hr.applications-lifecycle.email'))->queue(new ApplicationLifeCycleNotifcationEmail($expiredApplicationTotalNumber));
+        return Mail::to(config('hr.application-lifecycle.email'))->queue(new ApplicationLifeCycleNotifcationEmail($expiredApplicationTotalNumber));
     }
 }
