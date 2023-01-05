@@ -2,12 +2,12 @@
 
 namespace Modules\User\Http\Controllers;
 
-use Modules\User\Entities\User;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
-use Modules\User\Http\Requests\RoleRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Modules\User\Entities\User;
+use Modules\User\Http\Requests\RoleRequest;
 use Modules\User\Services\RoleService;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RolesController extends ModuleBaseController
 {
@@ -31,7 +31,7 @@ class RolesController extends ModuleBaseController
         $roles = Role::with('permissions')->get();
         $permissions = Permission::all();
 
-        return view ('user::roles.index', compact('roles', 'permissions'));
+        return view('user::roles.index', compact('roles', 'permissions'));
     }
 
     public function getAllRoles()
@@ -39,17 +39,18 @@ class RolesController extends ModuleBaseController
         return Role::all();
     }
 
-    public function addRoles(RoleRequest $request)
+    public function addRole(RoleRequest $request)
     {
-		$this->authorize('viewAny', User::class);
+
+        $this->authorize('viewAny', User::class);
         $validated = $request->validated();
-        $this->service->addRoles($validated);
+        $this->service->addRole($validated);
 
         return redirect()->back();
     }
 
-    public function deleteRoles($id)
-    {	
-        Role::find($id)->delete();
+    public function deleteRole(Role $role)
+    {
+        Role::find($role->delete());
     }
 }

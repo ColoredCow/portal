@@ -6,10 +6,11 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class RoleRequest extends FormRequest
 {
-	public function authorize()
+    public function authorize()
     {
         return true;
     }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -17,11 +18,10 @@ class RoleRequest extends FormRequest
      */
     public function rules()
     {
-		return [
+        return [
             'name' => 'required|string|unique:roles,name',
-			'guard_name' => 'required|string|unique:roles,guard_name',
-			'description' => 'required|string|unique:roles,description',
+            'guard_name' => 'required|string:roles,guard_name',
+            'description' => 'required|string:roles,description',
         ];
     }
-   
 }

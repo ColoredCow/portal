@@ -2,20 +2,19 @@
 
 namespace Modules\User\Services;
 
-use Spatie\Permission\Models\Role;
 use Illuminate\Support\Str;
-// use Modules\User\Http\Requests\RoleRequest;
+use Spatie\Permission\Models\Role;
 
 class RoleService
 {
-    public function addRoles($role = [])
+    public function addRole($roleData = [])
     {
-        $roleName = $role['name'];
+        $roleName = $roleData['name'];
         Role::create([
             'name' => $roleName,
             'label' => Str::title($roleName),
-            'guard_name' => $role['guard_name'],
-            'description' => $role['description']
+            'guard_name' => $roleData['guard_name'],
+            'description' => $roleData['description'],
         ]);
     }
 }
