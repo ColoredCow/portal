@@ -41,9 +41,10 @@ class RolesController extends ModuleBaseController
 
     public function addRoles(RoleRequest $request)
     {
+		$this->authorize('viewAny', User::class);
         $validated = $request->validated();
         $this->service->addRoles($validated);
-		
+
         return redirect()->back();
     }
 
