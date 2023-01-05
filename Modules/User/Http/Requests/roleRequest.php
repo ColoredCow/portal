@@ -20,8 +20,8 @@ class RoleRequest extends FormRequest
     {
         return [
             'name' => 'required|string|unique:roles,name',
-            'guard_name' => 'required|string:roles,guard_name',
-            'description' => 'required|string:roles,description',
+			'guard_name' => 'required|string',
+            'description' => 'required|string',
         ];
     }
 }

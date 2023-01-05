@@ -11,7 +11,7 @@ class RoleService
     {
         $roleName = $roleData['name'];
         Role::create([
-            'name' => $roleName,
+            'name' => Str::slug($roleName),
             'label' => Str::title($roleName),
             'guard_name' => $roleData['guard_name'],
             'description' => $roleData['description'],
