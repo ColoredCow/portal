@@ -50,6 +50,6 @@ class RolesController extends ModuleBaseController
 
     public function deleteRole(Role $role)
     {
-		$role->delete();
+        $role->delete();
     }
 }
