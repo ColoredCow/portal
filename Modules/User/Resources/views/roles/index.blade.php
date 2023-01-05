@@ -39,7 +39,7 @@
                          <button type="button" class="btn btn-primary" form="create-form" id="save-btn-action">Add</button>
                      </div>
                  </div>
-             </div>
+			</div>
          </div>
          <role-listing :roles="{{ json_encode($roles) }}" :permissions="{{ json_encode($permissions) }}"
              :update-route="{{ json_encode(route('permissions.module.index', ['module' => 'roles'])) }}" />

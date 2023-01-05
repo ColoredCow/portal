@@ -18,7 +18,7 @@ Route::prefix('user')->middleware('auth')->group(function () {
     Route::delete('{user}/delete', 'UserController@destroy')->name('user.delete');
     Route::put('update-roles', 'UserController@updateUserRoles')->name('user.update-roles');
     Route::post('/add-roles', 'RolesController@addRoles')->name('roles.add-roles');
-    Route::delete('delete-roles/{role}', 'RolesController@deleteRoles')->name('roles.delete');
+    Route::delete('/delete-roles/{role}', 'RolesController@deleteRoles')->name('roles.delete');
 
     /*
      * User Profile

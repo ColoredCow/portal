@@ -31,7 +31,7 @@ class RolesController extends ModuleBaseController
         $roles = Role::with('permissions')->get();
         $permissions = Permission::all();
 
-        return view('user::roles.index', compact('roles', 'permissions'));
+        return view ('user::roles.index', compact('roles', 'permissions'));
     }
 
     public function getAllRoles()
@@ -43,13 +43,12 @@ class RolesController extends ModuleBaseController
     {
         $validated = $request->validated();
         $this->service->addRoles($validated);
-        dd($this->service->addRoles($validated));
-
+		
         return redirect()->back();
     }
 
     public function deleteRoles($id)
-    {
+    {	
         Role::find($id)->delete();
     }
 }

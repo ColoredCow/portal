@@ -29,7 +29,7 @@
 						<button
 							type="button"
 							data-toggle="modal"
-							v-on:click="deleteRole(index)"
+							v-on:click="removeRole(index)"
 							class="btn btn-sm btn-outline-danger"
 						>
 							<i aria-hidden="true" class="fa fa-trash fa-lg"></i>
@@ -80,10 +80,11 @@ export default {
 			Vue.set(this.selectedRole, "permissions", selectedPermissions);
 		},
 
-		deleteRole: async function(index) {
+		removeRole: async function(index) {
 			let id = this.allRoles[index]["id"];
-			let route = `delete-roles/${id}`;
+			let route = `/user/delete-roles/${id}`;
 			let response = await axios.delete(route);
+			console.log(response, "response");
 			this.allRoles.splice(index, 1);
 			this.$toast.success("Role removed successfully!");
 		},
