@@ -193,6 +193,7 @@ return [
         'culture-mismatch' => 'Culture mismatch',
         'salary-expectation-mismatch' => 'Salary expectation mismatch',
         'not-enough-knowledge-inclination-for-coloredcow' => 'Not enough knowledge/inclination for ColoredCow',
+        'other' => 'Other', 
     ],
     'verified_application_date' =>[
         'start_date' => '2022-07-06'
