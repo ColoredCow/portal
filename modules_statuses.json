@@ -21,5 +21,6 @@
     "Media": true,
     "Post": true,
     "Revenue": true,
-    "ProjectContract": true
+    "ProjectContract": true,
+    "Operation": true
 }

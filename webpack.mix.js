@@ -78,4 +78,10 @@ mix
     "Modules/Expense/Resources/assets/sass/app.scss",
     "public/css/expense.css"
   );
+mix
+  .js(
+    "Modules/Operation/Resources/assets/js/app.js",
+    "public/js/operation.js"
+  );
+
 mix.version();
