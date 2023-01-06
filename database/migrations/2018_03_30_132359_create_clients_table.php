@@ -22,7 +22,6 @@ class CreateClientsTable extends Migration
         });
 
         Schema::create('clients_old', function (Blueprint $table) {
-            dd($table);
             $table->increments('id');
             $table->string('name');
             $table->text('emails')->nullable();

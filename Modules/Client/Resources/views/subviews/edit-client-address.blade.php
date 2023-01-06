@@ -23,7 +23,7 @@
                             <div class="form-group flex-grow-1">
                                 <label for="name" class="field-required">Country</label>
                                 <select :name="`address[${index}][country_id]`"  class="form-control" required="required">
-                                    <option selected='' disabled>Select country</option>
+                                    <option value="">Select country</option>
                                     @foreach ($countries as $key => $country)
                                     <option value="{{$country->id}}" {{($country->id) ==  $client->country_id ? 'selected' : '' }}>{{$country->name}}</option>
                                     @endforeach
