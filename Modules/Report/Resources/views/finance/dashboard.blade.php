@@ -1,14 +1,20 @@
 @extends('report::layouts.finance')
 @section('content')
     <div class="container" id="vueContainer">
-        <br>
-        <br>
-
-        <div class="d-flex justify-content-between mb-2">
-            <h4 class="mb-1 pb-1 font-muli-bold">Finance Dashboard</h4>
+        <div class="d-flex justify-content-between my-2">
+            <h2 class="mb-1 pb-1 font-muli-bold">Finance Dashboard</h2>
         </div>
 
         <div>
+            <div class="mt-4 container">
+                <h3>
+                    Invoice Details
+                </h3>
+                <canvas class="w-full" id="financeReportRevenueTrends"></canvas>
+            </div>
+        </div>
+
+        <div class="mt-4">
             <div class="d-flex justify-content-start row flex-wrap">
                 <div class="col-md-3">
                     <div class="card h-75 ">
@@ -40,8 +46,8 @@
                 </div>
 
                 <div class="col-md-3">
-                    <div class="card h-75 bg-theme-gray-lighter">
-                        <a class="card-body text-decoration-none" href="#">
+                    <div class="card h-75">
+                        <a class="card-body no-transition" href="{{ route('reports.finance.dashboard.client') }}">
                             <h2 class="text-center">Revenue by client</h2><br>
                         </a>
                     </div>
@@ -102,12 +108,6 @@
                         </a>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div>
-            <div class="mt-4 w-60p">
-                <canvas class="w-full" id="financeReportRevenueTrends" style="width:38em !important"></canvas>
             </div>
         </div>
     </div>
