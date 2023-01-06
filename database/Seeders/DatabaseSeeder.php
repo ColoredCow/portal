@@ -13,11 +13,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // roles
         $this->call(RolesTableSeeder::class);
-        $this->call(PermissionsTableSeeder::class);
-        $this->call(RoleHasPermissionsTableSeeder::class);
         $this->call(CountriesTableSeeder::class);
+        if (! app()->environment('production')) {
+            $this->call(UsersTableSeeder::class);
+        }
+
+        // books
+        $this->call(BooksPermissionsSeeder::class);
         $this->call(BookCategoriesTableSeeder::class);
-        $this->call(UsersTableSeeder::class);
     }
 }

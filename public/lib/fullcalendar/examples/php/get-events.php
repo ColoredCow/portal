@@ -37,7 +37,7 @@ $input_arrays = json_decode($json, true);
 $output_arrays = [];
 foreach ($input_arrays as $array) {
 
-  // Convert the input array into a useful Event object
+    // Convert the input array into a useful Event object
     $event = new Event($array, $time_zone);
 
     // If the event is in-bounds, add it to the output

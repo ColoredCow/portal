@@ -63,7 +63,7 @@ class UserController extends ModuleBaseController
      */
     public function destroy(User $user)
     {
-        $this->authorize('delete', User::class);
+        $this->authorize('delete', $user);
         $this->service->delete($user);
     }
 }

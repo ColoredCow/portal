@@ -8,18 +8,24 @@ use Modules\HR\Events\Recruitment\JobUpdated;
 use Modules\User\Entities\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\HR\Database\Factories\HrJobsFactory;
+use App\Models\Resource;
 
 class Job extends Model
 {
     use SoftDeletes, HasFactory;
 
-    protected $fillable = ['opportunity_id', 'title', 'type', 'domain', 'start_date', 'description', 'posted_by', 'link', 'end_date', 'status', 'facebook_post', 'instagram_post', 'twitter_post', 'linkedin_post'];
+    protected $fillable = ['opportunity_id', 'title', 'type', 'domain', 'start_date', 'description', 'posted_by', 'link', 'end_date', 'status', 'facebook_post', 'instagram_post', 'twitter_post', 'linkedin_post', 'hr_resource_category_id', 'job_id'];
 
     protected $table = 'hr_jobs';
 
     public function applications()
     {
         return $this->hasMany(Application::class, 'hr_job_id');
+    }
+
+    public function jobRequisition()
+    {
+        return $this->hasMany(JobRequisition::class, 'job_id')->where('status', 'pending');
     }
 
     public function rounds()
@@ -30,6 +36,11 @@ class Job extends Model
     public function postedBy()
     {
         return $this->belongsTo(User::class, 'posted_by', 'id');
+    }
+
+    public function resources()
+    {
+        return $this->hasMany(Resource::class, 'job_id');
     }
 
     public function exceptTrialRounds()

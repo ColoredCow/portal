@@ -26,7 +26,107 @@ $(document).ready(function(){
 		}
 		document.getElementById("container").innerHTML = output;
 	});
+
+	$(".show-preview").on("click", function() {
+		var invoiceData = $(this).data("invoice-data");
+		var mapping = {
+			"|*project_name*|": invoiceData["projectName"],
+			"|*term*|": invoiceData["term"],
+			"|*year*|": invoiceData["year"],
+			"|*billing_person_name*|": invoiceData["billingPersonFirstName"],
+			"|*invoice_amount*|": invoiceData["totalAmount"],
+			"|*invoice_number*|": invoiceData["invoiceNumber"],
+		};
+		var emailSubject = invoiceData["emailSubject"];
+		var emailBody = $("#emailBody").text();
+		
+		for (var key in mapping) {
+			var emailSubject = emailSubject.replace(key, mapping[key]);
+			var emailBody = emailBody.replace(key, mapping[key]);
+		}
+
+		$("#emailSubject").val(emailSubject); 
+		$("#sendTo").val(invoiceData["billingPersonEmail"]); 
+		$("#sendToName").val(invoiceData["billingPersonName"]); 
+		$("#clientId").val(invoiceData["clientId"]); 
+		$("#cc").val(invoiceData["senderEmail"]);
+		if (invoiceData["ccEmails"] != null) {
+			$("#cc").val(invoiceData["ccEmails"]);
+		}
+		$("#bcc").val(invoiceData["bccEmails"]);
+		$("#projectId").val(invoiceData["projectId"]); 
+		tinymce.get("emailBody").setContent(emailBody, { format: "html" });
+		$("#emailPreview").modal("show");
+	});
+
+	$(".send-reminder").on("click", function() {
+		var invoiceData = $(this).data("invoice-data");
+		var mapping = {
+			"|*project_name*|": invoiceData["projectName"],
+			"|*term*|": invoiceData["term"],
+			"|*year*|": invoiceData["year"],
+			"|*billing_person_name*|": invoiceData["billingPersonFirstName"],
+			"|*invoice_amount*|": invoiceData["invoiceAmount"],
+			"|*invoice_number*|": invoiceData["invoiceNumber"],
+		};
+		var emailSubject = invoiceData["emailSubject"];
+		var emailBody = $("#emailBody").text();
+		
+		for (var key in mapping) {
+			var emailSubject = emailSubject.replace(key, mapping[key]);
+			var emailBody = emailBody.replace(key, mapping[key]);
+		}
+
+		$("#emailSubject").val(emailSubject); 
+		$("#sendTo").val(invoiceData["billingPersonEmail"]); 
+		$("#sendToName").val(invoiceData["billingPersonName"]); 
+		$("#invoiceId").val(invoiceData["invoiceId"]); 
+		$("#cc").val(invoiceData["senderEmail"]);
+		if (invoiceData["ccEmails"] != null) {
+			$("#cc").val(invoiceData["ccEmails"]);
+		}
+		$("#bcc").val(invoiceData["bccEmails"]); 
+		tinymce.get("emailBody").setContent(emailBody, { format: "html" });
+		$("#emailPreview").modal("show");
+	});
+
+	$("#verifyInvoice").on("click", function () {
+		if ($("#verifyInvoice").is(":checked")) {
+			$("#sendInvoiceBtn").attr("disabled", false);
+		} else {
+			$("#sendInvoiceBtn").attr("disabled", true);
+		}
+	});
+	
+	$("#sendInvoiceForm").on("submit", function (event) {
+		event.preventDefault();
+		$("#sendInvoiceBtn").attr("disabled", true);
+		if(validateFormData(event.target)) {
+			event.target.submit();
+		}
+	});
+
+	$("#sendInvoiceReminderForm").on("submit", function (event) {
+		event.preventDefault();
+		$("#sendBtn").attr("disabled", true);
+		if(validateFormData(event.target)) {
+			event.target.submit();
+		}
+	});
+	window.setTimeout(function() {
+		$(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+			$(this).remove(); 
+		});
+	}, 6000);
 });
+
+function validateFormData(form) {
+	if (!form.checkValidity()) {
+		form.reportValidity();
+		return false;
+	}
+	return true;
+}
 
 function convert_number(number) {
 	if (number < 0 || number > 999999999) {

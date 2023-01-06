@@ -26,13 +26,11 @@ class ClientPolicy
 
     public function update(User $user, Client $client)
     {
-        return $user->can('clients.update') &&
-        $user->id == $client->key_account_manager_id;
+        return $user->can('clients.update') || $user->id === $client->key_account_manager_id;
     }
 
     public function delete(User $user, Client $client)
     {
-        return $user->can('clients.delete') &&
-        $user->id == $client->key_account_manager_id;
+        return $user->can('clients.delete');
     }
 }

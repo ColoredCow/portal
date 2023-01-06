@@ -2,12 +2,20 @@
 
 namespace Modules\Salary\Http\Controllers;
 
-use Modules\User\Entities\User;
+use Modules\HR\Entities\Employee;
 use Illuminate\Routing\Controller;
-use Modules\Salary\Services\SalaryCalculationService;
+use Illuminate\Http\Request;
+use Modules\Salary\Entities\EmployeeSalary;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Modules\Salary\Entities\SalaryConfiguration;
 
 class SalaryController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(EmployeeSalary::class);
+    }
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -23,12 +31,25 @@ class SalaryController extends Controller
     {
     }
 
-    public function employee()
+    public function employee(Request $request, Employee $employee)
     {
-        $user = User::find(4);
-        $salaryCalculation = new SalaryCalculationService(28169);
+        $this->authorize('view', EmployeeSalary::class);
+        $salaryConfigs = SalaryConfiguration::formatAll();
 
-        return view('salary::employee.index', ['user' => $user, 'salaryCalculation' => $salaryCalculation]);
+        return view('salary::employee.index')->with([
+            'employee'=> $employee,
+            'salaryConfigs' => $salaryConfigs
+        ]);
+    }
+
+    public function storeSalary(Request $request, Employee $employee)
+    {
+        EmployeeSalary::updateOrCreate(
+            ['employee_id' => $employee->id],
+            ['monthly_gross_salary' => ($request->grossSalary)]
+        );
+
+        return redirect()->back()->with('success', 'Gross Salary saved successfully!');
     }
 
     /**

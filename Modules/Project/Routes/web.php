@@ -19,5 +19,6 @@ Route::prefix('projects')->middleware('auth')->group(function () {
     Route::post('/', 'ProjectController@store')->name('project.store');
     Route::post('/{project}/update', 'ProjectController@update')->name('project.update');
     Route::get('/contract/pdf/{contract}', 'ProjectController@showPdf')->name('pdf.show');
+    Route::delete('client/{project}/edit', 'ProjectController@destroy')->name('project.destroy');
     //Route::get('/', 'ProjectController@edit')->name('project.edit');
 });

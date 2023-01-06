@@ -32,6 +32,10 @@ class EventServiceProvider extends ServiceProvider
             'Modules\HR\Listeners\AppointmentSlotMailSent'
         ],
 
+        'Modules\HR\Events\FollowUpEvent' => [
+            'Modules\HR\Listeners\FollowUpListener'
+        ],
+
         ApplicationCreated::class => [
             CreateFirstApplicationRound::class,
             ApplicantEmailVerification::class,

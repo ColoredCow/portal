@@ -3,9 +3,9 @@
 namespace Modules\HR\Database\Factories;
 
 use Modules\HR\Entities\Application;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Job;
-use Illuminate\Database\Eloquent\Factories\Factory;
 
 class HrApplicationsFactory extends Factory
 {
@@ -23,10 +23,19 @@ class HrApplicationsFactory extends Factory
      */
     public function definition()
     {
+        $status = array_rand(config('hr.status'));
+
+        if ($status == 'custom-mail') {
+            $status = 'sent-for-approval';
+        } elseif ($status == 'confirmed') {
+            $status = 'onboarded';
+        }
+
         return [
-            'hr_applicant_id' => Applicant::factory()->create()->id,
-            'hr_job_id' => Job::factory()->create()->id,
-            'status' => array_rand(config('hr.status'))
+            'hr_applicant_id' => Applicant::inRandomOrder()->first()->id,
+            'hr_job_id' => Job::inRandomOrder()->first()->id,
+            'resume' => config('hr.Sample-Resume'),
+            'status' => $status
         ];
     }
 }

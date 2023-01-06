@@ -43,6 +43,7 @@ class ProjectServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->app->register(ProjectAuthServiceProvider::class);
     }
 
     /**
