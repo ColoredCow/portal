@@ -16,6 +16,7 @@ class CreateClientsTable extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('country_id');
             $table->string('status');
             $table->bigInteger('key_account_manager_id')->nullable();
             $table->timestamps();
@@ -27,7 +28,7 @@ class CreateClientsTable extends Migration
             $table->text('emails')->nullable();
             $table->string('phone')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->string('country')->nullable();
+            $table->string('country_id')->nullable();
             $table->text('address')->nullable();
             $table->string('gst_num')->nullable();
             $table->timestamps();
