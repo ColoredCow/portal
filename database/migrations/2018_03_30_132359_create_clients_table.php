@@ -17,7 +17,6 @@ class CreateClientsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('status');
-            $table->string('country')->nullable();
             $table->bigInteger('key_account_manager_id')->nullable();
             $table->timestamps();
         });

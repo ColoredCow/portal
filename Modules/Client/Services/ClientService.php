@@ -65,7 +65,7 @@ class ClientService implements ClientServiceContract
                 'channelPartners' => $this->getChannelPartners(),
                 'parentOrganisations' => $this->getParentOrganisations(),
                 'client' => $client,
-                'section' => $section ?: config('client.default-client-form-stage'),
+                'section' => $section ?: config('client.default-client-form-stage')
             ];
         }
 
@@ -82,7 +82,7 @@ class ClientService implements ClientServiceContract
                 'client' => $client,
                 'countries' => Country::all(),
                 'section' => $section,
-                'addresses' => $client->addresses,
+                'addresses' => $client->addresses
             ];
         }
 
@@ -137,7 +137,7 @@ class ClientService implements ClientServiceContract
         }
 
         return [
-            'route' => $data['submit_action'] == 'next' ? $nextStage : $defaultRoute,
+            'route' => ($data['submit_action'] == 'next') ? $nextStage : $defaultRoute,
         ];
     }
 
