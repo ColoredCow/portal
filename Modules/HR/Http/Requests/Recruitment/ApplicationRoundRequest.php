@@ -52,8 +52,7 @@ class ApplicationRoundRequest extends FormRequest
                 $rules['mail_to_applicant.confirm.subject'] = 'nullable|string|required_with:send_mail_to_applicant';
                 $rules['mail_to_applicant.confirm.body'] = 'nullable|string|required_with:send_mail_to_applicant';
             }
-        } 
-
+        }
         if (request()->input('action') == 'confirm' && request()->input('create_calendar_event') == 'on') {
             $rules['summary_calendar_event'] = 'nullable|string|required_with:create_calendar_event';
             $rules['next_scheduled_end'] = 'nullable|date|required_with:create_calendar_event';
