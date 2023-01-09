@@ -45,7 +45,6 @@ class ApplicationRoundRequest extends FormRequest
         'send_mail_to_applicant.reject' => 'nullable|filled',
         'send_mail_to_applicant.hold' => 'nullable|filled',
         'follow_up_comment_for_reject' => 'nullable|string',
-        'reject_reason' => 'nullable|array'
     ];
         if (request()->input('action') == 'confirm') {
             if (request()->input('send_mail_to_applicant.confirm') == 'on') {
