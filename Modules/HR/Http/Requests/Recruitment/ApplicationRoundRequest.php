@@ -23,7 +23,7 @@ class ApplicationRoundRequest extends FormRequest
      */
     public function rules()
     {
-    $rules = [
+        $rules = [
         'reviews' => 'nullable',
         'action' => 'required|string',
         'refer_to' => 'nullable|string|required_if:action,refer',
@@ -47,18 +47,18 @@ class ApplicationRoundRequest extends FormRequest
         'follow_up_comment_for_reject' => 'nullable|string',
         'reject_reason' => 'nullable|array'
     ];
-    if (request()->input('action') == 'confirm') {
-        if (request()->input('send_mail_to_applicant.confirm') == 'on') {
-            $rules['mail_to_applicant.confirm.subject'] = 'nullable|string|required_with:send_mail_to_applicant';
-            $rules['mail_to_applicant.confirm.body'] = 'nullable|string|required_with:send_mail_to_applicant';
+        if (request()->input('action') == 'confirm') {
+            if (request()->input('send_mail_to_applicant.confirm') == 'on') {
+                $rules['mail_to_applicant.confirm.subject'] = 'nullable|string|required_with:send_mail_to_applicant';
+                $rules['mail_to_applicant.confirm.body'] = 'nullable|string|required_with:send_mail_to_applicant';
+            }
+        } elseif (request()->input('action') == 'reject') {
+            $rules['reject_reason'] = 'nullable|array';
+            if (request()->input('send_mail_to_applicant.reject') == 'on') {
+                $rules['mail_to_applicant.reject.subject'] = 'nullable|string|required_with:send_mail_to_applicant';
+                $rules['mail_to_applicant.reject.body'] = 'nullable|string|required_with:send_mail_to_applicant';
+            }
         }
-    } elseif (request()->input('action') == 'reject') {
-        $rules['reject_reason'] = 'nullable|array';
-        if (request()->input('send_mail_to_applicant.reject') == 'on') {
-            $rules['mail_to_applicant.reject.subject'] = 'nullable|string|required_with:send_mail_to_applicant';
-            $rules['mail_to_applicant.reject.body'] = 'nullable|string|required_with:send_mail_to_applicant';
-        }
-    }
         if (request()->input('action') == 'confirm' && request()->input('create_calendar_event') == 'on') {
             $rules['summary_calendar_event'] = 'nullable|string|required_with:create_calendar_event';
             $rules['next_scheduled_end'] = 'nullable|date|required_with:create_calendar_event';
