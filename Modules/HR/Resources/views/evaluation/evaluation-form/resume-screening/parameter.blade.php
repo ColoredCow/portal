@@ -28,7 +28,7 @@
             </div>
         </div>
     
-        <input  type="hidden" id="apperRejectButton"  data-target="<?php echo \Str::slug($parameter['name'], '-') ?>">
+        <input  type="hidden" id="appearRejectButton"  data-target="<?php echo \Str::slug($parameter['name'], '-') ?>">
         
         {{-- TODO: hardcoded block below. need to make dynamic --}}
         
