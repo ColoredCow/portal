@@ -261,13 +261,11 @@ class EvaluationController extends Controller
         $optionList = [];
 
         foreach ($options as $option) {
-            if ($option) {
                 $optionList[] = [
                     'id' => $option->id,
                     'name' => $option->value,
                     'marks' => $option->marks,
                 ];
-            }
         }
 
         return $optionList;
