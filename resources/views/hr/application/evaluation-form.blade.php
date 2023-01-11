@@ -1,4 +1,4 @@
-<form method="POST" action="/hr/evaluation/{{ $applicationRound->id }}">
+<form method="POST" action="/hr/evaluation/{{ $applicationRound->id }}>
     @method('PATCH')
     @csrf
     {{-- TODO: We can utilize this code in the future if needed --}}
@@ -34,8 +34,10 @@
             <div class="row py-4">
                 <div class="col-12">
                     {{-- TODO: save form on click using AJAX --}}
-                    <button class="btn btn-success show-evaluation-stage" data-target="#evaluationStage2"
-                        type="button">Next</button>
+                    <button class="btn btn-success show-evaluation-stage" id="nextButton" data-target="#evaluationStage2"
+                        type="button" >Next</button>
+                    <button class="btn btn-outline-danger ml-2 d-none reject-button" id="rejectButton" @click="rejectApplication()"
+                        type="button">Reject</button>
                 </div>
             </div>
         </div>
@@ -67,5 +69,6 @@
                 </div>
             </div>
         </div>
-    @endif
-</form>
+        @endif
+    </form>
+    
