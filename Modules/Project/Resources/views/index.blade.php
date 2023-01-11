@@ -80,22 +80,24 @@
                             </tr>
                             @foreach ($client->projects as $project)
                                  <tr>
-                                    @can('projects.update')
+                                    @if('projects.update')
                                         <td class="w-33p">
-                                            <div class="pl-2 pl-xl-3"><a
-                                                    href="{{ route('project.show', $project) }}">{{ $project->name }}</a></div>
+                                            <div class="pl-2 pl-xl-3">
+                                                @if($client->key_account_manager_id === auth()->user()->id)
+                                                 <div class="pl-2 pl-xl-3">
+                                                    <a
+                                                   href="{{ route('project.show', $project) }}">{{ $project->name }}</a></div> 
+                                                @else
+                                                     <span>{{ $project->name }}</span>
+                                                 @endif
+                                            </div     
                                         </td>
                                     @else
                                         <td class="w-33p">
-                                            @if($client->key_account_manager_id === auth()->user()->id)
-                                                 <div class="pl-2 pl-xl-3"><a
-                                                   href="{{ route('project.show', $project) }}">{{ $project->name }}</a></div> 
-                                            @else
-                                                 <span>{{ $project->name }}</span>
-                                            @endif
+                                            <div class="pl-2 pl-xl-3">{{ $project->name }}</div>
                                         </td>
                                     
-                                    @endcan
+                                    @endif
                                     <td class="w-20p">
                                         @foreach ($project->getTeamMembers ?: [] as $teamMember)
                                             <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
