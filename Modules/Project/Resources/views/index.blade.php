@@ -79,31 +79,25 @@
                                 </td>
                             </tr>
                             @foreach ($client->projects as $project)
-                                @foreach ($project->getTeamMembers ?: [] as $teamMember)
-                                {{-- @dd($project->users) --}}
-                                   {{-- @dd($project) --}}
-                                   {{-- @dd($client) --}}
-                                   {{-- @dd($teamMember) --}}
-                                   {{-- @dd(auth()->user()->id) --}}
-                                <tr>
+                                 <tr>
                                     @can('projects.update')
                                         <td class="w-33p">
-                                            <div class="pl-2 pl-xl-3">
-                                                @if($teamMember->team_member_id=== auth()->user()->id)  
-                                                    <a 
-                                                      href="{{ route('project.show', $project) }}">{{ $project->name }}
-                                                    </a>
-                                                @else
-                                                    <span>{{ $project->name }}</span>
-                                                 @endif -
-                                            </div>
+                                            <div class="pl-2 pl-xl-3"><a
+                                                    href="{{ route('project.show', $project) }}">{{ $project->name }}</a></div>
                                         </td>
                                     @else
                                         <td class="w-33p">
-                                            <div class="pl-2 pl-xl-3">{{ $project->name }}</div>
+                                            @if($client->key_account_manager_id === auth()->user()->id)
+                                                 <div class="pl-2 pl-xl-3"><a
+                                                   href="{{ route('project.show', $project) }}">{{ $project->name }}</a></div> 
+                                            @else
+                                                 <span>{{ $project->name }}</span>
+                                            @endif
                                         </td>
+                                    
                                     @endcan
                                     <td class="w-20p">
+                                        @foreach ($project->getTeamMembers ?: [] as $teamMember)
                                             <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
                                                 title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation] }} <br>    Efforts: {{ $teamMember->current_actual_effort }} Hours">
 
@@ -111,7 +105,7 @@
                                                         src="{{ $teamMember->user->avatar }}"
                                                         class="w-35 h-30 rounded-circle mb-1 mr-0.5 {{ $teamMember->border_color_class }} border-2"></a>
                                             </span>
-                                        
+                                        @endforeach
                                     </td>
                                     <td class="text-center">
                                         @if (empty($project->projectContracts->first()->contract_file_path))
@@ -129,7 +123,6 @@
                                             class="{{ $textColor }} font-weight-bold">{{ $project->velocity . ' (' . $project->current_hours_for_month . ' Hrs.)' }}</span>
                                     </td>
                                 </tr>
-                                @endforeach
                             @endforeach
                         @empty
                             <tr>
