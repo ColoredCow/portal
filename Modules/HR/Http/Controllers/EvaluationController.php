@@ -12,6 +12,7 @@ use Modules\HR\Entities\Evaluation\Segment;
 use Modules\HR\Entities\Round;
 use Modules\HR\Http\Requests\EditEvaluationRequest;
 use Modules\HR\Http\Requests\ManageEvaluationRequest;
+use Modules\HR\Entities\ApplicationRoundReview;
 
 class EvaluationController extends Controller
 {
@@ -146,6 +147,7 @@ class EvaluationController extends Controller
         return redirect(route('hr.evaluation.segment-parameters', $segmentID));
     }
 
+    
     public function updateSegmentParameterParent(Request $request, $segmentID, $parameterID)
     {
         $parameter = Parameter::find($parameterID);
@@ -182,7 +184,19 @@ class EvaluationController extends Controller
     {
         $request = request()->all();
 
+        // @dd($request);
+
+        
         $applicationRound = ApplicationRound::find($applicationRoundId);
+        
+        ApplicationRoundReview::updateorinsert(
+            [
+                'hr_application_round_id' => $applicationRoundId,
+            ],
+            [
+            'review_value' => $request['feedback_submit'],
+            'review_key' => "feedback",
+            ]);
 
         if (array_key_exists('evaluation', request()->all())) {
             $applicationRound->updateOrCreateEvaluation(request()->all()['evaluation']);
