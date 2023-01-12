@@ -79,8 +79,13 @@
                                 </td>
                             </tr>
                             @foreach ($client->projects as $project)
-                                 <tr>
-                                    @if('projects.update')
+                                <tr>
+                                    @can('projects.update')
+                                        <td class="w-33p">
+                                            <div class="pl-2 pl-xl-3"><a
+                                                    href="{{ route('project.show', $project) }}">{{ $project->name }}</a></div>
+                                        </td>
+                                    @else
                                         <td class="w-33p">
                                             <div class="pl-2 pl-xl-3">
                                                 @if($client->key_account_manager_id === auth()->user()->id)
@@ -90,14 +95,9 @@
                                                 @else
                                                      <span>{{ $project->name }}</span>
                                                  @endif
-                                            </div     
+                                            </div 
                                         </td>
-                                    @else
-                                        <td class="w-33p">
-                                            <div class="pl-2 pl-xl-3">{{ $project->name }}</div>
-                                        </td>
-                                    
-                                    @endif
+                                    @endcan
                                     <td class="w-20p">
                                         @foreach ($project->getTeamMembers ?: [] as $teamMember)
                                             <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
