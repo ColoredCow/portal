@@ -182,7 +182,7 @@ class EvaluationController extends Controller
     public function update($applicationRoundId)
     {
         $request = request()->all();
-        
+
         $applicationRound = ApplicationRound::find($applicationRoundId);
 
         ApplicationRoundReview::updateorinsert(
