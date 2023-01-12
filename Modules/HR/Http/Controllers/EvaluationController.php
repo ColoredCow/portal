@@ -147,7 +147,6 @@ class EvaluationController extends Controller
         return redirect(route('hr.evaluation.segment-parameters', $segmentID));
     }
 
-    
     public function updateSegmentParameterParent(Request $request, $segmentID, $parameterID)
     {
         $parameter = Parameter::find($parameterID);
@@ -185,7 +184,7 @@ class EvaluationController extends Controller
         $request = request()->all();
         
         $applicationRound = ApplicationRound::find($applicationRoundId);
-        
+
         ApplicationRoundReview::updateorinsert(
             [
                 'hr_application_round_id' => $applicationRoundId,

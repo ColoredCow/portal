@@ -40,9 +40,8 @@
 
             <div class="row py-4">
                 
-                <textarea name="testing_stage1"
-                    id="testing" rows="3" class="form-control"
-                    placeholder="Enter comments....">{{$applicationRoundReview->review_value}}</textarea>
+                <textarea name="testing_stage1" rows="3" class="form-control"
+                placeholder="Enter comments....">{{$applicationRoundReview->review_value}}</textarea>
 
                 <div class="col-12">
                     {{-- TODO: save form on click using AJAX --}}
@@ -72,17 +71,15 @@
                     </select>
                 </div>
             </div>
-
-            <textarea
-            id="testing" rows="5" class="form-control" name="feedback_submit"
+            
+            <textarea rows="5" class="form-control" name="feedback_submit"
             placeholder="Enter comments....">{{$applicationRoundReview->review_value}}</textarea>
 
             <div class="row py-4">
                 <div class="col-12">
                     <button type="button" class="btn btn-light border mr-2 show-evaluation-stage"
-                        data-target="#evaluationStage1">Back</button>
+                    data-target="#evaluationStage1">Back</button>
                     <button type="submit" class="btn btn-success" >Submit</button>
-                    {{-- <input type = "hidden" name = "application_id" value="{{ $applicationRound->id}}"> --}}
                 </div>
             </div>
         </div>
