@@ -186,6 +186,9 @@
 	.bottom-#{$name} {
 		bottom: $value;
 	}
+	.right-#{$name} {
+		right: $value;
+	}
 	.right-n#{$name} {
 		right: $value * -1;
 	}

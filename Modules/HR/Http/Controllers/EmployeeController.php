@@ -10,6 +10,7 @@ use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\Job;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Modules\Project\Entities\ProjectTeamMember;
 
 class EmployeeController extends Controller
 {
@@ -85,5 +86,12 @@ class EmployeeController extends Controller
             'employees' => $employees,
             'jobName' => $jobName
         ]);
+    }
+
+    public function employeeWorkHistory(Employee $employee)
+    {
+        $employeesDetails = ProjectTeamMember::where('team_member_id', $employee->user_id)->get()->unique('project_id');
+
+        return view('hr.employees.employee-work-history', compact('employeesDetails'));
     }
 }
