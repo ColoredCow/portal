@@ -38,7 +38,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $clients = $this->service->getClients();
+        $clients = $this->service->getClients($status = 'all');
 
         return view('project::create')->with('clients', $clients);
     }

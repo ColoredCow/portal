@@ -1,4 +1,4 @@
-<form method="POST" action="/hr/evaluation/{{ $applicationRound->id }}">
+<form method="POST" action="/hr/evaluation/{{ $applicationRound->id }}>
     @method('PATCH')
     @csrf
     {{-- TODO: We can utilize this code in the future if needed --}}
@@ -83,5 +83,6 @@
                 </div>
             </div>
         </div>
-    @endif
-</form>
+        @endif
+    </form>
+    

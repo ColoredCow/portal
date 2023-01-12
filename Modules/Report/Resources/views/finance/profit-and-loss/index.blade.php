@@ -12,47 +12,48 @@
         <div>
             <div class="d-flex justify-content-start row flex-wrap">
                 <div class="col-md-3">
-                    <div class="card h-75 ">
-                        <a class="card-body text-decoration-none"
+                    <div class="card">
+                        <a class="card-body text-decoration-none d-flex"
                             href="{{ route('reports.finance.profit-and-loss.detailed') }}">
-                            <h2 class="text-center">Detailed P&L Report</h2><br>
+                            <h2 class="text-center mb-0">Detailed P&L Report</h2><br>
                         </a>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card h-75 bg-theme-gray-lighter">
-                        <a class="card-body text-decoration-none" href="#">
-                            <h2 class="text-center"> Variance reasons</h2><br>
+                    <div class="card bg-theme-gray-lighter">
+                        <a class="card-body text-decoration-none d-flex" href="#">
+                            <h2 class="text-center mb-0"> Variance reasons</h2><br>
                         </a>
                     </div>
                 </div>
-                <div class="card h-75 bg-theme-gray-lighter">
-                    <a class="card-body text-decoration-none" href="#">
-                        <h2 class="text-center">Big ticket changes </h2><br>
-                    </a>
+                <div class="col-md-3">
+                    <div class="card  bg-theme-gray-lighter">
+                        <a class="card-body text-decoration-none d-flex" href="#">
+                            <h2 class="text-center mb-0">Big ticket changes </h2><br>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card h-75 bg-theme-gray-lighter">
-                    <a class="card-body text-decoration-none" href="#">
-                        <h2 class="text-center">Location wise profitability</h2><br>
-                    </a>
+                <div class="col-md-3">
+                    <div class="card  bg-theme-gray-lighter">
+                        <a class="card-body text-decoration-none d-flex" href="#">
+                            <h2 class="text-center mb-0">Location wise profitability</h2><br>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <h3> Budget </h3>
-    <div>
-        <div class="d-flex justify-content-start row flex-wrap">
-            <div class="col-md-3">
-                <div class="card h-75 bg-theme-gray-lighter">
-                    <a class="card-body text-decoration-none" href="#">
-                        <h2 class="text-center">Variance reasons</h2><br>
-                    </a>
+        <h3 class="mt-2"> Budget </h3>
+        <div>
+            <div class="d-flex justify-content-start row flex-wrap">
+                <div class="col-md-3">
+                    <div class="card bg-theme-gray-lighter">
+                        <a class="card-body text-decoration-none d-flex" href="#">
+                            <h2 class="text-center mb-0">Variance reasons</h2><br>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection
