@@ -191,7 +191,7 @@ class EvaluationController extends Controller
             ],
             [
             'review_value' => $request['feedback_submit'],
-            'review_key' => "feedback",
+            'review_key' => 'feedback',
             ]
         );
 
