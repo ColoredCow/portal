@@ -854,7 +854,6 @@
                                 $applicationRoundReview = $applicationRound->applicationRoundReviews->where('review_key', 'feedback')->first();
                                 $applicationRoundReviewValue = $applicationRoundReview ? $applicationRoundReview->review_value : '';
                             @endphp
-                            {{-- @dd($applicationRound->applicationRoundReviews); --}}
                             <br>
                             @if (sizeof($applicationRound->followUps))
                                 <div class="mt-3">
@@ -939,7 +938,7 @@
                                     </div>
                                 </div>
                                 @if ($application->latestApplicationRound->round->name != 'Trial Program')
-                                     <form action="/hr/recruitment/applications/rounds/{{ $applicationRound->id }}"
+                                    <form action="/hr/recruitment/applications/rounds/{{ $applicationRound->id }}"
                                         method="POST" enctype="multipart/form-data" class="applicant-round-form">
                                         {{ csrf_field() }}
                                         {{ method_field('PATCH') }}
@@ -1306,14 +1305,13 @@
                                                         @endphp
                                                         <textarea name="reviews[{{ $applicationRound->id }}][feedback]"
                                                             id="reviews[{{ $applicationRound->id }}][feedback]" rows="6" class="form-control"
-                                                            placeholder="Enter comments.....">{{ $applicationRoundReviewValue }}</textarea>
+                                                            placeholder="Enter comments...">{{ $applicationRoundReviewValue }}</textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-row d-flex justify-content-end">
                                                     <button type="button" class="btn btn-info btn-sm round-submit"
                                                         data-action="update">Update
                                                         feedback</button>
-                                                        
                                                 </div>
                                             </div>
                                             @php

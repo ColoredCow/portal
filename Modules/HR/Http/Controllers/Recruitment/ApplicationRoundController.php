@@ -23,7 +23,6 @@ class ApplicationRoundController extends Controller
     {
         $validatedData = $request->validated();
         $round->_update($validatedData);
-        // @dd($validatedData);
         if (array_key_exists('round_evaluation', $request->validated())) {
             $round->updateOrCreateEvaluation($request->validated()['round_evaluation']);
         }

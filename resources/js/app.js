@@ -309,7 +309,6 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			},
 			getApplicationEvaluation: function(applicationRoundID, roundId) {
 				let roundName = $("#applicationRoundName" + roundId)[0].innerText;
-
 				document.getElementById(
 					"roundName"
 				).innerText = `Evaluation\u00A0\u00A0•\u00A0\u00A0${roundName}`;

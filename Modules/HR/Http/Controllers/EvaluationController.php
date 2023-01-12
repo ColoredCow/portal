@@ -183,9 +183,6 @@ class EvaluationController extends Controller
     public function update($applicationRoundId)
     {
         $request = request()->all();
-
-        // @dd($request);
-
         
         $applicationRound = ApplicationRound::find($applicationRoundId);
         
@@ -197,6 +194,7 @@ class EvaluationController extends Controller
             'review_value' => $request['feedback_submit'],
             'review_key' => "feedback",
             ]);
+
 
         if (array_key_exists('evaluation', request()->all())) {
             $applicationRound->updateOrCreateEvaluation(request()->all()['evaluation']);
