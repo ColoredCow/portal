@@ -40,8 +40,8 @@ class ReportDataService
         $defaultStartDate = $client->created_at ?? $client->invoices()->orderBy('sent_on')->first()->sent_on;
         $defaultEndDate = today();
 
-        $filters['start_date'] = $defaultStartDate;
-        $filters['end_date'] = $defaultEndDate;
+        $filters['start_date'] = empty($filters['start_date']) ? $defaultStartDate : $filters['start_date'];
+        $filters['end_date'] = empty($filters['end_date']) ? $defaultEndDate : $filters['end_date'];
 
         $reportData = $this->service->getRevenueReportDataForClient($filters, $client);
 

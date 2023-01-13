@@ -177,41 +177,71 @@ class RevenueReportService
             ->get();
         $data['current_period_total_amount'] = 0;
         $data['previous_period_total_amount'] = 0;
-        $data['clients_name'] = Client::status('active')->pluck('name')->toArray();
-        $numberOfActiveClients = count($data['clients_name']);
-
-        for ($index = 0; $index < $numberOfActiveClients; $index++) {
+        $data['clients_name'] = Client::pluck('name')->toArray();
+        $numberOfClients = count($data['clients_name']);
+        for ($index = 0; $index < $numberOfClients; $index++) {
             $data['current_period_client_data'][$index] = 0;
             $data['previous_period_client_data'][$index] = 0;
         }
 
         foreach ($currentPeriodInvoiceDetails as $invoice) {
             $data['current_period_total_amount'] += round($invoice->total_amount_in_inr, 2);
-            $data['current_period_client_data'][array_search($invoice->client->name, $data['clients_name'], )] += round($invoice->total_amount_in_inr, 2);
+            $data['current_period_client_data'][array_search($invoice->client->name, $data['clients_name'])] += round($invoice->total_amount_in_inr, 2);
         }
 
         foreach ($previousPeriodInvoiceDetails as $invoice) {
             $data['previous_period_total_amount'] += round($invoice->total_amount_in_inr, 2);
             $data['previous_period_client_data'][array_search($invoice->client->name, $data['clients_name'])] += round($invoice->total_amount_in_inr, 2);
         }
+        for ($index = 0; $index < $numberOfClients; $index++) {
+            if ($data['current_period_client_data'][$index] == 0 && $data['previous_period_client_data'][$index] == 0) {
+                unset($data['current_period_client_data'][$index]);
+                unset($data['previous_period_client_data'][$index]);
+                unset($data['clients_name'][$index]);
+            }
+        }
+
+        // As unset() also delete the index therefore again setting the value for re-indexing
+        $data['current_period_client_data'] = array_values($data['current_period_client_data']);
+        $data['previous_period_client_data'] = array_values($data['previous_period_client_data']);
+        $data['clients_name'] = array_values($data['clients_name']);
 
         return $data;
     }
 
     public function getRevenueReportDataForClient($filters, $client)
     {
-        $clientInvoiceDetails = Invoice::where('client_id', $client->id)
-            ->whereBetween('sent_on', [$filters['start_date'], $filters['end_date']])
-            ->orderby('sent_on')
-            ->get();
-
         $amountMonthWise = [];
         $totalAmount = 0;
+        $clientDepartments = $client->linkedAsDepartment;
+        $clientPartners = $client->linkedAsPartner;
+
+        $clientInvoiceDetails = $this->getInvoicesForClient($client, $filters);
 
         foreach ($clientInvoiceDetails as $invoice) {
-            $invoiceAmount = round($invoice->total_amount_in_inr, 2);
-            $totalAmount += $invoiceAmount;
-            $amountMonthWise[$invoice->sent_on->format('M-Y')] = ($amountMonthWise[$invoice->sent_on->format('m-Y')] ?? 0) + $invoiceAmount;
+            $data = $this->handleInvoiceDataForClient($invoice, $totalAmount, $amountMonthWise);
+            $totalAmount = $data['totalAmount'];
+            $amountMonthWise = $data['amountMonthWise'];
+        }
+
+        foreach ($clientDepartments as $department) {
+            $departmentInvoiceDetails = $this->getInvoicesForClient($department, $filters);
+
+            foreach ($departmentInvoiceDetails as $invoice) {
+                $data = $this->handleInvoiceDataForClient($invoice, $totalAmount, $amountMonthWise);
+                $totalAmount = $data['totalAmount'];
+                $amountMonthWise = $data['amountMonthWise'];
+            }
+        }
+
+        foreach ($clientPartners as $partner) {
+            $partnerInvoiceDetails = $this->getInvoicesForClient($partner, $filters);
+
+            foreach ($partnerInvoiceDetails as $invoice) {
+                $data = $this->handleInvoiceDataForClient($invoice, $totalAmount, $amountMonthWise);
+                $totalAmount = $data['totalAmount'];
+                $amountMonthWise = $data['amountMonthWise'];
+            }
         }
 
         return [
@@ -219,5 +249,27 @@ class RevenueReportService
             'amount' => array_values($amountMonthWise),
             'total_amount' => round($totalAmount, 2)
         ];
+    }
+
+    private function handleInvoiceDataForClient($invoice, $totalAmount, $amountMonthWise)
+    {
+        $invoiceAmount = round($invoice->total_amount_in_inr, 2);
+        $totalAmount += $invoiceAmount;
+        $amountMonthWise[$invoice->sent_on->format('M-Y')] = ($amountMonthWise[$invoice->sent_on->format('m-Y')] ?? 0) + $invoiceAmount;
+
+        return [
+            'totalAmount' => $totalAmount,
+            'amountMonthWise' => $amountMonthWise
+        ];
+    }
+
+    private function getInvoicesForClient($client, $filters)
+    {
+        $invoices = Invoice::where('client_id', $client->id)
+            ->whereBetween('sent_on', [$filters['start_date'], $filters['end_date']])
+            ->orderby('sent_on')
+            ->get();
+
+        return $invoices;
     }
 }
