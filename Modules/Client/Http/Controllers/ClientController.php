@@ -7,6 +7,8 @@ use Modules\Client\Entities\Client;
 use Modules\Client\Http\Requests\ClientFormsRequest;
 use Modules\Client\Http\Requests\ClientRequest;
 use Modules\Client\Rules\ClientNameExist;
+use Illuminate\Support\Facades\DB;
+use Modules\Client\Entities\ClientAddress;
 
 class ClientController extends ModuleBaseController
 {
@@ -60,11 +62,16 @@ class ClientController extends ModuleBaseController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Client $client, $section = null)
+    public function edit(Client $client, $section = null, ClientAddress $clientAddress)
     {
+
+        $clientAddress = DB::table('clients')
+                               ->join('client_addresses', 'clients.client_id', '=', 'client_addresses.client_id')
+                               ->join('countries', 'client_addresses.country_id', '=', 'countries.id')
+                               ->get();
         $this->authorize('update', $client);
 
-        return view('client::edit', $this->service->edit($client, $section));
+        return view('client::edit', $this->service->edit($client, $section, $clientAddress));
     }
 
     /**

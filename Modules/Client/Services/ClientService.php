@@ -58,8 +58,9 @@ class ClientService implements ClientServiceContract
         ];
     }
 
-    public function edit($client, $section)
+    public function edit($client, $section, $clientAddress)
     {
+
         if (! $section || $section == 'client-details') {
             return [
                 'channelPartners' => $this->getChannelPartners(),
@@ -80,9 +81,10 @@ class ClientService implements ClientServiceContract
         if ($section == 'address') {
             return [
                 'client' => $client,
-                'countries' => Country::all(),
                 'section' => $section,
-                'addresses' => $client->addresses
+                'countries' => Country::all(),
+                'addresses' => $client->addresses,
+                'clientAddress' => $clientAddress,
             ];
         }
 
@@ -156,7 +158,14 @@ class ClientService implements ClientServiceContract
         $data['status'] = 'active';
         $data['client_id'] = Client::max('client_id') + 1;
 
-        return Client::create($data);
+        $store = Client::create($data);
+        $clientAddress = new clientAddress();
+        $clientAddress->country_id = $data['country_id'];
+        $clientAddress->client_id = $data['client_id'];
+        $clientAddress->save();
+
+        return $store;
+        
     }
 
     private function updateClientDetails($data, $client)
