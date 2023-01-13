@@ -219,8 +219,8 @@ class RevenueReportService
         $clientInvoiceDetails = $this->getInvoicesForClient($client, $filters);
 
         foreach ($clientInvoiceDetails as $invoice) {
-            $data = $this->handleInvoiceDataForClient($invoice, $totalAmount, $amountMonthWise);
-            $totalAmount = $data['totalAmount'];
+            $data = $this->handleInvoiceDataForClient($invoice, $amountMonthWise);
+            $totalAmount += $data['invoiceAmount'];
             $amountMonthWise = $data['amountMonthWise'];
         }
 
@@ -228,8 +228,8 @@ class RevenueReportService
             $departmentInvoiceDetails = $this->getInvoicesForClient($department, $filters);
 
             foreach ($departmentInvoiceDetails as $invoice) {
-                $data = $this->handleInvoiceDataForClient($invoice, $totalAmount, $amountMonthWise);
-                $totalAmount = $data['totalAmount'];
+                $data = $this->handleInvoiceDataForClient($invoice, $amountMonthWise);
+                $totalAmount += $data['invoiceAmount'];
                 $amountMonthWise = $data['amountMonthWise'];
             }
         }
@@ -238,8 +238,8 @@ class RevenueReportService
             $partnerInvoiceDetails = $this->getInvoicesForClient($partner, $filters);
 
             foreach ($partnerInvoiceDetails as $invoice) {
-                $data = $this->handleInvoiceDataForClient($invoice, $totalAmount, $amountMonthWise);
-                $totalAmount = $data['totalAmount'];
+                $data = $this->handleInvoiceDataForClient($invoice, $amountMonthWise);
+                $totalAmount += $data['invoiceAmount'];
                 $amountMonthWise = $data['amountMonthWise'];
             }
         }
@@ -251,14 +251,13 @@ class RevenueReportService
         ];
     }
 
-    private function handleInvoiceDataForClient($invoice, $totalAmount, $amountMonthWise)
+    private function handleInvoiceDataForClient($invoice, $amountMonthWise)
     {
         $invoiceAmount = round($invoice->total_amount_in_inr, 2);
-        $totalAmount += $invoiceAmount;
-        $amountMonthWise[$invoice->sent_on->format('M-Y')] = ($amountMonthWise[$invoice->sent_on->format('m-Y')] ?? 0) + $invoiceAmount;
+        $amountMonthWise[$invoice->sent_on->format('M-Y')] = ($amountMonthWise[$invoice->sent_on->format('M-Y')] ?? 0) + $invoiceAmount;
 
         return [
-            'totalAmount' => $totalAmount,
+            'invoiceAmount' => $invoiceAmount,
             'amountMonthWise' => $amountMonthWise
         ];
     }
