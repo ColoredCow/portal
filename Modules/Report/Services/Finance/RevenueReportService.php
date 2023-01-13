@@ -224,8 +224,7 @@ class RevenueReportService
             $amountMonthWise = $data['amountMonthWise'];
         }
 
-        foreach ($clientDepartments as $department)
-        {
+        foreach ($clientDepartments as $department) {
             $departmentInvoiceDetails = $this->getInvoicesForClient($department, $filters);
 
             foreach ($departmentInvoiceDetails as $invoice) {
@@ -235,8 +234,7 @@ class RevenueReportService
             }
         }
 
-        foreach ($clientPartners as $partner)
-        {
+        foreach ($clientPartners as $partner) {
             $partnerInvoiceDetails = $this->getInvoicesForClient($partner, $filters);
 
             foreach ($partnerInvoiceDetails as $invoice) {
