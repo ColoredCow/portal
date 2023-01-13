@@ -224,7 +224,8 @@ class RevenueReportService
             $amountMonthWise = $data['amountMonthWise'];
         }
 
-        foreach ($clientDepartments as $department) {
+        foreach ($clientDepartments as $department)
+        {
             $departmentInvoiceDetails = $this->getInvoicesForClient($department, $filters);
 
             foreach ($departmentInvoiceDetails as $invoice) {
@@ -234,7 +235,8 @@ class RevenueReportService
             }
         }
 
-        foreach ($clientPartners as $partner) {
+        foreach ($clientPartners as $partner)
+        {
             $partnerInvoiceDetails = $this->getInvoicesForClient($partner, $filters);
 
             foreach ($partnerInvoiceDetails as $invoice) {
@@ -251,7 +253,8 @@ class RevenueReportService
         ];
     }
 
-    private function handleInvoiceDataForClient($invoice, $totalAmount, $amountMonthWise) {
+    private function handleInvoiceDataForClient($invoice, $totalAmount, $amountMonthWise)
+    {
         $invoiceAmount = round($invoice->total_amount_in_inr, 2);
         $totalAmount += $invoiceAmount;
         $amountMonthWise[$invoice->sent_on->format('M-Y')] = ($amountMonthWise[$invoice->sent_on->format('m-Y')] ?? 0) + $invoiceAmount;
@@ -262,7 +265,8 @@ class RevenueReportService
         ];
     }
 
-    private function getInvoicesForClient($client, $filters) {
+    private function getInvoicesForClient($client, $filters)
+    {
         $invoices = Invoice::where('client_id', $client->id)
             ->whereBetween('sent_on', [$filters['start_date'], $filters['end_date']])
             ->orderby('sent_on')
