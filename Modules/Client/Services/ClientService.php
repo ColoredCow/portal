@@ -157,10 +157,9 @@ class ClientService implements ClientServiceContract
         $data['client_id'] = Client::max('client_id') + 1;
 
         $store = Client::create($data);
-        $clientId = $store->id;
         $clientAddress = new clientAddress();
         $clientAddress->country_id = $data['country_id'];
-        $clientAddress->client_id = $clientId;
+        $clientAddress->client_id = $store->id;
         $clientAddress->save();
 
         return $store;
