@@ -58,9 +58,6 @@
             </select>
         </div>
         <div class="form-group offset-md-6 col-md-5">
-            <label for="country_id">Country
-                <span data-toggle="tooltip" data-placement="right" title="If this client came via a channel partner then link that client from here."><i class="fa fa-question-circle"></i>&nbsp;</span>
-            </label>
             <select name="country_id" id="countryId" class="form-control">
                 <option value="">Select Country</option>
                 @foreach ($countries as $country)

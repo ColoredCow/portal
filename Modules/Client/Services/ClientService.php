@@ -156,13 +156,13 @@ class ClientService implements ClientServiceContract
         $data['status'] = 'active';
         $data['client_id'] = Client::max('client_id') + 1;
 
-        $store = Client::create($data);
+        $newClient = Client::create($data);
         $clientAddress = new clientAddress();
         $clientAddress->country_id = $data['country_id'];
-        $clientAddress->client_id = $store->id;
+        $clientAddress->client_id = $newClient->id;
         $clientAddress->save();
 
-        return $store;
+        return $newClient;
     }
 
     private function updateClientDetails($data, $client)
