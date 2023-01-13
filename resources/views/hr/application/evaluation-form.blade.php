@@ -1,4 +1,4 @@
-<form method="POST" action="/hr/evaluation/{{ $applicationRound->id }}>
+<form method="POST" action="/hr/evaluation/{{ $applicationRound->id }}">
     @method('PATCH')
     @csrf
     {{-- TODO: We can utilize this code in the future if needed --}}
@@ -30,18 +30,17 @@
     </div>
     @else
     {{-- @dd($applicationRound); --}}
-        @php
-        $applicationRoundReview = $applicationRound->applicationRoundReviews->where('review_key', 'feedback')->first();
-        $applicationRoundReviewValue = $applicationRoundReview ? $applicationRoundReview->review_value : '';
-        @endphp
+    
+    @php
+    $applicationRoundReview = $applicationRound->applicationRoundReviews->where('review_key', 'feedback')->first();
+    $applicationRoundReviewValue = $applicationRoundReview ? $applicationRoundReview->review_value : '';
+    @endphp
+
     <div class="evaluation-stage" id="evaluationStage1">
         @include('hr::evaluation.evaluation-form.resume-screening.feeling')
         {{-- @dd($applicationRound); --}}
 
             <div class="row py-4">
-                
-                <textarea name="testing_stage1" rows="3" class="form-control"
-                placeholder="Enter comments....">{{$applicationRoundReview->review_value}}</textarea>
 
                 <div class="col-12">
                     {{-- TODO: save form on click using AJAX --}}
@@ -71,18 +70,18 @@
                     </select>
                 </div>
             </div>
-            
-            <textarea rows="5" class="form-control" name="feedback_submit"
-            placeholder="Enter comments....">{{$applicationRoundReview->review_value}}</textarea>
 
             <div class="row py-4">
                 <div class="col-12">
                     <button type="button" class="btn btn-light border mr-2 show-evaluation-stage"
-                    data-target="#evaluationStage1">Back</button>
+                        data-target="#evaluationStage1">Back</button>
                     <button type="submit" class="btn btn-success" >Submit</button>
                 </div>
             </div>
         </div>
-        @endif
-    </form>
-    
+
+        <textarea rows="5" class="form-control" name="feedback_submit"
+        placeholder="Enter comments....">{{$applicationRoundReview->review_value}}</textarea>
+
+    @endif
+</form>
