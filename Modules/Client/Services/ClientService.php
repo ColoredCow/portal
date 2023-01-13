@@ -58,9 +58,8 @@ class ClientService implements ClientServiceContract
         ];
     }
 
-    public function edit($client, $section, $clientAddress)
+    public function edit($client, $section)
     {
-
         if (! $section || $section == 'client-details') {
             return [
                 'channelPartners' => $this->getChannelPartners(),
@@ -83,8 +82,7 @@ class ClientService implements ClientServiceContract
                 'client' => $client,
                 'section' => $section,
                 'countries' => Country::all(),
-                'addresses' => $client->addresses,
-                'clientAddress' => $clientAddress,
+                'addresses' => $client->addresses
             ];
         }
 
@@ -159,13 +157,13 @@ class ClientService implements ClientServiceContract
         $data['client_id'] = Client::max('client_id') + 1;
 
         $store = Client::create($data);
+        $clientId = $store->id;
         $clientAddress = new clientAddress();
         $clientAddress->country_id = $data['country_id'];
-        $clientAddress->client_id = $data['client_id'];
+        $clientAddress->client_id = $clientId;
         $clientAddress->save();
 
         return $store;
-        
     }
 
     private function updateClientDetails($data, $client)
