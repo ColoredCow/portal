@@ -96,6 +96,21 @@ return [
             'label' => 'Per Hour',
             'short-label' => '/hour'
         ],
+        'Per Month' => [
+            'slug' => 'Per Month',
+            'label' => 'Per Month',
+            'short-label' => 'Per Month'
+        ],
+        'Per Quarter' => [
+            'slug' => 'Per Quarter',
+            'label' => 'Per Quarter',
+            'short-label' => 'Per Quarter'
+        ],
+        'Per Year' => [
+            'slug' => 'Per Year',
+            'label' => 'Per Year',
+            'short-label' => 'Per Year'
+        ],
         'per_resource' => [
             'slug' => 'per_resource',
             'label' => 'Per Resource',
@@ -105,6 +120,7 @@ return [
             'slug' => 'overall',
             'label' => 'Overall',
             'short-label' => 'overall'
-        ]
+        ],
+    
     ]
 ];
