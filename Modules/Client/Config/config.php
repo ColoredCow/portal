@@ -121,6 +121,5 @@ return [
             'label' => 'Overall',
             'short-label' => 'overall'
         ],
-    
     ]
 ];
