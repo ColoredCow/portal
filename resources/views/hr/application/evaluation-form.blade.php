@@ -29,8 +29,7 @@
         </div>
     </div>
     @else
-    {{-- @dd($applicationRound); --}}
-    
+
     @php
     $applicationRoundReview = $applicationRound->applicationRoundReviews->where('review_key', 'feedback')->first();
     $applicationRoundReviewValue = $applicationRoundReview ? $applicationRoundReview->review_value : '';
@@ -81,7 +80,7 @@
         </div>
 
         <textarea rows="5" class="form-control" name="feedback_submit"
-        placeholder="Enter comments....">{{$applicationRoundReview->review_value}}</textarea>
+        placeholder="Enter comments....">{{optional($applicationRoundReview)->review_value}}</textarea>
 
     @endif
 </form>
