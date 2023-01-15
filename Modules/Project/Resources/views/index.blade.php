@@ -88,14 +88,15 @@
                                     @else
                                         <td class="w-33p">
                                             <div class="pl-2 pl-xl-3">
-                                                @if($client->key_account_manager_id === auth()->user()->id)
-                                                 <div class="pl-2 pl-xl-3">
-                                                    <a
-                                                   href="{{ route('project.show', $project) }}">{{ $project->name }}</a></div> 
-                                                @else
-                                                     <span>{{ $project->name }}</span>
-                                                 @endif
-                                            </div 
+                                                @php
+                                                    $team_member_ids = $project->getTeamMembers->pluck('team_member_id')->toArray();
+                                                    @endphp
+                                                    @if(in_array(auth()->user()->id, $team_member_ids))
+                                                        <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a>
+                                                    @else
+                                                         <div class="pl-2 pl-xl-3"> {{ $project->name }}</div>
+                                                    @endif
+                                            </div>   
                                         </td>
                                     @endcan
                                     <td class="w-20p">
