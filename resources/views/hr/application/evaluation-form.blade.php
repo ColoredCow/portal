@@ -37,7 +37,6 @@
 
     <div class="evaluation-stage" id="evaluationStage1">
         @include('hr::evaluation.evaluation-form.resume-screening.feeling')
-        {{-- @dd($applicationRound); --}}
 
             <div class="row py-4">
 
