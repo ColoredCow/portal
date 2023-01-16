@@ -29,12 +29,6 @@
         </div>
     </div>
     @else
-
-    @php
-    $applicationRoundReview = $applicationRound->applicationRoundReviews->where('review_key', 'feedback')->first();
-    $applicationRoundReviewValue = $applicationRoundReview ? $applicationRoundReview->review_value : '';
-    @endphp
-
     <div class="evaluation-stage" id="evaluationStage1">
         @include('hr::evaluation.evaluation-form.resume-screening.feeling')
 
