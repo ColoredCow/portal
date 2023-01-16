@@ -27,6 +27,10 @@
                     <a class="nav-link" data-bs-toggle="pill" data-bs-target="#project-repository" type="button"
                         role="tab" aria-selected="false">Project repositories</a>
                 </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-bs-toggle="pill" data-bs-target="#resource-requirement" type="button"
+                        role="tab" aria-selected="false">Resource Requirement</a>
+                </li>
             </ul>
             @include('status', ['errors' => $errors->all()])
             <div class="tab-content">
@@ -40,6 +44,10 @@
 
                 <div class="tab-pane fade mb-5" id="project-repository" role="tabpanel">
                     @include('project::subviews.edit-project-repository')
+                </div>
+
+                <div class="tab-pane fade mb-5" id="resource-requirement" role="tabpanel">
+                    @include('project::subviews.edit-resource-requirement')
                 </div>
             </div>
         </div>

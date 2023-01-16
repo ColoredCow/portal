@@ -100,6 +100,7 @@ class ProjectController extends Controller
             'projectRepositories' => $this->service->getProjectRepositories($project),
             'designations' => $this->service->getDesignations(),
             'workingDaysInMonth' => $this->service->getWorkingDays(),
+            'resourceRequirement' => $this->service->getResourceRequirement(),
         ]);
     }
 

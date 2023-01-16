@@ -48,7 +48,6 @@
                     <div class="col-3">
                         <select v-model="projectTeamMember.pivot.designation" :name="`project_team_member[${index}][designation]`" class="form-control">
                             <option value="">Select Designations</option>
-
                             <option v-for="(designation, key) in designations" :value="key">@{{ designation }}</option>
                         </select>
                     </div>
