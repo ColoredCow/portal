@@ -161,7 +161,7 @@ class EvaluationController extends Controller
     public function show($applicationRoundId)
     {
         $applicationRound = ApplicationRound::find($applicationRoundId)->load('application.applicant');
-        $application_Round_Review = $applicationRound->applicationRoundReviews->where('review_key', 'feedback')->first();    
+        $application_Round_Review = $applicationRound->applicationRoundReviews->where('review_key', 'feedback')->first();
         $segmentList = [];
 
         foreach (self::getSegments($applicationRound->hr_application_id, $applicationRound->round) as $segment) {
