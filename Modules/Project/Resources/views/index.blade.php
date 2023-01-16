@@ -83,19 +83,19 @@
                                     @can('projects.update')
                                         <td class="w-33p">
                                             <div class="pl-2 pl-xl-3"><a
-                                                    href="{{ route('project.show', $project) }}">{{ $project->name }}</a></div>
+                                                href="{{ route('project.show', $project) }}">{{ $project->name }}</a></div>
                                         </td>
                                     @else
                                         <td class="w-33p">
                                             <div class="pl-2 pl-xl-3">
                                                 @php
                                                     $team_member_ids = $project->getTeamMembers->pluck('team_member_id')->toArray();
-                                                    @endphp
-                                                    @if(in_array(auth()->user()->id, $team_member_ids))
-                                                        <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a>
-                                                    @else
-                                                         <div class="pl-2 pl-xl-3"> {{ $project->name }}</div>
-                                                    @endif
+                                                @endphp
+                                                @if(in_array(auth()->user()->id, $team_member_ids))
+                                                    <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a>
+                                                @else
+                                                    <div class="pl-2 pl-xl-3"> {{ $project->name }}</div>
+                                                @endif
                                             </div>   
                                         </td>
                                     @endcan
@@ -103,7 +103,6 @@
                                         @foreach ($project->getTeamMembers ?: [] as $teamMember)
                                             <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
                                                 title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation] }} <br>    Efforts: {{ $teamMember->current_actual_effort }} Hours">
-
                                                 <a href={{ route('employees.show', $teamMember->user->employee) }}><img
                                                         src="{{ $teamMember->user->avatar }}"
                                                         class="w-35 h-30 rounded-circle mb-1 mr-0.5 {{ $teamMember->border_color_class }} border-2"></a>
