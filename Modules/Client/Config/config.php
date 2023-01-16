@@ -97,17 +97,17 @@ return [
             'short-label' => '/hour'
         ],
         'Per Month' => [
-            'slug' => 'Per Month',
+            'slug' => 'Per_month',
             'label' => 'Per Month',
             'short-label' => 'Per Month'
         ],
         'Per Quarter' => [
-            'slug' => 'Per Quarter',
+            'slug' => 'Per_quarter',
             'label' => 'Per Quarter',
             'short-label' => 'Per Quarter'
         ],
         'Per Year' => [
-            'slug' => 'Per Year',
+            'slug' => 'Per_year',
             'label' => 'Per Year',
             'short-label' => 'Per Year'
         ],
