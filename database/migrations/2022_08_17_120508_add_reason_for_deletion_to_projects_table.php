@@ -14,7 +14,7 @@ class AddReasonForDeletionToProjectsTable extends Migration
     public function up()
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->string('reason_for_deletion')->nullable();
+            $table->string('reason_for_deletion');
         });
     }
 
@@ -26,7 +26,7 @@ class AddReasonForDeletionToProjectsTable extends Migration
     public function down()
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->string('reason_for_deletion')->nullable(false);
+            $table->dropColumn('reason_for_deletion');
         });
     }
 }
