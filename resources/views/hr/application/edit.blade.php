@@ -940,7 +940,6 @@
                                 @if ($application->latestApplicationRound->round->name != 'Trial Program')
                                     <form action="/hr/recruitment/applications/rounds/{{ $applicationRound->id }}"
                                         method="POST" enctype="multipart/form-data" class="applicant-round-form">
-
                                         {{ csrf_field() }}
                                         {{ method_field('PATCH') }}
                                         <div id="collapse_{{ $loop->iteration }}"
