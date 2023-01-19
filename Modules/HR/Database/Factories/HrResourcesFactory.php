@@ -5,7 +5,6 @@ namespace Modules\HR\Database\Factories;
 use App\Models\Category;
 use App\Models\Resource;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Modules\HR\Entities\Job;
 
 class HrResourcesFactory extends Factory
 {
