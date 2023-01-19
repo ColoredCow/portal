@@ -45,31 +45,32 @@ class ProjectTeamMember extends Model
         return $query->whereNull('ended_on');
     }
 
-    public function getCurrentActualEffortAttribute()
+    public function getCurrentActualEffortAttribute($startDate = null)
     {
-        $firstDayOfMonth = date('y-m-01');
+        $startDate = $startDate ?? $this->project->client->month_start_date;
 
-        return $this->projectTeamMemberEffort()->where('added_on', '>=', $firstDayOfMonth)->sum('actual_effort');
+        return $this->projectTeamMemberEffort()->where('added_on', '>=', $this->project->client->month_start_date)->sum('actual_effort');
     }
 
-    public function getCurrentExpectedEffortAttribute()
+    public function getCurrentExpectedEffortAttribute($startDate = null)
     {
         $project = new Project;
         $currentDate = today(config('constants.timezone.indian'));
-        $firstDayOfMonth = date('y-m-01');
+        $startDate = $startDate ?? $this->project->client->month_start_date;
 
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = $currentDate->subDay();
         }
 
-        $daysTillToday = count($project->getWorkingDaysList($firstDayOfMonth, $currentDate));
+        $daysTillToday = count($project->getWorkingDaysList($this->project->client->month_start_date, $currentDate));
 
         return $this->daily_expected_effort * $daysTillToday;
     }
 
-    public function getExpectedEffortTillTodayAttribute()
+    public function getExpectedEffortTillTodayAttribute($startDate = null)
     {
         $project = new Project;
+        $startDate = $startDate ?? $this->project->client->month_start_date;
         $daysTillToday = count($project->getWorkingDaysList($this->project->client->month_start_date, today(config('constants.timezone.indian'))));
 
         return $this->daily_expected_effort * $daysTillToday;
@@ -84,7 +85,7 @@ class ProjectTeamMember extends Model
     {
         $project = new Project;
         $currentDate = today(config('constants.timezone.indian'));
-        $firstDayOfMonth = date('y-m-01');
+        $firstDayOfMonth = $this->current_actual_effort;
 
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = $currentDate->subDay();
