@@ -47,19 +47,21 @@ class ProjectTeamMember extends Model
 
     public function getCurrentActualEffortAttribute()
     {
-        return $this->projectTeamMemberEffort()->where('added_on', '>=', $this->project->client->month_start_date)->sum('actual_effort');
+        $firstDayOfMonth = date('y-m-01');
+        return $this->projectTeamMemberEffort()->where('added_on', '>=',$firstDayOfMonth)->sum('actual_effort');
     }
 
     public function getCurrentExpectedEffortAttribute()
     {
         $project = new Project;
         $currentDate = today(config('constants.timezone.indian'));
+        $firstDayOfMonth = date('y-m-01');
 
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = $currentDate->subDay();
         }
 
-        $daysTillToday = count($project->getWorkingDaysList($this->project->client->month_start_date, $currentDate));
+        $daysTillToday = count($project->getWorkingDaysList($firstDayOfMonth,$currentDate));
 
         return $this->daily_expected_effort * $daysTillToday;
     }
@@ -81,12 +83,13 @@ class ProjectTeamMember extends Model
     {
         $project = new Project;
         $currentDate = today(config('constants.timezone.indian'));
+        $firstDayOfMonth = date('y-m-01');
 
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = $currentDate->subDay();
         }
 
-        $daysTillToday = count($project->getWorkingDaysList($this->project->client->month_start_date, $currentDate));
+        $daysTillToday = count($project->getWorkingDaysList($firstDayOfMonth,$currentDate));
         if ($daysTillToday == 0) {
             return 0;
         }
