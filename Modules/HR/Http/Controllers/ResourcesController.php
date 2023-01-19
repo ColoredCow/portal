@@ -7,14 +7,28 @@ use Illuminate\Http\Request;
 use Modules\HR\Entities\Job;
 use App\Models\Category;
 use App\Models\Resource;
+use App\Models\UsersSuggestion;
 
 class ResourcesController extends Controller
 {
     public function index()
     {
-        $jobs = Job::all();
+        $resources = Resource::all();
+        $categories = Category::all();
+        $userSuggestions = UsersSuggestion::all();
 
-        return view('hr::guidelines-resources.index', compact('jobs'));
+        return view('hr::guidelines-resources.index', compact('resources', 'categories', 'userSuggestions'));
+    }
+
+    public function getUserSuggestionAndAvatar($id)
+    {
+
+        $userDetails = UsersSuggestion::where('id', $id)->first();
+
+        return response()->json([
+            'suggestion' => $userDetails->post_suggestions,
+            'avatar' => $userDetails->employee->user->avatar
+        ]);
     }
 
     public function show($job)
@@ -43,7 +57,6 @@ class ResourcesController extends Controller
         $resources = Resource::create([
             'resource_link' => $request['resource_link'],
             'hr_resource_category_id' => $request['category-type'],
-            'job_id' => $request['job_id'],
         ]);
 
         return redirect()->back();

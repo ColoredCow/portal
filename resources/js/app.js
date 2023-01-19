@@ -2057,3 +2057,29 @@ $("#responseModal").on("submit",function(e){
 	});
 });
 
+$(document).on("click", ".resource-avatar", function(e) {
+  const imgClicked = $(e.target);
+  const dataUrl = imgClicked.data("url");
+  var avatarSuggestion = $(this);
+  $.ajax({
+    type: "GET",
+    url: dataUrl,
+    success: function(response) {
+      avatarSuggestion
+        .closest("tr")
+        .find("td")
+        .next()
+        .find("p.response")
+        .html(response.suggestion);
+      avatarSuggestion
+        .closest("tr")
+        .find("td")
+        .next()
+        .next()
+        .find("img")
+        .attr("src", response.avatar);
+    },
+  });
+});
+
+

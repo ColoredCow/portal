@@ -107,6 +107,7 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('/evaluation', 'EvaluationController')->only(['show', 'update']);
         Route::get('/resources/', 'ResourcesController@index')->name('resources.index');
+        Route::get('/resources/{Id}/', 'ResourcesController@getUserSuggestionAndAvatar')->name('resources.index.id');
         Route::get('/resources/{jobId}/show/', 'ResourcesController@show')->name('resources.show');
         Route::post('/category/store/', 'ResourcesController@store')->name('resources.store');
         Route::post('/resources/create/', 'ResourcesController@create')->name('resources.create');
@@ -122,6 +123,8 @@ Route::middleware('auth')->group(function () {
                 'index' => 'employees',
                 'show' => 'employees.show',
             ]);
+        Route::get('/employees-resource-guideline/{employee}', 'EmployeeController@resources')->name('employees.resource.guideline');
+        Route::post('/employees-resource-guideline/{employee}', 'EmployeeController@userResourceSuggestions')->name('employees.resources.guideline');
         Route::get('/workhistory/{employee}/', 'EmployeeController@employeeWorkHistory')->name('employees.employeeWorkHistory');
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
         Route::get('fte-handler/{domain_id}', 'EmployeeController@showFTEdata')->name('employees.alert');
