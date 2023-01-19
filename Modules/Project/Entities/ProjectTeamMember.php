@@ -48,7 +48,7 @@ class ProjectTeamMember extends Model
     public function getCurrentActualEffortAttribute()
     {
         $firstDayOfMonth = date('y-m-01');
-        return $this->projectTeamMemberEffort()->where('added_on', '>=',$firstDayOfMonth)->sum('actual_effort');
+        return $this->projectTeamMemberEffort()->where('added_on', '>=', $firstDayOfMonth)->sum('actual_effort');
     }
 
     public function getCurrentExpectedEffortAttribute()
@@ -61,7 +61,7 @@ class ProjectTeamMember extends Model
             $currentDate = $currentDate->subDay();
         }
 
-        $daysTillToday = count($project->getWorkingDaysList($firstDayOfMonth,$currentDate));
+        $daysTillToday = count($project->getWorkingDaysList($firstDayOfMonth, $currentDate));
 
         return $this->daily_expected_effort * $daysTillToday;
     }
@@ -89,7 +89,7 @@ class ProjectTeamMember extends Model
             $currentDate = $currentDate->subDay();
         }
 
-        $daysTillToday = count($project->getWorkingDaysList($firstDayOfMonth,$currentDate));
+        $daysTillToday = count($project->getWorkingDaysList($firstDayOfMonth, $currentDate));
         if ($daysTillToday == 0) {
             return 0;
         }
