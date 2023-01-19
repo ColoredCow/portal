@@ -69,6 +69,5 @@
     </div>
     @include('hr::guidelines-resources.hr-category-modal')
     @include('hr::guidelines-resources.hr-resources-modal')
-    </div>
 </div>
 @endsection
