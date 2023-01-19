@@ -2088,7 +2088,7 @@ $(document).on("click", ".resource-avatar", function(e) {
 		type: "GET",
 		url: dataUrl,
 		success: function(response) {
-		avatarSuggestion
+			avatarSuggestion
 				.closest("tr")
 				.find("td")
 				.next()

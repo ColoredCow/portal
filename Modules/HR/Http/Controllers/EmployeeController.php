@@ -110,6 +110,7 @@ class EmployeeController extends Controller
                 ]
             );
         }
+
         return redirect()->back()->with('success', 'Resources saved successfully');
     }
     public function resources(Employee $employee)
