@@ -5,7 +5,7 @@
                 <h5 class="modal-title" id="exampleModal-Label">Add Resouces</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button>
+                  </button>
             </div>
             <div class="modal-body">
                 <form method="POST" action="{{ route('resources.create') }}" id="addResourceForm">
@@ -19,7 +19,7 @@
                         <select class="form-control" id="hrResourceCategory" name="category-type" required>
                             <option value="">Select Category</option>
                             @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
