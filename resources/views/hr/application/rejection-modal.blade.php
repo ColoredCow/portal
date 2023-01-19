@@ -69,15 +69,56 @@
                     </div>
                 </div>
                 <div class="form-row d-none" id="rejectMailToApplicantBlock">
-                    <div class="form-group col-md-12">
-                        <label for="rejectMailToApplicantSubject">Subject</label>
-                        <input type="text" name="mail_to_applicant[reject][subject]" id="rejectMailToApplicantSubject"
-                            class="form-control">
+
+                    <div>
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item "><a data-toggle="tab" href="#generalCommunication" class="nav-link rejectMailOpt" data-key-subject='general_communication_subject' data-key-body='general_communication_body' >General Communication</a></li>
+                            <li class="nav-item"><a data-toggle="tab" href="#codeTrekProposition" class="nav-link rejectMailOpt" data-key-subject='codetrek_proposition_subject' data-key-body='codetrek_proposition_body'>CodeTrek Proposition</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane" id="generalCommunication">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Subject</label>
+                                                <input name="subject_general_communication" type="text" class="form-control option-subject" id="general_communicationSubject">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Mail body:</label>
+                                                <textarea name="body_general_communication" rows="10" class="richeditor form-control option-body" id="general_communicationBody" ></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="codeTrekProposition">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Subject</label>
+                                                <input name="subject_codetrek_proposition" type="text" class="form-control" id="codetrek_propositionSubject">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Mail body:</label>
+                                                <textarea name="body_codetrek_proposition" rows="10" class="richeditor form-control" id="codetrek_propositionBody"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group col-md-12">
-                        <label for="rejectMailToApplicantBody">Body</label>
-                        <textarea name="mail_to_applicant[reject][body]" id="rejectMailToApplicantBody" class="form-control richeditor"></textarea>
-                    </div>
+
                 </div>
                 <div class="form-row mt-2">
                     <div class="form-group col-md-12">

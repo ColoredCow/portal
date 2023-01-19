@@ -96,6 +96,28 @@ class SettingsTableSeeder extends Seeder
             'setting_value' => '<div>Hey |*applicant_name*|,</div><div> </div><div>Thanks for applying for |*job_title*|.</div><div> </div><div>This might be an automated reply, but our gratitude towards you is absolutely immense. Rest assured that we have received your job application and are absolutely thrilled with working together.</div><div> </div><div>We have carefully reviewed your application. We’ve definitely saved your profile in our database for future reference. We believe that your bright mind and experience fit any of our roles and criteria. Don’t let it deter or demotivate you in any way, because opportunities from ColoredCow could come knocking your way in the near future too!</div><div> </div>
             <div>Now, if you are curious to know more, read ColoredCows, Origin Story!</div><div> </div><div>Looking forward to chatting soon.</div><div> </div><div>Thanks,</div><div>ColoredCow</div><div>PS: If you are a book lover, you may find some interest in our reading list.</div> ',
         ]);
+
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'general_communication_subject',
+            'setting_value' => 'Your application is rejected',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'general_communication_body',
+            'setting_value' => '  ',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'codetrek_proposition_subject',
+            'setting_value' => 'Your application is rejected',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'codetrek_proposition_body',
+            'setting_value' => '<div>Hey |*applicant_name*|,</div><div> </div><div>Thanks for considering ColoredCow as your next Career choice.</div><div> As we see you applied for |*JOB_ROLE*| but somehow this job requires different skills than your current resume reflects.</div><div> </div><div>Alternatively, if you want to build your Software Development skills as a Trainee, we are inviting candidates to our Tehri and Dwarahat offices. Drop us an email at deepak.sharma@coloredcow.com to know more about the program.</div><div> </div><div>Thanks again for applying.</div><div> </div> 
+		    <div>Thanks again for applying.</div><div> </div><div>HR Team</div><div>ColoredCow<div>',
+        ]);
         Setting::updateOrCreate([
             'module' => 'hr',
             'setting_key' => 'hr_team_interaction_round_subject',

@@ -2025,6 +2025,39 @@ $(".opt").on("click", function() {
 	});
 });
 
+$(".rejectMailOpt").on("click",function(){
+	let formData = {
+		setting_key_subject: $(this).data("key-subject"),
+		setting_key_body: $(this).data("key-body"),
+		applicant_name: $("#applicantName").text(),
+		job_title: $("#jobTitle").text(),
+	};
+
+	var originUrl = window.location.origin;
+	$.ajax({
+		url: originUrl + "/hr/recruitment/onRejectEmail",
+		type: "GET",
+		data: formData,
+		contentType: "application/json",
+		success: function(response) {
+			$("#general_communicationSubject").val(response.subject);
+			tinymce.get("general_communicationBody").setContent(response.body, { format: "html" });
+		},
+	});
+
+	var originUrl = window.location.origin;
+	$.ajax({
+		url: originUrl + "/hr/recruitment/onRejectEmail",
+		type: "GET",
+		data: formData,
+		contentType: "application/json",
+		success: function(response) {
+			$("#codetrek_propositionSubject").val(response.subject);
+			tinymce.get("codetrek_propositionBody").setContent(response.body, { format: "html" });
+		},
+	});
+});
+
 $(document).on("click", ".finish_interview", function(e) {
 	e.preventDefault();
 	var actualEndTime = $(".finish_interview").val();
