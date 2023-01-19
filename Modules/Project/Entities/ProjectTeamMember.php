@@ -96,7 +96,7 @@ class ProjectTeamMember extends Model
             return 0;
         }
 
-        return round($this->current_actual_effort / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
+        return round($firstDayOfMonth / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
     }
 
     public function getBorderColorClassAttribute()
