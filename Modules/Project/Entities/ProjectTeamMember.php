@@ -48,6 +48,7 @@ class ProjectTeamMember extends Model
     public function getCurrentActualEffortAttribute()
     {
         $firstDayOfMonth = date('y-m-01');
+
         return $this->projectTeamMemberEffort()->where('added_on', '>=', $firstDayOfMonth)->sum('actual_effort');
     }
 
