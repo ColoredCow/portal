@@ -76,7 +76,8 @@ class Employee extends Model
     {
         return $this->hasMany(EmployeeSalary::class);
     }
-    public function user_suggestons(){
+    public function user_suggestons()
+    {
         return $this->hasOne(UsersSuggestion::class);
     }
 }

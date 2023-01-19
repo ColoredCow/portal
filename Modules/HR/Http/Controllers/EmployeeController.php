@@ -105,7 +105,6 @@ class EmployeeController extends Controller
                 ['category' => isset($data['mark_as_read'][$index]) ? $category : null,
                  'user_id' => isset($data['mark_as_read'][$index]) && $data['mark_as_read'][$index] ? $employee->id : null,
                 'mark_as_read' => isset($data['mark_as_read'][$index]) ? $data['mark_as_read'][$index] : null],
-
                 [
                 'post_suggestions' => isset($data['post_suggestion'][$index]) && isset($data['mark_as_read'][$index]) ? $data['post_suggestion'][$index] : null
                 ]

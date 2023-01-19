@@ -22,7 +22,6 @@ class ResourcesController extends Controller
 
     public function getUserSuggestionAndAvatar($id)
     {
-
         $userDetails = UsersSuggestion::where('id', $id)->first();
 
         return response()->json([

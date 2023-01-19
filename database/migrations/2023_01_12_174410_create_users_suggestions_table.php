@@ -17,7 +17,7 @@ class CreateUsersSuggestionsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->nullable();
             $table->string('category')->nullable();
-            $table->boolean('mark_as_read')->nullable()->default(NULL);
+            $table->boolean('mark_as_read')->nullable()->default(null);
             $table->text('post_suggestions')->nullable()->default('');
             $table->timestamps();
         });

@@ -26,7 +26,6 @@ class HrResourcesFactory extends Factory
         return [
             'resource_link' => $this->faker->url,
             'hr_resource_category_id' => Category::inRandomOrder()->first()->id,
-            'job_id'=> Job::inRandomOrder()->first()->id,
         ];
     }
 }

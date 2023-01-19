@@ -14,7 +14,7 @@ class DropJobIdFromHrResources extends Migration
     public function up()
     {
         Schema::table('hr_resources', function (Blueprint $table) {
-            $table->dropForeign(['job_id']); 
+            $table->dropForeign(['job_id']);
             $table->dropColumn(['job_id']);
         });
     }
