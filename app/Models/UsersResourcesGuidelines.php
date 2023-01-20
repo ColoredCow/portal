@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\HR\Entities\Employee;
 
-class UsersResources extends Model
+class UsersResourcesGuidelines extends Model
 {
     use HasFactory;
     protected $guarded = [];

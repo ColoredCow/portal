@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersResourcesTable extends Migration
+class CreateUsersResourcesGuidelinesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUsersResourcesTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_resources', function (Blueprint $table) {
+        Schema::create('users_resources_guidelines', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->nullable();
             $table->string('category')->nullable();
