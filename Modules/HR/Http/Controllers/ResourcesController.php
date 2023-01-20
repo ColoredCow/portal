@@ -15,9 +15,9 @@ class ResourcesController extends Controller
     {
         $resources = Resource::all();
         $categories = Category::all();
-        $usersResources = UsersResourcesAndGuidelines::all();
+        $usersResourcesAndGuidelines = UsersResourcesAndGuidelines::all();
 
-        return view('hr::guidelines-resources.index', compact('resources', 'categories', 'usersResources'));
+        return view('hr::guidelines-resources.index', compact('resources', 'categories', 'usersResourcesAndGuidelines'));
     }
 
     public function getUserSuggestionAndAvatar($id)

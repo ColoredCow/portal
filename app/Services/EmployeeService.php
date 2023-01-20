@@ -27,7 +27,7 @@ class EmployeeService
         ];
     }
 
-    public function updateOrCreateUsersResourcesGuideline($data, $employee)
+    public function updateOrCreateUsersResourcesAndGuidelines($data, $employee)
     {
         foreach ($data['category'] as $index => $category) {
             $resource = UsersResourcesAndGuidelines::updateOrCreate(

@@ -47,10 +47,10 @@
                     </div>
                 </td>
                 <td class="text-center">
-                    @foreach ($usersResources as $usersResource)
-                        @if (!$usersResource->mark_as_read && $usersResource->category==$resource->category->name)
-                            <span class="content tooltip-wrapper" title="{{ $usersResource->employee->user->name }}">
-                            <img src="{{ $usersResource->employee->user->avatar }}" data-url="{{ route('resources.index.id',[$usersResource->id]) }}" class="w-35 resource-avatar h-30 rounded-circle mb-1 mr-0.5 {{ $usersResource->employee->user->border_color_class }} border-2"></span>
+                    @foreach ($usersResourcesAndGuidelines as $usersResourceAndGuideline)
+                        @if (!$usersResourceAndGuideline->mark_as_read && $usersResourceAndGuideline->category==$resource->category->name)
+                            <span class="content tooltip-wrapper" title="{{ $usersResourceAndGuideline->employee->user->name }}">
+                            <img src="{{ $usersResourceAndGuideline->employee->user->avatar }}" data-url="{{ route('resources.index.id',[$usersResourceAndGuideline->id]) }}" class="w-35 resource-avatar h-30 rounded-circle mb-1 mr-0.5 {{ $usersResourceAndGuideline->employee->user->border_color_class }} border-2"></span>
                         @endif
                     @endforeach
                 </td>

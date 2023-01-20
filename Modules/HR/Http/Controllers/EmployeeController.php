@@ -96,11 +96,11 @@ class EmployeeController extends Controller
         return view('hr.employees.employee-work-history', compact('employeesDetails'));
     }
 
-    public function updateOrCreateUsersResourcesGuideline(Request $request, Employee $employee)
+    public function updateOrCreateUsersResourcesAndGuidelines(Request $request, Employee $employee)
     {
         $data = $request->all();
 
-        return $this->service->updateOrCreateUsersResourcesGuideline($data, $employee);
+        return $this->service->updateOrCreateUsersResourcesAndGuidelines($data, $employee);
     }
 
     public function getAllResources(Employee $employee)
