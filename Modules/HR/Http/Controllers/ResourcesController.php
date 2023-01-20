@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Modules\HR\Entities\Job;
 use App\Models\Category;
 use App\Models\Resource;
-use App\Models\UsersResourcesGuidelines;
+use App\Models\UsersResourcesAndGuidelines;
 
 class ResourcesController extends Controller
 {
@@ -15,14 +15,14 @@ class ResourcesController extends Controller
     {
         $resources = Resource::all();
         $categories = Category::all();
-        $usersResources = UsersResourcesGuidelines::all();
+        $usersResources = UsersResourcesAndGuidelines::all();
 
         return view('hr::guidelines-resources.index', compact('resources', 'categories', 'usersResources'));
     }
 
     public function getUserSuggestionAndAvatar($id)
     {
-        $userResource = UsersResourcesGuidelines::where('id', $id)->first();
+        $userResource = UsersResourcesAndGuidelines::where('id', $id)->first();
 
         return response()->json([
             'suggestion' => $userResource->post_suggestions,

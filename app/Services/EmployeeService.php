@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use Modules\HR\Entities\Employee;
-use App\Models\UsersResourcesGuidelines;
+use App\Models\UsersResourcesAndGuidelines;
 
 class EmployeeService
 {
@@ -30,7 +30,7 @@ class EmployeeService
     public function updateOrCreateUsersResourcesGuideline($data, $employee)
     {
         foreach ($data['category'] as $index => $category) {
-            $resource = UsersResourcesGuidelines::updateOrCreate(
+            $resource = UsersResourcesAndGuidelines::updateOrCreate(
                 ['category' => isset($data['mark_as_read'][$index]) ? $category : null,
                  'user_id' => isset($data['mark_as_read'][$index]) && $data['mark_as_read'][$index] ? $employee->id : null,
                 'mark_as_read' => isset($data['mark_as_read'][$index]) ? $data['mark_as_read'][$index] : null],

@@ -6,7 +6,7 @@ use App\Models\Project;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Modules\User\Entities\User;
-use App\Models\UsersResourcesGuidelines;
+use App\Models\UsersResourcesAndGuidelines;
 use Modules\Salary\Entities\EmployeeSalary;
 
 class Employee extends Model
@@ -78,6 +78,6 @@ class Employee extends Model
     }
     public function userResourcesGuidelines()
     {
-        return $this->hasOne(UsersResourcesGuidelines::class);
+        return $this->hasOne(UsersResourcesAndGuidelines::class);
     }
 }
