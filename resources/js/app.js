@@ -282,6 +282,36 @@ $(document).ready(function () {
 	});
 });
 
+$(document).on("click","#viewReject",function(){
+	
+	$("body").on("click",`label[for='${$("#appearRejectButton").data("target")}-no']`,function(){
+		$("#rejectButton").removeClass("d-none");
+		$("#nextButton").addClass("d-none");
+
+	});
+
+	$("body").on("click",`label[for='${$("#appearRejectButton").data("target")}-yes']`,function(){
+		$("#nextButton").removeClass("d-none");
+		$("#rejectButton").addClass("d-none");
+
+	});
+});
+
+$(document).on("click",".reject-button",function(){
+	rejectApplication();
+});
+
+function rejectApplication()
+{
+	$("#application_reject_modal").modal("show");
+	loadTemplateMail("reject", (res) => {
+		$("#rejectMailToApplicantSubject").val(res.subject);
+		tinymce
+			.get("rejectMailToApplicantBody")
+			.setContent(res.body, { format: "html" });
+	});
+}
+
 if (document.getElementById("page_hr_applicant_edit")) {
 	new Vue({
 		el: "#page_hr_applicant_edit",
@@ -371,13 +401,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 				}
 			},
 			rejectApplication: function() {
-				$("#application_reject_modal").modal("show");
-				loadTemplateMail("reject", (res) => {
-					$("#rejectMailToApplicantSubject").val(res.subject);
-					tinymce
-						.get("rejectMailToApplicantBody")
-						.setContent(res.body, { format: "html" });
-				});
+				rejectApplication();
 			},
 		},
 		mounted() {
@@ -1350,7 +1374,6 @@ $(document).ready(function() {
 		$(".evaluation-stage").addClass("d-none");
 		var target = $(this).data("target");
 		$(target).removeClass("d-none");
-
 		if (
 			$("#segment-general-information > span")[0].innerText ==
       "General Information"
@@ -2057,3 +2080,27 @@ $("#responseModal").on("submit",function(e){
 	});
 });
 
+$(document).on("click", ".resource-avatar", function(e) {
+	const imgClicked = $(e.target);
+	const dataUrl = imgClicked.data("url");
+	var avatarSuggestion = $(this);
+	$.ajax({
+		type: "GET",
+		url: dataUrl,
+		success: function(response) {
+			avatarSuggestion
+				.closest("tr")
+				.find("td")
+				.next()
+				.find("p.response")
+				.html(response.suggestion);
+	  	avatarSuggestion
+				.closest("tr")
+				.find("td")
+				.next()
+				.next()
+				.find("img")
+				.attr("src", response.avatar);
+		},
+	});
+});
