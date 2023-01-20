@@ -2104,3 +2104,4 @@ $(document).on("click", ".resource-avatar", function(e) {
 		},
 	});
 });
+

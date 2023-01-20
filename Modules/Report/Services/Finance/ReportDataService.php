@@ -2,64 +2,75 @@
 
 namespace Modules\Report\Services\Finance;
 
+use Modules\Client\Entities\Client;
+
 class ReportDataService
 {
+    protected $service;
+
+    public function __construct(RevenueReportService $service)
+    {
+        $this->service = $service;
+    }
+
     public function getData($type, $filters)
     {
         if ($type == 'revenue-trend') {
-            return $this->revenueTrend();
+            return $this->revenueTrend($filters);
+        } elseif ($type == 'revenue-trend-client-wise') {
+            return $this->revenueTrendForClient($filters);
         }
 
         return $filters;
     }
 
-    private function revenueTrend()
+    public function getDataForClientRevenueReportPage(array $data)
     {
-        $currentYear = date('m') > 03 ? date('Y') + 1 : date('Y');
-        $defaultFilters = [
-            'transaction' => 'revenue',
-            'year' => $currentYear,
-        ];
-
-        $filters = array_merge($defaultFilters, request()->all());
-        $reportData = app(ProfitAndLossReportService::class)->profitAndLoss($filters);
-
-        $monthlyData = [];
-
-        foreach ($reportData as $revenueHead) {
-            foreach ($revenueHead['amounts'] as $key => $amount) {
-                $monthlyData[$key] = ($monthlyData[$key] ?? 0) + $amount;
-            }
-        }
-        unset($monthlyData['total']);
-
-        /**
-         * Will plan and see if we should move this to DB or config in the next PR.
-         */
-        $labels = [
-            '04-22' => 'April (2022)',
-            '05-22' => 'May (2022)',
-            '06-22' => 'June (2022)',
-            '07-22' => 'July (2022)',
-            '08-22' => 'August (2022)',
-            '09-22' => 'September (2022)',
-            '10-22' => 'October (2022)',
-            '11-22' => 'November (2022)',
-            '12-22' => 'December (2022)',
-            '01-23' => 'January (2023)',
-            '02-23' => 'February (2023)',
-            '03-23' => 'March (2023)',
-          ];
-
-        $data = [];
-
-        foreach ($labels as $key => $label) {
-            $data[] = $monthlyData[$key] ?? 0;
-        }
+        $selectedClient = isset($data['client_id']) ? Client::find($data['client_id']) : Client::orderBy('name')->first();
 
         return [
-            'labels' => array_values($labels),
-            'data' => $data
+            'selectedClient' => $selectedClient,
+            'clients' => Client::orderBy('name')->get()
+        ];
+    }
+
+    private function revenueTrendForClient($filters)
+    {
+        $client = Client::find($filters['client_id']);
+        $defaultStartDate = $client->created_at ?? $client->invoices()->orderBy('sent_on')->first()->sent_on;
+        $defaultEndDate = today();
+
+        $filters['start_date'] = empty($filters['start_date']) ? $defaultStartDate : $filters['start_date'];
+        $filters['end_date'] = empty($filters['end_date']) ? $defaultEndDate : $filters['end_date'];
+
+        $reportData = $this->service->getRevenueReportDataForClient($filters, $client);
+
+        return [
+            'labels' => $reportData['months'],
+            'data' => $reportData
+        ];
+    }
+
+    private function revenueTrend($filters)
+    {
+        $defaultStartDate = today()->startOfMonth();
+        $defaultEndDate = today()->endOfMonth();
+        $defaultPreviousStartDate = today()->subMonth()->startOfMonth();
+        $defaultPreviousEndDate = today()->subMonth()->endOfMonth();
+        $defaultFilters = [
+            'transaction' => 'revenue',
+            'current_period_start_date' => $defaultStartDate,
+            'current_period_end_date' => $defaultEndDate,
+            'previous_period_start_date' => $defaultPreviousStartDate,
+            'previous_period_end_date' => $defaultPreviousEndDate
+        ];
+        $filters = array_merge($defaultFilters, request()->all());
+
+        $reportData = $this->service->getRevenueGroupedByClient($filters);
+
+        return [
+            'labels' => $reportData['clients_name'],
+            'data' => $reportData,
         ];
     }
 }

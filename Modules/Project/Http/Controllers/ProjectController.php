@@ -38,7 +38,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $clients = $this->service->getClients();
+        $clients = $this->service->getClients($status = 'all');
 
         return view('project::create')->with('clients', $clients);
     }
@@ -110,7 +110,7 @@ class ProjectController extends Controller
     {
         return view('project::edit', [
             'project' => $project,
-            'clients' => Client::all(),
+            'clients' => Client::orderBy('name')->get(),
             'teamMembers' => $this->service->getTeamMembers(),
             'projectTeamMembers' => $this->service->getProjectTeamMembers($project),
             'projectRepositories' => $this->service->getProjectRepositories($project),
