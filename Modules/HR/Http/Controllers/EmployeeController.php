@@ -99,6 +99,7 @@ class EmployeeController extends Controller
     public function updateOrCreateUserResourceSuggestions(Request $request, Employee $employee)
     {
         $data = $request->all();
+
         return $this->service->updateOrCreateUserResourceSuggestion($data, $employee);
     }
 

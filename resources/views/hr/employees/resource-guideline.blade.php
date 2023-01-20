@@ -16,7 +16,7 @@
           </tr>
         </thead>
         <tbody>
-        <form method="POST" action="{{ route('employees.resources.guideline',$employee->id) }}" enctype="multipart/form-resource" id="addResourceForm">
+          <form method="POST" action="{{ route('employees.resources.guideline',$employee->id) }}" enctype="multipart/form-resource" id="addResourceForm">
             @csrf
             @foreach ( $resources as $index => $resource)
             <tr>
@@ -25,15 +25,14 @@
                 <input type="hidden" name="category[{{$index}}]" value="{{$resource->category['name']}}" />
               </td>
               <td class="text-center">
-              <input type="checkbox" name="mark_as_read[{{$index}}]" value="checked" /> 
+                <input type="checkbox" name="mark_as_read[{{$index}}]" value="checked" />
               </td>
               <td class="text-center ">
-
                 <textarea type="text" name="post_suggestion[{{$index}}]" class="form-control-plaintext bg-light text-dark text-center bold" placeholder="post here your suggestion"></textarea>
               </td>
             </tr>
             @endforeach
-        </form>
+          </form>
         </tbody>
       </table>
       <div class="modal-footer">
