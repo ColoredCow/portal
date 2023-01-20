@@ -47,9 +47,10 @@ class ProjectTeamMember extends Model
 
     public function getCurrentActualEffortAttribute($startDate = null)
     {
-        $startDate = $startDate ?? $this->project->client->month_start_date;
-
-        return $this->projectTeamMemberEffort()->where('added_on', '>=', $this->project->client->month_start_date)->sum('actual_effort');
+        $daysTillToday = date('y-m-01');
+        $startDate = $startDate ? $this->project->client->month_start_date :$daysTillToday;
+        
+        return $this->projectTeamMemberEffort()->where('added_on', '>=', $startDate)->sum('actual_effort');
     }
 
     public function getCurrentExpectedEffortAttribute($startDate = null)
@@ -96,7 +97,7 @@ class ProjectTeamMember extends Model
             return 0;
         }
 
-        return round($firstDayOfMonth / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
+        return round($this->getCurrentActualEffortAttribute($firstDayOfMonth) / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
     }
 
     public function getBorderColorClassAttribute()
