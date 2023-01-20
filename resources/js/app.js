@@ -447,8 +447,8 @@ if (document.getElementById("client_form")) {
 			newEmailId: "",
 			clientEmails:
 					document.getElementById("emails").value == ""
-							? []
-							: document.getElementById("emails").value.split(","),
+						? []
+						: document.getElementById("emails").value.split(","),
 		},
 		methods: {
 			toggleActive: function() {
@@ -482,7 +482,7 @@ if (document.getElementById("finance_report")) {
 				document.getElementById("sent_amount_USD").dataset.sentAmount || 0,
 			conversionRateUSD:
 					document.getElementById("conversion_rate_usd").dataset
-					.conversionRateUsd || 0,
+						.conversionRateUsd || 0,
 		},
 		computed: {
 			convertedUSDSentAmount: function() {
