@@ -47,11 +47,11 @@ class ProjectTeamMember extends Model
 
     public function getCurrentActualEffortAttribute($startDate = null)
     {
-        $daysTillToday = date('y-m-01');
+        $firstDayOfMonth = date('y-m-01');
 
-        $startDate = $startDate ? $this->project->client->month_start_date : $daysTillToday;
+        $startedDate = $startDate ? $this->project->client->month_start_date : $firstDayOfMonth;
 
-        return $this->projectTeamMemberEffort()->where('added_on', '>=', $startDate)->sum('actual_effort');
+        return $this->projectTeamMemberEffort()->where('added_on', '>=', $startedDate)->sum('actual_effort');
     }
 
     public function getCurrentExpectedEffortAttribute($startDate = null)
@@ -87,7 +87,7 @@ class ProjectTeamMember extends Model
     {
         $project = new Project;
         $currentDate = today(config('constants.timezone.indian'));
-        $firstDayOfMonth = $this->current_actual_effort;
+        $firstDayOfMonth = date('Y-m-01');
 
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = $currentDate->subDay();
