@@ -282,36 +282,6 @@ $(document).ready(function () {
 	});
 });
 
-$(document).on("click","#viewReject",function(){
-	
-	$("body").on("click",`label[for='${$("#appearRejectButton").data("target")}-no']`,function(){
-		$("#rejectButton").removeClass("d-none");
-		$("#nextButton").addClass("d-none");
-
-	});
-
-	$("body").on("click",`label[for='${$("#appearRejectButton").data("target")}-yes']`,function(){
-		$("#nextButton").removeClass("d-none");
-		$("#rejectButton").addClass("d-none");
-
-	});
-});
-
-$(document).on("click",".reject-button",function(){
-	rejectApplication();
-});
-
-function rejectApplication()
-{
-	$("#application_reject_modal").modal("show");
-	loadTemplateMail("reject", (res) => {
-		$("#rejectMailToApplicantSubject").val(res.subject);
-		tinymce
-			.get("rejectMailToApplicantBody")
-			.setContent(res.body, { format: "html" });
-	});
-}
-
 if (document.getElementById("page_hr_applicant_edit")) {
 	new Vue({
 		el: "#page_hr_applicant_edit",
@@ -364,7 +334,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			onSelectNextRound: function(event) {
 				this.selectedAction = event.target.value;
 				this.selectedActionOption =
-		  				event.target.options[event.target.options.selectedIndex];
+          event.target.options[event.target.options.selectedIndex];
 			},
 			takeAction: function() {
 				switch (this.selectedAction) {
@@ -401,7 +371,13 @@ if (document.getElementById("page_hr_applicant_edit")) {
 				}
 			},
 			rejectApplication: function() {
-				rejectApplication();
+				$("#application_reject_modal").modal("show");
+				loadTemplateMail("reject", (res) => {
+					$("#rejectMailToApplicantSubject").val(res.subject);
+					tinymce
+						.get("rejectMailToApplicantBody")
+						.setContent(res.body, { format: "html" });
+				});
 			},
 		},
 		mounted() {
@@ -439,16 +415,16 @@ if (document.getElementById("client_form")) {
 		el: "#client_form",
 		data: {
 			country:
-					document.getElementById("country").dataset.preSelectCountry || "",
+        document.getElementById("country").dataset.preSelectCountry || "",
 			isActive: document.getElementById("is_active").dataset.preSelectStatus
 				? parseInt(document.getElementById("is_active").dataset.preSelectStatus)
 				: 1,
 			newEmailName: "",
 			newEmailId: "",
 			clientEmails:
-					document.getElementById("emails").value == ""
-						? []
-						: document.getElementById("emails").value.split(","),
+        document.getElementById("emails").value == ""
+        	? []
+        	: document.getElementById("emails").value.split(","),
 		},
 		methods: {
 			toggleActive: function() {
@@ -477,23 +453,23 @@ if (document.getElementById("finance_report")) {
 		data: {
 			showReportTable: "received",
 			sentAmountINR:
-				document.getElementById("sent_amount_INR").dataset.sentAmount || 0,
+        document.getElementById("sent_amount_INR").dataset.sentAmount || 0,
 			sentAmountUSD:
-				document.getElementById("sent_amount_USD").dataset.sentAmount || 0,
+        document.getElementById("sent_amount_USD").dataset.sentAmount || 0,
 			conversionRateUSD:
-					document.getElementById("conversion_rate_usd").dataset
-						.conversionRateUsd || 0,
+        document.getElementById("conversion_rate_usd").dataset
+        	.conversionRateUsd || 0,
 		},
 		computed: {
 			convertedUSDSentAmount: function() {
 				let convertedAmount =
-		  				parseFloat(this.sentAmountUSD) * parseFloat(this.conversionRateUSD);
+          parseFloat(this.sentAmountUSD) * parseFloat(this.conversionRateUSD);
 				return isNaN(convertedAmount) ? 0 : convertedAmount.toFixed(2);
 			},
 			totalINREstimated: function() {
 				return (
 					parseFloat(this.sentAmountINR) +
-		  			parseFloat(this.convertedUSDSentAmount)
+          parseFloat(this.convertedUSDSentAmount)
 				);
 			},
 		},
@@ -825,9 +801,9 @@ if (document.getElementById("books_listing")) {
 				? JSON.parse(document.getElementById("books_table").dataset.categories)
 				: [],
 			updateRoute:
-					document.getElementById("books_table").dataset.indexRoute || "",
+        document.getElementById("books_table").dataset.indexRoute || "",
 			categoryIndexRoute:
-					document.getElementById("books_table").dataset.categoryIndexRoute || "",
+        document.getElementById("books_table").dataset.categoryIndexRoute || "",
 			categoryInputs: [],
 			currentBookIndex: 0,
 			newCategory: "",
@@ -966,7 +942,7 @@ if (document.getElementById("books_category")) {
 				: [],
 			categoryNameToChange: [],
 			indexRoute:
-					document.getElementById("category_container").dataset.indexRoute || "",
+        document.getElementById("category_container").dataset.indexRoute || "",
 			newCategoryName: "",
 			newCategoryMode: "",
 		},
@@ -1227,8 +1203,8 @@ if (document.getElementById("roles_permission_table")) {
 				)
 				: [],
 			updateRoute:
-					document.getElementById("roles_permission_table").dataset.updateRoute ||
-					"",
+        document.getElementById("roles_permission_table").dataset.updateRoute ||
+        "",
 			currentRoleIndex: 0,
 			permissionInputs: [],
 		},
@@ -1292,7 +1268,7 @@ if (document.getElementById("user_roles_table")) {
 				? JSON.parse(document.getElementById("user_roles_table").dataset.roles)
 				: "",
 			updateRoute:
-					document.getElementById("user_roles_table").dataset.updateRoute || "",
+        document.getElementById("user_roles_table").dataset.updateRoute || "",
 			currentUserIndex: 0,
 			roleInputs: [],
 		},
@@ -1374,9 +1350,10 @@ $(document).ready(function() {
 		$(".evaluation-stage").addClass("d-none");
 		var target = $(this).data("target");
 		$(target).removeClass("d-none");
+
 		if (
 			$("#segment-general-information > span")[0].innerText ==
-	  	   "General Information"
+      "General Information"
 		) {
 			$(".evaluation-score input").each(function() {
 				if ($(this).is(":checked")) {
