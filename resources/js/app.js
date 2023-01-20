@@ -2094,7 +2094,7 @@ $(document).on("click", ".resource-avatar", function(e) {
 				.next()
 				.find("p.response")
 				.html(response.suggestion);
-	  	avatarSuggestion
+	  	    avatarSuggestion
 				.closest("tr")
 				.find("td")
 				.next()
