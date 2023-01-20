@@ -72,8 +72,8 @@
 
                     <div>
                         <ul class="nav nav-tabs">
-                            <li class="nav-item "><a data-toggle="tab" href="#generalCommunication" class="nav-link rejectMailOpt" data-key-subject='general_communication_subject' data-key-body='general_communication_body' >General Communication</a></li>
-                            <li class="nav-item"><a data-toggle="tab" href="#codeTrekProposition" class="nav-link rejectMailOpt" data-key-subject='codetrek_proposition_subject' data-key-body='codetrek_proposition_body'>CodeTrek Proposition</a></li>
+                            <li class="nav-item "><a data-toggle="tab" href="#generalCommunication" class="nav-link reject_Mail_Opt" data-key-subject='general_communication_subject' data-key-body='general_communication_body' >General Communication</a></li>
+                            <li class="nav-item"><a data-toggle="tab" href="#codeTrekProposition" class="nav-link reject_Mail_Opt" data-key-subject='codetrek_proposition_subject' data-key-body='codetrek_proposition_body'>CodeTrek Proposition</a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane" id="generalCommunication">
@@ -82,7 +82,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Subject</label>
-                                                <input name="subject_general_communication" type="text" class="form-control option-subject" id="general_communicationSubject">
+                                                <input name="subject_general_communication" type="text" class="form-control option-subject" id="general_communication_subject">
                                             </div>
                                         </div>
                                     </div>
@@ -90,7 +90,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Mail body:</label>
-                                                <textarea name="body_general_communication" rows="10" class="richeditor form-control option-body" id="general_communicationBody" ></textarea>
+                                                <textarea name="body_general_communication" rows="10" class="richeditor form-control option-body" id="general_communication_body" ></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -102,7 +102,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Subject</label>
-                                                <input name="subject_codetrek_proposition" type="text" class="form-control" id="codetrek_propositionSubject">
+                                                <input name="subject_codetrek_proposition" type="text" class="form-control" id="codetrek_proposition_subject">
                                             </div>
                                         </div>
                                     </div>
@@ -110,7 +110,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Mail body:</label>
-                                                <textarea name="body_codetrek_proposition" rows="10" class="richeditor form-control" id="codetrek_propositionBody"></textarea>
+                                                <textarea name="body_codetrek_proposition" rows="10" class="richeditor form-control" id="codetrek_proposition_body"></textarea>
                                             </div>
                                         </div>
                                     </div>
