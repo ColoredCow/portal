@@ -3,7 +3,7 @@
 <div class="container ">
     <div class="row col-gap justify-content-center mt-5">
         <div class="col-md-6">
-            <h3> Resource & Guideline </h3>
+            <h3> Resources & Guidelines</h3>
         </div>
         <div class="col-md-2">
             <button type="button" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#create-Modal"><i class="fa fa-plus"></i>
@@ -20,7 +20,7 @@
                     <tr>
                         <th class="text-center">Categories</th>
                         <th class="text-center">Read by</th>
-                        <th class="text-center">Suggestions</th>
+                        <th class="text-center">Users Suggestions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,16 +48,16 @@
                 </td>
                 <td class="text-center">
                     @foreach ($userSuggestions as $userSuggestion)
-                    @if (!$userSuggestion->mark_as_read && $userSuggestion->category==$resource->category->name)
-                    <span class="content tooltip-wrapper" title="{{ $userSuggestion->employee->user->name }}">
-                        <img src="{{ $userSuggestion->employee->user->avatar }}" data-url="{{ route('resources.index.id',[$userSuggestion->id]) }}" class="w-35 resource-avatar h-30 rounded-circle mb-1 mr-0.5 {{ $userSuggestion->employee->user->border_color_class }} border-2"></span>
-                    @endif
+                        @if (!$userSuggestion->mark_as_read && $userSuggestion->category==$resource->category->name)
+                            <span class="content tooltip-wrapper" title="{{ $userSuggestion->employee->user->name }}">
+                            <img src="{{ $userSuggestion->employee->user->avatar }}" data-url="{{ route('resources.index.id',[$userSuggestion->id]) }}" class="w-35 resource-avatar h-30 rounded-circle mb-1 mr-0.5 {{ $userSuggestion->employee->user->border_color_class }} border-2"></span>
+                        @endif
                     @endforeach
                 </td>
                 <td class="response-data text-center">
                     <span class="content tooltip-wrapper">
                         <img class="w-35 h-30 rounded-circle mb-1 mr-0.5 border-2"></span></br>
-                    <p class="response"></p>
+                    <p class="response text-primary">&larr; please click on avatar</p>
                 </td>
             </tr>
             @includewhen($resource, 'hr::guidelines-resources.edit-modal')

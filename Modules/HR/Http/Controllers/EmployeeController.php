@@ -10,7 +10,6 @@ use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\Job;
 use App\Models\Resource;
-use App\Models\UsersSuggestion;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Project\Entities\ProjectTeamMember;
 
@@ -97,23 +96,13 @@ class EmployeeController extends Controller
         return view('hr.employees.employee-work-history', compact('employeesDetails'));
     }
 
-    public function userResourceSuggestions(Request $request, Employee $employee)
+    public function updateOrCreateUserResourceSuggestions(Request $request, Employee $employee)
     {
         $data = $request->all();
-        foreach ($data['category'] as $index => $category) {
-            $resource = UsersSuggestion::updateOrCreate(
-                ['category' => isset($data['mark_as_read'][$index]) ? $category : null,
-                 'user_id' => isset($data['mark_as_read'][$index]) && $data['mark_as_read'][$index] ? $employee->id : null,
-                'mark_as_read' => isset($data['mark_as_read'][$index]) ? $data['mark_as_read'][$index] : null],
-                [
-                'post_suggestions' => isset($data['post_suggestion'][$index]) && isset($data['mark_as_read'][$index]) ? $data['post_suggestion'][$index] : null
-                ]
-            );
-        }
-
-        return redirect()->back()->with('success', 'Resources saved successfully');
+        return $this->service->updateOrCreateUserResourceSuggestion($data, $employee);
     }
-    public function resources(Employee $employee)
+
+    public function getAllResources(Employee $employee)
     {
         $resources = Resource::all();
 

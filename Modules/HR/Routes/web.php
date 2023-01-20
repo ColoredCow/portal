@@ -123,8 +123,8 @@ Route::middleware('auth')->group(function () {
                 'index' => 'employees',
                 'show' => 'employees.show',
             ]);
-        Route::get('/employees-resource-guideline/{employee}', 'EmployeeController@resources')->name('employees.resource.guideline');
-        Route::post('/employees-resource-guideline/{employee}', 'EmployeeController@userResourceSuggestions')->name('employees.resources.guideline');
+        Route::get('/employees-resource-guideline/{employee}', 'EmployeeController@getAllResources')->name('employees.resource.guideline');
+        Route::post('/employees-resource-guideline/{employee}', 'EmployeeController@updateOrCreateUserResourceSuggestions')->name('employees.resources.guideline');
         Route::get('/workhistory/{employee}/', 'EmployeeController@employeeWorkHistory')->name('employees.employeeWorkHistory');
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
         Route::get('fte-handler/{domain_id}', 'EmployeeController@showFTEdata')->name('employees.alert');

@@ -6,7 +6,7 @@ use App\Models\Project;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Modules\User\Entities\User;
-use App\Models\UsersSuggestion;
+use App\Models\UsersResourcesSuggestion;
 use Modules\Salary\Entities\EmployeeSalary;
 
 class Employee extends Model
@@ -78,6 +78,6 @@ class Employee extends Model
     }
     public function user_suggestons()
     {
-        return $this->hasOne(UsersSuggestion::class);
+        return $this->hasOne(UsersResourcesSuggestion::class);
     }
 }

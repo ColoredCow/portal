@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersSuggestionsTable extends Migration
+class CreateUsersResourcesSuggestionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUsersSuggestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_suggestions', function (Blueprint $table) {
+        Schema::create('users_resources_suggestions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->nullable();
             $table->string('category')->nullable();
@@ -30,6 +30,6 @@ class CreateUsersSuggestionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_suggestions');
+        Schema::dropIfExists('users_resources_suggestions');
     }
 }
