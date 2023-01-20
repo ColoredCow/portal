@@ -15,18 +15,17 @@ class ResourcesController extends Controller
     {
         $resources = Resource::all();
         $categories = Category::all();
-        $userSuggestions = UsersResourcesSuggestion::all();
+        $usersResourcesSuggestions = UsersResourcesSuggestion::all();
 
-        return view('hr::guidelines-resources.index', compact('resources', 'categories', 'userSuggestions'));
+        return view('hr::guidelines-resources.index', compact('resources', 'categories', 'usersResourcesSuggestions'));
     }
 
     public function getUserSuggestionAndAvatar($id)
     {
-        $userResourceDetails = UsersResourcesSuggestion::where('id', $id)->first();
-
-        return response()->json([
-            'suggestion' => $userResourceDetails->post_suggestions,
-            'avatar' => $userResourceDetails->employee->user->avatar
+        $userResource = UsersResourcesSuggestion::where('id', $id)->first();
+      return response()->json([
+            'suggestion' => $userResource->post_suggestions,
+            'avatar' => $userResource->employee->user->avatar
         ]);
     }
 

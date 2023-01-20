@@ -18,7 +18,7 @@
         <tbody>
           <form method="POST" action="{{ route('employees.resources.guideline',$employee->id) }}" enctype="multipart/form-resource" id="addResourceForm">
             @csrf
-            @foreach ( $resources as $index => $resource)
+            @foreach ( $allResources as $index => $resource)
             <tr>
               <td class="text-center">
                 <a href="{{$resource['resource_link']}}" target="_blank"> {{$resource->category['name']}}</a>
