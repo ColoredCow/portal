@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Factory;
 class CodeTrekServiceProvider extends ServiceProvider
 {
     /**
-     * @var string 
+     * @var string
      */
     protected $moduleName = 'CodeTrek';
 
     /**
-     * @var string 
+     * @var string
      */
     protected $moduleNameLower = 'codetrek';
 
@@ -121,6 +121,7 @@ class CodeTrekServiceProvider extends ServiceProvider
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
+        
         return $paths;
     }
 }
