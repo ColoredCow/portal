@@ -27,17 +27,19 @@ class EmployeeService
         ];
     }
 
-    public function updateOrCreateUsersResourcesAndGuidelines($data, $employee)
+      public function updateOrCreateUsersResourcesAndGuidelines($data, $employee)
     {
         foreach ($data['category'] as $index => $category) {
-            $resource = UsersResourcesAndGuidelines::updateOrCreate(
-                ['category' => isset($data['mark_as_read'][$index]) ? $category : null,
-                 'user_id' => isset($data['mark_as_read'][$index]) && $data['mark_as_read'][$index] ? $employee->id : null,
-                'mark_as_read' => isset($data['mark_as_read'][$index]) ? $data['mark_as_read'][$index] : null],
-                [
-                'post_suggestions' => isset($data['post_suggestion'][$index]) && isset($data['mark_as_read'][$index]) ? $data['post_suggestion'][$index] : null
-                ]
-            );
+            if(!empty($data['mark_as_read'][$index]) && !empty($employee->id) && !empty($category)){
+                $resource = UsersResourcesAndGuidelines::updateOrCreate(
+                    ['category' => $category,
+                     'user_id' => $employee->id,
+                     'mark_as_read' => $data['mark_as_read'][$index]],
+                    [
+                    'post_suggestions' => isset($data['post_suggestion'][$index]) ? $data['post_suggestion'][$index] : null
+                    ]
+                );
+            }
         }
 
         return redirect()->back()->with('success', 'Resources saved successfully');

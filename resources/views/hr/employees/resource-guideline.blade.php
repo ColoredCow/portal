@@ -25,10 +25,11 @@
                 <input type="hidden" name="category[{{$index}}]" value="{{$resource->category['name']}}" />
               </td>
               <td class="text-center">
-                <input type="checkbox" name="mark_as_read[{{$index}}]" value="checked" />
+              <input type="checkbox" name="mark_as_read[{{$index}}]" value="checked" {{ isset($formData['mark_as_read'][$index]) && $formData['mark_as_read'][$index]== 'checked' ? 'checked' : '' }} />
+
               </td>
               <td class="text-center ">
-                <textarea type="text" name="post_suggestion[{{$index}}]" class="form-control-plaintext bg-light text-dark text-center bold" placeholder="post here your suggestion"></textarea>
+              <textarea type="text" name="post_suggestion[{{$index}}]" class="form-control-plaintext bg-light text-dark text-center bold" placeholder="post here your suggestion">{{isset($formData['post_suggestion'][$index]) ? $formData['post_suggestion'][$index] : ''}}</textarea>
               </td>
             </tr>
             @endforeach
