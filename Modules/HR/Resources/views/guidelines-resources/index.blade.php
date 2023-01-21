@@ -48,10 +48,10 @@
                 </td>
                 <td class="text-center">
                     @foreach ($usersResourcesAndGuidelines as $usersResourceAndGuideline)
-                        @if (!$usersResourceAndGuideline->mark_as_read && $usersResourceAndGuideline->category==$resource->category->name)
-                            <span class="content tooltip-wrapper" title="{{ $usersResourceAndGuideline->employee->user->name }}">
-                            <img src="{{ $usersResourceAndGuideline->employee->user->avatar }}" data-url="{{ route('resources.index.id',[$usersResourceAndGuideline->id]) }}" class="w-35 resource-avatar h-30 rounded-circle mb-1 mr-0.5 {{ $usersResourceAndGuideline->employee->user->border_color_class }} border-2"></span>
-                        @endif
+                    @if (!$usersResourceAndGuideline->mark_as_read && $usersResourceAndGuideline->category==$resource->category->name)
+                    <span class="content tooltip-wrapper" title="{{ $usersResourceAndGuideline->employee->user->name }}">
+                        <img src="{{ $usersResourceAndGuideline->employee->user->avatar }}" data-url="{{ route('resources.index.id',[$usersResourceAndGuideline->id]) }}" class="w-35 resource-avatar h-30 rounded-circle mb-1 mr-0.5 {{ $usersResourceAndGuideline->employee->user->border_color_class }} border-2"></span>
+                    @endif
                     @endforeach
                 </td>
                 <td class="response-data text-center">

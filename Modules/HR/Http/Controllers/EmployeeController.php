@@ -107,6 +107,6 @@ class EmployeeController extends Controller
     {
         $resources = Resource::all();
 
-        return view('hr.employees.resource-guideline', compact('allResources', 'employee'));
+        return view('hr.employees.resource-guideline', compact('resources', 'employee'));
     }
 }

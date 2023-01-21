@@ -22,11 +22,11 @@ class ResourcesController extends Controller
 
     public function getUserSuggestionAndAvatar($id)
     {
-        $userResource = UsersResourcesAndGuidelines::where('id', $id)->first();
+        $userResources = UsersResourcesAndGuidelines::where('id', $id)->first();
 
         return response()->json([
-            'suggestion' => $userResource->post_suggestions,
-            'avatar' => $userResource->employee->user->avatar
+            'suggestion' => $userResources->post_suggestions,
+            'avatar' => $userResources->employee->user->avatar
         ]);
     }
 
