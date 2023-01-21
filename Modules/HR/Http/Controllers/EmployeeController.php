@@ -105,7 +105,7 @@ class EmployeeController extends Controller
 
     public function getAllResources(Employee $employee)
     {
-        $allResources = Resource::all();
+        $resources = Resource::all();
 
         return view('hr.employees.resource-guideline', compact('allResources', 'employee'));
     }
