@@ -122,6 +122,7 @@ class CodeTrekServiceProvider extends ServiceProvider
             }
         }
         
+        
         return $paths;
     }
 }
