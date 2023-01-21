@@ -30,7 +30,7 @@ class EmployeeService
     public function updateOrCreateUsersResourcesAndGuidelines($data, $employee)
     {
         foreach ($data['category'] as $index => $category) {
-            if (!empty($data['mark_as_read'][$index]) && !empty($employee->id) && !empty($category)) {
+            if (! empty($data['mark_as_read'][$index]) && ! empty($employee->id) && ! empty($category)) {
                 $resource = UsersResourcesAndGuidelines::updateOrCreate(
                     ['category' => $category,
                      'user_id' => $employee->id,
