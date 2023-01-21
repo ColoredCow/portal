@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Factory;
 class CodeTrekServiceProvider extends ServiceProvider
 {
     /**
-     * @var string $moduleName
+     * @var string 
      */
     protected $moduleName = 'CodeTrek';
 
     /**
-     * @var string $moduleNameLower
+     * @var string 
      */
     protected $moduleNameLower = 'codetrek';
 
@@ -52,7 +52,8 @@ class CodeTrekServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
+            module_path($this->moduleName, 'Config/config.php'),
+            $this->moduleNameLower
         );
     }
 

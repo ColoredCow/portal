@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('codetrek')->group(function() {
+Route::prefix('codetrek')->group(function () {
     Route::get('/', 'CodeTrekController@index');
 });
