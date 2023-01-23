@@ -2037,7 +2037,7 @@ $(".reject_Mail_Opt").on("click",function()
 	};
 
 	$.ajax({
-		url: originUrl + "/hr/recruitment/onRejectEmail",
+		url: originUrl + "/hr/recruitment/RejectEmailGeneral",
 		type: "GET",
 		data: formData,
 		contentType: "application/json",
@@ -2048,7 +2048,7 @@ $(".reject_Mail_Opt").on("click",function()
 	});
 
 	$.ajax({
-		url: originUrl + "/hr/recruitment/onRejectEmail",
+		url: originUrl + "/hr/recruitment/RejectEmailCodetrack",
 		type: "GET",
 		data: formData,
 		contentType: "application/json",

@@ -99,16 +99,6 @@ class SettingsTableSeeder extends Seeder
 
         Setting::updateOrCreate([
             'module' => 'hr',
-            'setting_key' => 'general_communication_subject',
-            'setting_value' => 'Your application is rejected',
-        ]);
-        Setting::updateOrCreate([
-            'module' => 'hr',
-            'setting_key' => 'general_communication_body',
-            'setting_value' => '  ',
-        ]);
-        Setting::updateOrCreate([
-            'module' => 'hr',
             'setting_key' => 'codetrek_proposition_subject',
             'setting_value' => 'Your application is rejected',
         ]);
