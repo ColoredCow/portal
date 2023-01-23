@@ -261,7 +261,7 @@ abstract class ApplicationController extends Controller
         $body = str_replace('<\/div>', ' ', $body);
         $body = str_replace('<\/a>', '', $body);
         $body = str_replace('\", \"', '', $body);
-        $body = str_replace("\\", '', $body);
+        $body = str_replace('\\', '', $body);
 
         return response()->json([
             'subject' => $subject,
