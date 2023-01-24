@@ -267,7 +267,7 @@ abstract class ApplicationController extends Controller
         $body = json_encode($body);
         $body = str_replace('"', '', $body);
 
-        return response()->json([
+        return response([
             'subject' => $subject,
             'body' => $body,
            ]);
