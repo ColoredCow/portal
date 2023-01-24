@@ -482,7 +482,7 @@ class InvoiceService implements InvoiceServiceContract
         $clientType = ($countryId == 1) ? 'IN' : 'EX';
         $lastInvoice = Invoice::where([['client_id', $client ? $client->id : $project->client->id], ['project_id', optional($project)->id]])->orderBy('sent_on', 'DESC')->first();
         $invoiceSequence = $lastInvoice ? (int) Str::substr($lastInvoice->invoice_number, 8, 6) + 1 : '000001';
-        $invoiceNumber = $clientType . sprintf('%03s', $client ? $client->client_id : $project->client->client_id) . '-' . ($billingLevel == 'client' ? '000' : $project->client_project_id) . '-' . sprintf('%06s', $invoiceSequence) . '-' . date('m', strtotime($sentDate)) . date('y', strtotime($sentDate));
+        $invoiceNumber = $clientType . sprintf('%03s', $client ? $client->client_id : $project->client->client_id) . ($billingLevel == 'client' ? '000' : $project->client_project_id) . sprintf('%06s', $invoiceSequence) . date('m', strtotime($sentDate)) . date('y', strtotime($sentDate));
 
         return $invoiceNumber;
     }
@@ -501,16 +501,18 @@ class InvoiceService implements InvoiceServiceContract
         $projectForInvoiceNumber = $billingLevel == 'project' ? $project : null;
         $invoiceNumber = $this->getInvoiceNumberPreview($client, $projectForInvoiceNumber, $data['sent_on'], $billingLevel);
         $billingStartMonth = $client ? $client->getMonthStartDateAttribute(1)->format('M') : $project->client->getMonthStartDateAttribute(1)->format('M');
+        $billingStartMonthYear = $client ? $client->getMonthStartDateAttribute(1)->format('Y') : $project->client->getMonthStartDateAttribute(1)->format('Y');
         if ($data['period_start_date'] ?? false) {
             $billingStartMonth = Carbon::parse($data['period_start_date'])->format('M');
         }
 
         $billingEndMonth = $client ? $client->getMonthEndDateAttribute(1)->format('M') : $project->client->getMonthEndDateAttribute(1)->format('M');
+        $billingEndMonthYear = $client ? $client->getMonthEndDateAttribute(1)->format('Y') : $project->client->getMonthEndDateAttribute(1)->format('Y');
         if ($data['period_end_date'] ?? false) {
             $billingEndMonth = Carbon::parse($data['period_end_date'])->format('M');
         }
 
-        $termText = $billingStartMonth . ' - ' . $billingEndMonth;
+        $termText = $billingStartMonth . ' ' . $billingStartMonthYear . ' - ' . $billingEndMonth . ' ' . $billingEndMonthYear;
 
         if ($billingStartMonth == $billingEndMonth) {
             $termText = $monthName;
@@ -575,7 +577,7 @@ class InvoiceService implements InvoiceServiceContract
             'body' => $data['email_body'] ?? null,
             'subject' => $data['email_subject'] ?? null
         ];
-        $invoiceNumber = str_replace('-', '', optional($client)->next_invoice_number ?: $project->next_invoice_number);
+        $invoiceNumber = optional($client)->next_invoice_number ?: $project->next_invoice_number;
         $invoice = $this->createInvoice($client, $project, $term, $periodStartDate, $periodEndDate);
         Mail::queue(new SendInvoiceMail($invoice, $invoiceNumber, $email));
     }
@@ -683,8 +685,8 @@ class InvoiceService implements InvoiceServiceContract
             'period_start_date' => $periodStartDate,
             'period_end_date' => $periodEndDate
         ]);
-        $invoiceNumber = str_replace('-', '', $data['invoiceNumber']);
-        $data['invoiceNumber'] = substr($data['invoiceNumber'], 0, -5);
+        $invoiceNumber = $data['invoiceNumber'];
+        $data['invoiceNumber'] = $data['invoiceNumber'];
         $pdf = App::make('snappy.pdf.wrapper');
         $template = config('invoice.templates.invoice.clients.' . optional($data['client'])->name) ?: 'invoice-template';
         $html = view(('invoice::render.' . $template), $data)->render();
