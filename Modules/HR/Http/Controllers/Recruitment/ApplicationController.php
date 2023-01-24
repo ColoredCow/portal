@@ -265,6 +265,7 @@ abstract class ApplicationController extends Controller
         $body = str_replace('\", \"', '', $body);
         $body = str_replace('\\', '', $body);
         $body = json_encode($body);
+        
         $body = str_replace('"', '', $body);
 
         return response([
