@@ -29,7 +29,6 @@ use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
-
 abstract class ApplicationController extends Controller
 {
     abstract public function getApplicationType();
