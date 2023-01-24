@@ -197,8 +197,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         $templateVariablesForSubject = config('invoice.templates.setting-key.received-invoice-payment.template-variables.subject');
         $templateVariablesForBody = config('invoice.templates.setting-key.received-invoice-payment.template-variables.body');
-        $year = $invoice->sent_on->subMonth()->year;
-
+        $year = $invoice->client->billingDetails->billing_date == 1 ? $invoice->sent_on->subMonth()->year : $invoice->sent_on->year;
         $subjectData = [
             $templateVariablesForSubject['project-name'] => optional($invoice->project)->name ?: ($invoice->client->name . ' Projects'),
             $templateVariablesForSubject['term'] => $invoice->term,

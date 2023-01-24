@@ -165,7 +165,7 @@
                                     'billingPersonFirstName' => optional($client->billing_contact)->first_name,
                                     'billingPersonEmail' => optional($client->billing_contact)->email,
                                     'senderEmail' => config('invoice.mail.send-invoice.email'),
-                                    'invoiceNumber' => str_replace('-', '', $client->next_invoice_number),
+                                    'invoiceNumber' => $client->next_invoice_number,
                                     'totalAmount' => $amount,
                                     'year' => $billingEndMonthYear,
                                     'term' => $billingStartMonth != $billingEndMonth ? $termText . ' - ' . $billingEndMonth : $monthName,
