@@ -21,6 +21,7 @@ yarn-error.log
 
 # macos
 .DS_Store
+.dccache
 
 # laravel debugbar
 /storage/debugbar
