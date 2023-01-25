@@ -35,7 +35,7 @@
         "laravel/ui": "^3.0",
         "laravelcollective/html": "^6.2",
         "maatwebsite/excel": "^3.1",
-        "nesbot/carbon": "^2.52",
+        "nesbot/carbon": "^2.61",
         "niklasravnsborg/laravel-pdf": "^4.1",
         "nwidart/laravel-modules": "^7.0",
         "owen-it/laravel-auditing": "^13.0",
