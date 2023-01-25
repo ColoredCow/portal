@@ -2,8 +2,12 @@
 
 namespace App\Traits;
 
+use App\Traits\HasTags;
+
 trait Filters
 {
+    use HasTags;
+
     public function scopeFilterByStatus($query, $status)
     {
         return $query->where('status', $status);
@@ -26,6 +30,9 @@ trait Filters
                     break;
                 case 'is_amc':
                     $query->isAMC($value);
+                    break;
+                case 'tags':
+                    $query->filterByTags($value);
                     break;
             }
         }

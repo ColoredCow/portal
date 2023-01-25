@@ -3,6 +3,7 @@
 namespace Modules\Project\Entities;
 
 use App\Traits\Filters;
+use App\Traits\HasTags;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Modules\Client\Entities\Client;
 use Modules\EffortTracking\Entities\Task;
 use Modules\Invoice\Entities\Invoice;
-use Modules\Invoice\Entities\LedgerAccount;
+use Modules\Invoice\Entities\LedgerAccount; 
 use Modules\Invoice\Services\InvoiceService;
 use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
@@ -19,7 +20,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class Project extends Model implements Auditable
 {
-    use HasFactory, Filters, SoftDeletes, \OwenIt\Auditing\Auditable;
+    use HasFactory, HasTags, Filters, SoftDeletes, \OwenIt\Auditing\Auditable;
 
     protected $table = 'projects';
 
@@ -31,6 +32,18 @@ class Project extends Model implements Auditable
     {
         return new ProjectFactory();
     }
+    public function addTag($slug)
+    {
+        $project = $this->project;
+        dd($project);
+        $this->tag($slug, false);
+    }
+
+    public function test($project) {
+        $project->tag('get_renewed');
+        $project = $this->project;
+    }
+    
 
     public function scopeIsAMC($query, $isAmc)
     {
@@ -73,6 +86,23 @@ class Project extends Model implements Auditable
     public function getTeamMembers()
     {
         return $this->hasMany(ProjectTeamMember::class)->whereNULL('ended_on');
+    }
+
+    /**
+     * Apply filters on application.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param array $filters
+     *
+     * @return \Illuminate\Database\Eloquent\Builder $query
+     */
+    public function scopeApplyFilter($query, array $filters)
+    {
+        foreach (array_filter($filters) as $type => $value) {
+            switch ($type) {
+                
+            }
+        }
     }
 
     public function getTeamMembersGroupedByEngagement()

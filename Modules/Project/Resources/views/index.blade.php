@@ -105,6 +105,21 @@
                                         @if (empty($project->projectContracts->first()->contract_file_path))
                                             <span class="badge badge-pill badge-secondary">No Contract</span>
                                         @endif
+                                        @dd($project->tags);
+                                        {{-- @foreach ($tags as $tag)
+                                            @php
+                                                $target = request()->fullUrlWithQuery(['tags' => [
+                                                $tag->id
+                                                ]]);
+                                                $class = in_array($tag->id, request()->get('tags') ?? []) ? 'visible' : 'invisible';
+                                            @endphp
+                                            <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
+                                                <i class="fa fa-check fz-12 mr-1 {{ $class }}"></i>
+                                                <div class="rounded w-13 h-13 d-inline-block mr-1"
+                                                style="background-color: {{$tag->background_color}};color: {{$tag->text_color}};"></div>
+                                                <span>{{ $tag->name }}</span>
+                                            </a>
+                                        @endforeach --}}
                                     </td>
                                     <td class="w-20p">
                                         @php

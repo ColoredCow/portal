@@ -16,6 +16,7 @@ use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\User\Entities\User;
+use App\Models\Tag;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -24,15 +25,19 @@ class ProjectService implements ProjectServiceContract
         $filters = [
             'status' => $data['status'] ?? 'active',
             'is_amc' => $data['is_amc'] ?? 0,
+            'tags' => Project::where('is_amc', 1)->get() !== [] ? "is_amc" : null,
         ];
-
+        
         if ($nameFilter = $data['name'] ?? false) {
             $filters['name'] = $nameFilter;
         }
-
+        
         $showAllProjects = Arr::get($data, 'projects', 'my-projects') != 'my-projects';
-
+        
         $memberId = Auth::id();
+        $tags = function ($query) use ($filters, $showAllProjects, $memberId) {
+            $query->applyFilter($filters);
+        };  
 
         $projectClauseClosure = function ($query) use ($filters, $showAllProjects, $memberId) {
             $query->applyFilter($filters);
@@ -44,10 +49,11 @@ class ProjectService implements ProjectServiceContract
             ->whereHas('projects', $projectClauseClosure)
             ->orderBy('name')
             ->paginate(config('constants.pagination_size'));
+            
 
         $tabCounts = $this->getListTabCounts($filters, $showAllProjects, $memberId);
 
-        return array_merge(['clients' => $projectsData], $tabCounts);
+        return array_merge(['clients' => $projectsData, 'tags' => $tags], $tabCounts);
     }
 
     public function create()

@@ -164,6 +164,7 @@
                     @endif
                 </span>
             @endif
+            @dd($applications);
             @foreach ($application->tags as $tag)
                 <span class="badge badge-pill mr-1 mb-1 fz-12 c-pointer"
                     style="background-color: {{ $tag->background_color }};color: {{ $tag->text_color }};"
