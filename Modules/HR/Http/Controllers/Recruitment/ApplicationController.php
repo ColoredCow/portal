@@ -246,26 +246,19 @@ abstract class ApplicationController extends Controller
 
     public function generateRejectEmailGeneral(Request $request)
     {
-        $data = DB::table('hr_rounds')->select('name', 'rejected_mail_template')->where('name', 'Resume screening')->first();
+        $data = Round::where('name', 'Resume Screening')->first('rejected_mail_template');
         $mail_text = $data->rejected_mail_template;
         $point = 'subject';
+        
         $body = substr($mail_text, 0, strpos($mail_text, $point));
-
         $subject = str_replace($body, ' ', $mail_text);
-        $subject = str_replace('subject\": \"', ' ', $subject);
-        $subject = str_replace('\"}"', ' ', $subject);
-        $subject = json_encode($subject);
-        $subject = str_replace('"', '', $subject);
+        $subject = str_replace('subject": "', '', $subject);
+        $subject = str_replace('"}','', $subject);
 
         $body = str_replace('|*applicant_name*|', $request->applicant_name, $body);
         $body = str_replace('|*job_title*|', $request->job_title, $body);
-        $body = str_replace('"{\"body\": \"', ' ', $body);
-        $body = str_replace('<\/div>', ' ', $body);
-        $body = str_replace('<\/a>', '', $body);
-        $body = str_replace('\", \"', '', $body);
-        $body = str_replace('\\', '', $body);
-        $body = json_encode($body);
-        $body = str_replace('"', '', $body);
+        $body = str_replace('", "', '', $body);
+        $body = str_replace('{"body": "', '', $body);
 
         return response([
             'subject' => $subject,
