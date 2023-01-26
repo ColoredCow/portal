@@ -263,7 +263,7 @@ abstract class ApplicationController extends Controller
         return response([
             'subject' => $subject,
             'body' => $body,
-           ]);
+        ]);
     }
 
     public function generateRejectEmailCodetrack(Request $request)
