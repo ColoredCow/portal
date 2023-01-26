@@ -2,13 +2,16 @@
 
 namespace Modules\Project\Http\Controllers;
 
+use Google\Service\Transcoder\Input;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Modules\Client\Entities\Client;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Rules\ProjectNameExist;
+use Modules\Project\Entities\ProjectResourceRequirement;
 
 class ProjectController extends Controller
 {
@@ -45,6 +48,18 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
+        $tableData = $request->all();
+        $designations = $tableData['designation'];
+        if($request->has('project_id')) {
+            $project_id = $request->input('project_id');
+        }
+        foreach ($designations as $designation){
+        $requirement = new ProjectResourceRequirement();
+            $requirement->project_id = $project_id;
+            $requirement->designation = $designation;
+            $requirement->save();
+        }
+
         $validated = $request->validated();
         $this->service->store($validated);
 

@@ -2,6 +2,7 @@
 
 namespace Modules\Project\Services;
 
+use Modules\Project\Entities\ProjectResourceRequirement;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Modules\Client\Entities\Client;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectTeamMember;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -71,6 +73,14 @@ class ProjectService implements ProjectServiceContract
 
     public function store($data)
     {
+    //     foreach ((array) $table as $tableData){
+    //         $resourceRequirement = new ProjectResourceRequirement();
+    //         $resourceRequirement->designation = $tableData;
+    //         $resourceRequirement->total_requirement = $tableData;
+    //         $resourceRequirement->project_id = $project_id;
+    //         $resourceRequirement->save();
+    // };
+        if (isset($data['name'])){
         $project = Project::create([
             'name' => $data['name'],
             'client_id' => $data['client_id'],
@@ -83,6 +93,7 @@ class ProjectService implements ProjectServiceContract
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
         ]);
+    }
 
         if ($data['billing_level'] ?? null) {
             ProjectMeta::updateOrCreate(
@@ -127,7 +138,7 @@ class ProjectService implements ProjectServiceContract
 
     public function getResourceRequirement()
     {
-        
+    
     }
 
     public function updateProjectData($data, $project)

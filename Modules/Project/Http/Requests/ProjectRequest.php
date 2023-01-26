@@ -5,6 +5,7 @@ namespace Modules\Project\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\TeamMemberDesignationRule;
 use App\Rules\TeamMemberRule;
+use Modules\Project\Entities\ProjectResourceRequirement;
 
 class ProjectRequest extends FormRequest
 {

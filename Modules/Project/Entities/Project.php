@@ -35,6 +35,11 @@ class Project extends Model
         return $this->hasMany(ProjectRepository::class);
     }
 
+    public function resourceRequirement()
+    {
+        return $this->hasMany(ProjectResourceRequirement::class);
+    }
+
     public function client()
     {
         return $this->belongsTo(Client::class);
