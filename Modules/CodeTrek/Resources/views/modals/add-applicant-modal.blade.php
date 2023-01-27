@@ -63,7 +63,7 @@
                             <?php 
                                  $currentYear = date('Y');
                                  $endYear = $currentYear + 4;
-                                      for ($i=1900; $i<=$endYear; $i++) {
+                                      for ($i=1990; $i<=$endYear; $i++) {
                                           echo '<option value="'.$i.'">'.$i.'</option>';
                                       } 
                             ?>
