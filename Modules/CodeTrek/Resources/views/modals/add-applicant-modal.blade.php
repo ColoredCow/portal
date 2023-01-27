@@ -7,8 +7,9 @@
 <div class="modal fade" id="photoGallery" tabindex="-1" role="dialog" aria-labelledby="photoGalleryLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
+            <form action="" method="POST" >
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add new applicant</h5>
+              <h5 class="modal-title" id="exampleModalLabel"><strong>Add new applicant</strong></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -52,20 +53,35 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="Course" class="field-required">Course</label>
-                        <input type="course" class="form-control" name="course" id="course" placeholder="Enter course name"
+                        <input type="text" class="form-control" name="course" id="course" placeholder="Enter course name"
                             required="required" value="">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="graduation_year" class="field-required">Graduation Year</label>
                         <select v-model="graduation_year" name="graduation_year" id="graduation_year" class="form-control" required>
                             <option value="">Select Graduation Year</option>
+                            <?php 
+                                 $currentYear = date('Y');
+                                 $endYear = $currentYear + 4;
+                                      for ($i=1900; $i<=$endYear; $i++) {
+                                          echo '<option value="'.$i.'">'.$i.'</option>';
+                                      } 
+                            ?>
                          </select>
                     </div>
                 </div>
-            <div class="card-footer">
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="phone_no" class="field-required">Phone Number</label>
+                        <input type="tel" class="form-control" name="phone_no" id="course" placeholder="Enter Phone Number"
+                            required="required"  maxlength="10" value="">
+                    </div>
+                </div>
+            </div>
+                  <div class="card-footer">
                      <button type="button" class="btn btn-primary" id="save-btn-action">Create</button>
                  </div>
-             </div>
+            </form>
          </div>
      </div>
     </div>
