@@ -11,8 +11,17 @@ $(function() {
 	}
 	if ($("#clientWiseReportRevenueTrends").length) {
 		const clientId = $("#clientSelectBox option:selected").val();
+		const startDate = $("#startDate").val();
+		const endDate = $("#endDate").val();
 		getData(
-			{ type: "revenue-trend-client-wise", filters: {"client_id": clientId} },
+			{ 
+				type: "revenue-trend-client-wise", 
+				filters: {
+					"client_id": clientId,
+					"start_date": startDate,
+					"end_date": endDate
+				} 
+			},
 			clientWiseRevenueTrendsReport
 		);
 	}
@@ -70,6 +79,13 @@ function financeReportRevenueTrendsReport(reportsData) {
 						scaleLabel: {
 							display: false,
 							labelString: "Client",
+						},
+						ticks: {
+							callback: function(value,index, values) {
+								const valueLength = value.length;
+								const truncatedValue = value.substring(0, 15);
+								return valueLength > 15 ? truncatedValue + "..." : truncatedValue;
+							},
 						}
 					},
 				]

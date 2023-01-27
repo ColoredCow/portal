@@ -22,20 +22,23 @@
     </div> --}}
     {{-- this depends on the application round. currently hard-coded for resume-screening --}}
     @if ($applicationRound->round->name == "Telephonic Interview")
-        @include('hr::evaluation.evaluation-form.knowledge')
-        <div class="row py-4">
-            <div class="col-12">
-                <button type="submit" class="btn btn-success">Submit</button>
-            </div>
+    @include('hr::evaluation.evaluation-form.knowledge')
+    <div class="row py-4">
+        <div class="col-12">
+            <button type="submit" class="btn btn-success">Submit</button>
         </div>
+    </div>
     @else
-        <div class="evaluation-stage" id="evaluationStage1">
-            @include('hr::evaluation.evaluation-form.resume-screening.feeling')
+    <div class="evaluation-stage" id="evaluationStage1">
+        @include('hr::evaluation.evaluation-form.resume-screening.feeling')
+
             <div class="row py-4">
+
                 <div class="col-12">
                     {{-- TODO: save form on click using AJAX --}}
-                    <button class="btn btn-success show-evaluation-stage" data-target="#evaluationStage2"
-                        type="button">Next</button>
+                    <br>
+                    <button class="btn btn-success show-evaluation-stage " data-target="#evaluationStage2"
+                        type="button" data-action="update">Next</button>
                 </div>
             </div>
         </div>
@@ -59,13 +62,18 @@
                     </select>
                 </div>
             </div>
+
             <div class="row py-4">
                 <div class="col-12">
                     <button type="button" class="btn btn-light border mr-2 show-evaluation-stage"
                         data-target="#evaluationStage1">Back</button>
-                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button type="submit" class="btn btn-success" >Submit</button>
                 </div>
             </div>
         </div>
+
+        <textarea rows="5" class="form-control" name="feedback_submit"
+        placeholder="Enter comments....">{{optional($applicationRoundReview)->review_value}}</textarea>
+
     @endif
 </form>
