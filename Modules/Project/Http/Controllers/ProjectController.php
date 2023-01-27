@@ -2,9 +2,7 @@
 
 namespace Modules\Project\Http\Controllers;
 
-use Google\Service\Transcoder\Input;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
 use Modules\Client\Entities\Client;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
@@ -53,11 +51,19 @@ class ProjectController extends Controller
         if($request->has('project_id')) {
             $project_id = $request->input('project_id');
         }
+
         foreach ($designations as $designation){
-        $requirement = new ProjectResourceRequirement();
-            $requirement->project_id = $project_id;
-            $requirement->designation = $designation;
-            $requirement->save();
+            $check = ProjectResourceRequirement::where([
+                ['project_id', "=", $project_id],
+                ['designation', "=", $designation],
+            ])->first();
+        
+            if ($check === null) {
+                $requirement = new ProjectResourceRequirement();
+                $requirement->project_id = $project_id;
+                $requirement->designation = $designation;
+                $requirement->save();
+            }
         }
 
         $validated = $request->validated();

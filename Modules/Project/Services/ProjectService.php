@@ -73,13 +73,6 @@ class ProjectService implements ProjectServiceContract
 
     public function store($data)
     {
-    //     foreach ((array) $table as $tableData){
-    //         $resourceRequirement = new ProjectResourceRequirement();
-    //         $resourceRequirement->designation = $tableData;
-    //         $resourceRequirement->total_requirement = $tableData;
-    //         $resourceRequirement->project_id = $project_id;
-    //         $resourceRequirement->save();
-    // };
         if (isset($data['name'])){
         $project = Project::create([
             'name' => $data['name'],
@@ -95,7 +88,7 @@ class ProjectService implements ProjectServiceContract
         ]);
     }
 
-        if ($data['billing_level'] ?? null) {
+        if (isset($project) && $data['billing_level'] ?? null) {
             ProjectMeta::updateOrCreate(
                 [
                     'key' => config('project.meta_keys.billing_level.key'),
@@ -107,8 +100,10 @@ class ProjectService implements ProjectServiceContract
             );
         }
 
-        $project->client->update(['status' => 'active']);
-        $this->saveOrUpdateProjectContract($data, $project);
+        if(isset($project)){
+            $project->client->update(['status' => 'active']);
+            $this->saveOrUpdateProjectContract($data, $project);
+        }
     }
 
     public function getClients()
