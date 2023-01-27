@@ -28,22 +28,22 @@
             @endphp
             <a class="nav-link {{ (request()->input('status','active')== 'reports') ? 'active' : '' }}"  href="{{ route('codetrek.index', $request)  }}"><i class="fa fa-pie-chart"></i> Reports</a>
         </li>
-
     </ul>
     @if (request()->input('status','active') == 'active'||request()->status=='applicants')
         <div>
-          <br>
+            <br>
             <table class="table table-bordered table-striped">
-                 <thead class="thead-dark">
+                <thead class="thead-dark">
                     <tr class="text-center sticky-top">
-                         <th class="col-md-4">Name</th>
-                         <th class="col-md-2"> Days in CodeTrek</th>
-                         <th> Status</th>
-                         <th>Feedbacks</th>
+                        <th class="col-md-4">Name</th>
+                        <th class="col-md-2"> Days in CodeTrek</th>
+                        <th> Status</th>
+                        <th>Feedbacks</th>
                     </tr>
-                         <td>
-                            No applicant found
-                         </td>
+                </thead>
+                <tbody>
+                    <td>No applicant found</td>
+                </tbody>
             </table>
         </div>
     @elseif (request()->status=='reports')
