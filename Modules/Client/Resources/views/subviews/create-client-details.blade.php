@@ -58,7 +58,7 @@
             </select>
         </div>
         <div class="form-group offset-md-6 col-md-5">
-            <label for="channel_partner_id">Select Country</label>
+            <label for="select_country">Select Country</label>
             <select name="country_id" id="countryId" class="form-control">
                 <option value="">Select Country</option>
                 @foreach ($countries as $country)
