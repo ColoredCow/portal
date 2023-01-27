@@ -30,7 +30,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand min-w-md-150" href="{{ url('/') }}">
                     {{ config('app.name', 'ColoredCow Portal') }}
                 </a>
                 @auth
@@ -98,7 +98,7 @@
             </div>
         @endif
 
-        <main class="py-4">
+        <main class="py-4 mx-4">
             @yield('content')
         </main>
     </div>
@@ -108,7 +108,6 @@
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
     <script src="{{ asset('src/tinymce/js/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
 
     @yield('js_scripts')
     @yield('vue_scripts')

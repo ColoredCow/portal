@@ -4,6 +4,8 @@ namespace Modules\Salary\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\Salary\Entities\EmployeeSalary;
+use Modules\Salary\Policies\EmployeeSalaryPolicy;
 
 class SalaryServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,10 @@ class SalaryServiceProvider extends ServiceProvider
      * @var string
      */
     protected $moduleNameLower = 'salary';
+
+    protected $policies = [
+        EmployeeSalary::class => EmployeeSalaryPolicy::class
+    ];
 
     /**
      * Boot the application events.

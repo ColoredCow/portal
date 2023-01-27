@@ -83,6 +83,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Book::class, 'book_wishlist', 'user_id', 'library_book_id');
     }
 
+    public function booksBorrower()
+    {
+        return $this->belongsToMany(Book::class, 'book_borrower', 'user_id', 'library_book_id');
+    }
+
     public function totalReadBooks()
     {
         return $this->books()->count();
@@ -108,7 +113,7 @@ class User extends Authenticatable
 
     public function profile()
     {
-        return $this->hasOne(UserProfile::class);
+        return $this->hasOne(UserProfile::class, 'user_id');
     }
 
     public function appointmentSlots()
@@ -118,7 +123,7 @@ class User extends Authenticatable
 
     public function projects()
     {
-        return $this->belongsToMany(Project::class, 'project_team_members', 'team_member_id', 'project_id');
+        return $this->belongsToMany(Project::class, 'project_team_members', 'team_member_id', 'project_id')->wherePivot('ended_on', null);
     }
 
     public function meta()
@@ -166,14 +171,26 @@ class User extends Authenticatable
         return $totalEffort;
     }
 
-    public function getFteAttribute()
+    public function getFtesAttribute()
     {
         $fte = 0;
-
-        foreach ($this->projectTeamMembers as $projectTeamMember) {
-            $fte += $projectTeamMember->fte;
+        $fteAmc = 0;
+        foreach ($this->projectTeamMembers()->with('project')->get() as $projectTeamMember) {
+            if (! $projectTeamMember->project->is_amc) {
+                $fte += $projectTeamMember->fte;
+            }
+            if ($projectTeamMember->project->is_amc) {
+                $fteAmc += $projectTeamMember->fte;
+            }
         }
 
-        return $fte;
+        return ['main' => $fte, 'amc' => $fteAmc];
+    }
+
+    public function activeProjects()
+    {
+        $projects = Project::linkedToTeamMember($this->id)->get();
+
+        return $projects;
     }
 }

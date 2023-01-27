@@ -6,6 +6,7 @@ use App\Models\Project;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Modules\User\Entities\User;
+use Modules\Salary\Entities\EmployeeSalary;
 
 class Employee extends Model
 {
@@ -16,6 +17,16 @@ class Employee extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function hrJobDesignation()
+    {
+        return $this->belongsTo(HrJobDesignation::class, 'designation_id');
+    }
+
+    public function hrJobDomain()
+    {
+        return $this->belongsTo(HrJobDomain::class, 'domain_id');
     }
 
     public function scopeStatus($query, $status)
@@ -58,5 +69,10 @@ class Employee extends Model
         }
 
         return $query;
+    }
+
+    public function employeeSalaries()
+    {
+        return $this->hasMany(EmployeeSalary::class);
     }
 }

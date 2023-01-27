@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\HR\Applications;
 
 use Modules\HR\Entities\Application;
+use Modules\HR\Entities\Job;
 use Illuminate\Support\Facades\Request;
 use Modules\HR\Http\Controllers\Recruitment\ApplicationController;
 
@@ -33,8 +34,28 @@ class VolunteerApplicationController extends ApplicationController
         $attr = [
             'applications' => $applications,
             'status' => request()->get('status'),
+            'volunteer_on_hold_count' => $this->getCount(['on-hold']),
+            'sent_for_approval_count' => $this->getCount(['sent-for-approval']),
+            'no_show_count' => $this->getCount(['no-show-reminded']),
+            'closed_count' => $this->getCount(['rejected']),
+            'open_count' => $this->getCount(['new', 'in-progress']),
+            'job-type' => $this->getApplicationType(),
+            'jobs' => Job::where('type', 'volunteer')->get(),
         ];
 
-        return view('hr.application.volunteer.index')->with($attr);
+        return view('hr.application.volunteer.index')->with(
+            $attr
+        );
+    }
+
+    public function getCount($currentStatus)
+    {
+        $attr = Application::whereHas('Job', function ($query) {
+            return $query->where('type', 'volunteer');
+        })
+            ->whereIn('status', $currentStatus)
+            ->count();
+
+        return $attr;
     }
 }

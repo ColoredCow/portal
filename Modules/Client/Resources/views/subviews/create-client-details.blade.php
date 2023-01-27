@@ -19,6 +19,7 @@
     </div>
     <br>
     <div class="form-row">
+
             <div class=" col-md-5 ">
                 <div class="form-check-inline mr-0 form-group">
                     <input type="checkbox" 
@@ -44,8 +45,6 @@
                     </label>
                 </div>
             </div>
-     
-        
 
         <div class="form-group offset-md-1 col-md-5">
             <label for="key_account_manager_id">Parent organisation
@@ -58,7 +57,14 @@
                 @endforeach
             </select>
         </div>
-
+        <div class="form-group offset-md-6 col-md-5">
+            <select name="country_id" id="countryId" class="form-control">
+                <option value="">Select Country</option>
+                @foreach ($countries as $country)
+                    <option value="{{$country->id}}">{{$country->name}}</option>
+                @endforeach
+            </select>
+        </div>
     </div>
 
 </div>

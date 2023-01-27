@@ -12,7 +12,7 @@ date_default_timezone_set('UTC');
 class Event
 {
     // Tests whether the given ISO8601 string has a time-of-day or not
-  const ALL_DAY_REGEX = '/^\d{4}-\d\d-\d\d$/'; // matches strings like "2013-12-29"
+    const ALL_DAY_REGEX = '/^\d{4}-\d\d-\d\d$/'; // matches strings like "2013-12-29"
 
     public $title;
     public $allDay; // a boolean
@@ -20,7 +20,7 @@ class Event
     public $end; // a DateTime, or null
     public $properties = []; // an array of other misc properties
 
-  // Constructs an Event object from the given array of key=>values.
+    // Constructs an Event object from the given array of key=>values.
     // You can optionally force the timeZone of the parsed dates.
     public function __construct($array, $timeZone = null)
     {
@@ -56,8 +56,7 @@ class Event
     // $rangeStart and $rangeEnd are assumed to be dates in UTC with 00:00:00 time.
     public function isWithinDayRange($rangeStart, $rangeEnd)
     {
-
-    // Normalize our event's dates for comparison with the all-day range.
+        // Normalize our event's dates for comparison with the all-day range.
         $eventStart = stripTime($this->start);
 
         if (isset($this->end)) {
@@ -73,8 +72,7 @@ class Event
     // Converts this Event object back to a plain data array, to be used for generating JSON
     public function toArray()
     {
-
-    // Start with the misc properties (don't worry, PHP won't affect the original array)
+        // Start with the misc properties (don't worry, PHP won't affect the original array)
         $array = $this->properties;
 
         $array['title'] = $this->title;
@@ -105,8 +103,8 @@ function parseDateTime($string, $timeZone = null)
     $date = new DateTime(
         $string,
         $timeZone ? $timeZone : new DateTimeZone('UTC')
-      // Used only when the string is ambiguous.
-      // Ignored if string has a timeZone offset in it.
+        // Used only when the string is ambiguous.
+        // Ignored if string has a timeZone offset in it.
     );
     if ($timeZone) {
         // If our timeZone was ignored above, force it.

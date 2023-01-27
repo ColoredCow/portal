@@ -49,3 +49,11 @@
 
     (ii) **Creating a pull request from a fork** : You can create a pull request to propose changes you've made to a fork of an upstream repository.  
     For know how to create a pull request from a fork click on this [link](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork)
+
+
+# Merge Conflict :
+ **Why merge conflict occurs and how to resolve that conflict** can go through the given links:
+
+- [fix merge conflicts vscode](https://linuxpip.org/fix-merge-conflicts-vscode/)
+
+- [How do i resolve merge conflicts](https://dev.to/github/how-do-i-resolve-merge-conflicts-5438)

@@ -14,7 +14,6 @@
         <div class="card-header">
             <span>Project Details</span>
         </div>
-
         <project-details-component
             :project="{{$project}}"
             :clients="{{$clients}}"

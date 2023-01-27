@@ -38,4 +38,11 @@ class Setting extends Model
     {
         return $query->where('module', $module);
     }
+
+    public static function getSendInvoiceTemplate()
+    {
+        return [
+            'body' => self::where('setting_key', 'send-invoice')->first()->setting_value ?? null,
+        ];
+    }
 }
