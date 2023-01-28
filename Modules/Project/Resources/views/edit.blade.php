@@ -28,17 +28,8 @@
                         role="tab" aria-selected="false">Project repositories</a>
                 </li>
                 <li class="nav-item" role="presentation">
-<<<<<<< HEAD
                     <a class="nav-link" data-bs-toggle="pill" data-bs-target="#resource-requirement" type="button"
                         role="tab" aria-selected="false">Resource Requirement</a>
-=======
-                    <a class="nav-link" data-toggle="pill" data-target="#projectFinancialDetails" type="button"
-                        role="tab" aria-selected="false">Project Financial Details</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-toggle="pill" data-target="#projectTechstack" type="button"
-                        role="tab" aria-selected="false">Project Techstack</a>
->>>>>>> 95f4521e6ae18afeb4694267f040453d5c1b86f6
                 </li>
             </ul>
             @include('status', ['errors' => $errors->all()])
