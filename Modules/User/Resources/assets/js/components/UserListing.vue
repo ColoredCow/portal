@@ -6,7 +6,7 @@
         <table class="table table-bordered table-striped">
 			<thead class="thead-dark">
 				<tr>
-					<th width="20%">User Name</th>
+					<th width="20%">User Name </th>
 					<th width="35%">User Roles</th>
 					<th>Actions</th>
 				</tr>
@@ -14,14 +14,17 @@
             <tbody>
                 <tr v-for="(user,index) in filteredUsers" :key="index">
                     <td>
-                        <span class="align-items-center d-flex justify-content-start">
-                            <div style="width:30px;" class="mr-2">
+                        <span class="align-items-start d-flex justify-content-start">
+                            <div class="mr-2 w-30">
                                 <img style="border-radius:50%"  class="w-full" :src="user.avatar" alt="">
                             </div>
-                            {{ user.name }}
+							<div>
+								<div>{{ user.name }}</div>
+								<div class="text-secondary fz-14">{{ user.email }}</div>
+							</div>
                         </span>
-                        </td>
-                    <td> 
+					</td>
+                    <td>
                         <span>{{ formatRoles(user) }}<span v-if="user.websiteUserRole">, {{user.websiteUserRole}}</span></span>
                     </td>
 
@@ -31,7 +34,7 @@
                                 Select action
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                
+
                                 <a v-show="userPermissions['can-assign-roles']" class="dropdown-item" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)" href="#">Assign roles</a>
                                 <a v-show="userPermissions['can-delete']" class="dropdown-item text-danger"  @click="removeUser(index)"  ref="#">Remove this user</a>
                             </div>
@@ -39,36 +42,60 @@
 
                         <div >
                             <button v-show="userPermissions['can-assign-roles']" class="btn btn-sm btn-outline-info mr-4" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">Manage user roles</button>
-                            <button v-show="userPermissions['can-delete']" class="btn btn-sm btn-outline-danger "  @click="removeUser(index)">Remove user</button>
+                            <button v-show="userPermissions['can-delete'] && user.id !== authUser.id" type="button" class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#deleteUserModal" @click="setIndex(index)">
+								<i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+							</button>
+							<button v-show="userPermissions['can-assign-roles']" class="btn btn-edit btn-outline-dark" data-toggle="modal" data-target="#update_staff_type_modal" @click="updateUserRolesModal(index)">
+								<i class="fa fa-cog fa-lg" aria-hidden="true"></i>	
+							</button>						
                         </div>
-
                     </td>
                 </tr>
             </tbody>
 		</table>
 
-        <user-role-update-modal 
+		<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+                        <h5 class="modal-title">Delete user: <strong> {{ users[currentUserIndex].name }}</strong></h5>
+					</div>
+					<div class="modal-body">
+						Are you sure you want to take this action? It cannot be undone. The user will be removed from the system and will not be able to log in.
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						<button type="button" @click="removeUser(index)" class="btn btn-danger">Yes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+        <user-role-update-modal
             :user="this.selectedUser"
             :updateRoute="this.updateRoute"
             :config="config"
             @userRolesUpdated="this.onUserRoleUpdated"
-
+        />
+		<user-staff-type-update-modal
+            :user="this.selectedUser"
+			:stafftypes="stafftypes"
         />
     </div>
 </template>
 
 <script>
 export default {
-	props:[ "users", "updateRoute", "userPermissions", "config"],
+	props:["users", "updateRoute", "userPermissions", "config", "authUser","stafftypes"],
 
 	data(){
-		return { 
+		return {
 			currentUserIndex: 0,
 			roleInputs: [],
 			allUsers: this.users,
 			selectedUser:{},
 			search: ""
-		};  
+		};
 	},
 
 	methods: {
@@ -83,7 +110,7 @@ export default {
 				let roleName = userRoles[i].label;
 				roleNames.push(roleName);
 			}
-        
+
 			return (roleNames.length) ? roleNames.join(", ") : "-";
 		},
 
@@ -93,20 +120,20 @@ export default {
 		},
 
 		onUserRoleUpdated: function(selectedRoles) {
-			Vue.set(this.selectedUser, "roles",  selectedRoles);
+			Vue.set(this.selectedUser, "roles", selectedRoles);
 		},
 
-		removeUser: async function(index) {
-
-			if(!confirm("Are you sure?")) {
-				return true;
-			}
-
-			this.currentUserIndex = index;
-			let user = this.users[index];
+		removeUser: async function() {
+			let user = this.users[this.currentUserIndex];
 			let route = `/user/${user.id}/delete`;
 			let response = await axios.delete(route);
+			window.location.reload();
+			this.$toast.success("User removed successfully!");
 			this.$delete(this.allUsers, index);
+		},
+
+		setIndex: function(index){
+			this.currentUserIndex = index;
 		}
 	},
 

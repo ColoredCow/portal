@@ -25,6 +25,13 @@ return [
         ],
     ],
 
+    'client-contact-person-type'=>[
+        'primary-billing-contact' => 'billing-contact',
+        'general-point-of-contact' => 'general-contact',
+        'secondary-billing-contact' => 'secondary-contact',
+        'tertiary-billing-contact' => 'tertiary-contact',
+    ],
+
     'default-client-form-stage' => 'client-details',
 
     'countries' => [
@@ -55,7 +62,7 @@ return [
             'id' => 2,
             'name' => 'Monthly',
         ],
-        'quaterly' => [
+        'quarterly' => [
             'id' => 3,
             'name' => 'Quarterly',
         ],
@@ -69,7 +76,7 @@ return [
         ],
     ],
 
-    'currency-symbols' =>[
+    'currency-symbols' => [
         [
             'rupee' => '₹'
         ],
@@ -80,6 +87,39 @@ return [
 
         [
             'pound' => '€'
+        ],
+    ],
+
+    'service-rate-terms' => [
+        'per_hour' => [
+            'slug' => 'per_hour',
+            'label' => 'Per Hour',
+            'short-label' => '/hour'
+        ],
+        'per_month' => [
+            'slug' => 'per_month',
+            'label' => 'Per Month',
+            'short-label' => '/month'
+        ],
+        'per_quarter' => [
+            'slug' => 'per_quarter',
+            'label' => 'Per Quarter',
+            'short-label' => '/quarter'
+        ],
+        'per_year' => [
+            'slug' => 'per_year',
+            'label' => 'Per Year',
+            'short-label' => '/year'
+        ],
+        'per_resource' => [
+            'slug' => 'per_resource',
+            'label' => 'Per Resource',
+            'short-label' => '/resource'
+        ],
+        'overall' => [
+            'slug' => 'overall',
+            'label' => 'Overall',
+            'short-label' => 'overall'
         ],
     ]
 ];

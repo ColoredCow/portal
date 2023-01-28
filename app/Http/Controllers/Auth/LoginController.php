@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -110,13 +111,16 @@ class LoginController extends Controller
 
             return $authUser;
         }
-
-        return User::create([
+        $user = User::create([
             'name' => $user->name,
             'email' => $user->email,
             'provider' => $provider,
             'provider_id' => $user->id,
             'avatar' => '',
         ]);
+        $role = DB::table('roles')->select('id')->where('name', 'book-manager')->first();
+        $user->roles()->attach($role);
+
+        return $user;
     }
 }

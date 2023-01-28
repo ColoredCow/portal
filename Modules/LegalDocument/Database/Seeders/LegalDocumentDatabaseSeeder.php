@@ -16,5 +16,6 @@ class LegalDocumentDatabaseSeeder extends Seeder
     {
         Model::unguard();
         $this->call(LegalDocumentsTableSeeder::class);
+        $this->call(LegalDocumentPermissionsTableSeeder::class);
     }
 }

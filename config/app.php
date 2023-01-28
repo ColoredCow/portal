@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'UTC'),
+    'timezone' => env('APP_TIMEZONE', 'Asia/Kolkata'),
 
     /*
     |--------------------------------------------------------------------------
@@ -163,6 +163,7 @@ return [
         App\Providers\DatabaseServiceProvider::class,
         OfficeSuite\OfficeSuitesServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
+        OwenIt\Auditing\AuditingServiceProvider::class,
     ],
 
     /*
@@ -218,4 +219,6 @@ return [
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
     ],
+
+    'faker_locale' => 'en_IN',
 ];

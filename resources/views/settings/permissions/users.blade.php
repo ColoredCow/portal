@@ -23,7 +23,6 @@
 					<th width="20%">User Name</th>
 					<th width="35%">User Roles</th>
 					<th>Actions</th>
-
 				</tr>
 			</thead>
 			<tr v-for="(user,index) in users">
@@ -34,10 +33,12 @@
 				<td>
 					<button class="btn btn-sm btn-outline-danger" v-if="user.roles.length == 0" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">No role assigned</button>
 					<button class="btn btn-sm btn-outline-info" v-else data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">View roles assigned</button>
+
+					<button class="btn btn-sm btn-outline-danger" v-if="user.roles.length == 0" data-toggle="modal" data-target="#update_staff_type_modal" @click="updateStaffTypeModal(index)">Nomber role assigned</button>
+					<button class="btn btn-sm btn-outline-info" v-else data-toggle="modal" data-target="#update_staff_type_modal" @click="updateStaffTypeModal(index)">Viewber roles assigned</button>
 				</td>
 			</tr>
 		</table>
-		@include('settings.permissions.update-user-roles-modal')
 	</div>
 </div>
 @endsection

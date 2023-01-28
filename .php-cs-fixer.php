@@ -16,6 +16,11 @@ $rules = [
     'braces' => true,
     'cast_spaces' => true,
     'class_definition' => true,
+    'class_attributes_separation' => [
+        'elements' => [
+            'trait_import' => 'none',
+        ],
+    ],
     'concat_space' => [
         'spacing' => 'one',
     ],
@@ -45,7 +50,6 @@ $rules = [
             'extra',
             'throw',
             'use',
-            'use_trait',
         ],
     ],
     'no_blank_lines_after_class_opening' => true,
@@ -67,8 +71,7 @@ $rules = [
     'no_spaces_after_function_name' => true,
     'no_spaces_around_offset' => true,
     'no_spaces_inside_parenthesis' => true,
-    'no_trailing_comma_in_list_call' => true,
-    'no_trailing_comma_in_singleline_array' => true,
+    'no_trailing_comma_in_singleline' => true,
     'no_trailing_whitespace' => true,
     'no_trailing_whitespace_in_comment' => true,
     'no_unneeded_control_parentheses' => true,

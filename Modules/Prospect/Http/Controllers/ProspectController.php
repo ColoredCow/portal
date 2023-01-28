@@ -88,4 +88,14 @@ class ProspectController extends Controller
 
         return Storage::download($prospectDocument->file_path);
     }
+
+    /**
+     * soft delete prospect.
+     */
+    public function delete($id)
+    {
+        Prospect::find($id)->delete();
+
+        return redirect()->back();
+    }
 }

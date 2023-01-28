@@ -5,15 +5,17 @@
     <div class="d-flex">
         <h4 class="d-inline-block font-weight-bold">Sales & Marketing Reports</h4>
         @can('report.edit')
-        <button type="button" class="btn btn-primary ml-auto report" data-bs-toggle="modal" data-bs-target="#Modal">
-            Add Report
+        <button type="button" class="btn btn-primary ml-auto report" data-toggle="modal" data-target="#Modal">
+        <i class="fa fa-plus"></i>
+             Add New Report
+
         </button>
         <div class="modal @if(count($errors->all()) > 0) show-modal @endif" id="Modal" role="dialog" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Add Report</h4>
-                        <button type="button" class="btn-close ml-auto" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Add New Report</h4>
+                        <button type="button" class="btn-close ml-auto" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
                         <form method="post" action="{{ route('report.store') }}">
@@ -74,11 +76,12 @@
     @foreach($reports as $report)
     @if($report->type == "sales_and_marketing")
     <div class="card mt-4">
-        <div class="card-header d-flex c-pointer" data-toggle="collapse" data-target="#report_id_{{ $report->id }}" aria-expanded="true" aria-controls="report-bar">
+        <div class="card-header d-flex c-pointer">
             <div>
                 <h4 class="font-weight-bold"> {{ $report->name }} </h4>
             </div>
-            <a href="{{ route('report.show', ['id' => $report->id]) }}" target="_self" class="btn btn-primary ml-auto"> View </a>
+            <a data-toggle="collapse" data-target="#report_id_{{ $report->id }}" aria-expanded="true" aria-controls="report-bar" href="{{ route('report.show', ['id' => $report->id]) }}" class="btn btn-primary ml-auto"> View </a>
+            <a href="{{ route('report.delete', ['id' => $report->id]) }}" target="_self" class="btn btn-danger ml-1"> Delete </a>
         </div>
         <div id="report_id_{{$report->id}}" class="collapse">
             <div class="card-body">
@@ -88,7 +91,7 @@
             @can('report.edit')
             <div class="card-footer">
                 <a href="{{route('report.edit', ['id' => $report->id]) }}">
-                    <button type="button" class="btn btn-primary report" data-bs-toggle="modal" data-bs-target="#EditModal"> Edit </button>
+                    <button type="button" class="btn btn-primary report" data-toggle="modal" data-target="#EditModal"> Edit </button>
                 </a>
             </div>
             @endcan

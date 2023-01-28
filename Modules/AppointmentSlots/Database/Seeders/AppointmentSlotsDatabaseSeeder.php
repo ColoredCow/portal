@@ -16,6 +16,5 @@ class AppointmentSlotsDatabaseSeeder extends Seeder
     {
         Model::unguard();
         $this->call(AppointmentSlotsPermissionsTableSeeder::class);
-        $this->call(AppointmentSlotsRoleHasPermissionsTableSeeder::class);
     }
 }

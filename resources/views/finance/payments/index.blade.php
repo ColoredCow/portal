@@ -20,7 +20,7 @@
             <tr>
                 <td>
                     <a href="{{route('payments.edit', $payment)}}">
-                        {{$payment->invoice->project->name}}
+                        {{optional($payment->invoice->project)->name ?: ($payment->invoice->client->name . ' Projects')}}
                     </a>
                 </td>
                 <td>

@@ -12,7 +12,6 @@ class ApplicationCreated
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $application;
-
     /**
      * Create a new event instance.
      *

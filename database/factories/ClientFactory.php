@@ -7,7 +7,7 @@ use App\Models\Client;
 
 $factory->define(Client::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
+        'name' => $faker->company,
         'is_active' => true,
         'gst_num' => null,
     ];

@@ -1,28 +1,19 @@
 @extends('user::layouts.master')
 @section('content')
-
-<div class="container" id="vueContainer">
-	<ul class="nav nav-pills mb-3 px-3 d-none">
-		<li class="nav-item">
-			<a class="nav-item nav-link active" href="{{ route('user.index')  }}"><i class="fa fa-users"></i>&nbsp;Users</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-item nav-link" href="{{ route('user.role-index') }}"><i class="fa fa-list-ul"></i>&nbsp;Roles</a>
-		</li>
-	</ul>
-	<br>
-		<h4>User Management</h4>
-		<user-listing 
-			:users="{{ json_encode($users) }}"
-			:update-route="{{ json_encode( route('user.update-roles')) }}"
-			:user-permissions = "{{ json_encode(
-				[ 
-				'can-assign-roles' => auth()->user()->can('user_management.assign-roles'),
-				'can-delete' => auth()->user()->can('user_management.delete'),
-				], true)}}"
-			:config = "{{ json_encode(['website_url' => config('website.url')]) }}"
-		/>
-
-	</div>
+<div class="container" id="vueContainer" data-users ="{{ json_encode($users) }}">
+    @includeWhen(session('success'), 'toast', ['message' => session('success')])
+	@include('user::layouts.navbar')
+	<h4>User Management</h4>
+	<user-listing
+		:users="{{ json_encode($users) }}"
+		:update-route="{{ json_encode( route('user.update-roles')) }}"
+		:user-permissions="{{ json_encode([
+			'can-assign-roles' => auth()->user()->can('user_management.update'),
+			'can-delete' => auth()->user()->can('user_management.delete'),
+		], true)}}"
+		:auth-user="{{ json_encode(auth()->user()) }}"
+		:config="{{ json_encode(['website_url' => config('website.url')]) }}"
+		:stafftypes="{{json_encode(config('hr.working-staff.staff-type'))}}"
+	/>
 </div>
 @endsection

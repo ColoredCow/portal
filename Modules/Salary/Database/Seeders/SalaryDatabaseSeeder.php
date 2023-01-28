@@ -15,5 +15,6 @@ class SalaryDatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
+        $this->call(SalaryPermissionTableSeeder::class);
     }
 }
