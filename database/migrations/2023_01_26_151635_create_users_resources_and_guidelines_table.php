@@ -15,11 +15,12 @@ class CreateUsersResourcesAndGuidelinesTable extends Migration
     {
         Schema::create('users_resources_and_guidelines', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->nullable();
-            $table->string('category')->nullable();
-            $table->boolean('mark_as_read')->nullable()->default(null);
+            $table->unsignedInteger('employee_id');
+            $table->integer('resource_id')->nullable();
+            $table->boolean('mark_as_read')->default(0);
             $table->text('post_suggestions')->nullable()->default('');
             $table->timestamps();
+            $table->foreign('employee_id')->references('id')->on('employees');
         });
     }
 
@@ -30,6 +31,6 @@ class CreateUsersResourcesAndGuidelinesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_resources_suggestions');
+        Schema::dropIfExists('users_resources_and_guidelines');
     }
 }

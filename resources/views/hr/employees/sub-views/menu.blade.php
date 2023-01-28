@@ -11,6 +11,6 @@
             <a class="nav-item nav-link {{ Request::is('hr/employee-basic-details*') ? 'active' : ' ' }}" href="{{ route('employees.basic.details', $employee) }}"><i class="fa fa-details"></i>&nbsp;Basic Details</a>
         </li>
         <li class="nav-item">
-            <a class="nav-item nav-link {{ Request::is('hr/employees-resource-guideline*') ? 'active' : '' }}" href="{{ route('employees.resource.guideline', $employee) }}">&nbsp;Resource</a>
+            <a class="nav-item nav-link {{ Request::is('hr/employees-resource-guideline*') ? 'active' : '' }}" href="{{ route('employees.resource.guideline', $employee) }}">&nbsp;Resources</a>
         </li>
 </ul>

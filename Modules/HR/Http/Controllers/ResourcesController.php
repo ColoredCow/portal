@@ -15,7 +15,7 @@ class ResourcesController extends Controller
     {
         $resources = Resource::all();
         $categories = Category::all();
-        $usersResourcesAndGuidelines = UsersResourcesAndGuidelines::all();
+        $usersResourcesAndGuidelines = UsersResourcesAndGuidelines::get();
 
         return view('hr::guidelines-resources.index', compact('resources', 'categories', 'usersResourcesAndGuidelines'));
     }
@@ -75,6 +75,6 @@ class ResourcesController extends Controller
     {
         $resource->delete();
 
-        return redirect()->back()->with('status', 'Category deleted successfully!');
+        return redirect()->back()->with('status', 'Resource deleted successfully!');
     }
 }

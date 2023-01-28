@@ -29,14 +29,17 @@ class EmployeeService
 
     public function updateOrCreateUsersResourcesAndGuidelines($data, $employee)
     {
-        foreach ($data['category'] as $index => $category) {
-            if (! empty($data['mark_as_read'][$index]) && ! empty($employee->id) && ! empty($category)) {
+        foreach ($data['resource_id'] as $index => $resource_id) {
+            if (! empty($employee->id) && ! empty($resource_id)) {
+                $mark_as_read = isset($data['mark_as_read'][$resource_id]) ? 1 : 0;
                 $resource = UsersResourcesAndGuidelines::updateOrCreate(
-                    ['category' => $category,
-                     'user_id' => $employee->id,
-                     'mark_as_read' => $data['mark_as_read'][$index]],
                     [
-                    'post_suggestions' => isset($data['post_suggestion'][$index]) ? $data['post_suggestion'][$index] : null
+                     'resource_id' => $resource_id,
+                     'employee_id' => $employee->id
+                    ],
+                    [
+                     'mark_as_read' => $mark_as_read,
+                     'post_suggestions' => isset($data['post_suggestion'][$resource_id]) ? $data['post_suggestion'][$resource_id] : null
                     ]
                 );
             }

@@ -10,7 +10,7 @@
                     @method('PUT')
                     <div class="mb-3">
                         <label for="name" class="form-label">Resource Link</label>
-                        <input type="text" class="form-control" id="resource_link" name="name" value="{{ $resource }}">
+                        <input type="text" class="form-control" id="resource_link" name="name" value="{{ $resource->resource_link }}">
                     </div>
                     <div class="form-group mb-3">
                         <label for="category-type">Select Categories<strong class="text-danger">*</strong></label>
