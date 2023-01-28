@@ -26,6 +26,6 @@ class Resource extends Model
 
     public function getUsersResourcesAndGuidelines($resource_id, $employee_id)
     {
-        return UsersResourcesAndGuidelines::where('employee_id', $employee_id)->where('resource_id', $resource_id)->first();;
+        return UsersResourcesAndGuidelines::where('employee_id', $employee_id)->where('resource_id', $resource_id)->first();
     }
 }
