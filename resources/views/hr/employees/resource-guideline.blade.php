@@ -19,36 +19,36 @@
           <form method="POST" action="{{ route('employees.resources.guideline',$employee->id) }}" enctype="multipart/form-resource" id="addResourceForm">
             @csrf
             @foreach ( $resources as $index => $resource)
-            <tr>
-              <td class="text-center">
-                <a href="{{$resource['resource_link']}}" target="_blank"> {{$resource->category['name']}}</a>
-                <input type="hidden" name="resource_id[{{$resource->id}}]" value="{{$resource->id}}" />
-              </td>
-              <td class="text-center">
-                
-              <input type="checkbox" name="mark_as_read[{{$resource->id}}]" value="1" id="mark_as_read_{{$index}}"
+              <tr>
+                <td class="text-center">
+                  <a href="{{$resource['resource_link']}}" target="_blank"> {{$resource->category['name']}}</a>
+                  <input type="hidden" name="resource_id[{{$resource->id}}]" value="{{$resource->id}}" />
+                </td>
+                <td class="text-center">
+                  
+                  <input type="checkbox" name="mark_as_read[{{$resource->id}}]" value="1" id="mark_as_read_{{$index}}"
                     @if($resource->getUsersResourcesAndGuidelines($resource->id,$employee->id))
                       @if($resource->getUsersResourcesAndGuidelines($resource->id,$employee->id)->mark_as_read==1)
                         checked
                       @endif
                     @endif>
                   <label for="mark_as_read_{{$resource->id}}">
-                    @if($resource->getUsersResourcesAndGuidelines($resource->id,$employee->id))
-                     {{ ($resource->getUsersResourcesAndGuidelines($resource->id,$employee->id)->mark_as_read==1) ? "Read" : "Unread"}}
-                    @else
-                      {{"Unread"}}
-                    @endif
+                      @if($resource->getUsersResourcesAndGuidelines($resource->id,$employee->id))
+                        {{ ($resource->getUsersResourcesAndGuidelines($resource->id,$employee->id)->mark_as_read==1) ? "Read" : "Unread"}}
+                      @else
+                        {{"Unread"}}
+                      @endif
                   </label>
 
-              </td>
-              <td class="text-center ">
-                <textarea type="text" name="post_suggestion[{{$resource->id}}]" id="post_suggestion_{{$index}}" class="form-control-plaintext bg-light text-dark text-center bold" placeholder="post here your suggestion" style="overflow:hidden">
-                  @if($resource->getUsersResourcesAndGuidelines($resource->id,$employee->id))
-                        {{$resource->getUsersResourcesAndGuidelines($resource->id,$employee->id)->post_suggestions}}
-                  @endif  
-                </textarea>
-              </td>
-            </tr>
+                </td>
+                <td class="text-center ">
+                  <textarea type="text" name="post_suggestion[{{$resource->id}}]" id="post_suggestion_{{$index}}" class="form-control-plaintext bg-light text-dark text-center bold" placeholder="post here your suggestion" style="overflow:hidden">
+                    @if($resource->getUsersResourcesAndGuidelines($resource->id,$employee->id))
+                          {{$resource->getUsersResourcesAndGuidelines($resource->id,$employee->id)->post_suggestions}}
+                    @endif  
+                  </textarea>
+                </td>
+              </tr>
             @endforeach
           </form>
         </tbody>
