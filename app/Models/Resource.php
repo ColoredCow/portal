@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\HR\Database\Factories\HrResourcesFactory;
-use App\Models\UsersResourcesAndGuidelines;
 
 class Resource extends Model
 {
