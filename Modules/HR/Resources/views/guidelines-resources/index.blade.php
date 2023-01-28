@@ -64,7 +64,7 @@
                                     </span>   
                                 </td>
                             </tr>
-                        @includewhen($resource, 'hr::guidelines-resources.edit-modal')
+                            @includewhen($resource, 'hr::guidelines-resources.edit-modal')
                         @endforeach
                     @endif
                 </tbody>
