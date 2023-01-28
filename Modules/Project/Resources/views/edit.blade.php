@@ -57,7 +57,6 @@
 
                 <div class="tab-pane fade mb-5" id="resource-requirement" role="tabpanel">
                     @include('project::subviews.edit-resource-requirement')
-
                 </div>
             </div>
         </div>
