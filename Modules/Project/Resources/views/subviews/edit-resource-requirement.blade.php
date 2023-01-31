@@ -5,8 +5,7 @@
     <div id="resource_requirement_form">
       <form  action="{{ route('project.store')}}" method="POST" id="form_project">
         @csrf
-        {{-- <input type="hidden" value="project_resource_requirement" name="update_section">  --}}
-        <input type="hidden" value="{{ $project->id}}" name="project_id">
+        <input type="hidden" value="{{ $project->id }}" name="project_id">
             <div class="card-body form-body">
                         <div class="container m-5">Total Team Members Required:</div>
                         <table class="table table-bordered text-justify">

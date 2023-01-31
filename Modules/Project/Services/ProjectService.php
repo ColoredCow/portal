@@ -2,6 +2,7 @@
 
 namespace Modules\Project\Services;
 
+
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Arr;
@@ -15,7 +16,8 @@ use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectTeamMember;
-
+use Modules\User\Entities\User;
+use Modules\Project\Entities\ProjectResourceRequirement;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -55,10 +57,10 @@ class ProjectService implements ProjectServiceContract
         return $this->getClients();
     }
 
-    public function store($data)
+    public function store($data, $request)
     {
-        if (isset($data['name'])){
-        $project = Project::create([
+        if (isset($data['name'])) {
+            $project = Project::create([
             'name' => $data['name'],
             'client_id' => $data['client_id'],
             'client_project_id' => $this->getClientProjectID($data['client_id']),
@@ -72,7 +74,7 @@ class ProjectService implements ProjectServiceContract
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
             'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
         ]);
-    }
+        }
 
         if (isset($project) && $data['billing_level'] ?? null) {
             ProjectMeta::updateOrCreate(
@@ -86,9 +88,39 @@ class ProjectService implements ProjectServiceContract
             );
         }
 
-        if(isset($project)){
+        if (isset($project)) {
             $project->client->update(['status' => 'active']);
             $this->saveOrUpdateProjectContract($data, $project);
+        }
+
+        if (isset($request['designation'])) {
+            $designations = $request['designation'];
+            $needed = $request['needed'];
+            
+            if (isset($request['project_id'])) {
+                $project_id = $request->input('project_id');
+            }
+
+            $index = 0;
+            foreach ($designations as $designation) {
+                $record = ProjectResourceRequirement::where([
+                    ['project_id', "=", $project_id],
+                    ['designation', "=", $designation],
+                ])->first();
+            
+                if ($record === null) {
+                    $requirement = new ProjectResourceRequirement();
+                    $requirement->project_id = $project_id;
+                    $requirement->designation = $designation;
+                    $requirement->total_requirement = $needed[$index];
+                    $requirement->save();
+                }
+                else {
+                    $record->total_requirement = $needed[$index];
+                    $record->save();
+                }
+                $index++;
+            }
         }
     }
 
@@ -144,7 +176,7 @@ class ProjectService implements ProjectServiceContract
 
     public function getResourceRequirement()
     {
-    
+        
     }
 
     public function updateProjectData($data, $project)

@@ -12,7 +12,6 @@ use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-
 class ProjectController extends Controller
 {
     use AuthorizesRequests;
@@ -51,29 +50,9 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
-        $tableData = $request->all();
-        $designations = $tableData['designation'];
-        if($request->has('project_id')) {
-            $project_id = $request->input('project_id');
-        }
-
-        foreach ($designations as $designation){
-            $check = ProjectResourceRequirement::where([
-                ['project_id', "=", $project_id],
-                ['designation', "=", $designation],
-            ])->first();
-        
-            if ($check === null) {
-                $requirement = new ProjectResourceRequirement();
-                $requirement->project_id = $project_id;
-                $requirement->designation = $designation;
-                $requirement->save();
-            }
-        }
-
         $validated = $request->validated();
-        $this->service->store($validated);
-
+        $this->service->store($validated, $request);
+        
         return redirect(route('project.index'))->with('success', 'Project has been created successfully!');
     }
 
@@ -137,9 +116,8 @@ class ProjectController extends Controller
             'projectTeamMembers' => $this->service->getProjectTeamMembers($project),
             'projectRepositories' => $this->service->getProjectRepositories($project),
             'designations' => $this->service->getDesignations(),
-            'workingDaysInMonth' => $this->service->getWorkingDays(),
+            'workingDaysInMonth' => $this->service->getWorkingDays($project),
             'resourceRequirement' => $this->service->getResourceRequirement(),
-
         ]);
     }
 

@@ -28,7 +28,7 @@
                         role="tab" aria-selected="false">Project repositories</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-bs-toggle="pill" data-bs-target="#resource-requirement" type="button"
+                    <a class="nav-link" data-toggle="pill" data-target="#resourceRequirement" type="button"
                         role="tab" aria-selected="false">Resource Requirement</a>
                 </li>
             </ul>
@@ -46,7 +46,7 @@
                     @include('project::subviews.edit-project-repository')
                 </div>
 
-                <div class="tab-pane fade mb-5" id="resource-requirement" role="tabpanel">
+                <div class="tab-pane fade mb-5" id="resourceRequirement" role="tabpanel">
                     @include('project::subviews.edit-resource-requirement')
                 </div>
             </div>
