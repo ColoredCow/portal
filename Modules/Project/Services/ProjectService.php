@@ -59,6 +59,9 @@ class ProjectService implements ProjectServiceContract
 
     public function store($data, $request)
     {
+        $project = null;
+        $project_id = null;
+
         if (isset($data['name'])) {
             $project = Project::create([
             'name' => $data['name'],
@@ -104,8 +107,8 @@ class ProjectService implements ProjectServiceContract
             $index = 0;
             foreach ($designations as $designation) {
                 $record = ProjectResourceRequirement::where([
-                    ['project_id', "=", $project_id],
-                    ['designation', "=", $designation],
+                    ['project_id', '=', $project_id],
+                    ['designation', '=', $designation],
                 ])->first();
             
                 if ($record === null) {
@@ -114,8 +117,7 @@ class ProjectService implements ProjectServiceContract
                     $requirement->designation = $designation;
                     $requirement->total_requirement = $needed[$index];
                     $requirement->save();
-                }
-                else {
+                } else {
                     $record->total_requirement = $needed[$index];
                     $record->save();
                 }
@@ -176,7 +178,6 @@ class ProjectService implements ProjectServiceContract
 
     public function getResourceRequirement()
     {
-        
     }
 
     public function updateProjectData($data, $project)

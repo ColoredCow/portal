@@ -6,7 +6,6 @@ use Illuminate\Routing\Controller;
 use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
 use Modules\Project\Rules\ProjectNameExist;
-use Modules\Project\Entities\ProjectResourceRequirement;
 use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Contracts\ProjectServiceContract;
@@ -52,6 +51,7 @@ class ProjectController extends Controller
     {
         $validated = $request->validated();
         $this->service->store($validated, $request);
+        
         
         return redirect(route('project.index'))->with('success', 'Project has been created successfully!');
     }
