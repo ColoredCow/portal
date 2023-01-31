@@ -46,7 +46,7 @@ class CodeTrekController extends Controller
         $applicant->graduation_year = $request['graduation_year'];
         $applicant->university = $request['university_name'];
         $applicant->save();
-      
+
         return redirect()->route('codetrek.index')
                          ->with('success', 'Applicant Added successfully');
     }
