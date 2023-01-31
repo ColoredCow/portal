@@ -5,14 +5,15 @@ namespace Modules\CodeTrek\Services;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 
 
+
 class CodeTrekService 
 {
     
-function getCodeTrekApplicants()
-{
-    $applicants = CodeTrekApplicant::all();
+    public function getCodeTrekApplicants()
+    {
+        $applicants = CodeTrekApplicant::all();
 
-    return ['applicants'=> $applicants];
-}
+        return ['applicants'=> $applicants];
+    }
 
 }

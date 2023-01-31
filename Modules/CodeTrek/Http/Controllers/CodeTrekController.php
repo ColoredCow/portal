@@ -19,7 +19,6 @@ class CodeTrekController extends Controller
      */
     public function index()
     {
-       
         return view('codetrek::index', $this->service->getCodeTrekApplicants(request()->all()));
     }
 
@@ -36,22 +35,21 @@ class CodeTrekController extends Controller
     public function store(Request $request)
     {
         $applicant = new CodeTrekApplicant();
-
+    
         $applicant->first_name = $request['first_name'];
-        $applicant->last_name=$request['last_name'];
+        $applicant->last_name = $request['last_name'];
         $applicant->email = $request['email_id'];
-        $applicant->phone=$request['phone'];
-        $applicant->github_user_name=$request['github_username'];
-        $applicant->course=$request['course'];
-        $applicant->start_date=$request['start_date'];
-        $applicant->graduation_year=$request['graduation_year'];
-        $applicant->university=$request['university_name'];
+        $applicant->phone = $request['phone'];
+        $applicant->github_user_name = $request['github_username'];
+        $applicant->course = $request['course'];
+        $applicant->start_date = $request['start_date'];
+        $applicant->graduation_year = $request['graduation_year'];
+        $applicant->university = $request['university_name'];
         $applicant->save();
-
+    
         return redirect()->route('codetrek.index')
-                         ->with('success','Applicant Added successfully');
+                         ->with('success', 'Applicant Added successfully');
     }
-
     /**
      * Show the specified resource.
      */
