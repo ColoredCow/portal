@@ -2,7 +2,6 @@
 
 namespace Modules\Project\Services;
 
-
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Arr;
@@ -99,9 +98,9 @@ class ProjectService implements ProjectServiceContract
         if (isset($request['designation'])) {
             $designations = $request['designation'];
             $needed = $request['needed'];
-            
+
             if (isset($request['project_id'])) {
-                $project_id = $request->input('project_id');
+                $project_id = $request['project_id'];
             }
 
             $index = 0;
