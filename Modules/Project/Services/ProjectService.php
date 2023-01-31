@@ -109,7 +109,7 @@ class ProjectService implements ProjectServiceContract
                     ['project_id', '=', $project_id],
                     ['designation', '=', $designation],
                 ])->first();
-            
+
                 if ($record === null) {
                     $requirement = new ProjectResourceRequirement();
                     $requirement->project_id = $project_id;
