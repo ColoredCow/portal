@@ -42,7 +42,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <td>No applicant found</td>
+                    <tr>
+                        <td>
+                            @foreach ($applicants as $applicant )
+                                {{$applicant->first_name}}
+                                {{$applicant->last_name}}
+                                <br><br>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($applicants as $applicant )
+                             -
+                            <br><br>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($applicants as $applicant )
+                                {{$applicant->status}}
+                                <br><br>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($applicants as $applicant )
+                             -
+                            <br><br>
+                            @endforeach
+                        </td>
+                    </tr> 
                 </tbody>
             </table>
         </div>

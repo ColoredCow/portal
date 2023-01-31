@@ -1,5 +1,11 @@
 @section('popup',' Add new applicant')
-
+<div>
+    @if (Session::has('success'))
+    <div class="alert alert-success">
+        {{Session::get('success')}}
+    </div>
+    @endif
+</div>
 <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#photoGallery">
     <a><i class="fa fa-plus"></i>@yield('popup')</a>
 </button>
@@ -7,7 +13,8 @@
     <div class="modal fade" id="photoGallery" tabindex="-1" role="dialog" aria-labelledby="photoGalleryLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
-                <form action="" method="POST" >
+                <form action="{{route('codetrek.store')}}" method="POST" >
+                    @csrf
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel"><strong>Add new applicant</strong></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -72,7 +79,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="button" class="btn btn-primary" id="save-btn-action">Create</button>
+                        <button type="submit" class="btn btn-primary" id="save-btn-action">Create</button>
                     </div>
                 </form>
             </div>
