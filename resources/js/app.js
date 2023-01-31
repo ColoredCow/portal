@@ -2079,5 +2079,3 @@ $("#responseModal").on("submit",function(e){
 		},
 	});
 });
-
-
