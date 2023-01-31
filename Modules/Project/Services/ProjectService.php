@@ -363,7 +363,7 @@ class ProjectService implements ProjectServiceContract
     public function getMailDetailsForZeroExpectedHours()
     {
         $zeroEffortProjectsIds = ProjectTeamMember::where('daily_expected_effort', 0)->pluck('project_id');
-        $projectsWithZeroEffort = Project::with(['teamMembers'])->whereIn('id', $zeroEffortProjectsIds)->get();
+        $projectsWithZeroEffort = Project::with(['teamMembers'])->whereIn('id', $zeroEffortProjectsIds)->where('status', 'active')->get();
         $projectDetails = [];
         foreach ($projectsWithZeroEffort as $project) {
             foreach ($project->teamMembers as $teamMember) {
