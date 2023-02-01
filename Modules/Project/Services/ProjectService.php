@@ -56,7 +56,7 @@ class ProjectService implements ProjectServiceContract
         return $this->getClients();
     }
 
-    public function store($data, $request)
+    public function store($data)
     {
         $project = null;
         $project_id = null;
@@ -95,12 +95,12 @@ class ProjectService implements ProjectServiceContract
             $this->saveOrUpdateProjectContract($data, $project);
         }
 
-        if (isset($request['designation'])) {
-            $designations = $request['designation'];
-            $needed = $request['needed'];
+        if (isset($data['designation'])) {
+            $designations = $data['designation'];
+            $needed = $data['needed'];
 
-            if (isset($request['project_id'])) {
-                $project_id = $request['project_id'];
+            if (isset($data['project_id'])) {
+                $project_id = $data['project_id'];
             }
 
             $index = 0;
@@ -175,8 +175,9 @@ class ProjectService implements ProjectServiceContract
         return $project->repositories;
     }
 
-    public function getResourceRequirement()
+    public function getResourceRequirement(Project $project)
     {
+        return $project->resourceRequirement;
     }
 
     public function updateProjectData($data, $project)

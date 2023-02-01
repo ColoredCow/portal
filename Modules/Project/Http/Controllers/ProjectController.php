@@ -49,8 +49,8 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
-        $validated = $request->validated();
-        $this->service->store($validated, $request);
+        $data = $request->all();
+        $this->service->store($data);
 
         return redirect(route('project.index'))->with('success', 'Project has been created successfully!');
     }
@@ -116,7 +116,7 @@ class ProjectController extends Controller
             'projectRepositories' => $this->service->getProjectRepositories($project),
             'designations' => $this->service->getDesignations(),
             'workingDaysInMonth' => $this->service->getWorkingDays($project),
-            'resourceRequirement' => $this->service->getResourceRequirement(),
+            'resourceRequirement' => $this->service->getResourceRequirement($project),
         ]);
     }
 

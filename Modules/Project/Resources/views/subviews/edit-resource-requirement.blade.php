@@ -23,8 +23,8 @@
                               <tr>
                                 <td><input type="text" name="designation[]" class="form-control" value="{{ $designation }}" readonly></td>
                                 <td><input type="text" name="needed[]" class="form-control"></td>
-                                <td><input type="text" name="deployed" class="form-control"></td>
-                                <td><input type="text" name="to-be-deployed" class="form-control"></td>
+                                <td><input type="text" name="deployed" class="form-control" disabled></td>
+                                <td><input type="text" name="to-be-deployed" class="form-control" disabled></td>
                               </tr>
                               @endforeach
                             </tbody>
