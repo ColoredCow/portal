@@ -25,7 +25,7 @@ class ProjectService implements ProjectServiceContract
         $filters = [
             'status' => $data['status'] ?? 'active',
             'is_amc' => $data['is_amc'] ?? 0,
-            'tags' => Project::where('is_amc', 1)->get() !== [] ? "is_amc" : null,
+            'tags' => 'get_renewed',
         ];
         
         if ($nameFilter = $data['name'] ?? false) {
@@ -35,10 +35,7 @@ class ProjectService implements ProjectServiceContract
         $showAllProjects = Arr::get($data, 'projects', 'my-projects') != 'my-projects';
         
         $memberId = Auth::id();
-        $tags = function ($query) use ($filters, $showAllProjects, $memberId) {
-            $query->applyFilter($filters);
-        };  
-
+       
         $projectClauseClosure = function ($query) use ($filters, $showAllProjects, $memberId) {
             $query->applyFilter($filters);
             $showAllProjects ? $query : $query->linkedToTeamMember($memberId);
@@ -53,7 +50,7 @@ class ProjectService implements ProjectServiceContract
 
         $tabCounts = $this->getListTabCounts($filters, $showAllProjects, $memberId);
 
-        return array_merge(['clients' => $projectsData, 'tags' => $tags], $tabCounts);
+        return array_merge(['clients' => $projectsData], $tabCounts);
     }
 
     public function create()
@@ -61,8 +58,9 @@ class ProjectService implements ProjectServiceContract
         return $this->getClients();
     }
 
-    public function store($data)
+    public function store($data, Project $project)
     {
+        $project->test($project);
         $project = Project::create([
             'name' => $data['name'],
             'client_id' => $data['client_id'],
@@ -171,6 +169,7 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectDetails($data, $project)
     {
+        $project->getRenewed($project);
         $isProjectUpdated = $project->update([
             'name' => $data['name'],
             'client_id' => $data['client_id'],

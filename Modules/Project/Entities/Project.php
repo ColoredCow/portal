@@ -39,9 +39,10 @@ class Project extends Model implements Auditable
         $this->tag($slug, false);
     }
 
-    public function test($project) {
-        $project->tag('get_renewed');
-        $project = $this->project;
+    public function getRenewed($project) {
+        // dd("hello");
+        $project->tag('get-renewed');
+        
     }
     
 

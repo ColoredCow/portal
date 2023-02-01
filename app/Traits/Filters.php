@@ -32,7 +32,7 @@ trait Filters
                     $query->isAMC($value);
                     break;
                 case 'tags':
-                    $query->filterByTags($value);
+                    $query->untag($value);
                     break;
             }
         }
