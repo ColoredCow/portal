@@ -17,6 +17,7 @@ use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\User\Entities\User;
 use Modules\Project\Entities\ProjectResourceRequirement;
+use Illuminate\Support\str;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -99,21 +100,32 @@ class ProjectService implements ProjectServiceContract
             $designations = $data['designation'];
             $needed = $data['needed'];
 
+            $designationMap = [
+                'Project Manager' => 'project_manager',
+                'Developer' => 'developer',
+                'Designer' => 'designer',
+                'Tester(QA)' => 'tester',
+                'Solution Architect' => 'solution_architect',
+                'Customer Support' => 'customer_support',
+                'Consultant' => 'consultant',
+            ];
+
             if (isset($data['project_id'])) {
                 $project_id = $data['project_id'];
             }
 
             $index = 0;
             foreach ($designations as $designation) {
+                $key = $designationMap[$designation] ?? $designation;
                 $record = ProjectResourceRequirement::where([
                     ['project_id', '=', $project_id],
-                    ['designation', '=', $designation],
+                    ['designation', '=', $key],
                 ])->first();
 
                 if ($record === null) {
                     $requirement = new ProjectResourceRequirement();
                     $requirement->project_id = $project_id;
-                    $requirement->designation = $designation;
+                    $requirement->designation = $key;
                     $requirement->total_requirement = $needed[$index];
                     $requirement->save();
                 } else {
