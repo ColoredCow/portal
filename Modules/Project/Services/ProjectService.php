@@ -17,7 +17,6 @@ use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\User\Entities\User;
 use Modules\Project\Entities\ProjectResourceRequirement;
-use Illuminate\Support\str;
 
 class ProjectService implements ProjectServiceContract
 {
