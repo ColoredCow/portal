@@ -124,7 +124,11 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
-        return view('invoice::edit', $this->service->edit($invoice));
+    $data = $this->service->edit($invoice);
+    $invoiceValue = $data['invoiceValue'];
+
+    return view('invoice::edit', $this->service->edit($invoice))
+        ->with(compact('invoiceValue'));
     }
 
     /**

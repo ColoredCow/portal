@@ -24,6 +24,7 @@ use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Project\Entities\Project;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
 use Modules\Invoice\Entities\LedgerAccount;
+use App\Models\RemainingInvoiceDetails;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -163,34 +164,72 @@ class InvoiceService implements InvoiceServiceContract
 
     public function update($data, $invoice)
     {
+        $this->updateOrCreateInvoiceRemainingDetails($data,$invoice);
         $invoice->update($data);
         if (isset($data['send_mail'])) {
-            $emailData = $this->getSendEmailData($data, $invoice);
-            Mail::queue(new SendPaymentReceivedMail($invoice, $emailData));
-            $invoice->update([
-                'payment_confirmation_mail_sent' => true
-            ]);
+           $emailData = $this->getSendEmailData($data, $invoice);
+           Mail::queue(new SendPaymentReceivedMail($invoice, $emailData));
+           $invoice->update([
+              'payment_confirmation_mail_sent' => true
+           ]);
         }
         if (isset($data['invoice_file']) and $data['invoice_file']) {
-            $this->saveInvoiceFile($invoice, $data['invoice_file']);
-            $this->setInvoiceNumber($invoice, $data['sent_on']);
+           $this->saveInvoiceFile($invoice, $data['invoice_file']);
+           $this->setInvoiceNumber($invoice, $data['sent_on']);
         }
-
         return $invoice;
     }
 
     public function edit($invoice)
     {
+        $invoiceValue = $this->getUpdatedAmountForRemainingInvoice($invoice);
         $emailData = $this->getPaymentReceivedEmailForInvoice($invoice);
 
+    return [
+        'invoice' => $invoice,
+        'clients' => $this->getClientsForInvoice(),
+        'countries' => Country::all(),
+        'paymentReceivedEmailSubject' => $emailData['subject'],
+        'paymentReceivedEmailBody' => $emailData['body'],
+        'currencyService' => $this->currencyService(),
+        'invoiceValue' => $invoiceValue,
+    ];
+    }
+
+    public function getUpdatedAmountForRemainingInvoice($invoice)
+    {
+        $symbol = "";
+        if ($invoice->remainingInvoiceDetails) {
+            switch (true) {
+                case (strpos($invoice->display_amount, '$') !== false):
+                    $updatedAmount = (int) str_replace("$", "", $invoice->display_amount) - $invoice->remainingInvoiceDetails->amount_paid_till_now;
+                    $symbol = "$";
+                    break;
+                case (strpos($invoice->display_amount, '₹') !== false):
+                    $updatedAmount = (int) str_replace(" ₹", "", $invoice->display_amount) - $invoice->remainingInvoiceDetails->amount_paid_till_now;
+                    $symbol = "₹";
+                    break;
+            }
+        } else {
+            $updatedAmount = 0;
+        }
+
+        $showMailOption = ($updatedAmount !== 0) || ($invoice->payment_confirmation_mail_sent === 0);
         return [
-            'invoice' => $invoice,
-            'clients' => $this->getClientsForInvoice(),
-            'countries' => Country::all(),
-            'paymentReceivedEmailSubject' => $emailData['subject'],
-            'paymentReceivedEmailBody' => $emailData['body'],
-            'currencyService' => $this->currencyService(),
-        ];
+            'updatedAmount' => $updatedAmount,
+            'symbol' => $symbol,
+            'showMailOption' => $showMailOption
+        ]; 
+    }
+
+    public function updateOrCreateInvoiceRemainingDetails($data,$invoice)
+    {
+       $updatedAmount= ($invoice->remaininginvoicedetails) ? ($data['amount_paid'] + $invoice->remaininginvoicedetails->amount_paid_till_now) : 0;
+        RemainingInvoiceDetails::updateOrCreate(
+            ['invoice_id' => $invoice->id],
+            ['amount_paid_till_now' => $updatedAmount,
+             'last_amount_paid_on' => $data['receivable_date']]
+        );
     }
 
     public function getPaymentReceivedEmailForInvoice(Invoice $invoice)

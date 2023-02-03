@@ -7,6 +7,7 @@ use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use App\Models\RemainingInvoiceDetails;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
@@ -231,5 +232,10 @@ class Invoice extends Model implements Auditable
         }
 
         return $term;
+    }
+
+    public function remainingInvoiceDetails()
+    {
+            return $this->hasOne(RemainingInvoiceDetails::class, 'invoice_id', 'id');
     }
 }

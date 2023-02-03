@@ -50,6 +50,15 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <div class="d-flex">
+                        <label for="client_id" class="mr-5">Remaining Amount:</label>
+                        <span>   
+                        <p>{{$invoiceValue['updatedAmount']. ' ' .$invoiceValue['symbol'] }}</p>
+                        </span>
+                    </div>
+                </div>
+
                 <div class="form-group" v-if="this.client.type == 'indian'">
                     <div class="d-flex">
                         <label for="client_id" class="mr-5">GST:</label>
@@ -161,7 +170,7 @@
                 </div>
             </div>
             <div v-if="status == 'paid'">
-                @if($invoice->payment_confirmation_mail_sent === 0)
+                @if($invoiceValue['showMailOption'])
                     <input type="checkbox" id="showEmail" class="ml-auto" name="send_mail">
                     <label for="showEmail" class="mx-1 pt-1">{{ __('Send Confirmation Mail') }}</label>
                     <i class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal" data-target="#paymentReceived"></i>
@@ -175,7 +184,6 @@
                     </label>
                 @endif
             </div> 
-        </div>
         <div>
             @include('invoice::modals.payment-received')
         </div>
