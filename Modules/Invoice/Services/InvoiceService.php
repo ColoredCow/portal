@@ -177,6 +177,7 @@ class InvoiceService implements InvoiceServiceContract
             $this->saveInvoiceFile($invoice, $data['invoice_file']);
             $this->setInvoiceNumber($invoice, $data['sent_on']);
         }
+
         return $invoice;
     }
 
@@ -198,16 +199,17 @@ class InvoiceService implements InvoiceServiceContract
 
     public function getUpdatedAmountForRemainingInvoice($invoice)
     {
-        $symbol = "";
+        $symbol = '';
+        $updatedAmount = 0;
         if ($invoice->remainingInvoiceDetails) {
             switch (true) {
-                case (strpos($invoice->display_amount, '$') !== false):
-                    $updatedAmount = (int) str_replace("$", "", $invoice->display_amount) - $invoice->remainingInvoiceDetails->amount_paid_till_now;
-                    $symbol = "$";
+                case strpos($invoice->display_amount, '$') !== false:
+                    $updatedAmount = (int) str_replace('$', '', $invoice->display_amount) - $invoice->remainingInvoiceDetails->amount_paid_till_now;
+                    $symbol = '$';
                     break;
-                case (strpos($invoice->display_amount, '₹') !== false):
-                    $updatedAmount = (int) str_replace(" ₹", "", $invoice->display_amount) - $invoice->remainingInvoiceDetails->amount_paid_till_now;
-                    $symbol = "₹";
+                case strpos($invoice->display_amount, '₹') !== false:
+                    $updatedAmount = (int) str_replace(' ₹', '', $invoice->display_amount) - $invoice->remainingInvoiceDetails->amount_paid_till_now;
+                    $symbol = '₹';
                     break;
             }
         } else {
@@ -215,16 +217,17 @@ class InvoiceService implements InvoiceServiceContract
         }
 
         $showMailOption = ($updatedAmount !== 0) || ($invoice->payment_confirmation_mail_sent === 0);
+
         return [
             'updatedAmount' => $updatedAmount,
             'symbol' => $symbol,
             'showMailOption' => $showMailOption
-        ]; 
+        ];
     }
 
     public function updateOrCreateInvoiceRemainingDetails($data, $invoice)
     {
-        $updatedAmount= ($invoice->remaininginvoicedetails) ? ($data['amount_paid'] + $invoice->remaininginvoicedetails->amount_paid_till_now) : 0;
+        $updatedAmount = ($invoice->remaininginvoicedetails) ? ($data['amount_paid'] + $invoice->remaininginvoicedetails->amount_paid_till_now) : 0;
         RemainingInvoiceDetails::updateOrCreate(
             ['invoice_id' => $invoice->id],
             ['amount_paid_till_now' => $updatedAmount,

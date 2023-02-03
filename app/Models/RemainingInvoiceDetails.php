@@ -11,5 +11,4 @@ class RemainingInvoiceDetails extends Model
     use HasFactory;
 
     protected $fillable = ['invoice_id', 'amount_paid_till_now', 'last_amount_paid_on'];
-
 }
