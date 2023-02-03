@@ -227,7 +227,7 @@ class InvoiceService implements InvoiceServiceContract
 
     public function updateOrCreateInvoiceRemainingDetails($data, $invoice)
     {
-        $updatedAmount = ($invoice->remaininginvoicedetails) ? ($data['amount_paid'] + $invoice->remaininginvoicedetails->amount_paid_till_now) : 0;
+        $updatedAmount = ($invoice->remaininginvoicedetails) ? ($data['amount_paid'] + $invoice->remaininginvoicedetails->amount_paid_till_now) : $data['amount_paid'];
         RemainingInvoiceDetails::updateOrCreate(
             ['invoice_id' => $invoice->id],
             ['amount_paid_till_now' => $updatedAmount,
