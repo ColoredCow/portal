@@ -170,8 +170,8 @@ class InvoiceService implements InvoiceServiceContract
             $emailData = $this->getSendEmailData($data, $invoice);
             Mail::queue(new SendPaymentReceivedMail($invoice, $emailData));
             $invoice->update([
-              'payment_confirmation_mail_sent' => true
-           ]);
+            'payment_confirmation_mail_sent' => true
+        ]);
         }
         if (isset($data['invoice_file']) and $data['invoice_file']) {
             $this->saveInvoiceFile($invoice, $data['invoice_file']);
@@ -187,13 +187,13 @@ class InvoiceService implements InvoiceServiceContract
         $emailData = $this->getPaymentReceivedEmailForInvoice($invoice);
 
         return [
-        'invoice' => $invoice,
-        'clients' => $this->getClientsForInvoice(),
-        'countries' => Country::all(),
-        'paymentReceivedEmailSubject' => $emailData['subject'],
-        'paymentReceivedEmailBody' => $emailData['body'],
-        'currencyService' => $this->currencyService(),
-        'invoiceValue' => $invoiceValue,
+            'invoice' => $invoice,
+            'clients' => $this->getClientsForInvoice(),
+            'countries' => Country::all(),
+            'paymentReceivedEmailSubject' => $emailData['subject'],
+            'paymentReceivedEmailBody' => $emailData['body'],
+            'currencyService' => $this->currencyService(),
+            'invoiceValue' => $invoiceValue,
         ];
     }
 

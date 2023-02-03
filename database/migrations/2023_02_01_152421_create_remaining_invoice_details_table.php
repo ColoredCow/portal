@@ -19,7 +19,7 @@ class CreateRemainingInvoiceDetailsTable extends Migration
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->text('amount_paid_till_now')->nullable();
             $table->date('last_amount_paid_on')->nullable();
-            $table->timestamps(); 
+            $table->timestamps();
         });
     }
 
