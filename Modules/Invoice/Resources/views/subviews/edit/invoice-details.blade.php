@@ -54,7 +54,7 @@
                     <div class="d-flex">
                         <label for="client_id" class="mr-5">Remaining Amount:</label>
                         <span>   
-                        <p>{{$invoiceValue['updatedAmount']. ' ' .$invoiceValue['symbol'] }}</p>
+                        <p>{{$invoiceValue['updatedRemainingAmount']. ' ' .$invoiceValue['symbol'] }}</p>
                         </span>
                     </div>
                 </div>

@@ -200,26 +200,26 @@ class InvoiceService implements InvoiceServiceContract
     public function getUpdatedAmountForRemainingInvoice($invoice)
     {
         $symbol = '';
-        $updatedAmount = 0;
+        $updatedRemainingAmount = 0;
         if ($invoice->remainingInvoiceDetails) {
             switch (true) {
                 case strpos($invoice->display_amount, '$') !== false:
-                    $updatedAmount = (int) str_replace('$', '', $invoice->display_amount) - $invoice->remainingInvoiceDetails->amount_paid_till_now;
+                    $updatedRemainingAmount = (int) str_replace('$', '', $invoice->display_amount) - $invoice->remainingInvoiceDetails->amount_paid_till_now;
                     $symbol = '$';
                     break;
                 case strpos($invoice->display_amount, '₹') !== false:
-                    $updatedAmount = (int) str_replace(' ₹', '', $invoice->display_amount) - $invoice->remainingInvoiceDetails->amount_paid_till_now;
+                    $updatedRemainingAmount = (int) str_replace(' ₹', '', $invoice->display_amount) - $invoice->remainingInvoiceDetails->amount_paid_till_now;
                     $symbol = '₹';
                     break;
             }
         } else {
-            $updatedAmount = 0;
+            $updatedRemainingAmount = 0;
         }
 
-        $showMailOption = ($updatedAmount !== 0) || ($invoice->payment_confirmation_mail_sent === 0);
+        $showMailOption = ($updatedRemainingAmount !== 0) || ($invoice->payment_confirmation_mail_sent === 0);
 
         return [
-            'updatedAmount' => $updatedAmount,
+            'updatedRemainingAmount' => $updatedRemainingAmount,
             'symbol' => $symbol,
             'showMailOption' => $showMailOption
         ];
