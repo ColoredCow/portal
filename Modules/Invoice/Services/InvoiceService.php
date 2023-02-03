@@ -164,18 +164,18 @@ class InvoiceService implements InvoiceServiceContract
 
     public function update($data, $invoice)
     {
-        $this->updateOrCreateInvoiceRemainingDetails($data,$invoice);
+        $this->updateOrCreateInvoiceRemainingDetails($data, $invoice);
         $invoice->update($data);
         if (isset($data['send_mail'])) {
-           $emailData = $this->getSendEmailData($data, $invoice);
-           Mail::queue(new SendPaymentReceivedMail($invoice, $emailData));
-           $invoice->update([
+            $emailData = $this->getSendEmailData($data, $invoice);
+            Mail::queue(new SendPaymentReceivedMail($invoice, $emailData));
+            $invoice->update([
               'payment_confirmation_mail_sent' => true
            ]);
         }
         if (isset($data['invoice_file']) and $data['invoice_file']) {
-           $this->saveInvoiceFile($invoice, $data['invoice_file']);
-           $this->setInvoiceNumber($invoice, $data['sent_on']);
+            $this->saveInvoiceFile($invoice, $data['invoice_file']);
+            $this->setInvoiceNumber($invoice, $data['sent_on']);
         }
         return $invoice;
     }
@@ -185,7 +185,7 @@ class InvoiceService implements InvoiceServiceContract
         $invoiceValue = $this->getUpdatedAmountForRemainingInvoice($invoice);
         $emailData = $this->getPaymentReceivedEmailForInvoice($invoice);
 
-    return [
+        return [
         'invoice' => $invoice,
         'clients' => $this->getClientsForInvoice(),
         'countries' => Country::all(),
@@ -193,7 +193,7 @@ class InvoiceService implements InvoiceServiceContract
         'paymentReceivedEmailBody' => $emailData['body'],
         'currencyService' => $this->currencyService(),
         'invoiceValue' => $invoiceValue,
-    ];
+        ];
     }
 
     public function getUpdatedAmountForRemainingInvoice($invoice)
@@ -222,9 +222,9 @@ class InvoiceService implements InvoiceServiceContract
         ]; 
     }
 
-    public function updateOrCreateInvoiceRemainingDetails($data,$invoice)
+    public function updateOrCreateInvoiceRemainingDetails($data, $invoice)
     {
-       $updatedAmount= ($invoice->remaininginvoicedetails) ? ($data['amount_paid'] + $invoice->remaininginvoicedetails->amount_paid_till_now) : 0;
+        $updatedAmount= ($invoice->remaininginvoicedetails) ? ($data['amount_paid'] + $invoice->remaininginvoicedetails->amount_paid_till_now) : 0;
         RemainingInvoiceDetails::updateOrCreate(
             ['invoice_id' => $invoice->id],
             ['amount_paid_till_now' => $updatedAmount,

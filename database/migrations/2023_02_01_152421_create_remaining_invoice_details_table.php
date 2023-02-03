@@ -20,7 +20,6 @@ class CreateRemainingInvoiceDetailsTable extends Migration
             $table->text('amount_paid_till_now')->nullable();
             $table->date('last_amount_paid_on')->nullable();
             $table->timestamps(); 
-
         });
     }
 

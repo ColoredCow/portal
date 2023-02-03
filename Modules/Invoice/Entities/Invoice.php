@@ -236,6 +236,6 @@ class Invoice extends Model implements Auditable
 
     public function remainingInvoiceDetails()
     {
-            return $this->hasOne(RemainingInvoiceDetails::class, 'invoice_id', 'id');
+        return $this->hasOne(RemainingInvoiceDetails::class, 'invoice_id', 'id');
     }
 }
