@@ -10,6 +10,7 @@ use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Modules\Project\Entities\ProjectResourceRequirement;
 
 class ProjectController extends Controller
 {
@@ -108,6 +109,17 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $requirements = ProjectResourceRequirement::where('project_id', $project->id)->get();
+        $designations = [
+            'Project Manager',
+            'Developer',
+            'Designer',
+            'Tester(QA)',
+            'Solution Architect',
+            'Customer Support',
+            'Consultant'
+          ];
+
         return view('project::edit', [
             'project' => $project,
             'clients' => Client::orderBy('name')->get(),
@@ -117,6 +129,8 @@ class ProjectController extends Controller
             'designations' => $this->service->getDesignations(),
             'workingDaysInMonth' => $this->service->getWorkingDays($project),
             'resourceRequirement' => $this->service->getResourceRequirement($project),
+            'requirements' => $requirements,
+            'designations' => $designations,
         ]);
     }
 

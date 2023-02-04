@@ -121,6 +121,10 @@ class ProjectService implements ProjectServiceContract
                     ['designation', '=', $key],
                 ])->first();
 
+                if (empty($needed[$index])) {
+                    $needed[$index] = 0;
+                  }
+
                 if ($record === null) {
                     $requirement = new ProjectResourceRequirement();
                     $requirement->project_id = $project_id;
