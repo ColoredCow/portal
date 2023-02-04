@@ -1,11 +1,5 @@
 @section('popup',' Add new applicant')
-<div>
-    @if (Session::has('success'))
-    <div class="alert alert-success">
-        {{Session::get('success')}}
-    </div>
-    @endif
-</div>
+
 <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#photoGallery">
     <a><i class="fa fa-plus"></i>@yield('popup')</a>
 </button>
@@ -13,7 +7,7 @@
     <div class="modal fade" id="photoGallery" tabindex="-1" role="dialog" aria-labelledby="photoGalleryLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
-                <form action="{{route('codetrek.store')}}" method="POST" >
+                <form action="{{route('codetrek.store')}}" method="POST" id='applicant_form' enctype="multipart/form-data">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel"><strong>Add new applicant</strong></h5>
@@ -54,18 +48,18 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-5">
-                                 <label for="university" class="field-required">Enter University</label>
-                                 <input type="text" class="form-control" name="university_name" id="universityName" placeholder="Enter University" required="required" value="">
+                                 <label for="university" >Enter University</label>
+                                 <input type="text" class="form-control" name="university_name" id="universityName" placeholder="Enter University"  value="">
                             </div>
                             <div class="form-group offset-md-1 col-md-5">
-                                 <label for="course" class="field-required">Course</label>
-                                 <input type="text" class="form-control" name="course" id="courseName" placeholder="Enter course name" required="required" value="">
+                                 <label for="course" >Course</label>
+                                 <input type="text" class="form-control" name="course" id="courseName" placeholder="Enter course name" value="">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-5">
-                                <label for="graduation" class="field-required">Graduation Year</label>
-                                <select v-model="graduationyear" name="graduation_year" id="graduationYear" class="form-control" required>
+                                <label for="graduation" >Graduation Year</label>
+                                <select v-model="graduationyear" name="graduation_year" id="graduationYear" class="form-control" >
                                     <option value="">Select Graduation Year</option>
                                     @php
                                         $currentYear = date('Y');
@@ -79,10 +73,10 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary" id="save-btn-action">Create</button>
+                        <button type="submit" class="btn btn-primary save-btn" v-on:click="submitForm('applicant_form')" >Create</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-</div>
+ </div>
