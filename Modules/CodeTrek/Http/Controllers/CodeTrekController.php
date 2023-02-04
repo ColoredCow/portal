@@ -47,7 +47,7 @@ class CodeTrekController extends Controller
         $applicant->university = $request['university_name'];
         $applicant->save();
 
-        return redirect() ->route('codetrek.index');
+        return redirect()->route('codetrek.index');
     }
     /**
      * Show the specified resource.
