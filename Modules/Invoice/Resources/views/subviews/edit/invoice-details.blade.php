@@ -222,8 +222,9 @@
         },
 
         remainingPayment(){
-            this.remainingAmount=  (this.amountPaid) ? (parseInt(this.totalProjectAmount)-(parseInt(this.amountPaid)+parseInt(this.previousAmount))) : this.remainingAmount;
+            this.remainingAmount = (this.amountPaid) ?  (parseFloat(this.totalProjectAmount) - (parseFloat(this.amountPaid) + parseFloat(this.previousAmount))).toFixed(2) : parseFloat(this.remainingAmount).toFixed(2);
         },
+
         calculateTaxes() {
             if(this.client.type == 'indian') {
                 this.updateTds()
