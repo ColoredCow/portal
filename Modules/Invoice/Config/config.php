@@ -5,6 +5,7 @@ return [
     'status' => [
         'sent' => 'Sent',
         'paid' => 'Paid',
+        'partially' => 'Partially Paid',
         'pending' => 'Pending',
         'disputed' => 'Disputed'
     ],

@@ -199,27 +199,22 @@ class InvoiceService implements InvoiceServiceContract
 
     public function getUpdatedAmountForRemainingInvoice($invoice)
     {
+        $remainingAmount = 0;
         $symbol = '';
-        $updatedRemainingAmount = 0;
+        $lastPaymentAmount = 0;
         if ($invoice->remainingInvoiceDetails) {
-            switch (true) {
-                case strpos($invoice->display_amount, '$') !== false:
-                    $updatedRemainingAmount = (int) str_replace('$', '', $invoice->display_amount) - $invoice->remainingInvoiceDetails->amount_paid_till_now;
-                    $symbol = '$';
-                    break;
-                case strpos($invoice->display_amount, '₹') !== false:
-                    $updatedRemainingAmount = (int) str_replace(' ₹', '', $invoice->display_amount) - $invoice->remainingInvoiceDetails->amount_paid_till_now;
-                    $symbol = '₹';
-                    break;
-            }
-        } else {
-            $updatedRemainingAmount = 0;
+            $lastPaymentAmount =  $invoice->remainingInvoiceDetails->amount_paid_till_now;  
+            $symbol = (strpos($invoice->display_amount, '$') !== false) ? '$' : ((strpos($invoice->display_amount, '₹') !== false) ? '₹' : '');  
+            $remainingAmount = (int) str_replace(strpos($invoice->display_amount, '$') !== false ? '$' : (strpos($invoice->display_amount, '₹') !== false ? '₹' : ''), '', $invoice->display_amount)- $lastPaymentAmount; 
         }
-
-        $showMailOption = ($updatedRemainingAmount !== 0) || ($invoice->payment_confirmation_mail_sent === 0);
+         else {
+            $lastPaymentAmount = 0;
+        }
+        $showMailOption = ($lastPaymentAmount !== 0) || ($invoice->payment_confirmation_mail_sent === 0);
 
         return [
-            'updatedRemainingAmount' => $updatedRemainingAmount,
+            'lastPaymentAmount' => $lastPaymentAmount,
+            'remainingAmount' => $remainingAmount,
             'symbol' => $symbol,
             'showMailOption' => $showMailOption
         ];

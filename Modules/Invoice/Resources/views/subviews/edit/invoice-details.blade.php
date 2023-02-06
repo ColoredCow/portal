@@ -50,12 +50,12 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" v-if="status == 'partially'">
                     <div class="d-flex">
                         <label for="client_id" class="mr-5">Remaining Amount:</label>
-                        <span>   
-                        <p>{{$invoiceValue['updatedRemainingAmount']. ' ' .$invoiceValue['symbol'] }}</p>
-                        </span>
+                        <span>
+                            <p> @{{remainingAmount}} </p>
+                      </span>
                     </div>
                 </div>
 
@@ -94,7 +94,7 @@
 
             </div>
 
-            <div class="col-md-5 offset-md-1" v-if="status == 'paid'">
+            <div class="col-md-5 offset-md-1" v-if="status === 'partially' || status === 'paid'">
                 <div>
                     <h4><b>Payment Information:</b></h4>
                     <br>
@@ -106,7 +106,7 @@
                         <input v-model="amountPaid" type="number" class="form-control" name="amount_paid" id="amountPaid"
                             placeholder="Amount Received" required="required" step=".01" min="0" v-on:input="changePaidAmountListener">
                             <div class="input-group-prepend">
-                                <select name="currency_transaction_charge" v-model="currencyTransactionCharge" id="currencyTransactionCharge" class="input-group-text" required="required">
+                                <select name="currency_transaction_charge" v-model="currencyTransactionCharge" id=" " class="input-group-text" required="required">
                                 @foreach($countries as $country)
                                     <option value="{{$country->currency}}">{{$country->currency}}</option>
                                 @endforeach
@@ -169,7 +169,7 @@
                     <textarea name="comments" id="comments" rows="5" class="form-control" v-model="comments"></textarea>
                 </div>
             </div>
-            <div v-if="status == 'paid'">
+            <div v-if="status == 'partially' || status == 'paid'">
                 @if($invoiceValue['showMailOption'])
                     <input type="checkbox" id="showEmail" class="ml-auto" name="send_mail">
                     <label for="showEmail" class="mx-1 pt-1">{{ __('Send Confirmation Mail') }}</label>
@@ -217,9 +217,13 @@
             var emailBody = $("#emailBody").text();
             emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
             tinymce.get("emailBody").setContent(emailBody, { format: "html" });
+            this.remainingPayment()
             this.calculateTaxes()
         },
 
+        remainingPayment(){
+            this.remainingAmount=(parseInt(this.amount)-(parseInt(this.amountPaid)+parseInt(this.previousAmount))).toString();
+        },
         calculateTaxes() {
             if(this.client.type == 'indian') {
                 this.updateTds()
@@ -277,7 +281,7 @@
                     }
                     continue;
                 }
-                
+
                 if (index == 0) {
                     this.amountPaid = filtered_number_list[index]
                     $('#amountPaid').val(this.amountPaid)
@@ -317,6 +321,8 @@
             tds: "{{ $invoice->tds }}",
             tdsPercentage: "{{ $invoice->tds_percentage }}",
             show_on_select: true,
+            remainingAmount : "{{$invoiceValue['remainingAmount']}}",
+            previousAmount:"{{$invoiceValue['lastPaymentAmount']}}"
         }
     },
 
