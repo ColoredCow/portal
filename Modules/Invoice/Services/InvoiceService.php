@@ -206,7 +206,7 @@ class InvoiceService implements InvoiceServiceContract
             $lastPaymentAmount = $invoice->remainingInvoiceDetails->amount_paid_till_now;
             $symbol = (strpos($invoice->display_amount, '$') !== false) ? '$' : ((strpos($invoice->display_amount, '₹') !== false) ? '₹' : '');
             $remainingAmount = (int) str_replace(strpos($invoice->display_amount, '$') !== false ? '$' : (strpos($invoice->display_amount, '₹') !== false ? '₹' : ''), '', $invoice->display_amount) - $lastPaymentAmount;
-       } else {
+        } else {
             $lastPaymentAmount = 0;
         }
         $showMailOption = ($lastPaymentAmount !== 0) || ($invoice->payment_confirmation_mail_sent === 0);
@@ -225,7 +225,8 @@ class InvoiceService implements InvoiceServiceContract
         RemainingInvoiceDetails::updateOrCreate(
             ['invoice_id' => $invoice->id],
             ['amount_paid_till_now' => $updatedAmount,
-             'last_amount_paid_on' => $data['receivable_date']]
+             'last_amount_paid_on' => $data['receivable_date']
+            ]
         );
     }
 
