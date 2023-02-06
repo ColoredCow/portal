@@ -203,11 +203,10 @@ class InvoiceService implements InvoiceServiceContract
         $symbol = '';
         $lastPaymentAmount = 0;
         if ($invoice->remainingInvoiceDetails) {
-            $lastPaymentAmount =  $invoice->remainingInvoiceDetails->amount_paid_till_now;  
-            $symbol = (strpos($invoice->display_amount, '$') !== false) ? '$' : ((strpos($invoice->display_amount, '₹') !== false) ? '₹' : '');  
-            $remainingAmount = (int) str_replace(strpos($invoice->display_amount, '$') !== false ? '$' : (strpos($invoice->display_amount, '₹') !== false ? '₹' : ''), '', $invoice->display_amount)- $lastPaymentAmount; 
-        }
-         else {
+            $lastPaymentAmount = $invoice->remainingInvoiceDetails->amount_paid_till_now;
+            $symbol = (strpos($invoice->display_amount, '$') !== false) ? '$' : ((strpos($invoice->display_amount, '₹') !== false) ? '₹' : '');
+            $remainingAmount = (int) str_replace(strpos($invoice->display_amount, '$') !== false ? '$' : (strpos($invoice->display_amount, '₹') !== false ? '₹' : ''), '', $invoice->display_amount) - $lastPaymentAmount;
+       } else {
             $lastPaymentAmount = 0;
         }
         $showMailOption = ($lastPaymentAmount !== 0) || ($invoice->payment_confirmation_mail_sent === 0);
