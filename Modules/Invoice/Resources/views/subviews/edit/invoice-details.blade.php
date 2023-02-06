@@ -222,7 +222,7 @@
         },
 
         remainingPayment(){
-            this.remainingAmount=  (this.amountPaid) ? (parseInt(this.amount)-(parseInt(this.amountPaid)+parseInt(this.previousAmount))) : this.remainingAmount;
+            this.remainingAmount=  (this.amountPaid) ? (parseInt(this.totalProjectAmount)-(parseInt(this.amountPaid)+parseInt(this.previousAmount))) : this.remainingAmount;
         },
         calculateTaxes() {
             if(this.client.type == 'indian') {
@@ -321,7 +321,8 @@
             tdsPercentage: "{{ $invoice->tds_percentage }}",
             show_on_select: true,
             remainingAmount : "{{$invoiceValue['remainingAmount']}}",
-            previousAmount:"{{$invoiceValue['lastPaymentAmount']}}"
+            previousAmount:"{{$invoiceValue['lastPaymentAmount']}}",
+            totalProjectAmount : "{{$invoiceValue['totalProjectAmount']}}",
         }
     },
 

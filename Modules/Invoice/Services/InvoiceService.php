@@ -202,20 +202,22 @@ class InvoiceService implements InvoiceServiceContract
         $remainingAmount = 0;
         $symbol = '';
         $lastPaymentAmount = 0;
+        $symbol = (strpos($invoice->display_amount, '$') !== false) ? '$' : ((strpos($invoice->display_amount, '₹') !== false) ? '₹' : '');
+        $totalProjectAmount = (int) str_replace(strpos($invoice->display_amount, '$') !== false ? '$' : (strpos($invoice->display_amount, '₹') !== false ? '₹' : ''), '', $invoice->display_amount)+$invoice->gst;
         if ($invoice->remainingInvoiceDetails) {
             $lastPaymentAmount = $invoice->remainingInvoiceDetails->amount_paid_till_now;
-            $symbol = (strpos($invoice->display_amount, '$') !== false) ? '$' : ((strpos($invoice->display_amount, '₹') !== false) ? '₹' : '');
-            $remainingAmount = (int) str_replace(strpos($invoice->display_amount, '$') !== false ? '$' : (strpos($invoice->display_amount, '₹') !== false ? '₹' : ''), '', $invoice->display_amount) - $lastPaymentAmount;
+            $remainingAmount = $totalProjectAmount - $lastPaymentAmount;
         } else {
-            $lastPaymentAmount = 0;
+            $remainingAmount = $totalProjectAmount ;
         }
-        $showMailOption = ($lastPaymentAmount !== 0) || ($invoice->payment_confirmation_mail_sent === 0);
+        $showMailOption = ($remainingAmount !== 0.0) || ($invoice->payment_confirmation_mail_sent === 0);
 
         return [
             'lastPaymentAmount' => $lastPaymentAmount,
             'remainingAmount' => $remainingAmount,
             'symbol' => $symbol,
-            'showMailOption' => $showMailOption
+            'showMailOption' => $showMailOption,
+            'totalProjectAmount' => $totalProjectAmount,
         ];
     }
 
