@@ -106,7 +106,7 @@
                         <input v-model="amountPaid" type="number" class="form-control" name="amount_paid" id="amountPaid"
                             placeholder="Amount Received" required="required" step=".01" min="0" v-on:input="changePaidAmountListener">
                             <div class="input-group-prepend">
-                                <select name="currency_transaction_charge" v-model="currencyTransactionCharge" id=" " class="input-group-text" required="required">
+                                <select name="currency_transaction_charge" v-model="currencyTransactionCharge" id="currencyTransactionCharge" class="input-group-text" required="required">
                                 @foreach($countries as $country)
                                     <option value="{{$country->currency}}">{{$country->currency}}</option>
                                 @endforeach
