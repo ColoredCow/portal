@@ -58,11 +58,7 @@ class ProjectService implements ProjectServiceContract
 
     public function store($data)
     {
-        $project = null;
-        $project_id = null;
-
-        if (isset($data['name'])) {
-            $project = Project::create([
+        $project = Project::create([
             'name' => $data['name'],
             'client_id' => $data['client_id'],
             'client_project_id' => $this->getClientProjectID($data['client_id']),
@@ -76,9 +72,8 @@ class ProjectService implements ProjectServiceContract
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
             'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
         ]);
-        }
 
-        if (isset($project) && $data['billing_level'] ?? null) {
+        if ($data['billing_level'] ?? null) {
             ProjectMeta::updateOrCreate(
                 [
                     'key' => config('project.meta_keys.billing_level.key'),
@@ -90,54 +85,8 @@ class ProjectService implements ProjectServiceContract
             );
         }
 
-        if (isset($project)) {
             $project->client->update(['status' => 'active']);
             $this->saveOrUpdateProjectContract($data, $project);
-        }
-
-        if (isset($data['designation'])) {
-            $designations = $data['designation'];
-            $needed = $data['needed'];
-
-            $designationMap = [
-                'Project Manager' => 'project_manager',
-                'Developer' => 'developer',
-                'Designer' => 'designer',
-                'Tester(QA)' => 'tester',
-                'Solution Architect' => 'solution_architect',
-                'Customer Support' => 'customer_support',
-                'Consultant' => 'consultant',
-            ];
-
-            if (isset($data['project_id'])) {
-                $project_id = $data['project_id'];
-            }
-
-            $index = 0;
-            foreach ($designations as $designation) {
-                $key = $designationMap[$designation] ?? $designation;
-                $record = ProjectResourceRequirement::where([
-                    ['project_id', '=', $project_id],
-                    ['designation', '=', $key],
-                ])->first();
-
-                if (empty($needed[$index])) {
-                    $needed[$index] = 0;
-                  }
-
-                if ($record === null) {
-                    $requirement = new ProjectResourceRequirement();
-                    $requirement->project_id = $project_id;
-                    $requirement->designation = $key;
-                    $requirement->total_requirement = $needed[$index];
-                    $requirement->save();
-                } else {
-                    $record->total_requirement = $needed[$index];
-                    $record->save();
-                }
-                $index++;
-            }
-        }
     }
 
     private function getListTabCounts($filters, $showAllProjects, $userId)
@@ -217,6 +166,9 @@ class ProjectService implements ProjectServiceContract
 
             case 'project_techstack':
                 return $this->updateProjectTechstack($data, $project);
+
+            case 'project_resource_requirement':
+                return $this->updateProjectRequirement($data, $project);
         }
     }
 
@@ -338,6 +290,55 @@ class ProjectService implements ProjectServiceContract
                 ]
             );
         }
+    }
+
+    private function updateProjectRequirement($data)
+    {
+        if (isset($data['designation'])) {
+            $designations = $data['designation'];
+            $needed = $data['needed'];
+
+            $designationMap = [
+                'Project Manager' => 'project_manager',
+                'Developer' => 'developer',
+                'Designer' => 'designer',
+                'Tester(QA)' => 'tester',
+                'Solution Architect' => 'solution_architect',
+                'Customer Support' => 'customer_support',
+                'Consultant' => 'consultant',
+            ];
+
+            if (isset($data['project_id'])) {
+                $project_id = $data['project_id'];
+            }
+
+            $index = 0;
+            foreach ($designations as $designation) {
+                $key = $designationMap[$designation] ?? $designation;
+                $record = ProjectResourceRequirement::where([
+                    ['project_id', '=', $project_id],
+                    ['designation', '=', $key],
+                ])->first();
+
+                if (empty($needed[$index])) {
+                    $needed[$index] = 0;
+                  }
+
+                if ($record === null) {
+                    $requirement = new ProjectResourceRequirement();
+                    $requirement->project_id = $project_id;
+                    $requirement->designation = $key;
+                    $requirement->total_requirement = $needed[$index];
+                    $requirement->save();
+                } else {
+                    $record->total_requirement = $needed[$index];
+                    $record->save();
+                }
+                $index++;
+            }
+        }
+
+        return redirect(route('project.index'));
     }
 
     private function getClientProjectID($clientID)
