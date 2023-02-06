@@ -362,6 +362,7 @@ class Project extends Model implements Auditable
     {
         $serviceRate = $this->client->billingDetails->service_rates;
         $clientFrequency = $this->client->billingDetails->billing_frequency;
+
         return $clientFrequency*$serviceRate;
     }
 }
