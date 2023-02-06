@@ -340,7 +340,7 @@ class Project extends Model implements Auditable
         return $this->hasOne(ProjectBillingDetail::class);
     }
 
-    public function  nextBillingDate()
+    public function nextBillingDate()
     {
         $billingDate = $this->client->billingDetails->billing_date;
         $clientFrequency = $this->client->billingDetails->billing_frequency;

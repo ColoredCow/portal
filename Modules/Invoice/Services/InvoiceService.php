@@ -43,9 +43,7 @@ class InvoiceService implements InvoiceServiceContract
             $clientsReadyToSendInvoicesData = [];
             $projectsReadyToSendInvoicesData = [];
             $AMCprojectsReadyToSendInvoicesData=[];
-        }
-        else
-        {
+        } else {
             $invoices = [];
             $clientsReadyToSendInvoicesData = Client::status('active')->invoiceReadyToSend()->orderBy('name')->get();
             $projectsReadyToSendInvoicesData = Project::whereHas('meta', function ($query) {
@@ -53,13 +51,13 @@ class InvoiceService implements InvoiceServiceContract
                 'key' => 'billing_level',
                 'value' => config('project.meta_keys.billing_level.value.project.key')
                 ]);
-                })->where('is_amc', '!=', 1)->status('active')->invoiceReadyToSend()->orderBy('name')->get();
+            })->where('is_amc', '!=', 1)->status('active')->invoiceReadyToSend()->orderBy('name')->get();
             $AMCprojectsReadyToSendInvoicesData = Project::whereHas('meta', function ($query) {
                 return $query->where([
                 'key' => 'billing_level',
                 'value' => config('project.meta_keys.billing_level.value.project.key')
                 ]);
-                })->where('is_amc', 1)->status('active')->invoiceReadyToSend()->orderBy('name')->get();
+            })->where('is_amc', 1)->status('active')->invoiceReadyToSend()->orderBy('name')->get();
         }
 
         return [
