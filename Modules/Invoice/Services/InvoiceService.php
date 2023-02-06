@@ -42,7 +42,7 @@ class InvoiceService implements InvoiceServiceContract
             ->get();
             $clientsReadyToSendInvoicesData = [];
             $projectsReadyToSendInvoicesData = [];
-            $AMCprojectsReadyToSendInvoicesData=[];
+            $AMCprojectsReadyToSendInvoicesData = [];
         } else {
             $invoices = [];
             $clientsReadyToSendInvoicesData = Client::status('active')->invoiceReadyToSend()->orderBy('name')->get();

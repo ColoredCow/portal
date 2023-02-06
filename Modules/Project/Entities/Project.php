@@ -350,9 +350,9 @@ class Project extends Model implements Auditable
         $currentMonth = Carbon::now()->month;
         $formattedDate = Carbon::createFromDate($currentYear, $currentMonth, $billingDate);
         $billingDate = $formattedDate->toDateString(); // this convert date into string
- 
+
         $nextBillingDate = $formattedDate->addMonths($clientFrequency);
-        $nextBillingDate= $nextBillingDate->toDateString();
+        $nextBillingDate = $nextBillingDate->toDateString();
         $nextBillingDate = Carbon::parse($nextBillingDate)->format('d-m-Y'); // this change formate of date
 
         return $nextBillingDate;
@@ -362,7 +362,6 @@ class Project extends Model implements Auditable
     {
         $serviceRate = $this->client->billingDetails->service_rates;
         $clientFrequency = $this->client->billingDetails->billing_frequency;
-
 
         return $clientFrequency*$serviceRate;
     }
