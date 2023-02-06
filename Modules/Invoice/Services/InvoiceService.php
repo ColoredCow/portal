@@ -208,7 +208,7 @@ class InvoiceService implements InvoiceServiceContract
             $lastPaymentAmount = $invoice->remainingInvoiceDetails->amount_paid_till_now;
             $remainingAmount = $totalProjectAmount - $lastPaymentAmount;
         } else {
-            $remainingAmount = $totalProjectAmount ;
+            $remainingAmount = $totalProjectAmount;
         }
         $showMailOption = ($remainingAmount !== 0.0) || ($invoice->payment_confirmation_mail_sent === 0);
 
