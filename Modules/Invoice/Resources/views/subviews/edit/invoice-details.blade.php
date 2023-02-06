@@ -54,7 +54,7 @@
                     <div class="d-flex">
                         <label for="client_id" class="mr-5">Remaining Amount:</label>
                         <span>
-                            <p> @{{remainingAmount}} </p>
+                            <p> @{{remainingAmount}} {{$invoiceValue['symbol']}}</p>
                       </span>
                     </div>
                 </div>
@@ -222,7 +222,7 @@
         },
 
         remainingPayment(){
-            this.remainingAmount=(parseInt(this.amount)-(parseInt(this.amountPaid)+parseInt(this.previousAmount))).toString();
+            this.remainingAmount=  (this.amountPaid) ? (parseInt(this.amount)-(parseInt(this.amountPaid)+parseInt(this.previousAmount))) : this.remainingAmount;
         },
         calculateTaxes() {
             if(this.client.type == 'indian') {
@@ -270,7 +270,6 @@
         updatePaymentAmountDetails(filtered_number_list) {
             let totalNumbersInList =  filtered_number_list.length
             var emailBody = $("#emailBody").text();
-           
             for (var index = 0; index < totalNumbersInList; index++) {
                 if (this.client.type == 'indian') {
                     if (index == totalNumbersInList - 1) {
