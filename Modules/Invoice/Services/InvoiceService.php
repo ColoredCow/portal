@@ -42,15 +42,24 @@ class InvoiceService implements InvoiceServiceContract
             ->get();
             $clientsReadyToSendInvoicesData = [];
             $projectsReadyToSendInvoicesData = [];
-        } else {
+            $AMCprojectsReadyToSendInvoicesData=[];
+        }
+        else
+        {
             $invoices = [];
             $clientsReadyToSendInvoicesData = Client::status('active')->invoiceReadyToSend()->orderBy('name')->get();
             $projectsReadyToSendInvoicesData = Project::whereHas('meta', function ($query) {
                 return $query->where([
-                    'key' => 'billing_level',
-                    'value' => config('project.meta_keys.billing_level.value.project.key')
+                'key' => 'billing_level',
+                'value' => config('project.meta_keys.billing_level.value.project.key')
                 ]);
-            })->status('active')->invoiceReadyToSend()->orderBy('name')->get();
+                })->where('is_amc', '!=', 1)->status('active')->invoiceReadyToSend()->orderBy('name')->get();
+            $AMCprojectsReadyToSendInvoicesData = Project::whereHas('meta', function ($query) {
+                return $query->where([
+                'key' => 'billing_level',
+                'value' => config('project.meta_keys.billing_level.value.project.key')
+                ]);
+                })->where('is_amc', 1)->status('active')->invoiceReadyToSend()->orderBy('name')->get();
         }
 
         return [
@@ -62,6 +71,7 @@ class InvoiceService implements InvoiceServiceContract
             'invoiceStatus' => $invoiceStatus,
             'clientsReadyToSendInvoicesData' => $clientsReadyToSendInvoicesData,
             'projectsReadyToSendInvoicesData' => $projectsReadyToSendInvoicesData,
+            'AMCprojectsReadyToSendInvoicesData' => $AMCprojectsReadyToSendInvoicesData,
             'sendInvoiceEmailSubject' => optional(Setting::where([
                 'module' => 'invoice',
                 'setting_key' => config('invoice.templates.setting-key.send-invoice.subject')

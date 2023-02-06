@@ -16,7 +16,7 @@ use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
-
+use Carbon\Carbon;
 class Project extends Model implements Auditable
 {
     use HasFactory, Filters, SoftDeletes, \OwenIt\Auditing\Auditable;
@@ -338,5 +338,29 @@ class Project extends Model implements Auditable
     public function billingDetail()
     {
         return $this->hasOne(ProjectBillingDetail::class);
+    }
+
+    public function  nextBillingDate()
+    {
+        $billingDate = $this->client->billingDetails->billing_date;
+        $clientFrequency = $this->client->billingDetails->billing_frequency;
+
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
+        $formattedDate = Carbon::createFromDate($currentYear, $currentMonth, $billingDate);
+        $billingDate = $formattedDate->toDateString(); // this convert date into string
+        
+        $nextBillingDate = $formattedDate->addMonths($clientFrequency);
+        $nextBillingDate=$nextBillingDate->toDateString();
+        $nextBillingDate = Carbon::parse($nextBillingDate)->format('d-m-Y'); // this change formate of date
+
+        return $nextBillingDate;
+    }
+
+    public function amcTotalProjectAmount()
+    {
+        $serviceRate = $this->client->billingDetails->service_rates;
+        $clientFrequency = $this->client->billingDetails->billing_frequency;
+        return $clientFrequency*$serviceRate;
     }
 }
