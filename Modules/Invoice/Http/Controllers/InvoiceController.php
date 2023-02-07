@@ -127,7 +127,7 @@ class InvoiceController extends Controller
         $data = $this->service->edit($invoice);
         $invoiceValue = $data['invoiceValue'];
 
-        return view('invoice::edit', $this->service->edit($invoice))->with(compact('invoiceValue'));
+        return view('invoice::edit', $this->service->edit($invoice))->with($invoiceValue);
     }
 
     /**
