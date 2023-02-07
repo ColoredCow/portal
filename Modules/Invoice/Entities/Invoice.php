@@ -70,7 +70,7 @@ class Invoice extends Model implements Auditable
     }
     public function scopeInvoiceInaYear($query, $invoiceYear)
     {
-        if (!is_numeric($invoiceYear)) {
+        if (! is_numeric($invoiceYear)) {
             return $query;
         }
 
