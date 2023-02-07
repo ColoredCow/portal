@@ -85,8 +85,8 @@ class ProjectService implements ProjectServiceContract
             );
         }
 
-            $project->client->update(['status' => 'active']);
-            $this->saveOrUpdateProjectContract($data, $project);
+        $project->client->update(['status' => 'active']);
+        $this->saveOrUpdateProjectContract($data, $project);
     }
 
     private function getListTabCounts($filters, $showAllProjects, $userId)
@@ -292,7 +292,7 @@ class ProjectService implements ProjectServiceContract
         }
     }
 
-    private function updateProjectRequirement($data)
+    private function updateProjectRequirement($data, $project)
     {
         if (isset($data['designation'])) {
             $designations = $data['designation'];
@@ -307,10 +307,8 @@ class ProjectService implements ProjectServiceContract
                 'Customer Support' => 'customer_support',
                 'Consultant' => 'consultant',
             ];
-
-            if (isset($data['project_id'])) {
-                $project_id = $data['project_id'];
-            }
+            
+            $project_id = $project->id;
 
             $index = 0;
             foreach ($designations as $designation) {
@@ -322,7 +320,7 @@ class ProjectService implements ProjectServiceContract
 
                 if (empty($needed[$index])) {
                     $needed[$index] = 0;
-                  }
+                }
 
                 if ($record === null) {
                     $requirement = new ProjectResourceRequirement();

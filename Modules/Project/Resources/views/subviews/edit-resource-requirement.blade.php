@@ -6,7 +6,6 @@
       <form  action="{{ route('project.update', $project) }}" method="POST" id="form_project">
         @csrf
         <input type="hidden" value="project_resource_requirement" name="update_section">
-        <input type="hidden" value="{{ $project->id }}" name="project_id">
             <div class="card-body form-body">
                         <h3 class="mb-7 font-weight-bold">Requirement Details</h3>
                         <table class="table table-bordered text-justify">
