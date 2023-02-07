@@ -7,7 +7,6 @@ use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Illuminate\Http\Request;
 use Modules\CodeTrek\Services\CodeTrekService;
 
-
 class CodeTrekController extends Controller
 {
     protected $service;
@@ -37,7 +36,7 @@ class CodeTrekController extends Controller
     {
         $data = $request->all();
         $applicant = $service->store($data);
-        
+
         return redirect()->route('codetrek.index');
     }
     
