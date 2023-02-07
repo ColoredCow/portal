@@ -358,11 +358,31 @@ class Project extends Model implements Auditable
         return $nextBillingDate;
     }
 
-    public function amcTotalProjectAmount()
+    public function amcTotalProjectAmount(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
-        $serviceRate = $this->client->billingDetails->service_rates;
+        $totalAmountInMonth = $this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours() + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
         $clientFrequency = $this->client->billingDetails->billing_frequency;
 
-        return $clientFrequency * $serviceRate;
+        return $clientFrequency * $totalAmountInMonth;
+    }
+
+    public function amcBillableHours(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
+    {
+        $amcBillableHours = $this->getBillableHoursForMonth($monthToSubtract, $periodStartDate, $periodEndDate);
+        $clientFrequency = $this->client->billingDetails->billing_frequency;
+
+        return $amcBillableHours * $clientFrequency;
+    }
+
+    public function serviceRateFromProject_Billing_DetailsTable()
+    {
+        $details = DB::table('project_billing_details')->where('project_id', $this->id)->first();
+        return $details->service_rates;
+    }
+
+    public function serviceRateTermFromProject_Billing_DetailsTable()
+    {
+        $details = DB::table('project_billing_details')->where('project_id', $this->id)->first();
+        return $details->service_rate_term;
     }
 }
