@@ -342,7 +342,7 @@
                                 <td>
                                     {{ $project->name }}
                                 </td>
-                                <td>{{ config('constants.currency.' . $project->client->currency . '.symbol') . '' . $project->serviceRateFromProject_Billing_DetailsTable() . config('client.service-rate-terms.' . optional($project->client->billingDetails)->service_rate_term . '.short-label') }}</td>
+                                <td>{{ config('constants.currency.' . $project->client->currency . '.symbol') . '' . $project->serviceRateFromProject_Billing_DetailsTable() . config('client.service-rate-terms.' . $project->serviceRateTermFromProject_Billing_DetailsTable() . '.short-label') }}</td>
                                 <td>
                                     @if(optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                     {{ __('-') }}
