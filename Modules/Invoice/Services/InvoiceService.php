@@ -199,11 +199,10 @@ class InvoiceService implements InvoiceServiceContract
 
     public function getUpdatedAmountForRemainingInvoice($invoice)
     {
-        $remainingAmount = 0;
         $symbol = '';
         $lastPaymentAmount = 0;
         $symbol = (strpos($invoice->display_amount, '$') !== false) ? '$' : ((strpos($invoice->display_amount, '₹') !== false) ? '₹' : '');
-        $totalProjectAmount = $totalProjectAmount = floatval(str_replace(['$', '₹'], '', $invoice->display_amount)) + floatval($invoice->gst);
+        $totalProjectAmount = floatval(str_replace(['$', '₹'], '', $invoice->display_amount)) + floatval($invoice->gst);
         if ($invoice->remainingInvoiceDetails) {
             $lastPaymentAmount = $invoice->remainingInvoiceDetails->amount_paid_till_now;
             $remainingAmount = $totalProjectAmount - $lastPaymentAmount;
