@@ -203,7 +203,7 @@ class InvoiceService implements InvoiceServiceContract
         $symbol = '';
         $lastPaymentAmount = 0;
         $symbol = (strpos($invoice->display_amount, '$') !== false) ? '$' : ((strpos($invoice->display_amount, '₹') !== false) ? '₹' : '');
-        $totalProjectAmount = (int) str_replace(strpos($invoice->display_amount, '$') !== false ? '$' : (strpos($invoice->display_amount, '₹') !== false ? '₹' : ''), '', $invoice->display_amount) + $invoice->gst;
+        $totalProjectAmount = $totalProjectAmount = floatval(str_replace(['$', '₹'], '', $invoice->display_amount)) + floatval($invoice->gst);
         if ($invoice->remainingInvoiceDetails) {
             $lastPaymentAmount = $invoice->remainingInvoiceDetails->amount_paid_till_now;
             $remainingAmount = $totalProjectAmount - $lastPaymentAmount;
