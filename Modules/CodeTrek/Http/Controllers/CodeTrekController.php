@@ -7,6 +7,7 @@ use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Illuminate\Http\Request;
 use Modules\CodeTrek\Services\CodeTrekService;
 
+
 class CodeTrekController extends Controller
 {
     protected $service;
@@ -32,20 +33,12 @@ class CodeTrekController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request,CodeTrekService $service)
     {
-        $applicant = new CodeTrekApplicant();
+       
+        $data = $request->all();
 
-        $applicant->first_name = $request['first_name'];
-        $applicant->last_name = $request['last_name'];
-        $applicant->email = $request['email_id'];
-        $applicant->phone = $request['phone'];
-        $applicant->github_user_name = $request['github_username'];
-        $applicant->course = $request['course'];
-        $applicant->start_date = $request['start_date'];
-        $applicant->graduation_year = $request['graduation_year'];
-        $applicant->university = $request['university_name'];
-        $applicant->save();
+        $applicant = $service->store($data);
 
         return redirect()->route('codetrek.index');
     }

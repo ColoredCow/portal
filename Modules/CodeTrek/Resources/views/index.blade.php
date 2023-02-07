@@ -42,33 +42,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            @foreach ($applicants as $applicant )
-                                {{$applicant->first_name}}
-                                {{$applicant->last_name}}
-                                <br><br>
-                            @endforeach
-                        </td>
-                        <td>
-                            @foreach ($applicants as $applicant )
-                             -
-                            <br><br>
-                            @endforeach
-                        </td>
-                        <td>
-                            @foreach ($applicants as $applicant )
-                                {{$applicant->status}}
-                                <br><br>
-                            @endforeach
-                        </td>
-                        <td>
-                            @foreach ($applicants as $applicant )
-                             -
-                            <br><br>
-                            @endforeach
-                        </td>
-                    </tr> 
+                    @foreach ($applicants as $applicant )
+                        <tr>
+                            <td>{{$applicant->first_name}} {{$applicant->last_name}}</td>
+                            <td>-</td>
+                            <td>{{$applicant->status}}</td>
+                            <td>-</td>
+                        </tr> 
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -94,16 +75,15 @@
                 start_date: '',
                 university: '',
                 course: '',
-                graduation_year: ''
+                graduationyear: ''
             }
         },
         methods: {
             submitForm: async function(formId) {
                 $('.save-btn').attr('disabled', true);
                 let formData = new FormData(document.getElementById(formId));
-                $('.save-btn').removeClass('btn-primary').addClass('btn-dark');
                 await axios.post('{{ route('codetrek.store') }}', formData)
-                    .then((respose) => {
+                    .then((response) => {
                         $('.save-btn').removeClass('btn-dark').addClass('btn-primary');
                         $('.save-btn').attr('disabled', false);
                         this.$toast.success("Applicant added successfully", { duration: 5000 });
@@ -113,12 +93,15 @@
                     .catch((error) => {
                         let errors = error.response.data.errors;
                         $('.save-btn').attr('disabled', false);
-                        if (errors) {
-                            var errormessage = errors[error].join().replace('id', '');
-                            this.$toast.error(errormessage);
-                        }
-                    });
-            }
+                        if (errors) { 
+                            Object.keys(errors).forEach(function(key) { 
+                                this.$toast.error(errors[key][0]); 
+                            }); 
+                        } else { 
+                            this.$toast.error("Error submitting form, please fill required fields"); 
+                        } 
+                    }); 
+            } 
         }
     });
 </script>
