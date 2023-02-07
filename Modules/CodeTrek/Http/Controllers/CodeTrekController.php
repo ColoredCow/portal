@@ -3,7 +3,6 @@
 namespace Modules\CodeTrek\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Illuminate\Http\Request;
 use Modules\CodeTrek\Services\CodeTrekService;
 
@@ -39,7 +38,7 @@ class CodeTrekController extends Controller
 
         return redirect()->route('codetrek.index');
     }
-    
+
     /**
      * Show the specified resource.
      */
