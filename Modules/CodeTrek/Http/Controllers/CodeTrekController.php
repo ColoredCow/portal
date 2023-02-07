@@ -35,8 +35,7 @@ class CodeTrekController extends Controller
      */
     public function store(Request $request, CodeTrekService $service)
     {
-       
-        $data = $request->all();
+       $data = $request->all();
 
         $applicant = $service->store($data);
 
