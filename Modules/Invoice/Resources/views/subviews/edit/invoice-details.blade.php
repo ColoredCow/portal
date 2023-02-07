@@ -325,9 +325,9 @@
             tds: "{{ $invoice->tds }}",
             tdsPercentage: "{{ $invoice->tds_percentage }}",
             show_on_select: true,
-            remainingAmount : "{{$invoiceValue['remainingAmount']}}",
-            previousAmount:"{{$invoiceValue['lastPaymentAmount']}}",
-            totalProjectAmount : "{{$invoiceValue['totalProjectAmount']}}",
+            remainingAmount: "{{$invoiceValue['remainingAmount']}}",
+            previousAmount: "{{$invoiceValue['lastPaymentAmount']}}",
+            totalProjectAmount: "{{$invoiceValue['totalProjectAmount']}}",
         }
     },
 
