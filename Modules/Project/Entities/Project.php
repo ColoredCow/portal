@@ -360,7 +360,7 @@ class Project extends Model implements Auditable
 
     public function amcTotalProjectAmount(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
-        $totalAmountInMonth = $this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours() + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
+        $totalAmountInMonth = ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
         $clientFrequency = $this->client->billingDetails->billing_frequency;
 
         return $clientFrequency * $totalAmountInMonth;
@@ -385,6 +385,12 @@ class Project extends Model implements Auditable
     {
         $details = DB::table('project_billing_details')->where('project_id', $this->id)->first();
 
-        return $details->service_rate_term;
+        if ($details)
+        {
+            return $details->service_rate_term;
+        } else
+        {
+            return  optional($this->client->billingDetails)->service_rate_term;
+        }
     }
 }
