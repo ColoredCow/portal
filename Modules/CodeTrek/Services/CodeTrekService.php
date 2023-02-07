@@ -14,7 +14,7 @@ class CodeTrekService
     }
     public function store($data)
     {
-        
+
         $applicant = new CodeTrekApplicant();
 
         $applicant->first_name = $data['first_name'];

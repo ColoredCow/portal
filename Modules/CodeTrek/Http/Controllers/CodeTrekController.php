@@ -33,12 +33,11 @@ class CodeTrekController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,CodeTrekService $service)
+    public function store(Request $request, CodeTrekService $service)
     {
-       
-        $data = $request->all();
+       $data = $request->all();
 
-        $applicant = $service->store($data);
+       $applicant = $service->store($data);
 
         return redirect()->route('codetrek.index');
     }
