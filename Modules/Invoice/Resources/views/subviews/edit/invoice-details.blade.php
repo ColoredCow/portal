@@ -222,7 +222,11 @@
         },
 
         remainingPayment(){
-            this.remainingAmount = (this.amountPaid) ?  (parseFloat(this.totalProjectAmount) - (parseFloat(this.amountPaid) + parseFloat(this.previousAmount))).toFixed(2) : parseFloat(this.remainingAmount).toFixed(2);
+            if (!this.amountPaid) {
+                this.remainingAmount = this.totalProjectAmount - this.previousAmount;
+            } else {
+                this.remainingAmount = (this.totalProjectAmount - (parseFloat(this.amountPaid) + parseFloat(this.previousAmount))).toFixed(2);
+            }
         },
 
         calculateTaxes() {
