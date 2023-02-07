@@ -114,7 +114,6 @@ class Invoice extends Model implements Auditable
         if ($invoiceYear = Arr::get($filters, 'invoiceYear', '')) {
             $query = $query->InvoiceInaYear($invoiceYear);
         }
-        // dd($filters);
 
         return $query;
     }
