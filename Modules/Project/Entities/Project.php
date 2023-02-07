@@ -385,11 +385,9 @@ class Project extends Model implements Auditable
     {
         $details = DB::table('project_billing_details')->where('project_id', $this->id)->first();
 
-        if ($details)
-        {
+        if ($details) {
             return $details->service_rate_term;
-        } else
-        {
+        } else {
             return  optional($this->client->billingDetails)->service_rate_term;
         }
     }
