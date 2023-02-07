@@ -307,7 +307,6 @@ class ProjectService implements ProjectServiceContract
                 'Customer Support' => 'customer_support',
                 'Consultant' => 'consultant',
             ];
-            
             $project_id = $project->id;
 
             $index = 0;
