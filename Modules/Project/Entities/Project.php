@@ -345,7 +345,6 @@ class Project extends Model implements Auditable
     {
         $billingDate = $this->client->billingDetails->billing_date;
         $clientFrequency = $this->client->billingDetails->billing_frequency;
-
         $currentYear = Carbon::now()->year;
         $currentMonth = Carbon::now()->month;
         $formattedDate = Carbon::createFromDate($currentYear, $currentMonth, $billingDate);
@@ -360,10 +359,21 @@ class Project extends Model implements Auditable
 
     public function amcTotalProjectAmount(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
-        $totalAmountInMonth = ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
-        $clientFrequency = $this->client->billingDetails->billing_frequency;
-
-        return $clientFrequency * $totalAmountInMonth;
+        $serviceRateTerm = $this->serviceRateTermFromProject_Billing_DetailsTable();
+        switch($serviceRateTerm){
+            case 'per_hour':
+                $totalAmountInMonth = ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
+                return  $totalAmountInMonth;
+            case 'per_month':
+                $totalAmountInMonth = $this->serviceRateFromProject_Billing_DetailsTable() + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
+                return  $totalAmountInMonth;
+            case 'per_quarter':
+                $totalAmountInMonth = $this->serviceRateFromProject_Billing_DetailsTable() + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
+                return  $totalAmountInMonth;
+            case 'per_year':
+                $totalAmountInYear = $this->serviceRateFromProject_Billing_DetailsTable() + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
+                return $totalAmountInYear;
+        }
     }
 
     public function amcBillableHours(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
