@@ -3,15 +3,22 @@
 namespace Modules\CodeTrek\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Request;
+use Modules\CodeTrek\Services\CodeTrekService;
 
 class CodeTrekController extends Controller
 {
+    protected $service;
+    public function __construct(CodeTrekService $service)
+    {
+        $this->service = $service;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('codetrek::index');
+        return view('codetrek::index', $this->service->getCodeTrekApplicants(request()->all()));
     }
 
     /**
@@ -24,8 +31,12 @@ class CodeTrekController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store()
+    public function store(Request $request, CodeTrekService $service)
     {
+        $data = $request->all();
+        $applicant = $service->store($data);
+
+        return redirect()->route('codetrek.index');
     }
 
     /**
