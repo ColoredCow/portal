@@ -360,14 +360,12 @@ class Project extends Model implements Auditable
         $clientFrequency = $this->client->billingDetails->billing_frequency;
         $billingDate = $this->previousBillingDate();
         $billingDate = Carbon::createFromFormat('Y-m-d', $billingDate);
-        if($clientFrequency == 3) {
+        if ($clientFrequency == 3) {
             $billingDate->addMonths(3);
             $nextBillingDate = $billingDate->toDateString();
 
             return $nextBillingDate;
-        }
-        else if ($clientFrequency == 2)
-        {
+        } elseif ($clientFrequency == 2) {
             $billingDate->addMonths(1);
             $nextBillingDate = $billingDate->toDateString();
 
