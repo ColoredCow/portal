@@ -145,7 +145,7 @@ class ProjectController extends Controller
         if ($request->name != $project->name) {
             $request->validate(['name' => new ProjectNameExist()]);
         }
-        
+
         return $this->service->updateProjectData($request->all(), $project);
     }
 }
