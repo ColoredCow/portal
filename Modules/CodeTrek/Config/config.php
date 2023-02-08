@@ -1,5 +1,15 @@
 <?php
 
 return [
-    'name' => 'CodeTrek'
+    'name' => 'CodeTrek',
+    'status' => [
+        'active' =>[
+            'label' => 'Active',
+            'slug'  => 'active'
+        ],
+        'inactive' =>[
+            'label' => 'Inactive',
+            'slug'  => 'inactive'
+        ],
+    ]
 ];
