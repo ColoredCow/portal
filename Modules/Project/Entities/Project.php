@@ -363,15 +363,19 @@ class Project extends Model implements Auditable
         switch ($serviceRateTerm) {
             case 'per_hour':
                 $totalAmountInMonth = ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
+
                 return  $totalAmountInMonth;
             case 'per_month':
                 $totalAmountInMonth = $this->serviceRateFromProject_Billing_DetailsTable() + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
+
                 return  $totalAmountInMonth;
             case 'per_quarter':
                 $totalAmountInQuater = $this->serviceRateFromProject_Billing_DetailsTable() + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
+
                 return  $totalAmountInQuater;
             case 'per_year':
                 $totalAmountInYear = $this->serviceRateFromProject_Billing_DetailsTable() + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
+
                 return $totalAmountInYear;
         }
     }
