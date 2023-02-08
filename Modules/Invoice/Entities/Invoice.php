@@ -70,6 +70,10 @@ class Invoice extends Model implements Auditable
     }
     public function scopeInvoiceInaYear($query, $invoiceYear)
     {
+        if (! is_numeric($invoiceYear)) {
+            return $query;
+        }
+
         return $query->whereBetween('sent_on', [($invoiceYear . '-' . config('invoice.financial-month-details.financial_year_start_month') . '-' . '01'), (($invoiceYear + 1) . '-' . config('invoice.financial-month-details.financial_year_end_month') . '-' . '31')]);
     }
 
