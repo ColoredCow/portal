@@ -17,19 +17,19 @@
         @endphp
         <li class="nav-item mr-3">
             @php
-                $request['status'] = 'applicants';
+                $request['tab'] = 'applicants';
             @endphp
-             <a class="nav-link {{ (request()->input('status', 'applicants') == 'applicants')  ? 'active' : '' }} " href="{{ route('codetrek.index', $request)  }}"><i class="fa fa-list-ul"></i> Applicants</a>
+             <a class="nav-link {{ (request()->input('tab', 'applicants') == 'applicants')  ? 'active' : '' }} " href="{{ route('codetrek.index', $request)  }}"><i class="fa fa-list-ul"></i> Applicants</a>
         </li>
 
         <li class="nav-item">
             @php
-                $request['status'] = 'reports';
+                $request['tab'] = 'reports';
             @endphp
-            <a class="nav-link {{ (request()->input('status','active')== 'reports') ? 'active' : '' }}"  href="{{ route('codetrek.index', $request)  }}"><i class="fa fa-pie-chart"></i> Reports</a>
+            <a class="nav-link {{ (request()->input('tab','active')== 'reports') ? 'active' : '' }}"  href="{{ route('codetrek.index', $request)  }}"><i class="fa fa-pie-chart"></i> Reports</a>
         </li>
     </ul>
-    @if (request()->input('status','active') == 'active'||request()->status=='applicants')
+    @if (request()->input('tab','active') == 'active'||request()->tab=='applicants')
         <div>
             <br>
             <table class="table table-bordered table-striped">
@@ -46,7 +46,7 @@
                         <tr>
                             <td>{{$applicant->first_name}} {{$applicant->last_name}}</td>
                             <td>-</td>
-                            <td>{{$applicant->status}}</td>
+                            <td>{{ config('codetrek.status.' . $applicant->status) }}</td>
                             <td>-</td>
                         </tr> 
                     @endforeach
