@@ -360,7 +360,7 @@ class Project extends Model implements Auditable
     public function amcTotalProjectAmount(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
         $serviceRateTerm = $this->serviceRateTermFromProject_Billing_DetailsTable();
-        switch($serviceRateTerm){
+        switch($serviceRateTerm) {
             case 'per_hour':
                 $totalAmountInMonth = ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
                 return  $totalAmountInMonth;
