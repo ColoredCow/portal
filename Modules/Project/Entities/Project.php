@@ -368,8 +368,8 @@ class Project extends Model implements Auditable
                 $totalAmountInMonth = $this->serviceRateFromProject_Billing_DetailsTable() + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
                 return  $totalAmountInMonth;
             case 'per_quarter':
-                $totalAmountInMonth = $this->serviceRateFromProject_Billing_DetailsTable() + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
-                return  $totalAmountInMonth;
+                $totalAmountInQuater = $this->serviceRateFromProject_Billing_DetailsTable() + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
+                return  $totalAmountInQuater;
             case 'per_year':
                 $totalAmountInYear = $this->serviceRateFromProject_Billing_DetailsTable() + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
                 return $totalAmountInYear;
