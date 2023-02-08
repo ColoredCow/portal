@@ -310,7 +310,6 @@
                                     $amount = $currencySymbol . $project->amcTotalProjectAmount($monthToSubtract);
                                 }
                                 
-                                $project->nextBillingDate();
                                 $billingStartMonth = $project->client->getMonthStartDateAttribute($monthToSubtract)->format('M');
                                 $billingEndMonth = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('M');
                                 $billingEndMonthYear = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('Y');
