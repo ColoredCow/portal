@@ -165,7 +165,7 @@ class InvoiceService implements InvoiceServiceContract
     public function update($data, $invoice)
     {
         $invoiceValue = $this->getUpdatedAmountForRemainingInvoice($invoice);
-        if ($invoice->amount+$invoice->gst == $invoiceValue['totalProjectAmount']) {
+        if ($invoice->amount + $invoice->gst == $invoiceValue['totalProjectAmount']) {
             $data['status'] = 'paid';
         }
         $this->updateOrCreateInvoiceRemainingDetails($data, $invoice);
