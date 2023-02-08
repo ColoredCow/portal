@@ -46,7 +46,7 @@
                         <tr>
                             <td>{{$applicant->first_name}} {{$applicant->last_name}}</td>
                             <td>-</td>
-                            <td>{{ config('codetrek.status.' . $applicant->status) }}</td>
+                            <td>{{ config('codetrek.status.' . $applicant->status . '.label') }}</td>
                             <td>-</td>
                         </tr> 
                     @endforeach

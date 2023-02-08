@@ -3,7 +3,13 @@
 return [
     'name' => 'CodeTrek',
     'status' => [
-        'active' => 'Active',
-        'inactive' => 'Inactive'
+        'active' =>[
+            'label' => 'Active',
+            'slug'  => 'active'
+        ],
+        'inactive' =>[
+            'label' => 'Inactive',
+            'slug'  => 'inactive'
+        ],
     ]
 ];
