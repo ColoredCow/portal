@@ -351,6 +351,7 @@ class Project extends Model implements Auditable
             $priviousDate = $billingDate;
             $currentYear = Carbon::now()->year;
             $currentMonth = Carbon::now()->month;
+
             return Carbon::createFromDate($currentYear, $currentMonth, $priviousDate)->toDateString();
         }
     }
