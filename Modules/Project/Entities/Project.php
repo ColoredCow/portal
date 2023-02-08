@@ -341,18 +341,40 @@ class Project extends Model implements Auditable
         return $this->hasOne(ProjectBillingDetail::class);
     }
 
-    public function nextBillingDate()
+    public function previousBillingDate()
     {
         $billingDate = $this->client->billingDetails->billing_date;
-        $clientFrequency = $this->client->billingDetails->billing_frequency;
-        $currentYear = Carbon::now()->year;
-        $currentMonth = Carbon::now()->month;
-        $formattedDate = Carbon::createFromDate($currentYear, $currentMonth, $billingDate);
-        $billingDate = $formattedDate->toDateString(); // this convert date into string
+        $priviousDateData = DB::table('invoices')->where('project_id', $this->id)->first();
+        if ($priviousDateData) {
+            return $priviousDateData->sent_on;
+        } else {
+            $priviousDate = $billingDate;
+            $currentYear = Carbon::now()->year;
+            $currentMonth = Carbon::now()->month;
+            return Carbon::createFromDate($currentYear, $currentMonth, $priviousDate)->toDateString();
+        }
+    }
 
-        $nextBillingDate = $formattedDate->addMonths($clientFrequency);
-        $nextBillingDate = $nextBillingDate->toDateString();
-        $nextBillingDate = Carbon::parse($nextBillingDate)->format('d-m-Y'); // this change formate of date
+    public function nextBillingDate()
+    {
+        $clientFrequency = $this->client->billingDetails->billing_frequency;
+        $billingDate = $this->previousBillingDate();
+        $billingDate = Carbon::createFromFormat('Y-m-d', $billingDate);
+        if($clientFrequency == 3) {
+            $billingDate->addMonths(3);
+            $nextBillingDate = $billingDate->toDateString();
+
+            return $nextBillingDate;
+        }
+        else if ($clientFrequency == 2)
+        {
+            $billingDate->addMonths(1);
+            $nextBillingDate = $billingDate->toDateString();
+
+            return $nextBillingDate;
+        }
+        $billingDate->addMonths(1);
+        $nextBillingDate = $billingDate->toDateString();
 
         return $nextBillingDate;
     }
