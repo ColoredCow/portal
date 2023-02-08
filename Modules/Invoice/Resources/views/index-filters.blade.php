@@ -35,6 +35,7 @@
                 <option {{ $filters['status'] == '' ? "selected=selected" : '' }} value="">All Status</option>
                 <option {{ $filters['status'] == 'sent' ? "selected=selected" : '' }} value="sent">Pending</option>
                 <option {{ $filters['status'] == 'paid' ? "selected=selected" : '' }} value="paid">Paid</option>
+                <option {{ $filters['status'] == 'partially_paid' ? "selected=selected" : '' }} value="partially_paid">Partially Paid</option>
                 <option {{ $filters['status'] == 'disputed' ? "selected=selected" : '' }} value="disputed">Disputed</option>
             </select>
         </div>

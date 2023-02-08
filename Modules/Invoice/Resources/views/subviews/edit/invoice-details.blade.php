@@ -50,7 +50,7 @@
                     </div>
                 </div>
 
-                <div class="form-group" v-if="status == 'partially'">
+                <div class="form-group" v-if="status == 'partially_paid'">
                     <div class="d-flex">
                         <label for="client_id" class="mr-5">Remaining Amount:</label>
                         <span>
@@ -94,7 +94,7 @@
 
             </div>
 
-            <div class="col-md-5 offset-md-1" v-if="status === 'partially' || status === 'paid'">
+            <div class="col-md-5 offset-md-1" v-if="status === 'partially_paid' || status === 'paid'">
                 <div>
                     <h4><b>Payment Information:</b></h4>
                     <br>
@@ -169,7 +169,7 @@
                     <textarea name="comments" id="comments" rows="5" class="form-control" v-model="comments"></textarea>
                 </div>
             </div>
-            <div v-if="status == 'partially' || status == 'paid'">
+            <div v-if="status == 'partially_paid' || status == 'paid'">
                 @if($invoiceValue['showMailOption'])
                     <input type="checkbox" id="showEmail" class="ml-auto" name="send_mail">
                     <label for="showEmail" class="mx-1 pt-1">{{ __('Send Confirmation Mail') }}</label>

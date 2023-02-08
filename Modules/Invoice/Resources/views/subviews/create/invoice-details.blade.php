@@ -71,6 +71,7 @@
                     <select class="form-control" name="status">
                         <option value="sent">Sent</option>
                         <option value="paid">Paid</option>
+                        <option value="partially_paid">Partially Paid</option>
                     </select>
                 </div>
                 <div class="form-group mb-0">

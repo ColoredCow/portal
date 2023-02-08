@@ -116,8 +116,8 @@
                                 <td class="{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }} text-center">
                                     {{ $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '' }}
                                 </td>
-                                <td class="{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger' : '' }}{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }} text-center">
-                                    {{ $invoice->shouldHighlighted() ? __('Overdue') : $invoice->status }}
+                                <td class="{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger' : '' }}{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : ($invoice->status == 'partially_paid' ? 'partially_paid' : '' ) }} text-center">
+                                    {{ $invoice->shouldHighlighted() ? __('Overdue') : ($invoice->status) ? $invoice->status=='partially_paid' ? 'partillay paid' : $invoice->status :''}}
                                 </td>
                                 <td class="text-center">
                                     @if($invoice->reminder_mail_count)
