@@ -16,9 +16,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($designations as $index => $designation)
+                  @foreach ($designationNames as $index => $designationName)
                     <tr>
-                      <td><input type="text" name="designation[]" class="form-control" value="{{ ($requirements->count() > 0) ? $requirements[$index]->designation : $designation }}" readonly></td>
+                      <td><input type="text" name="designation[]" class="form-control" value="{{ ($requirements->count() > 0) ? $requirements[$index]->designation : $designationName }}" readonly></td>
                       <td><input type="text" name="needed[]" class="form-control" value="{{ ($requirements->count() > 0) ? $requirements[$index]->total_requirement : '' }}"></td>
                       <td><input type="text" name="deployed" class="form-control" disabled></td>
                       <td><input type="text" name="to-be-deployed" class="form-control" disabled></td>

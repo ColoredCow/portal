@@ -110,7 +110,7 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $requirements = ProjectResourceRequirement::where('project_id', $project->id)->get();
-        $designations = [
+        $designationNames = [
             'Project Manager',
             'Developer',
             'Designer',
@@ -129,7 +129,7 @@ class ProjectController extends Controller
             'designations' => $this->service->getDesignations(),
             'workingDaysInMonth' => $this->service->getWorkingDays($project),
             'requirements' => $requirements,
-            'designations' => $designations,
+            'designationNames' => $designationNames,
         ]);
     }
 
@@ -145,8 +145,7 @@ class ProjectController extends Controller
         if ($request->name != $project->name) {
             $request->validate(['name' => new ProjectNameExist()]);
         }
-        $this->service->updateProjectData($request->all(), $project);
-
-        return redirect(route('project.index'));
+        
+        return $this->service->updateProjectData($request->all(), $project);
     }
 }
