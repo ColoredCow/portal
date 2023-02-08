@@ -110,7 +110,7 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $requirements = ProjectResourceRequirement::where('project_id', $project->id)->get();
-        $posts = [
+        $designations = [
             'Project Manager',
             'Developer',
             'Designer',
@@ -128,9 +128,8 @@ class ProjectController extends Controller
             'projectRepositories' => $this->service->getProjectRepositories($project),
             'designations' => $this->service->getDesignations(),
             'workingDaysInMonth' => $this->service->getWorkingDays($project),
-            'resourceRequirement' => $this->service->getResourceRequirement($project),
             'requirements' => $requirements,
-            'posts' => $posts,
+            'designations' => $designations,
         ]);
     }
 

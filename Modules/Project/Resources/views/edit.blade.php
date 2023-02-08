@@ -13,7 +13,7 @@
         <a target="_self" class="badge badge-primary p-1 ml-2 text-light pl-3 pr-3 " target="blank"
             href="{{ route('project.effort-tracking', $project) }}">{{ _('FTE') }}</a>
         <br>
-        <div class="mt-2" style="width: max-content">
+        <div class="mt-2 ml-1">
             <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <a class="nav-link active" data-toggle="pill" data-target="#projectDetails" type="button"
@@ -143,7 +143,6 @@
                             $('#project-details-update-message').addClass('d-block');
                             $('#project-details-update-message').removeClass('d-none');
                             this.$toast.success('Project details updated!');
-                            window.location = '{{ route('project.index') }}';
                         })
                         .catch((error) => {
                             $('#project-details-update-message').removeClass('d-block');
