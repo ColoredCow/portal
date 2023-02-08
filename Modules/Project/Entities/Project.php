@@ -360,6 +360,8 @@ class Project extends Model implements Auditable
     public function amcTotalProjectAmount(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
         $serviceRateTerm = $this->serviceRateTermFromProject_Billing_DetailsTable();
+        $clientFrequency = $this->client->billingDetails->billing_frequency;
+
         switch ($serviceRateTerm) {
             case 'per_hour':
                 $totalAmountInMonth = ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
@@ -370,11 +372,11 @@ class Project extends Model implements Auditable
 
                 return  $totalAmountInMonth;
             case 'per_quarter':
-                $totalAmountInQuater = $this->serviceRateFromProject_Billing_DetailsTable() + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
+                $totalAmountInQuater = $this->serviceRateFromProject_Billing_DetailsTable() + ( 3 * ($this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges));
 
                 return  $totalAmountInQuater;
             case 'per_year':
-                $totalAmountInYear = $this->serviceRateFromProject_Billing_DetailsTable() + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
+                $totalAmountInYear = $this->serviceRateFromProject_Billing_DetailsTable() + ( 12 * ($this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges));
 
                 return $totalAmountInYear;
         }
