@@ -360,7 +360,6 @@ class Project extends Model implements Auditable
     public function amcTotalProjectAmount(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
         $serviceRateTerm = $this->serviceRateTermFromProject_Billing_DetailsTable();
-        $clientFrequency = $this->client->billingDetails->billing_frequency;
 
         switch ($serviceRateTerm) {
             case 'per_hour':
