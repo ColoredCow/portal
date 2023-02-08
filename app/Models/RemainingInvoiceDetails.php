@@ -18,5 +18,4 @@ class RemainingInvoiceDetails extends Model implements Auditable
     protected $encryptable = [
          'amount_paid_till_now',
     ];
-   
 }
