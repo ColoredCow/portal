@@ -21,11 +21,12 @@ Portal uses PHP v8.2. You can install it using one of the following ways:
 
 2. WAMP (Windows)
     - If you prefer using WAMP Windows(64-bit and 32-bit), you can download from [this link](https://www.wampserver.com/en/download-wampserver-64bits).
-   A possible error that may arise with openSSL extension. It should be enabled from your 'php.ini' file. To enable it, use the following steps:
-   - Edit the system environment variables and set the path of your selected PHP version.
-   - In 'php.ini', uncomment the ";extension=openSSL" by removing ";" before it.
+   A possible error may arise with openSSL extension in older versions. It should be enabled from your 'php.ini' file. To enable it, use the following steps:
+   - Edit the system environment variables by right-clicking your windows icon most likely on the bottom-left of your screen, click on system, on the right under related settings click on Advanced System Settings, under Advanced tab click on Environment Variables, under System variables click on new or edit, to add new click on new and in th variable name write your phpversion eg php8.0.26 or just php, click on browse directory go to this pc / local disk c:/wamp/bin/php and select a php version directory you want to use use any greater than 7, click ok and the path of your selected PHP version will be set.
+   - 'php.ini' can be found in thispc/localdisk c/wamp/bin/phpversion you have selected
+   - In 'php.ini' (older versions), if ";extension=openSSL" is present, uncomment the ";extension=openSSL" by removing ";" before it.
    - The WAMP users have to right click on the server icon in the toolbar, and choose ‘Restart all services’ after making changes to the 'php.ini' file.
-   - Run this command in the root directory of your project:
+   - Run this command in the root directory of your project if composer already installed on your system:
       ```sh
       composer update
       ```
@@ -43,16 +44,11 @@ php -v
 ### 3. Steps on how to connect to MySQL database in your phpMyAdmin:running:
 Before you start building PHP connection to MySQL database you need to know what phpMyAdmin is. It’s a control panel from where you can manage the database that you’ve created.
 
-1. Open your browser and go to localhost/phpMyAdmin.
+1. Open your browser and go to localhost/phpmyadmin.
 
-2. When you first installed XAMPP/WAMP, it only created the username for it to be accessed, you now have to add a password to it by yourself. For this, you have to go to User account.
+2. Just click Login
 
-3. Now click Edit privileges and go to Change Admin password, type your password there and save it. Remember this password as it will be used to connect to your Database.
-
-Note: It is not necessary to change the password to access databases on the localhost. It is a good practice and that is why we have used a password.(For this poject, it is not necessary to have one).
-
-4. Create Database -
-Now return to the homepage of phpMyAdmin. Click the New button to create a new database.
+4. At the top click databases.
 
 5. In the new window, name your database as per your need, we are naming it “portal”. Now select Collation as utf8_general_ci. Now click on Create and your database will be created.
 
@@ -113,8 +109,8 @@ composer --version
 
 ### 6. Nodejs :running:
 For (Windows, Ubuntu, macOS)
-- [Nodejs v14 or higher](https://nodejs.org/en/download/).
-After you've successfully installed, you can verify the installation using:
+- [Nodejs v15](https://nodejs.org/download/release/v15.14.0/).
+Download and install the file with .msi extension if on windows. After you've successfully installed, you can verify the installation using:
 ```sh
 npm -v
 # output should be something like
