@@ -167,7 +167,7 @@ class InvoiceService implements InvoiceServiceContract
         $invoiceValue = $this->getUpdatedAmountForRemainingInvoice($invoice);
         if ($invoice->amount + $invoice->gst === ($invoiceValue['lastPaymentAmount']+$data['amount_paid'])) {
             $data['status'] = 'paid';
-        } 
+        }
         $this->updateOrCreateInvoiceRemainingDetails($data, $invoice);
         $invoice->update($data);
         if (isset($data['send_mail'])) {
