@@ -341,13 +341,13 @@ class Project extends Model implements Auditable
         return $this->hasOne(ProjectBillingDetail::class);
     }
 
-    public function previousBillingDate() // this calculation is based on project level
+    public function previousBillingDate() // In this function calculation is based on project level.
     {
         $billingDate = $this->client->billingDetails->billing_date;
-        $priviousDateData = DB::table('invoices')->where('project_id', $this->id)->first();
+        $previousDateData = DB::table('invoices')->where('project_id', $this->id)->first();
         $startDateOfProject = DB::table('projects')->where('id', $this->id)->first();
-        if ($priviousDateData) {
-            return $priviousDateData->sent_on;
+        if ($previousDateData) {
+            return $previousDateData->sent_on;
         } else {
             if ($startDateOfProject->start_date) {
                 return  date('Y-m-d', strtotime($startDateOfProject->start_date));
@@ -360,7 +360,7 @@ class Project extends Model implements Auditable
         }
     }
 
-    public function nextBillingDate() // nextbilling date comes from client level
+    public function nextBillingDate() // In this function nextbilling date comes from client level.
     {
         $clientFrequency = $this->client->billingDetails->billing_frequency;
         $billingDate = $this->previousBillingDate();
