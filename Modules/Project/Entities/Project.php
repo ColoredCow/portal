@@ -350,7 +350,6 @@ class Project extends Model implements Auditable
             return $priviousDateData->sent_on;
         } else {
             if ($startDateOfProject->start_date) {
-
                 return  date("Y-m-d", strtotime($startDateOfProject->start_date));
             } else {
                 $currentYear = Carbon::now()->year;
