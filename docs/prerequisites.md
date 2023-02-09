@@ -48,13 +48,13 @@ Before you start building PHP connection to MySQL database you need to know what
 
 2. Just click Login
 
-4. At the top click databases.
+3. At the top click databases.
 
-5. In the new window, name your database as per your need, we are naming it “portal”. Now select Collation as utf8_general_ci. Now click on Create and your database will be created.
+4. In the new window, name your database as per your need, we are naming it “portal”. Now select Collation as utf8_general_ci. Now click on Create and your database will be created.
 
-6. The newly created database will be empty now, as there are no tables in it.
+5. The newly created database will be empty now, as there are no tables in it.
 
-7. Create a Folder in htdocs -
+6. Create a Folder in htdocs -
 Now, locate the folder where you installed XAMPP and open the htdocs folder (usually c:/xampp). Create a new folder inside c:/xampp/htdocs/ and name it “portal” we will place web files in this folder.
 
 - Why we have created a folder in htdocs?
@@ -62,7 +62,7 @@ Now, locate the folder where you installed XAMPP and open the htdocs folder (usu
 
 - For WAMP - Add your practice folder in c:/wamp/www folder.
 
-8. For both XAMP and WAMP:
+7. For both XAMP and WAMP:
   If you’re asked to log in into your phpMyAdmin, use the username “root” and enter your root password. If you haven’t set one yet, you can leave it blank.
 
   For MAMP:
