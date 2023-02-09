@@ -223,7 +223,7 @@
 
         remainingPayment(){
             if (!this.amountPaid) {
-                this.remainingAmount = this.totalProjectAmount - this.previousAmount;
+                this.remainingAmount = (this.totalProjectAmount - this.previousAmount).toFixed(2);
             } else {
                 this.remainingAmount = (this.totalProjectAmount - (parseFloat(this.amountPaid) + parseFloat(this.previousAmount))).toFixed(2);
             }
