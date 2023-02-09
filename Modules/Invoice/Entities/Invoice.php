@@ -170,9 +170,6 @@ class Invoice extends Model implements Auditable
         if ($this->status == 'paid') {
             return false;
         }
-        if ($this->status == 'partially_paid') {
-            return true;
-        }
         if ($this->status == 'disputed') {
             return false;
         }

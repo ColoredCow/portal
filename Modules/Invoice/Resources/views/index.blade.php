@@ -122,7 +122,7 @@
                                 <td class="text-center">
                                     @if($invoice->reminder_mail_count)
                                         <div class="text-success">{{ __('Reminder Sent') }}</div>
-                                    @elseif($invoice->shouldHighlighted())
+                                    @elseif($invoice->shouldHighlighted() || $invoice->status === 'partially_paid')
                                         <div class="btn btn-sm btn-primary send-reminder" data-invoice-data="{{ json_encode($invoiceData) }}" data-toggle="modal" data-target="#invoiceReminder" >{{ __('Reminder') }}</div>
                                     @else
                                         <div> - </div> 
