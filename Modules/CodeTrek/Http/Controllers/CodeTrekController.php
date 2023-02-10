@@ -2,9 +2,12 @@
 
 namespace Modules\CodeTrek\Http\Controllers;
 
+use Aws\Api\Service;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\CodeTrek\Services\CodeTrekService;
+use Modules\CodeTrek\Entities;
+use Modules\CodeTrek\Entities\CodeTrekApplicant;
 
 class CodeTrekController extends Controller
 {
@@ -49,16 +52,22 @@ class CodeTrekController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(CodeTrekService $service,$id)
     {
+        $applicant = $this->service->edit($id);
+        return view('codetrek::edit')->with('applicant', $applicant);
     }
 
     /**
      * Update the specified resource in storage.
      * @param int $id
      */
-    public function update($id)
+    public function update(Request $request,$id,CodeTrekService $service)
     {
+        $data =$request->all();
+        $applicant=$this->service->update($data,$id);
+
+        return redirect()->route('codetrek.index');
     }
 
     /**
