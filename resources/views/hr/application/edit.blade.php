@@ -940,7 +940,6 @@
                                 @if ($application->latestApplicationRound->round->name != 'Trial Program')
                                     <form action="/hr/recruitment/applications/rounds/{{ $applicationRound->id }}"
                                         method="POST" enctype="multipart/form-data" class="applicant-round-form">
-
                                         {{ csrf_field() }}
                                         {{ method_field('PATCH') }}
                                         <div id="collapse_{{ $loop->iteration }}"
@@ -1365,9 +1364,6 @@
                                                                 'currentApplication' => $application,
                                                                 'allApplications' => $applicantOpenApplications,
                                                             ])
-                                                            {{-- @else --}}
-                                                            {{-- <button type="button" class="btn btn-outline-danger ml-2 round-submit" data-action="reject" data-toggle="modal" data-target="#application_reject_modal">Reject</button> --}}
-                                                            {{-- @endif --}}
                                                         @endif
                                                         @if (!is_null($applicationRound->round_status) && !$applicationRound->mail_sent)
                                                             <button type="button" class="btn btn-primary ml-auto"
