@@ -5,7 +5,6 @@ namespace Modules\CodeTrek\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\CodeTrek\Services\CodeTrekService;
-use Modules\CodeTrek\Entities\CodeTrekApplicant;
 
 class CodeTrekController extends Controller
 {
