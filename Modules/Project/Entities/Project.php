@@ -344,8 +344,8 @@ class Project extends Model implements Auditable
     public function previousBillingDate() // In this function calculation is based on project level.
     {
         $billingDate = $this->client->billingDetails->billing_date;
-        $previousDateData = DB::table('invoices')->where('project_id', $this->id)->first();
-        $startDateOfProject = DB::table('projects')->where('id', $this->id)->first();
+        $previousDateData = DB::table('invoices')->where('project_id', $this->id)->last();
+        $startDateOfProject = DB::table('projects')->where('id', $this->id)->last();
         if ($previousDateData) {
             return $previousDateData->sent_on;
         } else {
