@@ -53,6 +53,7 @@ class CodeTrekController extends Controller
     public function edit(CodeTrekService $service, $id)
     {
         $applicant = $this->service->edit($id);
+
         return view('codetrek::edit')->with('applicant', $applicant);
     }
 
@@ -62,8 +63,8 @@ class CodeTrekController extends Controller
      */
     public function update(Request $request, $id, CodeTrekService $service)
     {
-        $data =  $request->all();
-        $applicant= $this->service->update($data, $id);
+        $data = $request->all();
+        $applicant = $this->service->update($data, $id);
 
         return redirect()->route('codetrek.index');
     }
