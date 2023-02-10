@@ -344,13 +344,14 @@ class Project extends Model implements Auditable
     public function previousBillingDate() // In this function calculation is based on project level.
     {
         $billingDate = $this->client->billingDetails->billing_date;
-        $previousDateData = DB::table('invoices')->where('project_id', $this->id)->last();
-        $startDateOfProject = DB::table('projects')->where('id', $this->id)->last();
+        $previousDateData = invoice::where('project_id',$this->id)->orderby('sent_on','desc')->first();
+        $startDateOfProject = project::where('id', $this->id)->orderby('updated_at','desc')->first();
+        dd($startDateOfProject->updated_at->toDateString());
         if ($previousDateData) {
-            return $previousDateData->sent_on;
+            return $previousDateData->sent_on->toDateString();
         } else {
-            if ($startDateOfProject->start_date) {
-                return  date('Y-m-d', strtotime($startDateOfProject->start_date));
+            if ($startDateOfProject) {
+                return $startDateOfProject->updated_at->toDateString();
             } else {
                 $currentYear = Carbon::now()->year;
                 $currentMonth = Carbon::now()->month;
@@ -416,8 +417,10 @@ class Project extends Model implements Auditable
     public function serviceRateFromProject_Billing_DetailsTable()
     {
         $details = DB::table('project_billing_details')->where('project_id', $this->id)->first();
-
-        return optional($details->service_rates);
+        if (!empty($details) && $details->service_rates) {
+            return $details->service_rates;
+        }
+        return 0;
     }
 
     public function serviceRateTermFromProject_Billing_DetailsTable()
