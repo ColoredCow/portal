@@ -48,6 +48,7 @@
         "filp/whoops": "^2.5",
         "friendsofphp/php-cs-fixer": "^3.13",
         "fzaninotto/faker": "^1.4",
+        "laravel/sail": "^1.19",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^5.0",
         "nunomaduro/larastan": "^0.7.10",
