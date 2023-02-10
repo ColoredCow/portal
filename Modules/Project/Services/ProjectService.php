@@ -139,11 +139,6 @@ class ProjectService implements ProjectServiceContract
         return $project->repositories;
     }
 
-    public function getResourceRequirement(Project $project)
-    {
-        return $project->resourceRequirement;
-    }
-
     public function updateProjectData($data, $project)
     {
         $updateSection = $data['update_section'] ?? '';
