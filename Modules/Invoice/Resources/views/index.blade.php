@@ -182,7 +182,7 @@
                                 <td>
                                     {{ $client->name . ' Projects' }}
                                 </td>
-                                <td>{{ config('constants.currency.' . $client->currency . '.symbol') . '' . $client->billingDetails->service_rates . config('client.service-rate-terms.' . optional($client->billingDetails)->service_rate_term . '.short-label') }}</td>
+                                <td>{{ config('constants.currency.' . $client->currency . '.symbol') . '' . optional($client->billingDetails)->service_rates . config('client.service-rate-terms.' . optional($client->billingDetails)->service_rate_term . '.short-label') }}</td>
                                 <td>
                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                         {{ __('-') }}
@@ -262,7 +262,7 @@
                                 <td>
                                     {{ $project->name }}
                                 </td>
-                                <td>{{ config('constants.currency.' . $project->client->currency . '.symbol') . '' . $project->client->billingDetails->service_rates . config('client.service-rate-terms.' . optional($project->client->billingDetails)->service_rate_term . '.short-label') }}</td>
+                                <td>{{ config('constants.currency.' . $client->currency . '.symbol') . '' . optional($client->billingDetails)->service_rates . config('client.service-rate-terms.' . optional($client->billingDetails)->service_rate_term . '.short-label') }}</td>
                                 <td>
                                     @if(optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                     {{ __('-') }}

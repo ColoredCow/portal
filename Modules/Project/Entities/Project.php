@@ -417,7 +417,7 @@ class Project extends Model implements Auditable
     {
         $details = DB::table('project_billing_details')->where('project_id', $this->id)->first();
 
-        return $details->service_rates;
+        return optional($details->service_rates);
     }
 
     public function serviceRateTermFromProject_Billing_DetailsTable()
