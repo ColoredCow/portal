@@ -2,7 +2,6 @@
 
 namespace Modules\CodeTrek\Services;
 
-use AWS\CRT\HTTP\Request;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 
 class CodeTrekService
@@ -36,10 +35,10 @@ class CodeTrekService
 
         return $applicant;
     }
-    public function update($data,$id)
+    public function update($data, $id)
     {
         $applicant = CodeTrekApplicant::findOrFail($id);
-        $applicant->first_name =$data['first_name'];
+        $applicant->first_name = $data['first_name'];
         $applicant->last_name = $data['last_name'];
         $applicant->email = $data['email_id'];
         $applicant->phone = $data['phone'] ?? null;
@@ -51,6 +50,5 @@ class CodeTrekService
         $applicant->save();
 
         return $applicant;
-
     }
 }
