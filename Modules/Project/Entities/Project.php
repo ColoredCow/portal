@@ -363,7 +363,7 @@ class Project extends Model implements Auditable
             return Carbon::parse($billingDate->toDateString())->format('Y-m-d');
         }
         $billingDate->addMonths(1);
-        $nextBillingDate =  Carbon::parse($billingDate->toDateString())->format('Y-m-d');
+        $nextBillingDate = Carbon::parse($billingDate->toDateString())->format('Y-m-d');
 
         return $nextBillingDate;
     }
