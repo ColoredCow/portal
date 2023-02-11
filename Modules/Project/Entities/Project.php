@@ -346,7 +346,6 @@ class Project extends Model implements Auditable
         $billingDate = $this->client->billingDetails->billing_date;
         $previousDateData = invoice::where('project_id', $this->id)->orderby('sent_on', 'desc')->first();
         $startDateOfProject = self::where('id', $this->id)->orderby('updated_at', 'desc')->first();
-        dd($startDateOfProject->updated_at->toDateString());
         if ($previousDateData) {
             return $previousDateData->sent_on->toDateString();
         } else {

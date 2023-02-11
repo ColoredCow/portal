@@ -319,7 +319,6 @@
                                     $billingStartMonth = $termText = today()->startOfQuarter()->format('M');
                                     $billingEndMonth  = $termText = today()->endOfQuarter()->format('M');
                                 }
-                                $project->previousBillingDate();
                                 $invoiceData = [
                                     'projectName' => $project->name,
                                     'billingPersonName' => optional($project->client->billing_contact)->name,
