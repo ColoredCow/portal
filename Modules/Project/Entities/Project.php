@@ -341,42 +341,29 @@ class Project extends Model implements Auditable
         return $this->hasOne(ProjectBillingDetail::class);
     }
 
-    public function previousBillingDate() // In this function calculation is based on project level.
-    {
-        $billingDate = $this->client->billingDetails->billing_date;
-        $previousDateData = invoice::where('project_id', $this->id)->orderby('sent_on', 'desc')->first();
-        $startDateOfProject = self::where('id', $this->id)->orderby('updated_at', 'desc')->first();
-        if ($previousDateData) {
-            return $previousDateData->sent_on->toDateString();
-        } else {
-            if ($startDateOfProject) {
-                return $startDateOfProject->updated_at->toDateString();
-            } else {
-                $currentYear = Carbon::now()->year;
-                $currentMonth = Carbon::now()->month;
-
-                return Carbon::createFromDate($currentYear, $currentMonth, $billingDate)->toDateString();
-            }
-        }
-    }
-
     public function nextBillingDate() // In this function nextbilling date comes from client level.
     {
         $clientFrequency = $this->client->billingDetails->billing_frequency;
-        $billingDate = $this->previousBillingDate();
-        $billingDate = Carbon::createFromFormat('Y-m-d', $billingDate);
+        $previousInvoiceSent_onDate = invoice::where('client_id', $this->client_id)->orderby('sent_on', 'desc')->first();
+
+        if ($previousInvoiceSent_onDate) {
+            $billingDate = $previousInvoiceSent_onDate->sent_on;
+        } else {
+            $projectCreated_atdate = self::where('id', $this->id)->first();
+            $billingDate = $projectCreated_atdate->created_at;   
+        }
 
         if ($clientFrequency == 3) {
             $billingDate->addMonths(3);
 
-            return $billingDate->toDateString();
+            return Carbon::parse($billingDate->toDateString())->format('Y-m-d');
         } elseif ($clientFrequency == 2) {
             $billingDate->addMonths(1);
 
-            return $billingDate->toDateString();
+            return Carbon::parse($billingDate->toDateString())->format('Y-m-d');
         }
         $billingDate->addMonths(1);
-        $nextBillingDate = $billingDate->toDateString();
+        $nextBillingDate =  Carbon::parse($billingDate->toDateString())->format('Y-m-d');
 
         return $nextBillingDate;
     }
