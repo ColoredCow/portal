@@ -50,8 +50,8 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
-        $data = $request->all();
-        $this->service->store($data);
+        $validated = $request->validated();
+        $this->service->store($validated);
 
         return redirect(route('project.index'))->with('success', 'Project has been created successfully!');
     }
@@ -110,15 +110,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $requirements = ProjectResourceRequirement::where('project_id', $project->id)->get();
-        $designationNames = [
-            'Project Manager',
-            'Developer',
-            'Designer',
-            'Tester(QA)',
-            'Solution Architect',
-            'Customer Support',
-            'Consultant'
-          ];
+        $designations = $this->service->getDesignations();
+        $designationKeys = array_keys($designations);
 
         return view('project::edit', [
             'project' => $project,
@@ -126,10 +119,10 @@ class ProjectController extends Controller
             'teamMembers' => $this->service->getTeamMembers(),
             'projectTeamMembers' => $this->service->getProjectTeamMembers($project),
             'projectRepositories' => $this->service->getProjectRepositories($project),
-            'designations' => $this->service->getDesignations(),
+            'designations' => $designations,
             'workingDaysInMonth' => $this->service->getWorkingDays($project),
             'requirements' => $requirements,
-            'designationNames' => $designationNames,
+            'designationKeys' => $designationKeys,
         ]);
     }
 

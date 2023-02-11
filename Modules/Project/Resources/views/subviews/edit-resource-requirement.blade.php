@@ -16,10 +16,10 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($designationNames as $index => $designationName)
+                  @foreach ($designationKeys as $index => $designationName)
                     <tr>
-                      <td><input type="text" name="designation[]" class="form-control" value="{{ ($requirements->count() > 0) ? $requirements[$index]->designation : $designationName }}" readonly></td>
-                      <td><input type="text" name="needed[]" class="form-control" value="{{ ($requirements->count() > 0) ? $requirements[$index]->total_requirement : '' }}"></td>
+                      <td><input type="text" name="designation[]" class="form-control" value="{{ ($requirements->count() > 0) ? $designations[$requirements[$index]->designation] : $designations[$designationName]}}" readonly></td>
+                      <td><input type="text" name="needed[{{$designationName}}]" class="form-control" value="{{ ($requirements->count() > 0) ? $requirements[$index]->total_requirement : '' }}"></td>
                       <td><input type="text" name="deployed" class="form-control" disabled></td>
                       <td><input type="text" name="to-be-deployed" class="form-control" disabled></td>
                     </tr>

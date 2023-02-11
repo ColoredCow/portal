@@ -290,47 +290,35 @@ class ProjectService implements ProjectServiceContract
     private function updateProjectRequirement($data, $project)
     {
         if (isset($data['designation'])) {
-            $designations = $data['designation'];
             $needed = $data['needed'];
 
-            $designationMap = [
-                'Project Manager' => 'project_manager',
-                'Developer' => 'developer',
-                'Designer' => 'designer',
-                'Tester(QA)' => 'tester',
-                'Solution Architect' => 'solution_architect',
-                'Customer Support' => 'customer_support',
-                'Consultant' => 'consultant',
-            ];
+            $designationMap = array_keys(config('project.designation'));
             $project_id = $project->id;
 
-            $index = 0;
-            foreach ($designations as $designation) {
-                $key = $designationMap[$designation] ?? $designation;
-                $record = ProjectResourceRequirement::where([
+            foreach ($designationMap as $key => $value) {
+                $designation = $designationMap[$key] ?? $value;
+
+                $projectResourceRequirement = ProjectResourceRequirement::where([
                     ['project_id', '=', $project_id],
-                    ['designation', '=', $key],
+                    ['designation', '=', $designation],
                 ])->first();
 
-                if (empty($needed[$index])) {
-                    $needed[$index] = 0;
+                if (empty($needed[$designation])) {
+                    $needed[$designation] = 0;
                 }
 
-                if ($record === null) {
+                if ($projectResourceRequirement === null) {
                     $requirement = new ProjectResourceRequirement();
                     $requirement->project_id = $project_id;
-                    $requirement->designation = $key;
-                    $requirement->total_requirement = $needed[$index];
+                    $requirement->designation = $designation;
+                    $requirement->total_requirement = $needed[$designation];
                     $requirement->save();
                 } else {
-                    $record->total_requirement = $needed[$index];
-                    $record->save();
+                    $projectResourceRequirement->total_requirement = $needed[$designation];
+                    $projectResourceRequirement->save();
                 }
-                $index++;
             }
         }
-
-        return redirect(route('project.index'));
     }
 
     private function getClientProjectID($clientID)
