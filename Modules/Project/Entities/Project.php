@@ -349,8 +349,8 @@ class Project extends Model implements Auditable
         if ($previousInvoiceSent_onDate) {
             $billingDate = $previousInvoiceSent_onDate->sent_on;
         } else {
-            $projectCreated_atdate = self::where('id', $this->id)->first();
-            $billingDate = $projectCreated_atdate->created_at;   
+            $projectCreated_atdate = self::where('client_project_id', $this->client_project_id)->first();
+            $billingDate = $projectCreated_atdate->created_at;
         }
 
         if ($clientFrequency == 3) {
