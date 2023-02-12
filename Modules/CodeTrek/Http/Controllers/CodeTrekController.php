@@ -75,4 +75,5 @@ class CodeTrekController extends Controller
     public function destroy($id)
     {
     }
+
 }

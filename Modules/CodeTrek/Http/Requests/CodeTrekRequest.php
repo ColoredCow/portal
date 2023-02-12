@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CodeTrekRequest extends FormRequest
 {
-
     private function codeTrekValidation()
     {
         return [
@@ -51,4 +50,5 @@ class CodeTrekRequest extends FormRequest
             'graduation_year.digits' => 'Graduation year should be in 4 digit format.'
         ];
     }
+
 }
