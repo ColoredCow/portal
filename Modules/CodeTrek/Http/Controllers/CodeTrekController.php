@@ -4,6 +4,7 @@ namespace Modules\CodeTrek\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 use Modules\CodeTrek\Services\CodeTrekService;
 
 class CodeTrekController extends Controller
@@ -60,10 +61,9 @@ class CodeTrekController extends Controller
      * Update the specified resource in storage.
      * @param int $id
      */
-    public function update(Request $request, $id, CodeTrekService $service)
+    public function update(CodeTrekRequest $request, $id, CodeTrekService $service)
     {
-        $data = $request->all();
-        $applicant = $this->service->update($data, $id);
+        $this->service->update($request->all(), $id);
 
         return redirect()->route('codetrek.index');
     }

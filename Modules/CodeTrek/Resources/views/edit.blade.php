@@ -7,6 +7,15 @@
             @csrf
             <div class="card-body">
                 <h4 class="mb-3 font-weight-bold">Edit Applicant information</h4>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                     <div class="form-row">
                         <div class="form-group col-md-5">
                             <label for="first_name" class="field-required">First Name</label>
