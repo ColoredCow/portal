@@ -15,6 +15,5 @@ class InvoicePaymentsDetails extends Model implements Auditable
 
     protected $fillable = ['invoice_id', 'amount_paid_till_now', 'bank_charges', 'gst', 'conversion_rate', 'conversion_rate_diff', 'comments', 'last_amount_paid_on'];
 
-    protected $encryptable = ['amount_paid_till_now', 'tds', 'gst', 'bank_charges', 'conversion_rate', 'conversion_rate_diff'];
-    
+    protected $encryptable = ['amount_paid_till_now', 'tds', 'gst', 'bank_charges', 'conversion_rate', 'conversion_rate_diff'];  
 }
