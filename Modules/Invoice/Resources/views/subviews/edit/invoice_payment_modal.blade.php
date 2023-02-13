@@ -23,14 +23,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($invoiceValue['allInstallmentPayments'] as $key=> $item)
+                                @foreach ($invoiceValue['allInstallmentPayments']->sortByDesc('last_amount_paid_on') as $key=> $item)
                                     <tr>
                                         <td class="text-center align-middle">{{ $item->amount_paid_till_now }} {{$invoiceValue['symbol']}}</td>
-                                        @if($invoiceValue['symbol']=='$')
-                                            <td class="text-center align-middle">{{ $item->bank_charges }} </td>
-                                            <td class="text-center align-middle">{{ $item->conversion_rate }} </td>
-                                            <td class="text-center align-middle">{{ $item->conversion_rate_diff }}</td>
-                                        @endif
+                                            @if($invoiceValue['symbol']=='$')
+                                                <td class="text-center align-middle">{{ $item->bank_charges }} </td>
+                                                <td class="text-center align-middle">{{ $item->conversion_rate }} </td>
+                                                <td class="text-center align-middle">{{ $item->conversion_rate_diff }}</td>
+                                            @endif
                                         <td class="text-center align-middle">{{ date('d-m-Y', strtotime($item->last_amount_paid_on)) }}</td>
                                     </tr>
                                 @endforeach
