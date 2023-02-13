@@ -202,12 +202,12 @@ class InvoiceService implements InvoiceServiceContract
     }
 
     public function getUpdatedAmountForRemainingInvoice($invoice)
-    {   
+    {
         $amount_paid_till_now = 0;
-        $allInstallmentPayments =$invoice->remainingInvoiceDetails;
-            foreach ($allInstallmentPayments as $detail) {
-                $amount_paid_till_now += $detail->amount_paid_till_now;
-            }
+        $allInstallmentPayments = $invoice->remainingInvoiceDetails;
+        foreach ($allInstallmentPayments as $detail) {
+            $amount_paid_till_now += $detail->amount_paid_till_now;
+        }
         $symbol = '';
         $symbol = (strpos($invoice->display_amount, '$') !== false) ? '$' : ((strpos($invoice->display_amount, '₹') !== false) ? '₹' : '');
         $totalProjectAmount = floatval(str_replace(['$', '₹'], '', $invoice->display_amount)) + floatval($invoice->gst);
@@ -230,20 +230,20 @@ class InvoiceService implements InvoiceServiceContract
         if (isset($data['bank_charges'])) {
             $bankcharges = $data['bank_charges'];
             $conversionRate = $data['conversion_rate'];
-              $conversionRateDiff = $data['conversion_rate_diff'];
+            $conversionRateDiff = $data['conversion_rate_diff'];
         }
         InvoicePaymentsDetails::Create(
             ['invoice_id' => $invoice->id,
-            'amount_paid_till_now' => $data["amount_paid"],
-            'bank_charges' => $bankcharges,  
+            'amount_paid_till_now' => $data['amount_paid'],
+            'bank_charges' => $bankcharges,
             'gst' =>  $invoice->gst,
             'tds' => $invoice->tds,
             'conversion_rate' => $conversionRate,
             'conversion_rate_diff' => $conversionRateDiff,
-            'comments' => $data["comments"],
+            'comments' => $data['comments'],
             'last_amount_paid_on' => $data['payment_at'],
              ]
-        );  
+        );
     }
 
     public function getPaymentReceivedEmailForInvoice(Invoice $invoice)
