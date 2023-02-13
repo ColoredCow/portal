@@ -60,6 +60,11 @@ class Project extends Model implements Auditable
         return $this->hasMany(ProjectResourceRequirement::class);
     }
 
+    public function getRequirementByDesignation($designationName)
+    {
+       return $this->resourceRequirement()->where('designation', $designationName)->first();
+    }
+
     public function client()
     {
         return $this->belongsTo(Client::class);

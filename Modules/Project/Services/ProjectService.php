@@ -292,29 +292,28 @@ class ProjectService implements ProjectServiceContract
         if (isset($data['designation'])) {
             $needed = $data['needed'];
 
-            $designationMap = array_keys(config('project.designation'));
+            $designationMap = config('project.designation');
             $project_id = $project->id;
 
             foreach ($designationMap as $key => $value) {
-                $designation = $designationMap[$key] ?? $value;
 
                 $projectResourceRequirement = ProjectResourceRequirement::where([
                     ['project_id', '=', $project_id],
-                    ['designation', '=', $designation],
+                    ['designation', '=', $key],
                 ])->first();
 
-                if (empty($needed[$designation])) {
-                    $needed[$designation] = 0;
+                if (empty($needed[$key])) {
+                    $needed[$key] = 0;
                 }
 
                 if ($projectResourceRequirement === null) {
                     $requirement = new ProjectResourceRequirement();
                     $requirement->project_id = $project_id;
-                    $requirement->designation = $designation;
-                    $requirement->total_requirement = $needed[$designation];
+                    $requirement->designation = $key;
+                    $requirement->total_requirement = $needed[$key];
                     $requirement->save();
                 } else {
-                    $projectResourceRequirement->total_requirement = $needed[$designation];
+                    $projectResourceRequirement->total_requirement = $needed[$key];
                     $projectResourceRequirement->save();
                 }
             }
