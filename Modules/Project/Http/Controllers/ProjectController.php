@@ -10,7 +10,6 @@ use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Modules\Project\Entities\ProjectResourceRequirement;
 
 class ProjectController extends Controller
 {

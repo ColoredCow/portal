@@ -296,7 +296,6 @@ class ProjectService implements ProjectServiceContract
             $project_id = $project->id;
 
             foreach ($designationMap as $key => $value) {
-
                 $projectResourceRequirement = ProjectResourceRequirement::where([
                     ['project_id', '=', $project_id],
                     ['designation', '=', $key],

@@ -62,7 +62,7 @@ class Project extends Model implements Auditable
 
     public function getRequirementByDesignation($designationName)
     {
-       return $this->resourceRequirement()->where('designation', $designationName)->first();
+        return $this->resourceRequirement()->where('designation', $designationName)->first();
     }
 
     public function client()
