@@ -14,8 +14,8 @@
                     </select>
                 </div>
             </div>
-            <div class="col-md-2 col-lg-4 offset-md-3" v-if="status === 'partially_paid' || status === 'paid'">
-                <a class="btn btn-sm btn-info text-white mr-4 font-weight-bold" data-toggle="modal" data-target="#invoiceModal">  {{ __('Click On To Get Last Payments') }}</a>
+            <div class="col-md-1 col-lg-4 offset-md-3" v-if="status === 'partially_paid' || status === 'paid'">
+                <a class="btn btn-sm btn-info text-white mr-4 font-weight-bold" data-toggle="modal" data-target="#invoiceModal">{{ __('Click On To Get Last Payments') }}</a>
             </div>
         </div>
 

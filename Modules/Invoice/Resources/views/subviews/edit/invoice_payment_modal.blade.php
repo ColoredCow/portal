@@ -10,10 +10,9 @@
             <div class="modal-body">
                 @if(count($invoiceValue['allInstallmentPayments'])>0)
                     <div class="table-responsive">
-                        <table class="table table-lg">
-                            <thead>
+                        <table class="table table-lg table-striped">
+                            <thead class="thead-dark">
                                 <tr>
-                                    <th class="text-center align-middle">S.No.</th>
                                     <th class="text-center align-middle">Last Payments</th>
                                     @if($invoiceValue['symbol']=='$')
                                         <th class="text-center align-middle">Bank Charges</th>
@@ -26,7 +25,6 @@
                             <tbody>
                                 @foreach ($invoiceValue['allInstallmentPayments'] as $key=> $item)
                                     <tr>
-                                        <td class="text-center align-middle">{{ $key+1 }}</td>
                                         <td class="text-center align-middle">{{ $item->amount_paid_till_now }} {{$invoiceValue['symbol']}}</td>
                                         @if($invoiceValue['symbol']=='$')
                                             <td class="text-center align-middle">{{ $item->bank_charges }} </td>
