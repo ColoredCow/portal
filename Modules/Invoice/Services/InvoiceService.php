@@ -204,8 +204,8 @@ class InvoiceService implements InvoiceServiceContract
     public function getUpdatedAmountForRemainingInvoice($invoice)
     {
         $amount_paid_till_now = 0;
-        $allInstallmentPayments = $invoice->remainingInvoiceDetails->sortByDesc(function($lastPaymentsDates) {
-        return $lastPaymentsDates->created_at;
+        $allInstallmentPayments = $invoice->remainingInvoiceDetails->sortByDesc(function ($lastPaymentsDates) {
+            return $lastPaymentsDates->created_at;
         });
         foreach ($allInstallmentPayments as $detail) {
             $amount_paid_till_now += $detail->amount_paid_till_now;
