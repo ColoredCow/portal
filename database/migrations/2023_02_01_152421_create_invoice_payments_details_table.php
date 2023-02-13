@@ -20,8 +20,8 @@ class CreateInvoicePaymentsDetailsTable extends Migration
             $table->text('amount_paid_till_now')->nullable();
             $table->text('gst')->nullable();
             $table->text('bank_charges')->nullable();
-		    $table->text('conversion_rate')->nullable();
-		    $table->text('conversion_rate_diff')->nullable();
+	    $table->text('conversion_rate')->nullable();
+            $table->text('conversion_rate_diff')->nullable();
             $table->text('tds')->nullable();
             $table->text('comments')->nullable();
             $table->date('last_amount_paid_on')->nullable();
