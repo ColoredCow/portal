@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRemainingInvoiceDetailsTable extends Migration
+class CreateInvoicePaymentsDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,17 @@ class CreateRemainingInvoiceDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('remaining_invoice_details', function (Blueprint $table) {
+        Schema::create('invoice_payments_details', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('invoice_id')->unsigned();
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->text('amount_paid_till_now')->nullable();
+            $table->text('gst')->nullable();
+            $table->text('bank_charges')->nullable();
+		    $table->text('conversion_rate')->nullable();
+		    $table->text('conversion_rate_diff')->nullable();
+            $table->text('tds')->nullable();
+            $table->text('comments')->nullable();
             $table->date('last_amount_paid_on')->nullable();
             $table->softDeletes();
             $table->timestamps();
@@ -31,6 +37,6 @@ class CreateRemainingInvoiceDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('remaining_invoice_details');
+        Schema::dropIfExists('invoice_payments_details');
     }
 }

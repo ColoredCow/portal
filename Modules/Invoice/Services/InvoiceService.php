@@ -24,7 +24,7 @@ use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Project\Entities\Project;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
 use Modules\Invoice\Entities\LedgerAccount;
-use App\Models\RemainingInvoiceDetails;
+use App\Models\InvoicePaymentsDetails;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -165,7 +165,7 @@ class InvoiceService implements InvoiceServiceContract
     public function update($data, $invoice)
     {
         $invoiceValue = $this->getUpdatedAmountForRemainingInvoice($invoice);
-        if (floatval($invoice->amount + $invoice->gst) === floatval($invoiceValue['lastPaymentAmount'] + $data['amount_paid'])) {
+        if (floatval($invoice->amount + $invoice->gst) === floatval($invoiceValue['amount_paid_till_now'] + $data['amount_paid'])) {
             $data['status'] = 'paid';
         }
         $this->updateOrCreateInvoiceRemainingDetails($data, $invoice);
@@ -202,37 +202,48 @@ class InvoiceService implements InvoiceServiceContract
     }
 
     public function getUpdatedAmountForRemainingInvoice($invoice)
-    {
+    {   
+        $amount_paid_till_now = 0;
+        $allInstallmentPayments =$invoice->remainingInvoiceDetails;
+            foreach ($allInstallmentPayments as $detail) {
+                $amount_paid_till_now += $detail->amount_paid_till_now;
+            }
         $symbol = '';
-        $lastPaymentAmount = 0;
         $symbol = (strpos($invoice->display_amount, '$') !== false) ? '$' : ((strpos($invoice->display_amount, '₹') !== false) ? '₹' : '');
         $totalProjectAmount = floatval(str_replace(['$', '₹'], '', $invoice->display_amount)) + floatval($invoice->gst);
-        if ($invoice->remainingInvoiceDetails) {
-            $lastPaymentAmount = $invoice->remainingInvoiceDetails->amount_paid_till_now;
-            $remainingAmount = $totalProjectAmount - $lastPaymentAmount;
-        } else {
-            $remainingAmount = $totalProjectAmount;
-        }
-        $showMailOption = ($remainingAmount !== 0.0) || ($invoice->payment_confirmation_mail_sent === 0);
+        $showMailOption = ($invoice->status == 'paid') && ($invoice->payment_confirmation_mail_sent === 1);
 
         return [
-            'lastPaymentAmount' => $lastPaymentAmount,
-            'remainingAmount' => $remainingAmount,
             'symbol' => $symbol,
             'showMailOption' => $showMailOption,
+            'amount_paid_till_now' => $amount_paid_till_now,
             'totalProjectAmount' => $totalProjectAmount,
+            'allInstallmentPayments' => $allInstallmentPayments,
         ];
     }
 
     public function updateOrCreateInvoiceRemainingDetails($data, $invoice)
     {
-        $updatedAmount = ($invoice->remaininginvoicedetails) ? ($data['amount_paid'] + $invoice->remaininginvoicedetails->amount_paid_till_now) : $data['amount_paid'];
-        RemainingInvoiceDetails::updateOrCreate(
-            ['invoice_id' => $invoice->id],
-            ['amount_paid_till_now' => $updatedAmount,
-             'last_amount_paid_on' => $data['receivable_date']
-            ]
-        );
+        $bankcharges = $invoice->bank_charges;
+        $conversionRate = $invoice->conversion_rate;
+        $conversionRateDiff = $invoice->conversion_rate_diff;
+        if (isset($data['bank_charges'])) {
+            $bankcharges = $data['bank_charges'];
+            $conversionRate = $data['conversion_rate'];
+              $conversionRateDiff = $data['conversion_rate_diff'];
+        }
+        InvoicePaymentsDetails::Create(
+            ['invoice_id' => $invoice->id,
+            'amount_paid_till_now' => $data["amount_paid"],
+            'bank_charges' => $bankcharges,  
+            'gst' =>  $invoice->gst,
+            'tds' => $invoice->tds,
+            'conversion_rate' => $conversionRate,
+            'conversion_rate_diff' => $conversionRateDiff,
+            'comments' => $data["comments"],
+            'last_amount_paid_on' => $data['payment_at'],
+             ]
+        );  
     }
 
     public function getPaymentReceivedEmailForInvoice(Invoice $invoice)

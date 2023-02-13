@@ -14,6 +14,9 @@
                     </select>
                 </div>
             </div>
+            <div class="col-md-2 col-lg-4 offset-md-3" v-if="status === 'partially_paid' || status === 'paid'">
+                <a class="btn btn-sm btn-info text-white mr-4 font-weight-bold" data-toggle="modal" data-target="#invoiceModal">  {{ __('Click On To Get Last Payments') }}</a>
+            </div>
         </div>
 
         <div class="form-row mb-4">
@@ -170,7 +173,7 @@
                 </div>
             </div>
             <div v-if="status == 'partially_paid' || status == 'paid'">
-                @if($invoiceValue['showMailOption'])
+                @if(!$invoiceValue['showMailOption'])
                     <input type="checkbox" id="showEmail" class="ml-auto" name="send_mail">
                     <label for="showEmail" class="mx-1 pt-1">{{ __('Send Confirmation Mail') }}</label>
                     <i class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal" data-target="#paymentReceived"></i>
@@ -223,7 +226,7 @@
 
         remainingPayment(){
             if (!this.amountPaid) {
-                this.remainingAmount = (this.totalProjectAmount - this.previousAmount).toFixed(2);
+                (this.remainingAmount).toFixed(2)
             } else {
                 this.remainingAmount = (this.totalProjectAmount - (parseFloat(this.amountPaid) + parseFloat(this.previousAmount))).toFixed(2);
             }
@@ -318,16 +321,17 @@
             amount:"{{ $invoice->amount }}",
             sent_on:"{{ $invoice->sent_on->format('Y-m-d') }}",
             due_on:"{{ $invoice->due_on->format('Y-m-d') }}",
-            amountPaid: "{{ $invoice->amount_paid }}",
+            amountPaid: "{{''}}",
             bankCharges: "{{ $invoice->bank_charges }}",
             conversionRateDiff: "{{ $invoice->conversion_rate_diff }}",
             conversionRate: "{{ $invoice->conversion_rate }}",
             tds: "{{ $invoice->tds }}",
             tdsPercentage: "{{ $invoice->tds_percentage }}",
             show_on_select: true,
-            remainingAmount: "{{$invoiceValue['remainingAmount']}}",
-            previousAmount: "{{$invoiceValue['lastPaymentAmount']}}",
+            remainingAmount: "{{$invoiceValue['totalProjectAmount'] - $invoiceValue['amount_paid_till_now']}}",
+            previousAmount: "{{$invoiceValue['amount_paid_till_now']}}",
             totalProjectAmount: "{{$invoiceValue['totalProjectAmount']}}",
+            allInstallmentPayments: "{{$invoiceValue['allInstallmentPayments']}}",
         }
     },
 
@@ -344,5 +348,5 @@
 });
 
 </script>
-
+@include('invoice::subviews.edit.invoice_payment_modal')
 @endsection
