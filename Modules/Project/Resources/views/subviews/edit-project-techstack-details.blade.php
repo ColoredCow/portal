@@ -7,7 +7,7 @@
             <div class="form-group row m-5">
                 <label for="language" class="col-sm-4 col-form-label m-4">Language</label>
                 <div class="col-sm-6 m-4">
-                    <input type="text" name="language" class="form-control" id="language" placeholder="Language">
+                    <input type="text" name="language" class="form-control" id="language" placeholder="Language" value="{{old('language')}}">
                 </div>
             </div>
             <div class="form-group row m-5">

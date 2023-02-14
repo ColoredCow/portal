@@ -12,12 +12,12 @@ class CodeTrekRequest extends FormRequest
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'email_id' => 'required|email',
-            'phone' => 'required|numeric',
+            'phone' => 'nullable|numeric',
             'github_username' => 'required|string',
             'start_date' => 'required|date',
-            'university_name' => 'required|string',
-            'course' => 'required|string',
-            'graduation_year' => 'required|numeric|digits:4',
+            'university_name' => 'nullable|string',
+            'course' => 'nullable|string',
+            'graduation_year' => 'nullable|numeric|digits:4',
         ];
     }
 
