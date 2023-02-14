@@ -62,9 +62,9 @@ class CodeTrekController extends Controller
      * Update the specified resource in storage.
      * @param int $id
      */
-    public function update(CodeTrekRequest $request, $id, CodeTrekService $service)
+    public function update(CodeTrekRequest $request, CodeTrekApplicant $applicant)
     {
-        $this->service->update($request->all(), $id);
+        $this->service->update($request->all(), $applicant);
 
         return redirect()->route('codetrek.index');
     }

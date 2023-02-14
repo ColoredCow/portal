@@ -29,15 +29,15 @@ class CodeTrekService
 
         return $applicant;
     }
-    public function edit($data)
+    public function edit($codeTrekApplicant)
     {
-        $data = CodeTrekApplicant::find($data->id);
+        $codeTrekApplicant = CodeTrekApplicant::find($codeTrekApplicant->id);
 
-        return $data;
+        return $codeTrekApplicant;
     }
-    public function update($data, $id)
+    public function update($data,$codeTrekApplicant)
     {
-        $applicant = CodeTrekApplicant::findOrFail($id);
+        $applicant = CodeTrekApplicant::findOrFail($codeTrekApplicant->id);
         $applicant->first_name = $data['first_name'];
         $applicant->last_name = $data['last_name'];
         $applicant->email = $data['email_id'];
