@@ -35,7 +35,7 @@ class CodeTrekService
 
         return $codeTrekApplicant;
     }
-    public function update($data,$codeTrekApplicant)
+    public function update($data, $codeTrekApplicant)
     {
         $applicant = CodeTrekApplicant::findOrFail($codeTrekApplicant->id);
         $applicant->first_name = $data['first_name'];
