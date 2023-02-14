@@ -19,7 +19,7 @@
                   @foreach ($designationKeys as $designationName)
                     <tr>
                       <td><input type="text" name="designation[]" class="form-control" value="{{ $designations[$designationName]}}" readonly></td>
-                      <td><input type="text" name="needed[{{$designationName}}]" class="form-control" value="{{ ($requirement = $project->getRequirementByDesignation($designationName)) ? $requirement->total_requirement : '' }}"></td>
+                      <td><input type="text" name="needed[{{$designationName}}]" class="form-control" value="{{ optional($project->getResourceRequirementByDesignation($designationName))->total_requirement ?? 0 }}"></td>
                       <td><input type="text" name="deployed" class="form-control" disabled></td>
                       <td><input type="text" name="to-be-deployed" class="form-control" disabled></td>
                     </tr>
