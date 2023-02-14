@@ -293,11 +293,11 @@ class ProjectService implements ProjectServiceContract
             $needed = $data['needed'];
 
             $designationMap = config('project.designation');
-            $project_id = $project->id;
+            $projectId = $project->id;
 
             foreach ($designationMap as $key => $value) {
                 $projectResourceRequirement = ProjectResourceRequirement::where([
-                    ['project_id', '=', $project_id],
+                    ['project_id', '=', $projectId],
                     ['designation', '=', $key],
                 ])->first();
 
@@ -307,7 +307,7 @@ class ProjectService implements ProjectServiceContract
 
                 if ($projectResourceRequirement === null) {
                     $requirement = new ProjectResourceRequirement();
-                    $requirement->project_id = $project_id;
+                    $requirement->project_id = $projectId;
                     $requirement->designation = $key;
                     $requirement->total_requirement = $needed[$key];
                     $requirement->save();
