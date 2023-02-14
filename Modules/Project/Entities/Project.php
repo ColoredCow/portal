@@ -400,6 +400,7 @@ class Project extends Model implements Auditable
         if ($this->serviceRateTermFromProject_Billing_DetailsTable() == 'per_hour') {
             return $amcBillableHours * $clientFrequency;
         }
+
         return '';
     }
 
