@@ -397,7 +397,10 @@ class Project extends Model implements Auditable
         $amcBillableHours = $this->getBillableHoursForMonth($monthToSubtract, $periodStartDate, $periodEndDate);
         $clientFrequency = $this->client->billingDetails->billing_frequency;
 
-        return $amcBillableHours * $clientFrequency;
+        if($this->serviceRateTermFromProject_Billing_DetailsTable() == 'per_hour') {
+            return $amcBillableHours * $clientFrequency;
+        }
+        return '';
     }
 
     public function serviceRateFromProject_Billing_DetailsTable()
