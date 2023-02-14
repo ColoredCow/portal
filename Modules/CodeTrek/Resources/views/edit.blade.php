@@ -3,8 +3,9 @@
 
 <div class="container" id="update_details">
     <div  class="card-body">
-        <form action="{{route('codetrek.update', $applicant->id)}}" method="POST" id='update_form' enctype="multipart/form-data">
+        <form action="{{route('codetrek.update', $applicant)}}" method="POST" id='updateForm' enctype="multipart/form-data">
             @csrf
+            <input type="hidden" name="codetrek" value="applicant->id">
             <div class="card-body">
                 <h4 class="mb-3 font-weight-bold">Edit Applicant information</h4>
                 @if ($errors->any())
@@ -71,7 +72,7 @@
                             </select>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary save-btn" >Save</button>
+                    <button type="submit" class="btn btn-primary save-btn">Save</button>
             </div>
         </form>
     </div>

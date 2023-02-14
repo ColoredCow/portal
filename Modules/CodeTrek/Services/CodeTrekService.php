@@ -29,11 +29,11 @@ class CodeTrekService
 
         return $applicant;
     }
-    public function edit($id)
+    public function edit($data)
     {
-        $applicant = CodeTrekApplicant::find($id);
+        $data = CodeTrekApplicant::find($data->id);
 
-        return $applicant;
+        return $data;
     }
     public function update($data, $id)
     {
