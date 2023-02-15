@@ -44,7 +44,7 @@
                 <tbody>
                     @foreach ($applicants as $applicant )
                         <tr>
-                            <td>{{$applicant->first_name}} {{$applicant->last_name}}</td>
+                            <td><a href="{{route('codetrek.edit', $applicant->id) }}">{{$applicant->first_name}} {{$applicant->last_name}}</a></td>
                             <td>-</td>
                             <td>{{ config('codetrek.status.' . $applicant->status . '.label') }}</td>
                             <td>-</td>
