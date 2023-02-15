@@ -4,6 +4,8 @@ namespace Modules\CodeTrek\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Modules\CodeTrek\Entities\CodeTrekApplicant;
+use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 use Modules\CodeTrek\Services\CodeTrekService;
 
 class CodeTrekController extends Controller
@@ -49,16 +51,22 @@ class CodeTrekController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(CodeTrekApplicant $applicant)
     {
+        $this->service->edit($applicant);
+
+        return view('codetrek::edit')->with('applicant', $applicant);
     }
 
     /**
      * Update the specified resource in storage.
-     * @param int $id
+     * @param CodeTrekRequest $request
      */
-    public function update($id)
+    public function update(CodeTrekRequest $request, CodeTrekApplicant $applicant)
     {
+        $this->service->update($request->all(), $applicant);
+
+        return redirect()->route('codetrek.index');
     }
 
     /**
