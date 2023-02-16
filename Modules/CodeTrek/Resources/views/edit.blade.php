@@ -73,6 +73,7 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary save-btn">Save</button>
+                    <a href="{{ route('codetrek.delete', $applicant) }}" class="btn btn-danger save-btn">Delete</a>
             </div>
         </form>
     </div>
