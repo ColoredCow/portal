@@ -20,8 +20,8 @@
                     <tr>
                       <td><input type="text" name="designation[]" class="form-control" value="{{ $designations[$designationName]}}" readonly></td>
                       <td><input type="text" name="needed[{{$designationName}}]" class="form-control" value="{{ optional($project->getResourceRequirementByDesignation($designationName))->total_requirement ?? 0 }}"></td>
-                      <td><input type="text" name="deployed" class="form-control" disabled></td>
-                      <td><input type="text" name="to-be-deployed" class="form-control" disabled></td>
+                      <td><input type="text" name="deployed{{$designationName}}" class="form-control" value="{{$designationCount[$designationName] ?? 0}}" disabled></td>
+                      <td><input type="text" name="to-be-deployed[{{$designationName}}]" class="form-control" value="{{ max(0, optional($project->getResourceRequirementByDesignation($designationName))->total_requirement - ($designationCount[$designationName] ?? 0)) }}" disabled></td>
                     </tr>
                   @endforeach
                 </tbody>
