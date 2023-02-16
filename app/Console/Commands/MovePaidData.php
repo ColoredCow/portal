@@ -59,4 +59,3 @@ class MovePaidData extends Command
         return InvoicePaymentsDetails::insert($mappedData->toArray());
     }
 }
-
