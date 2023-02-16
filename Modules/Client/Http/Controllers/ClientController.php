@@ -2,8 +2,8 @@
 
 namespace Modules\Client\Http\Controllers;
 
-use Modules\Client\Entities\Client;
 use Modules\Client\Contracts\ClientServiceContract;
+use Modules\Client\Entities\Client;
 use Modules\Client\Http\Requests\ClientFormsRequest;
 use Modules\Client\Http\Requests\ClientRequest;
 use Modules\Client\Rules\ClientNameExist;

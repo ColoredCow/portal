@@ -11,6 +11,7 @@ class InfrastructureController extends Controller
 {
     protected $sdk;
     protected $service;
+
     use AuthorizesRequests;
 
     public function __construct(InfrastructureServiceContract $service)

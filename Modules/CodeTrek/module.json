@@ -1,0 +1,13 @@
+{
+    "name": "CodeTrek",
+    "alias": "codetrek",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\CodeTrek\\Providers\\CodeTrekServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
