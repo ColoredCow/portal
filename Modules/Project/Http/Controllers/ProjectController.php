@@ -12,7 +12,6 @@ use Modules\Project\Contracts\ProjectServiceContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 
-
 class ProjectController extends Controller
 {
     use AuthorizesRequests;
