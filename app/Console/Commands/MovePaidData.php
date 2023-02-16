@@ -56,6 +56,7 @@ class MovePaidData extends Command
             ];
         });
 
-        return InvoicePaymentsDetails::insert($mappedData->toArray());
+        InvoicePaymentsDetails::insert($mappedData->toArray());
+        return 0;
     }
 }
