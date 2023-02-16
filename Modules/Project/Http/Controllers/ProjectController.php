@@ -111,7 +111,7 @@ class ProjectController extends Controller
     {
         $designations = $this->service->getDesignations();
         $designationKeys = array_keys($designations);
-        $designationCount=[];
+        $designationCount = [];
         $deployedCount = DB::table('project_team_members')
                 ->select('designation', DB::raw('Count(designation) as count'))
                 ->where('project_id', '=', $project->id)
@@ -121,7 +121,7 @@ class ProjectController extends Controller
         foreach ($deployedCount as $designation) {
             $designationCount[$designation->designation] = $designation->count;
         }
- 
+
         return view('project::edit', [
             'project' => $project,
             'clients' => Client::orderBy('name')->get(),
