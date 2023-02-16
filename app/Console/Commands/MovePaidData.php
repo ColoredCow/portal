@@ -39,8 +39,8 @@ class MovePaidData extends Command
      */
     public function handle()
     {
-        $paidData = Invoice::where('status', 'paid')->get(['id','status', 'gst', 'comments', 'bank_charges', 'conversion_rate_diff', 'conversion_rate', 'tds', 'tds_percentage', 'payment_at']);
-        
+        $paidData = Invoice::where('status', 'paid')->get(['id', 'status', 'gst', 'comments', 'bank_charges', 'conversion_rate_diff', 'conversion_rate', 'tds', 'tds_percentage', 'payment_at']);
+
         $mappedData = $paidData->map(function ($item) {
             return [
                 'invoice_id' => $item['id'],
@@ -55,8 +55,8 @@ class MovePaidData extends Command
                 'last_amount_paid_on' => $item['payment_at']
             ];
         });
-        
-       return InvoicePaymentsDetails::insert($mappedData->toArray());
+
+        return InvoicePaymentsDetails::insert($mappedData->toArray());
     }
-    
 }
+
