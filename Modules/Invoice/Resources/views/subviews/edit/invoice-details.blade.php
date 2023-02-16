@@ -14,8 +14,8 @@
                     </select>
                 </div>
             </div>
-            <div class="col-md-1 col-lg-4 offset-md-3" v-if="status === 'partially_paid' || status === 'paid'">
-                <a class="btn btn-sm btn-info text-white mr-4 font-weight-bold" data-toggle="modal" data-target="#invoiceModal">{{ __('Click On To Get Last Payments') }}</a>
+            <div class="col-md-2 col-lg-3 offset-md-4" v-if="status === 'partially_paid' || status === 'paid'">
+                <a class="btn btn-sm btn-info text-white mr-4 font-weight-bold" data-toggle="modal" data-target="#invoiceModal">{{ __('Payments History') }}</a>
             </div>
         </div>
 
@@ -226,7 +226,7 @@
 
         remainingPayment(){
             if (!this.amountPaid) {
-                (this.remainingAmount).toFixed(2)
+                this.remainingAmount=(this.totalProjectAmount - this.previousAmount).toFixed(2)
             } else {
                 this.remainingAmount = (this.totalProjectAmount - (parseFloat(this.amountPaid) + parseFloat(this.previousAmount))).toFixed(2);
             }
@@ -241,12 +241,21 @@
         },
 
         updateTds() {
-            this.tds = this.amount - this.amountPaid + (this.amount * 0.18)
-            this.tdsPercentage = (this.tds/this.amount) * 100
+            if(!this.amountPaid){
+                this.tds = '',
+                this.tdsPercentage = ''
+            }else{
+                this.tds = this.amount - this.amountPaid + (this.amount * 0.18)
+                this.tdsPercentage = (this.tds/this.amount) * 100
+            }
         },
 
         updateBankCharges() {
-            this.bankCharges = this.amount - this.amountPaid
+            if(!this.amountPaid){
+                this.bankCharges = '';
+            }else{
+                this.bankCharges = this.amount - this.amountPaid;
+            }
         },
 
         showEmail($event) {
@@ -316,17 +325,17 @@
             amountPaidText:"|*amount_paid*|",  
             currentExchangeRate: "{{ $currencyService->getCurrentRatesInINR() }}",
             currencyTransactionCharge:"{{ $invoice->currency_transaction_charge ? : $invoice->currency }}",
-            comments:`{{ $invoice->comments }}`,
+            comments:`{{''}}`,
             status:"{{ $invoice->status }}",
             amount:"{{ $invoice->amount }}",
             sent_on:"{{ $invoice->sent_on->format('Y-m-d') }}",
             due_on:"{{ $invoice->due_on->format('Y-m-d') }}",
             amountPaid: "{{''}}",
-            bankCharges: "{{ $invoice->bank_charges }}",
-            conversionRateDiff: "{{ $invoice->conversion_rate_diff }}",
-            conversionRate: "{{ $invoice->conversion_rate }}",
-            tds: "{{ $invoice->tds }}",
-            tdsPercentage: "{{ $invoice->tds_percentage }}",
+            bankCharges: "{{ '' }}",
+            conversionRateDiff: "{{''}}",
+            conversionRate: "{{''}}",
+            tds: "{{''}}",
+            tdsPercentage: "{{''}}",
             show_on_select: true,
             remainingAmount: "{{$invoiceValue['totalProjectAmount'] - $invoiceValue['amount_paid_till_now']}}",
             previousAmount: "{{$invoiceValue['amount_paid_till_now']}}",

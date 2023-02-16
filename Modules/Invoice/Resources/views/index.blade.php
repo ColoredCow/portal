@@ -71,7 +71,7 @@
                         @if (request()->invoice_status == "sent" || $invoiceStatus == 'sent')
                             <th>Sent on</th>
                             <th>Due on</th>
-                            <th>Paid on</th>
+                            <th>{{ request()->status === 'partially_paid' ? 'Last Partially Paid on' : 'Paid on' }}</th>
                             <th>Status</th>
                             <th>Email</th>
                         @elseif (request()->invoice_status == "ready")
@@ -117,7 +117,7 @@
                                     {{ $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '' }}
                                 </td>
                                 <td class="{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger' : '' }}{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : ($invoice->status == 'partially_paid' ? 'partially_paid' : '' ) }} text-center">
-                                    {{ $invoice->shouldHighlighted() ? __('Overdue') : (($invoice->status) ? $invoice->status=='partially_paid' ? 'Partillay Paid' : $invoice->status :'')}}
+                                    {{ $invoice->shouldHighlighted() ? __('Overdue') : (($invoice->status) ? $invoice->status=='partially_paid' ? 'Partillay Paid' : 'Paid' :'')}}
                                 </td>
                                 <td class="text-center">
                                     @if($invoice->reminder_mail_count)

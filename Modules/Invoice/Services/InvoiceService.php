@@ -204,11 +204,13 @@ class InvoiceService implements InvoiceServiceContract
     public function getUpdatedAmountForRemainingInvoice($invoice)
     {
         $amount_paid_till_now = 0;
-        $allInstallmentPayments = $invoice->remainingInvoiceDetails->sortByDesc(function ($lastPaymentsDates) {
-            return $lastPaymentsDates->created_at;
+        $comments = '';
+        $allInstallmentPayments = $invoice->remainingInvoiceDetails->sortByDesc(function ($details) {
+            return $details->created_at;
         });
-        foreach ($allInstallmentPayments as $detail) {
-            $amount_paid_till_now += $detail->amount_paid_till_now;
+        foreach ($allInstallmentPayments as $data) {
+            $amount_paid_till_now += $data->amount_paid_till_now;
+            $comments = $data->comments;
         }
         $symbol = '';
         $symbol = (strpos($invoice->display_amount, '$') !== false) ? '$' : ((strpos($invoice->display_amount, '₹') !== false) ? '₹' : '');
@@ -221,6 +223,7 @@ class InvoiceService implements InvoiceServiceContract
             'amount_paid_till_now' => $amount_paid_till_now,
             'totalProjectAmount' => $totalProjectAmount,
             'allInstallmentPayments' => $allInstallmentPayments,
+            'comments' => $comments,
         ];
     }
 
@@ -237,6 +240,7 @@ class InvoiceService implements InvoiceServiceContract
         InvoicePaymentsDetails::Create(
             ['invoice_id' => $invoice->id,
             'amount_paid_till_now' => $data['amount_paid'],
+            'status' => $invoice->status,
             'bank_charges' => $bankcharges,
             'gst' =>  $invoice->gst,
             'tds' => $invoice->tds,
