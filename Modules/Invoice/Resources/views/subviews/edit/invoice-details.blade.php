@@ -1,6 +1,5 @@
 <div id="edit_invoice_details_form">
     <div class="card-body">
-
         <div class="form-row mb-4">
             <div class="col-md-5">
                 <div class="form-group d-flex">
@@ -290,8 +289,6 @@
             for (var index = 0; index < totalNumbersInList; index++) {
                 if (this.client.type == 'indian') {
                     if (index == totalNumbersInList - 1) {
-                        this.amountPaid = filtered_number_list[index]
-                        $('#amountPaid').val(this.amountPaid)
                         emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
                         this.calculateTaxes()
                     }
@@ -299,8 +296,6 @@
                 }
 
                 if (index == 0) {
-                    this.amountPaid = filtered_number_list[index]
-                    $('#amountPaid').val(this.amountPaid)
                     emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
                     this.calculateTaxes()
                 } else if (index == 1) {

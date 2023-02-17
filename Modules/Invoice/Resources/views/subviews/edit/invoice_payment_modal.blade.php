@@ -8,7 +8,7 @@
                         @foreach ($invoiceValue['allInstallmentPayments']->sortByDesc('last_amount_paid_on') as $key=> $item)
                             <div class="card">
                                 <div class="card-header" id="heading-{{$key}}">
-                                    <h5 class="mb-0">
+                                    <h5>
                                         <div class="accordion" data-toggle="collapse" data-target="#collapse-{{$key}}" aria-expanded="false" aria-controls="collapse-{{$key}}" data-parent="#accordion">
                                             {{ "Paid " . $invoiceValue['allInstallmentPayments'][0]['amount_paid_till_now'] . $invoiceValue['symbol'] . " on " . date('d-m-Y', strtotime($invoiceValue['allInstallmentPayments'][0]['last_amount_paid_on']))}}
                                         </div>
@@ -18,11 +18,11 @@
                                     <div class="card-body ">
                                         @if($item->comments)
                                             <div class="card">
-                                                <div class="p-2">
-                                                    <header>Comments :</header>
+                                                <div class="p-1">
+                                                    <header>Comment :</header>
                                                 </div>   
                                                 <div class="card-body text-justify">
-                                                    <li class="text-dark">{{ $item->comments }}</li>
+                                                     <li class="text-dark">{{ $item->comments }}</li>
                                                 </div>
                                             </div>
                                         @endif
