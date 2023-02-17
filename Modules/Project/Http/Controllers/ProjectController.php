@@ -10,6 +10,8 @@ use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\DB;
+use Modules\Project\Entities\ProjectMeta;
 
 class ProjectController extends Controller
 {
@@ -108,6 +110,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $projectmeta = ProjectMeta::where('project_id', $project->id)->get();
+
         return view('project::edit', [
             'project' => $project,
             'clients' => Client::orderBy('name')->get(),
@@ -116,6 +120,7 @@ class ProjectController extends Controller
             'projectRepositories' => $this->service->getProjectRepositories($project),
             'designations' => $this->service->getDesignations(),
             'workingDaysInMonth' => $this->service->getWorkingDays($project),
+            'projectmeta' => $projectmeta,
         ]);
     }
 
