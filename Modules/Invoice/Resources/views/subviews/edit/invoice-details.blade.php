@@ -245,8 +245,8 @@
                 this.tds = '',
                 this.tdsPercentage = ''
             }else{
-                this.tds = this.amount - this.amountPaid + (this.amount * 0.18)
-                this.tdsPercentage = (this.tds/this.amount) * 100
+                this.tds = (this.amount - this.amountPaid + (this.amount * 0.18)).toFixed(2);
+                this.tdsPercentage = ((this.tds/this.amount) * 100).toFixed(2);
             }
         },
 
