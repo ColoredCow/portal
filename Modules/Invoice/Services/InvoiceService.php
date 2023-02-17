@@ -223,35 +223,27 @@ class InvoiceService implements InvoiceServiceContract
             'amount_paid_till_now' => $amount_paid_till_now,
             'totalProjectAmount' => $totalProjectAmount,
             'allInstallmentPayments' => $allInstallmentPayments,
-            'comments' => $comments,
         ];
     }
 
     public function updateOrCreateInvoiceRemainingDetails($data, $invoice)
     {
-        $bankcharges = $invoice->bank_charges;
-        $conversionRate = $invoice->conversion_rate;
-        $conversionRateDiff = $invoice->conversion_rate_diff;
-        if (isset($data['bank_charges'])) {
-            $bankcharges = $data['bank_charges'];
-            $conversionRate = $data['conversion_rate'];
-            $conversionRateDiff = $data['conversion_rate_diff'];
-        }
-        InvoicePaymentsDetails::Create(
-            ['invoice_id' => $invoice->id,
+        InvoicePaymentsDetails::create([
+            'invoice_id' => $invoice->id,
             'amount_paid_till_now' => $data['amount_paid'],
             'status' => $invoice->status,
-            'bank_charges' => $bankcharges,
-            'gst' =>  $invoice->gst,
-            'tds' => $invoice->tds,
-            'conversion_rate' => $conversionRate,
-            'conversion_rate_diff' => $conversionRateDiff,
+            'bank_charges' => $data['bank_charges'] ?? null,
+            'gst' => $invoice->gst ?? null,
+            'tds' => $data['tds'] ?? null,
+            'tds_percentage' => $data['tds_percentage'] ?? null,
+            'conversion_rate' => $data['conversion_rate'] ?? null,
+            'conversion_rate_diff' => $data['conversion_rate_diff'] ?? null,
             'comments' => $data['comments'],
             'last_amount_paid_on' => $data['payment_at'],
-             ]
-        );
-    }
+        ]);
 
+    }
+    
     public function getPaymentReceivedEmailForInvoice(Invoice $invoice)
     {
         $templateVariablesForSubject = config('invoice.templates.setting-key.received-invoice-payment.template-variables.subject');

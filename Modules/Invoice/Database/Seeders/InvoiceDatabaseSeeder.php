@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Models\Permission;
+use Database\Seeders\MovePaidInvoicesToInvoicePaymentsDetailsSeeder;
 
 class InvoiceDatabaseSeeder extends Seeder
 {
@@ -52,5 +53,6 @@ class InvoiceDatabaseSeeder extends Seeder
         foreach ($allfinanceInvoicePermissions as $permission) {
             $financeManagerRole->givePermissionTo($permission);
         }
+        $this->call(MovePaidInvoicesToInvoicePaymentsDetailsSeeder::class);
     }
 }
