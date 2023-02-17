@@ -52,9 +52,9 @@
                                                             <td class="text-center align-middle">{{ $item->conversion_rate }} </td>
                                                             <td class="text-center align-middle">{{ $item->conversion_rate_diff }}</td>
                                                         @else
-                                                            <td class="text-center align-middle">{{ $item->tds }}</td>
-                                                            <td class="text-center align-middle">{{ $item->tds_percentage }}</td>
-                                                            <td class="text-center align-middle">{{ $item->gst }}</td>
+                                                            <td class="text-center align-middle">{{ number_format($item->tds, 2) }}</td>
+                                                            <td class="text-center align-middle">{{ number_format($item->tds_percentage,2) }}</td>
+                                                            <td class="text-center align-middle">{{ number_format($item->gst,2) }}</td>
                                                         @endif
                                                             <td class="text-center align-middle">{{ date('d-m-Y', strtotime($item->last_amount_paid_on)) }}</td>
                                                     </tr>
