@@ -204,13 +204,11 @@ class InvoiceService implements InvoiceServiceContract
     public function getUpdatedAmountForRemainingInvoice($invoice)
     {
         $amount_paid_till_now = 0;
-        $comments = '';
         $allInstallmentPayments = $invoice->remainingInvoiceDetails->sortByDesc(function ($details) {
             return $details->created_at;
         });
         foreach ($allInstallmentPayments as $data) {
             $amount_paid_till_now += $data->amount_paid_till_now;
-            $comments = $data->comments;
         }
         $symbol = '';
         $symbol = (strpos($invoice->display_amount, '$') !== false) ? '$' : ((strpos($invoice->display_amount, '₹') !== false) ? '₹' : '');
@@ -241,9 +239,8 @@ class InvoiceService implements InvoiceServiceContract
             'comments' => $data['comments'],
             'last_amount_paid_on' => $data['payment_at'],
         ]);
-
     }
-    
+
     public function getPaymentReceivedEmailForInvoice(Invoice $invoice)
     {
         $templateVariablesForSubject = config('invoice.templates.setting-key.received-invoice-payment.template-variables.subject');

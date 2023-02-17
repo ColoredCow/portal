@@ -15,19 +15,19 @@ class MovePaidInvoicesToInvoicePaymentsDetailsSeeder extends Seeder
      */
     public function run()
     {
-            $paidInvoices = Invoice::where('status', 'paid')->get();
-            
-            foreach ($paidInvoices as $invoice) {
-                InvoicePaymentsDetails::insert([
-                    'invoice_id' => $invoice->id,
-                    'amount_paid_till_now' => $invoice->amount,
-                    'status' => $invoice->status,
-                    'gst' => $invoice->gst,
-                    'tds' => $invoice->tds,
-                    'tds_percentage' => $invoice->tds_Percentage,
-                    'comments' => $invoice->comments,
-                    'last_amount_paid_on' => $invoice->receivable_date,
-                ]);
-            }
+        $paidInvoices = Invoice::where('status', 'paid')->get();
+
+        foreach ($paidInvoices as $invoice) {
+            InvoicePaymentsDetails::insert([
+                'invoice_id' => $invoice->id,
+                'amount_paid_till_now' => $invoice->amount,
+                'status' => $invoice->status,
+                'gst' => $invoice->gst,
+                'tds' => $invoice->tds,
+                'tds_percentage' => $invoice->tds_Percentage,
+                'comments' => $invoice->comments,
+                'last_amount_paid_on' => $invoice->receivable_date,
+            ]);
+        }
     }
 }
