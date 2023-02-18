@@ -14,13 +14,18 @@ class Job extends Model
 {
     use SoftDeletes, HasFactory;
 
-    protected $fillable = ['opportunity_id', 'title', 'type', 'domain', 'start_date', 'description', 'posted_by', 'link', 'end_date', 'status', 'facebook_post', 'instagram_post', 'twitter_post', 'linkedin_post', 'hr_resource_category_id', 'job_id', 'resources_required'];
+    protected $fillable = ['opportunity_id', 'title', 'type', 'domain', 'start_date', 'description', 'posted_by', 'link', 'end_date', 'status', 'facebook_post', 'instagram_post', 'twitter_post', 'linkedin_post', 'hr_resource_category_id', 'job_id'];
 
     protected $table = 'hr_jobs';
 
     public function applications()
     {
         return $this->hasMany(Application::class, 'hr_job_id');
+    }
+
+    public function jobRequisition()
+    {
+        return $this->hasMany(JobRequisition::class, 'job_id')->where('status', 'pending');
     }
 
     public function rounds()

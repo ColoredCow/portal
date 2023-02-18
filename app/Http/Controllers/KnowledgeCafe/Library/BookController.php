@@ -26,12 +26,22 @@ class BookController extends Controller
     public function index(Request $request, Book $book)
     {
         $this->authorize('list', Book::class);
+        $searchCategory = $request->category_name ?? false;
         $searchString = (request()->has('search')) ? request()->input('search') : false;
         $categories = BookCategory::orderBy('name')->get();
-        if (request()->has('wishlist')) {
-            $books = auth()->user()->booksInWishlist;
-        } else {
-            $books = Book::getList($searchString);
+
+        switch (request()) {
+            case request()->has('wishlist'):
+                $books = auth()->user()->booksInWishlist;
+                break;
+            case request()->has('borrowedBook'):
+                $books = auth()->user()->booksBorrower;
+                break;
+            case request()->has('categoryName'):
+                $books = Book::getByCategoryName($searchCategory);
+                break;
+            default:
+                $books = Book::getList($searchString);
         }
         $loggedInUser = auth()->user();
         $books->load('wishers');
@@ -41,6 +51,9 @@ class BookController extends Controller
         ->get()->count();
         
         return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories', 'review'));
+        $books->load('borrowers');
+
+        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories'));
     }
 
     /**

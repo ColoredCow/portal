@@ -9,6 +9,7 @@ class RecurringExpenseService
     public function index(array $data = [])
     {
         return RecurringExpense::query()
+        ->latest()
         ->paginate(config('constants.pagination_size'));
     }
 

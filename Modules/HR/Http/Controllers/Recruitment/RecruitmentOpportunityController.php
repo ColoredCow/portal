@@ -3,7 +3,6 @@
 namespace Modules\HR\Http\Controllers\Recruitment;
 
 use Illuminate\Support\Facades\Request;
-use Illuminate\Http\Request as HttpRequest;
 use Modules\HR\Entities\Job;
 
 class RecruitmentOpportunityController extends JobController
@@ -21,26 +20,20 @@ class RecruitmentOpportunityController extends JobController
     public function index()
     {
         $this->authorize('list', Job::class);
-
-        $jobs = Job::with('applications', 'applications.applicant')
+        $search = request()->query('title') ?? '';
+        $jobs = Job::with('applications', 'applications.applicant', 'jobRequisition')
             ->typeRecruitment()
-            ->latest()
-            ->paginate(config('constants.pagination_size'))
+            ->latest();
+
+        if ($search != '') {
+            $jobs = $jobs->where('title', 'LIKE', "%$search%")->orwhere('type', 'LIKE', "%$search%");
+        }
+        $jobs = $jobs->paginate(config('constants.pagination_size'))
             ->appends(Request::except('page'));
 
         return view('hr.job.index')->with([
             'jobs' => $jobs,
             'type' => 'recruitment',
         ]);
-    }
-
-    public function resourcesRequiredCount(HttpRequest $request, Job $opportunity)
-    {
-        $validated = $request->validate([
-            'resources_required' => 'required|integer'
-        ]);
-        $opportunity->update($validated);
-
-        return redirect(route('recruitment.opportunities'))->with('status', 'Resources updated successfully!');
     }
 }

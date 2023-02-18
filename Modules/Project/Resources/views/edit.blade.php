@@ -31,6 +31,10 @@
                     <a class="nav-link" data-toggle="pill" data-target="#projectFinancialDetails" type="button"
                         role="tab" aria-selected="false">Project Financial Details</a>
                 </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-toggle="pill" data-target="#projectTechstack" type="button"
+                        role="tab" aria-selected="false">Project Techstack</a>
+                </li>
             </ul>
             @include('status', ['errors' => $errors->all()])
             <div class="tab-content">
@@ -48,6 +52,9 @@
 
                 <div class="tab-pane fade mb-5" id="projectFinancialDetails" role="tabpanel">
                     @include('project::subviews.edit-project-financial-details')
+                </div>
+                <div class="tab-pane fade mb-5" id="projectTechstack" role="tabpanel">
+                    @include('project::subviews.edit-project-techstack-details')
                 </div>
             </div>
         </div>
@@ -139,7 +146,10 @@
                             }
                             $('#edit-project-errors').removeClass('d-none');
                             $('.save-btn').attr('disabled', false);
-                            this.$toast.success('Project details updated!');
+                            if(errors){
+                                var errormessage =  errors[error].join().replace('id','');
+                                this.$toast.error(errormessage);                           
+                            }
                         })
                 },
 

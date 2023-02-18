@@ -2,14 +2,15 @@
 
 namespace Modules\HR\Services;
 
-use Module;
 use App\Models\Tag;
-use Modules\HR\Entities\Job;
-use Modules\User\Entities\User;
+use Carbon\Carbon;
+use Module;
+use Modules\HR\Contracts\ApplicationServiceContract;
 use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Application;
-use Modules\HR\Contracts\ApplicationServiceContract;
+use Modules\HR\Entities\Job;
 use Modules\HR\Events\CustomMailTriggeredForApplication;
+use Modules\User\Entities\User;
 
 class ApplicationService implements ApplicationServiceContract
 {
@@ -92,5 +93,13 @@ class ApplicationService implements ApplicationServiceContract
         // call event that triggers send custom application mail
         $data['mail_sender_name'] = $data['mail_sender_name'] ?? auth()->user()->name;
         event(new CustomMailTriggeredForApplication($application, $data));
+    }
+
+    public function markInterviewFinished($data)
+    {
+        $meetDate = config('timezone');
+        $meetDuration = Carbon::parse($meetDate);
+        $data->actual_end_time = $meetDuration;
+        $data->save();
     }
 }

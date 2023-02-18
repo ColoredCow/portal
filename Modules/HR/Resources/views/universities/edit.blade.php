@@ -8,9 +8,6 @@
         <div class="col-md-6">
             <h1>Edit University</h1>
         </div>
-        <div class="col-md-6">
-            <a href="{{ route('universities.create') }}" class="btn btn-success float-right">Add University</a>
-        </div>
     </div>
     @include('status', ['errors' => $errors->all()])
     <div class="card">
