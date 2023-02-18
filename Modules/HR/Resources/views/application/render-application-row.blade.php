@@ -6,7 +6,6 @@
                 <button class="assignlabels outline-none " title="Assign labels" data-toggle="modal"
                     data-target="#assignlabelsmodal" type="button">{!! file_get_contents(public_path('icons/three-dots-vertical.svg')) !!}</button>
             </div>
-
             @php
                 $formData = $application
                     ->applicationMeta()
@@ -49,11 +48,11 @@
                         class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a>
                     @else
                         <a href="{{ route('applications.internship.edit', $application->id) }}"
-                            class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a>
+                            class="btn-sm btn-primary text-decoration-none " target="_self">Evaluate</a>
                     @endif
                 @else
                     <a data-target="#evaluation{{ $application->id }}" role="button"
-                        class="btn-sm btn-primary text-decoration-none" data-toggle="modal">Evaluate</a>
+                        class="btn-sm btn-primary text-decoration-none c-pointer" data-toggle="modal">Evaluate</a>
                     <div class="modal fade" id="evaluation{{ $application->id }}" tabindex="-1" role="dialog"
                         aria-labelledby="confirmation" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -124,8 +123,8 @@
             <span class="fz-xl-14 text-secondary">Applied on
                 {{ $application->created_at->format(config('constants.display_date_format')) }}</span>
             <span class="font-weight-bold fz-xl-14 text-dark">
-                <span><i
-                        class="fa fa-flag mr-1"></i>{{ $application->latestApplicationRound->round->isTrialRound() ? optional($application->latestApplicationRound->trialRound)->name : $application->latestApplicationRound->round->name }}</span>
+                <span>
+                    <i class="fa fa-flag mr-1"></i>{{ $application->latestApplicationRound->round->isTrialRound() ? optional($application->latestApplicationRound->trialRound)->name : $application->latestApplicationRound->round->name }}</span><br>
                 @if ($application->latestApplicationRound->scheduled_date &&
                     $application->latestApplicationRound->round->name != 'Resume Screening')
                     <p class="ml-3">
@@ -144,6 +143,11 @@
             @if (!in_array($application->status, ['in-progress', 'new']))
                 <span
                     class="{{ config("constants.hr.status.$application->status.class") }} badge-pill mr-1 mb-1 fz-12">{{ config("constants.hr.status.$application->status.title") }}</span>
+            @endif
+            @if ($applicantId != null)
+                @if ($application->hr_applicant_id == $applicantId->hr_applicant_id) 
+                    <span class="{{ config("constants.hr.status.submitted-offer-letter-details.class") }} badge-pill mr-1 mb-1 fz-12"> Submitted Offer Letter Details</span>
+                @endif
             @endif
             @if (!$application->latestApplicationRound->scheduled_date &&
                 $application->latestApplicationRound->round->name != 'Telephonic Interview' &&

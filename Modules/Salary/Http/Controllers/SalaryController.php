@@ -15,6 +15,7 @@ class SalaryController extends Controller
     {
         $this->authorizeResource(EmployeeSalary::class);
     }
+
     use AuthorizesRequests;
     /**
      * Display a listing of the resource.

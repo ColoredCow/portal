@@ -13,10 +13,12 @@ class FinanceReportController extends Controller
     use AuthorizesRequests;
 
     protected $service;
+    protected $reportDataService;
 
     public function __construct(ProfitAndLossReportService $service)
     {
         $this->service = $service;
+        $this->reportDataService = app(ReportDataService::class);
     }
 
     public function dashboard()
@@ -24,26 +26,11 @@ class FinanceReportController extends Controller
         return view('report::finance.dashboard');
     }
 
-    /**
-     * Main function to fetch the P&L report.
-     */
-    public function profitAndLoss()
+    public function clientWiseInvoiceDashboard(Request $request)
     {
-        $this->authorize('finance_reports.view');
-        $currentYear = date('m') > 03 ? date('Y') + 1 : date('Y');
-        $defaultFilters = [
-            'transaction' => 'revenue',
-            'year' => $currentYear,
-        ];
+        $data = $this->reportDataService->getDataForClientRevenueReportPage($request->all());
 
-        $filters = array_merge($defaultFilters, request()->all());
-        $reportData = $this->service->profitAndLoss($filters);
-
-        $allAmounts = array_map(function ($item) {
-            return $item['amounts'];
-        }, $reportData);
-
-        return view('report::finance.profit-and-loss', ['reportData' => $reportData, 'currentYear' => $currentYear, 'allAmounts' => $allAmounts]);
+        return view('report::finance.client-wise-revenue.index', $data);
     }
 
     public function getReportData(Request $request)
@@ -51,6 +38,6 @@ class FinanceReportController extends Controller
         $type = $request->type;
         $filters = $request->filters;
 
-        return app(ReportDataService::class)->getData($type, $filters);
+        return $this->reportDataService->getData($type, json_decode($filters, true));
     }
 }

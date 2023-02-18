@@ -16,7 +16,7 @@ class ProfileEditRequest extends FormRequest
         return [
             'name' => 'required|regex:/^[a-zA-Z ]+$/',
             'nickName' => 'required|regex:/^[a-zA-Z ]+$/',
-            'designation' => 'required|string',
+            'designationId' => 'exists:hr_job_designation,id',
             'domainId' => 'exists:hr_job_domains,id'
         ];
     }

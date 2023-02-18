@@ -6,7 +6,7 @@
         <table class="table table-bordered table-striped">
 			<thead class="thead-dark">
 				<tr>
-					<th width="20%">User Name</th>
+					<th width="20%">User Name </th>
 					<th width="35%">User Roles</th>
 					<th>Actions</th>
 				</tr>
@@ -42,7 +42,12 @@
 
                         <div >
                             <button v-show="userPermissions['can-assign-roles']" class="btn btn-sm btn-outline-info mr-4" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">Manage user roles</button>
-                            <button v-show="userPermissions['can-delete'] && user.id !== authUser.id" type="button" class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#deleteUserModal" @click="setIndex(index)">Remove user</button>
+                            <button v-show="userPermissions['can-delete'] && user.id !== authUser.id" type="button" class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#deleteUserModal" @click="setIndex(index)">
+								<i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+							</button>
+							<button v-show="userPermissions['can-assign-roles']" class="btn btn-edit btn-outline-dark" data-toggle="modal" data-target="#update_staff_type_modal" @click="updateUserRolesModal(index)">
+								<i class="fa fa-cog fa-lg" aria-hidden="true"></i>	
+							</button>						
                         </div>
                     </td>
                 </tr>
@@ -72,12 +77,16 @@
             :config="config"
             @userRolesUpdated="this.onUserRoleUpdated"
         />
+		<user-staff-type-update-modal
+            :user="this.selectedUser"
+			:stafftypes="stafftypes"
+        />
     </div>
 </template>
 
 <script>
 export default {
-	props:["users", "updateRoute", "userPermissions", "config", "authUser"],
+	props:["users", "updateRoute", "userPermissions", "config", "authUser","stafftypes"],
 
 	data(){
 		return {

@@ -57,7 +57,7 @@
                 <th>Current FTE</th>
             </tr>
             @foreach ($employees as $employee)
-                @if ($employee->user != null && $employee->user->fte < 0.7) 
+                @if ($employee->user != null && $employee->user->ftes['main'] < 0.7) 
                     <tr>
                         <td>
                             <a href={{ route('employees.show', $employee->id) }}>{{ $employee->name }}</a>
@@ -66,7 +66,7 @@
                             {{count($employee->user->activeProjectTeamMembers)}}
                         </td>
                         <td>    
-                            <span class="text-danger">{{ $employee->user->fte  }}</span>
+                            <span class="text-danger">{{ $employee->user->ftes['main'] }}</span>
                         </td>
                     </tr>
                 @endif

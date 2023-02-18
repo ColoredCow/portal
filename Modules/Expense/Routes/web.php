@@ -15,6 +15,9 @@ Route::prefix('expense')->group(function () {
     Route::get('/', 'ExpenseController@index')->name('expense.index');
     Route::get('create', 'ExpenseController@create')->name('expense.create');
     Route::post('/', 'ExpenseController@store')->name('expense.store');
+    Route::get('edit/{id}', 'ExpenseController@edit')->name('expense.edit');
+    Route::post('update/{id}', 'ExpenseController@update')->name('expense.update');
+    Route::get('delete/{id}', 'ExpenseController@delete')->name('expense.delete');
 
     Route::prefix('recurring')->group(function () {
         Route::get('/', 'RecurringExpenseController@index')->name('expense.recurring.index');

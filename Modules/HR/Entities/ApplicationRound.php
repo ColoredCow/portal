@@ -217,7 +217,6 @@ class ApplicationRound extends Model
 
                 $subject = $attr['subject'];
                 $body = $attr['body'];
-
                 if (! $application->offer_letter) {
                     $application->offer_letter = FileHelper::generateOfferLetter($application);
                 }

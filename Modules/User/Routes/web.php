@@ -19,11 +19,15 @@ Route::prefix('user')->middleware('auth')->group(function () {
     Route::put('update-roles', 'UserController@updateUserRoles')->name('user.update-roles');
     Route::post('/storeRoles', 'RolesController@storeRoles')->name('role.store-roles');
     Route::delete('DeleteRoles/{roles}', 'RolesController@DeleteRoles')->name('roles.delete');
+    Route::post('/add-roles', 'RolesController@addRole')->name('roles.add-roles');
+    Route::delete('/delete-roles/{role}', 'RolesController@deleteRole')->name('roles.delete');
     /*
      * User Profile
     */
+
     Route::get('/profile', 'ProfileController@index')->name('user.profile');
     Route::post('/profile/{user}/edit', 'ProfileController@update')->name('profile.update');
     Route::get('/user-settings', 'UserSettingsController@index')->name('user.settings');
     Route::post('/user-settings', 'UserSettingsController@update')->name('user.settings.update');
+    Route::post('/add-staff-type', 'UserSettingsController@addStaffType');
 });

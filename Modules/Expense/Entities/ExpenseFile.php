@@ -12,5 +12,6 @@ class ExpenseFile extends Model
         'expense_id',
         'file_path',
         'file_type',
+        'user_id',
     ];
 }

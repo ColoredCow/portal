@@ -2,6 +2,7 @@
 
 namespace Modules\User\Http\Controllers;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\User\Entities\User;
 use Spatie\Permission\Models\Role;
 use Modules\User\Http\Requests\RoleRequest;
@@ -11,6 +12,15 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class RolesController extends ModuleBaseController
 {
+use Modules\User\Http\Requests\RoleRequest;
+use Modules\User\Services\RoleService;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+class RolesController extends ModuleBaseController
+{
+    /*
+     * Display a listing of the resource.
+     */
     use AuthorizesRequests;
 
     protected $service;
@@ -35,14 +45,17 @@ class RolesController extends ModuleBaseController
     {
         return Role::all();
     }
-
     public function storeRoles(RoleRequest $request)
     {
         $this->service->storeRoles($request);
+    public function addRole(RoleRequest $request)
+    {
+        $this->authorize('viewAny', User::class);
+        $validated = $request->validated();
+        $this->service->addRole($validated);
 
         return redirect()->back();
     }
-
     public function DeleteRoles($id)
     {
         Role::find($id)->delete();
@@ -51,5 +64,8 @@ class RolesController extends ModuleBaseController
             'status'=>200,
             'message'=>'Role deleted successfuly'
         ]);
+    public function deleteRole(Role $role)
+    {
+        $role->delete();
     }
 }

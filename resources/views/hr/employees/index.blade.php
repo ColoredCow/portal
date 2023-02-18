@@ -6,8 +6,8 @@
     @include('hr.employees.menu')
     <br><br>
     <div class="d-flex">
-        <h1>Employees ({{count($employees)}})</h1>
-        <form id="employeeFilterForm">
+        <h1>{{request()->get('name')}} ({{count($employees)}})</h1>
+        <form id="employeeFilterForm" class="d-md-flex justify-content-between ml-md-3">
             <input type="hidden" name="status" value="{{ request()->input('status', 'current') }}">
             <div class='form-group w-130' class="d-inline">
                 <select class="form-control bg-info text-white ml-3" name="status"  onchange="document.getElementById('employeeFilterForm').submit();">
@@ -15,6 +15,11 @@
                     <option {{ $filters['status'] == 'previous' ? "selected=selected" : '' }} value="previous">Previous</option>
                 </select>
             </div>
+            <div class="d-flex align-items-center ml-35">
+                    <input type="text" name="employeename" class="form-control" id="name" placeholder="Enter the Employee" value="{{ request()->get('employeename') }}">
+                    <button class="btn btn-info ml-2 text-white">Search</button>
+                </div>
+            <input type="hidden" name="name" value="{{ request()->input('name', 'Employee') }}">
         </form>
     </div>
     <table class="table table-striped table-bordered">
@@ -25,6 +30,7 @@
             <th>Joined on</th>
             <th>Projects Count</th>
             <th>Current FTE</th>
+            <th>AMC FTE</th>
         </tr>
         @foreach ($employees as $employee)
             <tr>
@@ -32,8 +38,8 @@
                     <a href={{ route('employees.show', $employee->id) }}>{{ $employee->name }}</a>
                 </td>
                 <td>
-                    @if ($employee->designation)
-                        {{ $employee->designation }}
+                    @if ($employee->designation_id)
+                        {{ $employee->hrJobDesignation->designation }}
                     @else
                         -
                     @endif
@@ -51,7 +57,7 @@
                     @if($employee->user == null)
                         0
                     @else
-                        {{count($employee->user->activeProjectTeamMembers)}}
+                        {{$employee->project_count}}
                     @endif
                 </td>
                 <td>
@@ -66,6 +72,9 @@
                     @else
                         <span class="text-danger font-weight-bold">{{ $employee->user ? $employee->user->ftes['main'] :'NA' }}</span>
                     @endif
+                </td>
+                <td>
+                    <span class="{{ $employee->user ? ($employee->user->ftes['amc'] > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->ftes['amc']  :'NA' }}</span>
                 </td>
             </tr>
         @endforeach

@@ -245,6 +245,73 @@ $(document).ready(function() {
 	});
 });
 
+$(document).ready(function () {
+	$("#designationformModal").on("hidden.bs.modal", function () {
+		$(this).find("form").trigger("reset");
+		$("#designationerror").addClass("d-none");
+	});
+
+	$("#designationForm").on("submit", function (e) {
+		e.preventDefault();
+		$("#designationFormSpinner").removeClass("d-none");
+		let form = $("#designationForm");
+		$.ajax({
+			type: form.attr("method"),
+			url: form.attr("action"),
+			data: form.serialize(),
+			success: function (response) {
+				$("#designationFormSpinner").addClass("d-none");
+				$("#designationformModal").modal("hide");
+				$("#successMessage").toggleClass("d-none");
+				$("#successMessage").fadeToggle(3000);
+			},
+			error: function (response) {
+				$("#designationFormSpinner").addClass("d-none");
+				if (response.responseJSON.errors.name) {
+					let text = response.responseJSON.errors.name[0];
+					$("#designationerror").html(text).removeClass("d-none");
+					return false;
+				}
+				if (response.responseJSON.errors.domain) {
+					let text = response.responseJSON.errors.domain[0];
+					$("#domainerror").html(text).removeClass("d-none");
+					return false;
+				}
+			},
+		});
+	});
+});
+
+$(document).on("click","#viewReject",function(){
+	
+	$("body").on("click",`label[for='${$("#appearRejectButton").data("target")}-no']`,function(){
+		$("#rejectButton").removeClass("d-none");
+		$("#nextButton").addClass("d-none");
+
+	});
+
+	$("body").on("click",`label[for='${$("#appearRejectButton").data("target")}-yes']`,function(){
+		$("#nextButton").removeClass("d-none");
+		$("#rejectButton").addClass("d-none");
+
+	});
+});
+
+$(document).on("click",".reject-button",function(){
+	rejectApplication();
+});
+
+function rejectApplication()
+{
+	$("#application_reject_modal").modal("show");
+	loadTemplateMail("reject", (res) => {
+		$("#rejectMailToApplicantSubject").val(res.subject);
+		tinymce
+			.get("rejectMailToApplicantBody")
+			.setContent(res.body, { format: "html" });
+	});
+}
+
 if (document.getElementById("page_hr_applicant_edit")) {
 	new Vue({
 		el: "#page_hr_applicant_edit",
@@ -334,13 +401,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 				}
 			},
 			rejectApplication: function() {
-				$("#application_reject_modal").modal("show");
-				loadTemplateMail("reject", (res) => {
-					$("#rejectMailToApplicantSubject").val(res.subject);
-					tinymce
-						.get("rejectMailToApplicantBody")
-						.setContent(res.body, { format: "html" });
-				});
+				rejectApplication();
 			},
 		},
 		mounted() {
@@ -518,26 +579,34 @@ clipboard.on("success", function(e) {
 	hideTooltip(e.trigger);
 });
 
-tinymce.init({
-	selector: ".richeditor",
-	skin: "lightgray",
-	toolbar:
-    "undo redo formatselect | fontselect fontsizeselect bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-	plugins: ["advlist lists autolink link code image print"],
-	font_formats:
-    "Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;AkrutiKndPadmini=Akpdmi-n",
-	images_upload_url: "postAcceptor.php",
-	content_style: "body{font-size:14pt;}",
-	automatic_uploads: false,
-	fontsize_formats: "8pt 10pt 12pt 14pt 16pt 18pt 24pt 36pt 48pt",
-	menubar: false,
-	statusbar: false,
-	entity_encoding: "raw",
-	forced_root_block: "",
-	force_br_newlines: true,
-	force_p_newlines: false,
-	height: "280",
-	convert_urls: 0,
+function initRicheditor() {
+	tinymce.init({
+		selector: ".richeditor",
+		skin: "lightgray",
+		toolbar:
+			"undo redo formatselect | fontselect fontsizeselect bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+		plugins: ["advlist lists autolink link code image print"],
+		font_formats:
+			"Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;AkrutiKndPadmini=Akpdmi-n",
+		images_upload_url: "postAcceptor.php",
+		content_style: "body{font-size:14pt;}",
+		automatic_uploads: false,
+		fontsize_formats: "8pt 10pt 12pt 14pt 16pt 18pt 24pt 36pt 48pt",
+		menubar: false,
+		statusbar: false,
+		entity_encoding: "raw",
+		forced_root_block: "",
+		force_br_newlines: true,
+		force_p_newlines: false,
+		height: "280",
+		convert_urls: 0
+	});
+}
+
+initRicheditor();
+
+$("body").on("click", "#takeAction", function () {
+	initRicheditor();
 });
 
 $(".hr_round_guide").on("click", ".edit-guide", function() {
@@ -1334,7 +1403,6 @@ $(document).ready(function() {
 		$(".evaluation-stage").addClass("d-none");
 		var target = $(this).data("target");
 		$(target).removeClass("d-none");
-
 		if (
 			$("#segment-general-information > span")[0].innerText ==
       "General Information"
@@ -1779,8 +1847,8 @@ $(".status").on("change", function() {
 		$.ajax({
 			url: "completed/change-status/" + this.dataset.id,
 			method: "GET",
-			success: function(res) {
-				location.reload(true);
+			success: function (res) {
+				$("#mymodal").modal() + this.dataset.id;
 			},
 			error: function(err) {
 				alert("there is some problem");
@@ -1790,6 +1858,12 @@ $(".status").on("change", function() {
 			},
 		});
 	}
+});
+
+$(document).ready(function(){
+	var multipleSelect = new Choices("#choices-multiple", {
+		removeItemButton: true,
+	});
 });
 
 $(".pending").on("change", function() {
@@ -1863,6 +1937,23 @@ $(document).ready(function() {
  */
 
 // fix for tinymce and bootstrap modal
+
+$("body").on("click", "#offerLetter", function (e) {
+	e.preventDefault();
+	var originUrl = window.location.origin;
+	let applicationid = $("#getApplicationId").val();
+	$.ajax({
+		url: originUrl + `/hr/recruitment/${applicationid}/save-offer-letter`,
+		type: "GET",
+		success: function (response) {
+			$("#seeOfferLetter").removeClass("d-none");
+		},
+		error: function () {
+			alert("error");
+		}
+	});
+});
+
 $(document).on("focusin", function(e) {
 	if ($(event.target).closest(".mce-window").length) {
 		e.stopImmediatePropagation();
@@ -2017,4 +2108,3 @@ $("#responseModal").on("submit",function(e){
 		},
 	});
 });
-
