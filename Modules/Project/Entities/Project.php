@@ -16,7 +16,6 @@ use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
-use Carbon\Carbon;
 
 class Project extends Model implements Auditable
 {
