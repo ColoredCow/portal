@@ -344,26 +344,28 @@ class Project extends Model implements Auditable
     public function nextBillingDate() // In this function nextbilling date comes from client level.
     {
         $clientFrequency = $this->client->billingDetails->billing_frequency;
-        $previousInvoiceSent_onDate = invoice::where('client_id', $this->client_id)->orderby('sent_on', 'desc')->first();
+        $previousInvoice = invoice::where('project_id', $this->client_project_id)->orderby('sent_on', 'desc')->first();
 
-        if ($previousInvoiceSent_onDate) {
-            $billingDate = $previousInvoiceSent_onDate->sent_on;
+        if ($previousInvoice) {
+            $priviousbillingDate = $previousInvoice->sent_on;
         } else {
-            $projectCreated_atdate = self::where('client_project_id', $this->client_project_id)->first();
-            $billingDate = $projectCreated_atdate->created_at;
+            $priviousbillingDate = $this->created_at;
         }
 
-        if ($clientFrequency == 3) {
-            $billingDate->addMonths(3);
+        if ($clientFrequency == config('client.billing-frequency.quarterly.id')) { // clientFrequency = 3
+            $nextBillingDate = $priviousbillingDate->addMonthsNoOverflow(3)->format('Y-m-d');
 
-            return Carbon::parse($billingDate->toDateString())->format('Y-m-d');
-        } elseif ($clientFrequency == 2) {
-            $billingDate->addMonths(1);
+            return $nextBillingDate;
+        } elseif ($clientFrequency == config('client.billing-frequency.monthly.id')) { // clientFrequency = 1
+            $nextBillingDate = $priviousbillingDate->addMonthsNoOverflow(1)->format('Y-m-d');
 
-            return Carbon::parse($billingDate->toDateString())->format('Y-m-d');
+            return $nextBillingDate;
+        } elseif ($clientFrequency == config('client.billing-frequency.yearly.id')) { // clientFrequency = 4
+            $nextBillingDate = $priviousbillingDate->addMonthsNoOverflow(12)->format('Y-m-d');
+
+            return $nextBillingDate;
         }
-        $billingDate->addMonths(1);
-        $nextBillingDate = Carbon::parse($billingDate->toDateString())->format('Y-m-d');
+        $nextBillingDate = $priviousbillingDate->addMonthsNoOverflow(1)->format('Y-m-d');
 
         return $nextBillingDate;
     }

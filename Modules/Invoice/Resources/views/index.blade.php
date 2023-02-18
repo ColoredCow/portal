@@ -295,9 +295,7 @@
                             $index = 0;
                         @endphp
                         @foreach ($AMCprojectsReadyToSendInvoicesData as $project)
-                            @if ($project->getBillableHoursForMonth($monthToSubtract) == 0)
-                                @continue
-                            @endif
+
                             @php
                                 $index++;
                                
@@ -309,6 +307,7 @@
                                 } else {
                                     $amount = $currencySymbol . $project->amcTotalProjectAmount($monthToSubtract);
                                 }
+
                                 $billingStartMonth = $project->client->getMonthStartDateAttribute($monthToSubtract)->format('M');
                                 $billingEndMonth = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('M');
                                 $billingEndMonthYear = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('Y');
