@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Google_Client;
 use Google_Service_Directory;
 use App\Models\KnowledgeCafe\Library\Book;
+
 
 class HomeController extends Controller
 {
@@ -21,12 +23,18 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      */
+
     public function index()
     {
         $unreadBook = (session('disable_book_suggestion')) ? null : Book::getRandomUnreadBook();
-
-        return view('home')->with(['book' => $unreadBook]);
+        $name = auth()->user()->name;
+        // FTE = Sum of hours booked by an employee in all the projects/(total number of days in month till today *8)
+        $id =  DB::table('users')->where('name', $name)->value('id');
+        $efforts = DB::table('project_team_members_effort')->where('project_team_member_id', $id)->whereMonth('added_on', date('m'))->sum('actual_effort');
+        $FTE = $efforts/(date('d')*8.00);
+        return view('home')->with(['book' => $unreadBook, 'FTE'=>$FTE]);
     }
+
 
     /**
      * Fetch a user's groups from GSuite API.

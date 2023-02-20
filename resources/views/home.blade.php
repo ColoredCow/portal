@@ -15,9 +15,16 @@
             <p>
                 It looks like you're brand new here and do not have access to any features! Please contact the administrator to grant you required access so that you can get rolling!
             </p>
-        </div>
+        </div>    
     @endif
-
+    <div>
+        @if ($FTE < 1)
+            <span>Your FTE: <b style="color : red;">{{$FTE}}</b> </span>
+        @else 
+            <span>Your FTE: <b style="color : green;">{{$FTE}}</b> </span>
+        @endif
+    </div>
+    
     <div class="card-deck dashboard_view d-flex flex-wrap justify-content-start">
         @can('library_books.view')
             <div class="mr-5 mr-md-3 pr-md-0 pr-4 mb-4 min-w-389">
