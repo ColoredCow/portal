@@ -7,7 +7,6 @@ use Google_Client;
 use Google_Service_Directory;
 use App\Models\KnowledgeCafe\Library\Book;
 
-
 class HomeController extends Controller
 {
     /**
@@ -23,7 +22,6 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      */
-
     public function index()
     {
         $unreadBook = (session('disable_book_suggestion')) ? null : Book::getRandomUnreadBook();
@@ -34,7 +32,6 @@ class HomeController extends Controller
         $FTE = $efforts/(date('d')*8.00);
         return view('home')->with(['book' => $unreadBook, 'FTE'=>$FTE]);
     }
-
 
     /**
      * Fetch a user's groups from GSuite API.
