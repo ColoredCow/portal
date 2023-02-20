@@ -73,9 +73,19 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary save-btn">Save</button>
-                    <a href="{{ route('codetrek.delete', $applicant) }}" class="btn btn-danger save-btn">Delete</a>
+                    <span class="btn btn-danger" id="deleteButton" >Delete</span>
             </div>
         </form>
     </div>
 </div>
+@endsection
+@section('js_scripts')
+<script>
+    document.getElementById("deleteButton").addEventListener("click", function() {
+        if(confirm("Are you sure ?")) {
+            document.getElementById("updateForm").action = "{{ route('codetrek.delete', $applicant) }}";
+            document.getElementById("updateForm").submit();
+        }
+    });
+</script>
 @endsection
