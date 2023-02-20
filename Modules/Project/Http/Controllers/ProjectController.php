@@ -10,7 +10,6 @@ use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -111,16 +110,6 @@ class ProjectController extends Controller
     {
         $designations = $this->service->getDesignations();
         $designationKeys = array_keys($designations);
-        $designationCount = [];
-        $deployedCount = DB::table('project_team_members')
-                ->select('designation', DB::raw('Count(designation) as count'))
-                ->where('project_id', '=', $project->id)
-                ->groupBy('designation')
-                ->get();
-
-        foreach ($deployedCount as $designation) {
-            $designationCount[$designation->designation] = $designation->count;
-        }
 
         return view('project::edit', [
             'project' => $project,
@@ -131,7 +120,6 @@ class ProjectController extends Controller
             'designations' => $designations,
             'workingDaysInMonth' => $this->service->getWorkingDays($project),
             'designationKeys' => $designationKeys,
-            'designationCount' => $designationCount,
         ]);
     }
 

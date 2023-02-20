@@ -65,6 +65,23 @@ class Project extends Model implements Auditable
         return $this->resourceRequirement()->where('designation', $designationName)->first();
     }
 
+    public function getDeployedCountForDesignation($designation)
+    {
+        return DB::table('project_team_members')
+                    ->where('project_id', '=', $this->id)
+                    ->where('designation', '=', $designation)
+                    ->count();
+    }
+
+    public function getToBeDeployedCountForDesignation($designation)
+    {
+        $resourceRequirementCount = optional($this->getResourceRequirementByDesignation($designation))->total_requirement ?? 0;
+        $deployedCount = $this->getDeployedCountForDesignation($designation);
+        $toBeDeployedCount = max(0, $resourceRequirementCount - $deployedCount);
+
+        return $toBeDeployedCount;
+    }
+
     public function client()
     {
         return $this->belongsTo(Client::class);
