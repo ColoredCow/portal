@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Invoice\Contracts\CurrencyServiceContract;
 
 class Invoice extends Model implements Auditable
 {
@@ -25,11 +26,11 @@ class Invoice extends Model implements Auditable
     public function scopeStatus($query, $status)
     {
         if (is_string($status)) {
-            return $query->where('status', $status);
+            return $query->where($this->getTable() . '.status', $status);
         }
 
         if (is_array($status)) {
-            return $query->whereIn('status', $status);
+            return $query->whereIn($this->getTable() . '.status', $status);
         }
 
         return $query;
@@ -37,12 +38,12 @@ class Invoice extends Model implements Auditable
 
     public function scopeYear($query, $year)
     {
-        return $query->whereYear('sent_on', $year);
+        return $query->whereYear($this->getTable() . '.sent_on', $year);
     }
 
     public function scopeMonth($query, $month)
     {
-        return $query->whereMonth('sent_on', $month);
+        return $query->whereMonth($this->getTable() . '.sent_on', $month);
     }
 
     public function scopeCountry($query, $country)
@@ -65,10 +66,14 @@ class Invoice extends Model implements Auditable
 
     public function scopeClient($query, $clientId)
     {
-        return $query->where('client_id', $clientId);
+        return $query->where($this->getTable() . '.client_id', $clientId);
     }
     public function scopeInvoiceInaYear($query, $invoiceYear)
     {
+        if (! is_numeric($invoiceYear)) {
+            return $query;
+        }
+
         return $query->whereBetween('sent_on', [($invoiceYear . '-' . config('invoice.financial-month-details.financial_year_start_month') . '-' . '01'), (($invoiceYear + 1) . '-' . config('invoice.financial-month-details.financial_year_end_month') . '-' . '31')]);
     }
 
@@ -192,15 +197,37 @@ class Invoice extends Model implements Auditable
         return $this->amount + $this->gst;
     }
 
+    public function getTotalAmountInInrAttribute()
+    {
+        if ($this->currency == config('constants.countries.india.currency')) {
+            return $this->getTotalAmountAttribute();
+        }
+
+        if ($this->conversion_rate) {
+            return $this->getTotalAmountAttribute() * $this->conversion_rate;
+        }
+
+        return $this->getTotalAmountAttribute() * app(CurrencyServiceContract::class)->getCurrentRatesInINR();
+    }
+
     public function getTermAttribute()
     {
+        if (optional($this->client->billingDetails)->billing_date == 1) {
+            return $this->sent_on->subMonth()->format('F');
+        }
+
         $invoiceStartMonthNumber = $this->sent_on->subMonth()->month;
         $currentMonthNumber = today(config('constants.timezone.indian'))->month;
         if (optional($this->client->billingDetails)->billing_date > today()->day) {
             $currentMonthNumber -= 1;
         }
-        $termStartDate = $this->client->getMonthStartDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
-        $termEndDate = $this->client->getMonthEndDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
+        $monthDifference = $currentMonthNumber - $invoiceStartMonthNumber;
+        if ($monthDifference < 0) {
+            $monthDifference = ($currentMonthNumber + 12) - $invoiceStartMonthNumber;
+        }
+        $termStartDate = $this->client->getMonthStartDateAttribute($monthDifference);
+        $termEndDate = $this->client->getMonthEndDateAttribute($monthDifference);
+
         $term = $termStartDate->format('M') . ' - ' . $termEndDate->format('M');
 
         if ($termStartDate->format('M') == $termEndDate->format('M')) {

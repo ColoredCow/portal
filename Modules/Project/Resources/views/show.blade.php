@@ -37,7 +37,7 @@
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold mb-6 ml-1">Client:</label>
                         </h4>
-                        <span class="text-capitalize ml-2 fz-lg-22">{{ $project->client->name }}</span>
+                        <a href="{{route('client.edit', $project->client->id)}}" class="text-capitalize ml-2 fz-lg-22">{{ $project->client->name }}</a>
                     </div>
                     <div class="form-group offset-md-1 pl-4 col-md-5">
                         <h4 class="d-inline-block">
@@ -133,7 +133,7 @@
                                                 <th>Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
                                             </tr>
                                         </thead>
-                                        @if($project->TeamMembers->first() == null)
+                                        @if($project->teamMembers->first() == null)
                                             </table>
                                             <div class="fz-lg-28 text-center mt-4">No member in the project</div>
                                         @else
