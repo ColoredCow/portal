@@ -38,14 +38,10 @@
                         <td>{{$prospect->Resources}}</td>
                         <td>{{$prospect->Requirement}}</td>
                         <td>
-                            <form method="POST" action="{{ route('prospect.delete', $prospect->id) }}">
-                                @csrf
-                                <input name="_method" type="hidden" value="get">
-                                <i  type="submit" class="fa fa-trash fz-20 text-theme-red" onclick="if (!confirm('Are you sure?')) { return false}"></i>
-                            </form>
+                        <i  type="submit" class="fa fa-trash fz-20 text-theme-red" data-toggle="modal" data-target="#delete"></i>
                         </td>
                     </tr>
-                @empty
+                @empty+
                     <tr>
                         <td colspan="2">
                             <p class="my-4 text-left">No {{ config('prospect.status')[request()->input('status', 'active')] }} prospects found.</p>
@@ -56,6 +52,6 @@
         </table>
 
     </div>
-    
+    @include('prospect::delete')
 </div>
 @endsection
