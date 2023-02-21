@@ -258,11 +258,9 @@ class Project extends Model implements Auditable
             default:
                 $numberOfMonths = 1;
         }
+
         foreach ($this->getTeamMembersGroupedByEngagement() as $groupedResources) {
-            if (($groupedResources->billing_engagement / 100) == 0) {
-                $billingEngagement = 1;
-            }
-            $totalAmount += $billingEngagement * $groupedResources->resource_count * $service_rate * $numberOfMonths;
+            $totalAmount += ($groupedResources->billing_engagement / 100) * $groupedResources->resource_count * $service_rate * $numberOfMonths;
         }
 
         return round($totalAmount, 2);
