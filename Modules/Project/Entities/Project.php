@@ -295,7 +295,7 @@ class Project extends Model implements Auditable
     public function lastInvoice()
     {
         $lastInvoice = $this->invoices()->orderBy('sent_on', 'desc')->first();
-        
+
         return $lastInvoice;
     }
 

@@ -250,7 +250,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         $folder = $this->getInvoiceFilePath($invoice);
 
-        if (!$fileName) {
+        if (! $fileName) {
             $fileName = $file->getClientOriginalName();
         }
         $file = Storage::putFileAs($folder, $file, $fileName, ['visibility' => 'public']);
@@ -554,7 +554,7 @@ class InvoiceService implements InvoiceServiceContract
         $periodStartDate = $data['period_start_date'] ?? null;
         $periodEndDate = $data['period_end_date'] ?? null;
 
-        if (!empty($ccEmails)) {
+        if (! empty($ccEmails)) {
             $ccEmails = array_map('trim', explode(',', $data['cc']));
             foreach ($ccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -564,7 +564,7 @@ class InvoiceService implements InvoiceServiceContract
             }
         }
 
-        if (!empty($bccEmails)) {
+        if (! empty($bccEmails)) {
             $bccEmails = array_map('trim', explode(',', $data['bcc']));
             foreach ($bccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -594,7 +594,7 @@ class InvoiceService implements InvoiceServiceContract
         $ccEmails = $data['cc'] ?? [];
         $bccEmails = $data['bcc'] ?? [];
 
-        if (!empty($ccEmails)) {
+        if (! empty($ccEmails)) {
             $ccEmails = array_map('trim', explode(',', $data['cc']));
             foreach ($ccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -604,7 +604,7 @@ class InvoiceService implements InvoiceServiceContract
             }
         }
 
-        if (!empty($bccEmails)) {
+        if (! empty($bccEmails)) {
             $bccEmails = array_map('trim', explode(',', $data['bcc']));
             foreach ($bccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -644,7 +644,7 @@ class InvoiceService implements InvoiceServiceContract
         $ccEmails = $data['cc'] ?? [];
         $bccEmails = $data['bcc'] ?? [];
 
-        if (!empty($ccEmails)) {
+        if (! empty($ccEmails)) {
             $ccEmails = array_map('trim', explode(',', $data['cc']));
             foreach ($ccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -654,7 +654,7 @@ class InvoiceService implements InvoiceServiceContract
             }
         }
 
-        if (!empty($bccEmails)) {
+        if (! empty($bccEmails)) {
             $bccEmails = array_map('trim', explode(',', $data['bcc']));
             foreach ($bccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -883,7 +883,7 @@ class InvoiceService implements InvoiceServiceContract
         $project = Project::find($data['project_id'] ?? null);
         $client = Client::find($data['client_id'] ?? null);
 
-        if (!$client) {
+        if (! $client) {
             return;
         }
 
