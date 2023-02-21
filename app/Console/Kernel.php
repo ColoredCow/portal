@@ -52,7 +52,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('project:zero-effort-in-project')->weekly()->mondays()->at('09:00');
         $schedule->command('project:ended-project')->dailyAt('09:00');
         $schedule->command('project:remind-to-update-effort')->weekdays()->at('19:00');
-        $schedule->command('project:send-daily-effort-summary-google-chat')->weekdays()->at('22:30');
+        $schedule->command('project:send-daily-effort-summary-google-chat')->weekdays()->at('08:00');
         $schedule->command('project:zero-expected-hours-in-project')->weekly()->tuesdays()->at('11:00');
     }
 
