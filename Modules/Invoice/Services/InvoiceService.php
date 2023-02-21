@@ -27,7 +27,7 @@ use Modules\Invoice\Entities\LedgerAccount;
 
 class InvoiceService implements InvoiceServiceContract
 {
-    public function index($filters = [], $invoiceStatus = 'sent', $project = null)
+    public function index($filters = [], $invoiceStatus = 'sent', $project = null, $lastInvoice = [])
     {
         $filters = [
             'client_id' => $filters['client_id'] ?? null,
@@ -44,7 +44,6 @@ class InvoiceService implements InvoiceServiceContract
             $projectsReadyToSendInvoicesData = [];
         } else {
             $invoices = [];
-            $lastInvoice = [];
             $clientsReadyToSendInvoicesData = Client::status('active')->invoiceReadyToSend()->orderBy('name')->get();
             $projectsReadyToSendInvoicesData = Project::whereHas('meta', function ($query) {
                 return $query->where([
