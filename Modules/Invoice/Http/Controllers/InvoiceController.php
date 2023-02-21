@@ -142,6 +142,11 @@ class InvoiceController extends Controller
         return redirect(route('invoice.index'))->with('success', 'Invoice updated successfully!');
     }
 
+    public function updatePaymentDetails(Request $request, $invoiceId, $paymentId) {
+        $data=$request->all();
+      return $this->service->updatePaymentDetails($data,$invoiceId,$paymentId);
+    }
+
     /**
      * Remove the specified resource from storage.
      * @param Invoice $invoice

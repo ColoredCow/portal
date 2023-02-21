@@ -6,23 +6,27 @@
                 <div id="accordion" class="card-header accordion-button">
                     @if(count($invoiceValue['allInstallmentPayments'])>0)
                         @foreach ($invoiceValue['allInstallmentPayments']->sortByDesc('last_amount_paid_on') as $key=> $item)
-                            <div class="card">
-                                <div class="card-header" id="heading-{{$key}}">
-                                    <h5>
-                                        <div class="accordion" data-toggle="collapse" data-target="#collapse-{{$key}}" aria-expanded="false" aria-controls="collapse-{{$key}}" data-parent="#accordion">
-                                            {{ "Paid " . $invoiceValue['allInstallmentPayments'][0]['amount_paid_till_now'] . $invoiceValue['symbol'] . " on " . date('d-m-Y', strtotime($invoiceValue['allInstallmentPayments'][0]['last_amount_paid_on']))}}
-                                        </div>
-                                    </h5>
-                                </div>
-                                <div id="collapse-{{$key}}" class="collapse" aria-labelledby="heading-{{$key}}" data-parent="#accordion">
+                            <div  class=" card card-header " id="heading-{{$key}}">
+                                <div style="display:flex; justify-content:space-between; cursor:pointer;">
+                                    <div class="w-full"  data-toggle="collapse" data-target="#collapse-{{$key}}" aria-expanded="false" aria-controls="collapse-{{$key}}" data-parent="#accordion">
+                                        {{ "Paid " . $invoiceValue['allInstallmentPayments'][$key]['amount_paid_till_now'] . $invoiceValue['symbol'] . " on " . date('d-m-Y', strtotime($invoiceValue['allInstallmentPayments'][0]['last_amount_paid_on']))}}
+                                    </div> 
+                                    <div>
+                                        <a href="#" class="pr-1 rg_edit_btn edit-icon-container" data-target="#editPaymentDetailsModal-{{$key}}" data-url="{{ route('invoice.updatePaymentDetails', ['invoice' => $item->invoice_id, 'id' => $item->id]) }}" data-toggle="modal">
+                                            <i class="text-success fa fa-edit fa-lg"></i>
+                                        </a>
+                                    </div>
+                                        @includewhen($invoiceValue['allInstallmentPayments'][$key], 'invoice::subviews.edit.edit-payment-details')
+                                </div>  
+                                <div id="collapse-{{$key}}" class="collapse" aria-labelledby="heading-{{$key}}">
                                     <div class="card-body ">
                                         @if($item->comments)
-                                            <div class="card">
+                                            <div >
                                                 <div class="p-1">
-                                                    <header>Comment :</header>
+                                                    <p><strong class="text-dark">Comments :-</strong></p>
                                                 </div>   
-                                                <div class="card-body text-justify">
-                                                     <li class="text-dark">{{ $item->comments }}</li>
+                                                <div class="card text-justify">
+                                                     <p class="card-body text-dark">{{ $item->comments }}</p>
                                                 </div>
                                             </div>
                                         @endif
@@ -31,7 +35,7 @@
                                             <table class="table table-lg">
                                                 <thead class="thead-dark">
                                                     <tr>
-                                                        <th class="text-center align-middle">Amount {{$invoiceValue['symbol']}}</th>
+                                                        <th class="text-center align-middle">Paid-Amount {{$invoiceValue['symbol']}}</th>
                                                         @if($invoiceValue['symbol']=='$')
                                                             <th class="text-center align-middle">Bank Charges {{$invoiceValue['symbol']}}</th>
                                                             <th class="text-center align-middle">Conversion Rate</th>
@@ -39,7 +43,6 @@
                                                         @else
                                                             <th class="text-center align-middle">Tds {{$invoiceValue['symbol']}}</th>
                                                             <th class="text-center align-middle">Tds %</th>
-                                                            <th class="text-center align-middle">Gst {{$invoiceValue['symbol']}}</th>
                                                         @endif
                                                             <th class="text-center align-middle">Dates</th>
                                                     </tr>
@@ -54,7 +57,6 @@
                                                         @else
                                                             <td class="text-center align-middle">{{ $item->tds }}</td>
                                                             <td class="text-center align-middle">{{ $item->tds_percentage }}</td>
-                                                            <td class="text-center align-middle">{{ $item->gst }}</td>
                                                         @endif
                                                             <td class="text-center align-middle">{{ date('d-m-Y', strtotime($item->last_amount_paid_on)) }}</td>
                                                     </tr>

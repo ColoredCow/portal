@@ -241,6 +241,28 @@ class InvoiceService implements InvoiceServiceContract
         ]);
     }
 
+    public function updatePaymentDetails($data,$id, $paymentId)
+    {
+        $payment = InvoicePaymentsDetails::find($paymentId);
+
+        $payment->amount_paid_till_now = $data['amountPaid'];
+        if (isset($data['bankCharges'])) {
+            $payment->bank_charges = $data['bankCharges'];
+            $payment->conversion_rate = $data['conversionRate'];
+            $payment->conversion_rate_diff = $data['conversionRateDiff'];
+        }else{
+            $payment->tds = $data['tds'];
+            $payment->tds_percentage = $data['tdsPercentage'];
+        }
+            $payment->comments = $data['comments'];
+
+        $payment->save();
+
+        return redirect()->back()->with('success', 'Payment details updated successfully.');
+    }
+    
+
+
     public function getPaymentReceivedEmailForInvoice(Invoice $invoice)
     {
         $templateVariablesForSubject = config('invoice.templates.setting-key.received-invoice-payment.template-variables.subject');

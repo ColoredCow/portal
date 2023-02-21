@@ -23,6 +23,7 @@ Route::prefix('invoice')->middleware('auth')->group(function () {
     Route::post('/', 'InvoiceController@store')->name('invoice.store');
     Route::get('/{invoice}/edit', 'InvoiceController@edit')->name('invoice.edit');
     Route::post('/{invoice}/update', 'InvoiceController@update')->name('invoice.update');
+    Route::put('/{invoice}/edit/update-payment-details/{id}', 'InvoiceController@updatePaymentDetails')->name('invoice.updatePaymentDetails');
     Route::delete('/{invoice}/delete', 'InvoiceController@destroy')->name('invoice.delete');
     Route::post('/generate-invoice', 'InvoiceController@generateInvoice')->name('invoice.generate-invoice');
     Route::post('/reminder', 'InvoiceController@sendReminderEmail')->name('invoice.reminder.email');
