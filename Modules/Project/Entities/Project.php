@@ -408,25 +408,22 @@ class Project extends Model implements Auditable
                 return $totalAmountInYear;
         }
     }
-    
+
     public function getAmcTotalAmountPerHour(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
         $clientFrequency = $this->client->billingDetails->billing_frequency;
 
         if ($clientFrequency == 2) { // monthly
-
-            return  (($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges);
+            return  ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
         }
         if ($clientFrequency == 3) { // Quarterly
-
-            return  (($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + (3 * $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate)) + optional($this->client->billingDetails)->bank_charges);
+            return  ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + (3 * $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate)) + optional($this->client->billingDetails)->bank_charges;
         }
         if ($clientFrequency == 4) { // yearly
-
-            return  (($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + (12 * $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate)) + optional($this->client->billingDetails)->bank_charges);
+            return  ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + (12 * $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate)) + optional($this->client->billingDetails)->bank_charges;
         }
 
-        return  (($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges);
+        return  ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
     }
 
     public function getAmcTotalAmountPerMonth(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
@@ -436,15 +433,12 @@ class Project extends Model implements Auditable
         $clientFrequency = $this->client->billingDetails->billing_frequency;
 
         if ($clientFrequency == 2) { // monthly
-
             return  $totalAmountInMonth;
         }
         if ($clientFrequency == 3) { // Quarterly
-
             return  $totalAmountInMonth * 3;
         }
         if ($clientFrequency == 4) { // yearly
-
             return  $totalAmountInMonth * 12;
         }
 
