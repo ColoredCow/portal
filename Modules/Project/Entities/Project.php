@@ -429,7 +429,6 @@ class Project extends Model implements Auditable
     public function getAmcTotalAmountPerMonth(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
         $totalAmountInMonth = $this->serviceRateFromProject_Billing_DetailsTable() + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
-        
         $clientFrequency = $this->client->billingDetails->billing_frequency;
 
         if ($clientFrequency == 2) { // monthly
