@@ -421,11 +421,11 @@ class Project extends Model implements Auditable
         }
         if ($clientFrequency == 3) { // Quarterly
 
-            return  (($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + (3 * $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate)) + optional($this->client->billingDetails)->bank_charges);;
+            return  (($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + (3 * $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate)) + optional($this->client->billingDetails)->bank_charges);
         }
         if ($clientFrequency == 4) { // yearly
 
-            return  (($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + (12 * $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate)) + optional($this->client->billingDetails)->bank_charges);;
+            return  (($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + (12 * $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate)) + optional($this->client->billingDetails)->bank_charges);
         }
 
         return  (($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges);
@@ -459,11 +459,9 @@ class Project extends Model implements Auditable
         $totalAmountInQuater = $this->serviceRateFromProject_Billing_DetailsTable() + (3 * ($this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges));
 
         if ($clientFrequency == 3) { // Quarterly
-
             return  $totalAmountInQuater;
         }
         if ($clientFrequency == 4) { // yearly
-
             return  $totalAmountInQuater * 4;
         }
 
@@ -493,7 +491,7 @@ class Project extends Model implements Auditable
     public function serviceRateFromProject_Billing_DetailsTable()
     {
         $details = DB::table('project_billing_details')->where('project_id', $this->id)->first();
-        if (!empty($details) && $details->service_rates) {
+        if (! empty($details) && $details->service_rates) {
             return $details->service_rates;
         }
 
