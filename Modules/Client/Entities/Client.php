@@ -6,6 +6,7 @@ use App\Traits\Filters;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\User\Entities\User;
+use Illuminate\Support\Facades\DB;
 use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Client\Database\Factories\ClientFactory;
@@ -107,6 +108,14 @@ class Client extends Model
         return $this->hasOne(ClientBillingDetail::class)->withDefault();
     }
 
+    public function previousBillingDate()
+    {
+        $lastInvoiceDate = DB::table('invoices')->where('client_id', $this->id)->orderBy('sent_on', 'desc')->first();
+        $previousBillingDate = $lastInvoiceDate ? $lastInvoiceDate->sent_on : date('Y-m-01');
+
+        return $previousBillingDate;
+    }
+
     public function getTypeAttribute()
     {
         $address = $this->addresses->first();
@@ -197,6 +206,13 @@ class Client extends Model
     public function invoices()
     {
         return $this->hasMany(Invoice::class);
+    }
+
+    public function lastInvoice()
+    {
+        $lastInvoice = $this->invoices()->orderBy('sent_on', 'desc')->first();
+
+        return $lastInvoice;
     }
 
     public function scopeInvoiceReadyToSend($query)

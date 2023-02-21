@@ -292,6 +292,13 @@ class Project extends Model implements Auditable
         return $this->hasMany(Invoice::class);
     }
 
+    public function lastInvoice()
+    {
+        $lastInvoice = $this->invoices()->orderBy('sent_on', 'desc')->first();
+        
+        return $lastInvoice;
+    }
+
     public function scopeInvoiceReadyToSend($query)
     {
         $query->whereDoesntHave('invoices', function ($query) {

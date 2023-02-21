@@ -27,7 +27,7 @@ use Modules\Invoice\Entities\LedgerAccount;
 
 class InvoiceService implements InvoiceServiceContract
 {
-    public function index($filters = [], $invoiceStatus = 'sent')
+    public function index($filters = [], $invoiceStatus = 'sent', $project = null)
     {
         $filters = [
             'client_id' => $filters['client_id'] ?? null,
@@ -37,13 +37,14 @@ class InvoiceService implements InvoiceServiceContract
         ];
         if ($invoiceStatus == 'sent') {
             $invoices = Invoice::query()->applyFilters($filters)->leftjoin('clients', 'invoices.client_id', '=', 'clients.id')
-            ->select('invoices.*', 'clients.name')
-            ->orderBy('name', 'asc')->orderBy('sent_on', 'desc')
-            ->get();
+                ->select('invoices.*', 'clients.name')
+                ->orderBy('name', 'asc')->orderBy('sent_on', 'desc')
+                ->get();
             $clientsReadyToSendInvoicesData = [];
             $projectsReadyToSendInvoicesData = [];
         } else {
             $invoices = [];
+            $lastInvoice = [];
             $clientsReadyToSendInvoicesData = Client::status('active')->invoiceReadyToSend()->orderBy('name')->get();
             $projectsReadyToSendInvoicesData = Project::whereHas('meta', function ($query) {
                 return $query->where([
@@ -52,9 +53,16 @@ class InvoiceService implements InvoiceServiceContract
                 ]);
             })->status('active')->invoiceReadyToSend()->orderBy('name')->get();
         }
+        $projects = Project::all();
+        foreach ($projects as $project) {
+            $lastInvoice = $project->lastInvoice();
+        }
+        $previousBillingDates = $project->client->previousBillingDate();
 
         return [
             'invoices' => $invoices,
+            'lastInvoice' => $lastInvoice,
+            'previousBillingDates' => $previousBillingDates,
             'clients' => $this->getClientsForInvoice(),
             'currencyService' => $this->currencyService(),
             'totalReceivableAmount' => $this->getTotalReceivableAmountInINR($invoices),
@@ -242,7 +250,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         $folder = $this->getInvoiceFilePath($invoice);
 
-        if (! $fileName) {
+        if (!$fileName) {
             $fileName = $file->getClientOriginalName();
         }
         $file = Storage::putFileAs($folder, $file, $fileName, ['visibility' => 'public']);
@@ -546,7 +554,7 @@ class InvoiceService implements InvoiceServiceContract
         $periodStartDate = $data['period_start_date'] ?? null;
         $periodEndDate = $data['period_end_date'] ?? null;
 
-        if (! empty($ccEmails)) {
+        if (!empty($ccEmails)) {
             $ccEmails = array_map('trim', explode(',', $data['cc']));
             foreach ($ccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -556,7 +564,7 @@ class InvoiceService implements InvoiceServiceContract
             }
         }
 
-        if (! empty($bccEmails)) {
+        if (!empty($bccEmails)) {
             $bccEmails = array_map('trim', explode(',', $data['bcc']));
             foreach ($bccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -586,7 +594,7 @@ class InvoiceService implements InvoiceServiceContract
         $ccEmails = $data['cc'] ?? [];
         $bccEmails = $data['bcc'] ?? [];
 
-        if (! empty($ccEmails)) {
+        if (!empty($ccEmails)) {
             $ccEmails = array_map('trim', explode(',', $data['cc']));
             foreach ($ccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -596,7 +604,7 @@ class InvoiceService implements InvoiceServiceContract
             }
         }
 
-        if (! empty($bccEmails)) {
+        if (!empty($bccEmails)) {
             $bccEmails = array_map('trim', explode(',', $data['bcc']));
             foreach ($bccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -636,7 +644,7 @@ class InvoiceService implements InvoiceServiceContract
         $ccEmails = $data['cc'] ?? [];
         $bccEmails = $data['bcc'] ?? [];
 
-        if (! empty($ccEmails)) {
+        if (!empty($ccEmails)) {
             $ccEmails = array_map('trim', explode(',', $data['cc']));
             foreach ($ccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -646,7 +654,7 @@ class InvoiceService implements InvoiceServiceContract
             }
         }
 
-        if (! empty($bccEmails)) {
+        if (!empty($bccEmails)) {
             $bccEmails = array_map('trim', explode(',', $data['bcc']));
             foreach ($bccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -768,9 +776,7 @@ class InvoiceService implements InvoiceServiceContract
             $filters['invoiceYear'] = null;
         }
 
-        $invoices = Invoice::query()->applyFilters($filters)
-        ->orderBy('sent_on', 'desc')
-        ->get();
+        $invoices = Invoice::query()->applyFilters($filters)->orderBy('sent_on', 'desc')->get();
 
         if (isset($filters['client_id'])) {
             $clientId = request()->client_id;
@@ -877,7 +883,7 @@ class InvoiceService implements InvoiceServiceContract
         $project = Project::find($data['project_id'] ?? null);
         $client = Client::find($data['client_id'] ?? null);
 
-        if (! $client) {
+        if (!$client) {
             return;
         }
 
