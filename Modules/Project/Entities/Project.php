@@ -87,8 +87,8 @@ class Project extends Model implements Auditable
         $designations = array_keys(config('project.designation'));
         $totalToBeDeployedCount = 0;
         foreach ($designations as $designationName) {
-        $totalToBeDeployedCount += $this->getToBeDeployedCountForDesignation($designationName);
-    }
+            $totalToBeDeployedCount += $this->getToBeDeployedCountForDesignation($designationName);
+        }
 
         return $totalToBeDeployedCount;
     }
