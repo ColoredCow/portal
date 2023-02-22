@@ -1,7 +1,7 @@
 <?php
 
 namespace Modules\Project\Services;
-use App\Traits\HasTags;
+
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Arr;
@@ -16,7 +16,7 @@ use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\User\Entities\User;
-use App\Models\Tag;
+
 
 class ProjectService implements ProjectServiceContract
 {
