@@ -77,9 +77,20 @@ class Project extends Model implements Auditable
     {
         $resourceRequirementCount = optional($this->getResourceRequirementByDesignation($designation))->total_requirement ?? 0;
         $deployedCount = $this->getDeployedCountForDesignation($designation);
-        $toBeDeployedCount = max(0, $resourceRequirementCount - $deployedCount);
+        $toBeDeployedCount = $resourceRequirementCount - $deployedCount;
 
-        return $toBeDeployedCount;
+        return ($toBeDeployedCount > 0) ? $toBeDeployedCount : (($toBeDeployedCount < 0) ? $toBeDeployedCount : '0');
+    }
+
+    public function getTotalToBeDeployedCount()
+    {
+        $designations = array_keys(config('project.designation'));
+        $totalToBeDeployedCount = 0;
+        foreach ($designations as $designationName) {
+        $totalToBeDeployedCount += $this->getToBeDeployedCountForDesignation($designationName);
+    }
+
+        return $totalToBeDeployedCount;
     }
 
     public function client()

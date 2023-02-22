@@ -6,7 +6,7 @@
         <div class="card-body form-body">
           <h3 class="mb-7 font-weight-bold">Requirement Details</h3>
             <table class="table table-bordered text-justify">
-              <h4 class="mb-3 font-weight-bold">Total Team Members Required:</h4>
+              <h4 class="mb-3 font-weight-bold">Total Team Members Required: {{ $project->getTotalToBeDeployedCount() }}</h4>
                 <thead>
                   <tr>
                     <th>Designation</th>
@@ -33,3 +33,4 @@
     </form>
   </div>
 </div>
+

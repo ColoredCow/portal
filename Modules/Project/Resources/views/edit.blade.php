@@ -143,6 +143,7 @@
                             $('#project-details-update-message').addClass('d-block');
                             $('#project-details-update-message').removeClass('d-none');
                             this.$toast.success('Project details updated!');
+                            location.reload(true);
                         })
                         .catch((error) => {
                             $('#project-details-update-message').removeClass('d-block');
