@@ -17,7 +17,6 @@ use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\User\Entities\User;
 
-
 class ProjectService implements ProjectServiceContract
 {
     public function index(array $data = [])
