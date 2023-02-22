@@ -133,7 +133,7 @@ class Project extends Model implements Auditable
         $endDate = $endDate ?: $this->client->getMonthEndDateAttribute($monthToSubtract);
 
         return $this->getAllTeamMembers->sum(function ($teamMember) use ($startDate, $endDate) {
-            if (!$teamMember->projectTeamMemberEffort) {
+            if (! $teamMember->projectTeamMemberEffort) {
                 return 0;
             }
 
@@ -188,9 +188,9 @@ class Project extends Model implements Auditable
 
         if ($diff === null) {
             return true;
-        } else if ($this->end_date <= today()) {
+        } elseif ($this->end_date <= today()) {
             return true;
-        } else if ($diff <= 30) {
+        } elseif ($diff <= 30) {
             return false;
         }
 
@@ -261,7 +261,7 @@ class Project extends Model implements Auditable
         $endDate = $periodEndDate ?: $this->client->getMonthEndDateAttribute($monthToSubtract);
 
         return $this->getAllTeamMembers->sum(function ($teamMember) use ($startDate, $endDate) {
-            if (!$teamMember->projectTeamMemberEffort) {
+            if (! $teamMember->projectTeamMemberEffort) {
                 return 0;
             }
 
