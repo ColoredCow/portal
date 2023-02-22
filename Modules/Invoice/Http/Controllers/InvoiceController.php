@@ -145,7 +145,8 @@ class InvoiceController extends Controller
     public function updatePaymentDetails(Request $request, $invoiceId, $invoicePaymentDetailsId)
     {
         $data = $request->all();
-      return $this->service->updatePaymentDetails($data, $invoiceId, $invoicePaymentDetailsId);
+
+        return $this->service->updatePaymentDetails($data, $invoiceId, $invoicePaymentDetailsId);
     }
 
     /**
