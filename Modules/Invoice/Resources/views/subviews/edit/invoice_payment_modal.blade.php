@@ -7,12 +7,12 @@
                     @if(count($invoiceValue['allInstallmentPayments'])>0)
                         @foreach ($invoiceValue['allInstallmentPayments']->sortByDesc('last_amount_paid_on') as $key=> $item)
                             <div  class=" card card-header " id="heading-{{$key}}">
-                                <div style="display:flex; justify-content:space-between; cursor:pointer;">
-                                    <div class="w-full"  data-toggle="collapse" data-target="#collapse-{{$key}}" aria-expanded="false" aria-controls="collapse-{{$key}}" data-parent="#accordion">
-                                        {{ "Paid " . $invoiceValue['allInstallmentPayments'][$key]['amount_paid_till_now'] . $invoiceValue['symbol'] . " on " . date('d-m-Y', strtotime($invoiceValue['allInstallmentPayments'][0]['last_amount_paid_on']))}}
+                                <div class="d-flex justify-content-between ">
+                                    <div class=" w-full cursorPointerAccordion" data-toggle="collapse" data-target="#collapse-{{$key}}" aria-expanded="false" aria-controls="collapse-{{$key}}" data-parent="#accordion">
+                                        {{ "Paid " . $invoiceValue['allInstallmentPayments'][$key]['amount_paid_till_now'] . $invoiceValue['symbol'] . " on " . date('d-m-Y', strtotime($invoiceValue['allInstallmentPayments'][$key]['last_amount_paid_on']))}}
                                     </div> 
                                     <div>
-                                        <a href="#" class="pr-1 rg_edit_btn edit-icon-container" data-target="#editPaymentDetailsModal-{{$key}}" data-url="{{ route('invoice.updatePaymentDetails', ['invoice' => $item->invoice_id, 'id' => $item->id]) }}" data-toggle="modal">
+                                        <a href="#" class=" rg_edit_btn" data-target="#editPaymentDetailsModal-{{$key}}" data-url="{{ route('invoice.updatePaymentDetails', ['invoice' => $item->invoice_id, 'id' => $item->id]) }}" data-toggle="modal">
                                             <i class="text-success fa fa-edit fa-lg"></i>
                                         </a>
                                     </div>

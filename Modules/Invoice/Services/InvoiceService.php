@@ -241,27 +241,25 @@ class InvoiceService implements InvoiceServiceContract
         ]);
     }
 
-    public function updatePaymentDetails($data,$id, $paymentId)
+    public function updatePaymentDetails($data, $id, $invoicePaymentDetailsId)
     {
-        $payment = InvoicePaymentsDetails::find($paymentId);
+        $paymentRecord = InvoicePaymentsDetails::find($invoicePaymentDetailsId);
 
-        $payment->amount_paid_till_now = $data['amountPaid'];
+        $paymentRecord->amount_paid_till_now = $data['amountPaid'];
         if (isset($data['bankCharges'])) {
-            $payment->bank_charges = $data['bankCharges'];
-            $payment->conversion_rate = $data['conversionRate'];
-            $payment->conversion_rate_diff = $data['conversionRateDiff'];
-        }else{
-            $payment->tds = $data['tds'];
-            $payment->tds_percentage = $data['tdsPercentage'];
+            $paymentRecord->bank_charges = $data['bankCharges'];
+            $paymentRecord->conversion_rate = $data['conversionRate'];
+            $paymentRecord->conversion_rate_diff = $data['conversionRateDiff'];
+        } else {
+            $paymentRecord->tds = $data['tds'];
+            $paymentRecord->tds_percentage = $data['tdsPercentage'];
         }
-            $payment->comments = $data['comments'];
+        $paymentRecord->comments = $data['comments'];
 
-        $payment->save();
+        $paymentRecord->save();
 
         return redirect()->back()->with('success', 'Payment details updated successfully.');
     }
-    
-
 
     public function getPaymentReceivedEmailForInvoice(Invoice $invoice)
     {
