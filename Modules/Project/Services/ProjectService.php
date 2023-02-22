@@ -1,7 +1,7 @@
 <?php
 
 namespace Modules\Project\Services;
-
+use App\Traits\HasTags;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Arr;
@@ -27,15 +27,15 @@ class ProjectService implements ProjectServiceContract
             'is_amc' => $data['is_amc'] ?? 0,
             'tags' => 'get_renewed',
         ];
-        
+
         if ($nameFilter = $data['name'] ?? false) {
             $filters['name'] = $nameFilter;
         }
-        
+
         $showAllProjects = Arr::get($data, 'projects', 'my-projects') != 'my-projects';
-        
+
         $memberId = Auth::id();
-       
+
         $projectClauseClosure = function ($query) use ($filters, $showAllProjects, $memberId) {
             $query->applyFilter($filters);
             $showAllProjects ? $query : $query->linkedToTeamMember($memberId);
@@ -46,7 +46,7 @@ class ProjectService implements ProjectServiceContract
             ->whereHas('projects', $projectClauseClosure)
             ->orderBy('name')
             ->paginate(config('constants.pagination_size'));
-            
+
 
         $tabCounts = $this->getListTabCounts($filters, $showAllProjects, $memberId);
 
@@ -60,7 +60,6 @@ class ProjectService implements ProjectServiceContract
 
     public function store($data, Project $project)
     {
-        $project->test($project);
         $project = Project::create([
             'name' => $data['name'],
             'client_id' => $data['client_id'],
@@ -169,7 +168,6 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectDetails($data, $project)
     {
-        $project->getRenewed($project);
         $isProjectUpdated = $project->update([
             'name' => $data['name'],
             'client_id' => $data['client_id'],
@@ -205,6 +203,8 @@ class ProjectService implements ProjectServiceContract
             }
             $project->getTeamMembers()->update(['ended_on' => now()]);
         }
+
+        $project->is_ready_to_renew ? $project->tag('get-renewed') : $project->untag('get-renewed');
 
         return $isProjectUpdated;
     }

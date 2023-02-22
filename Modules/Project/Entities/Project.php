@@ -32,18 +32,6 @@ class Project extends Model implements Auditable
     {
         return new ProjectFactory();
     }
-    public function addTag($slug)
-    {
-        $project = $this->project;
-        dd($project);
-        $this->tag($slug, false);
-    }
-
-    public function getRenewed($project) {
-        // dd("hello");
-        $project->tag('get-renewed');
-        
-    }
     
 
     public function scopeIsAMC($query, $isAmc)
@@ -196,6 +184,21 @@ class Project extends Model implements Auditable
 
         return $dates;
     }
+    public function getIsReadyToRenewAttribute()
+    {  
+        $diff = optional($this->end_date)->diffInDays(today());
+
+        if ($diff === null) {
+            return true;
+        } else if ($this->end_date <= today()) {
+            return true;
+        } else if ($diff <= 30) {
+            return false;
+        }
+        
+        return false;  
+    }
+
 
     public function getCurrentExpectedHoursAttribute()
     {
