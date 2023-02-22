@@ -42,6 +42,7 @@ trait HasTags
         }
         if ($status) {
             $this->tags()->syncWithoutDetaching($tag);
+           
             return;
         }
         $this->tags()->detach($tag);
