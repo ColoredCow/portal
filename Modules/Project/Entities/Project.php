@@ -76,22 +76,6 @@ class Project extends Model implements Auditable
         return $this->hasMany(ProjectTeamMember::class)->whereNULL('ended_on');
     }
 
-    /**
-     * Apply filters on application.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param array $filters
-     *
-     * @return \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopeApplyFilter($query, array $filters)
-    {
-        foreach (array_filter($filters) as $type => $value) {
-            switch ($type) {
-            }
-        }
-    }
-
     public function getTeamMembersGroupedByEngagement()
     {
         return $this->getTeamMembers()->select('billing_engagement', DB::raw('count(*) as resource_count'))->groupBy('billing_engagement')->get();
