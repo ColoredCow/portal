@@ -125,7 +125,6 @@ class ProjectController extends Controller
      */
     public function update(ProjectRequest $request, Project $project)
     {
-        $project->test($project);
         $request->merge([
             'name' => trim(preg_replace('/\s\s+/', ' ', str_replace("\n", ' ', $request->name))),
         ]);
