@@ -7,15 +7,15 @@ use App\Traits\HasTags;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Modules\Client\Entities\Client;
 use Modules\EffortTracking\Entities\Task;
 use Modules\Invoice\Entities\Invoice;
-use Modules\Invoice\Entities\LedgerAccount; 
+use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Services\InvoiceService;
 use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Project extends Model implements Auditable
@@ -32,7 +32,6 @@ class Project extends Model implements Auditable
     {
         return new ProjectFactory();
     }
-    
 
     public function scopeIsAMC($query, $isAmc)
     {
@@ -89,7 +88,6 @@ class Project extends Model implements Auditable
     {
         foreach (array_filter($filters) as $type => $value) {
             switch ($type) {
-                
             }
         }
     }
@@ -135,7 +133,7 @@ class Project extends Model implements Auditable
         $endDate = $endDate ?: $this->client->getMonthEndDateAttribute($monthToSubtract);
 
         return $this->getAllTeamMembers->sum(function ($teamMember) use ($startDate, $endDate) {
-            if (! $teamMember->projectTeamMemberEffort) {
+            if (!$teamMember->projectTeamMemberEffort) {
                 return 0;
             }
 
@@ -177,7 +175,7 @@ class Project extends Model implements Auditable
         $dates = [];
         $weekend = ['Saturday', 'Sunday'];
         foreach ($period as $date) {
-            if (! in_array($date->format('l'), $weekend)) {
+            if (!in_array($date->format('l'), $weekend)) {
                 $dates[] = $date->format('Y-m-d');
             }
         }
@@ -185,7 +183,7 @@ class Project extends Model implements Auditable
         return $dates;
     }
     public function getIsReadyToRenewAttribute()
-    {  
+    {
         $diff = optional($this->end_date)->diffInDays(today());
 
         if ($diff === null) {
@@ -195,10 +193,9 @@ class Project extends Model implements Auditable
         } else if ($diff <= 30) {
             return false;
         }
-        
-        return false;  
-    }
 
+        return false;
+    }
 
     public function getCurrentExpectedHoursAttribute()
     {
@@ -264,7 +261,7 @@ class Project extends Model implements Auditable
         $endDate = $periodEndDate ?: $this->client->getMonthEndDateAttribute($monthToSubtract);
 
         return $this->getAllTeamMembers->sum(function ($teamMember) use ($startDate, $endDate) {
-            if (! $teamMember->projectTeamMemberEffort) {
+            if (!$teamMember->projectTeamMemberEffort) {
                 return 0;
             }
 
@@ -278,7 +275,7 @@ class Project extends Model implements Auditable
     public function getResourceBillableAmount()
     {
         $service_rate = optional($this->billingDetail)->service_rates;
-        if (! $service_rate) {
+        if (!$service_rate) {
             $service_rate = $this->client->billingDetails->service_rates;
         }
         $totalAmount = 0;

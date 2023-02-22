@@ -2,9 +2,7 @@
 
 namespace Modules\Project\Http\Controllers;
 
-use App\Models\Tag;
 use Illuminate\Routing\Controller;
-use app\Traits\HasTags;
 use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
 use Modules\Project\Rules\ProjectNameExist;

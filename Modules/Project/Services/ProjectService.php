@@ -47,7 +47,6 @@ class ProjectService implements ProjectServiceContract
             ->orderBy('name')
             ->paginate(config('constants.pagination_size'));
 
-
         $tabCounts = $this->getListTabCounts($filters, $showAllProjects, $memberId);
 
         return array_merge(['clients' => $projectsData], $tabCounts);
