@@ -414,16 +414,16 @@ class Project extends Model implements Auditable
         $clientFrequency = $this->client->billingDetails->billing_frequency;
 
         if ($clientFrequency == 2) { // monthly
-            return  ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
+            return ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
         }
         if ($clientFrequency == 3) { // Quarterly
-            return  ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + (3 * $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate)) + optional($this->client->billingDetails)->bank_charges;
+            return ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + (3 * $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate)) + optional($this->client->billingDetails)->bank_charges;
         }
         if ($clientFrequency == 4) { // yearly
-            return  ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + (12 * $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate)) + optional($this->client->billingDetails)->bank_charges;
+            return ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + (12 * $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate)) + optional($this->client->billingDetails)->bank_charges;
         }
 
-        return  ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
+        return ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
     }
 
     public function getAmcTotalAmountPerMonth(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
@@ -459,7 +459,7 @@ class Project extends Model implements Auditable
         return $totalAmountInQuater;
     }
 
-    public function amcBillableHours(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
+    public function amcBillableHoursDisplay(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
         $amcBillableHours = $this->getBillableHoursForMonth($monthToSubtract, $periodStartDate, $periodEndDate);
         $clientFrequency = $this->client->billingDetails->billing_frequency;
@@ -476,7 +476,12 @@ class Project extends Model implements Auditable
             }
         }
 
-        return '-';
+        return null;
+    }
+
+    public function amcBillableHours(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
+    {
+        return $this->getBillableHoursForMonth($monthToSubtract, $periodStartDate, $periodEndDate);
     }
 
     public function serviceRateFromProject_Billing_DetailsTable()
@@ -498,5 +503,52 @@ class Project extends Model implements Auditable
         } else {
             return  optional($this->client->billingDetails)->service_rate_term;
         }
+    }
+
+    public function getTermStartAndEndDateForInvoice()
+    {
+        $clientBillingDate = $this->client->billingDetails->billing_date;
+        $lastInvoice = $this->lastSentDateInvoice();
+        $startDate = Carbon::createFromFormat('Y-m-d', $lastInvoice)->day($clientBillingDate);
+        $endDate = $this->getEndDate($clientBillingDate);
+
+        return [
+            'startDate'=>$startDate,
+            'endDate'=>$endDate
+        ];
+    }
+
+    public function lastSentDateInvoice()
+    {
+        $previousInvoice = invoice::where('project_id', $this->client_project_id)->orderby('sent_on', 'desc')->first();
+        if ($previousInvoice) {
+            $priviousbillingDate = $previousInvoice->sent_on;
+        } else {
+            $priviousbillingDate = $this->created_at;
+        }
+
+        return $priviousbillingDate->format('Y-m-d');
+    }
+
+    public function getEndDate($clientBillingDate = 0)
+    {
+        $billingFrequency = $this->client->billingDetails->billing_frequency;
+        $startdate = $this->lastSentDateInvoice();
+
+        if ($billingFrequency == config('client.billing-frequency.quarterly.id')) { // clientFrequency = 3
+            $startdate = Carbon::createFromFormat('Y-m-d', $startdate);
+            $endDate = $startdate->addMonthsNoOverflow(3)->startOfMonth()->day($clientBillingDate-1);
+        } elseif ($billingFrequency == config('client.billing-frequency.monthly.id')) { // clientFrequency = 1
+            $startdate = Carbon::createFromFormat('Y-m-d', $startdate);
+            $endDate = $startdate->addMonthNoOverflow()->startOfMonth()->day($clientBillingDate-1);
+        } elseif ($billingFrequency == config('client.billing-frequency.yearly.id')) { // clientFrequency = 4
+            $startdate = Carbon::createFromFormat('Y-m-d', $startdate);
+            $endDate = $startdate->addYearNoOverflow()->startOfMonth()->day($clientBillingDate-1);
+        } else {
+            $startdate = Carbon::createFromFormat('Y-m-d', $startdate);
+            $endDate = $startdate->addMonthsNoOverflow(1)->startOfMonth()->day($clientBillingDate-1);
+        }
+
+        return $endDate;
     }
 }

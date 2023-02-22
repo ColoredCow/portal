@@ -346,7 +346,7 @@
                                     @if(optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                     {{ __('-') }}
                                     @else
-                                        {{ $project->amcBillableHours($monthToSubtract) }}           
+                                        {{ $project->amcBillableHoursDisplay($monthToSubtract) }}           
                                     @endif
                                 </td>
                                 <td>{{ $amount }}</td>
