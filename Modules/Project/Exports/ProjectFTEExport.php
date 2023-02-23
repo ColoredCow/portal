@@ -35,6 +35,4 @@ class ProjectFTEExport implements FromArray, WithHeadings, ShouldAutoSize, WithT
     {
         return 'FTE';
     }
-
-
 }

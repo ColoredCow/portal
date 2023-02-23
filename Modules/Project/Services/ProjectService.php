@@ -406,6 +406,8 @@ class ProjectService implements ProjectServiceContract
                 }
             }
         }
+
         return $teamMembers;
     }
-}        
+}
+        
