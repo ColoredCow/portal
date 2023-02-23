@@ -22,7 +22,5 @@ class ProjectMeta extends Model
         if ($meta) {
             return $meta->value;
         }
-
-        return null;
     }
 }
