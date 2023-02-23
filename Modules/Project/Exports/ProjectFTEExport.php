@@ -16,14 +16,11 @@ class ProjectFTEExport implements FromArray, WithHeadings, ShouldAutoSize, WithT
         $this->employees = $employees;
     }
 
-    /**
-     * @return \Illuminate\Support\Collection
-     */
     public function array(): array
     {
         return $this->employees;
     }
-    
+
     public function headings(): array
     {
         return [
@@ -38,4 +35,5 @@ class ProjectFTEExport implements FromArray, WithHeadings, ShouldAutoSize, WithT
     {
         return 'FTE';
     }
+
 }

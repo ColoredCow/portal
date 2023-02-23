@@ -13,7 +13,6 @@ use Modules\Project\Contracts\ProjectServiceContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
-
 class ProjectController extends Controller
 {
     use AuthorizesRequests;
@@ -142,6 +141,7 @@ class ProjectController extends Controller
     {
         $this->authorize('projectFTEExport', Employee::class);
         $filters = $request->all();
-        return $this->service->project_FTE_Export($filters, $request);
+        return $this->service->projectFTEExport($filters, $request);
     }
+
 }        

@@ -383,7 +383,7 @@ class ProjectService implements ProjectServiceContract
         return $projectDetails;
     }
 
-    public function project_FTE_Export($filters, $request)
+    public function projectFTEExport($filters, $request)
     {
         $employees = Employee::query()->applyFilters($filters)
             ->get();
@@ -408,4 +408,5 @@ class ProjectService implements ProjectServiceContract
         }
         return $teamMembers;
     }
+
 }        
