@@ -106,6 +106,16 @@
                     <input type="month" class="form-control" name="term" id="term" required="required" value='{{ old('term', now(config('constants.timezone.indian'))->subMonth()->format('Y-m')) }}'>
                 </div>
                 <div class="form-group">
+                    <label for="term_start_date" class="field-required">Term Start Date</label>
+                    <input type="date" class="form-control" name="term_start_date" id="term_start_date" required="required"
+                        value="{{ now()->format('Y-m-d') }}">
+                </div>
+                <div class="form-group">
+                    <label for="term_end_date" class="field-required">Term End Date</label>
+                    <input type="date" class="form-control" name="term_end_date" id="term_end_date" required="required"
+                        value="{{ now()->format('Y-m-d') }}">
+                </div>
+                <div class="form-group">
                     <label for="sent_on" class="field-required">Sent on</label>
                     <input type="date" class="form-control" name="sent_on" id="sent_on" required="required"
                         value="{{ now()->format('Y-m-d') }}">
