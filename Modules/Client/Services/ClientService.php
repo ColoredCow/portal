@@ -108,7 +108,6 @@ class ClientService implements ClientServiceContract
 
     public function update($data, $client)
     {
-
         $data['section'] = $data['section'] ?? null;
         $nextStage = route('client.index');
         $defaultRoute = route('client.index');
@@ -152,7 +151,6 @@ class ClientService implements ClientServiceContract
     {
         return Client::status($status)->with('projects')->orderBy('name')->get();
     }
-
 
     public function store($data)
     {

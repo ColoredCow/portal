@@ -475,7 +475,6 @@ class Project extends Model implements Auditable
                 return $amcBillableHours * 12;
             }
         }
-
     }
 
     public function amcBillableHours(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
@@ -550,5 +549,4 @@ class Project extends Model implements Auditable
 
         return $endDate;
     }
-
 }
