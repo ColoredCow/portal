@@ -21,7 +21,6 @@ class ProjectFTEExport implements FromArray, WithHeadings, ShouldAutoSize, WithT
      */
     public function array(): array
     {
-        
         return $this->employees;
     }
     
@@ -40,9 +39,3 @@ class ProjectFTEExport implements FromArray, WithHeadings, ShouldAutoSize, WithT
         return 'FTE';
     }
 }
-
-
-
-
-
-

@@ -138,19 +138,10 @@ class ProjectController extends Controller
         return $this->service->updateProjectData($request->all(), $project);
     }
 
-    public function projectFTEExport(Request $request){
-        
+    public function projectFTEExport(Request $request)
+    {
         $this->authorize('projectFTEExport', Employee::class);
         $filters = $request->all();
-
         return $this->service->project_FTE_Export($filters, $request);
-
     }
-}
-
-
-        
-
-
-
-        
+}        
