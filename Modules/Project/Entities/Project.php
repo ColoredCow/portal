@@ -507,13 +507,24 @@ class Project extends Model implements Auditable
     {
         $clientBillingDate = $this->client->billingDetails->billing_date;
         $lastInvoice = $this->lastSentDateInvoice();
-        $startDate = Carbon::createFromFormat('Y-m-d', $lastInvoice)->day($clientBillingDate);
-        $endDate = $this->getEndDate($clientBillingDate);
+        $last_marked_as_active_date = Carbon::createFromFormat('Y-m-d', $this->client->last_marked_as_active_date);
+        $startDate = $this->startDateOfInvoice($lastInvoice, $clientBillingDate, $last_marked_as_active_date);
+        $endDate = $this->endDateOfInvoice($clientBillingDate, $startDate);
 
         return [
             'startDate'=>$startDate,
             'endDate'=>$endDate
         ];
+    }
+
+    public function startDateOfInvoice($lastInvoice = null, $clientBillingDate = null, $last_marked_as_active_date = null)
+    {
+        $lastInvoiceSentDate = Carbon::createFromFormat('Y-m-d', $lastInvoice)->day($clientBillingDate);
+        if ($last_marked_as_active_date->greaterThanOrEqualTo($lastInvoiceSentDate)) {
+            return  $last_marked_as_active_date->day($clientBillingDate);
+        }
+
+        return $lastInvoiceSentDate;
     }
 
     public function lastSentDateInvoice()
@@ -528,22 +539,18 @@ class Project extends Model implements Auditable
         return $priviousbillingDate->format('Y-m-d');
     }
 
-    public function getEndDate($clientBillingDate = 0)
+    public function endDateOfInvoice($clientBillingDate = 0, $startDate = null)
     {
         $billingFrequency = $this->client->billingDetails->billing_frequency;
-        $startdate = $this->lastSentDateInvoice();
+        $startdate = $startDate->copy();
 
         if ($billingFrequency == config('client.billing-frequency.quarterly.id')) { // clientFrequency = 3
-            $startdate = Carbon::createFromFormat('Y-m-d', $startdate);
             $endDate = $startdate->addMonthsNoOverflow(3)->startOfMonth()->day($clientBillingDate - 1);
         } elseif ($billingFrequency == config('client.billing-frequency.monthly.id')) { // clientFrequency = 1
-            $startdate = Carbon::createFromFormat('Y-m-d', $startdate);
             $endDate = $startdate->addMonthNoOverflow()->startOfMonth()->day($clientBillingDate - 1);
         } elseif ($billingFrequency == config('client.billing-frequency.yearly.id')) { // clientFrequency = 4
-            $startdate = Carbon::createFromFormat('Y-m-d', $startdate);
             $endDate = $startdate->addYearNoOverflow()->startOfMonth()->day($clientBillingDate - 1);
         } else {
-            $startdate = Carbon::createFromFormat('Y-m-d', $startdate);
             $endDate = $startdate->addMonthsNoOverflow(1)->startOfMonth()->day($clientBillingDate - 1);
         }
 
