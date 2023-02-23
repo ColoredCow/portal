@@ -143,5 +143,4 @@ class ProjectController extends Controller
         $filters = $request->all();
         return $this->service->projectFTEExport($filters, $request);
     }
-
 }        
