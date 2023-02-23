@@ -43,6 +43,7 @@ class ClientController extends ModuleBaseController
      */
     public function store(ClientRequest $request)
     {
+        
         $this->authorize('create', Client::class);
         $client = $this->service->store($request->all());
 

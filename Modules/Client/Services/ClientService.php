@@ -9,6 +9,7 @@ use Modules\Client\Entities\ClientAddress;
 use Modules\Client\Entities\ClientBillingDetail;
 use Modules\Client\Entities\ClientContactPerson;
 use Modules\Client\Contracts\ClientServiceContract;
+use Carbon\Carbon;
 
 class ClientService implements ClientServiceContract
 {
@@ -107,6 +108,7 @@ class ClientService implements ClientServiceContract
 
     public function update($data, $client)
     {
+
         $data['section'] = $data['section'] ?? null;
         $nextStage = route('client.index');
         $defaultRoute = route('client.index');
@@ -151,10 +153,12 @@ class ClientService implements ClientServiceContract
         return Client::status($status)->with('projects')->orderBy('name')->get();
     }
 
+
     public function store($data)
     {
         $data['status'] = 'active';
         $data['client_id'] = Client::max('client_id') + 1;
+        $data['last_marked_as_active_date'] = Carbon::now();
 
         $newClient = Client::create($data);
         $clientAddress = new clientAddress();

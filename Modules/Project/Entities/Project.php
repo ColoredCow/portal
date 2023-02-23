@@ -476,7 +476,6 @@ class Project extends Model implements Auditable
             }
         }
 
-        return null;
     }
 
     public function amcBillableHours(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
@@ -537,18 +536,19 @@ class Project extends Model implements Auditable
 
         if ($billingFrequency == config('client.billing-frequency.quarterly.id')) { // clientFrequency = 3
             $startdate = Carbon::createFromFormat('Y-m-d', $startdate);
-            $endDate = $startdate->addMonthsNoOverflow(3)->startOfMonth()->day($clientBillingDate-1);
+            $endDate = $startdate->addMonthsNoOverflow(3)->startOfMonth()->day($clientBillingDate - 1);
         } elseif ($billingFrequency == config('client.billing-frequency.monthly.id')) { // clientFrequency = 1
             $startdate = Carbon::createFromFormat('Y-m-d', $startdate);
-            $endDate = $startdate->addMonthNoOverflow()->startOfMonth()->day($clientBillingDate-1);
+            $endDate = $startdate->addMonthNoOverflow()->startOfMonth()->day($clientBillingDate - 1);
         } elseif ($billingFrequency == config('client.billing-frequency.yearly.id')) { // clientFrequency = 4
             $startdate = Carbon::createFromFormat('Y-m-d', $startdate);
-            $endDate = $startdate->addYearNoOverflow()->startOfMonth()->day($clientBillingDate-1);
+            $endDate = $startdate->addYearNoOverflow()->startOfMonth()->day($clientBillingDate - 1);
         } else {
             $startdate = Carbon::createFromFormat('Y-m-d', $startdate);
-            $endDate = $startdate->addMonthsNoOverflow(1)->startOfMonth()->day($clientBillingDate-1);
+            $endDate = $startdate->addMonthsNoOverflow(1)->startOfMonth()->day($clientBillingDate - 1);
         }
 
         return $endDate;
     }
+
 }

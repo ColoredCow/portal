@@ -70,6 +70,7 @@ class ProjectService implements ProjectServiceContract
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
             'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
+            'last_marked_as_active_date' => Carbon::now(),
         ]);
 
         if ($data['billing_level'] ?? null) {
@@ -177,6 +178,7 @@ class ProjectService implements ProjectServiceContract
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
             'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
             'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
+            'last_marked_as_active_date' => $project->status == 'inactive' && $data['status'] == 'active' ? today() : $project->last_marked_as_active_date
         ]);
 
         if ($data['billing_level'] ?? null) {
@@ -193,7 +195,11 @@ class ProjectService implements ProjectServiceContract
 
         $this->saveOrUpdateProjectContract($data, $project);
         if ($data['status'] == 'active' || $data['status'] == 'halted') {
-            $project->client->update(['status' => 'active']);
+            $client = $project->client;
+            $client->update([
+                'last_marked_as_active_date' => $client->status == 'inactive' ? today() : $client->last_marked_as_active_date,
+                'status' => 'active'
+            ]);
         } else {
             if (! $project->client->projects()->where('status', 'active')->exists()) {
                 $project->client->update(['status' => 'inactive']);
