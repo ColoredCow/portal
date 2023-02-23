@@ -16,12 +16,13 @@ class ProjectMeta extends Model
     public function getMetaValue($metaKey, $projectId)
     {
         $meta = $this->where('key', $metaKey)
-        ->where('project_id', $projectId)
-        ->first(); 
+                     ->where('project_id', $projectId)
+                     ->first();
 
         if ($meta) {
             return $meta->value;
         }
+        
         return null;
     }
 }
