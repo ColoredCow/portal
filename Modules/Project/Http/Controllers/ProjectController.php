@@ -109,8 +109,6 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        $projectmeta = ProjectMeta::where('project_id', $project->id)->get();
-
         return view('project::edit', [
             'project' => $project,
             'clients' => Client::orderBy('name')->get(),
@@ -119,9 +117,9 @@ class ProjectController extends Controller
             'projectRepositories' => $this->service->getProjectRepositories($project),
             'designations' => $this->service->getDesignations(),
             'workingDaysInMonth' => $this->service->getWorkingDays($project),
-            'projectmeta' => $projectmeta,
         ]);
     }
+
 
     /**
      * Update the specified resource in storage.
