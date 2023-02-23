@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
 use Modules\Invoice\Entities\Invoice;
-use Modules\Project\Entities\Project;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
@@ -37,14 +36,8 @@ class InvoiceController extends Controller
             $invoiceStatus = 'ready';
             $filters = $request->all();
         }
-        $projects = Project::all();
-        $lastInvoices = [];
-        foreach ($projects as $project) {
-            $lastInvoice = $project->lastInvoice();
-            $lastInvoices[$project->id] = $lastInvoice;
-        }
 
-        return view('invoice::index', array_merge(['lastInvoices' => $lastInvoices], $this->service->index($filters, $invoiceStatus)));
+        return view('invoice::index', $this->service->index($filters, $invoiceStatus));
     }
 
     /**

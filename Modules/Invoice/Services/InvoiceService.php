@@ -27,7 +27,7 @@ use Modules\Invoice\Entities\LedgerAccount;
 
 class InvoiceService implements InvoiceServiceContract
 {
-    public function index($filters = [], $invoiceStatus = 'sent', $project = null, $lastInvoice = [])
+    public function index($filters = [], $invoiceStatus = 'sent', $project = null, $lastInvoices = [])
     {
         $filters = [
             'client_id' => $filters['client_id'] ?? null,
@@ -52,15 +52,16 @@ class InvoiceService implements InvoiceServiceContract
                 ]);
             })->status('active')->invoiceReadyToSend()->orderBy('name')->get();
         }
-        $projects = Project::all();
+        $projects = Project::status('active')->get();
         foreach ($projects as $project) {
             $lastInvoice = $project->lastInvoice();
+            $lastInvoices[$project->id] = $lastInvoice;
         }
         $previousBillingDates = $project->client->previousBillingDate();
 
         return [
             'invoices' => $invoices,
-            'lastInvoice' => $lastInvoice,
+            'lastInvoices' => $lastInvoices,
             'previousBillingDates' => $previousBillingDates,
             'clients' => $this->getClientsForInvoice(),
             'currencyService' => $this->currencyService(),
