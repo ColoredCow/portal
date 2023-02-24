@@ -18,10 +18,10 @@
         </div>    
     @endif
     <div>
-        @if ($FTE < 1)
-            <span>Your FTE: <b style="color : red;">{{$FTE}}</b> </span>
+        @if (($data = auth()->user()->ftes['main']) < 1)
+            <span>Your FTE: <b class = 'text-danger'>{{$data}}</b> </span>
         @else 
-            <span>Your FTE: <b style="color : green;">{{$FTE}}</b> </span>
+            <span>Your FTE: <b class = 'text-success'>{{$data}}</b> </span>
         @endif
     </div>
     

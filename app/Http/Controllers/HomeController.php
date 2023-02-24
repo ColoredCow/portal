@@ -25,13 +25,8 @@ class HomeController extends Controller
     public function index()
     {
         $unreadBook = (session('disable_book_suggestion')) ? null : Book::getRandomUnreadBook();
-        $name = auth()->user()->name;
-        // FTE = Sum of hours booked by an employee in all the projects/(total number of days in month till today *8)
-        $id = DB::table('users')->where('name', $name)->value('id');
-        $efforts = DB::table('project_team_members_effort')->where('project_team_member_id', $id)->whereMonth('added_on', date('m'))->sum('actual_effort');
-        $FTE = $efforts / (date('d') * 8.00);
-
-        return view('home')->with(['book' => $unreadBook, 'FTE'=>$FTE]);
+       
+        return view('home')->with(['book' => $unreadBook]);
     }
 
     /**
