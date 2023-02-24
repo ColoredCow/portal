@@ -386,34 +386,106 @@ class Project extends Model implements Auditable
         return $nextBillingDate->subDay(2)->format('Y-m-d');
     }
 
+
     public function amcTotalProjectAmount(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
         $serviceRateTerm = $this->serviceRateTermFromProject_Billing_DetailsTable();
-        switch ($serviceRateTerm) {
-            case 'per_hour':
-                $totalAmountInMonth = $this->getAmcTotalAmountPerHour();
+        $clientserviceRateTerm = $this->client->billingDetails->service_rate_term;
 
-                return  $totalAmountInMonth;
-            case 'per_month':
-                $totalAmountInMonth = $this->getAmcTotalAmountPerMonth();
+        if ($serviceRateTerm) {
+            switch ($serviceRateTerm) {
+                case 'per_hour':
+                    $totalAmountInMonth = $this->getAmcTotalAmountPerHour();
 
-                return  $totalAmountInMonth;
-            case 'per_quarter':
-                $totalAmountInQuater = $this->getAmcTotalAmountPerQuarterly();
+                    return  $totalAmountInMonth;
+                case 'per_month':
+                    $totalAmountInMonth = $this->getAmcTotalAmountPerMonth();
 
-                return  $totalAmountInQuater;
-            case 'per_year':
-                $totalAmountInYear = $this->serviceRateFromProject_Billing_DetailsTable() + (12 * ($this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges));
+                    return  $totalAmountInMonth;
+                case 'per_quarter':
+                    $totalAmountInQuater = $this->getAmcTotalAmountPerQuarterly();
 
-                return $totalAmountInYear;
+                    return  $totalAmountInQuater;
+                case 'per_year':
+                    $totalAmountInYear = $this->serviceRateFromProjectBillingDetailsTable() + (12 * ($this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges));
+
+                    return $totalAmountInYear;
+            }
         }
+        switch ($clientserviceRateTerm) {
+            case 'per_hour':
+                return $this->getAmcTotalAmountPerHourClientbase();
+            case 'per_month':
+                return $this->getAmcTotalAmountPerMonthClientbase();
+            case 'per_quarter':
+                return $this->getAmcTotalAmountPerQuarterClientbase();
+            case 'per_year':
+                return ($this->client->billingDetails->service_rates
+                + optional($this->client->billingDetails)->bank_charges
+                + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate));
+        }
+
+    }
+
+    public function getAmcTotalAmountPerHourClientbase(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null) 
+    {
+        $taxandBankCharges = optional($this->client->billingDetails)->bank_charges + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate);
+        $clientFrequency = $this->client->billingDetails->billing_frequency;
+        $amount = ($this->client->billingDetails->service_rates * $this->amcBillableHours());
+
+        if ($clientFrequency == 2) { // monthly
+            return $amount + $taxandBankCharges;
+        }
+        if ($clientFrequency == 3) { // quarterly
+            return ($amount * 3) + $taxandBankCharges;
+        }
+        if ($clientFrequency == 4) { // yearly
+            return ($amount * 12) + $taxandBankCharges;
+        }
+
+        return $amount + $taxandBankCharges;
+    }
+
+    public function getAmcTotalAmountPerMonthClientbase(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
+    {
+        $taxandBankCharges = optional($this->client->billingDetails)->bank_charges + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate);
+        $clientFrequency = $this->client->billingDetails->billing_frequency;
+        $amount = ($this->client->billingDetails->service_rates);
+
+        if ($clientFrequency == 2) { // monthly
+            return $amount + $taxandBankCharges;
+        }
+        if ($clientFrequency == 3) { // quarterly
+            return ($amount * 3) + $taxandBankCharges;
+        }
+        if ($clientFrequency == 4) { // yearly
+            return ($amount * 12) + $taxandBankCharges;
+        }
+
+        return $amount + $taxandBankCharges;
+    }
+
+    public function getAmcTotalAmountPerQuarterClientbase(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
+    {
+        $taxandBankCharges = optional($this->client->billingDetails)->bank_charges + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate);
+        $clientFrequency = $this->client->billingDetails->billing_frequency;
+        $amount = ($this->client->billingDetails->service_rates);
+
+        if ($clientFrequency == 3) { // quarterly
+            return ($amount) + $taxandBankCharges;
+        }
+        if ($clientFrequency == 4) { // yearly
+            return ($amount * 4) + $taxandBankCharges;
+        }
+
+        return $amount + $taxandBankCharges;
     }
 
     public function getAmcTotalAmountPerHour(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
         $startAndEndDate = $this->getTermStartAndEndDateForInvoice();
         $months = $startAndEndDate['startDate']->diffInMonths($startAndEndDate['endDate']);
-        $amount = ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours());
+        $amount = ($this->serviceRateFromProjectBillingDetailsTable() * $this->amcBillableHours());
         $taxandBankCharges = optional($this->client->billingDetails)->bank_charges + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate);
 
         if ($months == 0) { // monthly
@@ -431,7 +503,7 @@ class Project extends Model implements Auditable
 
     public function getAmcTotalAmountPerMonth(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
-        $totalAmountInMonth = $this->serviceRateFromProject_Billing_DetailsTable() + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
+        $totalAmountInMonth = $this->serviceRateFromProjectBillingDetailsTable() + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
         $startAndEndDate = $this->getTermStartAndEndDateForInvoice();
         $months = $startAndEndDate['startDate']->diffInMonths($startAndEndDate['endDate']);
         $taxandBankCharges = optional($this->client->billingDetails)->bank_charges + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate);
@@ -450,7 +522,7 @@ class Project extends Model implements Auditable
 
     public function getAmcTotalAmountPerQuarterly(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
-        $totalAmountInQuater = $this->serviceRateFromProject_Billing_DetailsTable() + (3 * ($this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges));
+        $totalAmountInQuater = $this->serviceRateFromProjectBillingDetailsTable() + (3 * ($this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges));
         $startAndEndDate = $this->getTermStartAndEndDateForInvoice();
         $months = $startAndEndDate['startDate']->diffInMonths($startAndEndDate['endDate']);
         $taxandBankCharges = optional($this->client->billingDetails)->bank_charges + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate);
@@ -488,11 +560,17 @@ class Project extends Model implements Auditable
         return $this->getBillableHoursForMonth($monthToSubtract, $periodStartDate, $periodEndDate);
     }
 
-    public function serviceRateFromProject_Billing_DetailsTable()
+    public function serviceRateFromProjectBillingDetailsTable()
     {
         $details = DB::table('project_billing_details')->where('project_id', $this->id)->first();
+        $clientServiceRate = $this->client->billingDetails->service_rates;
+
         if (! empty($details) && $details->service_rates) {
             return $details->service_rates;
+        }
+
+        if(! empty($clientServiceRate)) {
+            return $clientServiceRate;
         }
 
         return 0;
