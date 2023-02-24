@@ -68,6 +68,12 @@ class CodeTrekController extends Controller
 
         return redirect()->route('codetrek.index');
     }
+    public function delete(CodeTrekApplicant $applicant)
+    {
+        $applicant->delete();
+
+        return redirect()->route('codetrek.index');
+    }
 
     /**
      * Remove the specified resource from storage.

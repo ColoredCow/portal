@@ -16,6 +16,7 @@ use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\User\Entities\User;
+use Modules\Project\Entities\ProjectResourceRequirement;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -160,6 +161,9 @@ class ProjectService implements ProjectServiceContract
 
             case 'project_techstack':
                 return $this->updateProjectTechstack($data, $project);
+
+            case 'project_resource_requirement':
+                return $this->updateProjectRequirement($data, $project);
         }
     }
 
@@ -200,6 +204,8 @@ class ProjectService implements ProjectServiceContract
             }
             $project->getTeamMembers()->update(['ended_on' => now()]);
         }
+
+        $project->is_ready_to_renew ? $project->tag('get-renewed') : $project->untag('get-renewed');
 
         return $isProjectUpdated;
     }
@@ -280,6 +286,38 @@ class ProjectService implements ProjectServiceContract
                     'value' => $value,
                 ]
             );
+        }
+    }
+
+    private function updateProjectRequirement($data, $project)
+    {
+        if (isset($data['designation'])) {
+            $needed = $data['needed'];
+
+            $designationMap = config('project.designation');
+            $projectId = $project->id;
+
+            foreach ($designationMap as $key => $value) {
+                $projectResourceRequirement = ProjectResourceRequirement::where([
+                    ['project_id', '=', $projectId],
+                    ['designation', '=', $key],
+                ])->first();
+
+                if (empty($needed[$key])) {
+                    $needed[$key] = 0;
+                }
+
+                if ($projectResourceRequirement === null) {
+                    $requirement = new ProjectResourceRequirement();
+                    $requirement->project_id = $projectId;
+                    $requirement->designation = $key;
+                    $requirement->total_requirement = $needed[$key];
+                    $requirement->save();
+                } else {
+                    $projectResourceRequirement->total_requirement = $needed[$key];
+                    $projectResourceRequirement->save();
+                }
+            }
         }
     }
 

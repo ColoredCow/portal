@@ -108,14 +108,18 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $designations = $this->service->getDesignations();
+        $designationKeys = array_keys($designations);
+
         return view('project::edit', [
             'project' => $project,
             'clients' => Client::orderBy('name')->get(),
             'teamMembers' => $this->service->getTeamMembers(),
             'projectTeamMembers' => $this->service->getProjectTeamMembers($project),
             'projectRepositories' => $this->service->getProjectRepositories($project),
-            'designations' => $this->service->getDesignations(),
+            'designations' => $designations,
             'workingDaysInMonth' => $this->service->getWorkingDays($project),
+            'designationKeys' => $designationKeys,
         ]);
     }
 
