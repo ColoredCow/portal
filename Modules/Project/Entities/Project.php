@@ -326,7 +326,7 @@ class Project extends Model implements Auditable
         if ($meta) {
             return $meta->value;
         } else {
-            return null;
+            return;
         }
     }
 
