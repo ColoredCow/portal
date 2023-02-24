@@ -385,25 +385,30 @@ class ProjectService implements ProjectServiceContract
 
     public function projectFTEExport($filters, $request)
     {
-        $employees = Employee::query()->applyFilters($filters)
+        $employees = Employee::applyFilters($filters)
             ->get();
 
-        $employees = $this->formatProjectFTEForExportAll($employees);
-        $currentTimeStamp = Carbon::now();
-
-        return Excel::download(new ProjectFTEExport($employees), "FTE-$currentTimeStamp->year$currentTimeStamp->month$currentTimeStamp->day.xlsx");
+        $employees = $this->formatProjectFTEFOrExportAll($employees);
+        $currentTimeStamp = now();
+        $filename = "FTE-$currentTimeStamp->year$currentTimeStamp->month$currentTimeStamp->day.xlsx";
+        return Excel::download(new ProjectFTEExport($employees), $filename);
     }
 
-    private function formatProjectFTEForExportAll($employees)
+    private function formatProjectFTEFOrExportAll($employees)
     {
         $teamMembers = [];
         foreach ($employees as $employee) {
-            if ($employee->user) {
-                foreach ($employee->user->activeProjectTeamMembers as $activeProjectTeamMember) {
-                    $teamMember = [];
-                    array_push($teamMember, $employee->name, number_format($employee->user->ftes['main'], 2), $activeProjectTeamMember->project->name, number_format($activeProjectTeamMember->fte, 2));
-                    array_push($teamMembers, $teamMember);
-                }
+            if (!$employee->user) {
+            continue;
+            }
+            foreach ($employee->user->activeProjectTeamMembers as $activeProjectTeamMember) {
+                $teamMember = [
+                $employee->name, 
+                number_format($employee->user->ftes['main'], 2), 
+                $activeProjectTeamMember->project->name, 
+                number_format($activeProjectTeamMember->fte, 2)
+                ];
+                $teamMembers[] = $teamMember;
             }
         }
 

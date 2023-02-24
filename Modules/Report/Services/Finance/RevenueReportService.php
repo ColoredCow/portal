@@ -73,8 +73,8 @@ class RevenueReportService
 
         foreach ($invoices as $invoice) {
             $dateKey = $invoice->sent_on->format($this->dataKeyFormat);
-            $totalAmount += $invoice->amount;
-            $results[$dateKey] = ($results[$dateKey] ?? 0) + $invoice->amount;
+            $totalAmount += (int)$invoice->amount;
+            $results[$dateKey] = ($results[$dateKey] ?? 0) + (int)$invoice->amount;
         }
 
         $results['total'] = $totalAmount;
@@ -91,7 +91,7 @@ class RevenueReportService
         foreach ($invoices as $invoice) {
             $dateKey = $invoice->sent_on->format($this->dataKeyFormat);
             $exchangeRate = $this->avgCurrencyRates[$dateKey][strtolower($invoice->currency)] ?? $this->defaultCurrencyRates;
-            $amount = ($invoice->amount) * ($exchangeRate);
+            $amount = (float)($invoice->amount) * (float)($exchangeRate);
             $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
             $totalAmount += $amount;
         }
