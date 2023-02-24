@@ -58,7 +58,6 @@
                     <div class="col-2">
                         <select v-model="projectTeamMember.pivot.designation" :name="`project_team_member[${index}][designation]`" class="custom-select">
                             <option value="">Select Designations</option>
-
                             <option v-for="(designation, key) in designations" :value="key">@{{ designation }}</option>
                         </select>
                     </div>

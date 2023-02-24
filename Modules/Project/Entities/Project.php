@@ -55,6 +55,41 @@ class Project extends Model implements Auditable
         return $this->hasMany(ProjectRepository::class);
     }
 
+    public function resourceRequirement()
+    {
+        return $this->hasMany(ProjectResourceRequirement::class);
+    }
+
+    public function getResourceRequirementByDesignation($designationName)
+    {
+        return $this->resourceRequirement()->where('designation', $designationName)->first();
+    }
+
+    public function getDeployedCountForDesignation($designation)
+    {
+        return $this->getTeamMembers()->where('designation', '=', $designation)->count();
+    }
+
+    public function getToBeDeployedCountForDesignation($designation)
+    {
+        $resourceRequirementCount = optional($this->getResourceRequirementByDesignation($designation))->total_requirement ?? 0;
+        $deployedCount = $this->getDeployedCountForDesignation($designation);
+        $toBeDeployedCount = $resourceRequirementCount - $deployedCount;
+
+        return ($toBeDeployedCount > 0) ? $toBeDeployedCount : (($toBeDeployedCount < 0) ? $toBeDeployedCount : '0');
+    }
+
+    public function getTotalToBeDeployedCount()
+    {
+        $designations = array_keys(config('project.designation'));
+        $totalToBeDeployedCount = 0;
+        foreach ($designations as $designationName) {
+            $totalToBeDeployedCount += $this->getToBeDeployedCountForDesignation($designationName);
+        }
+
+        return $totalToBeDeployedCount;
+    }
+
     public function client()
     {
         return $this->belongsTo(Client::class);
