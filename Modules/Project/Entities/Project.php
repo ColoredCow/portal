@@ -3,9 +3,11 @@
 namespace Modules\Project\Entities;
 
 use App\Traits\Filters;
+use App\Traits\HasTags;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Modules\Client\Entities\Client;
 use Modules\EffortTracking\Entities\Task;
@@ -14,12 +16,11 @@ use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Services\InvoiceService;
 use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Project extends Model implements Auditable
 {
-    use HasFactory, Filters, SoftDeletes, \OwenIt\Auditing\Auditable;
+    use HasFactory, HasTags, Filters, SoftDeletes, \OwenIt\Auditing\Auditable;
 
     protected $table = 'projects';
 
@@ -199,6 +200,20 @@ class Project extends Model implements Auditable
         }
 
         return $dates;
+    }
+    public function getIsReadyToRenewAttribute()
+    {
+        $diff = optional($this->end_date)->diffInDays(today());
+
+        if ($diff === null) {
+            return true;
+        } elseif ($this->end_date <= today()) {
+            return true;
+        } elseif ($diff <= 30) {
+            return false;
+        }
+
+        return false;
     }
 
     public function getCurrentExpectedHoursAttribute()

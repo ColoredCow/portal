@@ -205,6 +205,8 @@ class ProjectService implements ProjectServiceContract
             $project->getTeamMembers()->update(['ended_on' => now()]);
         }
 
+        $project->is_ready_to_renew ? $project->tag('get-renewed') : $project->untag('get-renewed');
+
         return $isProjectUpdated;
     }
 

@@ -145,7 +145,7 @@
                     class="{{ config("constants.hr.status.$application->status.class") }} badge-pill mr-1 mb-1 fz-12">{{ config("constants.hr.status.$application->status.title") }}</span>
             @endif
             @if ($applicantId != null)
-                @if ($application->hr_applicant_id == $applicantId->hr_applicant_id) 
+                @if ($application->hr_applicant_id == $applicantId->hr_applicant_id)
                     <span class="{{ config("constants.hr.status.submitted-offer-letter-details.class") }} badge-pill mr-1 mb-1 fz-12"> Submitted Offer Letter Details</span>
                 @endif
             @endif
