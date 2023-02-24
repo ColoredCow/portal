@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use Google_Client;
 use Google_Service_Directory;
 use App\Models\KnowledgeCafe\Library\Book;
