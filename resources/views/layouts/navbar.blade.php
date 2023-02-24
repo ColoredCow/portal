@@ -148,9 +148,9 @@
         </li>
     @endcan
     @can('codetrek.view')
-    <li class="nav-item">
-        <a class="nav-item nav-link" href="{{('/codetrek') }}">CodeTrek</a>
-    </li>
+        <li class="nav-item">
+            <a class="nav-item nav-link" href="{{('/codetrek') }}">CodeTrek</a>
+        </li>
     @endcan
     @can('media.view')
         <li class="nav-item">
