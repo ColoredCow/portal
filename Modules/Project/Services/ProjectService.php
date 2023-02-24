@@ -403,9 +403,9 @@ class ProjectService implements ProjectServiceContract
             }
             foreach ($employee->user->activeProjectTeamMembers as $activeProjectTeamMember) {
                 $teamMember = [
-                    $employee->name, 
-                    number_format($employee->user->ftes['main'], 2), 
-                    $activeProjectTeamMember->project->name, 
+                    $employee->name,
+                    number_format($employee->user->ftes['main'], 2),
+                    $activeProjectTeamMember->project->name,
                     number_format($activeProjectTeamMember->fte, 2)
                 ];
                 $teamMembers[] = $teamMember;
