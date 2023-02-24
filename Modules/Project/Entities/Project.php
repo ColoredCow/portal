@@ -67,10 +67,7 @@ class Project extends Model implements Auditable
 
     public function getDeployedCountForDesignation($designation)
     {
-        return DB::table('project_team_members')
-                    ->where('project_id', '=', $this->id)
-                    ->where('designation', '=', $designation)
-                    ->count();
+        return $this->getTeamMembers()->where('designation', '=', $designation)->count();
     }
 
     public function getToBeDeployedCountForDesignation($designation)
