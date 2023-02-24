@@ -229,7 +229,7 @@ class Project extends Model implements Auditable
     {
         $startDate = $periodStartDate ?: $this->client->getMonthStartDateAttribute($monthToSubtract);
         $endDate = $periodEndDate ?: $this->client->getMonthEndDateAttribute($monthToSubtract);
-
+        // dd($startDate);
         return $this->getAllTeamMembers->sum(function ($teamMember) use ($startDate, $endDate) {
             if (! $teamMember->projectTeamMemberEffort) {
                 return 0;
@@ -413,19 +413,20 @@ class Project extends Model implements Auditable
     {
         $startAndEndDate = $this->getTermStartAndEndDateForInvoice();
         $months = $startAndEndDate['startDate']->diffInMonths($startAndEndDate['endDate']);
-        $amount = ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours()) + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
+        $amount = ($this->serviceRateFromProject_Billing_DetailsTable() * $this->amcBillableHours());
+        $taxandBankCharges = optional($this->client->billingDetails)->bank_charges + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate);
 
         if ($months == 0) { // monthly
-            return $amount;
+            return $amount  + $taxandBankCharges;
         }
         if ($months == 2) { // Quarterly
-            return $amount * 3;
+            return ($amount * 3) + $taxandBankCharges;
         }
         if ($months == 11) { // yearly
-            return $amount * 12;
+            return ($amount * 12) + $taxandBankCharges;
         }
 
-        return $amount;
+        return $amount + $taxandBankCharges;
     }
 
     public function getAmcTotalAmountPerMonth(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
@@ -433,18 +434,18 @@ class Project extends Model implements Auditable
         $totalAmountInMonth = $this->serviceRateFromProject_Billing_DetailsTable() + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
         $startAndEndDate = $this->getTermStartAndEndDateForInvoice();
         $months = $startAndEndDate['startDate']->diffInMonths($startAndEndDate['endDate']);
-
+        $taxandBankCharges = optional($this->client->billingDetails)->bank_charges + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate);
         if ($months == 0) { // monthly
-            return  $totalAmountInMonth;
+            return  $totalAmountInMonth + $taxandBankCharges;
         }
         if ($months == 2) { // Quarterly
-            return  $totalAmountInMonth * 3;
+            return  ($totalAmountInMonth * 3) + $taxandBankCharges;
         }
         if ($months == 11) { // yearly
-            return  $totalAmountInMonth * 12;
+            return  ($totalAmountInMonth * 12) + $taxandBankCharges;
         }
 
-        return $totalAmountInMonth;
+        return $totalAmountInMonth + $taxandBankCharges;
     }
 
     public function getAmcTotalAmountPerQuarterly(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
@@ -452,15 +453,16 @@ class Project extends Model implements Auditable
         $totalAmountInQuater = $this->serviceRateFromProject_Billing_DetailsTable() + (3 * ($this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges));
         $startAndEndDate = $this->getTermStartAndEndDateForInvoice();
         $months = $startAndEndDate['startDate']->diffInMonths($startAndEndDate['endDate']);
+        $taxandBankCharges = optional($this->client->billingDetails)->bank_charges + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate);
 
         if ($months == 2) { // Quarterly
-            return  $totalAmountInQuater;
+            return  $totalAmountInQuater + $taxandBankCharges;
         }
         if ($months == 11) { // yearly
-            return  $totalAmountInQuater * 4;
+            return  ($totalAmountInQuater * 4) + $taxandBankCharges;
         }
 
-        return $totalAmountInQuater;
+        return $totalAmountInQuater + $taxandBankCharges;
     }
 
     public function amcBillableHoursDisplay(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
