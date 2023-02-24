@@ -19,6 +19,7 @@ class CodeTrekPermissionTableSeeder extends Seeder
         Model::unguard();
 
         $applicantPermissions = [
+            ['name' => 'codetrek.view'],
             ['name' => 'codetrek_applicant.create'],
             ['name' => 'codetrek_applicant.view'],
             ['name' => 'codetrek_applicant.update'],
