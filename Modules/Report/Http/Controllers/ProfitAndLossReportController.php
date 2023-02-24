@@ -7,7 +7,6 @@ use Illuminate\Routing\Controller;
 use Modules\Report\Services\Finance\ReportDataService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Report\Services\Finance\ProfitAndLossReportService;
-use Maatwebsite\Excel\Facades\Excel;
 
 class ProfitAndLossReportController extends Controller
 {
@@ -58,10 +57,5 @@ class ProfitAndLossReportController extends Controller
         $filters = $request->filters;
 
         return app(ReportDataService::class)->getData($type, $filters);
-    }
-
-    public function profitLossReportExport()
-    {
-        return Excel::download(new ProfitLossExport, 'Profit and Loss Report.xlsx');
     }
 }

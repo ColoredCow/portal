@@ -8,7 +8,7 @@
             <h4 class="mb-1 pb-1"> Profit and Loss Report</h4>
             {{-- ToDo:: we need to enable this when we add export funcationality done in the backend. --}}
             <span>
-                <a href="{{ route('reports.finance.profit-and-loss.report.export')}}" class="btn btn-info text-white"> Export To Excel </a>
+                <a href="" class="btn disabled btn-info text-white"> Export To Excel </a>
             </span>
         </div>
         <br>
