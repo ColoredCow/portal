@@ -417,7 +417,7 @@ class Project extends Model implements Auditable
         $taxandBankCharges = optional($this->client->billingDetails)->bank_charges + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate);
 
         if ($months == 0) { // monthly
-            return $amount  + $taxandBankCharges;
+            return $amount + $taxandBankCharges;
         }
         if ($months == 2) { // Quarterly
             return ($amount * 3) + $taxandBankCharges;
