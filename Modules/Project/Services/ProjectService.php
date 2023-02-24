@@ -24,7 +24,6 @@ class ProjectService implements ProjectServiceContract
         $filters = [
             'status' => $data['status'] ?? 'active',
             'is_amc' => $data['is_amc'] ?? 0,
-            'tags' => 'get_renewed',
         ];
 
         if ($nameFilter = $data['name'] ?? false) {
@@ -56,7 +55,7 @@ class ProjectService implements ProjectServiceContract
         return $this->getClients();
     }
 
-    public function store($data, Project $project)
+    public function store($data)
     {
         $project = Project::create([
             'name' => $data['name'],
