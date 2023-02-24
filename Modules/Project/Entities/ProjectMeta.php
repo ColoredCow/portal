@@ -13,14 +13,4 @@ class ProjectMeta extends Model
     {
         return $this->belongsTo(Project::class);
     }
-    public function getMetaValue($metaKey, $projectId)
-    {
-        $meta = $this->where('key', $metaKey)
-                     ->where('project_id', $projectId)
-                     ->first();
-
-        if ($meta) {
-            return $meta->value;
-        }
-    }
 }

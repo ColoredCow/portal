@@ -270,6 +270,16 @@ class Project extends Model implements Auditable
         return $this->hasMany(ProjectMeta::class);
     }
 
+    public function getMetaValue($metaKey)
+    {
+        $meta = $this->meta()->where('key', $metaKey)->first();
+        if ($meta) {
+            return $meta->value;
+        } else {
+            return null;
+        }
+    }
+
     public function getBillingLevelAttribute()
     {
         return optional($this->meta()->where('key', 'billing_level')->first())->value;
