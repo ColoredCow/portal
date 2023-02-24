@@ -429,7 +429,7 @@ class ProjectService implements ProjectServiceContract
         $employees = $this->formatProjectFTEFOrExportAll($employees);
         $currentTimeStamp = now();
         $filename = "FTE-$currentTimeStamp->year$currentTimeStamp->month$currentTimeStamp->day.xlsx";
-        
+
         return Excel::download(new ProjectFTEExport($employees), $filename);
     }
 
