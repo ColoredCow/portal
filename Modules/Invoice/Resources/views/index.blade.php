@@ -298,7 +298,7 @@
 
                             @php
                                 $index++;
-                               
+
                                 $currencySymbol = config('constants.currency.' . $project->client->currency . '.symbol');
                                 if ($project->hasCustomInvoiceTemplate()) {
                                     $amount = $currencySymbol . $project->getTotalLedgerAmount($quarter);
