@@ -386,7 +386,6 @@ class Project extends Model implements Auditable
         return $nextBillingDate->subDay(2)->format('Y-m-d');
     }
 
-
     public function amcTotalProjectAmount(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
         $serviceRateTerm = $this->serviceRateTermFromProject_Billing_DetailsTable();
@@ -420,11 +419,10 @@ class Project extends Model implements Auditable
             case 'per_quarter':
                 return $this->getAmcTotalAmountPerQuarterClientbase();
             case 'per_year':
-                return ($this->client->billingDetails->service_rates
+                return $this->client->billingDetails->service_rates
                 + optional($this->client->billingDetails)->bank_charges
-                + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate));
+                + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate);
         }
-
     }
 
     public function getAmcTotalAmountPerHourClientbase(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null) 
@@ -472,7 +470,7 @@ class Project extends Model implements Auditable
         $amount = ($this->client->billingDetails->service_rates);
 
         if ($clientFrequency == 3) { // quarterly
-            return ($amount) + $taxandBankCharges;
+            return $amount + $taxandBankCharges;
         }
         if ($clientFrequency == 4) { // yearly
             return ($amount * 4) + $taxandBankCharges;
@@ -569,7 +567,7 @@ class Project extends Model implements Auditable
             return $details->service_rates;
         }
 
-        if(! empty($clientServiceRate)) {
+        if (! empty($clientServiceRate)) {
             return $clientServiceRate;
         }
 
