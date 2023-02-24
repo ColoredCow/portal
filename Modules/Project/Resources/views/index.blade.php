@@ -13,6 +13,7 @@
             @include('project::menu_header')
             @can('projects.create')
                 <span class='mt-4'>
+                    <a href="{{ route('project.fte.export')}}" class="btn btn-info text-white">Export To Excel</a>
                     <a href="{{ route('project.create') }}" class="btn btn-success text-white ml-1"><i class="fa fa-plus"></i>
                         {{ __('Add new project') }}</a>
                 </span>
