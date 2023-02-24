@@ -124,7 +124,7 @@
                         @if ( !isset($applicationRound['0']->round_status))
                             <div class="form-row">
                                 <div class="form-group col-md-5">
-                                    <label for="scheduled_" class="fz-14 leading-none text-secondary w-100p">
+                                    <label for="scheduled_date" class="fz-14 leading-none text-secondary w-100p">
                                         <div>
                                         <i class="fa fa-calendar" aria-hidden="true"></i>
                                         <span>Scheduled date</span>
