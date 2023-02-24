@@ -164,4 +164,8 @@ Route::middleware('auth')->group(function () {
     Route::get('user/read-books', 'UserBookController@index');
     Route::get('user/wishlist-books', 'UserBookController@booksInWishlist');
     Route::get('user/projects', 'UserController@projects');
+
+    Route::get('/index', function () {
+        return view('index');
+    });
 });

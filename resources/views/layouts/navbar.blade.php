@@ -113,6 +113,16 @@
             </div>
         </li>
     @endcan
+   
+        <li class="nav-item dropdown">
+            <a id="navbarDropdown_" class="nav-link dropdown-toggle" href="#" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Operations <span class="caret"></span>
+            </a>
+            <div class="dropdown-menu z-index-1100" aria-labelledby="">
+                <a class="dropdown-item" href="{{ url('/index') }}">Office location</a>
+               
+        </li>
+   
 
     @if (auth()->user()->canAny(['weeklydoses.view', 'library_books.view']))
         <li class="nav-item dropdown">
@@ -120,7 +130,7 @@
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>KnowledgeCafe <span
                     class="caret"></span>
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales"> 
                 @can('library_books.view')
                     <a class="dropdown-item" href="{{ route('books.index') }}">Library</a>
                 @endcan
