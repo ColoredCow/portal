@@ -229,7 +229,6 @@ class Project extends Model implements Auditable
     {
         $startDate = $periodStartDate ?: $this->client->getMonthStartDateAttribute($monthToSubtract);
         $endDate = $periodEndDate ?: $this->client->getMonthEndDateAttribute($monthToSubtract);
-        // dd($startDate);
         return $this->getAllTeamMembers->sum(function ($teamMember) use ($startDate, $endDate) {
             if (! $teamMember->projectTeamMemberEffort) {
                 return 0;
@@ -406,7 +405,7 @@ class Project extends Model implements Auditable
 
                     return  $totalAmountInQuater;
                 case 'per_year':
-                    $totalAmountInYear = $this->serviceRateFromProjectBillingDetailsTable() + (12 * ($this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges));
+                    $totalAmountInYear = $this->serviceRateFromProjectBillingDetailsTable() + ($this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges);
 
                     return $totalAmountInYear;
             }
