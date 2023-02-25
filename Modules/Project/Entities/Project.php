@@ -2,6 +2,7 @@
 
 namespace Modules\Project\Entities;
 
+use Modules\Project\Entities\ProjectMeta;
 use App\Traits\Filters;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -589,7 +590,12 @@ class Project extends Model implements Auditable
     {
         $clientBillingDate = $this->client->billingDetails->billing_date;
         $lastInvoice = $this->lastSentDateInvoice();
-        $last_marked_as_active_date = Carbon::createFromFormat('Y-m-d', $this->client->last_marked_as_active_date);
+        $billingLevel = ProjectMeta::where('project_id', $this->id)->value('value');
+        if ($billingLevel == 'client') {
+            $last_marked_as_active_date = Carbon::createFromFormat('Y-m-d', $this->client->last_marked_as_active_date);
+        } else {
+            $last_marked_as_active_date = Carbon::createFromFormat('Y-m-d', $this->last_marked_as_active_date);
+        }
         $startDate = $this->startDateOfInvoice($lastInvoice, $clientBillingDate, $last_marked_as_active_date);
         $endDate = $this->endDateOfInvoice($clientBillingDate, $startDate);
 
