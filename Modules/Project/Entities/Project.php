@@ -2,7 +2,6 @@
 
 namespace Modules\Project\Entities;
 
-use Modules\Project\Entities\ProjectMeta;
 use App\Traits\Filters;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
