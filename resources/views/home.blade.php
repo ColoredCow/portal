@@ -21,7 +21,7 @@
         @if (($data = auth()->user()->ftes['main']) < 1)
             <span>Your FTE: <b class='text-danger'>{{$data}}</b> </span>
         @else 
-            <span>Your FTE: <b class = 'text-success'>{{$data}}</b> </span>
+            <span>Your FTE: <b class='text-success'>{{$data}}</b> </span>
         @endif
     </div>
     
