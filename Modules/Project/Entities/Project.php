@@ -425,7 +425,7 @@ class Project extends Model implements Auditable
         }
     }
 
-    public function getAmcTotalAmountPerHourClientbase(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null) 
+    public function getAmcTotalAmountPerHourClientbase(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
         $taxandBankCharges = optional($this->client->billingDetails)->bank_charges + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate);
         $clientFrequency = $this->client->billingDetails->billing_frequency;
