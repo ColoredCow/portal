@@ -5,11 +5,13 @@ namespace Modules\Project\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
+use Modules\HR\Entities\Employee;
 use Modules\Project\Rules\ProjectNameExist;
 use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
@@ -108,14 +110,18 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $designations = $this->service->getDesignations();
+        $designationKeys = array_keys($designations);
+
         return view('project::edit', [
             'project' => $project,
             'clients' => Client::orderBy('name')->get(),
             'teamMembers' => $this->service->getTeamMembers(),
             'projectTeamMembers' => $this->service->getProjectTeamMembers($project),
             'projectRepositories' => $this->service->getProjectRepositories($project),
-            'designations' => $this->service->getDesignations(),
+            'designations' => $designations,
             'workingDaysInMonth' => $this->service->getWorkingDays($project),
+            'designationKeys' => $designationKeys,
         ]);
     }
 
@@ -133,5 +139,13 @@ class ProjectController extends Controller
         }
 
         return $this->service->updateProjectData($request->all(), $project);
+    }
+
+    public function projectFTEExport(Request $request)
+    {
+        $this->authorize('projectFTEExport', Employee::class);
+        $filters = $request->all();
+
+        return $this->service->projectFTEExport($filters, $request);
     }
 }
