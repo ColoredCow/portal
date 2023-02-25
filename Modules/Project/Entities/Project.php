@@ -229,6 +229,7 @@ class Project extends Model implements Auditable
     {
         $startDate = $periodStartDate ?: $this->client->getMonthStartDateAttribute($monthToSubtract);
         $endDate = $periodEndDate ?: $this->client->getMonthEndDateAttribute($monthToSubtract);
+
         return $this->getAllTeamMembers->sum(function ($teamMember) use ($startDate, $endDate) {
             if (! $teamMember->projectTeamMemberEffort) {
                 return 0;
