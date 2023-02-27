@@ -70,7 +70,7 @@ class ProfitAndLossReportService
             ];
             $profitAndLossData[] = $profitAndLoss;
         }
-        $profitAndLoss = ['Total Revenue', Null, array_sum(array_column($allAmounts, 'total')),
+        $profitAndLoss = ['Total Revenue', null, array_sum(array_column($allAmounts, 'total')),
             array_sum(array_column($allAmounts, "04-$lastYearVal")),
             array_sum(array_column($allAmounts, "05-$lastYearVal")),
             array_sum(array_column($allAmounts, "06-$lastYearVal")),
