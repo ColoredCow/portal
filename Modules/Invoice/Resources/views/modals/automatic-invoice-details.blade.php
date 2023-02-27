@@ -8,14 +8,14 @@
                 <table>
                     <tr>
                         <th>&nbsp</th>
-                        <th>Current term details</th>
                         <th>Previous term details</th>
+                        <th>Current term details</th>
                     </tr>
                     @foreach ($lastInvoices as $invoice)
                         @if ($invoice !== null && $invoice->client_id == $project->client_id)
                             <tr>
                                 <td>Booked hours</td>
-                                <td>{{ $project->getHoursBookedForMonth($monthToSubtract = 0) }} Hrs.</td>
+                                <td>{{ '-' }}</td>
                                 <td> {{ $project->getHoursBookedForMonth($monthToSubtract = 1) }} Hrs.</td>
                             </tr>
                             @php
@@ -23,8 +23,7 @@
                             @endphp
                             <tr>
                                 <td>Amount</td>
-                                <td>{{ config('constants.currency.' . $project->client->currency . '.symbol') . '' . $invoice->client->current_hours_in_projects * $project->client->billingDetails->service_rates }}
-                                </td>
+                                <td>{{ $invoice->invoiceAmount() }}</td>
                                 <td>{{ $amount }}</td>
                             </tr>
                         @break
