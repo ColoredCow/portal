@@ -16,4 +16,5 @@ Route::prefix('codetrek')->group(function () {
     Route::post('/', 'CodeTrekController@store')->name('codetrek.store');
     Route::get('/edit/{applicant}', 'CodeTrekController@edit')->name('codetrek.edit');
     Route::post('/edit/{applicant}', 'CodeTrekController@update')->name('codetrek.update');
+    Route::get('/{applicant}', 'CodeTrekController@delete')->name('codetrek.delete');
 });

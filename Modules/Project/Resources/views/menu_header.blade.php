@@ -4,7 +4,7 @@
     @endphp
 
     <li class="nav-item mr-3">
-        <a class="nav-link {{ request()->input('is_amc', '0') == '0' ? 'active' : '' }}"
+        <a class="nav-link {{ request()->input('is_amc', '0') == '0' && request()->input('status', 'active') == 'active' ? 'active' : '' }}"
             href="{{ route('project.index', array_merge($filters, ['status' => 'active', 'is_amc' => '0'])) }}">
             Main Projects({{ $mainProjectsCount }})</a>
     </li>
