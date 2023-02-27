@@ -27,9 +27,9 @@ class ProfitAndLossReportExport implements FromArray, WithHeadings, ShouldAutoSi
         $startYear = request()->input('year', $currentYear);
         $lastYear = $startYear - 1;
         $startYearVal = substr($startYear, -2);
-        $lastYearVal = substr($lastYear, -2);
-        
-        return [
+        $lastYearVal = substr((string) $lastYear, -2);
+
+            return [
                 'Head',
                 'Particulars',
                 'Total',

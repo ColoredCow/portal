@@ -44,11 +44,11 @@ class ProfitAndLossReportService
         $startYear = request()->input('year', $currentYear);
         $lastYear = $startYear - 1;
         $startYearVal = substr($startYear, -2);
-        $lastYearVal = substr($lastYear, -2);
+        $lastYearVal = substr((string) $lastYear, -2);
         $allAmounts = array_map(function ($item) {
             return $item['amounts'];
         }, $reportData);
-        
+
         $profitAndLossData = [];
         foreach ($reportData as $perticular) {
             $profitAndLoss = [
@@ -70,7 +70,7 @@ class ProfitAndLossReportService
             ];
             $profitAndLossData[] = $profitAndLoss;
         }
-        $profitAndLoss = [ 'Total Revenue', Null, array_sum(array_column($allAmounts, 'total')), 
+        $profitAndLoss = ['Total Revenue', Null, array_sum(array_column($allAmounts, 'total')),
             array_sum(array_column($allAmounts, "04-$lastYearVal")),
             array_sum(array_column($allAmounts, "05-$lastYearVal")),
             array_sum(array_column($allAmounts, "06-$lastYearVal")),
