@@ -22,7 +22,6 @@ class OperationsController extends Controller
      */
     public function create()
     {
-
     }
 
     /**
@@ -30,7 +29,6 @@ class OperationsController extends Controller
      */
     public function store()
     {
-        //
     }
 
     /**
@@ -38,7 +36,6 @@ class OperationsController extends Controller
      */
     public function show()
     {
-
     }
 
     /**
@@ -46,7 +43,6 @@ class OperationsController extends Controller
      */
     public function edit()
     {
-
     }
 
     /**
@@ -54,7 +50,6 @@ class OperationsController extends Controller
      */
     public function update()
     {
-        //
     }
 
     /**
@@ -62,6 +57,5 @@ class OperationsController extends Controller
      */
     public function destroy()
     {
-        //
     }
 }
