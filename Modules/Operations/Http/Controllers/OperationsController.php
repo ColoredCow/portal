@@ -19,11 +19,10 @@ class OperationsController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * @return Renderable
      */
     public function create()
     {
-        return view('operations::create');
+
     }
 
     /**
@@ -38,17 +37,15 @@ class OperationsController extends Controller
     /**
      * Show the specified resource.
      * @param int $id
-     * @return Renderable
      */
     public function show($id)
     {
-        return view('operations::show');
+
     }
 
     /**
      * Show the form for editing the specified resource.
      * @param int $id
-     * @return Renderable
      */
     public function edit($id)
     {
