@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -35,7 +34,7 @@ class ApplicantsSubmittedBeforeSevenDays extends Mailable
 
         return $this->view('emails.applicants_before_seven_days', [
                         'applicants' => $this->applicants,
-                        'count' => $this->applicants->count(),])
+                        'count' => $this->applicants->count(), ])
                     ->subject($subject);
     }
 }

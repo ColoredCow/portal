@@ -102,5 +102,4 @@ class ApplicationService implements ApplicationServiceContract
         $data->actual_end_time = $meetDuration;
         $data->save();
     }
-
 }
