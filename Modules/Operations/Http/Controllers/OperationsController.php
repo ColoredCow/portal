@@ -29,7 +29,6 @@ class OperationsController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param Request $request
-     * 
      */
     public function store(Request $request)
     {
