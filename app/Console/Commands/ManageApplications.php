@@ -42,20 +42,20 @@ class ManageApplications extends Command
     {
         // Get the current date/time
         $now = now();
-    
+
         // Calculate the date/time 7 days ago
         $sevenDaysAgo = $now->subDays(7);
-    
+
         // Get all applicants whose application was submitted before 7 days
         $applicants = DB::table('hr_applicants')
                     ->where('created_at', '<', $sevenDaysAgo)
                     ->get();
-                    
+
         // Check if there are any applicants
         if ($applicants->count() > 0) {
             // Send email to HR with applicant details
             Mail::to('vivek.kumar@coloredcow.in')->send(new ApplicantsSubmittedBeforeSevenDays($applicants));
-        
+
             $this->info('Email sent successfully!');
         } else {
             $this->info('No applicants found!');
