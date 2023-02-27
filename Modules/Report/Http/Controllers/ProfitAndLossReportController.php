@@ -58,4 +58,9 @@ class ProfitAndLossReportController extends Controller
 
         return app(ReportDataService::class)->getData($type, $filters);
     }
+
+    public function profitAndLossReportExport()
+    {
+        return $this->service->profitAndLossReportExport();
+    }
 }
