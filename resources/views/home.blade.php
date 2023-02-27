@@ -18,10 +18,10 @@
         </div>    
     @endif
     <div>
-        @if (($data = auth()->user()->ftes['main']) < 1)
-            <span>Your FTE: <b class = 'text-danger'>{{$data}}</b> </span>
+        @if (auth()->user()->ftes['main'] < 1)
+            <span>Your FTE: <b class='text-danger'>{{auth()->user()->ftes['main'] }}</b> </span>
         @else 
-            <span>Your FTE: <b class = 'text-success'>{{$data}}</b> </span>
+            <span>Your FTE: <b class='text-success'>{{auth()->user()->ftes['main'] }}</b> </span>
         @endif
     </div>
     
