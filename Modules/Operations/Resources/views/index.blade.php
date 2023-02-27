@@ -1,9 +1,5 @@
-@extends('operations::layouts.master')
+@extends('task::layouts.master')
 
 @section('content')
-    <h1>Hello World</h1>
-
-    <p>
-        This view is loaded from module: {!! config('operations.name') !!}
-    </p>
+<h1 style="text-align: center;">comming soon</h1>
 @endsection
