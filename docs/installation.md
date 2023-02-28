@@ -267,16 +267,15 @@ Before you start following the guidelines, make sure to go through the [prerequi
         MAIL_FROM_NAME="${APP_NAME}"
         ```
 
-13. _(Optional)_ Setup pdf configuration:
+13. _(Optional)_ Setup pdf generator tool for automatic invoice creation:
 
-    1. Open site https://wkhtmltopdf.org/downloads.html and download wkhtmltopdf for window.
+    1. Open site https://wkhtmltopdf.org/downloads.html and download wkhtmltopdf for window and install it
 
-    2. Install  wkhtmltox-0.12.6-1.msvc2015-win64 from download (C:\Users\user\Downloads)
-
-    3. Open .env file and add the following
-    
+    2. Open .env file and add the following
+        ```sh
         PDF_BINARY='C://"Program Files"/wkhtmltopdf/bin/wkhtmltopdf.exe'
-
-    4. Run the  following command in the terminal
-    
+        ```
+    3. Run the following command in the terminal
+        ```sh
         php artisan optimize
+        ```
