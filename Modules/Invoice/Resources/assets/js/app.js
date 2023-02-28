@@ -208,3 +208,10 @@ function convert_number(number) {
 	}
 	return result;
 }
+
+$(document).ready(function() {
+	$('#pendingInvoice').hide();
+	$('#hidebtn').click(function() {
+		$('#pendingInvoice').toggle();
+	});
+});

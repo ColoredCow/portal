@@ -13,7 +13,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-md-2 col-lg-3 offset-md-4" v-if="status === 'partially_paid' || status === 'paid'">
+            <div class="col-md-2 col-lg-3 offset-md-4" v-if="status === 'partially_paid'|| status === 'paid'">
                 <a class="btn btn-sm btn-info text-white mr-4 font-weight-bold" data-toggle="modal" data-target="#invoiceModal">{{ __('Payments History') }}</a>
             </div>
         </div>
@@ -102,6 +102,38 @@
                     <br>
                 </div>
 
+                <div class="custom-control custom-switch mb-4 " v-if="status === 'paid'" >
+                    <input type="checkbox" id="hidebtn" class="custom-control-input" >
+                    <label class="custom-control-label" for="hidebtn">Pending Payments</label>
+                </div>
+
+                <div id="pendingInvoice">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="col-4 text-center">Invoice Number</th>
+                                <th class="col-4 text-center">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($getUnpaidInvoicesForProjectOrClient as $pendinginvoicedata)
+                                <tr>
+                                    <td class="col-4">
+                                        <label>
+                                            <input type="checkbox" 
+                                                name="pendingpayment[]" 
+                                                value="{{ $pendinginvoicedata['id'] }}" 
+                                                v-model="selectedInvoices">
+                                            {{ $pendinginvoicedata['invoice_number'] }}
+                                        </label>
+                                    </td>
+                                    <td class="col-4 text-center">{{ $pendinginvoicedata['amount'] }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+ 
                 <div class="form-group d-flex">
                     <label for="amountPaid" class="field-required mr-3 pt-1">Received Amount</label>
                     <div class="input-group flex-1">
@@ -109,12 +141,15 @@
                             placeholder="Amount Received" required="required" step=".01" min="0" v-on:input="changePaidAmountListener">
                             <div class="input-group-prepend">
                                 <select name="currency_transaction_charge" v-model="currencyTransactionCharge" id="currencyTransactionCharge" class="input-group-text" required="required">
-                                @foreach($countries as $country)
+                                    @foreach($countries as $country)
                                     <option value="{{$country->currency}}">{{$country->currency}}</option>
-                                @endforeach
+                                    @endforeach
                                 </select>
                             </div>
+                        </div>
                     </div>
+                <div v-if="totalAmountStatus()==false " > 
+                    <p class="text-danger">Please Enter The Amount Value.</p>
                 </div>
 
                 <div class="form-group-inline d-flex mb-2">
@@ -200,8 +235,7 @@
     </div>
 </div>
 
-
-@section('js_scripts')
+@section('scripts')
 <script>
     new Vue({
     el:'#edit_invoice_details_form',
@@ -225,11 +259,11 @@
 
         remainingPayment(){
             if (!this.amountPaid) {
-                this.remainingAmount=(this.totalProjectAmount - this.previousAmount).toFixed(2)
+                this.remainingAmount = (this.totalProjectAmount - this.previousAmount).toFixed(2)
             } else {
                 this.remainingAmount = (this.totalProjectAmount - (parseFloat(this.amountPaid) + parseFloat(this.previousAmount))).toFixed(2);
-            }
-        },
+            }  
+            },       
 
         calculateTaxes() {
             if(this.client.type == 'indian') {
@@ -306,6 +340,34 @@
             }
 
             tinymce.get("emailBody").setContent(emailBody, { format: "html" });
+        },
+
+        totalPendingAmount() {
+                 var total = 0;
+                 for (let i = 0; i < this.selectedInvoices.length; i++) {
+                    var invoice = this.getUnpaidInvoicesForProjectOrClient.find(inv => inv.id == this.selectedInvoices[i]);
+                    total += parseInt(invoice.amount);
+                    }
+                return total;
+            },
+
+        totalAmountStatus() {
+            const totalPendingAmount = this.totalPendingAmount();
+            let inputAmount = parseInt(this.amountPaid)
+            let projectAmount = parseInt(this.amount); 
+            if (totalPendingAmount) {
+                if (inputAmount === totalPendingAmount + projectAmount) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else if (inputAmount) {
+                if (inputAmount === projectAmount) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
     },
 
@@ -318,7 +380,7 @@
             projectId:"{{ $invoice->project_id }}",
             client:@json( $invoice->client),
             amountPaidText:"|*amount_paid*|",  
-            currentExchangeRate: "{{ $currencyService->getCurrentRatesInINR() }}",
+             currentExchangeRate: "{{ $currencyService->getCurrentRatesInINR() }}",
             currencyTransactionCharge:"{{ $invoice->currency_transaction_charge ? : $invoice->currency }}",
             comments:`{{''}}`,
             status:"{{ $invoice->status }}",
@@ -336,6 +398,8 @@
             previousAmount: "{{$invoiceValue['amount_paid_till_now']}}",
             totalProjectAmount: "{{$invoiceValue['totalProjectAmount']}}",
             allInstallmentPayments: "{{$invoiceValue['allInstallmentPayments']}}",
+            selectedInvoices: [],
+            getUnpaidInvoicesForProjectOrClient: @json($getUnpaidInvoicesForProjectOrClient),
         }
     },
 
