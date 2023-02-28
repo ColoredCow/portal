@@ -13,4 +13,4 @@
 
 Route::prefix('operations')->group(function () {
     Route::get('/', 'OperationsController@index');
-});
+ });
