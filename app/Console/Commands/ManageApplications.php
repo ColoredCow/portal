@@ -49,7 +49,7 @@ class ManageApplications extends Command
         // Get all applicants whose application was submitted before 3 days
         $screeningApplicants = DB::table('hr_applicants')
                     ->join('hr_applications', 'hr_applicants.id', '=', 'hr_applications.hr_applicant_id')
-                    ->select('hr_applicants.id','hr_applicants.name', 'hr_applicants.email', 'hr_applicants.phone', 'hr_applications.status')
+                    ->select('hr_applicants.id', 'hr_applicants.name', 'hr_applicants.email', 'hr_applicants.phone', 'hr_applications.status')
                     ->where('hr_applications.status', config('hr.status.new.label'))
                     ->where('hr_applications.created_at', '<', $threeDaysAgo)
                     ->get();
