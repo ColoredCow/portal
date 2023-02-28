@@ -33,28 +33,28 @@ class OperationsController extends Controller
     /**
      * Show the specified resource.
      */
-    public function show()
+    public function show($id)
     {
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit()
+    public function edit($id)
     {
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update()
+    public function update($id)
     {
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy()
+    public function destroy($id)
     {
     }
 }
