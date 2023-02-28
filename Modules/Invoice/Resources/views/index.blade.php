@@ -311,7 +311,7 @@
                                                 $project->client->billingDetails->service_rate_term == config('client.service-rate-terms.per_month.slug'))
                                             <a class='text-danger' data-toggle="modal"
                                                 data-target="#modal-invoice-details{{ $project->id }}"
-                                                href="#"><big><i class="ml-10 fa fa-external-link-square "></i></big>
+                                                href="#"><big><i class="ml-1 fa fa-external-link-square "></i></big>
                                             </a>
                                         @endif
                                     @endif

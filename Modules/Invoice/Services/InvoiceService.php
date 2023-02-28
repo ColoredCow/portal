@@ -57,12 +57,10 @@ class InvoiceService implements InvoiceServiceContract
             $lastInvoice = $project->lastInvoice();
             $lastInvoices[$project->id] = $lastInvoice;
         }
-        $previousBillingDates = $project->client->previousBillingDate();
 
         return [
             'invoices' => $invoices,
             'lastInvoices' => $lastInvoices,
-            'previousBillingDates' => $previousBillingDates,
             'clients' => $this->getClientsForInvoice(),
             'currencyService' => $this->currencyService(),
             'totalReceivableAmount' => $this->getTotalReceivableAmountInINR($invoices),

@@ -108,14 +108,6 @@ class Client extends Model
         return $this->hasOne(ClientBillingDetail::class)->withDefault();
     }
 
-    public function previousBillingDate()
-    {
-        $lastInvoiceDate = DB::table('invoices')->where('client_id', $this->id)->orderBy('sent_on', 'desc')->first();
-        $previousBillingDate = $lastInvoiceDate ? $lastInvoiceDate->sent_on : date('Y-m-01');
-
-        return $previousBillingDate;
-    }
-
     public function getTypeAttribute()
     {
         $address = $this->addresses->first();
