@@ -11,7 +11,19 @@ git --version
 # git version 2.33.0.windows.2
 ```
 
-### 2. PHP, MySQL, Apache:running:
+### 2. You can take one of the following two paths:-
+### a. Docker setup		b. PHP, MySQL, Apache:
+
+
+### Docker setup
+# Lets begin with the Docker setup:
+a.1 : If you are a windows user:
+		Download Docker Desktop using this [this link](https://docs.docker.com/desktop/install/windows-install/)
+a.2 :	If you are a linux ubuntu user:
+		Download Docker and docker-compose following this [this link](https://www.howtogeek.com/devops/how-to-install-docker-and-docker-compose-on-linux/)
+Note: If you are done with the Docker setup, jump to step 7		
+		
+### PHP, MySQL, Apache
 Portal uses PHP v8.2. You can install it using one of the following ways:
 
 1. XAMPP (Windows and Linux)
