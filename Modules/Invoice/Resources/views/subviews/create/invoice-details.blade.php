@@ -1,8 +1,8 @@
 <div id="create_invoice_details_form">
     <div class="card-body">
         <div class="form-row mb-4">
-            <div class="col-md-5">
-                <div class="form-group position-relative">
+            <div class="col-md-5 d-flex flex-column ">
+                <div class="form-group ">
                     <div class="d-flex justify-content-between">
                         <label for="clientId" class="field-required">Client</label>
                         <a href="{{ route('client.create') }}" for="clientId" class="text-underline">Add new client</a>
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group position-absolute bottom-0 w-full">
+                <div class="form-group mt-auto">
                     <label for="comments">Comments</label>
                     <textarea name="comments" id="comments" rows="5" class="form-control"></textarea>
                 </div>
