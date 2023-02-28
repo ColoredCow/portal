@@ -133,7 +133,7 @@
                         </tbody>
                     </table>
                 </div>
- 
+
                 <div class="form-group d-flex">
                     <label for="amountPaid" class="field-required mr-3 pt-1">Received Amount</label>
                     <div class="input-group flex-1">
@@ -402,9 +402,6 @@
             getUnpaidInvoicesForProjectOrClient: @json($getUnpaidInvoicesForProjectOrClient),
         }
     },
-
-
-
     mounted() {
     },
 

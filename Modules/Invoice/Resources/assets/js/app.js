@@ -210,8 +210,8 @@ function convert_number(number) {
 }
 
 $(document).ready(function() {
-	$('#pendingInvoice').hide();
-	$('#hidebtn').click(function() {
-		$('#pendingInvoice').toggle();
+	$("#pendingInvoice").hide();
+	$("#hidebtn").click(function() {
+		$("#pendingInvoice").toggle();
 	});
 });

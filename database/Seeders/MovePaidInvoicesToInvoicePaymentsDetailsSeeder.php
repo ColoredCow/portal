@@ -31,6 +31,6 @@ class MovePaidInvoicesToInvoicePaymentsDetailsSeeder extends Seeder
                 'comments' => $invoice->comments,
                 'last_amount_paid_on' => $invoice->receivable_date,
             ]);
-        } 
+        }
     }
 }

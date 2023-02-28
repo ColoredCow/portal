@@ -164,7 +164,7 @@ class InvoiceService implements InvoiceServiceContract
 
     public function update($data, $invoice)
     {
-        $this->updateInvoicePaymentDetails($data,$invoice);       
+        $this->updateInvoicePaymentDetails($data, $invoice);       
         $invoiceValue = $this->getUpdatedAmountForRemainingInvoice($invoice);
         if (floatval($invoice->amount + $invoice->gst) === floatval($invoiceValue['amount_paid_till_now'] + $data['amount_paid'])) {
             $data['status'] = 'paid';
@@ -203,7 +203,7 @@ class InvoiceService implements InvoiceServiceContract
 
     public function getUpdatedAmountForRemainingInvoice($invoice)
     {
-        $getUnpaidInvoicesForProjectOrClient=$this->getUnpaidInvoicesForProjectOrClient($invoice);
+        $getUnpaidInvoicesForProjectOrClient = $this->getUnpaidInvoicesForProjectOrClient($invoice);
         $amount_paid_till_now = 0;
         $allInstallmentPayments = $invoice->remainingInvoiceDetails->sortByDesc(function ($details) {
             return $details->created_at;
@@ -225,48 +225,48 @@ class InvoiceService implements InvoiceServiceContract
             'getUnpaidInvoicesForProjectOrClient' => $getUnpaidInvoicesForProjectOrClient->toArray(),
         ];
     }
-    public function getUnpaidInvoicesForProjectOrClient($invoice) {
+    public function getUnpaidInvoicesForProjectOrClient($invoice) 
+    {
         $query = Invoice::where(function ($query) use ($invoice) {
             if ($invoice->project_id && $invoice->client_id) {
                 $query->where('project_id', $invoice->project_id)
                       ->where('client_id', $invoice->client_id);
-            } else if ($invoice->project_id && !$invoice->client_id) {
+            } else if ($invoice->project_id && ! $invoice->client_id) {
                 $query->where('project_id', $invoice->project_id);
             } else {
                 $query->where('client_id', $invoice->client_id);
             }
         })
         ->where('id', '<>', $invoice->id);
-    
+
         $query->whereNotIn('id', function ($query) {
             $query->select('invoice_id')
                   ->from('invoice_payments_details');
         });
-    
         $unpaidInvoices = $query->get();
-    return $unpaidInvoices;
+
+        return $unpaidInvoices;
     }
 
     public function updateInvoicePaymentDetails($data, $invoice)
     {
-       if($invoice->status == 'paid' || $invoice->status == 'sent'){
-         $invoices = Invoice::whereIn('id', $data['pendingpayment'])
+       if($invoice->status == 'paid' || $invoice->status == 'sent') {
+            $invoices = Invoice::whereIn('id', $data['pendingpayment'])
         ->orWhere('id', $invoice->id)
         ->get();
-        $totalAmount = $invoices->sum('amount'); 
-        foreach ($invoices as $invoice) {
-            $bankCharges = number_format(($invoice->amount /($totalAmount)),2)*($data['bank_charges']);
-            if ($invoice->tds) {
-                $invoice->tds = $invoice->amount * 0.18;
-                $invoice->tds_percentage = ($invoice->tds / $invoice->amount) * 100;
-            } else {
-                $invoice->bank_charges = $bankCharges;
-            }
-            $this->updateOrCreateInvoiceRemainingDetails($data,$invoice);
-        }
-        }else{
+            $totalAmount = $invoices->sum('amount'); 
+                foreach ($invoices as $invoice) {
+                    $bankCharges = number_format(($invoice->amount /($totalAmount)),2)*($data['bank_charges']);
+                    if ($invoice->tds) {
+                        $invoice->tds = $invoice->amount * 0.18;
+                        $invoice->tds_percentage = ($invoice->tds / $invoice->amount) * 100;
+                    } else {
+                        $invoice->bank_charges = $bankCharges;
+                    }
+                    $this->updateOrCreateInvoiceRemainingDetails($data,$invoice);
+                }
+        } else {
             $this->updateOrCreateInvoiceRemainingDetails($data, $invoice);
-
         }
     }
 
@@ -277,7 +277,7 @@ class InvoiceService implements InvoiceServiceContract
             'invoice_id' => $invoice->id,
             'amount_paid_till_now' => $invoicePaidAmount ? $invoice->amount : $data['amount_paid'],
             'status' => $invoice->status,
-            'bank_charges' => $invoicePaidAmount ? $invoice->bank_charges : $data['bank_charges'] ,
+            'bank_charges' => $invoicePaidAmount ? $invoice->bank_charges : $data['bank_charges'],
             'gst' => $invoice->gst ?? null,
             'tds' => $invoicePaidAmount ?? $invoice->tds,
             'tds_percentage' => $invoicePaidAmount ?? $invoice->tds_percentage,

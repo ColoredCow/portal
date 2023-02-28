@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use App\Traits\Encryptable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Invoice\Entities\Invoice;
 
 class InvoicePaymentsDetails extends Model implements Auditable
 {
@@ -21,5 +22,4 @@ class InvoicePaymentsDetails extends Model implements Auditable
     {
         return $this->belongsTo(Invoice::class);
     }
-
 }
