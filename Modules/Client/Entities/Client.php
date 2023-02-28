@@ -6,7 +6,6 @@ use App\Traits\Filters;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\User\Entities\User;
-use Illuminate\Support\Facades\DB;
 use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Client\Database\Factories\ClientFactory;
