@@ -143,9 +143,8 @@ class ProjectController extends Controller
 
     public function projectFTEExport(Request $request)
     {
-        $this->authorize('projectFTEExport', Employee::class);
         $filters = $request->all();
 
-        return $this->service->projectFTEExport($filters, $request);
+        return $this->service->projectFTEExport($filters);
     }
 }
