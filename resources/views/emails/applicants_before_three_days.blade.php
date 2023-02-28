@@ -1,5 +1,5 @@
 <div>
-    <h2>{{ $count }} applicants submitted their application before 7 days.</h2>
+    <h2>{{ $count }} applicants submitted their application before 3 days.</h2>
 
 <table>
     <thead>
