@@ -5,7 +5,6 @@ namespace Modules\Project\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
-use Modules\HR\Entities\Employee;
 use Modules\Project\Rules\ProjectNameExist;
 use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Http\Requests\ProjectRequest;
