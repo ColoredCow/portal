@@ -727,7 +727,9 @@ class InvoiceService implements InvoiceServiceContract
             'receivable_date' => $dueOn,
             'currency' => $client ? $client->country->currency : $project->client->country->currency,
             'amount' => $amount,
-            'gst' => $gst
+            'gst' => $gst,
+            'term_start_date' => $periodStartDate,
+            'term_end_date' => $periodEndDate
         ]);
 
         $filePath = $this->getInvoiceFilePath($invoice) . '/' . $invoiceNumber . '.pdf';

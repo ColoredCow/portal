@@ -5,7 +5,6 @@ namespace Modules\Project\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
-use Modules\HR\Entities\Employee;
 use Modules\Project\Rules\ProjectNameExist;
 use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Http\Requests\ProjectRequest;
@@ -143,9 +142,8 @@ class ProjectController extends Controller
 
     public function projectFTEExport(Request $request)
     {
-        $this->authorize('projectFTEExport', Employee::class);
         $filters = $request->all();
 
-        return $this->service->projectFTEExport($filters, $request);
+        return $this->service->projectFTEExport($filters);
     }
 }

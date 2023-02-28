@@ -427,7 +427,7 @@ class ProjectService implements ProjectServiceContract
         return $projectDetails;
     }
 
-    public function projectFTEExport($filters, $request)
+    public function projectFTEExport($filters)
     {
         $employees = Employee::applyFilters($filters)
             ->get();
