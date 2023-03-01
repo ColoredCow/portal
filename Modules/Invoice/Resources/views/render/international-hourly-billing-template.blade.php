@@ -2,10 +2,16 @@
 <table class="table">
     <thead class="thead-dark">
         <tr align="left">
-            <th style="width: 408px;">Description</th>
-            <th style="width: 95px;">Hours</th>
-            <th style="width: 135px;">Rate({{$client->country->initials . ' ' . $client->country->currency_symbol}})</th>
-            <th>Cost({{$client->country->initials . ' ' . $client->country->currency_symbol}})</th>
+            <th style="width: 440px;">Description</th>
+            <th style="width: 135px;">
+             @if($project->serviceRateTermFromProject_Billing_DetailsTable() == 'per_hour')
+             Hours
+             @else
+             Months
+             @endif
+            </th>
+            <th style="width: 135px;">Rate({{$client->country->initials . ' ' . config('constants.currency.' . $project->client->currency . '.symbol')}})</th>
+            <th>Cost({{$client->country->initials . ' ' . config('constants.currency.' . $project->client->currency . '.symbol')}})</th>
         </tr>
     </thead>
     <tbody>

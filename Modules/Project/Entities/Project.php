@@ -561,7 +561,7 @@ class Project extends Model implements Auditable
 
     public function getAmcTotalAmountPerMonth(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
-        $totalAmountInMonth = $this->serviceRateFromProjectBillingDetailsTable() + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
+        $totalAmountInMonth = $this->serviceRateFromProjectBillingDetailsTable();
         $startAndEndDate = $this->getTermStartAndEndDateForInvoice();
         $months = $startAndEndDate['startDate']->diffInMonths($startAndEndDate['endDate']);
         $taxandBankCharges = optional($this->client->billingDetails)->bank_charges + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate);
@@ -580,7 +580,7 @@ class Project extends Model implements Auditable
 
     public function getAmcTotalAmountPerQuarterly(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
-        $totalAmountInQuater = $this->serviceRateFromProjectBillingDetailsTable() + (3 * ($this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges));
+        $totalAmountInQuater = $this->serviceRateFromProjectBillingDetailsTable();
         $startAndEndDate = $this->getTermStartAndEndDateForInvoice();
         $months = $startAndEndDate['startDate']->diffInMonths($startAndEndDate['endDate']);
         $taxandBankCharges = optional($this->client->billingDetails)->bank_charges + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate);
@@ -703,4 +703,42 @@ class Project extends Model implements Auditable
 
         return $endDate;
     }
+
+    public function getGSTamountInPdf(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
+    {
+        $taxandBankCharges = optional($this->client->billingDetails)->bank_charges + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate);
+        $totalamount = $this->totalAmountWithOutTaxInPdf();
+        $totalamountwithouttax = $totalamount - $taxandBankCharges;
+        $igst = config('invoice.invoice-details.igst');
+        $igst_number = floatval($igst) / 100;
+
+        return round(($totalamountwithouttax * $igst_number), 2);
+    }
+
+    public function totalAmountWithOutTaxInPdf()
+    {
+        $totalamount = $this->amcTotalProjectAmount();
+        $totalAmountWithOutTaxInPdf = $totalamount / 1.18 - optional($this->client->billingDetails)->bank_charges;
+
+        return round($totalAmountWithOutTaxInPdf, 2);
+    }
+
+    public function getmonthStatDateAndEndDateInPdf()
+    {
+        $startdate = $this->getTermStartAndEndDateForInvoice()['startDate']->format('j-M-Y');
+        $enddate = $this->getTermStartAndEndDateForInvoice()['endDate']->format('j-M-Y');
+        if(date('F', strtotime($startdate)) == date('F', strtotime($enddate))) {
+            $enddate = $this->getTermStartAndEndDateForInvoice()['endDate']->addMonth()->format('j-M-Y');
+        }
+        $startdate = date('M-Y', strtotime($startdate));
+        $enddate = date('M-Y', strtotime($enddate));
+        $startdate = str_replace('-', ' ', $startdate);
+        $enddate = str_replace('-', ' ', $enddate);
+
+        return [
+            'startDate' => $startdate,
+            'endDate' => $enddate
+        ];
+    }
+
 }
