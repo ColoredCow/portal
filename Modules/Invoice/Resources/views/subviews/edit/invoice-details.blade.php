@@ -108,30 +108,34 @@
                 </div>
 
                 <div id="pendingInvoice">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th class="col-4 text-center">Invoice Number</th>
-                                <th class="col-4 text-center">Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($getUnpaidInvoicesForProjectOrClient as $pendinginvoicedata)
+                    @if($getUnpaidInvoicesForProjectOrClient)
+                        <table class="table table-bordered table-striped">
+                            <thead>
                                 <tr>
-                                    <td class="col-4">
-                                        <label>
-                                            <input type="checkbox" 
-                                                name="pendingpayment[]" 
-                                                value="{{ $pendinginvoicedata['id'] }}" 
-                                                v-model="selectedInvoices">
-                                            {{ $pendinginvoicedata['invoice_number'] }}
-                                        </label>
-                                    </td>
-                                    <td class="col-4 text-center">{{ $pendinginvoicedata['amount'] }}</td>
+                                    <th class="col-4 text-center">Invoice Number</th>
+                                    <th class="col-4 text-center">Amount</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($getUnpaidInvoicesForProjectOrClient as $pendinginvoicedata)
+                                    <tr>
+                                        <td class="col-4">
+                                            <label>
+                                                <input type="checkbox" 
+                                                    name="pendingpayment[]" 
+                                                    value="{{ $pendinginvoicedata['id'] }}" 
+                                                    v-model="selectedInvoices">
+                                                {{ $pendinginvoicedata['invoice_number'] }}
+                                            </label>
+                                        </td>
+                                        <td class="col-4 text-center">{{ $pendinginvoicedata['amount'] }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @else
+                        <p class="text-success">No Pending Invoices</p>
+                    @endif 
                 </div>
 
                 <div class="form-group d-flex">
@@ -148,7 +152,7 @@
                             </div>
                         </div>
                     </div>
-                <div v-if="totalAmountStatus()==false " > 
+                <div v-if="totalAmountStatus()==false && status === 'paid'"> 
                     <p class="text-danger">Please Enter The Amount Value.</p>
                 </div>
 
@@ -263,7 +267,7 @@
             } else {
                 this.remainingAmount = (this.totalProjectAmount - (parseFloat(this.amountPaid) + parseFloat(this.previousAmount))).toFixed(2);
             }  
-            },       
+        },       
 
         calculateTaxes() {
             if(this.client.type == 'indian') {

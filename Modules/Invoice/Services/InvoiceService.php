@@ -164,11 +164,11 @@ class InvoiceService implements InvoiceServiceContract
 
     public function update($data, $invoice)
     {
-        $this->updateInvoicePaymentDetails($data, $invoice);       
         $invoiceValue = $this->getUpdatedAmountForRemainingInvoice($invoice);
         if (floatval($invoice->amount + $invoice->gst) === floatval($invoiceValue['amount_paid_till_now'] + $data['amount_paid'])) {
             $data['status'] = 'paid';
         }
+        $this->getInvoicePaymentDetails($data, $invoice);
         $invoice->update($data);
         if (isset($data['send_mail'])) {
             $emailData = $this->getSendEmailData($data, $invoice);
@@ -225,13 +225,12 @@ class InvoiceService implements InvoiceServiceContract
             'getUnpaidInvoicesForProjectOrClient' => $getUnpaidInvoicesForProjectOrClient->toArray(),
         ];
     }
-    public function getUnpaidInvoicesForProjectOrClient($invoice) 
+    public function getUnpaidInvoicesForProjectOrClient($invoice)
     {
         $query = Invoice::where(function ($query) use ($invoice) {
             if ($invoice->project_id && $invoice->client_id) {
-                $query->where('project_id', $invoice->project_id)
-                      ->where('client_id', $invoice->client_id);
-            } else if ($invoice->project_id && ! $invoice->client_id) {
+                $query->where('project_id', $invoice->project_id);
+            } elseif ($invoice->project_id && ! $invoice->client_id) {
                 $query->where('project_id', $invoice->project_id);
             } else {
                 $query->where('client_id', $invoice->client_id);
@@ -248,39 +247,39 @@ class InvoiceService implements InvoiceServiceContract
         return $unpaidInvoices;
     }
 
-    public function updateInvoicePaymentDetails($data, $invoice)
+    public function getInvoicePaymentDetails($data, $invoice)
     {
-       if($invoice->status == 'paid' || $invoice->status == 'sent') {
+        if ($invoice->status == 'paid' || $invoice->status == 'sent') {
             $invoices = Invoice::whereIn('id', $data['pendingpayment'])
         ->orWhere('id', $invoice->id)
         ->get();
-            $totalAmount = $invoices->sum('amount'); 
-                foreach ($invoices as $invoice) {
-                    $bankCharges = number_format(($invoice->amount /($totalAmount)),2)*($data['bank_charges']);
-                    if ($invoice->tds) {
-                        $invoice->tds = $invoice->amount * 0.18;
-                        $invoice->tds_percentage = ($invoice->tds / $invoice->amount) * 100;
-                    } else {
-                        $invoice->bank_charges = $bankCharges;
-                    }
-                    $this->updateOrCreateInvoiceRemainingDetails($data,$invoice);
-                }
+        $totalAmount = $invoices->sum('amount'); 
+        foreach ($invoices as $invoice) {
+            $bankCharges = number_format(($invoice->amount /($totalAmount)),2)*($data['bank_charges']);
+            if ($invoice->tds) {
+                $invoice->tds = $invoice->amount * 0.18;
+                $invoice->tds_percentage = ($invoice->tds / $invoice->amount) * 100;
+            } else {
+                $invoice->bank_charges = $bankCharges;
+            }
+            $this->createInvoiceDetails($data,$invoice);
+            }
         } else {
-            $this->updateOrCreateInvoiceRemainingDetails($data, $invoice);
+            $this->createInvoiceDetails($data, $invoice);
         }
     }
 
-    public function updateOrCreateInvoiceRemainingDetails($data, $invoice)
+    public function createInvoiceDetails($data, $invoice)
     {
         $invoicePaidAmount = $invoice->status == 'paid' || $invoice->status == 'sent';
         InvoicePaymentsDetails::create([
             'invoice_id' => $invoice->id,
             'amount_paid_till_now' => $invoicePaidAmount ? $invoice->amount : $data['amount_paid'],
             'status' => $invoice->status,
-            'bank_charges' => $invoicePaidAmount ? $invoice->bank_charges : $data['bank_charges'],
+            'bank_charges' => $invoicePaidAmount ? $invoice->bank_charges : $data['bank_charges']?? null,
             'gst' => $invoice->gst ?? null,
-            'tds' => $invoicePaidAmount ?? $invoice->tds,
-            'tds_percentage' => $invoicePaidAmount ?? $invoice->tds_percentage,
+            'tds' => $invoicePaidAmount ? $invoice->tds : $data['tds']?? null,
+            'tds_percentage' => $invoicePaidAmount ? $invoice->tds_percentage:$data['tds_percentage']??null,
             'conversion_rate' => $data['conversion_rate'] ?? null,
             'conversion_rate_diff' => $data['conversion_rate_diff'] ?? null,
             'comments' => $data['comments'],
