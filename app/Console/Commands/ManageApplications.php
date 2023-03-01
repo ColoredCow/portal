@@ -57,7 +57,7 @@ class ManageApplications extends Command
         // Check if there are any applicants
         if ($screeningApplicants->count() > 0) {
             // Send email to HR with applicant details
-            Mail::to('vivek.kumar@coloredcow.in')->send(new ApplicantsSubmittedBeforeThreeDays($screeningApplicants));
+            Mail::to(env('MAIL_FROM_ADDRESS'))->send(new ApplicantsSubmittedBeforeThreeDays($screeningApplicants));
 
             $this->info('Email sent successfully!');
         } else {
