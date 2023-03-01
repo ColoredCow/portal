@@ -58,7 +58,7 @@
                     <div class="col-2">
                         <select v-model="projectTeamMember.pivot.designation" :name="`project_team_member[${index}][designation]`" class="custom-select">
                             <option value="">Select Designations</option>
-
+                            
                             <option v-for="(designation, key) in designations" :value="key">@{{ designation }}</option>
                         </select>
                     </div>
@@ -86,12 +86,7 @@
                                 <input class="form-control" type="date" :name="`project_team_member[${index}][started_on]`" @input="updateStartDateForTeamMember($event, index)" :value="projectTeamMember.pivot.started_on | toDate">
                             </div>
                         </div>
-                        <div>
-                            <div class="d-flex flex-column form-group">
-                                <label class="text-dark font-weight-bold fz-16">Ended on</label>
-                                <input class="form-control" type="date" :name="`project_team_member[${index}][ended_on]`" @input="updateEndDateForTeamMember($event, index)" :value="projectTeamMember.pivot.ended_on | toDate">
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
 
