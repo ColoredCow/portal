@@ -36,20 +36,19 @@ class SendPaymentReceivedNotification extends Notification
     public function toGoogleChat($notifiable)
     {
         return GoogleChatMessage::create()
-        ->mentionAll('', " We have received the payment for {$this->invoice->project->name} ? : {$this->invoice->client->name} successfully!\n")
-        ->card(
-            Card::create()
-            ->section(
-                Section::create(
-                    KeyValue::create('Invoice', $this->invoice->project->name)
-                    ->setContentMultiline(true)
-                    ->icon(Icon::DOLLAR)
-                    ->button(
-                        TextButton::create($this->invoice->project->google_chat_webhook_url, 'View invoice')
-                        )
-                    ),
+            ->mentionAll('', " We have received the payment for {$this->invoice->project->name} ? : {$this->invoice->client->name} successfully!\n")
+            ->card(
+                Card::create()
+                    ->section(
+                        Section::create(
+                            KeyValue::create('Invoice', $this->invoice->project->name)
+                                ->setContentMultiline(true)
+                                ->icon(Icon::DOLLAR)
+                                ->button(
+                                    TextButton::create($this->invoice->project->google_chat_webhook_url, 'View invoice')
+                                )
+                        ),
                     )
             );
-
     }
 }

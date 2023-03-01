@@ -23,7 +23,7 @@ class SendPaymentReceivedNotificationForProjectInvoice extends Command
      */
     protected $description = 'Sends a notification of invoice paid in Google Chat .';
 
-    
+
     /**
      * Create a new command instance.
      *
@@ -50,7 +50,7 @@ class SendPaymentReceivedNotificationForProjectInvoice extends Command
             }
         }
     }
-    
+
 
     /**
      * Get the console command arguments.
