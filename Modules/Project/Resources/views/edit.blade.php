@@ -182,11 +182,8 @@
                     this.projectTeamMembers[index]['pivot']['started_on'] = newDate;
                 },
 
-                updateEndDateForTeamMember($event, index) {
-                    newDate = $event.target.value;
-                    this.projectTeamMembers[index]['pivot']['ended_on'] = newDate;
-                },
 
+                
                 updatedDailyExpectedEffort($event, index, numberOfDays) {
                     value = $event.target.value;
                     maximumExpectedEfforts = 12
