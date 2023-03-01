@@ -259,12 +259,11 @@ class InvoiceService implements InvoiceServiceContract
         ->get();
             $totalAmount = $invoices->sum('amount');
             foreach ($invoices as $invoice) {
-                $bankCharges = number_format(($invoice->amount / ($totalAmount)), 2) * ($data['bank_charges']);
                 if ($invoice->tds) {
                     $invoice->tds = $invoice->amount * 0.18;
                     $invoice->tds_percentage = ($invoice->tds / $invoice->amount) * 100;
                 } else {
-                    $invoice->bank_charges = $bankCharges;
+                    $invoice->bank_charges = number_format(($invoice->amount / ($totalAmount)), 2) * ($data['bank_charges'] ?? 1);
                 }
                 $this->createInvoiceDetails($data, $invoice);
             }
