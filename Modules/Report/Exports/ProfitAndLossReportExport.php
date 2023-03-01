@@ -23,7 +23,7 @@ class ProfitAndLossReportExport implements FromArray, WithHeadings, ShouldAutoSi
         $this->lastYear = $this->startYear - 1;
         $this->startYearVal = substr($this->startYear, -2);
         $this->lastYearVal = substr((string) $this->lastYear, -2);
-        
+
         $this->reportData = $this->formatProfitAndLossForExportAll($reportData);
     }
 

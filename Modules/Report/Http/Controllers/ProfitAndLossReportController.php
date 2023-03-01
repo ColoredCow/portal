@@ -33,7 +33,7 @@ class ProfitAndLossReportController extends Controller
     {
         $this->authorize('finance_reports.view');
         $currentYear = date('m') > 03 ? date('Y') + 1 : date('Y');
-        
+
         $filters = $this->filters($currentYear);
         $reportData = $this->service->profitAndLoss($filters);
 
@@ -59,10 +59,10 @@ class ProfitAndLossReportController extends Controller
     public function profitAndLossReportExport()
     {
         $currentYear = date('m') > 03 ? date('Y') + 1 : date('Y');
-        
+
         $filters = $this->filters($currentYear);
         $reportData = $this->service->profitAndLoss($filters);
-        
+
         $request = request()->all();
         $endYear = $request['year'];
         $startYear = $endYear - 1;
