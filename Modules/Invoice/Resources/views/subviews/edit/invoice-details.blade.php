@@ -153,7 +153,7 @@
                         </div>
                     </div>
                 <div v-if="totalAmountStatus()==false && status === 'paid'"> 
-                    <p class="text-danger">Please Enter The Amount Value.</p>
+                    <p class="text-danger">Please Enter The Total Amount Value.</p>
                 </div>
 
                 <div class="form-group-inline d-flex mb-2">
