@@ -13,7 +13,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-md-2 col-lg-3 offset-md-4" v-if="status === 'partially_paid'|| status === 'paid'">
+            <div class="col-md-2 col-lg-3 offset-md-4" v-if="status === 'partially_paid'">
                 <a class="btn btn-sm btn-info text-white mr-4 font-weight-bold" data-toggle="modal" data-target="#invoiceModal">{{ __('Payments History') }}</a>
             </div>
         </div>
@@ -102,13 +102,13 @@
                     <br>
                 </div>
 
-                <div class="custom-control custom-switch mb-4 " v-if="status === 'paid'" >
-                    <input type="checkbox" id="hidebtn" class="custom-control-input" >
+                <div class="custom-control custom-switch mb-4" v-if="status === 'paid'">
+                    <input type="checkbox" id="hidebtn" class="custom-control-input" v-model="showPendingInvoices">
                     <label class="custom-control-label" for="hidebtn">Pending Payments</label>
                 </div>
 
-                <div id="pendingInvoice">
-                    @if($getUnpaidInvoicesForProjectOrClient)
+                <div  id="pendingInvoice" v-show="showPendingInvoices && status === 'paid'">
+                    @if($unpaidInvoiceDetailsByInvoiceId)
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -117,13 +117,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($getUnpaidInvoicesForProjectOrClient as $pendinginvoicedata)
+                                @foreach ($unpaidInvoiceDetailsByInvoiceId as $key=>$pendinginvoicedata)
                                     <tr>
                                         <td class="col-4">
                                             <label>
                                                 <input type="checkbox" 
                                                     name="pendingpayment[]" 
-                                                    value="{{ $pendinginvoicedata['id'] }}" 
+                                                    value="{{ $key }}" 
                                                     v-model="selectedInvoices">
                                                 {{ $pendinginvoicedata['invoice_number'] }}
                                             </label>
@@ -347,14 +347,16 @@
         },
 
         totalPendingAmount() {
-                 var total = 0;
-                 for (let i = 0; i < this.selectedInvoices.length; i++) {
-                    var invoice = this.getUnpaidInvoicesForProjectOrClient.find(inv => inv.id == this.selectedInvoices[i]);
+            var total = 0;
+            for (let i = 0; i < this.selectedInvoices.length; i++) {
+                var invoice = this.unpaidInvoiceDetailsByInvoiceId[this.selectedInvoices[i]];
+                if (invoice) {
                     total += parseInt(invoice.amount);
-                    }
-                return total;
-            },
-
+                }
+            }
+            return total;
+        },
+        
         totalAmountStatus() {
             const totalPendingAmount = this.totalPendingAmount();
             let inputAmount = parseInt(this.amountPaid)
@@ -402,8 +404,9 @@
             previousAmount: "{{$invoiceValue['amount_paid_till_now']}}",
             totalProjectAmount: "{{$invoiceValue['totalProjectAmount']}}",
             allInstallmentPayments: "{{$invoiceValue['allInstallmentPayments']}}",
+            showPendingInvoices: false,
             selectedInvoices: [],
-            getUnpaidInvoicesForProjectOrClient: @json($getUnpaidInvoicesForProjectOrClient),
+            unpaidInvoiceDetailsByInvoiceId: @json($unpaidInvoiceDetailsByInvoiceId),
         }
     },
     mounted() {
