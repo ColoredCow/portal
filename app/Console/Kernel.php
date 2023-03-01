@@ -12,6 +12,7 @@ use Modules\Project\Console\SendEffortSummaryCommand;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\Project\Console\GoogleChat\SendDailyEffortSummaryForProjectsOnGoogleChat;
 use Modules\Project\Console\GoogleChat\RemindProjectMembersToUpdateEffortOnGoogleChat;
+use Modules\Invoice\Console\GoogleChat\SendPaymentReceivedNotificationForProjectInvoice;
 
 class Kernel extends ConsoleKernel
 {
@@ -27,6 +28,7 @@ class Kernel extends ConsoleKernel
         ZeroExpectedHourInProject::class,
         EndedProject::class,
         FixedBudgetProject::class,
+        SendPaymentReceivedNotificationForProjectInvoice::class,
         SendDailyEffortSummaryForProjectsOnGoogleChat::class,
         RemindProjectMembersToUpdateEffortOnGoogleChat::class,
     ];
