@@ -33,9 +33,11 @@ class ProfitAndLossReportService
         $filters = array_merge($defaultFilters, request()->all());
         $reportData = $this->profitAndLoss($filters);
         $reportData = $this->formatProfitAndLossForExportAll($reportData);
-        $currentTimeStamp = now();
-
-        return Excel::download(new ProfitAndLossReportExport($reportData), "Profit And Loss Report Export-$currentTimeStamp->year$currentTimeStamp->month$currentTimeStamp->day.xlsx");
+        $request = request()->all();
+        $endYear = $request["year"];
+        $startYear = $endYear - 1;
+        
+        return Excel::download(new ProfitAndLossReportExport($reportData), "Profit And Loss Report $startYear-$endYear.xlsx");
     }
 
     private function formatProfitAndLossForExportAll($reportData)
