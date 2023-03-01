@@ -211,11 +211,9 @@ class InvoiceService implements InvoiceServiceContract
             ];
         }
         $amount_paid_till_now = 0;
-        $allInstallmentPayments = $invoice->remainingInvoiceDetails->sortByDesc(function ($details) {
-            return $details->created_at;
-        });
+        $allInstallmentPayments = $invoice->remainingInvoiceDetails;
         foreach ($allInstallmentPayments as $data) {
-            $amount_paid_till_now += $data->amount_paid_till_now;
+            $amount_paid_till_now += intval($data->amount_paid_till_now);
         }
         $symbol = '';
         $symbol = (strpos($invoice->display_amount, '$') !== false) ? '$' : ((strpos($invoice->display_amount, '₹') !== false) ? '₹' : '');
