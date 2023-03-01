@@ -253,16 +253,16 @@ class InvoiceService implements InvoiceServiceContract
             $invoices = Invoice::whereIn('id', $data['pendingpayment'])
         ->orWhere('id', $invoice->id)
         ->get();
-        $totalAmount = $invoices->sum('amount'); 
-        foreach ($invoices as $invoice) {
-            $bankCharges = number_format(($invoice->amount /($totalAmount)),2)*($data['bank_charges']);
-            if ($invoice->tds) {
-                $invoice->tds = $invoice->amount * 0.18;
-                $invoice->tds_percentage = ($invoice->tds / $invoice->amount) * 100;
-            } else {
-                $invoice->bank_charges = $bankCharges;
-            }
-            $this->createInvoiceDetails($data,$invoice);
+            $totalAmount = $invoices->sum('amount'); 
+            foreach ($invoices as $invoice) {
+                $bankCharges = number_format(($invoice->amount /($totalAmount)),2)*($data['bank_charges']);
+                if ($invoice->tds) {
+                    $invoice->tds = $invoice->amount * 0.18;
+                    $invoice->tds_percentage = ($invoice->tds / $invoice->amount) * 100;
+                } else {
+                    $invoice->bank_charges = $bankCharges;
+                }
+                $this->createInvoiceDetails($data, $invoice);
             }
         } else {
             $this->createInvoiceDetails($data, $invoice);
@@ -276,10 +276,10 @@ class InvoiceService implements InvoiceServiceContract
             'invoice_id' => $invoice->id,
             'amount_paid_till_now' => $invoicePaidAmount ? $invoice->amount : $data['amount_paid'],
             'status' => $invoice->status,
-            'bank_charges' => $invoicePaidAmount ? $invoice->bank_charges : $data['bank_charges']?? null,
+            'bank_charges' => $invoicePaidAmount ? $invoice->bank_charges : $data['bank_charges'] ?? null,
             'gst' => $invoice->gst ?? null,
-            'tds' => $invoicePaidAmount ? $invoice->tds : $data['tds']?? null,
-            'tds_percentage' => $invoicePaidAmount ? $invoice->tds_percentage:$data['tds_percentage']??null,
+            'tds' => $invoicePaidAmount ? $invoice->tds : $data['tds'] ?? null,
+            'tds_percentage' => $invoicePaidAmount ? $invoice->tds_percentage:$data['tds_percentage'] ?? null,
             'conversion_rate' => $data['conversion_rate'] ?? null,
             'conversion_rate_diff' => $data['conversion_rate_diff'] ?? null,
             'comments' => $data['comments'],
