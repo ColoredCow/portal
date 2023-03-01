@@ -14,7 +14,7 @@ class ProfitAndLossReportExport implements FromArray, WithHeadings, ShouldAutoSi
     protected $lastYear;
     protected $startYearVal;
     protected $lastYearVal;
-    protected $reportData;    
+    protected $reportData;
 
     public function __construct($reportData)
     {
