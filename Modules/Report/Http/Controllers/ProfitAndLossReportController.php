@@ -7,6 +7,8 @@ use Illuminate\Routing\Controller;
 use Modules\Report\Services\Finance\ReportDataService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Report\Services\Finance\ProfitAndLossReportService;
+use Modules\Report\Exports\ProfitAndLossReportExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProfitAndLossReportController extends Controller
 {
@@ -31,13 +33,8 @@ class ProfitAndLossReportController extends Controller
     {
         $this->authorize('finance_reports.view');
         $currentYear = date('m') > 03 ? date('Y') + 1 : date('Y');
-        $defaultFilters = [
-            'transaction' => 'revenue',
-            'year' => $currentYear,
-        ];
-
-        $filters = array_merge($defaultFilters, request()->all());
-
+        
+        $filters = $this->filters($currentYear);
         $reportData = $this->service->profitAndLoss($filters);
 
         $allAmounts = array_map(function ($item) {
@@ -61,6 +58,25 @@ class ProfitAndLossReportController extends Controller
 
     public function profitAndLossReportExport()
     {
-        return $this->service->profitAndLossReportExport();
+        $currentYear = date('m') > 03 ? date('Y') + 1 : date('Y');
+        
+        $filters = $this->filters($currentYear);
+        $reportData = $this->service->profitAndLoss($filters);
+        
+        $request = request()->all();
+        $endYear = $request['year'];
+        $startYear = $endYear - 1;
+
+        return Excel::download(new ProfitAndLossReportExport($reportData), "Profit And Loss Report $startYear-$endYear.xlsx");
+    }
+
+    public function filters($currentYear)
+    {
+        $defaultFilters = [
+            'transaction' => 'revenue',
+            'year' => $currentYear,
+        ];
+
+        return array_merge($defaultFilters, request()->all());
     }
 }
