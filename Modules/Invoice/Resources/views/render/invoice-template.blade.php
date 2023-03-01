@@ -375,8 +375,6 @@
                                         @if($project->is_amc == 1)
                                             @if($project->serviceRateTermFromProject_Billing_DetailsTable() == 'per_hour')
                                             {{ $project->amcBillableHoursDisplay($monthsToSubtract, $periodStartDate, $periodEndDate) }}
-                                            @else
-                                            {{$project->getmonthStatDateAndEndDateInPdf()['startDate'] ."-". $project->getmonthStatDateAndEndDateInPdf()['endDate'] }}
                                             @endif
                                         @else
                                             {{ $project->getBillableHoursForMonth($monthsToSubtract, $periodStartDate, $periodEndDate) }}
@@ -407,9 +405,9 @@
                         </tr>
                         <tr class="border-bottom">
                             <td>{{ $client->country->initials == 'IN' ? __('GST in INR') : __('IGST') }}</td>
-                            <td></td>
+                            <td style="width: 180px;"></td>
                             <td>{{ $client->country->initials == 'IN' ? config('invoice.invoice-details.igst') : __('NILL') }}</td>
-                            <td>
+                            <td >
                             @if($project->is_amc == 1)
                                 {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->getGSTamountInPdf() }}
                             @else
