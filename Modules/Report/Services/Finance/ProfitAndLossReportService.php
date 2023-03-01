@@ -36,7 +36,7 @@ class ProfitAndLossReportService
         $request = request()->all();
         $endYear = $request["year"];
         $startYear = $endYear - 1;
-        
+
         return Excel::download(new ProfitAndLossReportExport($reportData), "Profit And Loss Report $startYear-$endYear.xlsx");
     }
 
