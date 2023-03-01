@@ -202,8 +202,8 @@ class InvoiceService implements InvoiceServiceContract
     }
 
     public function getUpdatedAmountForRemainingInvoice($invoice)
-    {   
-        $unpaidInvoiceDetailsByInvoiceId=[];
+    {
+        $unpaidInvoiceDetailsByInvoiceId = [];
         foreach ($this->getUnpaidInvoicesForProjectOrClient($invoice) as $data) {
             $unpaidInvoiceDetailsByInvoiceId[$data->id] = [
                 'invoice_number' => $data->invoice_number,
@@ -215,8 +215,8 @@ class InvoiceService implements InvoiceServiceContract
             return $details->created_at;
         });
         foreach ($allInstallmentPayments as $data) {
-            $amount_paid_till_now +=$data->amount_paid_till_now;
-        }        
+            $amount_paid_till_now += $data->amount_paid_till_now;
+        }
         $symbol = '';
         $symbol = (strpos($invoice->display_amount, '$') !== false) ? '$' : ((strpos($invoice->display_amount, '₹') !== false) ? '₹' : '');
         $totalProjectAmount = floatval(str_replace(['$', '₹'], '', $invoice->display_amount)) + floatval($invoice->gst);
