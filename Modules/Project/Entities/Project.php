@@ -727,7 +727,7 @@ class Project extends Model implements Auditable
     {
         $startdate = $this->getTermStartAndEndDateForInvoice()['startDate']->format('j-M-Y');
         $enddate = $this->getTermStartAndEndDateForInvoice()['endDate']->format('j-M-Y');
-        if(date('F', strtotime($startdate)) == date('F', strtotime($enddate))) {
+        if (date('F', strtotime($startdate)) == date('F', strtotime($enddate))) {
             $enddate = $this->getTermStartAndEndDateForInvoice()['endDate']->addMonth()->format('j-M-Y');
         }
         $startdate = date('M-Y', strtotime($startdate));
@@ -740,5 +740,4 @@ class Project extends Model implements Auditable
             'endDate' => $enddate
         ];
     }
-
 }
