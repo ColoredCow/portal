@@ -51,11 +51,10 @@ class SendPaymentReceivedNotificationForProjectInvoice extends Command
         }
     }
 
-
     /**
      * Get the console command arguments.
      *
-     * @return array    
+     * @return array
      */
     protected function getArguments()
     {
