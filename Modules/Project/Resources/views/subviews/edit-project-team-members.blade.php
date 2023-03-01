@@ -86,7 +86,7 @@
                                 <input class="form-control" type="date" :name="`project_team_member[${index}][started_on]`" @input="updateStartDateForTeamMember($event, index)" :value="projectTeamMember.pivot.started_on | toDate">
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
 
