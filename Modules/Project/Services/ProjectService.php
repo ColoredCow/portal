@@ -29,9 +29,10 @@ class ProjectService implements ProjectServiceContract
         if ($nameFilter = $data['name'] ?? false) {
             $filters['name'] = $nameFilter;
         }
-
-        $showAllProjects = Arr::get($data, 'projects', 'my-projects') != 'my-projects';
-
+        if(auth()->user()->roles[0]['id'] == 1 || auth()->user()->roles[0]['id'] == 2  ){
+            $showAllProjects = Arr::get($data, 'projects', 'all-projects') == 'all-projects';}
+        else{
+        $showAllProjects = Arr::get($data, 'projects', 'my-projects') != 'my-projects';}
         $memberId = Auth::id();
 
         $projectClauseClosure = function ($query) use ($filters, $showAllProjects, $memberId) {
