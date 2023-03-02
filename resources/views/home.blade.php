@@ -17,7 +17,7 @@
             </p>
         </div>    
     @endif
-    <div>
+    <div class="mb-2">
         <span>Your FTE: <b class="{{ auth()->user()->ftes['main'] < 1 ? 'text-danger' : 'text-success' }}">{{auth()->user()->ftes['main'] }}</b> </span>
     </div>
     
