@@ -18,11 +18,7 @@
         </div>    
     @endif
     <div>
-        @if (auth()->user()->ftes['main'] < 1)
-            <span>Your FTE: <b class='text-danger'>{{auth()->user()->ftes['main'] }}</b> </span>
-        @else 
-            <span>Your FTE: <b class='text-success'>{{auth()->user()->ftes['main'] }}</b> </span>
-        @endif
+        <span>Your FTE: <b class="{{ auth()->user()->ftes['main'] < 1 ? 'text-danger' : 'text-success' }}">{{auth()->user()->ftes['main'] }}</b> </span>
     </div>
     
     <div class="card-deck dashboard_view d-flex flex-wrap justify-content-start">
