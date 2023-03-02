@@ -23,7 +23,6 @@ class MovePaidInvoicesToInvoicePaymentsDetailsSeeder extends Seeder
                 'amount_paid_till_now' => $invoice->amount_paid,
                 'status' => $invoice->status,
                 'bank_charges' => $invoice->bank_charges ?? null,
-                'gst' => $invoice->gst ?? null,
                 'tds' => $invoice->tds ?? null,
                 'tds_percentage' => $invoice->tds_percentage ?? null,
                 'conversion_rate' => $invoice->conversion_rate ?? null,

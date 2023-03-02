@@ -13,7 +13,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-md-2 col-lg-3 offset-md-4" v-if="status === 'partially_paid'">
+            <div class="col-md-2 col-lg-3 offset-md-4" v-if="status === 'partially_paid' || status ==='paid'">
                 <a class="btn btn-sm btn-info text-white mr-4 font-weight-bold" data-toggle="modal" data-target="#invoiceModal">{{ __('Payments History') }}</a>
             </div>
         </div>
@@ -107,7 +107,7 @@
                     <label class="custom-control-label" for="hidebtn">Pending Payments</label>
                 </div>
 
-                <div  id="pendingInvoice" v-show="showPendingInvoices && status === 'paid'">
+                <div  id="pendingInvoice" v-show="showPendingInvoices && status === 'paid'" class="mb-6">
                     @if($unpaidInvoiceDetailsByInvoiceId)
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -134,7 +134,7 @@
                             </tbody>
                         </table>
                     @else
-                        <p class="text-success">No Pending Invoices</p>
+                        <p class="text-success font-weight-bold ">No Pending Invoices</p>
                     @endif 
                 </div>
 
@@ -152,8 +152,8 @@
                             </div>
                         </div>
                     </div>
-                <div v-if="totalAmountStatus()==false && status === 'paid'"> 
-                    <p class="text-danger">Please Enter The Total Amount Value.</p>
+                <div v-if="totalAmountStatus()==false && status === 'paid'" class="mb-6"> 
+                    <p class="text-danger font-weight-bold ">plase enter the overall amount.</p>
                 </div>
 
                 <div class="form-group-inline d-flex mb-2">
@@ -198,8 +198,11 @@
                     </div>
                 </div>
 
-                <div class="form-group ">
-                    <label for="comments">Comments</label>
+                <div class="custom-control custom-switch mb-4">
+                    <input type="checkbox" id="hidebtncomment" class="custom-control-input" v-model="showInvoiceComment">
+                    <label class="custom-control-label" for="hidebtncomment">Comments</label>
+                </div>
+                <div class="form-group " v-show="showInvoiceComment">
                     <textarea name="comments" id="paidInvoiceComment" rows="5" class="form-control" @keyup="parseComment($event)" v-model="comments"></textarea>
                 </div>
 
@@ -230,7 +233,7 @@
         </div>
     </div>
     <div class="card-footer">
-        <button type="submit" class="btn btn-primary mr-4">Save</button>
+        <button type="submit" :disabled="!totalAmountStatus()" class="btn btn-primary mr-4">Save</button>
         @if(auth()->user()->can('finance_invoices.delete'))
             <span class="btn btn-danger" @click="deleteInvoice()" >Delete</span>
         @else
@@ -327,6 +330,8 @@
             for (var index = 0; index < totalNumbersInList; index++) {
                 if (this.client.type == 'indian') {
                     if (index == totalNumbersInList - 1) {
+                        this.amountPaid = filtered_number_list[index]
+                        $('#amountPaid').val(this.amountPaid)
                         emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
                         this.calculateTaxes()
                     }
@@ -334,6 +339,8 @@
                 }
 
                 if (index == 0) {
+                    this.amountPaid = filtered_number_list[index]
+                    $('#amountPaid').val(this.amountPaid)
                     emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
                     this.calculateTaxes()
                 } else if (index == 1) {
@@ -352,6 +359,7 @@
                 var invoice = this.unpaidInvoiceDetailsByInvoiceId[this.selectedInvoices[i]];
                 if (invoice) {
                     total += parseInt(invoice.amount);
+                    console.log(total);
                 }
             }
             return total;
@@ -405,6 +413,7 @@
             totalProjectAmount: "{{$invoiceValue['totalProjectAmount']}}",
             allInstallmentPayments: "{{$invoiceValue['allInstallmentPayments']}}",
             showPendingInvoices: false,
+            showInvoiceComment:false,
             selectedInvoices: [],
             unpaidInvoiceDetailsByInvoiceId: @json($unpaidInvoiceDetailsByInvoiceId),
         }
@@ -420,5 +429,5 @@
 });
 
 </script>
-@include('invoice::subviews.edit.invoice_payment_modal')
+@include('invoice::subviews.edit.invoice-payment-modal')
 @endsection
