@@ -73,7 +73,6 @@ class CodeTrekController extends Controller
     }
     public function delete(CodeTrekApplicant $applicant)
     {
-        
         $this->authorize('codetrek_applicant.delete');
 
         $applicant->delete();
