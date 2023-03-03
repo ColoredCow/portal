@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ApplicantsSubmittedBeforeThreeDays extends Mailable
+class ResumeScreeningPendingApplication extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,8 +29,7 @@ class ApplicantsSubmittedBeforeThreeDays extends Mailable
      */
     public function build()
     {
-        $count = $this->screeningApplicants->count();
-        $subject = "$count applicants submitted their application before 3 days.";
+        $subject = "Applications in resume screening round for more than 3 days.";
 
         return $this->view('emails.applicants_before_three_days', [
                         'applicants' => $this->screeningApplicants,

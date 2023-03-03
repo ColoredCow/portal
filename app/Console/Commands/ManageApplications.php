@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use App\Mail\ApplicantsSubmittedBeforeThreeDays;
+use App\Mail\ResumeScreeningPendingApplication;
 use Illuminate\Support\Facades\Mail;
 
 class ManageApplications extends Command
@@ -14,14 +14,14 @@ class ManageApplications extends Command
      *
      * @var string
      */
-    protected $signature = 'hr:send-mail-to-hr';
+    protected $signature = 'hr:resume-screening-application-review-reminder';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This will check every morning';
+    protected $description = 'This command will trigger mail to HR reminding him to review applications that are in resume screening round for more than 3 days';
 
     /**
      * Create a new command instance.
@@ -40,24 +40,19 @@ class ManageApplications extends Command
      */
     public function handle()
     {
-        // Get the current date/time
         $now = now();
 
-        // Calculate the date/time 3 days ago
         $threeDaysAgo = $now->subDays(3);
 
-        // Get all applicants whose application was submitted before 3 days
         $screeningApplicants = DB::table('hr_applicants')
                     ->join('hr_applications', 'hr_applicants.id', '=', 'hr_applications.hr_applicant_id')
-                    ->select('hr_applicants.id', 'hr_applicants.name', 'hr_applicants.email', 'hr_applicants.phone', 'hr_applications.status')
-                    ->where('hr_applications.status', config('hr.status.new.label'))
+                    ->select('hr_applicants.id', 'hr_applicants.name', 'hr_applicants.email', 'hr_applicants.phone', 'hr_applications.status', 'hr_applications.created_at')
+                    ->where('hr_applications.status', config('hr.status.new'))
                     ->where('hr_applications.created_at', '<', $threeDaysAgo)
                     ->get();
 
-        // Check if there are any applicants
         if ($screeningApplicants->count() > 0) {
-            // Send email to HR with applicant details
-            Mail::to(env('MAIL_FROM_ADDRESS'))->send(new ApplicantsSubmittedBeforeThreeDays($screeningApplicants));
+            Mail::to(config('hr.hr-email.primary'))->send(new ResumeScreeningPendingApplication($screeningApplicants));
 
             $this->info('Email sent successfully!');
         } else {
