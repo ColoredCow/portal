@@ -56,7 +56,7 @@
                     <div class="d-flex">
                         <label for="client_id" class="mr-5">Remaining Amount:</label>
                         <span>
-                            <p> @{{remainingAmount}} {{$invoiceValue['symbol']}}</p>
+                            <p> @{{(remainingAmount)}} {{$invoiceValue['symbol']}}</p>
                       </span>
                     </div>
                 </div>
@@ -204,7 +204,7 @@
                 <div>
                     <div class="custom-control custom-switch mb-4">
                         <input type="checkbox" id="toggleComments" class="custom-control-input" v-model="showPaymentDetails">
-                        <label class="custom-control-label" for="toggleComments">Enable Payment Parsing</label>
+                        <label class="custom-control-label" for="toggleComments">Payment Comment</label>
                     </div>
                     <div class="form-group">
                         <textarea name="comments" id="paidInvoiceComment" rows="5" class="form-control" @keyup="parseComment($event)" v-model="comments"></textarea>
@@ -420,7 +420,7 @@
             tds: "{{''}}",
             tdsPercentage: "{{''}}",
             show_on_select: true,
-            remainingAmount: "{{$invoiceValue['totalProjectAmount'] - $invoiceValue['amount_paid_till_now']}}",
+            remainingAmount: "{{round(($invoiceValue['totalProjectAmount'] - $invoiceValue['amount_paid_till_now']), 2)}}",
             previousAmount: "{{$invoiceValue['amount_paid_till_now']}}",
             totalProjectAmount: "{{$invoiceValue['totalProjectAmount']}}",
             allInstallmentPayments: "{{$invoiceValue['allInstallmentPayments']}}",

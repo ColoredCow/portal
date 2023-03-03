@@ -7,11 +7,11 @@
                 </div>
                 <div id="accordion" class="card-header accordion-button">
                     @if(count($invoiceValue['allInstallmentPayments'])>0)
-                    @foreach ($invoiceValue['allInstallmentPayments']->sortByDesc('last_amount_paid_on') as $key=> $item)
+                    @foreach ($allInstallmentPayments->sortByDesc('last_amount_paid_on') as $key=> $item)
                     <div class=" card card-header " id="heading-{{$key}}">
                         <div class="d-flex justify-content-between ">
                             <div class=" w-full cursorPointerAccordion" data-toggle="collapse" data-target="#collapse-{{$key}}" aria-expanded="false" aria-controls="collapse-{{$key}}" data-parent="#accordion">
-                                {{ "Paid " . $invoiceValue['allInstallmentPayments'][$key]['amount_paid_till_now'] . $invoiceValue['symbol'] . " on " . date('d-m-Y', strtotime($invoiceValue['allInstallmentPayments'][$key]['last_amount_paid_on']))}}
+                                {{ "Paid " . $item->amount_paid_till_now . $invoiceValue['symbol'] . " on " . date('d-m-Y', strtotime($item->last_amount_paid_on))}}
                             </div>
                             <div>
                                 <a href="#" class=" rg_edit_btn" data-target="#editPaymentDetailsModal-{{$key}}" data-url="{{ route('invoice.updatePaymentDetails', ['invoice' => $item->invoice_id, 'id' => $item->id]) }}" data-toggle="modal">
@@ -57,8 +57,8 @@
                                                         <td class="text-center align-middle">{{ $item->conversion_rate }} </td>
                                                         <td class="text-center align-middle">{{ $item->conversion_rate_diff }}</td>
                                                     @else
-                                                        <td class="text-center align-middle">{{ $item->tds }}</td>
-                                                        <td class="text-center align-middle">{{ $item->tds_percentage }}</td>
+                                                        <td class="text-center align-middle">{{ round($item->tds,2) }}</td>
+                                                        <td class="text-center align-middle">{{ round($item->tds_percentage,2) }}</td>
                                                     @endif
                                                     <td class="text-center align-middle">{{ date('d-m-Y', strtotime($item->last_amount_paid_on)) }}</td>
                                                 </tr>

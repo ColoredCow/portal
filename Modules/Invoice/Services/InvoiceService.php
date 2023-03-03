@@ -164,12 +164,13 @@ class InvoiceService implements InvoiceServiceContract
 
     public function update($data, $invoice)
     {
-        $invoiceValue = $this->getUpdatedAmountForRemainingInvoice($invoice);
-        if (floatval(intval($invoice->amount) + intval($invoice->gst)) === floatval($invoiceValue['amount_paid_till_now'] + $data['amount_paid'])) {
-            $data['status'] = 'paid';
-
-        }
         $this->getInvoicePaymentDetails($data, $invoice);
+        $invoiceValue = $this->getUpdatedAmountForRemainingInvoice($invoice); 
+        if (floatval(intval($invoice->amount) + intval($invoice->gst)) === floatval($invoiceValue['amount_paid_till_now'] + $data['amount_paid']) || floatval(intval($invoice->amount)) === floatval($invoiceValue['amount_paid_till_now'] + $data['amount_paid'])) {
+           $invoice->update([
+            'status' => 'paid',
+           ]);   
+        }
         $invoice->update($data);
         if (isset($data['send_mail'])) {
             $emailData = $this->getSendEmailData($data, $invoice);
@@ -214,9 +215,8 @@ class InvoiceService implements InvoiceServiceContract
         $allInstallmentPayments = $invoice->remainingInvoiceDetails;
         $amount_paid_till_now = 0;
         foreach ($allInstallmentPayments as $data) {
-            $amount_paid_till_now += intval($data->amount_paid_till_now);
-        }
-        
+            $amount_paid_till_now += $data->amount_paid_till_now;
+        }        
         $symbol = '';
         $symbol = (strpos($invoice->display_amount, '$') !== false) ? '$' : ((strpos($invoice->display_amount, '₹') !== false) ? '₹' : '');
         $totalProjectAmount = floatval(str_replace(['$', '₹'], '', $invoice->display_amount)) + floatval($invoice->gst);
@@ -250,30 +250,36 @@ class InvoiceService implements InvoiceServiceContract
     }
 
     public function getInvoicePaymentDetails($data, $invoice)
-    {
+    {  
+           if(($invoice->status == 'sent')||($invoice->status == 'paid')) {
             $invoicesQuery = Invoice::query();
             if (! empty($data['pendingpayment'])) {
                 $invoicesQuery->whereIn('id', $data['pendingpayment']);
             }
             $invoices = $invoicesQuery->orWhere('id', $invoice->id)->get();
-
             $totalAmount = $invoices->sum('amount');
             foreach ($invoices as $invoiceData) {
+
                 $currentInvoiceValue = 1;
                 if (array_key_exists('tds', $data)) {
                     $currentInvoiceValue = $invoiceData->amount / $totalAmount;
-                    $tdsValue = $invoiceData->tds * $currentInvoiceValue;
-                    $tdsPercentage = ($tdsValue / $invoiceData->amount) * 100;
+                    $tdsValue = round($data['tds'] * $currentInvoiceValue, 2);
+                    $tdsPercentage = round(($tdsValue / $invoiceData->amount) * 100, 2);
                     $invoiceData->tds = $tdsValue;
+
                     $invoiceData->tds_percentage = $tdsPercentage;
                 } else {
                     $invoiceData->bank_charges = number_format(($invoiceData->amount / ($totalAmount)), 2) * ($data['bank_charges'] ?? 1);
+
                 }
                 $invoiceData->update([
                     'status' => 'paid',
                 ]);
-                $this->createInvoicePaymentDetails($data, $invoice);
+                $this->createInvoicePaymentDetails($data, $invoiceData);
             }
+        }else{
+            $this->createInvoicePaymentDetails($data, $invoice);
+        }
     }
 
     public function createInvoicePaymentDetails($data, $invoice)
@@ -281,7 +287,7 @@ class InvoiceService implements InvoiceServiceContract
         $isStatusPaid = $invoice->status == 'paid';
         InvoicePaymentsDetails::create([
             'invoice_id' => $invoice->id,
-            'amount_paid_till_now' => $isStatusPaid ? $invoice->amount : $data['amount_paid'],
+            'amount_paid_till_now' => $isStatusPaid? $invoice->amount : $data['amount_paid'],
             'bank_charges' => $isStatusPaid ? $invoice->bank_charges : $data['bank_charges'] ?? null,
             'tds' => $isStatusPaid ? $invoice->tds : $data['tds'] ?? null,
             'tds_percentage' => $isStatusPaid ? $invoice->tds_percentage : $data['tds_percentage'] ?? null,
