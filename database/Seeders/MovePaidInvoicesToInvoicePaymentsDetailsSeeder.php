@@ -21,7 +21,6 @@ class MovePaidInvoicesToInvoicePaymentsDetailsSeeder extends Seeder
             InvoicePaymentsDetails::create([
                 'invoice_id' => $invoice->id,
                 'amount_paid_till_now' => $invoice->amount_paid,
-                'status' => $invoice->status,
                 'bank_charges' => $invoice->bank_charges ?? null,
                 'tds' => $invoice->tds ?? null,
                 'tds_percentage' => $invoice->tds_percentage ?? null,

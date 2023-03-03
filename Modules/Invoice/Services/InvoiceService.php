@@ -165,7 +165,7 @@ class InvoiceService implements InvoiceServiceContract
     public function update($data, $invoice)
     {
         $invoiceValue = $this->getUpdatedAmountForRemainingInvoice($invoice);
-        if (floatval($invoice->amount + $invoice->gst) === floatval($invoiceValue['amount_paid_till_now'] + $data['amount_paid'])) {
+        if (floatval(intval($invoice->amount) + intval($invoice->gst)) === floatval($invoiceValue['amount_paid_till_now'] + $data['amount_paid'])) {
             $data['status'] = 'paid';
 
         }
@@ -231,6 +231,7 @@ class InvoiceService implements InvoiceServiceContract
             'unpaidInvoiceDetailsByInvoiceId' => $unpaidInvoiceDetailsByInvoiceId,
         ];
     }
+
     public function getUnpaidInvoicesForProjectOrClient($invoice)
     {
         $unpaidInvoices = Invoice::where(function ($query) use ($invoice) {
@@ -240,9 +241,9 @@ class InvoiceService implements InvoiceServiceContract
                 $query->where('client_id', $invoice->client_id);
             }
         })
-        ->where('id', '<>', $invoice->id)
         ->where('status', 'sent')
         ->whereDoesntHave('remainingInvoiceDetails')
+        ->where('id', '<>', $invoice->id)
         ->get();
 
         return $unpaidInvoices;
@@ -251,7 +252,7 @@ class InvoiceService implements InvoiceServiceContract
     public function getInvoicePaymentDetails($data, $invoice)
     {
             $invoicesQuery = Invoice::query();
-            if (!empty($data['pendingpayment'])) {
+            if (! empty($data['pendingpayment'])) {
                 $invoicesQuery->whereIn('id', $data['pendingpayment']);
             }
             $invoices = $invoicesQuery->orWhere('id', $invoice->id)->get();
