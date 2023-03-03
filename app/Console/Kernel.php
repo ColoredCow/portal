@@ -3,15 +3,16 @@
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Modules\Project\Console\AMCProjectsRenewal;
+use Modules\Project\Console\EndedProject;
+use Modules\Project\Console\FixedBudgetProject;
+use Modules\Project\Console\GoogleChat\RemindProjectMembersToUpdateEffortOnGoogleChat;
+use Modules\Project\Console\GoogleChat\SendDailyEffortSummaryForProjectsOnGoogleChat;
+use Modules\Project\Console\SendEffortSummaryCommand;
 use Modules\Project\Console\SyncEffortsheet;
 use Modules\Project\Console\ZeroEffortInProject;
-use Modules\Project\Console\EndedProject;
 use Modules\Project\Console\ZeroExpectedHourInProject;
-use Modules\Project\Console\FixedBudgetProject;
-use Modules\Project\Console\SendEffortSummaryCommand;
-use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Modules\Project\Console\GoogleChat\SendDailyEffortSummaryForProjectsOnGoogleChat;
-use Modules\Project\Console\GoogleChat\RemindProjectMembersToUpdateEffortOnGoogleChat;
 
 class Kernel extends ConsoleKernel
 {
@@ -29,6 +30,7 @@ class Kernel extends ConsoleKernel
         FixedBudgetProject::class,
         SendDailyEffortSummaryForProjectsOnGoogleChat::class,
         RemindProjectMembersToUpdateEffortOnGoogleChat::class,
+        AMCProjectsRenewal::class,
     ];
 
     /**
@@ -54,6 +56,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('project:remind-to-update-effort')->weekdays()->at('19:00');
         $schedule->command('project:send-daily-effort-summary-google-chat')->weekdays()->at('22:30');
         $schedule->command('project:zero-expected-hours-in-project')->weekly()->tuesdays()->at('11:00');
+        $schedule->command('project:handle-amc-renewal')->dailyAt('08:00');
     }
 
     /**
