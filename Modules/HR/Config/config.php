@@ -224,7 +224,8 @@ return [
         'scanned_copy_pan_card' => 'scanned copy of Pan Card',
         'passbook_first_page_img' => 'Passbook First page IMG',
     ],
-    'encrypted-applicant-details' => [ 
+
+    'encrypted-applicant-details' => [
         'aadhar_card_number' => 'Aadhar Card Number',
         'pan_card_number' => 'Pan Card Number',
         'acc_number' => 'Account Number',
