@@ -12,5 +12,5 @@
 */
 
 Route::prefix('operations')->group(function () {
-    Route::get('/', 'OperationsController@index');
+    Route::get('/', 'operationsController@index')->name('index');
 });
