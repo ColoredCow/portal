@@ -24,6 +24,8 @@ use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Project\Entities\Project;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
 use Modules\Invoice\Entities\LedgerAccount;
+use Illuminate\Support\Facades\Notification;
+use Modules\Invoice\Notifications\GoogleChat\SendPaymentReceivedNotification;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -37,9 +39,9 @@ class InvoiceService implements InvoiceServiceContract
         ];
         if ($invoiceStatus == 'sent') {
             $invoices = Invoice::query()->applyFilters($filters)->leftjoin('clients', 'invoices.client_id', '=', 'clients.id')
-            ->select('invoices.*', 'clients.name')
-            ->orderBy('name', 'asc')->orderBy('sent_on', 'desc')
-            ->get();
+                ->select('invoices.*', 'clients.name')
+                ->orderBy('name', 'asc')->orderBy('sent_on', 'desc')
+                ->get();
             $clientsReadyToSendInvoicesData = [];
             $projectsReadyToSendInvoicesData = [];
         } else {
@@ -175,6 +177,24 @@ class InvoiceService implements InvoiceServiceContract
             $this->saveInvoiceFile($invoice, $data['invoice_file']);
             $this->setInvoiceNumber($invoice, $data['sent_on']);
         }
+        if (isset($data['send_payment_notification'])) {
+            if ($invoice->project) {
+                $lastPaidInvoice = $invoice->project->invoices()->where('status', 'paid')->orderBy('payment_at', 'desc')->first();
+                if ($lastPaidInvoice->id == $invoice->id && $invoice->project->google_chat_webhook_url) {
+                    Notification::route('googleChat', $invoice->project->google_chat_webhook_url)
+                        ->notify(new SendPaymentReceivedNotification($invoice));
+                }
+            } else {
+                $clients = $invoice->client->projects;
+                foreach ($clients as $client) {
+                    $lastPaidInvoice = $client->invoices()->where('status', 'paid')->orderBy('sent_on', 'desc')->first();
+                    if ($lastPaidInvoice && $lastPaidInvoice->id == $invoice->id && $client->google_chat_webhook_url) {
+                        Notification::route('googleChat', $client->google_chat_webhook_url)
+                            ->notify(new SendPaymentReceivedNotification($invoice));
+                    }
+                }
+            }
+        }
 
         return $invoice;
     }
@@ -242,7 +262,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         $folder = $this->getInvoiceFilePath($invoice);
 
-        if (! $fileName) {
+        if (!$fileName) {
             $fileName = $file->getClientOriginalName();
         }
         $file = Storage::putFileAs($folder, $file, $fileName, ['visibility' => 'public']);
@@ -546,7 +566,7 @@ class InvoiceService implements InvoiceServiceContract
         $periodStartDate = $data['period_start_date'] ?? null;
         $periodEndDate = $data['period_end_date'] ?? null;
 
-        if (! empty($ccEmails)) {
+        if (!empty($ccEmails)) {
             $ccEmails = array_map('trim', explode(',', $data['cc']));
             foreach ($ccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -556,7 +576,7 @@ class InvoiceService implements InvoiceServiceContract
             }
         }
 
-        if (! empty($bccEmails)) {
+        if (!empty($bccEmails)) {
             $bccEmails = array_map('trim', explode(',', $data['bcc']));
             foreach ($bccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -586,7 +606,7 @@ class InvoiceService implements InvoiceServiceContract
         $ccEmails = $data['cc'] ?? [];
         $bccEmails = $data['bcc'] ?? [];
 
-        if (! empty($ccEmails)) {
+        if (!empty($ccEmails)) {
             $ccEmails = array_map('trim', explode(',', $data['cc']));
             foreach ($ccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -596,7 +616,7 @@ class InvoiceService implements InvoiceServiceContract
             }
         }
 
-        if (! empty($bccEmails)) {
+        if (!empty($bccEmails)) {
             $bccEmails = array_map('trim', explode(',', $data['bcc']));
             foreach ($bccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -636,7 +656,7 @@ class InvoiceService implements InvoiceServiceContract
         $ccEmails = $data['cc'] ?? [];
         $bccEmails = $data['bcc'] ?? [];
 
-        if (! empty($ccEmails)) {
+        if (!empty($ccEmails)) {
             $ccEmails = array_map('trim', explode(',', $data['cc']));
             foreach ($ccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -646,7 +666,7 @@ class InvoiceService implements InvoiceServiceContract
             }
         }
 
-        if (! empty($bccEmails)) {
+        if (!empty($bccEmails)) {
             $bccEmails = array_map('trim', explode(',', $data['bcc']));
             foreach ($bccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -769,8 +789,8 @@ class InvoiceService implements InvoiceServiceContract
         }
 
         $invoices = Invoice::query()->applyFilters($filters)
-        ->orderBy('sent_on', 'desc')
-        ->get();
+            ->orderBy('sent_on', 'desc')
+            ->get();
 
         if (isset($filters['client_id'])) {
             $clientId = request()->client_id;
@@ -877,7 +897,7 @@ class InvoiceService implements InvoiceServiceContract
         $project = Project::find($data['project_id'] ?? null);
         $client = Client::find($data['client_id'] ?? null);
 
-        if (! $client) {
+        if (!$client) {
             return;
         }
 
