@@ -102,12 +102,12 @@
                     <br>
                 </div>
 
-                <div class="custom-control custom-switch mb-4" v-if="status === 'paid'">
+                <div class="custom-control custom-switch" v-if="status === 'paid'">
                     <input type="checkbox" id="hidebtn" class="custom-control-input" v-model="showPendingInvoices">
                     <label class="custom-control-label" for="hidebtn">Pending Payments</label>
                 </div>
 
-                <div  id="pendingInvoice" v-show="showPendingInvoices && status === 'paid'" class="mb-6">
+                <div id="pendingInvoice" v-show="showPendingInvoices && status === 'paid'" class =>
                     @if($unpaidInvoiceDetailsByInvoiceId)
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -134,26 +134,29 @@
                             </tbody>
                         </table>
                     @else
-                        <p class="text-success font-weight-bold ">No Pending Invoices</p>
+                        <p class="text-success small font-weight-bold">No pending invoices</p>
                     @endif 
                 </div>
 
-                <div class="form-group d-flex">
-                    <label for="amountPaid" class="field-required mr-3 pt-1">Received Amount</label>
-                    <div class="input-group flex-1">
-                        <input v-model="amountPaid" type="number" class="form-control" name="amount_paid" id="amountPaid"
-                            placeholder="Amount Received" required="required" step=".01" min="0" v-on:input="changePaidAmountListener">
+                <div class="form-group mt-5">
+                    <div class="d-flex align-items-start">
+                        <label for="amountPaid" class="field-required mr-3 pt-1">Received Amount</label>
+                        <div class="input-group flex-1">
+                            <input v-model="amountPaid" type="number" class="form-control" name="amount_paid" id="amountPaid"
+                                placeholder="Amount Received" required="required" step=".01" min="0" v-on:input="changePaidAmountListener">
                             <div class="input-group-prepend">
-                                <select name="currency_transaction_charge" v-model="currencyTransactionCharge" id="currencyTransactionCharge" class="input-group-text" required="required">
+                                <select name="currency_transaction_charge" v-model="currencyTransactionCharge" id="currencyTransactionCharge"
+                                    class="input-group-text" required="required">
                                     @foreach($countries as $country)
-                                    <option value="{{$country->currency}}">{{$country->currency}}</option>
+                                        <option value="{{$country->currency}}">{{$country->currency}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                     </div>
-                <div v-if="totalAmountStatus()==false && status === 'paid'" class="mb-6"> 
-                    <p class="text-danger font-weight-bold ">plase enter the overall amount.</p>
+                    <div>
+                        <p v-if="totalAmountStatus()==false && status === 'paid'" class="text-danger small font-weight-bold">Please enter the overall amount.</p>
+                    </div>
                 </div>
 
                 <div class="form-group-inline d-flex mb-2">
@@ -198,14 +201,15 @@
                     </div>
                 </div>
 
-                <div class="custom-control custom-switch mb-4">
-                    <input type="checkbox" id="hidebtncomment" class="custom-control-input" v-model="showInvoiceComment">
-                    <label class="custom-control-label" for="hidebtncomment">Comments</label>
+                <div>
+                    <div class="custom-control custom-switch mb-4">
+                        <input type="checkbox" id="toggleComments" class="custom-control-input" v-model="showPaymentDetails">
+                        <label class="custom-control-label" for="toggleComments">Enable Payment Parsing</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="comments" id="paidInvoiceComment" rows="5" class="form-control" @keyup="parseComment($event)" v-model="comments"></textarea>
+                    </div>
                 </div>
-                <div class="form-group " v-show="showInvoiceComment">
-                    <textarea name="comments" id="paidInvoiceComment" rows="5" class="form-control" @keyup="parseComment($event)" v-model="comments"></textarea>
-                </div>
-
             </div>
             <div class="col-md-5 offset-md-1 mt-auto" v-if="status=='disputed'">
                 <div class="form-group">
@@ -325,6 +329,9 @@
         },
 
         updatePaymentAmountDetails(filtered_number_list) {
+            if (!this.showPaymentDetails) {
+                return;
+            }
             let totalNumbersInList =  filtered_number_list.length
             var emailBody = $("#emailBody").text();
             for (var index = 0; index < totalNumbersInList; index++) {
@@ -367,20 +374,25 @@
         
         totalAmountStatus() {
             const totalPendingAmount = this.totalPendingAmount();
-            let inputAmount = parseInt(this.amountPaid)
-            let projectAmount = parseInt(this.amount); 
-            if (totalPendingAmount) {
-                if (inputAmount === totalPendingAmount + projectAmount) {
-                    return true;
-                } else {
-                    return false;
+            const inputAmount = parseInt(this.amountPaid);
+            const projectAmount = parseInt(this.amount);
+
+            if (this.status === 'paid') {
+                if (totalPendingAmount) {
+                    if(inputAmount === totalPendingAmount + projectAmount){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                } else if (inputAmount){
+                    if(inputAmount === projectAmount){
+                        return true;
+                    }else{
+                        return false;
+                    }
                 }
-            } else if (inputAmount) {
-                if (inputAmount === projectAmount) {
-                    return true;
-                } else {
-                    return false;
-                }
+            } else {
+                return true;
             }
         }
     },
