@@ -53,10 +53,10 @@ class ManageApplications extends Command
 
         foreach ($applications as $application) {
             $applicantDetails[] = [
-                "name" => $application->applicant->name,
-                "phone" => $application->applicant->phone,
-                "id" => $application->applicant->id,
-                "email" => $application->applicant->email
+                'name' => $application->applicant->name,
+                'phone' => $application->applicant->phone,
+                'id' => $application->applicant->id,
+                'email' => $application->applicant->email
             ];
         }
 
