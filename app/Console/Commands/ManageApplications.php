@@ -49,11 +49,15 @@ class ManageApplications extends Command
                       ->where('hr_applications.created_at', '<', $threeDaysAgo)
                       ->get();
 
+        $applicantDetails = array();
+
         foreach ($applications as $application) {
-                $application->applicant->name;
-                $application->applicant->phone;
-                $application->applicant->id;
-                $application->applicant->email;
+            $applicantDetails[] = array(
+                "name" => $application->applicant->name,
+                "phone" => $application->applicant->phone,
+                "id" => $application->applicant->id,
+                "email" => $application->applicant->email
+            );
         }
 
         if ($applications->count() > 0) {
