@@ -10,16 +10,16 @@ class ResumeScreeningPendingApplication extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $screeningApplicants;
+    public $applications;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($screeningApplicants)
+    public function __construct($applications)
     {
-        $this->screeningApplicants = $screeningApplicants;
+        $this->applications = $applications;
     }
 
     /**
@@ -31,9 +31,9 @@ class ResumeScreeningPendingApplication extends Mailable
     {
         $subject = 'Applications in resume screening round for more than 3 days.';
 
-        return $this->view('emails.applicants_before_three_days', [
-                        'applicants' => $this->screeningApplicants,
-                        'count' => $this->screeningApplicants->count(), ])
+        return $this->view('emails.application_in_resume_screening_reminder', [
+                        'applications' => $this->applications,
+                        'count' => $this->applications->count(), ])
                     ->subject($subject);
     }
 }

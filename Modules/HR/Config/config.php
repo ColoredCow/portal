@@ -233,7 +233,7 @@ return [
     ],
 
     'hr-email' => [
-        'primary' => env('HR_FOLLOWUP_EMAIL_PRIMARY'),
-        'name' => env('HR_DEFAULT_FROM_NAME', 'ColoredCow Portal'),
+        'primary' => env('HR_FOLLOWUP_EMAIL_PRIMARY', 'hr@coloredcow.com'),
+        'name' => env('HR_DEFAULT_FROM_NAME', 'ColoredCow HR'),
     ],
 ];

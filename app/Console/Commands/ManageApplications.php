@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use App\Mail\ResumeScreeningPendingApplication;
 use Illuminate\Support\Facades\Mail;
+use Modules\HR\Entities\Application;
 
 class ManageApplications extends Command
 {
@@ -44,15 +44,20 @@ class ManageApplications extends Command
 
         $threeDaysAgo = $now->subDays(3);
 
-        $screeningApplicants = DB::table('hr_applicants')
-                    ->join('hr_applications', 'hr_applicants.id', '=', 'hr_applications.hr_applicant_id')
-                    ->select('hr_applicants.id', 'hr_applicants.name', 'hr_applicants.email', 'hr_applicants.phone', 'hr_applications.status', 'hr_applications.created_at')
-                    ->where('hr_applications.status', config('hr.status.new'))
-                    ->where('hr_applications.created_at', '<', $threeDaysAgo)
-                    ->get();
+        $applications = Application::with('applicant')
+                      ->where('status', config('hr.status.new'))
+                      ->where('hr_applications.created_at', '<', $threeDaysAgo)
+                      ->get();
 
-        if ($screeningApplicants->count() > 0) {
-            Mail::to(config('hr.hr-email.primary'))->send(new ResumeScreeningPendingApplication($screeningApplicants));
+        foreach ($applications as $application) {
+                $application->applicant->name;
+                $application->applicant->phone;
+                $application->applicant->id;
+                $application->applicant->email;
+        }
+
+        if ($applications->count() > 0) {
+            Mail::to(config('hr.hr-email.primary'))->send(new ResumeScreeningPendingApplication($applications));
 
             $this->info('Email sent successfully!');
         } else {
