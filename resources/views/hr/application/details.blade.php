@@ -139,13 +139,27 @@
                                         </div>
                                     </label>
                                     @if ($applicationRound['0']->scheduled_date)
-                                        <input type="datetime-local" 
+                                        <input type="date" 
                                             name="scheduled_date" id="scheduled_date" 
                                             class="form-control form-control-sm" 
-                                            value="{{ $applicationRound['0']->scheduled_date->format(config('constants.display_datetime_format')) }}">
+                                            value="{{ $applicationRound['0']->scheduled_date->format(config('constants.date_format')) }}">
                                     @else
                                         <div class="fz-16 leading-tight">Pending calendar confirmation</div>
                                     @endif
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="scheduled_time"
+                                        class="fz-14 leading-none text-secondary w-100p">
+                                        <div>
+                                            <span>Scheduled Time</span>
+                                        </div>
+                                    </label>
+                                    @if ($applicationRound['0']->scheduled_date)
+                                    <input type="Time" name="scheduled_time"
+                                        id="scheduled_time"
+                                        class="form-control form-control-sm"
+                                        value="{{ $applicationRound['0']->scheduled_date->toTimeString() }}">
+                                @endif
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="scheduled_person_id" class="fz-14 leading-none text-secondary">
@@ -177,6 +191,7 @@
                                 @endif
                             </div>
                         @endif
+                        
                     </div>
                 </div>
                 <input type="hidden" name="action" value="schedule-update">
