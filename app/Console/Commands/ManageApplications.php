@@ -49,17 +49,6 @@ class ManageApplications extends Command
                       ->where('hr_applications.created_at', '<', $threeDaysAgo)
                       ->get();
 
-        $applicantDetails = [];
-
-        foreach ($applications as $application) {
-            $applicantDetails[] = [
-                'name' => $application->applicant->name,
-                'phone' => $application->applicant->phone,
-                'id' => $application->applicant->id,
-                'email' => $application->applicant->email
-            ];
-        }
-
         if ($applications->count() > 0) {
             Mail::to(config('hr.hr-email.primary'))->send(new ResumeScreeningPendingApplication($applications));
 
