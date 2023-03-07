@@ -119,7 +119,7 @@
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Operations <span class="caret"></span>
             </a>
             <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_operations">
-                <a class="dropdown-item"  href="{{route('index')}}" >Office location</a>
+                <a class="dropdown-item"  href="{{route('office_location.index')}}" >Office location</a>
                
             </div>
         </li>
