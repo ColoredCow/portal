@@ -25,11 +25,19 @@ $(function() {
 			clientWiseRevenueTrendsReport
 		);
 	}
+	if ($("#userDashboardGraph").length) {
+		getData(
+			{ type: "fte-trend", filters: {} },
+			userFteTrendsReport
+		);
+	}
 });
 
 function financeReportRevenueTrendsReport(reportsData) {
+	// console.log(reportsData);
 	const canvasElementId = "financeReportRevenueTrends";
 	const labels = reportsData.labels;
+	// console.log(labels);
 	const currentPeriodTotalRevenue = reportsData.data.current_period_total_amount;
 	const previousPeriodTotalRevenue = reportsData.data.previous_period_total_amount;
 	const chartData = {
@@ -149,6 +157,40 @@ function clientWiseRevenueTrendsReport(reportsData) {
 
 	new Chart(canvasElementId, chartConfig);
 }
+
+function userFteTrendsReport(reportFteData) {
+	const canvasElementId = "userDashboardGraph";
+	const labels = reportFteData.labels;
+	const chartData = {
+		labels: labels,
+		datasets: [
+			{
+				label: "Fte",
+				backgroundColor: "rgb(255, 0, 0)",
+				borderColor: "rgb(105, 105, 105)",
+				data: reportFteData.data,
+			},
+		],
+	};
+
+	const chartConfig = {
+		type: reportFteData.graph_type || "bar",
+		data: chartData,
+		options: {
+			scales: {
+				yAxes: [{
+					ticks: {
+						beginAtZero: true,
+					}
+				}]
+			}	
+	}
+};
+
+	new Chart(canvasElementId, chartConfig);
+}
+
+
 
 function getData(params, callback) {
 	url = $("#get_report_data_url").val();
