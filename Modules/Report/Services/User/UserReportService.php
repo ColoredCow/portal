@@ -16,7 +16,7 @@ class UserReportService
             return $this->fteTrend($user);
         }
     }
- 
+
     public function fteTrend($user)
     {
         $startMonth = today()->subMonth(17)->format('Y-m');

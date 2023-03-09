@@ -24,9 +24,9 @@ class UserReportController extends Controller
         $startMonth = today()->subMonth(17)->format('Y-m');
         $endMonth = today()->format('Y-m');
         $months = [];
-  
+
         $currentMonth = Carbon::createFromFormat('Y-m', $startMonth);
-        
+
         while ($currentMonth->format('Y-m') <= $endMonth) {
             $months[] = $currentMonth->format('Y-m');
             $currentMonth->addMonth();
