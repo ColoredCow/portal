@@ -13,7 +13,7 @@
           @method('PUT')
           <div class="form-group">
             <label for="amountPaid">Paid-Amount</label>
-            <input type="text" class="form-control" id="amountPaid" name="amountPaid" value="{{$item->amount_paid_till_now}}">
+            <input type="text" class="form-control" id="amountPaid" name="amountPaid" value="{{$item->amount_paid}}">
           </div>
           @if($invoiceValue['symbol']=='$')
             <div class="form-group">

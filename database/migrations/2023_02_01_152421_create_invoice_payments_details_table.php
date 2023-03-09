@@ -17,14 +17,14 @@ class CreateInvoicePaymentsDetailsTable extends Migration
             $table->increments('id');
             $table->unsignedBigInteger('invoice_id')->unsigned();
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
-            $table->text('amount_paid_till_now')->nullable();
+            $table->text('amount_paid')->nullable();
             $table->text('bank_charges')->nullable();
             $table->text('conversion_rate')->nullable();
             $table->text('conversion_rate_diff')->nullable();
             $table->text('tds')->nullable();
             $table->text('tds_percentage')->nullable();
             $table->text('comments')->nullable();
-            $table->date('last_amount_paid_on')->nullable();
+            $table->date('amount_paid_on')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

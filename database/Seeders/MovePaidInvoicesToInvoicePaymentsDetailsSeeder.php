@@ -20,14 +20,14 @@ class MovePaidInvoicesToInvoicePaymentsDetailsSeeder extends Seeder
         foreach ($paidInvoices as $invoice) {
             InvoicePaymentsDetails::create([
                 'invoice_id' => $invoice->id,
-                'amount_paid_till_now' => $invoice->amount_paid,
+                'amount_paid' => $invoice->amount_paid,
                 'bank_charges' => $invoice->bank_charges ?? null,
                 'tds' => $invoice->tds ?? null,
                 'tds_percentage' => $invoice->tds_percentage ?? null,
                 'conversion_rate' => $invoice->conversion_rate ?? null,
                 'conversion_rate_diff' => $invoice->conversion_rate_diff ?? null,
                 'comments' => $invoice->comments,
-                'last_amount_paid_on' => $invoice->receivable_date,
+                'amount_paid_on' => $invoice->receivable_date,
             ]);
         }
     }

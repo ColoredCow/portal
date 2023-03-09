@@ -1,4 +1,4 @@
-<div class="modal fade" id="invoiceModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+<div class="modal fade" id="invoiceModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true"  >
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-body">
@@ -7,11 +7,11 @@
                 </div>
                 <div id="accordion" class="card-header accordion-button">
                     @if(count($invoiceValue['allInstallmentPayments'])>0)
-                    @foreach ($allInstallmentPayments->sortByDesc('last_amount_paid_on') as $key=> $item)
+                    @foreach ($allInstallmentPayments->sortByDesc('created_at') as $key=> $item)
                     <div class=" card card-header " id="heading-{{$key}}">
                         <div class="d-flex justify-content-between ">
                             <div class=" w-full cursorPointerAccordion" data-toggle="collapse" data-target="#collapse-{{$key}}" aria-expanded="false" aria-controls="collapse-{{$key}}" data-parent="#accordion">
-                                {{ "Paid " . $item->amount_paid_till_now . $invoiceValue['symbol'] . " on " . date('d-m-Y', strtotime($item->last_amount_paid_on))}}
+                                {{ "Paid " . $item->amount_paid . $invoiceValue['symbol'] . " on " . date('d-m-Y', strtotime($item->amount_paid_on))}}
                             </div>
                             <div>
                                 <a href="#" class=" rg_edit_btn" data-target="#editPaymentDetailsModal-{{$key}}" data-url="{{ route('invoice.updatePaymentDetails', ['invoice' => $item->invoice_id, 'id' => $item->id]) }}" data-toggle="modal">
@@ -51,7 +51,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td class="text-center align-middle">{{ $item->amount_paid_till_now }} </td>
+                                                    <td class="text-center align-middle">{{ $item->amount_paid }} </td>
                                                     @if($invoiceValue['symbol']=='$')
                                                         <td class="text-center align-middle">{{ $item->bank_charges }} </td>
                                                         <td class="text-center align-middle">{{ $item->conversion_rate }} </td>
@@ -60,7 +60,7 @@
                                                         <td class="text-center align-middle">{{ round($item->tds,2) }}</td>
                                                         <td class="text-center align-middle">{{ round($item->tds_percentage,2) }}</td>
                                                     @endif
-                                                    <td class="text-center align-middle">{{ date('d-m-Y', strtotime($item->last_amount_paid_on)) }}</td>
+                                                    <td class="text-center align-middle">{{ date('d-m-Y', strtotime($item->amount_paid_on)) }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>

@@ -1,4 +1,4 @@
-<div id="edit_invoice_details_form">
+<div id="edit_invoice_details_form"  class="position-relative">
     <div class="card-body">
         <div class="form-row mb-4">
             <div class="col-md-5">
@@ -88,32 +88,48 @@
                     </div>
                 </div>
 
-                <div class="form-group d-flex">
+                <div class="form-group d-flex mb-10">
                     <label for="receivable_date" class="field-required mr-3 pt-2">Receivable date</label>
                     <input type="date" class="form-control flex-1" name="receivable_date" id="receivable_date" required="required"
                         value="{{ $invoice->receivable_date->format('Y-m-d') }}">
+                </div><br>
+
+                <div class="position-absolute bottom-0" v-if="status == 'partially_paid' || status == 'paid'">
+                    @if(!$invoiceValue['showMailOption'])
+                        <input type="checkbox" id="showEmail" class="ml-auto" name="send_mail">
+                        <label for="showEmail" class="mx-1 pt-1">{{ __('Send Confirmation Mail') }}</label>
+                        <i class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal" data-target="#paymentReceived"></i>
+                        <div class="fz-14 text-theme-orange">{{ __('If disabled the mail will not be sent.') }}</div>
+                    @else
+                        <label class="mx-1 pt-1 ">
+                            {{ __('Confirmation Mail Status: ') }}
+                            <span class="text-success font-weight-bold">
+                                {{ __('Sent') }}
+                            </span> 
+                        </label>
+                    @endif
                 </div>
 
             </div>
 
-            <div class="col-md-5 offset-md-1" v-if="status === 'partially_paid' || status === 'paid'">
+            <div class="col-md-5 offset-md-1 position-relative" v-if="(status === 'partially_paid' || status === 'paid') && !removePaymentInformationView()">
                 <div>
                     <h4><b>Payment Information:</b></h4>
                     <br>
                 </div>
-
-                <div class="custom-control custom-switch" v-if="status === 'paid'">
+                
+                @if($unpaidInvoiceDetailsByInvoiceId)
+                <div class="custom-control custom-switch">
                     <input type="checkbox" id="hidebtn" class="custom-control-input" v-model="showPendingInvoices">
                     <label class="custom-control-label" for="hidebtn">Pending Payments</label>
                 </div>
 
-                <div id="pendingInvoice" v-show="showPendingInvoices && status === 'paid'" class =>
-                    @if($unpaidInvoiceDetailsByInvoiceId)
+                <div id="pendingInvoice" v-show="showPendingInvoices && status === 'paid'">
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th class="col-4 text-center">Invoice Number</th>
-                                    <th class="col-4 text-center">Amount</th>
+                                    <th class="col-4 text-center">Amount {{$invoiceValue['symbol']}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -128,15 +144,13 @@
                                                 {{ $pendinginvoicedata['invoice_number'] }}
                                             </label>
                                         </td>
-                                        <td class="col-4 text-center">{{ $pendinginvoicedata['amount'] }}</td>
+                                        <td class="col-4 text-center">{{ $pendinginvoicedata['amount'] }} </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                    @else
-                        <p class="text-success small font-weight-bold">No pending invoices</p>
-                    @endif 
-                </div>
+                    </div>
+                @endif 
 
                 <div class="form-group mt-5">
                     <div class="d-flex align-items-start">
@@ -155,7 +169,7 @@
                         </div>
                     </div>
                     <div>
-                        <p v-if="totalAmountStatus()==false && status === 'paid'" class="text-danger small font-weight-bold">Please enter the overall amount.</p>
+                        <p v-if="totalAmountStatus()==false && status === 'paid'" class="text-danger small font-weight-bold"> Please enter the overall amount.</p>
                     </div>
                 </div>
 
@@ -204,7 +218,7 @@
                 <div>
                     <div class="custom-control custom-switch mb-4">
                         <input type="checkbox" id="toggleComments" class="custom-control-input" v-model="showPaymentDetails">
-                        <label class="custom-control-label" for="toggleComments">Payment Comment</label>
+                        <label class="custom-control-label" for="toggleComments">Payment Information / Comments</label>
                     </div>
                     <div class="form-group">
                         <textarea name="comments" id="paidInvoiceComment" rows="5" class="form-control" @keyup="parseComment($event)" v-model="comments"></textarea>
@@ -217,27 +231,13 @@
                     <textarea name="comments" id="comments" rows="5" class="form-control" v-model="comments"></textarea>
                 </div>
             </div>
-            <div v-if="status == 'partially_paid' || status == 'paid'">
-                @if(!$invoiceValue['showMailOption'])
-                    <input type="checkbox" id="showEmail" class="ml-auto" name="send_mail">
-                    <label for="showEmail" class="mx-1 pt-1">{{ __('Send Confirmation Mail') }}</label>
-                    <i class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal" data-target="#paymentReceived"></i>
-                    <div class="fz-14 text-theme-orange">{{ __('If disabled the mail will not be sent.') }}</div>
-                @else
-                    <label class="mx-1 pt-1">
-                        {{ __('Confirmation Mail Status: ') }}
-                        <span class="text-success font-weight-bold">
-                            {{ __('Sent') }}
-                        </span>
-                    </label>
-                @endif
-            </div> 
+
         <div>
             @include('invoice::modals.payment-received')
         </div>
     </div>
     <div class="card-footer">
-        <button type="submit" :disabled="!totalAmountStatus()" class="btn btn-primary mr-4">Save</button>
+        <button type="submit" v-if ="!removePaymentInformationView()" :disabled="!totalAmountStatus()" class="btn btn-primary mr-4">Save</button>
         @if(auth()->user()->can('finance_invoices.delete'))
             <span class="btn btn-danger" @click="deleteInvoice()" >Delete</span>
         @else
@@ -330,71 +330,74 @@
 
         updatePaymentAmountDetails(filtered_number_list) {
             if (!this.showPaymentDetails) {
-                return;
-            }
-            let totalNumbersInList =  filtered_number_list.length
-            var emailBody = $("#emailBody").text();
-            for (var index = 0; index < totalNumbersInList; index++) {
-                if (this.client.type == 'indian') {
-                    if (index == totalNumbersInList - 1) {
+                let totalNumbersInList =  filtered_number_list.length
+                var emailBody = $("#emailBody").text();
+                for (var index = 0; index < totalNumbersInList; index++) {
+                    if (this.client.type == 'indian') {
+                        if (index == totalNumbersInList - 1) {
+                            this.amountPaid = filtered_number_list[index]
+                            $('#amountPaid').val(this.amountPaid)
+                            emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
+                            this.calculateTaxes()
+                        }
+                        continue;
+                    }
+
+                    if (index == 0) {
                         this.amountPaid = filtered_number_list[index]
                         $('#amountPaid').val(this.amountPaid)
                         emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
                         this.calculateTaxes()
+                    } else if (index == 1) {
+                        conversionRate = filtered_number_list[index]
+                        this.conversionRate = conversionRate
+                        this.conversionRateDiff = Math.abs(this.currentExchangeRate - conversionRate).toFixed(2)
                     }
-                    continue;
                 }
-
-                if (index == 0) {
-                    this.amountPaid = filtered_number_list[index]
-                    $('#amountPaid').val(this.amountPaid)
-                    emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
-                    this.calculateTaxes()
-                } else if (index == 1) {
-                    conversionRate = filtered_number_list[index]
-                    this.conversionRate = conversionRate
-                    this.conversionRateDiff = Math.abs(this.currentExchangeRate - conversionRate).toFixed(2)
-                }
-            }
-
-            tinymce.get("emailBody").setContent(emailBody, { format: "html" });
-        },
+                tinymce.get("emailBody").setContent(emailBody, { format: "html" });
+              };  
+            },
 
         totalPendingAmount() {
             var total = 0;
             for (let i = 0; i < this.selectedInvoices.length; i++) {
                 var invoice = this.unpaidInvoiceDetailsByInvoiceId[this.selectedInvoices[i]];
                 if (invoice) {
-                    total += parseInt(invoice.amount);
-                    console.log(total);
+                    total += parseFloat(invoice.amount);
                 }
             }
             return total;
         },
-        
+
         totalAmountStatus() {
             const totalPendingAmount = this.totalPendingAmount();
-            const inputAmount = parseInt(this.amountPaid);
-            const projectAmount = parseInt(this.amount);
+            const inputAmount = parseFloat(this.amountPaid);
+            const projectAmount = parseFloat(this.amount);
+            const totalProjectAmount = parseFloat(this.totalProjectAmount);
+            const bankCharges = parseFloat(this.bankCharges);
+            const currencyStatus = this.symbol === "$";
 
-            if (this.status === 'paid') {
-                if (totalPendingAmount) {
-                    if(inputAmount === totalPendingAmount + projectAmount){
-                        return true;
-                    }else{
-                        return false;
-                    }
-                } else if (inputAmount){
-                    if(inputAmount === projectAmount){
-                        return true;
-                    }else{
-                        return false;
-                    }
-                }
-            } else {
+            if (this.status !== 'paid') {
                 return true;
             }
-        }
+
+            if (totalPendingAmount) {
+                const expectedAmount = currencyStatus ? projectAmount + totalPendingAmount + bankCharges : totalProjectAmount + totalPendingAmount;
+                return inputAmount == (expectedAmount).toFixed(2);
+            }
+
+            if (inputAmount) { 
+                return inputAmount == (currencyStatus ? projectAmount + bankCharges : totalProjectAmount);
+            }
+            return true;
+            },
+
+        removePaymentInformationView(){
+            if(this.totalProjectAmount == this.previousAmount){
+                return true;
+            }
+            return false;
+        },
     },
 
     data() {
@@ -406,7 +409,7 @@
             projectId:"{{ $invoice->project_id }}",
             client:@json( $invoice->client),
             amountPaidText:"|*amount_paid*|",  
-             currentExchangeRate: "{{ $currencyService->getCurrentRatesInINR() }}",
+            currentExchangeRate: "{{ $currencyService->getCurrentRatesInINR() }}",
             currencyTransactionCharge:"{{ $invoice->currency_transaction_charge ? : $invoice->currency }}",
             comments:`{{''}}`,
             status:"{{ $invoice->status }}",
@@ -420,10 +423,11 @@
             tds: "{{''}}",
             tdsPercentage: "{{''}}",
             show_on_select: true,
-            remainingAmount: "{{round(($invoiceValue['totalProjectAmount'] - $invoiceValue['amount_paid_till_now']), 2)}}",
-            previousAmount: "{{$invoiceValue['amount_paid_till_now']}}",
+            remainingAmount: "{{round(($invoiceValue['totalProjectAmount'] - $invoiceValue['amountPaid']), 2)}}",
+            previousAmount: "{{$invoiceValue['amountPaid']}}",
             totalProjectAmount: "{{$invoiceValue['totalProjectAmount']}}",
             allInstallmentPayments: "{{$invoiceValue['allInstallmentPayments']}}",
+            symbol: "{{$invoiceValue['symbol']}}",
             showPendingInvoices: false,
             showInvoiceComment:false,
             selectedInvoices: [],
