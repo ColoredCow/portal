@@ -260,35 +260,34 @@ class InvoiceService implements InvoiceServiceContract
 
     public function getInvoicePaymentDetails($data, $invoice)
     {  
-        if(($invoice->status == 'sent') || ($invoice->status == 'paid')) {
-        $invoicesQuery = Invoice::query();
-        if (! empty($data['pendingpayment'])) {
-            $invoicesQuery->whereIn('id', $data['pendingpayment']);
-        }
-        $invoices = $invoicesQuery->orWhere('id', $invoice->id)->get();
-        $totalAmount = $invoices->sum('amount');
-
-        foreach ($invoices as $invoiceData) {
-            $paidInformations = [
-            'id' => $invoiceData->id,
-            'invoiceAmount' => $invoiceData->amount + $invoiceData->gst ?? 0
-            ];
-            $currentInvoiceValue = 1;
-            if (array_key_exists('tds', $data)) {
-                $currentInvoiceValue = $invoiceData->amount / $totalAmount;
-                $tdsValue = round($data['tds'] * $currentInvoiceValue, 2);
-                $tdsPercentage = round(($tdsValue / $invoiceData->amount) * 100, 2);
-
-                $paidInformations['tds'] = $tdsValue;
-                $paidInformations['tds_percentage'] = $tdsPercentage;
-            } else {
-                $paidInformations['bank_charges'] = number_format(($invoiceData->amount / ($totalAmount)), 2) * ($data['bank_charges'] ?? 1);
+        if (($invoice->status == 'sent') || ($invoice->status == 'paid')) {
+            $invoicesQuery = Invoice::query();
+            if (! empty($data['pendingpayment'])) {
+                $invoicesQuery->whereIn('id', $data['pendingpayment']);
             }
-            $invoiceData->update([
-                'status' => 'paid',
-            ]);
-            $this->createInvoicePaymentDetails($data, $paidInformations);
-        }
+            $invoices = $invoicesQuery->orWhere('id', $invoice->id)->get();
+            $totalAmount = $invoices->sum('amount');
+
+            foreach ($invoices as $invoiceData) {
+                $paidInformations = [
+                'id' => $invoiceData->id,
+                'invoiceAmount' => $invoiceData->amount + $invoiceData->gst ?? 0
+                ];
+                $currentInvoiceValue = 1;
+                if (array_key_exists('tds', $data)) {
+                    $currentInvoiceValue = $invoiceData->amount / $totalAmount;
+                    $tdsValue = round($data['tds'] * $currentInvoiceValue, 2);
+                    $tdsPercentage = round(($tdsValue / $invoiceData->amount) * 100, 2);
+                    $paidInformations['tds'] = $tdsValue;
+                    $paidInformations['tds_percentage'] = $tdsPercentage;
+                } else {
+                    $paidInformations['bank_charges'] = number_format(($invoiceData->amount / ($totalAmount)), 2) * ($data['bank_charges'] ?? 1);
+                }
+                $invoiceData->update([
+                    'status' => 'paid',
+                ]);
+                $this->createInvoicePaymentDetails($data, $paidInformations);
+            }
         } else {
 
             $this->createInvoicePaymentDetails($data, $invoice);
