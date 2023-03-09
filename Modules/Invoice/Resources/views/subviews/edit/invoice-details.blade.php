@@ -378,19 +378,23 @@
             const currencyStatus = this.symbol === "$";
 
             if (this.status !== 'paid') {
-                return true;
-            }
+               if(this.remainingAmount >= 0){
+                    return true;
+               } else {
+                    return false;
+               }
+            };
 
             if (totalPendingAmount) {
                 const expectedAmount = currencyStatus ? projectAmount + totalPendingAmount + bankCharges : totalProjectAmount + totalPendingAmount;
                 return inputAmount == (expectedAmount).toFixed(2);
             }
 
-            if (inputAmount) { 
+            if (inputAmount) {
                 return inputAmount == (currencyStatus ? projectAmount + bankCharges : totalProjectAmount);
             }
             return true;
-            },
+        },
 
         removePaymentInformationView(){
             if(this.totalProjectAmount == this.previousAmount){

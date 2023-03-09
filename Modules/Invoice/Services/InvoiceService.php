@@ -167,7 +167,7 @@ class InvoiceService implements InvoiceServiceContract
         $this->getInvoicePaymentDetails($data, $invoice);
         $invoiceValue = $this->getUpdatedAmountForRemainingInvoice($invoice);
         if (($invoiceValue['amountPaid']) == floatval($invoiceValue['totalProjectAmount'])) {
-           $data['status'] = 'paid';
+            $data['status'] = 'paid';
         }
         $invoice->update($data);
         if (isset($data['send_mail'])) {
@@ -289,7 +289,6 @@ class InvoiceService implements InvoiceServiceContract
                 $this->createInvoicePaymentDetails($data, $paidInformations);
             }
         } else {
-
             $this->createInvoicePaymentDetails($data, $invoice);
         }
     }
