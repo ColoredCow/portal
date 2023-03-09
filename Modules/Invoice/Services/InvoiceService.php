@@ -166,7 +166,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         $this->getInvoicePaymentDetails($data, $invoice);
         $invoiceValue = $this->getUpdatedAmountForRemainingInvoice($invoice);
-        if(($invoiceValue['amountPaid']) == floatval($invoiceValue['totalProjectAmount'])) {
+        if (($invoiceValue['amountPaid']) == floatval($invoiceValue['totalProjectAmount'])) {
            $data['status'] = 'paid';
         }
         $invoice->update($data);
@@ -210,7 +210,7 @@ class InvoiceService implements InvoiceServiceContract
                 'amount' => $data->amount,
                 'gst' => $invoice->gst,
                 'tds' => $invoice->tds,
-                'bank_charge' => $data->bank_charge 
+                'bank_charge' => $data->bank_charge
             ];
         }
         $allInstallmentPayments = $invoice->remainingInvoiceDetails;
@@ -259,7 +259,7 @@ class InvoiceService implements InvoiceServiceContract
     }
 
     public function getInvoicePaymentDetails($data, $invoice)
-    {  
+    {
         if (($invoice->status == 'sent') || ($invoice->status == 'paid')) {
             $invoicesQuery = Invoice::query();
             if (! empty($data['pendingpayment'])) {
