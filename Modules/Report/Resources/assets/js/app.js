@@ -184,8 +184,8 @@ function userFteTrendsReport(reportFteData) {
 					}
 				}]
 			}	
-	}
-};
+		}
+	};
 
 	new Chart(canvasElementId, chartConfig);
 }
