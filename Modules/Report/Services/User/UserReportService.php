@@ -13,7 +13,7 @@ class UserReportService
     public function getFteData($type, $user)
     {
         if ($type == 'fte-trend') {
-           return $this->fteTrend($user);
+            return $this->fteTrend($user);
         }
     }
  
