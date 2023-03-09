@@ -14,7 +14,7 @@ class UserReportService
     {
         if ($type == 'fte-trend') {
 
-            return $this->fteTrend( $user);
+            return $this->fteTrend($user);
     }
 }
  
@@ -35,10 +35,10 @@ class UserReportService
         $month = $date->format('m');
         $year = $date->format('Y');
         $endDate = Carbon::createFromFormat('Y-m', $endMonth);
-        while($date->lte($endDate)) {
+        while ($date->lte($endDate)) {
             $teamMemberEffort = ProjectTeamMemberEffort::where('project_team_member_id',$projectTeamMemberId)->whereMonth('added_on', $month)->whereYear('added_on', $year)->get();
             $actualEffort = 0;
-            foreach($teamMemberEffort as $effort) {
+            foreach ($teamMemberEffort as $effort) {
                 $actualEffort += $effort->actual_effort;
             }
             if ($teamMemberEffort->isEmpty()) {

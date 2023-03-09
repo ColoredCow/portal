@@ -19,7 +19,7 @@ class UserReportController extends Controller
     }
 
     public function getFteData(Request $request, User $user)
-    {  
+    {
         $type = $request->type;
         $startMonth = today()->subMonth(17)->format('Y-m');
         $endMonth = today()->format('Y-m');
@@ -37,6 +37,6 @@ class UserReportController extends Controller
         return [
             'data' => $reportFteData,
             'labels' => $months,
-        ];      
+        ];
     }
 }
