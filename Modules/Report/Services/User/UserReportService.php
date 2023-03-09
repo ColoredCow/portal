@@ -4,7 +4,7 @@ namespace Modules\Report\Services\User;
 
 use Modules\Project\Entities\ProjectTeamMemberEffort;
 use Carbon\Carbon;
-use Modules\project\Entities\Project;
+use Modules\Project\Entities\Project;
 
 class UserReportService
 {
