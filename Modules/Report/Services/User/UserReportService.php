@@ -43,24 +43,18 @@ class UserReportService
         }
         while ($date->lte($endDate)) {
             $teamMemberEffort = ProjectTeamMemberEffort::where('project_team_member_id', $projectTeamMemberId)->whereMonth('added_on', $month)->whereYear('added_on', $year)->get();
-            $actualEffort = 0;
-            foreach ($teamMemberEffort as $effort) {
-                $actualEffort += $effort->actual_effort;
-            }
-            if ($teamMemberEffort->isEmpty()) {
-                $startMonth = Carbon::createFromFormat('Y-m', $startMonth)->addMonth()->format('Y-m');
-                $date = Carbon::createFromFormat('Y-m', $startMonth);
-                $month = $date->format('m');
-                $year = $date->format('Y');
-                $data[] = 0;
-                continue;
-            }
-            $monthEndDate = Carbon::parse($teamMemberEffort->last()->added_on);
-            $monthStartDate = Carbon::createFromDate((int) $year, (int) $month, 1);
-            $project = new Project;
-            $daysTillToday = count($project->getWorkingDaysList($monthStartDate, $monthEndDate));
-            if ($daysTillToday > 0) {
-                $monthlyFte = round($actualEffort / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
+            if ($teamMemberEffort->isNotEmpty()) {
+                $actualEffort = 0;
+                foreach ($teamMemberEffort as $effort) {
+                    $actualEffort += $effort->actual_effort;
+                }
+                $monthEndDate = Carbon::parse($teamMemberEffort->last()->added_on);
+                $monthStartDate = Carbon::createFromDate((int) $year, (int) $month, 1);
+                $project = new Project;
+                $daysTillToday = count($project->getWorkingDaysList($monthStartDate, $monthEndDate));
+                if ($daysTillToday > 0) {
+                    $monthlyFte = round($actualEffort / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
+                }
             } else {
                 $monthlyFte = 0;
             }
@@ -72,8 +66,8 @@ class UserReportService
         }
 
         return [
-            'data' => $data,
             'labels' => $months,
+            'data' => $data,
         ];
     }
 }
