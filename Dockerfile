@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-LABEL maintainer="Taylor Otwell"
+LABEL maintainer="ColoredCow"
 
 ARG WWWGROUP
 ARG NODE_VERSION=18
