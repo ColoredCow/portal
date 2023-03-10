@@ -34,10 +34,8 @@ $(function() {
 });
 
 function financeReportRevenueTrendsReport(reportsData) {
-	// console.log(reportsData);
 	const canvasElementId = "financeReportRevenueTrends";
 	const labels = reportsData.labels;
-	// console.log(labels);
 	const currentPeriodTotalRevenue = reportsData.data.current_period_total_amount;
 	const previousPeriodTotalRevenue = reportsData.data.previous_period_total_amount;
 	const chartData = {

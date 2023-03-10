@@ -19,7 +19,7 @@ class UserReportService
 
     public function fteTrend($user)
     {
-        $startMonth = today()->subMonth(17)->format('Y-m');
+        $startMonth = today()->subMonths(17)->format('Y-m');
         $endMonth = today()->format('Y-m');
         $projectTeamMemberId = $user->projectTeamMembers->pluck('id');
         $userFte = $this->getMonthsFteAttribute($startMonth, $endMonth, $projectTeamMemberId);

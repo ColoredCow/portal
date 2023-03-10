@@ -21,7 +21,7 @@ class UserReportController extends Controller
     public function getFteData(Request $request, User $user)
     {
         $type = $request->type;
-        $startMonth = today()->subMonth(17)->format('Y-m');
+        $startMonth = today()->subMonths(17)->format('Y-m');
         $endMonth = today()->format('Y-m');
         $months = [];
 
