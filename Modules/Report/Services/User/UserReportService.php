@@ -49,7 +49,7 @@ class UserReportService
                 continue;
             }
             $monthEndDate = Carbon::parse($teamMemberEffort->last()->added_on);
-            $monthStartDate = Carbon::createFromDate((int)$year, (int)$month, 1);
+            $monthStartDate = Carbon::createFromDate((int) $year, (int) $month, 1);
             $project = new Project;
             $daysTillToday = count($project->getWorkingDaysList($monthStartDate, $monthEndDate));
             if ($daysTillToday > 0) {
