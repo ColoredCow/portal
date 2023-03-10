@@ -58,11 +58,11 @@ class UserReportService
             } else {
                 $monthlyFte = 0;
             }
+            $data[] = $monthlyFte;
             $startMonth = Carbon::createFromFormat('Y-m', $startMonth)->addMonth()->format('Y-m');
             $date = Carbon::createFromFormat('Y-m', $startMonth);
             $month = $date->format('m');
             $year = $date->format('Y');
-            $data[] = $monthlyFte;
         }
 
         return [
