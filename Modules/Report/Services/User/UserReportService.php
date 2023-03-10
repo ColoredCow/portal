@@ -48,21 +48,24 @@ class UserReportService
                 foreach ($teamMemberEffort as $effort) {
                     $actualEffort += $effort->actual_effort;
                 }
+
                 $monthEndDate = Carbon::parse($teamMemberEffort->last()->added_on);
                 $monthStartDate = Carbon::createFromDate((int) $year, (int) $month, 1);
                 $project = new Project;
                 $daysTillToday = count($project->getWorkingDaysList($monthStartDate, $monthEndDate));
                 if ($daysTillToday > 0) {
                     $monthlyFte = round($actualEffort / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
+                } else {
+                    $monthlyFte = 0;
                 }
             } else {
                 $monthlyFte = 0;
             }
-            $data[] = $monthlyFte;
             $startMonth = Carbon::createFromFormat('Y-m', $startMonth)->addMonth()->format('Y-m');
             $date = Carbon::createFromFormat('Y-m', $startMonth);
             $month = $date->format('m');
             $year = $date->format('Y');
+            $data[] = $monthlyFte;
         }
 
         return [
