@@ -22,9 +22,9 @@ class UserReportService
         $startMonth = today()->subMonths(17)->format('Y-m');
         $endMonth = today()->format('Y-m');
         $projectTeamMemberId = $user->projectTeamMembers->pluck('id');
-        $userFte = $this->getMonthsFteAttribute($startMonth, $endMonth, $projectTeamMemberId);
+        $reportFteData = $this->getMonthsFteAttribute($startMonth, $endMonth, $projectTeamMemberId);
 
-        return  $userFte;
+        return  $reportFteData;
     }
 
     public function getMonthsFteAttribute($startMonth, $endMonth, $projectTeamMemberId)
@@ -34,6 +34,13 @@ class UserReportService
         $month = $date->format('m');
         $year = $date->format('Y');
         $endDate = Carbon::createFromFormat('Y-m', $endMonth);
+        $months = [];
+
+        $currentMonth = Carbon::createFromFormat('Y-m', $startMonth);
+        while ($currentMonth->format('Y-m') <= $endMonth) {
+            $months[] = $currentMonth->format('Y-m');
+            $currentMonth->addMonth();
+        }
         while ($date->lte($endDate)) {
             $teamMemberEffort = ProjectTeamMemberEffort::where('project_team_member_id', $projectTeamMemberId)->whereMonth('added_on', $month)->whereYear('added_on', $year)->get();
             $actualEffort = 0;
@@ -64,6 +71,9 @@ class UserReportService
             $data[] = $monthlyFte;
         }
 
-        return $data;
+        return [
+            'data' => $data,
+            'labels' => $months,
+        ];
     }
 }
