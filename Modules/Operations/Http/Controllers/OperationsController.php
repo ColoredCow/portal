@@ -2,7 +2,6 @@
 
 namespace Modules\Operations\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class OperationsController extends Controller
@@ -12,7 +11,7 @@ class OperationsController extends Controller
      */
     public function index()
     {
-        return view('operations::office_location.index');
+        return view('operations::index');
     }
 
     /**
@@ -26,7 +25,7 @@ class OperationsController extends Controller
      * Store a newly created resource in storage.
      * @param Request $request
      */
-    public function store(Request $request)
+    public function store()
     {
     }
 
@@ -47,7 +46,7 @@ class OperationsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
     }
 
