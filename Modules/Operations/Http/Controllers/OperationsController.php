@@ -8,6 +8,7 @@ class OperationsController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @return Renderable
      */
     public function index()
     {
@@ -23,7 +24,6 @@ class OperationsController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param Request $request
      */
     public function store()
     {
