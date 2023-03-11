@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('operations')->group(function() {
-    Route::get('/', 'OperationsController@index')->name('office_location.index');
+Route::prefix('operations')->group(function () {
+    Route::get('/', 'operationsController@index')->name('office_location.index');
 });
