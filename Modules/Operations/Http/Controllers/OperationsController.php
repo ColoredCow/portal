@@ -20,7 +20,6 @@ class OperationsController extends Controller
      */
     public function create()
     {
-        return view('operations::create');
     }
 
     /**
@@ -37,7 +36,6 @@ class OperationsController extends Controller
      */
     public function show($id)
     {
-        return view('operations::show');
     }
 
     /**
@@ -46,7 +44,6 @@ class OperationsController extends Controller
      */
     public function edit($id)
     {
-        return view('operations::edit');
     }
 
     /**
