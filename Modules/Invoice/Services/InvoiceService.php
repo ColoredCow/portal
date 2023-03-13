@@ -157,7 +157,7 @@ class InvoiceService implements InvoiceServiceContract
         $invoice = Invoice::create($data);
         $this->saveInvoiceFile($invoice, $data['invoice_file']);
         $this->setInvoiceNumber($invoice, $data['sent_on']);
-
+        dd($data);
         return $invoice;
     }
 
