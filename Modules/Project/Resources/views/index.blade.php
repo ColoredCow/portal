@@ -36,11 +36,23 @@
                     <input type="hidden" name="is_amc" value="{{ request()->input('is_amc', 0) }}">
                     <select class="fz-14 fz-lg-16 p-1 bg-info ml-3 my-auto text-white rounded border-0" name="projects"
                         onchange="this.form.submit()">
+                        @php
+                            $isUserAdmin =auth()->user()->isAdmin() ||
+                                auth()->user()->isSuperAdmin();
+                        @endphp
                         <option value="my-projects"
-                            {{ request()->get('projects') == 'my-projects' || !request()->has('projects') ? 'selected' : '' }}>
+                            {{ request()->get('projects') == 'my-projects' || (!$isUserAdmin && !request()->has('projects')) ? 'selected' : '' }}>
                             {{ __('My Projects') }} </option>
-                        <option value="all-projects" {{ request()->get('projects') == 'all-projects' ? 'selected' : '' }}>
-                            {{ __('All Projects') }} </option>
+
+                        @if ($isUserAdmin)
+                            <option value="all-projects"
+                                {{ request()->get('projects') == 'all-projects' || !request()->has('projects') ? 'selected' : '' }}>
+                                {{ __('All Projects') }} </option>
+                        @else
+                            <option value="all-projects"
+                                {{ request()->get('projects') == 'all-projects' ? 'selected' : '' }}>
+                                {{ __('All Projects') }} </option>
+                        @endif
                     </select>
                 </div>
                 <div class="d-flex align-items-center">
@@ -87,7 +99,7 @@
                                     @can('projects.update')
                                         <td class="w-33p">
                                             <div class="pl-2 pl-xl-3"><a
-                                                href="{{ route('project.show', $project) }}">{{ $project->name }}</a></div>
+                                                    href="{{ route('project.show', $project) }}">{{ $project->name }}</a></div>
                                         </td>
                                     @else
                                         <td class="w-33p">
@@ -95,12 +107,12 @@
                                                 @php
                                                     $team_member_ids = $project->getTeamMembers->pluck('team_member_id')->toArray();
                                                 @endphp
-                                                @if(in_array(auth()->user()->id, $team_member_ids))
+                                                @if (in_array(auth()->user()->id, $team_member_ids))
                                                     <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a>
                                                 @else
                                                     <div class="pl-2 pl-xl-3"> {{ $project->name }}</div>
                                                 @endif
-                                            </div>   
+                                            </div>
                                         </td>
                                     @endcan
                                     <td class="w-20p">
