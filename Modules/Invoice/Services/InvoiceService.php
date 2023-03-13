@@ -212,7 +212,7 @@ class InvoiceService implements InvoiceServiceContract
 
         foreach ($subjectData as $key => $value) {
             $subject = str_replace($key, $value, $subject);
-        }   
+        }
 
         $body = optional(Setting::where('module', 'invoice')->where('setting_key', 'received_invoice_payment_body')->first())->setting_value ?: '';
         $body = str_replace($templateVariablesForBody['billing-person-name'], optional($invoice->client->billing_contact)->first_name, $body);
