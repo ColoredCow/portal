@@ -169,6 +169,8 @@ class InvoiceService implements InvoiceServiceContract
         if (isset($data['send_mail'])) {
             $emailData = $this->getSendEmailData($data, $invoice);
             Mail::queue(new SendPaymentReceivedMail($invoice, $emailData));
+            Notification::route('googleChat', $invoice->project->google_chat_webhook_url || $invoice->client->projects[0]->google_chat_webhook_url)
+                ->notify(new SendPaymentReceivedNotification($invoice));
             $invoice->update([
                 'payment_confirmation_mail_sent' => true
             ]);
@@ -176,24 +178,6 @@ class InvoiceService implements InvoiceServiceContract
         if (isset($data['invoice_file']) and $data['invoice_file']) {
             $this->saveInvoiceFile($invoice, $data['invoice_file']);
             $this->setInvoiceNumber($invoice, $data['sent_on']);
-        }
-        if (isset($data['send_payment_notification'])) {
-            if ($invoice->project) {
-                $lastPaidInvoice = $invoice->project->invoices()->where('status', 'paid')->orderBy('payment_at', 'desc')->first();
-                if ($lastPaidInvoice->id == $invoice->id && $invoice->project->google_chat_webhook_url) {
-                    Notification::route('googleChat', $invoice->project->google_chat_webhook_url)
-                        ->notify(new SendPaymentReceivedNotification($invoice));
-                }
-            } else {
-                $clients = $invoice->client->projects;
-                foreach ($clients as $client) {
-                    $lastPaidInvoice = $client->invoices()->where('status', 'paid')->orderBy('sent_on', 'desc')->first();
-                    if ($lastPaidInvoice && $lastPaidInvoice->id == $invoice->id && $client->google_chat_webhook_url) {
-                        Notification::route('googleChat', $client->google_chat_webhook_url)
-                            ->notify(new SendPaymentReceivedNotification($invoice));
-                    }
-                }
-            }
         }
 
         return $invoice;
@@ -228,7 +212,7 @@ class InvoiceService implements InvoiceServiceContract
 
         foreach ($subjectData as $key => $value) {
             $subject = str_replace($key, $value, $subject);
-        }
+        }   
 
         $body = optional(Setting::where('module', 'invoice')->where('setting_key', 'received_invoice_payment_body')->first())->setting_value ?: '';
         $body = str_replace($templateVariablesForBody['billing-person-name'], optional($invoice->client->billing_contact)->first_name, $body);

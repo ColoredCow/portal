@@ -175,24 +175,13 @@
                     <i class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal"
                         data-target="#paymentReceived"></i>
                     <div class="fz-14 text-theme-orange">{{ __('If disabled the mail will not be sent.') }}</div>
-                    <br>
-                    <input type="checkbox" class="ml-auto" name="send_payment_notification">
-                    <label class="mx-1 pt-1">{{ __('Send Payment Received Notification On GoogleChat') }}</label>
-                    <div class="fz-14 text-theme-orange">{{ __('If disabled the notification will not be sent.') }}
-                    </div>
                 @else
                     <label class="mx-1 pt-1">
                         {{ __('Confirmation Mail Status: ') }}
                         <span class="text-success font-weight-bold">
                             {{ __('Sent') }}
                         </span>
-                    </label>
-                    <label class="mx-1 pt-1">
-                        {{ __('Confirmation Payment Received Notification Status: ') }}
-                        <span class="text-success font-weight-bold">
-                            {{ __('Sent') }}
-                        </span>
-                    </label>
+                    </label> 
                 @endif
             </div>
         </div>
