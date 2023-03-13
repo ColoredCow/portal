@@ -16,6 +16,6 @@ class CodeTrekDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call("OthersTableSeeder");
+        $this->call(CodeTrekPermissionTableSeeder::class);
     }
 }

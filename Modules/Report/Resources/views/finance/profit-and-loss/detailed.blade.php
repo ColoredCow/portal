@@ -6,12 +6,8 @@
 
         <div class="d-flex justify-content-between mb-2">
             <h4 class="mb-1 pb-1"> Profit and Loss Report</h4>
-            {{-- ToDo:: we need to enable this when we add export funcationality done in the backend. --}}
-            <span>
-                <a href="" class="btn disabled btn-info text-white"> Export To Excel </a>
-            </span>
         </div>
-        <br>
+        <br>    
         <br>
 
         <div>
@@ -54,6 +50,9 @@
                                 value="overall">
                                 Overall</option>
                         </select>
+                    </div>
+                    <div class="ml-auto">
+                        <button type="submit" formaction="{{ route('reports.finance.profit-and-loss.report.export')}}" class="btn btn-info text-white">Export to Excel</button>
                     </div>
                 </div>
             </form>

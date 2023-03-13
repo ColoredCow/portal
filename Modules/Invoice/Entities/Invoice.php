@@ -227,7 +227,6 @@ class Invoice extends Model implements Auditable
         }
         $termStartDate = $this->client->getMonthStartDateAttribute($monthDifference);
         $termEndDate = $this->client->getMonthEndDateAttribute($monthDifference);
-
         $term = $termStartDate->format('M') . ' - ' . $termEndDate->format('M');
 
         if ($termStartDate->format('M') == $termEndDate->format('M')) {

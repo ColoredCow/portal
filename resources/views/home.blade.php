@@ -15,9 +15,12 @@
             <p>
                 It looks like you're brand new here and do not have access to any features! Please contact the administrator to grant you required access so that you can get rolling!
             </p>
-        </div>
+        </div>    
     @endif
-
+    <div class="mb-2">
+        <span>Your FTE: <b class="{{ auth()->user()->ftes['main'] < 1 ? 'text-danger' : 'text-success' }}">{{auth()->user()->ftes['main'] }}</b> </span>
+    </div>
+    
     <div class="card-deck dashboard_view d-flex flex-wrap justify-content-start">
         @can('library_books.view')
             <div class="mr-5 mr-md-3 pr-md-0 pr-4 mb-4 min-w-389">
