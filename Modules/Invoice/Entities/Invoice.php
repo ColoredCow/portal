@@ -10,7 +10,6 @@ use Illuminate\Support\Arr;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
-use Carbon\Carbon;
 class Invoice extends Model implements Auditable
 {
     use Encryptable, SoftDeletes, \OwenIt\Auditing\Auditable;
