@@ -147,13 +147,11 @@ function clientWiseRevenueTrendsReport(reportsData) {
 			"animation": {
 				"onComplete": function() {
 					const chartInstance = this.chart,
-					ctx = chartInstance.ctx;
+						ctx = chartInstance.ctx;
 
-					ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize,
-														Chart.defaults.global.defaultFontStyle,
-														Chart.defaults.global.defaultFontFamily);
-					ctx.textAlign = 'center';
-					ctx.textBaseline = 'bottom';
+					ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+					ctx.textAlign = "center";
+					ctx.textBaseline = "bottom";
 
 					this.data.datasets.forEach(function(dataset, i) {
 						const meta = chartInstance.controller.getDatasetMeta(i);
