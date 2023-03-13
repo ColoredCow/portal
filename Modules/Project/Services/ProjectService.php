@@ -29,7 +29,14 @@ class ProjectService implements ProjectServiceContract
         if ($nameFilter = $data['name'] ?? false) {
             $filters['name'] = $nameFilter;
         }
-        if (auth()->user()->roles[0]['id'] == 1 || auth()->user()->roles[0]['id'] == 2) {
+        $hasAnyRole = false;
+        foreach (auth()->user()->roles as $role) {
+            if ($role['name'] == 'admin' || $role['name'] == 'super-admin') {
+                $hasAnyRole = true;
+                break;
+            }
+        }
+        if ($hasAnyRole) {
             $showAllProjects = Arr::get($data, 'projects', 'all-projects') == 'all-projects';
         } else {
             $showAllProjects = Arr::get($data, 'projects', 'my-projects') != 'my-projects';
@@ -143,7 +150,7 @@ class ProjectService implements ProjectServiceContract
     public function updateProjectData($data, $project)
     {
         $updateSection = $data['update_section'] ?? '';
-        if (! $updateSection) {
+        if (!$updateSection) {
             return false;
         }
 
@@ -197,7 +204,7 @@ class ProjectService implements ProjectServiceContract
         if ($data['status'] == 'active' || $data['status'] == 'halted') {
             $project->client->update(['status' => 'active']);
         } else {
-            if (! $project->client->projects()->where('status', 'active')->exists()) {
+            if (!$project->client->projects()->where('status', 'active')->exists()) {
                 $project->client->update(['status' => 'inactive']);
             }
             $project->getTeamMembers()->update(['ended_on' => now()]);
@@ -228,7 +235,7 @@ class ProjectService implements ProjectServiceContract
                     $member->update($tempArray);
                 }
             }
-            if (! $flag) {
+            if (!$flag) {
                 $member->update(['ended_on' => Carbon::now()]);
             }
         }
@@ -250,7 +257,7 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectRepositories($data, $project)
     {
-        if (! isset($data['url'])) {
+        if (!isset($data['url'])) {
             $project->repositories()->delete();
 
             return;
@@ -302,7 +309,7 @@ class ProjectService implements ProjectServiceContract
         $numberOfWorkingDays = 0;
         $weekend = ['Saturday', 'Sunday'];
         foreach ($period as $date) {
-            if (! in_array($date->format('l'), $weekend)) {
+            if (!in_array($date->format('l'), $weekend)) {
                 $numberOfWorkingDays++;
             }
         }
