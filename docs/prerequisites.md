@@ -13,17 +13,18 @@ git --version
 
 ### 2. Installation Options:
 The portal can be installed in two of the following ways. If you are familiar with Docker, please choose option 1 below, otherwise go with option 2.
-### 1. Dockerized setup		2. Non Dockerized setup 
+### 1. Dockerized setup	
+### 2. Non Dockerized setup 
 
 
 ### Dockerized setup
-#### Lets begin with the Docker setup:
+#### Lets begin with the Dockerized setup:
 a.1 : If you are a windows user:
 		Download Docker Desktop using this [this link](https://docs.docker.com/desktop/install/windows-install/)
 a.2 :	If you are a linux ubuntu user:
 		Download Docker and docker-compose following this [this link](https://www.howtogeek.com/devops/how-to-install-docker-and-docker-compose-on-linux/)
 
-### 2. Code Formatter :butterfly:
+#### b. Code Formatter :butterfly:
 
 Install the following extensions and packages based on the code editor you use:
 
@@ -39,42 +40,7 @@ Install the following extensions and packages based on the code editor you use:
   - [Laravel Blade Snippets for Blade files](https://marketplace.visualstudio.com/items?itemName=onecentlin.laravel-blade)
   - [Prettier - for JS, CSS, HTML files](https://prettier.io/)
 
-## Learning :book:
 
-There are some topics and tools you need to know to prior to work
-in portal so please make sure to check this out.
-
-
-### 1. Version Control System :computer:
-  Version control, also known as source control, is the practice of tracking and managing changes to software code.
-
-  More about [version control system](https://www.atlassian.com/git/tutorials/what-is-version-control)
-
-### 2. Git :cat:
-
-- [Understanding Git](https://hackernoon.com/understanding-git-fcffd87c15a3)
-
-- [Version control and Git](https://laracasts.com/series/git-me-some-version-control)
-
-- [What is Git](https://www.atlassian.com/git/tutorials/what-is-git)
-
-### 3. Git and Github :running:
-
-- [Git, GitHub and Development](https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners)
-
-### 4. Laravel Modules :butterfly:
-
-This project uses Laravel Modules, so a basic understanding of the commands is recommended:
-
-- [Laravel Module Utility Commands](https://nwidart.com/laravel-modules/v1/advanced-tools/artisan-commands)
-
-### 8. Automated Testing :computer:
-
-This project uses Cypress for automated testing, so a basic understanding of the writing test cases is recommended:
-
-- [Introduction to Cypress](https://github.com/ColoredCow/portal/blob/master/docs/testing.md)
-- [Writing Your First Test](https://docs.cypress.io/guides/getting-started/writing-your-first-test)
-- - [Testing Your App](https://docs.cypress.io/guides/getting-started/testing-your-app#Step-1-Start-your-server)
 
 
 		
