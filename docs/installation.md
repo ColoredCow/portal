@@ -2,6 +2,14 @@
 
 Before you start following the guidelines, make sure to go through the [prerequisites guide](./prerequisites.md) to install the required tools and packages on your machine.
 
+
+#### Dockerized installation:
+
+If you are using Docker, no seperate installation of phpMyAdmin/PHP, apache and mysql is needed. For installation via Docker follow this document [installation-docker](./installation-docker.md)
+
+
+#### Non Dockerized installation:
+
 **Note:** If you are a Windows user, use GitBash or PowerShell instead of the command prompt.
 
 1. Navigate to the right directory where your project will be locally saved
@@ -17,13 +25,8 @@ Before you start following the guidelines, make sure to go through the [prerequi
         ```sh
         cd /Application/MAMP/htdocs/
     ```
-    - For Docker users:
-    	Any folder
-    	 ```sh
-        cd /your-folder-name/
-    ```
-    Note- phpMyAdmin/PHP, apache, and MySQL comes preinstalled with the  WAMP, XAMPP package, that is going to be used later on in this project, so no need to install these files separately. 
-    Note- If you are using Docker, no seperate installation of phpMyAdmin/PHP, apache and mysql is needed. For installation via Docker follow this document [installation-docker](./installation-docker.md)
+    
+Note- phpMyAdmin/PHP, apache, and MySQL comes preinstalled with the  WAMP, XAMPP package, that is going to be used later on in this project, so no need to install these files separately. 
 
 If setting up via xampp, lampp, mamp or wamp, follow the below steps:
 2. Clone this repository and move to `portal` directory
