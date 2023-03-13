@@ -10,6 +10,7 @@ use Illuminate\Support\Arr;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
+
 class Invoice extends Model implements Auditable
 {
     use Encryptable, SoftDeletes, \OwenIt\Auditing\Auditable;
@@ -233,14 +234,5 @@ class Invoice extends Model implements Auditable
         }
 
         return $term;
-    }
-    public function setTermStartDateAttribute($value)
-    {
-        $this->attributes['term_start_date'] = $value ?: Carbon::now()->startOfMonth()->subMonth();
-    }
-
-    public function setTermEndDateAttribute($value)
-    {
-        $this->attributes['term_end_date'] = $value ?: Carbon::now()->endOfMonth()->subMonth();
     }
 }
