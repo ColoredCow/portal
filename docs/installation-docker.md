@@ -49,8 +49,10 @@ If you are in the right directory where you want your portal to be saved locally
   	 It should give you 3 containers started/running
   	 
 6. Now copy the container-id of portal_laravel.test1,
-     Go to terminal and type docker exec -it <container_id that you copied> bash
-    
+     Go to terminal and type
+	```sh
+ 	docker exec -it <container_id that you copied> bash
+   	```   
 7. Now you are inside the /var/www/html i.e inside your container environment,
      Install dependencies
    ```sh
