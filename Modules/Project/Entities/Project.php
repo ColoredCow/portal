@@ -645,7 +645,7 @@ class Project extends Model implements Auditable
         }
     }
 
-    public function getTermStartAndEndDateForInvoice()
+    public function getTermStartAndEndDateForInvoice() // Importent: based on client frequency
     {
         $clientBillingDate = $this->client->billingDetails->billing_date;
         $lastInvoice = $this->lastSentDateInvoice();
@@ -704,40 +704,20 @@ class Project extends Model implements Auditable
         return $endDate;
     }
 
-    public function getGSTamountInPdf(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
+    public function getGSTamountInPdf()
     {
-        $taxandBankCharges = optional($this->client->billingDetails)->bank_charges + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate);
-        $totalamount = $this->totalAmountWithOutTaxInPdf();
-        $totalamountwithouttax = $totalamount - $taxandBankCharges;
+        $totalamount = $this->amcTotalProjectAmount();
         $igst = config('invoice.invoice-details.igst');
         $igst_number = floatval($igst) / 100;
 
-        return round(($totalamountwithouttax * $igst_number), 2);
+        return round($igst_number * $totalamount,2);
     }
 
-    public function totalAmountWithOutTaxInPdf()
+    public function totalAmountInPdf()
     {
         $totalamount = $this->amcTotalProjectAmount();
-        $totalAmountWithOutTaxInPdf = $totalamount / 1.18 - optional($this->client->billingDetails)->bank_charges;
+        $tax = $this->getGSTamountInPdf();
 
-        return round($totalAmountWithOutTaxInPdf, 2);
-    }
-
-    public function getmonthStatDateAndEndDateInPdf()
-    {
-        $startdate = $this->getTermStartAndEndDateForInvoice()['startDate']->format('j-M-Y');
-        $enddate = $this->getTermStartAndEndDateForInvoice()['endDate']->format('j-M-Y');
-        if (date('F', strtotime($startdate)) == date('F', strtotime($enddate))) {
-            $enddate = $this->getTermStartAndEndDateForInvoice()['endDate']->addMonth()->format('j-M-Y');
-        }
-        $startdate = date('M-Y', strtotime($startdate));
-        $enddate = date('M-Y', strtotime($enddate));
-        $startdate = str_replace('-', ' ', $startdate);
-        $enddate = str_replace('-', ' ', $enddate);
-
-        return [
-            'startDate' => $startdate,
-            'endDate' => $enddate
-        ];
+        return $tax + $totalamount;
     }
 }

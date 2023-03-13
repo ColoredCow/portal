@@ -317,6 +317,7 @@
                                     $billingStartMonth = $termText = today()->startOfQuarter()->format('M');
                                     $billingEndMonth  = $termText = today()->endOfQuarter()->format('M');
                                 }
+
                                 $invoiceData = [
                                     'projectName' => $project->name,
                                     'billingPersonName' => optional($project->client->billing_contact)->name,
@@ -324,7 +325,7 @@
                                     'billingPersonEmail' => optional($project->client->billing_contact)->email,
                                     'senderEmail' => config('invoice.mail.send-invoice.email'),
                                     'invoiceNumber' => str_replace('-', '', $project->next_invoice_number),
-                                    'totalAmount' => $amount,
+                                    'totalAmount' => $project->totalAmountInPdf(),
                                     'year' => $billingEndMonthYear,
                                     'term' => $billingStartMonth != $billingEndMonth ? $termText . ' - ' . $billingEndMonth : $monthName,
                                     'emailSubject' => $sendInvoiceEmailSubject,
@@ -332,7 +333,12 @@
                                     'projectId' => $project->id,
                                     'clientId' => null,
                                     'bccEmails' => $project->client->bcc_emails,
-                                    'ccEmails' => $project->client->cc_emails
+                                    'ccEmails' => $project->client->cc_emails,
+                                    'totalAmountWithoutTax' => $amount,
+                                    'totalAmcAmountInPdf' => $project->totalAmountInPdf(),
+                                    'GstAmount' => $project->getGSTamountInPdf(),
+                                    'startAndEndDate' => $project->getTermStartAndEndDateForInvoice(),
+                                    'is_Amc' => $project->is_amc,
                                 ];
                             @endphp
                             <tr>
@@ -345,7 +351,7 @@
                                     @if(optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                     {{ __('-') }}
                                     @else
-                                        {{ $project->amcBillableHoursDisplay($monthToSubtract) }}           
+                                        {{ $project->amcBillableHoursDisplay($monthToSubtract) }}
                                     @endif
                                 </td>
                                 <td>{{ $amount }}</td>

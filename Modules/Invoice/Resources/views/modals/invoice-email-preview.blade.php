@@ -12,6 +12,8 @@
             <div class="modal-body">
                 <form action="{{ route('invoice.send-invoice-mail') }}" method="POST" id="sendInvoiceForm">
                     @csrf
+                        @dd($invoiceData);
+                    <input type="hidden" name="invoice_data" value="{{'$invoiceData'}}">
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="sendFrom">{{ __('From') }}</label>

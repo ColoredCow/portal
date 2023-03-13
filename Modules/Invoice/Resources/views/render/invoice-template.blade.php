@@ -338,7 +338,7 @@
                                                         {{ $currencySymbol . $project->getResourceBillableAmount() }}
                                                     @else
                                                         @if($project->is_amc == 1)
-                                                        {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->amcTotalProjectAmount($monthsToSubtract, $periodStartDate, $periodEndDate) }}
+                                                        {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->totalAmountInPdf($monthsToSubtract, $periodStartDate, $periodEndDate) }}
                                                         @else
                                                         {{ $currencySymbol . $project->getTotalPayableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate) }}
                                                         @endif
@@ -395,7 +395,7 @@
                                         {{ $project->getResourceBillableAmount() }}
                                     @else
                                         @if($project->is_amc == 1)
-                                        {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->totalAmountWithOutTaxInPdf() }}
+                                        {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->amcTotalProjectAmount() }}
                                         @else 
                                         {{ $project->getBillableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate) + optional($project->client->billingDetails)->bank_charges }}
                                         @endif
@@ -431,7 +431,7 @@
                                     {{ $currencySymbol . $project->getResourceBillableAmount() }}
                                     @else
                                         @if($project->is_amc == 1)
-                                            {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->amcTotalProjectAmount() }}
+                                            {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->totalAmountInPdf() }}
                                         @else
                                         {{ $currencySymbol . $project->getTotalPayableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate) }}
                                         @endif 
@@ -475,7 +475,7 @@
                                         {{ $currencySymbol . $project->getResourceBillableAmount() }}
                                     @else
                                         @if($project->is_amc == 1)
-                                            {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->amcTotalProjectAmount($monthsToSubtract, $periodStartDate, $periodEndDate) }}
+                                            {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->totalAmountInPdf($monthsToSubtract, $periodStartDate, $periodEndDate) }}
                                         @else
                                         {{ $currencySymbol . $project->getTotalPayableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate) }}
                                         @endif

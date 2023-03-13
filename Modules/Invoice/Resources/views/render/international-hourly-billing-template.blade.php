@@ -18,16 +18,24 @@
         <tr align="left">
             <th style="width: 440px;">
                @if($project->is_amc == 1)
-               {{ 'AMC Charges' }}
+               <span style="font-weight: normal">AMC Charges</span>
                @endif
             </th>
             <th style="width: 135px;">
-            @if($project->serviceRateTermFromProject_Billing_DetailsTable() == 'per_month')
-                {{$project->getmonthStatDateAndEndDateInPdf()['startDate'] ."-". $project->getmonthStatDateAndEndDateInPdf()['endDate'] }}
-            @endif
+                <span style="font-weight: normal" >
+                    @if($project->client->billingDetails->billing_frequency == 2)
+                        {{$project->getTermStartAndEndDateForInvoice()['startDate']->format('M-Y')}}
+                    @elseif($project->client->billingDetails->billing_frequency == 3)
+                        @if ($project->serviceRateTermFromProject_Billing_DetailsTable() == "per_month")
+                        {{$project->getTermStartAndEndDateForInvoice()['startDate']->format('M-Y')}}
+                        @else 
+                        {{ $project->getTermStartAndEndDateForInvoice()['startDate']->format('M-Y')." ". $project->getTermStartAndEndDateForInvoice()['endDate']->format('M-Y') }}
+                        @endif
+                    @endif
+                </span>
             </th>
             <th style="width: 135px;"></th>
-            <th align="center">
+            <th align="center"><span style="font-weight: normal">
                 @if($billingLevel == 'client') 
                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                         {{ '' }}
@@ -39,12 +47,13 @@
                         {{ $project->getResourceBillableAmount() }}
                     @else
                         @if($project->is_amc == 1)
-                        {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->totalAmountWithOutTaxInPdf() }}
+                        {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->amcTotalProjectAmount() }}
                         @else 
                         {{ $project->getBillableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate) + optional($project->client->billingDetails)->bank_charges }}
                         @endif
                     @endif     
                 @endif
+                </span>
             </th>
         </tr>
     </thead>

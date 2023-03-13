@@ -45,7 +45,11 @@
                     <div class="d-flex">
                         <label for="client_id" class="mr-5">Amount:</label>
                         <span>
-                            <p>{{ $invoice->display_amount }}</p>
+                            @if ($invoice->project->is_amc == 1) 
+                                <p>{{ $invoice->project->amcTotalProjectAmount() . " ₹" }}</p>
+                            @else 
+                                <p>{{ $invoice->display_amount }}</p>
+                            @endif
                         </span>
                     </div>
                 </div>
@@ -53,8 +57,12 @@
                 <div class="form-group" v-if="this.client.type == 'indian'">
                     <div class="d-flex">
                         <label for="client_id" class="mr-5">GST:</label>
-                        <span>
-                            <p>{{ $invoice->gst . " ₹" }}</p>
+                        <span>                            
+                            @if ($invoice->project->is_amc == 1) 
+                                <p>{{ $invoice->project->getGSTamountInPdf() . " ₹" }}</p>
+                            @else 
+                                <p>{{ $invoice->gst . " ₹" }}</p>
+                            @endif
                         </span>
                     </div>
                 </div>
