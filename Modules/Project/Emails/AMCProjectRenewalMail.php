@@ -10,17 +10,17 @@ use Illuminate\Queue\SerializesModels;
 class AMCProjectRenewalMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
-
-    public $data;
+    public $data, $keyAccountManagerEmail, $keyAccountManagerEligibleProject;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($data, $keyAccountManagerEmail )
     {
         $this->data = $data;
+        $this->keyAccountManagerEmail = $keyAccountManagerEmail;
         $this->build();
     }
     /**
@@ -30,15 +30,9 @@ class AMCProjectRenewalMail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-
         // dd($this->data);
         $mail = $this->subject('Project Contract Renewed');
-        
-        $mail->to('email');
-
-
-        
-
+        $mail->to($this->keyAccountManagerEmail);
         return $mail->view('project::mail.amc-project-renewal-mail');
     }
 }

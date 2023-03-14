@@ -2,13 +2,12 @@
 
 namespace Modules\Project\Console;
 
-use Modules\Client\Entities\Client;
+use Carbon\carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
+use Modules\Client\Entities\Client;
 use Modules\Project\Emails\AMCProjectRenewalMail;
-use Modules\Project\Entities\Project;
 use Modules\User\Entities\User;
-use Mpdf\Tag\Select;
 
 class AMCProjectsRenewal extends Command
 {
@@ -43,31 +42,29 @@ class AMCProjectsRenewal extends Command
      */
     public function handle()
     {
-        $keyaccountmanagers = client::pluck('key_account_manager_id');
-        dd($keyaccountmanagers);
-      foreach($keyaccountmanagers as $keyaccountmanager){
-        $user = User::select('*')->where('id', $keyaccountmanager)->get();
-        dd($user);
-      }
-
-        $projects = Project::where('is_amc', '1')->where('status', 'active')->get();
-        
-        foreach ($projects as $project) {
-            
-        
-            // dd($data);
-
-            if ($project->is_ready_to_renew) {
-                $diff = optional($project->end_date)->diffInDays(today());
-
-                // dd($project->name);
-                // dd($diff);
-                if ($diff == 0 || $diff == 7 || $diff == 15 || $diff == 30) {
-                    return Mail::queue(new AMCProjectRenewalMail($project));
+        $keyAccountManagers = Client::pluck('key_account_manager_id')->unique();
+        foreach ($keyAccountManagers as $keyAccountManager) {
+            $clients = Client::where('key_account_manager_id', $keyAccountManager)->get();
+            $eligibleProjects = [];
+            $keyAccountManagerEmail = User::select('email')->where('id', $keyAccountManager)->get();
+            foreach ($clients as $client) {
+                $projects = $client->projects()
+                    ->where('is_amc', '1')
+                    ->where('status', 'active')
+                    ->get();
+                foreach ($projects as $project) {
+                    $end_date = Carbon::parse($project->end_date);
+                    $diff = $end_date->diffInDays(Carbon::now(), true);
+                    if ($diff <= 0 || $diff == 7 || $diff == 15 || $diff == 30) {
+                        // dd($diff);
+                        $eligibleProjects[] = $project;
+                        $keyAccountManagerEligibleProject = $eligibleProjects;
+                    }
                 }
             }
+            if (!empty($keyAccountManagerEligibleProject)) {
+                return Mail::queue(new AMCProjectRenewalMail($keyAccountManagerEligibleProject, $keyAccountManagerEmail));
         }
     }
 }
-
-
+}
