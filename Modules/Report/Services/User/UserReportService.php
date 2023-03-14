@@ -3,7 +3,6 @@
 namespace Modules\Report\Services\User;
 
 use Modules\Project\Entities\ProjectTeamMemberEffort;
-use Carbon\Carbon;
 use Modules\Project\Entities\Project;
 
 class UserReportService
@@ -29,6 +28,8 @@ class UserReportService
     {
         $startMonth = today()->subMonthsNoOverflow(17);
         $endMonth = today();
+        $months = [];
+        $data = [];
         while ($startMonth <= $endMonth) {
             $months[] = $startMonth->format('Y-m');
             $teamMemberActualEffort = ProjectTeamMemberEffort::whereIn('project_team_member_id', $projectTeamMemberList)->whereMonth('added_on', $startMonth)->whereYear('added_on', $startMonth)->sum('actual_effort');

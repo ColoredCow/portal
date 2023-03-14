@@ -27,7 +27,7 @@ $(function() {
 	}
 	if ($("#userDashboardGraph").length) {
 		getData(
-			{ type: "fte-trend", filters: {} },
+			{ type: "fte-trend" },
 			userFteTrendsReport
 		);
 	}
