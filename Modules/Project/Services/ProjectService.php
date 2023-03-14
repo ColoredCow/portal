@@ -33,9 +33,18 @@ class ProjectService implements ProjectServiceContract
         if ($nameFilter = $data['name'] ?? false) {
             $filters['name'] = $nameFilter;
         }
-
-        $showAllProjects = Arr::get($data, 'projects', 'my-projects') != 'my-projects';
-
+        $hasAnyRole = false;
+        foreach (auth()->user()->roles as $role) {
+            if ($role['name'] == 'admin' || $role['name'] == 'super-admin') {
+                $hasAnyRole = true;
+                break;
+            }
+        }
+        if ($hasAnyRole) {
+            $showAllProjects = Arr::get($data, 'projects', 'all-projects') == 'all-projects';
+        } else {
+            $showAllProjects = Arr::get($data, 'projects', 'my-projects') != 'my-projects';
+        }
         $memberId = Auth::id();
 
         $projectClauseClosure = function ($query) use ($filters, $showAllProjects, $memberId) {
@@ -104,8 +113,8 @@ class ProjectService implements ProjectServiceContract
         foreach ($counts as $key => $tabFilters) {
             $query = Project::query()->applyFilter($tabFilters);
             $counts[$key] = $showAllProjects
-            ? $query->count()
-            : $query->linkedToTeamMember($userId)->count();
+                ? $query->count()
+                : $query->linkedToTeamMember($userId)->count();
         }
 
         return $counts;
