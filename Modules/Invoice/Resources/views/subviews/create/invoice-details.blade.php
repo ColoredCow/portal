@@ -108,12 +108,12 @@
                 <div class="form-group">
                     <label for="term_start_date" class="field-required">Term Start Date</label>
                     <input type="date" class="form-control" name="term_start_date" id="term_start_date" required="required"
-                           value="{{ \Carbon\Carbon::now()->subMonth()->startOfMonth()->toDateString() }}">
+                           value="{{ now()->subMonthNoOverflow()->startOfMonth()->toDateString() }}">
                 </div>
                 <div class="form-group">
                     <label for="term_end_date" class="field-required">Term End Date</label>
                     <input type="date" class="form-control" name="term_end_date" id="term_end_date" required="required"
-                           value="{{ \Carbon\Carbon::now()->subMonth()->endOfMonth()->toDateString() }}">
+                           value="{{ now()->subMonthNoOverflow()->endOfMonth()->toDateString() }}">
                 </div>
                 
                 
