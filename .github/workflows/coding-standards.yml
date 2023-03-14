@@ -47,7 +47,7 @@ jobs:
       - name: Install composer dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
       - name: Setup env file
-        run: cp .env.example .env
+        run: cp ./.env.example .env
       - name: Configure application encryption key
         run: php artisan key:generate
       - name: Larastan
