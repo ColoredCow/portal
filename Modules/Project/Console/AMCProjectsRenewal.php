@@ -2,7 +2,7 @@
 
 namespace Modules\Project\Console;
 
-use Carbon\carbon;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use Modules\Client\Entities\Client;
@@ -56,7 +56,6 @@ class AMCProjectsRenewal extends Command
                     $end_date = Carbon::parse($project->end_date);
                     $diff = $end_date->diffInDays(Carbon::now(), true);
                     if ($diff <= 0 || $diff == 7 || $diff == 15 || $diff == 30) {
-                        // dd($diff);
                         $eligibleProjects[] = $project;
                         $keyAccountManagerEligibleProject = $eligibleProjects;
                     }
