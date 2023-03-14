@@ -34,7 +34,7 @@ class AMCProjectRenewalMail extends Mailable implements ShouldQueue
     {
         $mail = $this->subject('Project Contract Renewed');
         $mail->to($this->keyAccountManagerEmail);
-        
+
         return $mail->view('project::mail.amc-project-renewal-mail');
     }
 }
