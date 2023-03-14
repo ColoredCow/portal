@@ -22,6 +22,5 @@
     "Post": true,
     "Revenue": true,
     "ProjectContract": true,
-    "CodeTrek": true,
-    "Operations": true
+    "CodeTrek": true
 }
