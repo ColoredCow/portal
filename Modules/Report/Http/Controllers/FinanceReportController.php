@@ -40,4 +40,9 @@ class FinanceReportController extends Controller
 
         return $this->reportDataService->getData($type, json_decode($filters, true));
     }
+    
+    public function index()
+    {
+        return view('report::finance.client-wise-revenue.dashboard');
+    }
 }
