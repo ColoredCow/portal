@@ -61,7 +61,7 @@ class AMCProjectsRenewal extends Command
                     }
                 }
             }
-            if (!empty($keyAccountManagerEligibleProject)) {
+            if (! empty($keyAccountManagerEligibleProject)) {
                 return Mail::queue(new AMCProjectRenewalMail($keyAccountManagerEligibleProject, $keyAccountManagerEmail));
             }
         }

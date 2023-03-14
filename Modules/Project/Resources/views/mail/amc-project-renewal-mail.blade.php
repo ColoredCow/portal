@@ -24,5 +24,5 @@
 	 </table>
 	<br>
 	<p class="line">Thanks,</p>
-	<p class="line">ColoredCow Portal</p>
+	<p class="line">ColoredCow</p>
 </div>
