@@ -21,6 +21,11 @@ class FinanceReportController extends Controller
         $this->reportDataService = app(ReportDataService::class);
     }
 
+    public function index()
+    {
+        return view('report::finance.client-wise-revenue.dashboard');
+    }
+    
     public function dashboard()
     {
         return view('report::finance.dashboard');
@@ -41,8 +46,5 @@ class FinanceReportController extends Controller
         return $this->reportDataService->getData($type, json_decode($filters, true));
     }
 
-    public function index()
-    {
-        return view('report::finance.client-wise-revenue.dashboard');
-    }
+    
 }
