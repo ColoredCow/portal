@@ -1,4 +1,4 @@
-<ul class="nav nav-pills my-3">
+<ul class="nav nav-pills mt-3 mb-2">
     @php
         $filters = request()->except('page');
     @endphp

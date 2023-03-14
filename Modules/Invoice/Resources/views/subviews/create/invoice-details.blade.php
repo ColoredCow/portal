@@ -1,8 +1,8 @@
 <div id="create_invoice_details_form">
     <div class="card-body">
         <div class="form-row mb-4">
-            <div class="col-md-5">
-                <div class="form-group">
+            <div class="col-md-5 d-flex flex-column ">
+                <div class="form-group ">
                     <div class="d-flex justify-content-between">
                         <label for="clientId" class="field-required">Client</label>
                         <a href="{{ route('client.create') }}" for="clientId" class="text-underline">Add new client</a>
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group ">
+                <div class="form-group mt-auto">
                     <label for="comments">Comments</label>
                     <textarea name="comments" id="comments" rows="5" class="form-control"></textarea>
                 </div>
@@ -105,6 +105,18 @@
                     <label for="term" class="field-required">Invoice for term</label>
                     <input type="month" class="form-control" name="term" id="term" required="required" value='{{ old('term', now(config('constants.timezone.indian'))->subMonth()->format('Y-m')) }}'>
                 </div>
+                <div class="form-group">
+                    <label for="term_start_date" class="field-required">Term Start Date</label>
+                    <input type="date" class="form-control" name="term_start_date" id="term_start_date" required="required"
+                           value="{{ now()->subMonthNoOverflow()->startOfMonth()->toDateString() }}">
+                </div>
+                <div class="form-group">
+                    <label for="term_end_date" class="field-required">Term End Date</label>
+                    <input type="date" class="form-control" name="term_end_date" id="term_end_date" required="required"
+                           value="{{ now()->subMonthNoOverflow()->endOfMonth()->toDateString() }}">
+                </div>
+                
+                
                 <div class="form-group">
                     <label for="sent_on" class="field-required">Sent on</label>
                     <input type="date" class="form-control" name="sent_on" id="sent_on" required="required"

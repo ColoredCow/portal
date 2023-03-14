@@ -15,9 +15,9 @@ class Invoice extends Model implements Auditable
 {
     use Encryptable, SoftDeletes, \OwenIt\Auditing\Auditable;
 
-    protected $fillable = ['client_id', 'project_id', 'status', 'billing_level', 'currency', 'amount', 'sent_on', 'due_on', 'receivable_date', 'gst', 'file_path', 'comments', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'conversion_rate', 'tds', 'tds_percentage', 'currency_transaction_charge', 'payment_at', 'invoice_number', 'reminder_mail_count', 'payment_confirmation_mail_sent', 'deleted_at'];
+    protected $fillable = ['client_id', 'project_id', 'status', 'billing_level', 'currency', 'amount', 'sent_on', 'due_on', 'receivable_date', 'gst', 'file_path', 'comments', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'conversion_rate', 'tds', 'tds_percentage', 'currency_transaction_charge', 'payment_at', 'invoice_number', 'reminder_mail_count', 'payment_confirmation_mail_sent', 'deleted_at', 'term_start_date', 'term_end_date'];
 
-    protected $dates = ['sent_on', 'due_on', 'receivable_date', 'payment_at'];
+    protected $dates = ['sent_on', 'due_on', 'receivable_date', 'payment_at', 'term_start_date', 'term_end_date'];
 
     protected $encryptable = [
         'amount', 'gst', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'tds'
@@ -227,7 +227,6 @@ class Invoice extends Model implements Auditable
         }
         $termStartDate = $this->client->getMonthStartDateAttribute($monthDifference);
         $termEndDate = $this->client->getMonthEndDateAttribute($monthDifference);
-
         $term = $termStartDate->format('M') . ' - ' . $termEndDate->format('M');
 
         if ($termStartDate->format('M') == $termEndDate->format('M')) {
