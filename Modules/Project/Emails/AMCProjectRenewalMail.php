@@ -10,14 +10,16 @@ use Illuminate\Queue\SerializesModels;
 class AMCProjectRenewalMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
-    public $data, $keyAccountManagerEmail, $keyAccountManagerEligibleProject;
+    public $data;
+    public $keyAccountManagerEmail;
+    public $keyAccountManagerEligibleProject;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data, $keyAccountManagerEmail )
+    public function __construct($data, $keyAccountManagerEmail)
     {
         $this->data = $data;
         $this->keyAccountManagerEmail = $keyAccountManagerEmail;

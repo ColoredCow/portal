@@ -32,7 +32,7 @@ class Event
         } else {
             // Guess allDay based off of ISO8601 date strings
             $this->allDay = preg_match(self::ALL_DAY_REGEX, $array['start']) &&
-        (! isset($array['end']) || preg_match(self::ALL_DAY_REGEX, $array['end']));
+                (!isset($array['end']) || preg_match(self::ALL_DAY_REGEX, $array['end']));
         }
 
         if ($this->allDay) {
@@ -46,7 +46,7 @@ class Event
 
         // Record misc properties
         foreach ($array as $name => $value) {
-            if (! in_array($name, ['title', 'allDay', 'start', 'end'])) {
+            if (!in_array($name, ['title', 'allDay', 'start', 'end'])) {
                 $this->properties[$name] = $value;
             }
         }
