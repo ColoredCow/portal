@@ -56,7 +56,6 @@ class Event
     // $rangeStart and $rangeEnd are assumed to be dates in UTC with 00:00:00 time.
     public function isWithinDayRange($rangeStart, $rangeEnd)
     {
-
         // Normalize our event's dates for comparison with the all-day range.
         $eventStart = stripTime($this->start);
 
@@ -73,7 +72,6 @@ class Event
     // Converts this Event object back to a plain data array, to be used for generating JSON
     public function toArray()
     {
-
         // Start with the misc properties (don't worry, PHP won't affect the original array)
         $array = $this->properties;
 
