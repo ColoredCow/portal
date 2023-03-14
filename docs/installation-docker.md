@@ -23,6 +23,10 @@ If you are in the right directory where you want your portal to be saved locally
     APP_ENV=local
     APP_DEBUG=true
     APP_URL=http://portal.test
+    
+    LOG_CHANNEL=stack
+    WWWGROUP=1000
+    WWWUSER=1000
     ```
 
     2. Database configurations
