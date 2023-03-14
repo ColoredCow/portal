@@ -29,5 +29,9 @@ Route::prefix('report')->group(function () {
             Route::get('/detailed', 'ProfitAndLossReportController@detailed')->name('reports.finance.profit-and-loss.detailed');
             Route::get('profit-and-loss-report-export', 'ProfitAndLossReportController@profitAndLossReportExport')->name('reports.finance.profit-and-loss.report.export');
         });
+
+        Route::prefix('revenue-by-client')->group(function () {
+            Route::get('/', 'FinanceReportController@index')->name('reports.finance.revenue-by-client.index');
+        });
     });
 });
