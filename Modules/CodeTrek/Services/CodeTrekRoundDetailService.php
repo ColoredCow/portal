@@ -24,7 +24,7 @@ class CodeTrekRoundDetailService
     public function takeAction($data, $id)
     {
         $applicant = CodeTrekApplicant::findOrFail($id);
-        $applicant->round_name  =$data->input('round');
+        $applicant->round_name = $data->input('round');
         $applicant->save();
 
         return $applicant;
