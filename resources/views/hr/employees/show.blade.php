@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('report::layouts.master')
 @section('content')
 
 <div class="container">
@@ -27,8 +27,10 @@
                 @endif
             </div>
             <hr class='bg-dark mx-4 pb-0.5'>
-            <div class="font-weight-bold fz-24 pl-5 mt-5 mb-3 d-flex justify-content-inline">{{__('Current FTE: ')}}<div class=" ml-1 {{ $employee->user ? ($employee->user->ftes['main'] > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->ftes['main']  :'NA' }}</div></div>
-            <div class="font-weight-bold fz-24 pl-5 mt-5 mb-3 d-flex justify-content-inline">{{__('FTE(AMC): ')}}<div class=" ml-1 {{ $employee->user ? ($employee->user->ftes['amc'] > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->ftes['amc']  :'NA' }}</div></div>
+            <div class="d-flex"><div class="font-weight-bold fz-24 pl-5 mt-5 mb-3 d-flex justify-content-inline">{{__('Current FTE: ')}}<div class=" ml-1 {{ $employee->user ? ($employee->user->ftes['main'] > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->ftes['main']  :'NA' }}</div></div>
+            <div class="font-weight-bold fz-24 pl-5 mt-5 mb-3 d-flex justify-content-inline">{{__('FTE(AMC): ')}}<div class=" ml-1 {{ $employee->user ? ($employee->user->ftes['amc'] > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->ftes['amc']  :'NA' }}</div></div></div>
+            <canvas class="w-full" id="userDashboardGraph"></canvas>
+            <input type="hidden" id="get_report_data_url" value={{ route('reports.fte.get-report-data', ['user' => $employee->user]) }}>
             <div class="font-weight-bold fz-24 pl-5 mt-5 mb-3">Project Details</div>
             <div class="mx-5">
                 <table class="table">
