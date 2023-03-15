@@ -2,7 +2,6 @@
 
 namespace Modules\Project\Console;
 
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use Modules\Client\Entities\Client;
@@ -53,7 +52,7 @@ class AMCProjectsRenewal extends Command
                     ->where('status', 'active')
                     ->get();
                 foreach ($projects as $project) {
-                    $diff= $project-> getAmcDateDiffAttribute($project);
+                    $diff = $project->getAmcDateDiffAttribute($project);
                     if ($diff <= 0 || $diff == 7 || $diff == 15 || $diff == 30) {
                         $projectAmcRenewal[] = $project;
                         $keyAccountManagerEligibleProject = $projectAmcRenewal;
