@@ -79,7 +79,7 @@
                 @include('component.deleteModal', [
                     'modalId' => 'confirm-delete',
                     'title' => 'Confirm Delete',
-                    'body' => 'Are you sure you want to delete this item?',
+                    'body' => 'Are you sure you want to remove this applicant?',
                     'action' => route('codetrek.delete', $applicant)
                     ])
     </div>
