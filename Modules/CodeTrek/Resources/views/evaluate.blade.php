@@ -34,7 +34,7 @@
                             <h6>{{$applicant->university}}</h6>
                         </div>
                     </div>
-                    <form action="{{ route('update-feedback', $applicant->id) }}" method="POST">
+                    <form action="{{ route('codetrek.update-feedback', $applicant->id) }}" method="POST">
                         @csrf
                             <div class="form-group row">
                                 <div class="col-sm-9">
@@ -54,7 +54,7 @@
                                 </div>
                             </div>
                     </form>
-                    <form action="{{ route('action', $applicant->id) }}" method="POST">
+                    <form action="{{ route('codetrek.action', $applicant->id) }}" method="POST">
                         @csrf
                         @if ($applicant->round_name == 'level-1')
                             <div class="card-footer">
@@ -82,7 +82,7 @@
                 </div>
                 <div id="collapseTwo" class="collapse {{ $applicant->round_name == 'level-2' ? 'show' : '' }}" aria-labelledby="headingTwo" data-parent="#accordionExample">
                     <div class="card-body">
-                        <form action="{{ route('update-feedback', $applicant->id) }}" method="POST">
+                        <form action="{{ route('codetrek.update-feedback', $applicant->id) }}" method="POST">
                             @csrf
                             <div class="form-group row">
                                 <div class="col-sm-9">
@@ -102,7 +102,7 @@
                                 </div>
                             </div>
                         </form>
-                        <form action="{{ route('action', $applicant->id) }}" method="POST">
+                        <form action="{{ route('codetrek.action', $applicant->id) }}" method="POST">
                             @csrf
                             @if ($applicant->round_name == 'level-2')
                                 <div class="card-footer">
@@ -130,7 +130,7 @@
                 </div>
                 <div id="collapseThree" class="collapse {{ $applicant->round_name == 'level-3' ? 'show' : '' }}" aria-labelledby="headingThree" data-parent="#accordionExample">
                     <div class="card-body">
-                        <form action="{{ route('update-feedback', $applicant->id) }}" method="POST">
+                        <form action="{{ route('codetrek.update-feedback', $applicant->id) }}" method="POST">
                             @csrf
                             <div class="form-group row">
                                 <div class="col-sm-9">
@@ -150,7 +150,7 @@
                                 </div>
                             </div>
                         </form>
-                        <form action="{{ route('action', $applicant->id) }}" method="POST">
+                        <form action="{{ route('codetrek.action', $applicant->id) }}" method="POST">
                             @csrf
                             @if ($applicant->round_name == 'level-3')
                                 <div class="card-footer">
