@@ -44,7 +44,30 @@
                 <tbody>
                     @foreach ($applicants as $applicant )
                         <tr>
-                            <td><a href="{{route('codetrek.edit', $applicant->id) }}">{{$applicant->first_name}} {{$applicant->last_name}}</a></td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <h6>{{$applicant->first_name}} {{$applicant->last_name}}</h6>
+                                    </div>
+                                </div>
+                                <div class="mb-2 fz-xl-14 text-secondary d-flex flex-column">
+                                    <div class="d-flex text-white my-2">
+                                        <a href="{{route('codetrek.edit', $applicant->id) }}" class="btn-sm btn-primary mr-1 text-decoration-none" target="_self">View</a>
+                                        <a href="{{route('codetrek.evaluate', $applicant->id) }}" class="btn-sm btn-primary mr-1 text-decoration-none" target="_self">Evaluate</a>
+                                    </div>
+                                </div>
+                                    <span class="mr-1 text-truncate"><i class="fa fa-envelope-o mr-1"></i>{{ $applicant->email }}</span>
+                                    <br>
+                                    @if ($applicant->phone)
+                                        <span class="mr-1"><i class="fa fa-phone mr-1"></i>{{ $applicant->phone }}</span>
+                                        <br>
+                                    @endif
+                                <div>
+                                    @if ($applicant->university)
+                                        <span class="mr-1"><i class="fa fa-university mr-1"></i>{{ $applicant->university }}</span>
+                                    @endif
+                                </div>
+                            </td>
                             <td>-</td>
                             <td>{{ config('codetrek.status.' . $applicant->status . '.label') }}</td>
                             <td>-</td>

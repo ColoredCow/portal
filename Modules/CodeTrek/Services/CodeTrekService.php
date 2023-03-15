@@ -3,6 +3,7 @@
 namespace Modules\CodeTrek\Services;
 
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
+use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
 class CodeTrekService
 {
@@ -51,4 +52,13 @@ class CodeTrekService
 
         return $applicant;
     }
+
+    public function evaluate($codeTrekApplicant)
+    {
+        $applicant = CodeTrekApplicant::find($codeTrekApplicant->id);
+        $roundDetails = CodeTrekApplicantRoundDetail::where('applicant_id', $applicant->id)->get();
+    
+        return $roundDetails;
+    }
+
 }
