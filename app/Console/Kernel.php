@@ -56,8 +56,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('project:send-daily-effort-summary-google-chat')->weekdays()->at('22:30');
         $schedule->command('project:zero-expected-hours-in-project')->weekly()->tuesdays()->at('11:00');
         if (App::environment('production')) {
-        $schedule->command('hr:resume-screening-application-review-reminder')->dailyAt('10:00');
-    }
+            $schedule->command('hr:resume-screening-application-review-reminder')->dailyAt('10:00');
+        }
     }
 
     /**
