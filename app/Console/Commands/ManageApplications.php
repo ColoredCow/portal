@@ -40,9 +40,7 @@ class ManageApplications extends Command
      */
     public function handle()
     {
-        $now = now();
-
-        $threeDaysAgo = $now->subDays(3);
+        $threeDaysAgo = now()->subDays(3);
 
         $applications = Application::with('applicant')
                       ->where('status', config('hr.status.new'))

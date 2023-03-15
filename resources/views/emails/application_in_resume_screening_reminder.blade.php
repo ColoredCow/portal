@@ -5,7 +5,7 @@
     <br>
     <ol>
         @foreach ($applications as $application)
-            <li><strong>Name -</strong> {{ $application->applicant->name }}
+            <li><strong>Name -</strong><a href="route(hr/recruitment/applicant/details/show/{{ $application->applicant->id }} )">{{ $application->applicant->name }}</a>
                 <br> <strong>Email -</strong> {{ $application->applicant->email }}
                 <br> <strong>Phone -</strong> {{ $application->applicant->phone }}
                 <br> <strong>Applied on -</strong> {{ \Carbon\Carbon::parse($application->applicant->created_at)->format('j M Y') }}</li>
