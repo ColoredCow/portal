@@ -55,9 +55,9 @@ class CodeTrekApplicantRoundDetailController extends Controller
         return redirect()->back();
     }
 
-    public function takeAction(Request $request ,$id)
+    public function takeAction(Request $request , $id)
     {
-        $this->service->takeAction($request,$id);
+        $this->service->takeAction($request, $id);
 
         return redirect()->back()->with('success', 'Round details updated successfully.');
     }
