@@ -64,7 +64,7 @@ class CodeTrekController extends Controller
     public function evaluate(CodeTrekApplicant $applicant)
     {
         $roundDetails = $this->service->evaluate($applicant);
-        
+
         return view('codetrek::evaluate')->with(['applicant' => $applicant, 'roundDetails' => $roundDetails]);
     }
     /**
