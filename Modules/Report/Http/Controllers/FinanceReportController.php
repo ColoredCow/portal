@@ -38,6 +38,26 @@ class FinanceReportController extends Controller
         return view('report::finance.client-wise-revenue.index', $data);
     }
 
+    public function detailed()
+    {
+        // $this->authorize('finance_reports.view');
+        // $currentYear = date('m') > 03 ? date('Y') + 1 : date('Y');
+
+        // $filters = $this->filters($currentYear);
+        // $reportData = $this->service->profitAndLoss($filters);
+
+        // $allAmounts = array_map(function ($item) {
+        //     return $item['amounts'];
+        // }, $reportData);
+
+        // return view('report::finance.profit-and-loss.detailed', [
+        //     'reportData' => $reportData,
+        //     'currentYear' => $currentYear,
+        //     'allAmounts' => $allAmounts
+        // ]);
+        return view('report::finance.client-wise-revenue.detailed');
+    }
+
     public function getReportData(Request $request)
     {
         $type = $request->type;
