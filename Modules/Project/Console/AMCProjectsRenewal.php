@@ -42,10 +42,10 @@ class AMCProjectsRenewal extends Command
      */
     public function handle()
     {
-        $keyAccountManagers = Client::pluck('key_account_manager_id')->unique();
-        foreach ($keyAccountManagers as $keyAccountManager) {
+        $keyAccountManagersId = Client::pluck('key_account_manager_id')->unique();
+        foreach ($keyAccountManagersId as $keyAccountManager) {
             $clients = Client::where('key_account_manager_id', $keyAccountManager)->get();
-            $eligibleProjects = [];
+            $projectAmcRenewal = [];
             $keyAccountManagerEmail = User::select('email')->where('id', $keyAccountManager)->get();
             foreach ($clients as $client) {
                 $projects = $client->projects()
@@ -53,11 +53,10 @@ class AMCProjectsRenewal extends Command
                     ->where('status', 'active')
                     ->get();
                 foreach ($projects as $project) {
-                    $end_date = Carbon::parse($project->end_date);
-                    $diff = $end_date->diffInDays(Carbon::now(), true);
+                    $diff= $project-> getAmcDateDiffAttribute($project);
                     if ($diff <= 0 || $diff == 7 || $diff == 15 || $diff == 30) {
-                        $eligibleProjects[] = $project;
-                        $keyAccountManagerEligibleProject = $eligibleProjects;
+                        $projectAmcRenewal[] = $project;
+                        $keyAccountManagerEligibleProject = $projectAmcRenewal;
                     }
                 }
             }

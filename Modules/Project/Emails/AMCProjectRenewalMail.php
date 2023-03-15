@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 class AMCProjectRenewalMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
-    public $data;
+    public $projectData;
     public $keyAccountManagerEmail;
     public $keyAccountManagerEligibleProject;
 
@@ -19,9 +19,9 @@ class AMCProjectRenewalMail extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($data, $keyAccountManagerEmail)
+    public function __construct($projectData, $keyAccountManagerEmail)
     {
-        $this->data = $data;
+        $this->projectData = $projectData;
         $this->keyAccountManagerEmail = $keyAccountManagerEmail;
         $this->build();
     }

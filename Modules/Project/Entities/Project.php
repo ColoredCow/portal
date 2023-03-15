@@ -4,6 +4,7 @@ namespace Modules\Project\Entities;
 
 use App\Traits\Filters;
 use App\Traits\HasTags;
+use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -179,6 +180,13 @@ class Project extends Model implements Auditable
         }
 
         return false;
+    }
+    public function getAmcDateDiffAttribute($project)
+    {
+        $end_date = Carbon::parse($project->end_date);
+        $diff = $end_date->diffInDays(Carbon::now(), true);
+
+        return $diff;
     }
 
     public function getCurrentExpectedHoursAttribute()
