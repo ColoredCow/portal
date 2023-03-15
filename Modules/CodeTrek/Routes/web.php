@@ -20,5 +20,4 @@ Route::prefix('codetrek')->group(function () {
     Route::get('/evaluate/{applicant}', 'CodeTrekController@evaluate')->name('codetrek.evaluate');
     Route::post('/action/{applicant}', 'CodeTrekApplicantRoundDetailController@takeAction')->name('action');
     Route::post('/update-feedback/{applicant}', 'CodeTrekApplicantRoundDetailController@update')->name('update-feedback');
-
 });
