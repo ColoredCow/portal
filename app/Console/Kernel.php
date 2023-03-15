@@ -10,6 +10,7 @@ use Modules\Project\Console\ZeroExpectedHourInProject;
 use Modules\Project\Console\FixedBudgetProject;
 use Modules\Project\Console\SendEffortSummaryCommand;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\App;
 use Modules\Project\Console\GoogleChat\SendDailyEffortSummaryForProjectsOnGoogleChat;
 use Modules\Project\Console\GoogleChat\RemindProjectMembersToUpdateEffortOnGoogleChat;
 
@@ -54,7 +55,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('project:remind-to-update-effort')->weekdays()->at('19:00');
         $schedule->command('project:send-daily-effort-summary-google-chat')->weekdays()->at('22:30');
         $schedule->command('project:zero-expected-hours-in-project')->weekly()->tuesdays()->at('11:00');
+        if (App::environment('production')) {
         $schedule->command('hr:resume-screening-application-review-reminder')->dailyAt('10:00');
+    }
     }
 
     /**

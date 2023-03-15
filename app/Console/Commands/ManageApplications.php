@@ -48,7 +48,7 @@ class ManageApplications extends Command
                       ->get();
 
         if ($applications->count() > 0) {
-            Mail::to(config('hr.hr-email.primary'))->send(new ResumeScreeningPendingApplication($applications));
+            Mail::to(config('hr.hr-email.primary'))->queue(new ResumeScreeningPendingApplication($applications));
 
             $this->info('Email sent successfully!');
         } else {
