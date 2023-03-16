@@ -56,15 +56,16 @@ class ProjectTeamMember extends Model
     {
         $project = new Project;
         $currentDate = today(config('constants.timezone.indian'));
-        $startDate = $startDate ?? $this->project->client->month_start_date;
+        if ($this->started_on && $this->started_on > $startDate) {
+            $startDate = $this->started_on;
+        } else {
+            $startDate = $this->project->client->month_start_date;
+        }
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = $currentDate->subDay();
         }
 
-        $daysTillToday = count($project->getWorkingDaysList($this->project->client->month_start_date, $currentDate));
-        if ($this->started_on && $this->started_on > $startDate) {
-            $daysTillToday = count($project->getWorkingDaysList($this->started_on, $currentDate));
-        }
+        $daysTillToday = count($project->getWorkingDaysList($startDate, $currentDate));
 
         return $this->daily_expected_effort * $daysTillToday;
     }
