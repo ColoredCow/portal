@@ -78,12 +78,10 @@ class ProjectController extends Controller
             'daysTillToday' => $daysTillToday,
         ]);
     }
-
-    public function destroy(ProjectRequest $request, Project $project)
     
+    public function destroy(ProjectRequest $request, Project $project)
     { 
         $project->update(
-            
             [ 
                 'reason_for_deletion' => $request['comment']
             ]
