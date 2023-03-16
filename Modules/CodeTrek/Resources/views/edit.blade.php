@@ -76,7 +76,7 @@
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">Delete</button>
                 </div>
         </form>
-                @include('component.deleteModal', [
+                @include('component.delete-modal', [
                     'modalId' => 'confirm-delete',
                     'title' => 'Confirm Delete',
                     'body' => 'Are you sure you want to remove this applicant?',
