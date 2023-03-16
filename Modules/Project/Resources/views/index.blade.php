@@ -97,10 +97,17 @@
                             @foreach ($client->projects as $project)
                                 <tr>
                                     @can('projects.update')
-                                        <td class="w-33p">
-                                            <div class="pl-2 pl-xl-3"><a
-                                                    href="{{ route('project.show', $project) }}">{{ $project->name }}</a></div>
-                                        </td>
+                                    <td class="w-33p">
+                                        <div class="pl-2 pl-xl-3">
+                                          @if ($project->getTotalToBeDeployedCount() > 0)
+                                            <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
+                                                  title="There is a requirement for {{ $project->getTotalToBeDeployedCount() }} team members">
+                                              <i class="fa fa-users text-danger mr-0.5" aria-hidden="true"></i>
+                                            </span>
+                                          @endif
+                                          <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a>
+                                        </div>
+                                      </td>
                                     @else
                                         <td class="w-33p">
                                             <div class="pl-2 pl-xl-3">
