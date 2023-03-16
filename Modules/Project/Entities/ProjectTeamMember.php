@@ -47,9 +47,9 @@ class ProjectTeamMember extends Model
 
     public function getCurrentActualEffortAttribute($startDate = null)
     {
-        $startDate = $startDate ?? $this->started_on;
+        $startDate = $startDate ?? $this->project->client->month_start_date;
 
-        return $this->projectTeamMemberEffort()->where('added_on', '>=', $this->started_on)->where('added_on', '>=', $startDate)->sum('actual_effort');
+        return $this->projectTeamMemberEffort()->where('added_on', '>=', $startDate)->sum('actual_effort');
     }
 
     public function getCurrentExpectedEffortAttribute($startDate = null)
