@@ -1,4 +1,4 @@
-<div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal{{$project->id}}" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('project.destroy', $project) }}" method="POST" id="delete-form">
+                <form action="{{ route('project.destroy', $project->id) }}" method="POST" id="delete-form">
                     @csrf
                     @method('DELETE')
                     <div class="form-group">
