@@ -86,7 +86,7 @@ class ProjectController extends Controller
                 'reason_for_deletion' => $request['comment']
             ]
         );
-        $project=project::find($id);
+        $project = project::find($id);
         $project->delete();
 
         return redirect()->back()->with('status', 'Project deleted successfully!');
