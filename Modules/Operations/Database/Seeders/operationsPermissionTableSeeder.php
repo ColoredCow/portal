@@ -19,8 +19,7 @@ class operationsPermissionTableSeeder extends Seeder
         Model::unguard();
 
         $applicantPermissions = [
-            ['name' => 'operations.view'],
- 
+            ['name' => 'codetrek.view'],
         ];
 
         foreach ($applicantPermissions as $permission) {
