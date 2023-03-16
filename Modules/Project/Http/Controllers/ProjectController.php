@@ -79,11 +79,9 @@ class ProjectController extends Controller
         ]);
     }
     public function destroy(ProjectRequest $request, Project $project)
-    
-    { 
+    {
         $project->update(
-            
-            [ 
+            [
                 'reason_for_deletion' => $request['comment']
             ]
         );
