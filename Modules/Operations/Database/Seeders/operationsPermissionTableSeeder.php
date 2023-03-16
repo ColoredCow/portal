@@ -39,4 +39,5 @@ class operationsPermissionTableSeeder extends Seeder
             $superAdminRole->givePermissionTo($permission['name']);
         }
     }
+
 }
