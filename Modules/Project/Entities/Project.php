@@ -300,7 +300,10 @@ class Project extends Model implements Auditable
         }
         $totalAmount = 0;
         $numberOfMonths = 1;
-
+        
+        ## Todo: Calculate billing_frequency
+        
+        
         switch ($this->client->billingDetails->billing_frequency) {
             case 3:
                 $numberOfMonths = 3;
@@ -448,13 +451,13 @@ class Project extends Model implements Auditable
 
     public function amcTotalProjectAmount(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
-        $serviceRateTerm = $this->serviceRateTermFromProject_Billing_DetailsTable();
+        $serviceRateTerm = $this->service_rate_term;
         $clientserviceRateTerm = $this->client->billingDetails->service_rate_term;
 
         if ($serviceRateTerm) {
             switch ($serviceRateTerm) {
                 case 'per_hour':
-                    $totalAmountInMonth = $this->getAmcTotalAmountPerHour();
+                    $totalAmountInMonth = $this->amountForTermPerHour();
 
                     return  $totalAmountInMonth;
                 case 'per_month':
@@ -473,7 +476,7 @@ class Project extends Model implements Auditable
         }
         switch ($clientserviceRateTerm) {
             case 'per_hour':
-                return $this->getAmcTotalAmountPerHourClientbase();
+                return $this->amountForTermPerHourClientbase();
             case 'per_month':
                 return $this->getAmcTotalAmountPerMonthClientbase();
             case 'per_quarter':
@@ -485,7 +488,7 @@ class Project extends Model implements Auditable
         }
     }
 
-    public function getAmcTotalAmountPerHourClientbase(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
+    public function amountForTermPerHourClientbase(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
         $taxandBankCharges = optional($this->client->billingDetails)->bank_charges + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate);
         $clientFrequency = $this->client->billingDetails->billing_frequency;
@@ -539,7 +542,7 @@ class Project extends Model implements Auditable
         return $amount + $taxandBankCharges;
     }
 
-    public function getAmcTotalAmountPerHour(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
+    public function amountForTermPerHour(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
         $startAndEndDate = $this->getTermStartAndEndDateForInvoice();
         $months = $startAndEndDate['startDate']->diffInMonths($startAndEndDate['endDate']);
@@ -600,7 +603,7 @@ class Project extends Model implements Auditable
         $amcBillableHours = $this->getBillableHoursForMonth($monthToSubtract, $periodStartDate, $periodEndDate);
         $clientFrequency = $this->client->billingDetails->billing_frequency;
 
-        if ($this->serviceRateTermFromProject_Billing_DetailsTable() == 'per_hour') {
+        if ($this->service_rate_term == 'per_hour') {
             if ($clientFrequency == 2) {
                 return $amcBillableHours;
             }
@@ -634,7 +637,7 @@ class Project extends Model implements Auditable
         return 0;
     }
 
-    public function serviceRateTermFromProject_Billing_DetailsTable()
+    public function getServiceRateTermAttribute()
     {
         $details = DB::table('project_billing_details')->where('project_id', $this->id)->first();
 
@@ -704,20 +707,134 @@ class Project extends Model implements Auditable
         return $endDate;
     }
 
-    public function getGSTamountInPdf()
+    public function totalAmountInPdf()
+    {
+        $totalamount = $this->amcTotalProjectAmount();
+        $tax = $this->getGstAmount();
+
+        return $tax + $totalamount;
+    }
+
+    public function getGstAmount()
     {
         $totalamount = $this->amcTotalProjectAmount();
         $igst = config('invoice.invoice-details.igst');
         $igst_number = floatval($igst) / 100;
 
-        return round($igst_number * $totalamount,2);
+        return round($igst_number * $totalamount, 2);
     }
 
-    public function totalAmountInPdf()
+    public function amountWithoutTaxForTerm($termStartDate, $termEndDate)
     {
-        $totalamount = $this->amcTotalProjectAmount();
-        $tax = $this->getGSTamountInPdf();
+        $serviceRateTerm = $this->service_rate_term;
 
-        return $tax + $totalamount;
+        switch ($serviceRateTerm) {
+            case 'per_hour':
+                $totalAmountInMonth = $this->getAmountForTermPerHour($termStartDate, $termEndDate);
+
+                return  $totalAmountInMonth;
+            case 'per_month':
+                $totalAmountInMonth = $this->getAmountForTermPerMonth($termStartDate, $termEndDate);
+
+                return  $totalAmountInMonth;
+            case 'per_quarter':
+                $totalAmountInQuater = $this->getAmountForTermPerQuarterly($termStartDate, $termEndDate);
+
+                return  $totalAmountInQuater;
+            case 'per_year':
+                $totalAmountInYear = $this->serviceRateFromProjectBillingDetailsTable();
+
+                return $totalAmountInYear;
+            case 'per_resource':
+
+                return $this->getResourceBillableAmount();
+            default:
+
+                return null;
+        }
+    }
+
+    public function getAmountForTermPerHour($termStartDate, $termEndDate)
+    {
+        $termStartDate = Carbon::parse($termStartDate);
+        $termEndDate = Carbon::parse($termEndDate);
+        $months = $termStartDate->diffInMonths($termEndDate);
+        $amount = ($this->serviceRateFromProjectBillingDetailsTable() * $this->amcBillableHours());
+
+        if ($months == 0) { // monthly
+            return $amount;
+        }
+        if ($months == 2) { // Quarterly
+            return ($amount * 3);
+        }
+        if ($months == 11) { // yearly
+            return ($amount * 12);
+        }
+
+        return $amount;
+    }
+
+    public function getAmountForTermPerMonth($termStartDate, $termEndDate)
+    {
+        $termStartDate = Carbon::parse($termStartDate);
+        $termEndDate = Carbon::parse($termEndDate);
+        $totalAmountInMonth = $this->serviceRateFromProjectBillingDetailsTable();
+        $months = $termStartDate->diffInMonths($termEndDate);
+        if ($months == 0) { // monthly
+            return  $totalAmountInMonth;
+        }
+        if ($months == 2) { // Quarterly
+            return  ($totalAmountInMonth * 3);
+        }
+        if ($months == 11) { // yearly
+            return  ($totalAmountInMonth * 12);
+        }
+    
+        return $totalAmountInMonth;
+    }
+
+    public function getAmountForTermPerQuarterly($termStartDate, $termEndDate)
+    {
+        $termStartDate = Carbon::parse($termStartDate);
+        $termEndDate = Carbon::parse($termEndDate);
+        $totalAmountInQuater = $this->serviceRateFromProjectBillingDetailsTable();
+        $months = $termStartDate->diffInMonths($termEndDate);
+
+        if ($months == 2) { // Quarterly
+            return  $totalAmountInQuater;
+        }
+        if ($months == 11) { // yearly
+            return  ($totalAmountInQuater * 4);
+        }
+
+        return $totalAmountInQuater;
+    }
+
+    public function amountWithTaxForTerm($termStartDate, $termEndDate)
+    {
+        $termStartDate = Carbon::parse($termStartDate);
+        $termEndDate = Carbon::parse($termEndDate);
+        $amount = $this->amountWithoutTaxForTerm($termStartDate, $termEndDate);
+        $ledgerAmount = null;
+        $bankCharge = optional($this->client->billingDetails)->bank_charges;
+        $totalAmount = $amount + $ledgerAmount + $bankCharge;
+        $gstPercentage = config('invoice.invoice-details.igst');
+        $gst = $totalAmount * floatval($gstPercentage) / 100;
+
+        return round($totalAmount + $gst, 2);
+    }
+
+    public function gstAmountForTerm($termStartDate, $termEndDate)
+    {
+        $termStartDate = Carbon::parse($termStartDate);
+        $termEndDate = Carbon::parse($termEndDate);
+        $amount = $this->amountWithoutTaxForTerm($termStartDate, $termEndDate);
+        $ledgerAmount = null;
+        $bankCharge = optional($this->client->billingDetails)->bank_charges;
+        $totalAmount = $amount + $ledgerAmount + $bankCharge;
+        $gstPercentage = config('invoice.invoice-details.igst');
+        $gst = $totalAmount * floatval($gstPercentage) / 100;
+
+        return round($gst, 2);
     }
 }

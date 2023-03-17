@@ -4,7 +4,7 @@
         <tr align="left">
             <th style="width: 440px;">Description</th>
             <th style="width: 135px;">
-             @if($project->serviceRateTermFromProject_Billing_DetailsTable() == 'per_hour')
+             @if($project->service_rate_term == 'per_hour')
              Hours
              @else
              Months
@@ -26,7 +26,7 @@
                     @if($project->client->billingDetails->billing_frequency == 2)
                         {{$project->getTermStartAndEndDateForInvoice()['startDate']->format('M-Y')}}
                     @elseif($project->client->billingDetails->billing_frequency == 3)
-                        @if ($project->serviceRateTermFromProject_Billing_DetailsTable() == "per_month")
+                        @if ($project->service_rate_term == "per_month")
                         {{$project->getTermStartAndEndDateForInvoice()['startDate']->format('M-Y')}}
                         @else 
                         {{ $project->getTermStartAndEndDateForInvoice()['startDate']->format('M-Y')." ". $project->getTermStartAndEndDateForInvoice()['endDate']->format('M-Y') }}

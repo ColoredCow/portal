@@ -12,8 +12,9 @@
             <div class="modal-body">
                 <form action="{{ route('invoice.send-invoice-mail') }}" method="POST" id="sendInvoiceForm">
                     @csrf
-                        @dd($invoiceData);
-                    <input type="hidden" name="invoice_data" value="{{'$invoiceData'}}">
+                    <input type="hidden" name="invoice_data" value="{{ json_encode($invoiceData) }}">
+                    <input type="hidden" name="period_start_date" value="{{ substr($invoiceData['startAndEndDate']['startDate'], 0, 10) }}">
+                    <input type="hidden" name="period_end_date" value="{{ substr($invoiceData['startAndEndDate']['endDate'], 0, 10) }}">
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="sendFrom">{{ __('From') }}</label>

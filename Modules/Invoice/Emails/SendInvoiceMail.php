@@ -31,6 +31,7 @@ class SendInvoiceMail extends Mailable
         $this->invoiceNumber = $invoiceNumber;
         $this->email = $email;
         $this->invoice = $invoice;
+
     }
 
     /**
@@ -42,35 +43,6 @@ class SendInvoiceMail extends Mailable
     {
         $subject = $this->email['subject'];
         $body = $this->email['body'];
-        $templateVariablesForSubject = config('invoice.templates.setting-key.send-invoice.template-variables.subject');
-        $templateVariablesForBody = config('invoice.templates.setting-key.send-invoice.template-variables.body');
-        $billingStartMonth = $this->client->getMonthStartDateAttribute(1)->format('M');
-        $billingEndMonth = $this->client->getMonthEndDateAttribute(1)->format('M');
-        $year = $this->client->getMonthEndDateAttribute(1)->year;
-        $monthName = $this->client->getMonthEndDateAttribute(1)->format('F');
-        $termText = $billingStartMonth != $billingEndMonth ? $billingStartMonth . ' - ' . $billingEndMonth : $monthName;
-
-        if (! $subject) {
-            $subject = Setting::where('module', 'invoice')->where('setting_key', 'send_invoice_subject')->first();
-            $subject = $subject ? $subject->setting_value : '';
-            $subject = str_replace($templateVariablesForSubject['project-name'], $this->client->name . ' Projects', $subject);
-            $subject = str_replace($templateVariablesForSubject['term'], $termText, $subject);
-            $subject = str_replace($templateVariablesForSubject['year'], $year, $subject);
-        }
-
-        if (! $body) {
-            $body = Setting::where('module', 'invoice')->where('setting_key', 'send_invoice_body')->first();
-            $body = $body ? $body->setting_value : '';
-            $body = str_replace($templateVariablesForBody['billing-person-name'], optional($this->client->billing_contact)->first_name, $body);
-            $body = str_replace(
-                $templateVariablesForBody['invoice-amount'],
-                $this->client->country->currency_symbol . $this->client->getTotalPayableAmountForTerm($this->monthToSubtract, $this->client->clientLevelBillingProjects),
-                $body
-            );
-            $body = str_replace($templateVariablesForBody['invoice-number'], $this->invoiceNumber, $body);
-            $body = str_replace($templateVariablesForBody['term'], $monthName, $body);
-            $body = str_replace($templateVariablesForBody['year'], $year, $body);
-        }
 
         $invoiceFile = Storage::path($this->invoice->file_path);
 
