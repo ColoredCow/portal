@@ -96,32 +96,30 @@
                             </tr>
                             @foreach ($client->projects as $project)
                                 <tr>
-                                    @can('projects.update')
                                     <td class="w-33p">
-                                        <div class="pl-2 pl-xl-3">
-                                          @if ($project->getTotalToBeDeployedCount() > 0)
-                                            <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
-                                                  title="There is a requirement for {{ $project->getTotalToBeDeployedCount() }} team members">
-                                              <i class="fa fa-users text-danger mr-0.5" aria-hidden="true"></i>
-                                            </span>
-                                          @endif
-                                          <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a>
-                                        </div>
-                                      </td>
-                                    @else
-                                        <td class="w-33p">
-                                            <div class="pl-2 pl-xl-3">
+                                        <div class="pl-2 pl-xl-2">
+                                            @if ($project->getTotalToBeDeployedCount() > 0)
+                                                <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
+                                                      title="There is a requirement for {{ $project->getTotalToBeDeployedCount() }} team members">
+                                                    <i class="fa fa-users text-danger mr-0.5" aria-hidden="true"></i>
+                                                </span>
+                                            @endif
+                                            @can('projects.update')
+                                                <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a>
+                                            @else
                                                 @php
-                                                    $team_member_ids = $project->getTeamMembers->pluck('team_member_id')->toArray();
+                                                $team_member_ids = $project->getTeamMembers->pluck('team_member_id')->toArray();
                                                 @endphp
                                                 @if (in_array(auth()->user()->id, $team_member_ids))
                                                     <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a>
                                                 @else
-                                                    <div class="pl-2 pl-xl-3"> {{ $project->name }}</div>
+                                                    <span class="pr-2 pr-xl-2">
+                                                        {{ $project->name }}
+                                                    </span>
                                                 @endif
-                                            </div>
-                                        </td>
-                                    @endcan
+                                            @endcan
+                                        </div>
+                                    </td>
                                     <td class="w-20p">
                                         @foreach ($project->getTeamMembers ?: [] as $teamMember)
                                             <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
