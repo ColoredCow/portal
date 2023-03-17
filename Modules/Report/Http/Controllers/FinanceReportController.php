@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller;
 use Modules\Report\Services\Finance\ReportDataService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Report\Services\Finance\ProfitAndLossReportService;
+use Modules\Client\Entities\Client;
 
 class FinanceReportController extends Controller
 {
@@ -40,22 +41,24 @@ class FinanceReportController extends Controller
 
     public function detailed()
     {
-        // $this->authorize('finance_reports.view');
-        // $currentYear = date('m') > 03 ? date('Y') + 1 : date('Y');
-
-        // $filters = $this->filters($currentYear);
-        // $reportData = $this->service->profitAndLoss($filters);
-
-        // $allAmounts = array_map(function ($item) {
-        //     return $item['amounts'];
-        // }, $reportData);
-
-        // return view('report::finance.profit-and-loss.detailed', [
-        //     'reportData' => $reportData,
-        //     'currentYear' => $currentYear,
-        //     'allAmounts' => $allAmounts
-        // ]);
-        return view('report::finance.client-wise-revenue.detailed');
+        $clients = Client::orderBy('name')->get();
+        
+        $clientsData = [];
+        foreach ($clients as $client) {
+            foreach ($client->projects as $project) {
+                $clientData = [
+                    "clientName" => $client->name, 
+                    "projectName" => $project->name,
+                    
+                ];
+                $clientsData[] = $clientData;
+            }
+        }
+        // dd($clientsData);
+        return view('report::finance.client-wise-revenue.detailed', [
+            'clientsData' => $clientsData,
+            
+        ]);
     }
 
     public function getReportData(Request $request)
