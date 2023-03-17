@@ -31,7 +31,6 @@ class SendInvoiceMail extends Mailable
         $this->invoiceNumber = $invoiceNumber;
         $this->email = $email;
         $this->invoice = $invoice;
-
     }
 
     /**

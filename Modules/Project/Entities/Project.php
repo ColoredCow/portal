@@ -765,10 +765,10 @@ class Project extends Model implements Auditable
             return $amount;
         }
         if ($months == 2) { // Quarterly
-            return ($amount * 3);
+            return $amount * 3;
         }
         if ($months == 11) { // yearly
-            return ($amount * 12);
+            return $amount * 12;
         }
 
         return $amount;
@@ -784,10 +784,10 @@ class Project extends Model implements Auditable
             return  $totalAmountInMonth;
         }
         if ($months == 2) { // Quarterly
-            return  ($totalAmountInMonth * 3);
+            return  $totalAmountInMonth * 3;
         }
         if ($months == 11) { // yearly
-            return  ($totalAmountInMonth * 12);
+            return  $totalAmountInMonth * 12;
         }
     
         return $totalAmountInMonth;
@@ -804,7 +804,7 @@ class Project extends Model implements Auditable
             return  $totalAmountInQuater;
         }
         if ($months == 11) { // yearly
-            return  ($totalAmountInQuater * 4);
+            return  $totalAmountInQuater * 4;
         }
 
         return $totalAmountInQuater;
