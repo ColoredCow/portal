@@ -56,7 +56,7 @@ class ProjectTeamMember extends Model
     {
         $project = new Project;
         $currentDate = today(config('constants.timezone.indian'));
-        if ($this->started_on && $this->started_on > $startDate) {
+        if ($this->started_on && $this->started_on > $this->project->client->month_start_date) {
             $startDate = $this->started_on;
         } else {
             $startDate = $this->project->client->month_start_date;
