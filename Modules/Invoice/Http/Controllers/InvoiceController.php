@@ -185,9 +185,9 @@ class InvoiceController extends Controller
         return redirect()->back()->with('status', 'Invoice saved successfully.');
     }
 
-    public function sendInvoice(Request $request ,Invoice $invoice)
+    public function sendInvoice(Request $request, Invoice $invoice)
     {
-        $this->service->sendInvoice($request->all(),  $invoice);
+        $this->service->sendInvoice($request->all(), $invoice);
 
         return redirect()->back()->with('status', 'Invoice saved successfully.');
     }

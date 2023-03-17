@@ -544,10 +544,10 @@ class InvoiceService implements InvoiceServiceContract
         ];
     }
 
-    public function sendInvoice(array $data,  Invoice $invoice)
+    public function sendInvoice(array $data, Invoice $invoice)
     {
         $term = $data['term'] ?? null;
-        $client = Client::find($data['client_id'] ?? null );
+        $client = Client::find($data['client_id'] ?? null);
         $project = Project::find($data['project_id'] ?? null);
         $ccEmails = $data['cc'] ?? [];
         $bccEmails = $data['bcc'] ?? [];
@@ -603,14 +603,14 @@ class InvoiceService implements InvoiceServiceContract
             ],
 
             'pdf' => [
+                 'client' => $project->client ?: $client,
+                 'project' => $project,
                  'gst' => $decodedInvoiceData['GstAmount'],
-                 'totalAmount' => $decodedInvoiceData['totalAmount'],
+                 'totalAmount' => $project->amountWithTaxForTerm($periodStartDate, $periodEndDate),
                  'totalAmountWithoutTax' => $decodedInvoiceData['totalAmountWithoutTax'],
                  'startAndEndDate' => $decodedInvoiceData['startAndEndDate'],
                  'projectName' => $decodedInvoiceData['projectName'],
                  'term' => $term,
-                 'client' => $project->client ?: $client,
-                 'project' => $project,
                  'projects' => $billingLevel == 'client' ? $client->clientLevelBillingProjects : collect([$project]),
                  'project' => $project,
                  'keyAccountManager' => $client ? $client->keyAccountManager()->first() : $project->client->keyAccountManager()->first(),
@@ -618,7 +618,7 @@ class InvoiceService implements InvoiceServiceContract
                  'invoiceData' => $dataArray,
                  'billingLevel' => $billingLevel,
                  'monthName' => $monthName,
-                 'year' => $year, 
+                 'year' => $year,
                  'monthNumber' => $monthNumber,
                  'currencyService' => $this->currencyService(),
                  'monthsToSubtract' => 1,
@@ -636,8 +636,8 @@ class InvoiceService implements InvoiceServiceContract
                  'projectId' => $data['project_id'],
                  'clientId' => $data['client_id'],
                  'invoiceNumber' => $decodedInvoiceData['invoiceNumber'],
-                 'gst' => $decodedInvoiceData['GstAmount'],
-                 'amount' => $decodedInvoiceData['totalAmountWithoutTax'],
+                 'gst' => $project->gstAmountForTerm($periodStartDate, $periodEndDate),
+                 'amount' => $project->amountWithTaxForTerm($periodStartDate, $periodEndDate),
                  'sentOn' => today(config('constants.timezone.indian')),
                  'dueOn' => today(config('constants.timezone.indian'))->addDays(6),
             ],
@@ -648,18 +648,50 @@ class InvoiceService implements InvoiceServiceContract
         ];
 
         $invoiceNumber = optional($client)->next_invoice_number ?: $project->next_invoice_number;
-        // dd($invoiceNumber, $decodedInvoiceData['invoiceNumber']);
         $invoice = $this->createInvoice($invoiceData, $periodStartDate, $periodEndDate);
         $invoice->update([
-            'amount' => $invoiceData['invoice']['totalAmount'],
+            'amount' => $invoiceData['invoice']['amount'],
             'invoice_number' => $invoiceData['invoice']['invoiceNumber'],
             'gst' => $invoiceData['invoice']['gst'],
             'term_start_date' => substr($invoiceData['invoice']['startAndEndDate']['startDate'], 0, 10),
             'term_end_date' => substr($invoiceData['invoice']['startAndEndDate']['endDate'], 0, 10),
         ]);
-        dd("stop! invoice is created in DB");
 
         Mail::queue(new SendInvoiceMail($invoice, $invoiceNumber, $invoiceData['email']));
+    }
+
+    public function createInvoice($overallInvoiceData, $periodStartDate, $periodEndDate)
+    {
+        $client = $overallInvoiceData['client'] ?? null;
+        $project = $overallInvoiceData['project'] ?? null;
+        $invoiceData = $overallInvoiceData['invoice'];
+        $pdf = App::make('snappy.pdf.wrapper');
+        $template = config('invoice.templates.invoice.clients.' . optional($overallInvoiceData['client'])->name) ?: 'invoice-template';
+        $html = view(('invoice::render.' . $template), $overallInvoiceData['pdf'])->render();
+
+        $invoice = Invoice::create([
+            'project_id' => optional($project)->id,
+            'client_id' => optional($client)->id ?: $project->client->id,
+            'billing_level' => $client ? 'client' : 'project',
+            'status' => 'sent',
+            'sent_on' =>  $invoiceData['sentOn'],
+            'due_on' => $invoiceData['dueOn'],
+            'receivable_date' => $invoiceData['dueOn'],
+            'currency' => $client ? $client->country->currency : $project->client->country->currency,
+            'amount' => $invoiceData['amount'],
+            'gst' => $invoiceData['gst'],
+            'term_start_date' => $periodStartDate,
+            'term_end_date' => $periodEndDate
+        ]);
+
+        $filePath = $this->getInvoiceFilePath($invoice) . '/' . $invoiceData['invoiceNumber'] . '.pdf';
+        $pdf->generateFromHtml($html, storage_path('app' . $filePath), [], true);
+        $invoice->update([
+            'invoice_number' => $invoiceData['invoiceNumber'],
+            'file_path' => $filePath
+        ]);
+
+        return $invoice;
     }
 
     public function getTermText($termStartDate, $termEndDate)
@@ -677,88 +709,6 @@ class InvoiceService implements InvoiceServiceContract
         }
 
         return $termText;
-    }
-
-    public function createInvoice($overallInvoiceData, $periodStartDate, $periodEndDate)
-    {
-        $client = $overallInvoiceData['client'] ?? null;
-        $project = $overallInvoiceData['project'] ?? null;
-        $term = $overallInvoiceData['term'] ?? null;
-        $invoiceData = $overallInvoiceData['invoice'];
-        $sentOn = $invoiceData['sentOn'];
-        $dueOn = $invoiceData['dueOn'];
-        $monthsToSubtract = 1;
-
-        $pdf = App::make('snappy.pdf.wrapper');
-        $template = config('invoice.templates.invoice.clients.' . optional($overallInvoiceData['pdf']['client'])->name) ?: 'invoice-template';
-        $html = view(('invoice::render.' . $template), $overallInvoiceData['pdf'])->render();
-        $gst = null;
-        $invoiceNumber = $overallInvoiceData['pdf']['invoiceNumber'];
-
-
-        $amount = $project->amountWithoutTaxForTerm($periodStartDate, $periodEndDate);
-        $amountwithtax = $project->amountWithTaxForTerm($periodStartDate, $periodEndDate);
-
-        $gst = $project->gstAmountForTerm($periodStartDate, $periodEndDate);
-        dd($amountwithtax ,$amount, $gst);
-        // $tax = $amountwithtax - $amount; 
-        dd("hay");
-
-        if ($project) {
-
-            ## Todo: Caculate service_rate_term. Priority should be given to project service_rate_term. 
-            ## Create a accessor in Project Model
-
-            if (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
-                $amount = $project->getResourceBillableAmount() + $project->getTotalLedgerAmount();
-            } else {
-                $amount = $project->getBillableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate) + optional($project->client->billingDetails)->bank_charges;
-                $gst = $project->getTaxAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate);
-                if ($gst == 0 || ! $gst) {
-                    $gst = $overallInvoiceData['invoice']['gst'];
-                }
-            }
-        } else {
-            if (optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
-                $amount = $client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount();
-            } else {
-                $amount = $client->getBillableAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate) + optional($client->billingDetails)->bank_charges;
-                $gst = $client->getTaxAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate);
-                if ($gst == 0 || ! $gst) {
-                    $gst = $overallInvoiceData['invoice']['gst'];
-                }
-            }
-        }
-
-        if (! $amount || $amount == 0 ) {
-            $amount = $invoiceData['invoice']['totalAmount'] ?? null;
-        }
-
-        dd("stop");
-
-        $invoice = Invoice::create([
-            'project_id' => optional($project)->id,
-            'client_id' => optional($client)->id ?: $project->client->id,
-            'billing_level' => $client ? 'client' : 'project',
-            'status' => 'sent',
-            'sent_on' =>  $invoiceData['sentOn'],
-            'due_on' => $invoiceData['dueOn'],
-            'receivable_date' => $invoiceData['dueOn'],
-            'currency' => $client ? $client->country->currency : $project->client->country->currency,
-            'amount' => $amount,
-            'gst' => $gst,
-            'term_start_date' => $periodStartDate,
-            'term_end_date' => $periodEndDate
-        ]);
-
-        $filePath = $this->getInvoiceFilePath($invoice) . '/' . $invoiceNumber . '.pdf';
-        $pdf->generateFromHtml($html, storage_path('app' . $filePath), [], true);
-        $invoice->update([
-            'invoice_number' => $invoiceNumber,
-            'file_path' => $filePath
-        ]);
-
-        return $invoice;
     }
 
     public function sendInvoiceReminder(Invoice $invoice, $data)
