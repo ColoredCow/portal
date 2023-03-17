@@ -183,6 +183,10 @@ class Project extends Model implements Auditable
     }
     public function getAmcDateDiffAttribute($project)
     {
+        if ($project->end_date == null) {
+
+            return;
+        }
         $end_date = Carbon::parse($project->end_date);
         $diff = $end_date->diffInDays(Carbon::now(), true);
 
