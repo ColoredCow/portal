@@ -7,7 +7,6 @@ use Modules\Project\Entities\Project;
 
 class CheckProjectRenewalTag extends Command
 {
-    
     /**
      * The console command name.
      *
