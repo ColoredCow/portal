@@ -2,13 +2,12 @@
 
 namespace Modules\Project\Console;
 
-use App\Traits\HasTags;
 use Illuminate\Console\Command;
 use Modules\Project\Entities\Project;
 
 class CheckProjectRenewalTag extends Command
 {
-    use HasTags;
+    
     /**
      * The console command name.
      *
