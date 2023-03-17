@@ -612,7 +612,6 @@ class InvoiceService implements InvoiceServiceContract
                  'projectName' => $decodedInvoiceData['projectName'],
                  'term' => $term,
                  'projects' => $billingLevel == 'client' ? $client->clientLevelBillingProjects : collect([$project]),
-                 'project' => $project,
                  'keyAccountManager' => $client ? $client->keyAccountManager()->first() : $project->client->keyAccountManager()->first(),
                  'invoiceNumber' => $decodedInvoiceData['invoiceNumber'],
                  'invoiceData' => $dataArray,
@@ -641,7 +640,7 @@ class InvoiceService implements InvoiceServiceContract
                  'sentOn' => today(config('constants.timezone.indian')),
                  'dueOn' => today(config('constants.timezone.indian'))->addDays(6),
             ],
-            
+
             'client' => $client,
             'project' => $project,
             'term' => $term ?? today(config('constants.timezone.indian'))->subMonth()->format('Y-m'),
@@ -797,8 +796,6 @@ class InvoiceService implements InvoiceServiceContract
             'subject' => $data['email_subject'] ?? null
         ];
     }
-
-
 
     public function yearlyInvoiceReport($filters, $request)
     {

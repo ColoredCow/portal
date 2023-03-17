@@ -300,10 +300,9 @@ class Project extends Model implements Auditable
         }
         $totalAmount = 0;
         $numberOfMonths = 1;
-        
+
         ## Todo: Calculate billing_frequency
-        
-        
+
         switch ($this->client->billingDetails->billing_frequency) {
             case 3:
                 $numberOfMonths = 3;
@@ -750,7 +749,7 @@ class Project extends Model implements Auditable
                 return $this->getResourceBillableAmount();
             default:
 
-                return null;
+                return;
         }
     }
 
@@ -789,7 +788,7 @@ class Project extends Model implements Auditable
         if ($months == 11) { // yearly
             return  $totalAmountInMonth * 12;
         }
-    
+
         return $totalAmountInMonth;
     }
 
