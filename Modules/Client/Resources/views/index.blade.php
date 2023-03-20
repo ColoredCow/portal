@@ -32,7 +32,52 @@
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr class="sticky-top">
-                    <th>Name</th>
+                    <th class="show">
+                        <div class="dropdown">
+                        <span data-toggle="dropdown" aria-haspopup="true" class="dropdown-toggle c-pointer">Client Id </span>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-item c-pointer">
+                                <form method="GET" action="{{ route('client.index') }}" class="w-100 m-0 d-grid gap-2">
+                                    @csrf
+                                    <input type="hidden" name="column_sort" value="client_id">
+                                    <input type="hidden" name="order" value="asc">
+                                    <button type="submit" class="btn btn-light w-100 d-flex align-items-center">ASC</button>
+                                </form>
+                            </div>
+                            <div class="dropdown-item c-pointer" >
+                                <form method="GET" action="{{ route('client.index') }}" class="w-100 m-0 d-grid gap-2">
+                                    @csrf
+                                    <input type="hidden" name="column_sort" value="client_id" >
+                                    <input type="hidden" name="order" value="desc">
+                                    <button type="submit" class="btn btn-light w-100 d-flex align-items-center">DESC</button>
+                                </form>
+                            </div> 
+                        </div>
+                        </div>
+                    </th>
+                    <th class="show">
+                        <div class="dropdown">
+                        <span data-toggle="dropdown" aria-haspopup="true" class="dropdown-toggle c-pointer">Name</span>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-item c-pointer">
+                                <form method="GET" action="{{ route('client.index') }}" class="w-100 m-0 d-grid gap-2">
+                                    @csrf
+                                    <input type="hidden" name="column_sort" value="name">
+                                    <input type="hidden" name="order" value="asc">
+                                    <button type="submit" class="btn btn-light w-100 d-flex align-items-center">ASC</button>
+                                </form>
+                            </div>
+                            <div class="dropdown-item c-pointer" >
+                                <form method="GET" action="{{ route('client.index') }}" class="w-100 m-0 d-grid gap-2">
+                                    @csrf
+                                    <input type="hidden" name="column_sort" value="name" >
+                                    <input type="hidden" name="order" value="desc">
+                                    <button type="submit" class="btn btn-light w-100 d-flex align-items-center">DESC</button>
+                                </form>
+                            </div> 
+                        </div>
+                        </div>
+                    </th>
                     <th>Client Type</th>
                     <th>Key Account Manager</th>
                 </tr>
@@ -59,6 +104,6 @@
             </tbody>
         </table>
 
-    </div>
+
 </div>
 @endsection

@@ -2,6 +2,8 @@
 
 namespace Modules\Client\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Modules\Client\Contracts\ClientServiceContract;
 use Modules\Client\Entities\Client;
 use Modules\Client\Http\Requests\ClientFormsRequest;
@@ -20,11 +22,17 @@ class ClientController extends ModuleBaseController
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index(Request $request)
+    {   
         $this->authorize('viewAny', Client::class);
 
-        return view('client::index', $this->service->index(request()->all()));
+            $column_sort = $request["column_sort"];
+            $order = $request["order"];
+            if(($column_sort == null) && ($order == null))
+            {
+                return view('client::index', $this->service->index(request()->all()));
+            }
+        return view('client::index', $this->service->index(request()->all(), $column_sort, $order));
     }
 
     /**

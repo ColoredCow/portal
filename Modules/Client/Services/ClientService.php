@@ -12,7 +12,7 @@ use Modules\Client\Contracts\ClientServiceContract;
 
 class ClientService implements ClientServiceContract
 {
-    public function index(array $data = [])
+    public function index(array $data = [], $column_sort="name", $order = "asc")
     {
         $filters = [
             'status' => $data['status'] ?? 'active',
@@ -27,7 +27,7 @@ class ClientService implements ClientServiceContract
                     return $subQuery->applyFilter($filters)->orderBy('name');
                 },
             ])
-            ->orderBy('name')
+            ->orderBy($column_sort, $order)
             ->get();
         $count = $clients->count();
 
