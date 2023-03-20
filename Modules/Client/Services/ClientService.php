@@ -12,7 +12,7 @@ use Modules\Client\Contracts\ClientServiceContract;
 
 class ClientService implements ClientServiceContract
 {
-    public function index(array $data = [], $column_sort="name", $order = "asc")
+    public function index(array $data = [], $column_sort='name', $order = 'asc')
     {
         $filters = [
             'status' => $data['status'] ?? 'active',
