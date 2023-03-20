@@ -61,6 +61,11 @@ class User extends Authenticatable
         return $this->hasRole('super-admin');
     }
 
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
+    }
+
     public static function scopeInterviewers($query)
     {
         return $query->whereHas('roles', function ($query) {

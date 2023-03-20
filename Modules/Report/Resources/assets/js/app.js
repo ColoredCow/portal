@@ -25,6 +25,12 @@ $(function() {
 			clientWiseRevenueTrendsReport
 		);
 	}
+	if ($("#userDashboardGraph").length) {
+		getData(
+			{ type: "fte-trend" },
+			userFteTrendsReport
+		);
+	}
 });
 
 function financeReportRevenueTrendsReport(reportsData) {
@@ -144,11 +150,63 @@ function clientWiseRevenueTrendsReport(reportsData) {
 					},
 				]
 			},
+			"animation": {
+				"onComplete": function() {
+					const chartInstance = this.chart,
+						ctx = chartInstance.ctx;
+
+					ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+					ctx.textAlign = "center";
+					ctx.textBaseline = "bottom";
+
+					this.data.datasets.forEach(function(dataset, i) {
+						const meta = chartInstance.controller.getDatasetMeta(i);
+						meta.data.forEach(function(bar, index) {
+							const data = dataset.data[index];
+							ctx.fillText(data, bar._model.x, bar._model.y - 5);
+						});
+					});
+				}
+			},
 		}
 	};
 
 	new Chart(canvasElementId, chartConfig);
 }
+
+function userFteTrendsReport(reportFteData) {
+	const canvasElementId = "userDashboardGraph";
+	const labels = reportFteData.labels;
+	const chartData = {
+		labels: labels,
+		datasets: [
+			{
+				label: "Fte",
+				backgroundColor: "rgb(255, 0, 0)",
+				borderColor: "rgb(105, 105, 105)",
+				data: reportFteData.data,
+			},
+		],
+	};
+
+	const chartConfig = {
+		type: reportFteData.graph_type || "bar",
+		data: chartData,
+		options: {
+			scales: {
+				yAxes: [{
+					ticks: {
+						beginAtZero: true,
+					}
+				}]
+			}	
+		}
+	};
+
+	new Chart(canvasElementId, chartConfig);
+}
+
+
 
 function getData(params, callback) {
 	url = $("#get_report_data_url").val();

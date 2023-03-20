@@ -35,7 +35,7 @@
                     </div>
                         <div class="w-10p mr-10">
                             @include('client::subviews.create-client-projects-modal')
-                            <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Remove</button>
+                            <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal{{$project->id}}">Remove</button>
                         </div>
                     </div>
                 @endforeach

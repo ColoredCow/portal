@@ -73,9 +73,15 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary save-btn">Save</button>
-                    <a onclick="return confirm('Are you sure ?')" href="{{ route('codetrek.delete', $applicant) }}" class="btn btn-danger save-btn">Delete</a>
-            </div>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">Delete</button>
+                </div>
         </form>
+                @include('component.delete-modal', [
+                    'modalId' => 'confirm-delete',
+                    'title' => 'Confirm Delete',
+                    'body' => 'Are you sure you want to remove this applicant?',
+                    'action' => route('codetrek.delete', $applicant)
+                    ])
     </div>
 </div>
 @endsection

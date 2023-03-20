@@ -17,7 +17,4 @@ Route::prefix('codetrek')->group(function () {
     Route::get('/edit/{applicant}', 'CodeTrekController@edit')->name('codetrek.edit');
     Route::post('/edit/{applicant}', 'CodeTrekController@update')->name('codetrek.update');
     Route::get('/{applicant}', 'CodeTrekController@delete')->name('codetrek.delete');
-    Route::get('/evaluate/{applicant}', 'CodeTrekController@evaluate')->name('codetrek.evaluate');
-    Route::post('/action/{applicant}', 'CodeTrekApplicantRoundDetailController@takeAction')->name('codetrek.action');
-    Route::post('/update-feedback/{applicant}', 'CodeTrekApplicantRoundDetailController@update')->name('codetrek.update-feedback');
 });
