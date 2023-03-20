@@ -3,7 +3,6 @@
 namespace Modules\Client\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
 use Modules\Client\Contracts\ClientServiceContract;
 use Modules\Client\Entities\Client;
 use Modules\Client\Http\Requests\ClientFormsRequest;
