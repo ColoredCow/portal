@@ -23,15 +23,15 @@ class ClientController extends ModuleBaseController
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {   
+    {
         $this->authorize('viewAny', Client::class);
 
-        $column_sort = $request["column_sort"];
-        $order = $request["order"];
-        if(($column_sort == null) && ($order == null)){
+        $column_sort = $request['column_sort'];
+        $order = $request['order'];
+        if (($column_sort == null) && ($order == null)) {
             return view('client::index', $this->service->index(request()->all()));
         }
-        
+
         return view('client::index', $this->service->index(request()->all(), $column_sort, $order));
     }
 
