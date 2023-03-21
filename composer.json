@@ -40,7 +40,8 @@
         "nwidart/laravel-modules": "^7.0",
         "owen-it/laravel-auditing": "^13.0",
         "revolution/laravel-google-sheets": "^5.6",
-        "spatie/laravel-permission": "^3.3"
+        "spatie/laravel-permission": "^3.3",
+        "spatie/pdf-to-text": "^1.52"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

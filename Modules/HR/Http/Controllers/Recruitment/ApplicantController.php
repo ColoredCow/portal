@@ -2,22 +2,23 @@
 
 namespace Modules\HR\Http\Controllers\Recruitment;
 
-use App\Imports\ApplicationImport;
 use App\Models\Setting;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
-use Maatwebsite\Excel\Facades\Excel;
-use Modules\HR\Contracts\ApplicationServiceContract;
-use Modules\HR\Entities\Applicant;
-use Modules\HR\Entities\Application;
 use Modules\HR\Entities\Job;
+use Modules\User\Entities\User;
+use App\Imports\ApplicationImport;
+use Illuminate\Routing\Controller;
+use Modules\HR\Entities\Applicant;
+use Maatwebsite\Excel\Facades\Excel;
+use Modules\HR\Entities\Application;
+use Modules\HR\Entities\ApplicantMeta;
+use Modules\HR\Services\ResumeService;
+use Modules\HR\Services\ApplicantService;
+use Modules\HR\Http\Requests\ApplicantMetaRequest;
+use Modules\HR\Contracts\ApplicationServiceContract;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\HR\Events\Recruitment\ApplicantEmailVerified;
 use Modules\HR\Http\Requests\Recruitment\ApplicantRequest;
-use Modules\User\Entities\User;
-use Modules\HR\Http\Requests\ApplicantMetaRequest;
-use Modules\HR\Entities\ApplicantMeta;
-use Modules\HR\Services\ApplicantService;
 
 class ApplicantController extends Controller
 {
@@ -138,5 +139,25 @@ class ApplicantController extends Controller
         $applicant = Applicant::where('id', $id)->get();
 
         return view('hr.application.verify-details', ['applicantMeta'=> $applicantMeta, 'applicant'=> $applicant]);
+    }
+
+
+    public function getOpenAIEvaluation(Request $request) {
+        $application = Application::find($request->application_id);
+        
+        $values = ['Creating opportunities', 'Vulnerability','Lead by example'];
+
+        if($request->type == "summery") {
+            $data = ResumeService::getTextFromPDF($application->resume, $request->type);
+            return $data['choices'][0]['text'];
+        }
+        
+        if($request->type == "value_summery") {
+            $data = ResumeService::getTextFromPDF($application->resume, $request->type, $values);
+            return $data['choices'][0]['text'];
+        }
+
+        return "Something is not right.";
+
     }
 }
