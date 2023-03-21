@@ -146,4 +146,19 @@ class ProjectController extends Controller
 
         return $this->service->projectFTEExport($filters);
     }
+
+    public function projectResource(Project $project)
+    {
+        $designations = $this->service->getDesignations();
+        $designationKeys = array_keys($designations);
+        $additionalResourceRequired = $this->service->allProjectsAdditionalResourceRequiredCount();
+
+        return view('project::resource-requirement', [
+            'project' => $project,
+            'clients' => Client::status('active')->orderBy('name')->get(),
+            'designations' => $designations,
+            'designationKeys' => $designationKeys,
+            'additionalResourceRequired' => $additionalResourceRequired,
+        ]);
+    }
 }

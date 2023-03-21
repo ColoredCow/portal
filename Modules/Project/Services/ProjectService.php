@@ -461,4 +461,20 @@ class ProjectService implements ProjectServiceContract
 
         return $teamMembers;
     }
+
+    public function allProjectsAdditionalResourceRequiredCount()
+    {
+        $clients = Client::status('active')->orderBy('name')->get();
+        $additionalResourceRequired = 0;
+        foreach ($clients as $client) {
+            foreach ($client->projects as $project) {
+                $count = $project->getTotalToBeDeployedCount();
+                if ($count > 0) {
+                    $additionalResourceRequired += $count;
+                }
+            }
+        }
+
+        return $additionalResourceRequired;
+    }
 }

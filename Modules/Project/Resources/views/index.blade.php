@@ -94,15 +94,14 @@
                                     </div>
                                 </td>
                             </tr>
-                            {{-- @dd(auth()->user()); --}}
                             @foreach ($client->projects as $project)
                             <tr>
                                 <td class="w-33p">
-                                    <div class="pl-1 pl-xl-3">
+                                    <div class="pl-1 pl-xl-2">
                                         @if ($project->getTotalToBeDeployedCount() > 0)
                                             <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
                                                   title="There is a requirement for {{ $project->getTotalToBeDeployedCount() }} team members">
-                                                <i class="fa fa-users text-danger mr-0.5" aria-hidden="true"></i>
+                                                <a href="{{ route('project.resource-requirement', $project) }}"><i class="fa fa-users text-danger mr-0.5" aria-hidden="true"></i></a>
                                             </span>
                                         @endif
                                         @can('projects.update')
