@@ -46,7 +46,7 @@ class ClientRevenueReportService
                 $reportData[] = $clientData;
             }
         }
-        
+
         return $reportData;
     }
 
