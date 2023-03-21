@@ -12,7 +12,7 @@
 */
 
 Route::prefix('client')->middleware('auth')->group(function () {
-    Route::any('/', 'ClientController@index')->name('client.index');
+    Route::get('/', 'ClientController@index')->name('client.index');
     Route::get('/create', 'ClientController@create')->name('client.create');
     Route::get('/{client}/edit/{section?}', 'ClientController@edit')->name('client.edit');
     Route::post('/', 'ClientController@store')->name('client.store');
