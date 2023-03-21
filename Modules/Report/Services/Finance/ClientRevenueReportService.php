@@ -6,7 +6,7 @@ use Modules\Client\Entities\Client;
 use Modules\Invoice\Entities\Invoice;
 use Carbon\Carbon;
 
-class ClientRevenueReportService 
+class ClientRevenueReportService
 {
     protected $dataKeyFormat = 'm-y';
     
@@ -25,7 +25,7 @@ class ClientRevenueReportService
         $reportData = [];
         foreach ($clients as $client) {
             foreach ($client->projects as $project) {
-                
+
                 $projectId = $project->id;
                 $invoices = $this->getInvoicesForProjectBetweenDates($startDate, $endDate, $projectId);
                 $totalAmount = 0;
