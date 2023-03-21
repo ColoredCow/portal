@@ -52,7 +52,7 @@ class ClientRevenueReportService
 
     public function getInvoicesForProjectBetweenDates($startDate, $endDate, $projectId)
     {
-        return Invoice::sentBetween($startDate, $endDate, $projectId)
+        return Invoice::sentBetween($startDate, $endDate)
             ->where('project_id', '=', $projectId)
             ->status(['sent', 'paid'])
             ->get();
