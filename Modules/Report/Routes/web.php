@@ -33,7 +33,7 @@ Route::prefix('report')->group(function () {
         Route::prefix('revenue-by-client')->group(function () {
             Route::get('/', 'FinanceReportController@index')->name('reports.finance.revenue-by-client.index');
             Route::get('/dashboard/client-wise', 'FinanceReportController@clientWiseInvoiceDashboard')->name('reports.finance.dashboard.client');
-            Route::get('/detailed', 'FinanceReportController@detailed')->name('reports.finance.revenue-by-client.detailed');
+            Route::get('/detailed', 'ClientRevenueReportController@detailed')->name('reports.finance.revenue-by-client.detailed');
         });
     });
 });

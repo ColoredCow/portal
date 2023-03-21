@@ -7,7 +7,6 @@ use Illuminate\Routing\Controller;
 use Modules\Report\Services\Finance\ReportDataService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Report\Services\Finance\ProfitAndLossReportService;
-use Modules\Client\Entities\Client;
 
 class FinanceReportController extends Controller
 {
@@ -37,28 +36,6 @@ class FinanceReportController extends Controller
         $data = $this->reportDataService->getDataForClientRevenueReportPage($request->all());
 
         return view('report::finance.client-wise-revenue.index', $data);
-    }
-
-    public function detailed()
-    {
-        $clients = Client::orderBy('name')->get();
-        
-        $clientsData = [];
-        foreach ($clients as $client) {
-            foreach ($client->projects as $project) {
-                $clientData = [
-                    "clientName" => $client->name, 
-                    "projectName" => $project->name,
-                    
-                ];
-                $clientsData[] = $clientData;
-            }
-        }
-        // dd($clientsData);
-        return view('report::finance.client-wise-revenue.detailed', [
-            'clientsData' => $clientsData,
-            
-        ]);
     }
 
     public function getReportData(Request $request)

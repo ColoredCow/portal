@@ -36,6 +36,7 @@ class ReportDataService
 
     private function revenueTrendForClient($filters)
     {
+        
         $client = Client::find($filters['client_id']);
         $defaultStartDate = $client->created_at ?? $client->invoices()->orderBy('sent_on')->first()->sent_on;
         $defaultEndDate = today();
