@@ -87,7 +87,7 @@ class RevenueReportService
         $totalAmount = 0;
         $results = [];
         $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'non-indian');
-        
+
         foreach ($invoices as $invoice) {
             $dateKey = $invoice->sent_on->format($this->dataKeyFormat);
             $exchangeRate = $this->avgCurrencyRates[$dateKey][strtolower($invoice->currency)] ?? $this->defaultCurrencyRates;

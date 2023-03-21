@@ -9,18 +9,18 @@ use Carbon\Carbon;
 class ClientRevenueReportService
 {
     protected $dataKeyFormat = 'm-y';
-    
+
     public function clientWiseRevenue()
     {
         $currentYear = date('m') > 03 ? date('Y') + 1 : date('Y');
         $filters = $this->filters($currentYear);
-        
+
         $year = $filters['year'];
         $startYear = $year - 1;
         $endYear = $year;
         $startDate = Carbon::parse($startYear . '-04-01')->startOfDay();
         $endDate = Carbon::parse($endYear . '-03-31')->endOfDay();
-        
+
         $clients = Client::orderBy('name')->get();
         $reportData = [];
         foreach ($clients as $client) {
@@ -29,7 +29,7 @@ class ClientRevenueReportService
                 $invoices = $this->getInvoicesForProjectBetweenDates($startDate, $endDate, $projectId);
                 $totalAmount = 0;
                 $results = [];
-                
+
                 foreach ($invoices as $invoice) {
                     $dateKey = $invoice->sent_on->format($this->dataKeyFormat);
                     $totalAmount += (int) $invoice->amount;
@@ -38,14 +38,15 @@ class ClientRevenueReportService
                 $results['total'] = $totalAmount;
 
                 $clientData = [
-                    "client" => $client->name,
-                    "project" => $project->name,
-                    "amounts" => $results,
+                    'client' => $client->name,
+                    'project' => $project->name,
+                    'amounts' => $results,
                 ];
 
                 $reportData[] = $clientData;
             }
         }
+        
         return $reportData;
     }
 
