@@ -25,7 +25,6 @@ class ClientRevenueReportService
         $reportData = [];
         foreach ($clients as $client) {
             foreach ($client->projects as $project) {
-
                 $projectId = $project->id;
                 $invoices = $this->getInvoicesForProjectBetweenDates($startDate, $endDate, $projectId);
                 $totalAmount = 0;
