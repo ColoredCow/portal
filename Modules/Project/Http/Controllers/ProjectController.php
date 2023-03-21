@@ -78,10 +78,9 @@ class ProjectController extends Controller
             'daysTillToday' => $daysTillToday,
         ]);
     }
-
     public function destroy(ProjectRequest $request, Project $project)
     {
-        Project::updateOrCreate(
+        $project->update(
             [
                 'reason_for_deletion' => $request['comment']
             ]
