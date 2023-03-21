@@ -100,7 +100,7 @@
                                     <div class="pl-1 pl-xl-2">
                                         @if ($project->getTotalToBeDeployedCount() > 0)
                                             <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
-                                                  title="There is a requirement for {{ $project->getTotalToBeDeployedCount() }} team members">
+                                                  title="There is a requirement of {{ $project->getTotalToBeDeployedCount() }} team members">
                                                 <a href="{{ route('project.resource-requirement', $project) }}"><i class="fa fa-users text-danger mr-0.5" aria-hidden="true"></i></a>
                                             </span>
                                         @endif
