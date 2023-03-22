@@ -22,7 +22,7 @@ class ClientRevenueReportController extends Controller
         $currentYear = date('m') > 03 ? date('Y') + 1 : date('Y');
         
         $filters = $this->filters($currentYear);
-        $reportData = $this->service->clientWiseRevenue();
+        $reportData = $this->service->clientWiseRevenue($filters);
 
         $allAmounts = array_map(function ($item) {
             return $item['amounts'];
