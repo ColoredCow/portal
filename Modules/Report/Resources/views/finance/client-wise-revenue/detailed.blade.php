@@ -32,7 +32,7 @@
                         </select>
                     </div>
                     <div class="ml-auto">
-                        <button type="submit" formaction="#" class="btn btn-info text-white">Export to Excel</button>
+                        <button type="submit" formaction="{{ route('reports.finance.client-revenue.report.export') }}" class="btn btn-info text-white">Export to Excel</button>
                     </div>
                 </div>
             </form>

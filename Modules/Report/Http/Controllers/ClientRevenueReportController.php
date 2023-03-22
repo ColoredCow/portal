@@ -5,6 +5,8 @@ namespace Modules\Report\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Report\Services\Finance\ClientRevenueReportService;
+use Modules\Report\Exports\ClientRevenueReportExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ClientRevenueReportController extends Controller
 {
@@ -42,5 +44,19 @@ class ClientRevenueReportController extends Controller
         ];
 
         return array_merge($defaultFilters, request()->all());
+    }
+
+    public function clientRevenueReportExport()
+    {
+        $currentYear = date('m') > 03 ? date('Y') + 1 : date('Y');
+
+        $filters = $this->filters($currentYear);
+        $reportData = $this->service->clientWiseRevenue($filters);
+
+        $request = request()->all();
+        $endYear = $request['year'];
+        $startYear = $endYear - 1;
+
+        return Excel::download(new ClientRevenueReportExport($reportData), "Client Revenue Report $startYear-$endYear.xlsx");
     }
 }
