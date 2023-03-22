@@ -32,7 +32,7 @@ class ClientRevenueReportService
                 $results = $this->getInvoicesForProjectBetweenDates($startDate, $endDate, $projectId);
                 
                 $clientData = [
-                    'client' => $client->name, 
+                    'client' => $client->name,
                     'project' => $project->name,
                     'amounts' => $results
                 ];
