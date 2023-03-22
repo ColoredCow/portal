@@ -10,11 +10,8 @@ class ClientRevenueReportService
 {
     protected $dataKeyFormat = 'm-y';
 
-    public function clientWiseRevenue()
+    public function clientWiseRevenue(array $filters): array
     {
-        $currentYear = date('m') > 03 ? date('Y') + 1 : date('Y');
-        $filters = $this->filters($currentYear);
-
         $year = $filters['year'];
         $startYear = $year - 1;
         $endYear = $year;
@@ -56,14 +53,5 @@ class ClientRevenueReportService
             ->where('project_id', '=', $projectId)
             ->status(['sent', 'paid'])
             ->get();
-    }
-
-    public function filters($currentYear)
-    {
-        $defaultFilters = [
-            'year' => $currentYear,
-        ];
-
-        return array_merge($defaultFilters, request()->all());
     }
 }

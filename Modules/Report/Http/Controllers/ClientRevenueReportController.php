@@ -20,6 +20,8 @@ class ClientRevenueReportController extends Controller
     public function detailed()
     {
         $currentYear = date('m') > 03 ? date('Y') + 1 : date('Y');
+        
+        $filters = $this->filters($currentYear);
         $reportData = $this->service->clientWiseRevenue();
 
         $allAmounts = array_map(function ($item) {
@@ -31,5 +33,14 @@ class ClientRevenueReportController extends Controller
             'currentYear' => $currentYear,
             'allAmounts' => $allAmounts
         ]);
+    }
+
+    public function filters($currentYear)
+    {
+        $defaultFilters = [
+            'year' => $currentYear,
+        ];
+
+        return array_merge($defaultFilters, request()->all());
     }
 }
