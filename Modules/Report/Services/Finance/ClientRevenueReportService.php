@@ -30,7 +30,7 @@ class ClientRevenueReportService
             foreach ($client->projects as $project) {
                 $projectId = $project->id;
                 $invoices = $this->getInvoicesForProjectBetweenDates($startDate, $endDate, $projectId);
-                
+
                 $totalAmount = 0;
                 $results = [];
                 foreach ($invoices as $invoice) {
