@@ -29,23 +29,13 @@ class ClientRevenueReportService
         foreach ($clients as $client) {
             foreach ($client->projects as $project) {
                 $projectId = $project->id;
-                $invoices = $this->getInvoicesForProjectBetweenDates($startDate, $endDate, $projectId);
-
-                $totalAmount = 0;
-                $results = [];
-                foreach ($invoices as $invoice) {
-                    $dateKey = $invoice->sent_on->format($this->dataKeyFormat);
-                    $totalAmount += (int) $invoice->amount;
-                    $results[$dateKey] = ($results[$dateKey] ?? 0) + (int) $invoice->amount;
-                }
-                $results['total'] = $totalAmount;
-
+                $results = $this->getInvoicesForProjectBetweenDates($startDate, $endDate, $projectId);
+                
                 $clientData = [
-                    'client' => $client->name,
+                    'client' => $client->name, 
                     'project' => $project->name,
                     'amounts' => $results
                 ];
-
                 $reportData[] = $clientData;
             }
         }
@@ -55,9 +45,20 @@ class ClientRevenueReportService
 
     public function getInvoicesForProjectBetweenDates($startDate, $endDate, $projectId)
     {
-        return Invoice::sentBetween($startDate, $endDate)
+        $invoices = Invoice::sentBetween($startDate, $endDate)
             ->where('project_id', '=', $projectId)
             ->status(['sent', 'paid'])
             ->get();
+
+        $totalAmount = 0;
+        $results = [];
+        foreach ($invoices as $invoice) {
+            $dateKey = $invoice->sent_on->format($this->dataKeyFormat);
+            $totalAmount += (int) $invoice->amount;
+            $results[$dateKey] = ($results[$dateKey] ?? 0) + (int) $invoice->amount;
+        }
+        $results['total'] = $totalAmount;
+
+        return $results;
     }
 }
