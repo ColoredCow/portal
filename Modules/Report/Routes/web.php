@@ -22,7 +22,6 @@ Route::prefix('report')->group(function () {
 
     Route::prefix('finance')->group(function () {
         Route::get('dashboard', 'FinanceReportController@dashboard')->name('reports.finance.dashboard');
-        Route::get('/dashboard/client-wise', 'FinanceReportController@clientWiseInvoiceDashboard')->name('reports.finance.dashboard.client');
         Route::get('get-report-data', 'FinanceReportController@getReportData')->name('reports.finance.get-report-data');
 
         Route::prefix('profit-and-loss')->group(function () {
@@ -33,6 +32,8 @@ Route::prefix('report')->group(function () {
 
         Route::prefix('revenue-by-client')->group(function () {
             Route::get('/', 'FinanceReportController@index')->name('reports.finance.revenue-by-client.index');
+            Route::get('/dashboard/client-wise', 'FinanceReportController@clientWiseInvoiceDashboard')->name('reports.finance.dashboard.client');
+            Route::get('/detailed', 'ClientRevenueReportController@detailed')->name('reports.finance.revenue-by-client.detailed');
         });
     });
 });
