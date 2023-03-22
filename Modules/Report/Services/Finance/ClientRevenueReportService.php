@@ -17,16 +17,22 @@ class ClientRevenueReportService
         $endYear = $year;
         $startDate = Carbon::parse($startYear . '-04-01')->startOfDay();
         $endDate = Carbon::parse($endYear . '-03-31')->endOfDay();
+        $reportData = $this->generateReportData($startDate, $endDate);
 
+        return $reportData;
+    }
+
+    public function generateReportData($startDate, $endDate)
+    {
         $clients = Client::orderBy('name')->get();
         $reportData = [];
         foreach ($clients as $client) {
             foreach ($client->projects as $project) {
                 $projectId = $project->id;
                 $invoices = $this->getInvoicesForProjectBetweenDates($startDate, $endDate, $projectId);
+                
                 $totalAmount = 0;
                 $results = [];
-
                 foreach ($invoices as $invoice) {
                     $dateKey = $invoice->sent_on->format($this->dataKeyFormat);
                     $totalAmount += (int) $invoice->amount;
@@ -37,7 +43,7 @@ class ClientRevenueReportService
                 $clientData = [
                     'client' => $client->name,
                     'project' => $project->name,
-                    'amounts' => $results,
+                    'amounts' => $results
                 ];
 
                 $reportData[] = $clientData;
