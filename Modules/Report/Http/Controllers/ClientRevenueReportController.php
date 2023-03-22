@@ -20,7 +20,7 @@ class ClientRevenueReportController extends Controller
     public function detailed()
     {
         $currentYear = date('m') > 03 ? date('Y') + 1 : date('Y');
-        
+
         $filters = $this->filters($currentYear);
         $reportData = $this->service->clientWiseRevenue($filters);
 
