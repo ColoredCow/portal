@@ -2,17 +2,11 @@
 
 namespace Modules\Project\Notifications\GoogleChat;
 
-use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use NotificationChannels\GoogleChat\Card;
 use Modules\Project\Entities\Project;
 use Illuminate\Notifications\Notification;
-use NotificationChannels\GoogleChat\Section;
-use NotificationChannels\GoogleChat\Enums\Icon;
-use NotificationChannels\GoogleChat\Widgets\KeyValue;
 use NotificationChannels\GoogleChat\GoogleChatChannel;
 use NotificationChannels\GoogleChat\GoogleChatMessage;
-use NotificationChannels\GoogleChat\Components\Button\TextButton;
 
 class NotificationToUpdateEffortForProject extends Notification
 {
