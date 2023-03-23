@@ -3,27 +3,22 @@
 namespace Modules\Invoice\Notifications\GoogleChat;
 
 use Illuminate\Bus\Queueable;
-use NotificationChannels\GoogleChat\Card;
 use Illuminate\Notifications\Notification;
-use NotificationChannels\GoogleChat\Section;
-use NotificationChannels\GoogleChat\Enums\Icon;
-use NotificationChannels\GoogleChat\Widgets\KeyValue;
 use NotificationChannels\GoogleChat\GoogleChatChannel;
 use NotificationChannels\GoogleChat\GoogleChatMessage;
-use NotificationChannels\GoogleChat\Components\Button\TextButton;
 
 class SendPaymentReceivedNotification extends Notification
 {
     use Queueable;
-    protected $invoice;
+    public $invoice;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($invoice)
+    public function __construct($invoiceNotificationData)
     {
-        $this->invoice = $invoice;
+        $this->$invoiceNotificationData = $invoiceNotificationData;
     }
 
     public function via($notifiable)
@@ -33,22 +28,9 @@ class SendPaymentReceivedNotification extends Notification
         ];
     }
 
-    public function toGoogleChat($notifiable)
+    public function toGoogleChat($invoiceNotificationData)
     {
         return GoogleChatMessage::create()
-            ->mentionAll('', "(optional($this->invoice->project)->name ?? $this->invoice->client->name) successfully!\n")
-            ->card(
-                Card::create()
-                    ->section(
-                        Section::create(
-                            KeyValue::create('Invoice', (optional($this->invoice->project)->name ?? $this->invoice->client->name))
-                                ->setContentMultiline(true)
-                                ->icon(Icon::DOLLAR)
-                                ->button(
-                                    TextButton::create($this->invoice->project->google_chat_webhook_url, 'View invoice')
-                                )
-                        ),
-                    )
-            );
+            ->mentionAll('', " We have received the payment for{{$invoiceNotificationData}} successfully!\n");
     }
 }

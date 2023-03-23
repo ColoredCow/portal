@@ -171,8 +171,9 @@ class InvoiceService implements InvoiceServiceContract
             Mail::queue(new SendPaymentReceivedMail($invoice, $emailData));
             $webHookUrl = $invoice->project->google_chat_webhook_url
             ?? $invoice->client->google_chat_webhook_url;
+            $invoiceNotificationData = (optional($invoice->project)->name ?? $invoice->client->name);
             Notification::route('googleChat', $webHookUrl)
-                ->notify(new SendPaymentReceivedNotification($invoice));
+                ->notify(new SendPaymentReceivedNotification($invoiceNotificationData));
             $invoice->update([
                 'payment_confirmation_mail_sent' => true
             ]);
