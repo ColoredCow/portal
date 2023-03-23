@@ -261,7 +261,7 @@ class Project extends Model implements Auditable
 
     public function getBillableAmountForTerm(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
-        return round($this->getBillableHoursForMonth($monthToSubtract, $periodStartDate, $periodEndDate) * $this->client->billingDetails->service_rates, 2);
+        return round($this->getBillableHoursForMonth($periodStartDate, $periodEndDate) * $this->service_rates, 2);
     }
 
     public function getTaxAmountForTerm($monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
@@ -275,22 +275,36 @@ class Project extends Model implements Auditable
         return $this->getBillableAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
     }
 
-    public function getBillableHoursForMonth($monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
+    public function getBillableHoursForMonth($termStartDate, $termEndDate)
     {
-        $startDate = $periodStartDate ?: $this->client->getMonthStartDateAttribute($monthToSubtract);
-        $endDate = $periodEndDate ?: $this->client->getMonthEndDateAttribute($monthToSubtract);
-
-        return $this->getAllTeamMembers->sum(function ($teamMember) use ($startDate, $endDate) {
+        return $this->getAllTeamMembers->sum(function ($teamMember) use ($termStartDate, $termEndDate) {
             if (! $teamMember->projectTeamMemberEffort) {
                 return 0;
             }
 
             return $teamMember->projectTeamMemberEffort()
-                ->where('added_on', '>=', $startDate)
-                ->where('added_on', '<=', $endDate)
+                ->where('added_on', '>=', $termStartDate)
+                ->where('added_on', '<=', $termEndDate)
                 ->sum('actual_effort');
         });
     }
+
+    // public function getBillableHoursForMonth($monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
+    // {
+    //     $startDate = $periodStartDate ?: $this->client->getMonthStartDateAttribute($monthToSubtract);
+    //     $endDate = $periodEndDate ?: $this->client->getMonthEndDateAttribute($monthToSubtract);
+
+    //     return $this->getAllTeamMembers->sum(function ($teamMember) use ($startDate, $endDate) {
+    //         if (! $teamMember->projectTeamMemberEffort) {
+    //             return 0;
+    //         }
+
+    //         return $teamMember->projectTeamMemberEffort()
+    //             ->where('added_on', '>=', $startDate)
+    //             ->where('added_on', '<=', $endDate)
+    //             ->sum('actual_effort');
+    //     });
+    // }
 
     public function getResourceBillableAmount()
     {
@@ -301,7 +315,7 @@ class Project extends Model implements Auditable
         $totalAmount = 0;
         $numberOfMonths = 1;
 
-        ## Todo: Calculate billing_frequency
+        //# Todo: Calculate billing_frequency
 
         switch ($this->client->billingDetails->billing_frequency) {
             case 3:
@@ -403,47 +417,62 @@ class Project extends Model implements Auditable
         return $this->hasOne(ProjectBillingDetail::class);
     }
 
+    public function getBillingFrequencyAttribute() // Billing frequency is based on Client
+    {
+        $billingFrequency = $this->client->billingDetails->billing_frequency;
+
+        return $billingFrequency;
+    }
+
     public function getstartDate()
     {
         $previousInvoice = invoice::where('project_id', $this->client_project_id)->orderby('sent_on', 'desc')->first();
 
         if ($previousInvoice) {
-            $priviousbillingDate = $previousInvoice->sent_on;
+            $previousBillingDate = $previousInvoice->sent_on;
         } else {
             $billingDate = DB::table('client_billing_details')->select('billing_date')->where('client_id', $this->client->id)->value('billing_date');
-            $priviousbillingDate = $this->created_at->format('Y-m-d');
+            $previousBillingDate = $this->created_at->format('Y-m-d');
 
-            return Carbon::createFromFormat('Y-m-d', $priviousbillingDate)->day($billingDate)->toDateString();
+            return Carbon::createFromFormat('Y-m-d', $previousBillingDate)->day($billingDate)->toDateString();
         }
 
-        return $priviousbillingDate->format('Y-m-d');
+        return $previousBillingDate->format('Y-m-d');
     }
 
-    public function nextBillingDate() // In this function nextbilling date comes from client level.
+    public function getNextBillingDateAttribute() // In this function nextbilling date comes from client level.
     {
-        $clientFrequency = $this->client->billingDetails->billing_frequency;
-        $previousInvoice = invoice::where('project_id', $this->client_project_id)->orderby('sent_on', 'desc')->first();
+        $billingFrequencyId = optional($this->projectDetail)->billing_frequency;
 
+        if ($billingFrequencyId == null) {       // next billing date will calculate based on project
+            $billingFrequencyId = $this->client->billingDetails->billing_frequency;
+        }
+
+        switch ($billingFrequencyId) {
+            case 2: // monthly
+                $monthsToAdd = 1;
+                break;
+            case 3: // quarterly
+                $monthsToAdd = 3;
+                break;
+            case 4: // yearly
+                $monthsToAdd = 12;
+                break;
+            default:
+                $monthsToAdd = 1;
+        }
+
+
+        $previousInvoice = $this->invoices()->orderby('sent_on', 'desc')->first();
         if ($previousInvoice) {
-            $priviousbillingDate = $previousInvoice->sent_on;
+            $previousBillingDate = Carbon::parse($previousInvoice->term_end_date)->addDay();
         } else {
-            $priviousbillingDate = $this->created_at;
+            $previousBillingDate = $this->last_marked_as_active_date ?? $this->created_at;
         }
 
-        if ($clientFrequency == config('client.billing-frequency.quarterly.id')) { // clientFrequency = 3
-            $nextBillingDate = $priviousbillingDate->addMonthsNoOverflow(3);
-
-            return $nextBillingDate->subDay(2)->format('Y-m-d');
-        } elseif ($clientFrequency == config('client.billing-frequency.monthly.id')) { // clientFrequency = 1
-            $nextBillingDate = $priviousbillingDate->addMonthsNoOverflow(1);
-
-            return $nextBillingDate->subDay(2)->format('Y-m-d');
-        } elseif ($clientFrequency == config('client.billing-frequency.yearly.id')) { // clientFrequency = 4
-            $nextBillingDate = $priviousbillingDate->addMonthsNoOverflow(12);
-
-            return $nextBillingDate->subDay(2)->format('Y-m-d');
-        }
-        $nextBillingDate = $priviousbillingDate->addMonthsNoOverflow(1)->format('Y-m-d');
+        $previousBillingDate = Carbon::parse($previousBillingDate);
+        $nextBillingDate = $previousBillingDate->addMonthsNoOverflow($monthsToAdd)->format('Y-m-d');
+        $nextBillingDate = Carbon::parse($nextBillingDate);
 
         return $nextBillingDate->subDay(2)->format('Y-m-d');
     }
@@ -597,9 +626,20 @@ class Project extends Model implements Auditable
         return $totalAmountInQuater + $taxandBankCharges;
     }
 
-    public function amcBillableHoursDisplay(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
+    public function getClientName($client_id)
+    { // return name from client table based of id
+        if ($client_id) {
+            $clientName = client::where('id', $client_id)->value('name');
+
+            return $clientName;
+        }
+
+            return "";
+    }
+
+    public function amcBillableHoursDisplay($periodStartDate, $periodEndDate)
     {
-        $amcBillableHours = $this->getBillableHoursForMonth($monthToSubtract, $periodStartDate, $periodEndDate);
+        $amcBillableHours = $this->getBillableHoursForMonth($periodStartDate, $periodEndDate);
         $clientFrequency = $this->client->billingDetails->billing_frequency;
 
         if ($this->service_rate_term == 'per_hour') {
@@ -613,6 +653,8 @@ class Project extends Model implements Auditable
                 return $amcBillableHours * 12;
             }
         }
+
+        return;
     }
 
     public function amcBillableHours(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
@@ -638,27 +680,28 @@ class Project extends Model implements Auditable
 
     public function getServiceRateTermAttribute()
     {
-        $details = DB::table('project_billing_details')->where('project_id', $this->id)->first();
+        $billingDetail =$this->billingDetail;
 
-        if ($details) {
-            return $details->service_rate_term;
+        if ($billingDetail) {
+            return $billingDetail->service_rate_term;
         } else {
             return  optional($this->client->billingDetails)->service_rate_term;
         }
     }
 
-    public function getTermStartAndEndDateForInvoice() // Importent: based on client frequency
+    public function getBillingLevel()
+    {
+        $billingLevel = ProjectMeta::where('project_id', $this->id)->value('value');
+
+        return $billingLevel;
+    }
+
+    public function getTermStartAndEndDateForInvoice() // Importent function: based on client frequency
     {
         $clientBillingDate = $this->client->billingDetails->billing_date;
-        $lastInvoice = $this->lastSentDateInvoice();
-        $billingLevel = ProjectMeta::where('project_id', $this->id)->value('value');
-        if ($billingLevel == 'client') {
-            $last_marked_as_active_date = Carbon::createFromFormat('Y-m-d', $this->client->last_marked_as_active_date);
-        } else {
-            $last_marked_as_active_date = Carbon::createFromFormat('Y-m-d', $this->last_marked_as_active_date);
-        }
-        $startDate = $this->startDateOfInvoice($lastInvoice, $clientBillingDate, $last_marked_as_active_date);
-        $endDate = $this->endDateOfInvoice($clientBillingDate, $startDate);
+        $startDate = $this->getTermStartDate($clientBillingDate);
+        $startDate = carbon::parse($startDate);
+        $endDate = $this->getTermEndDate($startDate, $clientBillingDate);
 
         return [
             'startDate'=>$startDate,
@@ -666,38 +709,32 @@ class Project extends Model implements Auditable
         ];
     }
 
-    public function startDateOfInvoice($lastInvoice = null, $clientBillingDate = null, $last_marked_as_active_date = null)
+    public function getTermStartDate($clientBillingDate)
     {
-        $lastInvoiceSentDate = Carbon::createFromFormat('Y-m-d', $lastInvoice)->day($clientBillingDate);
-        if ($last_marked_as_active_date->greaterThanOrEqualTo($lastInvoiceSentDate)) {
-            return  $last_marked_as_active_date->day($clientBillingDate);
+        $previousInvoice = $this->invoices()->orderby('sent_on', 'desc')->first();
+        $lastProjectActiveDate = $this->last_marked_as_active_date ?? $this->created_at;
+        if (optional($previousInvoice)->term_end_date) {
+            $lastInvoiceDate = $previousInvoice->term_end_date->addDay()->day($clientBillingDate);
+            $termStartDate = $lastInvoiceDate;
+            if ($lastInvoiceDate->greaterThanOrEqualTo($lastProjectActiveDate)) {
+                return $lastInvoiceDate;
+            }
         }
 
-        return $lastInvoiceSentDate;
+        return $lastProjectActiveDate;
     }
 
-    public function lastSentDateInvoice()
+    public function getTermEndDate($startDate, $clientBillingDate)
     {
-        $previousInvoice = invoice::where('project_id', $this->client_project_id)->orderby('sent_on', 'desc')->first();
-        if ($previousInvoice) {
-            $priviousbillingDate = $previousInvoice->sent_on;
-        } else {
-            $priviousbillingDate = $this->created_at;
-        }
+        $billingFrequencyId = $this->client->billingDetails->billing_frequency;
+        $startdate = $startDate;
+        $startdate = Carbon::parse($startdate);
 
-        return $priviousbillingDate->format('Y-m-d');
-    }
-
-    public function endDateOfInvoice($clientBillingDate = 0, $startDate = null)
-    {
-        $billingFrequency = $this->client->billingDetails->billing_frequency;
-        $startdate = $startDate->copy();
-
-        if ($billingFrequency == config('client.billing-frequency.quarterly.id')) { // clientFrequency = 3
+        if ($billingFrequencyId == config('client.billing-frequency.quarterly.id')) { // clientFrequency = 3
             $endDate = $startdate->addMonthsNoOverflow(3)->startOfMonth()->day($clientBillingDate - 1);
-        } elseif ($billingFrequency == config('client.billing-frequency.monthly.id')) { // clientFrequency = 1
+        } elseif ($billingFrequencyId == config('client.billing-frequency.monthly.id')) { // clientFrequency = 1
             $endDate = $startdate->addMonthNoOverflow()->startOfMonth()->day($clientBillingDate - 1);
-        } elseif ($billingFrequency == config('client.billing-frequency.yearly.id')) { // clientFrequency = 4
+        } elseif ($billingFrequencyId == config('client.billing-frequency.yearly.id')) { // clientFrequency = 4
             $endDate = $startdate->addYearNoOverflow()->startOfMonth()->day($clientBillingDate - 1);
         } else {
             $endDate = $startdate->addMonthNoOverflow()->startOfMonth()->day($clientBillingDate - 1);
@@ -835,5 +872,22 @@ class Project extends Model implements Auditable
         $gst = $totalAmount * floatval($gstPercentage) / 100;
 
         return round($gst, 2);
+    }
+
+    public function getTermText($termStartDate, $termEndDate)
+    {
+        $termStartDate = Carbon::parse($termStartDate);
+        $termEndDate = Carbon::parse($termEndDate);
+        $billingStartMonth = $termStartDate->subMonthsNoOverflow(1)->format('M');
+        $billingStartMonthYear = $termStartDate->format('Y');
+        $billingEndMonth = $termEndDate->subMonthsNoOverflow(1)->format('M');
+        $billingEndMonthYear = $termEndDate->format('Y');
+        $termText = $billingStartMonth . ' ' . $billingStartMonthYear . ' - ' . $billingEndMonth . ' ' . $billingEndMonthYear;
+
+        if ($billingStartMonth == $billingEndMonth) {
+            $termText = $termStartDate->format('F');
+        }
+
+        return $termText;
     }
 }

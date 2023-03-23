@@ -154,11 +154,6 @@ class Invoice extends Model implements Auditable
             $amount = (float) $this->amount + (float) $this->gst;
         }
 
-        $is_amc = Project::where('id', $this->project_id)->value('is_amc');
-        if ($is_amc == 1) {
-            return $this->project->totalAmountInPdf();
-        }
-
         return trim(optional($country)->currency_symbol . $amount);
     }
 

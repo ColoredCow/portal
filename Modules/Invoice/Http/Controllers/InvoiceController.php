@@ -90,8 +90,10 @@ class InvoiceController extends Controller
             'sent_on' => today(config('constants.timezone.indian')),
             'due_on' => today(config('constants.timezone.indian'))->addDays(6),
             'period_start_date' => $request->period_start_date,
-            'period_end_date' => $request->period_end_date
+            'period_end_date' => $request->period_end_date,
         ]);
+      
+        $data['currency'] =  $request->currency;      
         $invoiceNumber = $data['invoiceNumber'];
         $pdf = $this->showInvoicePdf($data);
 

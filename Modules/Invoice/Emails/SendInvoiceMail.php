@@ -2,7 +2,6 @@
 
 namespace Modules\Invoice\Emails;
 
-use App\Models\Setting;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;

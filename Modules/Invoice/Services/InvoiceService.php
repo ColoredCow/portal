@@ -42,22 +42,30 @@ class InvoiceService implements InvoiceServiceContract
             ->get();
             $clientsReadyToSendInvoicesData = [];
             $projectsReadyToSendInvoicesData = [];
-            $AMCprojectsReadyToSendInvoicesData = [];
+            $amcProjectsReadyToSendInvoicesData = [];
+
         } else {
             $invoices = [];
-            $clientsReadyToSendInvoicesData = Client::status('active')->invoiceReadyToSend()->orderBy('name')->get();
+            $clientsReadyToSendInvoicesData = Client::status('active')->whereHas('projects', function ($query) {
+                return $query->where('status', 'active')->whereHas('meta', function ($query) {
+                    return $query->where([
+                        'key' => 'billing_level',
+                        'value' => config('project.meta_keys.billing_level.value.client.key')
+                    ]);
+                });
+            })->orderBy('name')->get();
             $projectsReadyToSendInvoicesData = Project::whereHas('meta', function ($query) {
                 return $query->where([
                 'key' => 'billing_level',
                 'value' => config('project.meta_keys.billing_level.value.project.key')
                 ]);
-            })->where('is_amc', '!=', 1)->status('active')->invoiceReadyToSend()->orderBy('name')->get();
-            $AMCprojectsReadyToSendInvoicesData = Project::whereHas('meta', function ($query) {
+            })->isAMC(false)->status('active')->orderBy('name')->get();
+            $amcProjectsReadyToSendInvoicesData = Project::whereHas('meta', function ($query) {
                 return $query->where([
                 'key' => 'billing_level',
                 'value' => config('project.meta_keys.billing_level.value.project.key')
                 ]);
-            })->where('is_amc', 1)->status('active')->invoiceReadyToSend()->orderBy('name')->get();
+            })->isAMC(true)->status('active')->orderBy('name')->get();
         }
 
         return [
@@ -69,7 +77,7 @@ class InvoiceService implements InvoiceServiceContract
             'invoiceStatus' => $invoiceStatus,
             'clientsReadyToSendInvoicesData' => $clientsReadyToSendInvoicesData,
             'projectsReadyToSendInvoicesData' => $projectsReadyToSendInvoicesData,
-            'AMCprojectsReadyToSendInvoicesData' => $AMCprojectsReadyToSendInvoicesData,
+            'amcProjectsReadyToSendInvoicesData' => $amcProjectsReadyToSendInvoicesData,
             'sendInvoiceEmailSubject' => optional(Setting::where([
                 'module' => 'invoice',
                 'setting_key' => config('invoice.templates.setting-key.send-invoice.subject')
@@ -500,6 +508,9 @@ class InvoiceService implements InvoiceServiceContract
         $clientId = $data['client_id'] ?? null;
         $client = Client::find($clientId);
         $project = Project::find($projectId);
+        if($project == null) {
+            $project = Project::find($data['projectId'] ?? null);
+        }
         $year = (int) substr($data['term'], 0, 4);
         $monthNumber = (int) substr($data['term'], 5, 2);
         $monthName = date('F', mktime(0, 0, 0, $monthNumber, 10));
@@ -558,7 +569,13 @@ class InvoiceService implements InvoiceServiceContract
         $year = (int) substr($term, 0, 4);
         $monthName = date('F', mktime(0, 0, 0, $monthNumber, 10));
         $billingLevel = $client ? 'client' : 'project';
-
+        if($project == null) {
+            $project = Project::find($decodedInvoiceData['projectId'] ?? null);
+        }
+        // $proj = Project::find($decodedInvoiceData['projectId']);
+        // dd($proj);
+        // dd($data, $decodedInvoiceData['projectId'], $project, $client);
+        
         $dataArray = [
             'client_id' => optional($client)->id,
             'project_id' => optional($project)->id,
@@ -601,12 +618,11 @@ class InvoiceService implements InvoiceServiceContract
                 'body' => $data['email_body'],
                 'subject' => $data['email_subject'],
             ],
-
             'pdf' => [
-                 'client' => $project->client ?: $client,
+                 'client' => $client ,
                  'project' => $project,
                  'gst' => $decodedInvoiceData['GstAmount'],
-                 'totalAmount' => $project->amountWithTaxForTerm($periodStartDate, $periodEndDate),
+                 'totalAmount' => ($project && $project->amountWithTaxForTerm($periodStartDate, $periodEndDate)) ? $project->amountWithTaxForTerm($periodStartDate, $periodEndDate) : 0,
                  'totalAmountWithoutTax' => $decodedInvoiceData['totalAmountWithoutTax'],
                  'startAndEndDate' => $decodedInvoiceData['startAndEndDate'],
                  'projectName' => $decodedInvoiceData['projectName'],
@@ -635,8 +651,8 @@ class InvoiceService implements InvoiceServiceContract
                  'projectId' => $data['project_id'],
                  'clientId' => $data['client_id'],
                  'invoiceNumber' => $decodedInvoiceData['invoiceNumber'],
-                 'gst' => $project->gstAmountForTerm($periodStartDate, $periodEndDate),
-                 'amount' => $project->amountWithTaxForTerm($periodStartDate, $periodEndDate),
+                 'gst' => ($project && $project->gstAmountForTerm($periodStartDate, $periodEndDate)) ? $project->gstAmountForTerm($periodStartDate, $periodEndDate) : 0,
+                 'amount' => ($project && $project->amountWithTaxForTerm($periodStartDate, $periodEndDate)) ? $project->amountWithTaxForTerm($periodStartDate, $periodEndDate) : 0,
                  'sentOn' => today(config('constants.timezone.indian')),
                  'dueOn' => today(config('constants.timezone.indian'))->addDays(6),
             ],
@@ -655,7 +671,6 @@ class InvoiceService implements InvoiceServiceContract
             'term_start_date' => substr($invoiceData['invoice']['startAndEndDate']['startDate'], 0, 10),
             'term_end_date' => substr($invoiceData['invoice']['startAndEndDate']['endDate'], 0, 10),
         ]);
-
         Mail::queue(new SendInvoiceMail($invoice, $invoiceNumber, $invoiceData['email']));
     }
 
@@ -667,6 +682,7 @@ class InvoiceService implements InvoiceServiceContract
         $pdf = App::make('snappy.pdf.wrapper');
         $template = config('invoice.templates.invoice.clients.' . optional($overallInvoiceData['client'])->name) ?: 'invoice-template';
         $html = view(('invoice::render.' . $template), $overallInvoiceData['pdf'])->render();
+        $currency = $client ? $client->currency : $project->client->currency;
 
         $invoice = Invoice::create([
             'project_id' => optional($project)->id,
@@ -676,7 +692,7 @@ class InvoiceService implements InvoiceServiceContract
             'sent_on' =>  $invoiceData['sentOn'],
             'due_on' => $invoiceData['dueOn'],
             'receivable_date' => $invoiceData['dueOn'],
-            'currency' => $client ? $client->country->currency : $project->client->country->currency,
+            'currency' =>   $currency,
             'amount' => $invoiceData['amount'],
             'gst' => $invoiceData['gst'],
             'term_start_date' => $periodStartDate,

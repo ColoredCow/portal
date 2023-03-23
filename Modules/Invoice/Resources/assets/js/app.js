@@ -29,6 +29,7 @@ $(document).ready(function(){
 
 	$(".show-preview").on("click", function() {
 		var invoiceData = $(this).data("invoice-data");
+		console.log(invoiceData);
 		var mapping = {
 			"|*project_name*|": invoiceData["projectName"],
 			"|*term*|": invoiceData["term"],
@@ -57,6 +58,7 @@ $(document).ready(function(){
 		$("#bcc").val(invoiceData["bccEmails"]);
 		$("#projectId").val(invoiceData["projectId"]); 
 		tinymce.get("emailBody").setContent(emailBody, { format: "html" });
+		$('#invoiceData').val(invoiceData);
 		$("#emailPreview").modal("show");
 	});
 

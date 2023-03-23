@@ -14,6 +14,7 @@ use Modules\Client\Entities\Scopes\ClientGlobalScope;
 use Modules\Invoice\Entities\Invoice;
 use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Services\InvoiceService;
+use Modules\Invoice\Services;
 
 class Client extends Model
 {
@@ -72,6 +73,42 @@ class Client extends Model
             });
     }
 
+    public function getNextBillingDateAttribute() // In this function nextbilling date comes from client level it can be null. 
+    {
+        $billingFrequencyId = $this->billingDetails->billing_frequency;
+        $previousInvoice = invoice::whereNull('project_id')->where('client_id', $this->id)->orderby('sent_on', 'desc')->first();
+        
+        if (! $billingFrequencyId && $billingFrequencyId == null) {
+            return;
+        }
+        
+        switch ($billingFrequencyId) {
+            case 4: // yearly
+                $monthsToAdd = 12;
+                break;
+            case 2: // monthly
+                $monthsToAdd = 1;
+                break;
+            case 3: // quarterly
+                $monthsToAdd = 3;
+                break;
+            default:
+                $monthsToAdd = 1;
+        }
+
+        $previousInvoice = $this->invoices()->orderby('sent_on', 'desc')->first();
+        if ($previousInvoice) {
+            $previousBillingDate = Carbon::parse($previousInvoice->term_end_date)->addDay();
+        } else {
+            $previousBillingDate = $this->created_at;
+        }
+
+        $nextBillingDate = $previousBillingDate->addMonthsNoOverflow($monthsToAdd)->format('Y-m-d');
+        $nextBillingDate = Carbon::parse($nextBillingDate);
+
+        return $nextBillingDate->subDay(2)->format('Y-m-d');
+    }
+
     public function getReferenceIdAttribute()
     {
         return sprintf('%03s', $this->id);
@@ -124,32 +161,63 @@ class Client extends Model
 
     public function getCurrencyAttribute()
     {
-        return $this->type == 'indian' ? 'INR' : 'USD';
+        return optional($this->country)->currency;
     }
 
-    public function getBillableAmountForTerm(int $monthsToSubtract, $projects, $periodStartDate = null, $periodEndDate = null)
+    public function getTaxAmountForTerm($periodStartDate, $periodEndDate, $projects)
     {
-        $monthsToSubtract = $monthsToSubtract ?? 1;
-        $amount = $projects->sum(function ($project) use ($monthsToSubtract, $periodStartDate, $periodEndDate) {
-            return round($project->getBillableHoursForMonth($monthsToSubtract, $periodStartDate, $periodEndDate) * $this->billingDetails->service_rates, 2);
+        $country = $this->getTypeAttribute();
+        if ($country != 'indian') {
+            return 0;
+        }
+
+        $amount = $this->getBillableAmountWithoutTaxForTerm($periodStartDate, $periodEndDate, $projects);
+        $gstPercentage = config('invoice.invoice-details.igst');
+        $gstAmount = $amount * floatval($gstPercentage) / 100;
+
+        return $gstAmount;
+    }
+
+    public function getBillableHoursForMonth($periodStartDate, $periodEndDate)
+    {
+        $projects = $this->clientLevelBillingProjects;
+        $projects = $projects ?? collect([]);
+
+        $totalHours = $projects->sum(function ($project) use ($periodStartDate, $periodEndDate) {
+            return $project->getBillableHoursForMonth($periodStartDate, $periodEndDate);
+        });
+
+        if($totalHours == 0)
+        {
+            return;
+        }
+
+        return $totalHours;
+    }
+
+    public function getBillableAmountWithoutTaxForTerm($periodStartDate, $periodEndDate, $projects)
+    {
+        $serviceRateTerm = $this->billingDetails->service_rate_term;
+
+        if(! ($serviceRateTerm == 'per_hour'))
+        {
+            return $this->billingDetails->service_rates;
+        }
+
+        $amount = $projects->sum(function ($project) use ($periodStartDate, $periodEndDate) {
+            return round($project->getBillableHoursForMonth($periodStartDate, $periodEndDate) * $this->billingDetails->service_rates, 2);
         });
 
         return $amount;
     }
 
-    public function getTaxAmountForTerm(int $monthsToSubtract, $projects, $periodStartDate = null, $periodEndDate = null)
+    public function getTotalAmountWithTaxForTerm($periodStartDate, $periodEndDate)
     {
-        $monthsToSubtract = $monthsToSubtract ?? 1;
-        // Todo: Implement tax calculation correctly as per the IGST rules
-        return round($this->getBillableAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) * ($this->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
-    }
-
-    public function getTotalPayableAmountForTerm(int $monthsToSubtract, $projects = null, $periodStartDate = null, $periodEndDate = null)
-    {
-        $monthsToSubtract = $monthsToSubtract ?? 1;
+        $projects = $this->clientLevelBillingProjects;
         $projects = $projects ?? collect([]);
+        $tax = $this->getTaxAmountForTerm($periodStartDate, $periodEndDate, $projects);
 
-        return $this->getBillableAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) + $this->getTaxAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) + optional($this->billingDetails)->bank_charges;
+        return $this->getBillableAmountWithoutTaxForTerm($periodStartDate, $periodEndDate, $projects) + optional($this->billingDetails)->bank_charges + $tax;
     }
 
     public function getAmountPaidForTerm(int $monthsToSubtract, $projects)
@@ -165,11 +233,18 @@ class Client extends Model
         });
     }
 
-    public function getClientLevelProjectsBillableHoursForInvoice($monthsToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
+    public function getClientLevelProjectsBillableHoursForInvoice($periodStartDate, $periodEndDate)
     {
-        return $this->clientLevelBillingProjects->sum(function ($project) use ($monthsToSubtract, $periodStartDate, $periodEndDate) {
-            return $project->getBillableHoursForMonth($monthsToSubtract, $periodStartDate, $periodEndDate);
+        $billableHours =  $this->clientLevelBillingProjects->sum(function ($project) use ( $periodStartDate, $periodEndDate) {
+            return $project->getBillableHoursForMonth($periodStartDate, $periodEndDate);
         });
+
+        if($billableHours == 0 || $billableHours == null)
+        {
+            return 0;
+        }
+
+        return $billableHours;
     }
 
     public function getNextInvoiceNumberAttribute()
@@ -376,4 +451,175 @@ class Client extends Model
 
         return false;
     }
+
+    public function getTermStartAndEndDateForInvoice() // Importent function
+    {
+        $clientBillingDate = $this->billingDetails->billing_date;
+        $startDate = $this->getTermStartDate($clientBillingDate);
+        $startDate = carbon::parse($startDate);
+        $endDate =  $this->getTermEndDate($startDate, $clientBillingDate);
+
+        return [
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+        ];
+    }
+
+    public function getTermStartDate($clientBillingDate)
+    {
+        $previousInvoice = $this->invoices()->orderby('sent_on', 'desc')->first();
+
+        $lastProjectActiveDate = $this->last_marked_as_active_date ?? $this->created_at;
+        if (optional($previousInvoice)->term_end_date) {
+            $lastInvoiceDate = $previousInvoice->term_end_date->addDay()->day($clientBillingDate);
+            if ($lastInvoiceDate->greaterThanOrEqualTo($lastProjectActiveDate)) {
+                return $lastInvoiceDate;
+            }
+        }
+
+        return $lastProjectActiveDate;
+    }
+
+    public function getTermEndDate($startDate, $clientBillingDate)
+    {
+        $billingFrequencyId = $this->billingDetails->billing_frequency;
+        $startdate = $startDate;
+        $startdate = Carbon::parse($startdate);
+
+        if ($billingFrequencyId == config('client.billing-frequency.quarterly.id')) { // clientFrequency = 3
+            $endDate = $startdate->addMonthsNoOverflow(3)->startOfMonth()->day($clientBillingDate - 1);
+        } elseif ($billingFrequencyId == config('client.billing-frequency.monthly.id')) { // clientFrequency = 1
+            $endDate = $startdate->addMonthNoOverflow()->startOfMonth()->day($clientBillingDate - 1);
+        } elseif ($billingFrequencyId == config('client.billing-frequency.yearly.id')) { // clientFrequency = 4
+            $endDate = $startdate->addYearNoOverflow()->startOfMonth()->day($clientBillingDate - 1);
+        } else {
+            $endDate = $startdate->addMonthNoOverflow()->startOfMonth()->day($clientBillingDate - 1);
+        }
+
+        return $endDate;
+    }
+
+    public function amountWithoutTaxForTerm($termStartDate, $termEndDate)
+    {
+        $serviceRateTerm = $this->billingDetails->service_rate_term;
+
+        switch ($serviceRateTerm) {
+            case 'per_hour':
+                $totalAmountInMonth = $this->getAmountForTermPerHour($termStartDate, $termEndDate);
+
+                return  $totalAmountInMonth;
+            case 'per_month':
+                $totalAmountInMonth = $this->getAmountForTermPerMonth($termStartDate, $termEndDate);
+
+                return  $totalAmountInMonth;
+            case 'per_quarter':
+                $totalAmountInQuater = $this->getAmountForTermPerQuarterly($termStartDate, $termEndDate);
+
+                return  $totalAmountInQuater;
+            case 'per_year':
+                $totalAmountInYear = $this->serviceRateFromProjectBillingDetailsTable(); // this need to be correct
+
+                return $totalAmountInYear;
+            case 'per_resource':
+
+                return $this->project->getResourceBillableAmount();
+            default:
+
+                return $this->billingDetails->service_rates;
+        }
+    }
+
+    public function amountWithTaxForTerm($termStartDate, $termEndDate)
+    {
+        $termStartDate = Carbon::parse($termStartDate);
+        $termEndDate = Carbon::parse($termEndDate);
+        $amount = $this->amountWithoutTaxForTerm($termStartDate, $termEndDate);
+        $bankCharge = optional($this->billingDetails)->bank_charges;
+        $gstPercentage = config('invoice.invoice-details.igst');
+        $totalAmount = $amount + $bankCharge;
+        $gst = $totalAmount * floatval($gstPercentage) / 100;
+
+        return round($totalAmount + $gst, 2);
+    }
+
+    public function getAmountForTermPerHour($termStartDate, $termEndDate)
+    {
+        // getBillableHoursForMonth($periodStartDate, $periodEndDate)
+        $billingFrequencyId = $this->billingDetails->billing_frequency;
+        $termStartDate = Carbon::parse($termStartDate);
+        $termEndDate = Carbon::parse($termEndDate);
+        // $months = $termStartDate->diffInMonths($termEndDate);
+        $amount = ( $this->billingDetails->service_rates * $this->project->getBillableHoursForMonth($termStartDate, $termEndDate));
+
+        if ($billingFrequencyId == 2) { // monthly
+            return $amount;
+        }
+        if ($billingFrequencyId == 3) { // Quarterly
+            return $amount * 3;
+        }
+        if ($billingFrequencyId == 4) { // yearly
+            return $amount * 12;
+        }
+
+        return $amount;
+    }
+
+
+    public function getAmountForTermPerMonth($termStartDate, $termEndDate)
+    {
+        $termStartDate = Carbon::parse($termStartDate);
+        $termEndDate = Carbon::parse($termEndDate);
+        $billingFrequencyId = $this->billingDetails->billing_frequency;
+        $totalAmountInMonth = $this->billingDetails->service_rates;
+        // $months = $termStartDate->diffInMonths($termEndDate);
+        if ($billingFrequencyId == 2) { // monthly
+            return  $totalAmountInMonth;
+        }
+        if ($billingFrequencyId == 3) { // Quarterly
+            return  $totalAmountInMonth * 3;
+        }
+        if ($billingFrequencyId == 4) { // yearly
+            return  $totalAmountInMonth * 12;
+        }
+
+        return $totalAmountInMonth;
+    }
+
+    public function getAmountForTermPerQuarterly($termStartDate, $termEndDate)
+    {
+        $termStartDate = Carbon::parse($termStartDate);
+        $termEndDate = Carbon::parse($termEndDate);
+        $totalAmountInQuater = $this->billingDetails->service_rates;
+        $billingFrequencyId = $this->billingDetails->billing_frequency;
+        // $months = $termStartDate->diffInMonths($termEndDate);
+
+        if ($billingFrequencyId == 3) { // Quarterly
+            return  $totalAmountInQuater;
+        }
+        if ($billingFrequencyId == 4) { // yearly
+            return  $totalAmountInQuater * 4;
+        }
+
+        return $totalAmountInQuater;
+    }
+
+
+    public function getGstAmount($termStartDate, $termEndDate)
+    {
+        $amount = $this->amountWithoutTaxForTerm($termStartDate, $termEndDate);
+        $gstPercentage = config('invoice.invoice-details.igst');
+        $gst = $amount * floatval($gstPercentage) / 100;
+
+        return round($gst, 2);
+    }
+
+    public function getTermText($termStartDate, $termEndDate)
+    {        
+        $invoiceService = new InvoiceService();
+        $termText = $invoiceService->getTermText($termStartDate, $termEndDate);
+        return $termText;
+
+    }
+
+
 }

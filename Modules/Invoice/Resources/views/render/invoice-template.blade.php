@@ -256,7 +256,17 @@
     <body>
         <header>
             @php
-                $currencySymbol = $client ? $client->country->currency_symbol : $project->client->country->currency_symbol;
+                // $currencySymbol = $client ? $client->country->currency_symbol : $project->client->country->currency_symbol;
+                $currencySymbol = '';
+                if ($client && $client->country) {
+                    $currencySymbol = $client->country->currency_symbol;
+                } else if ($project && $project->client && $project->client->country) {
+                    $currencySymbol = $project->client->country->currency_symbol;
+                } else if ($client) {
+                    if ($client->billingDetails->currency == 'CAD') {
+                        $currencySymbol = '$';
+                    }
+                }
             @endphp
             <div class="w-100p">
                 <h2 style="text-align: center; font-weight: bold;">INVOICE</h2>
@@ -286,7 +296,8 @@
                                 <p>{{ optional($client->billing_contact)->email }}</p>
                                 <p>{{ optional($client->addresses->first())->address }}</p>
                                 <p>{{ optional($client->addresses->first())->city . ', ' . optional($client->addresses->first())->state . ', ' . optional($client->addresses->first())->area_code }}</p>
-                                <p>{{ $client->country->initials == 'IN' && optional($client->addresses->first())->gst_number ? __('GSTIN: ') . optional($client->addresses->first())->gst_number : '' }}</p>
+                                {{-- <p>{{ $client->country->initials == 'IN' && optional($client->addresses->first())->gst_number ? __('GSTIN: ') . optional($client->addresses->first())->gst_number : '' }}</p> --}}
+                                <p>{{ $client && $client->country && $client->country->initials == 'IN' && optional($client->addresses->first())->gst_number ? __('GSTIN: ') . optional($client->addresses->first())->gst_number : '' }}</p>
                                 <p>{{ optional($client->billing_contact)->phone }}</p>
                             </td>
                             <td>
@@ -327,20 +338,30 @@
                                         </td>
                                         <td align="right">
                                             <p><strong>
-                                                @if($billingLevel == 'client') 
+                                                @if($billingLevel == 'client')
                                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                                         {{ '' }}
                                                     @else
-                                                        {{ $currencySymbol . $client->getTotalPayableAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) }}
+                                                    <?php
+                                                    $termStartEndDate = $client->getTermStartAndEndDateForInvoice();
+                                                    $termStartDate = $termStartEndDate['startDate'];
+                                                    $termEndDate = $termStartEndDate['endDate'];
+                                                    ?>
+                                                    {{ $currencySymbol . $client->amountWithTaxForTerm($termStartDate, $termEndDate) }}
                                                     @endif
-                                                @else 
+                                                @else
                                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                                         {{ $currencySymbol . $project->getResourceBillableAmount() }}
                                                     @else
                                                         @if($project->is_amc == 1)
-                                                        {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->totalAmountInPdf($monthsToSubtract, $periodStartDate, $periodEndDate) }}
+                                                        {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->amountWithTaxForTerm($periodStartDate, $periodEndDate) }}
                                                         @else
-                                                        {{ $currencySymbol . $project->getTotalPayableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate) }}
+                                                        <?php
+                                                        $termStartEndDate = $project->getTermStartAndEndDateForInvoice();
+                                                        $termStartDate = $termStartEndDate['startDate'];
+                                                        $termEndDate = $termStartEndDate['endDate'];
+                                                        ?>
+                                                        {{ $currencySymbol . $project->amountWithTaxForTerm($termStartDate, $termEndDate) }}
                                                         @endif
                                                     @endif
                                                 @endif
@@ -366,7 +387,12 @@
                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                         {{ '' }}
                                     @else
-                                        {{ $client->getClientLevelProjectsBillableHoursForInvoice($monthsToSubtract, $periodStartDate, $periodEndDate) }}
+                                    <?php
+                                    $termStartEndDate = $client->getTermStartAndEndDateForInvoice();
+                                    $termStartDate = $termStartEndDate['startDate'];
+                                    $termEndDate = $termStartEndDate['endDate'];
+                                    ?>
+                                        {{ $client->getBillableHoursForMonth($termStartDate, $termEndDate) }}
                                     @endif
                                 @else 
                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
@@ -374,47 +400,114 @@
                                     @else
                                         @if($project->is_amc == 1)
                                             @if($project->service_rate_term == 'per_hour')
-                                            {{ $project->amcBillableHoursDisplay($monthsToSubtract, $periodStartDate, $periodEndDate) }}
+                                                <?php
+                                                $termStartEndDate = $project->getTermStartAndEndDateForInvoice();
+                                                $termStartDate = $termStartEndDate['startDate'];
+                                                $termEndDate = $termStartEndDate['endDate'];
+                                                $amcBillableHoursDisplay = $project->getBillableHoursForMonth($termStartDate, $termEndDate);
+                                                if($amcBillableHoursDisplay == null || $amcBillableHoursDisplay == 0)
+                                                {$amcBillableHoursDisplay = '';}
+                                                ?>
+                                                {{ $amcBillableHoursDisplay }}
                                             @endif
                                         @else
+                                            @if($project->getBillingLevel() == "project") 
+                                            {{ " " }}
+                                            @else
                                             {{ $project->getBillableHoursForMonth($monthsToSubtract, $periodStartDate, $periodEndDate) }}
+                                            @endif
                                         @endif
-                                    @endif     
+                                    @endif
                                 @endif
                             </td>
                             <td class="w-135"></td>
                             <td>
-                                @if($billingLevel == 'client') 
+                                @if($billingLevel == 'client')
                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                         {{ '' }}
                                     @else
-                                        {{ $client->getBillableAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) + optional($client->billingDetails)->bank_charges }}
+                                    <?php
+                                    $termStartEndDate = $client->getTermStartAndEndDateForInvoice();
+                                    $termStartDate = $termStartEndDate['startDate'];
+                                    $termEndDate = $termStartEndDate['endDate'];
+                                    ?>
+                                        {{ $currencySymbol . $client->amountWithoutTaxForTerm($termStartDate, $termEndDate) }}
                                     @endif
-                                @else 
+                                @else
                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                         {{ $project->getResourceBillableAmount() }}
                                     @else
                                         @if($project->is_amc == 1)
-                                        {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->amcTotalProjectAmount() }}
-                                        @else 
-                                        {{ $project->getBillableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate) + optional($project->client->billingDetails)->bank_charges }}
+                                            <?php
+                                            $termStartEndDate = $project->getTermStartAndEndDateForInvoice();
+                                            $termStartDate = $termStartEndDate['startDate'];
+                                            $termEndDate = $termStartEndDate['endDate'];
+                                            ?>
+                                            {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->amountWithoutTaxForTerm($termStartDate, $termEndDate) }}
+                                        @elseif ($project->getBillingLevel() == "project")
+                                            <?php
+                                            $termStartEndDate = $project->getTermStartAndEndDateForInvoice();
+                                            $termStartDate = $termStartEndDate['startDate'];
+                                            $termEndDate = $termStartEndDate['endDate'];
+                                            ?>
+                                            {{ $project->amountWithoutTaxForTerm($termStartDate, $termEndDate) }}
+                                        @else
+                                            {{ $project->getBillableAmountForTerm( $periodStartDate, $periodEndDate) + optional($project->client->billingDetails)->bank_charges }}
                                         @endif
-                                    @endif     
+                                    @endif
                                 @endif
                             </td>
                         </tr>
                         <tr class="border-bottom">
-                            <td>{{ $client->country->initials == 'IN' ? __('GST in INR') : __('IGST') }}</td>
+                            <td>
+                                @if($billingLevel == 'client')
+                                    @if ($client->country && $client)
+                                        @if ($currencySymbol == "$")
+                                        Bank Charges
+                                        @else
+                                        {{ $client->country->initial == 'IN' ? __('GST in INR') : __('IGST') }}
+                                        @endif
+                                    @else
+                                        Bank Charges
+                                    @endif
+                                @else 
+                                    {{ $client->country->initial == 'IN' ? __('GST in INR') : __('IGST') }}
+                                @endif
+                            </td>
                             <td style="width: 180px;"></td>
-                            <td>{{ $client->country->initials == 'IN' ? config('invoice.invoice-details.igst') : __('NILL') }}</td>
+                            <td>
+                                @if ($billingLevel == 'client')
+                                {{--  write code when project is client base --}}
+                                @endif
+                                @if ($client->country && $client)
+                                {{ $client->country->initials == 'IN' ? config('invoice.invoice-details.igst') : __('NILL') }}
+                                @endif
+                            </td>
                             <td >
-                            @if($project->is_amc == 1)
-                                {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->getGstAmount() }}
-                            @else
-                                {{ $currencySymbol . ($billingLevel == 'client' ? $client->getTaxAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) : $project->getTaxAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate)) }}
-                            @endif 
+                                @if($billingLevel == 'client')
+                                    @if($currencySymbol == '₹')
+                                    <?php
+                                    $termStartEndDate = $client->getTermStartAndEndDateForInvoice();
+                                    $termStartDate = $termStartEndDate['startDate'];
+                                    $termEndDate = $termStartEndDate['endDate'];
+                                    ?>
+                                        {{ $currencySymbol . $client->getGstAmount($termStartDate, $termEndDate) }}
+                                    @else
+                                    {{$client->billingDetails->bank_charges}}
+                                    @endif
+                                @endif
+                                @if($project)
+                                    @if($project->is_amc == 1)
+                                        {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->gstAmountForTerm($termStartDate, $termEndDate) }}
+                                    @elseif ($project->getBillingLevel() == "project") 
+                                        {{ $project->gstAmountForTerm($termStartDate, $termEndDate) }}
+                                    @else
+                                        {{ $currencySymbol . ($billingLevel == 'client' ? $client->getTaxAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) : $project->getTaxAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate)) }}
+                                    @endif 
+                                @endif
                             </td>
                         </tr>
+
                         <tr>
                             <td>Current Payable</td>
                             <td></td>
@@ -424,16 +517,23 @@
                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                         {{ '' }}
                                     @else
-                                        {{ $currencySymbol . $client->getTotalPayableAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) }}
+                                    <?php
+                                    $termStartEndDate = $client->getTermStartAndEndDateForInvoice();
+                                    $termStartDate = $termStartEndDate['startDate'];
+                                    $termEndDate = $termStartEndDate['endDate'];
+                                    ?>
+                                        {{ $currencySymbol . $client->amountWithTaxForTerm($termStartDate, $termEndDate) }}
                                     @endif
                                 @else 
                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                     {{ $currencySymbol . $project->getResourceBillableAmount() }}
                                     @else
                                         @if($project->is_amc == 1)
-                                            {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->totalAmountInPdf() }}
+                                            {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->amountWithTaxForTerm($termStartDate, $termEndDate) }}
+                                        @elseif (($project->getBillingLevel() == "project")) 
+                                            {{ $project->gstAmountForTerm($termStartDate, $termEndDate) + $project->amountWithoutTaxForTerm($termStartDate, $termEndDate) }}
                                         @else
-                                        {{ $currencySymbol . $project->getTotalPayableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate) }}
+                                            {{ $currencySymbol . $project->getTotalPayableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate) }}
                                         @endif 
                                     @endif     
                                 @endif
@@ -445,20 +545,24 @@
                             <td></td>
                             <td></td>
                             <td>
-                                @if ($project->is_amc == 1)
-                                    {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->client->getAmountPaidForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) }}
-                                @else
-                                    {{ $currencySymbol . $client->getAmountPaidForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) }}
+                                @if($project)
+                                    @if ($project->is_amc == 1)
+                                        {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->client->getAmountPaidForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) }}
+                                    @else
+                                        {{ $currencySymbol . $client->getAmountPaidForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) }}
+                                    @endif
                                 @endif
                             </td>
                         </tr>
                         <tr class="border-bottom">
                             <td>
                                 <strong>Amount Due in
-                                    @if ($project->is_amc == 1)
-                                        {{ config('constants.currency.' . $project->client->currency . '.symbol') }}
-                                    @else
-                                        {{ $client->country->initials == 'IN' ? $currencySymbol : $client->country->initials . ' ' . $currencySymbol }}</strong>
+                                    @if($project)
+                                        @if ($project->is_amc == 1)
+                                            {{ config('constants.currency.' . $project->client->currency . '.symbol') }}
+                                        @else
+                                            {{ $client->country->initials == 'IN' ? $currencySymbol : $client->country->initials . ' ' . $currencySymbol }}</strong>
+                                        @endif
                                     @endif
                             </td>
                             <td></td>
@@ -468,16 +572,27 @@
                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                         {{ '' }}
                                     @else
-                                        {{ $currencySymbol . $client->getTotalPayableAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) }}
+                                        <?php
+                                        $termStartEndDate = $client->getTermStartAndEndDateForInvoice();
+                                        $termStartDate = $termStartEndDate['startDate'];
+                                        $termEndDate = $termStartEndDate['endDate'];
+                                        ?>
+                                        {{ $currencySymbol . $client->amountWithTaxForTerm($termStartDate, $termEndDate) }}
                                     @endif
                                 @else 
                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                         {{ $currencySymbol . $project->getResourceBillableAmount() }}
                                     @else
                                         @if($project->is_amc == 1)
-                                            {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->totalAmountInPdf($monthsToSubtract, $periodStartDate, $periodEndDate) }}
+                                            {{ config('constants.currency.' . $project->client->currency . '.symbol') . $project->amountWithTaxForTerm($termStartDate, $termEndDate) }}
+                                        @elseif ($project->getBillingLevel() == "project")
+                                            <?php
+                                            $termStartDate = $project->client->getMonthStartDateAttribute($monthToSubtract = 1);
+                                            $termEndDate = $project->client->getMonthEndDateAttribute($monthToSubtract = 1);
+                                            ?>
+                                            {{ $project->amountWithTaxForTerm($termStartDate, $termEndDate) }}
                                         @else
-                                        {{ $currencySymbol . $project->getTotalPayableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate) }}
+                                            {{ $currencySymbol . $project->getTotalPayableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate) }}
                                         @endif
                                     @endif     
                                 @endif

@@ -59,7 +59,7 @@
                         <label for="client_id" class="mr-5">GST:</label>
                         <span>                            
                             @if ($invoice->project->is_amc == 1) 
-                                <p>{{ $invoice->project->getGstAmount() . " ₹" }}</p>
+                                <p>{{ $invoice->project->gstAmountForTerm($periodStartDate, $periodEndDate) . " ₹" }}</p>
                             @else 
                                 <p>{{ $invoice->gst . " ₹" }}</p>
                             @endif

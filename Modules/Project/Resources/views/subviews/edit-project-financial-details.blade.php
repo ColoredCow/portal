@@ -22,6 +22,14 @@
                                 @endforeach
                             </select>
                         </div>
+                        
+                        <br>
+                        <label for="project_billing_frequency">Billing frequency</label>
+                        <select name="billing_frequency" class="form-control col-md-6">
+                            @foreach (config('client.billing-frequency') as $billingFrequency)
+                            <option  name= "{{ $billingFrequency['id'] }}" value="{{ $billingFrequency['id'] }}">{{ $billingFrequency['name'] }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <br>
