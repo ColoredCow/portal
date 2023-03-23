@@ -34,12 +34,11 @@ class CodeTrekRoundDetailService
     public function takeActionApplicantToRound($applicant)
     {
         $applicationround = CodeTrekApplicantRoundDetail::updateOrCreate(
-            ['applicant_id' => $applicant->id, 
-            'round_name' => $applicant->round_name]
-            ,
+            ['applicant_id' => $applicant->id,
+            'round_name' => $applicant->round_name],
             ['applicant_id' => $applicant->id,
              'round_name' => $applicant->round_name,
              'start_date' => today()]
-            );
+        );
     }
 }

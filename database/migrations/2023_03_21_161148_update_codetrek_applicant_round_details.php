@@ -29,5 +29,6 @@ class UpdateCodetrekApplicantRoundDetails extends Migration
         Schema::table('codetrek_applicant_round_details', function (Blueprint $table) {
             $table->dropColumn(['feedback']);
         });
+        
     }
 }
