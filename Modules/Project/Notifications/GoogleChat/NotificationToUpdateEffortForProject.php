@@ -39,7 +39,7 @@ class NotificationToUpdateEffortForProject extends Notification
     {
         $projects = PROJECT::all();
         foreach ($projects as $project) {
-            $diff_project = ($project->end_date())->diff(CARBON::NOW());
+            $diff_project = ($project->end_date)->diff(CARBON::NOW());
 
             if ($diff_project == 1) {
                 return GoogleChatMessage::create()
