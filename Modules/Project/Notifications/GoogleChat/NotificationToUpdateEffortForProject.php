@@ -37,26 +37,13 @@ class NotificationToUpdateEffortForProject extends Notification
 
     public function toGoogleChat($notifiable)
     {
-        $projects = PROJECT::all();
+        $projects = Project::all();
         foreach ($projects as $project) {
-            $diff_project = date_diff(($project->end_date), (CARBON::NOW()));
+            $diff_in_dates = date_diff($project->end_date, today());
 
-            if ($diff_project->days == 1) {
+            if ($diff_in_dates->days == 1) {
                 return GoogleChatMessage::create()
-                    ->mentionAll('', " it's time to update your efforts, the end date is tomorrow!\n")
-                    ->card(
-                        Card::create()
-                            ->section(
-                                Section::create(
-                                    KeyValue::create('Project', $this->project->name)
-                                    ->setContentMultiline(true)
-                                    ->icon(Icon::CLOCK)
-                                    ->button(
-                                        TextButton::create($this->project->effort_sheet_url, 'Open effortsheet')
-                                    )
-                                ),
-                            ),
-                    );
+                    ->mentionAll('', "  Please check and update the efforts sheet to avoid last minutes updates at the end of the billing cycle.\n");
             }
         }
     }
