@@ -93,7 +93,7 @@ class InvoiceController extends Controller
             'period_end_date' => $request->period_end_date,
         ]);
 
-        $data['currency'] =  $request->currency;
+        $data['currency'] = $request->currency;
         $invoiceNumber = $data['invoiceNumber'];
         $pdf = $this->showInvoicePdf($data);
 
