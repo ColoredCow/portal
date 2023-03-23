@@ -3,8 +3,8 @@
 namespace Modules\Project\Notifications\GoogleChat;
 
 use Illuminate\Bus\Queueable;
-use Modules\Project\Entities\Project;
 use Illuminate\Notifications\Notification;
+use Modules\Client\Entities\Client;
 use NotificationChannels\GoogleChat\GoogleChatChannel;
 use NotificationChannels\GoogleChat\GoogleChatMessage;
 
@@ -31,9 +31,9 @@ class NotificationToUpdateEffortForProject extends Notification
 
     public function toGoogleChat($notifiable)
     {
-        $projects = Project::all();
+        $projects = Client::all();
         foreach ($projects as $project) {
-            $interval = date_diff($project->end_date, today());
+            $interval = date_diff($project->billingDetails->billing_date, today());
 
             if ($interval->days == 1) {
                 return GoogleChatMessage::create()
