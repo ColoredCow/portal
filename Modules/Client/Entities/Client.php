@@ -14,7 +14,6 @@ use Modules\Client\Entities\Scopes\ClientGlobalScope;
 use Modules\Invoice\Entities\Invoice;
 use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Services\InvoiceService;
-use Modules\Invoice\Services;
 
 class Client extends Model
 {
@@ -77,11 +76,11 @@ class Client extends Model
     {
         $billingFrequencyId = $this->billingDetails->billing_frequency;
         $previousInvoice = invoice::whereNull('project_id')->where('client_id', $this->id)->orderby('sent_on', 'desc')->first();
-        
+
         if (! $billingFrequencyId && $billingFrequencyId == null) {
             return;
         }
-        
+
         switch ($billingFrequencyId) {
             case 4: // yearly
                 $monthsToAdd = 12;
@@ -106,7 +105,7 @@ class Client extends Model
         $nextBillingDate = $previousBillingDate->addMonthsNoOverflow($monthsToAdd)->format('Y-m-d');
         $nextBillingDate = Carbon::parse($nextBillingDate);
 
-        return $nextBillingDate->subDay(2)->format('Y-m-d');
+        return $nextBillingDate->subDays(2)->format('Y-m-d');
     }
 
     public function getReferenceIdAttribute()
@@ -231,9 +230,9 @@ class Client extends Model
         });
     }
 
-    public function getClientLevelProjectsBillableHoursForInvoice( $periodStartDate, $periodEndDate)
+    public function getClientLevelProjectsBillableHoursForInvoice($periodStartDate, $periodEndDate)
     {
-        $billableHours =  $this->clientLevelBillingProjects->sum(function ($project) use ( $periodStartDate, $periodEndDate) {
+        $billableHours = $this->clientLevelBillingProjects->sum(function ($project) use ($periodStartDate, $periodEndDate) {
             return $project->getBillableHoursForMonth($periodStartDate, $periodEndDate);
         });
 
@@ -454,7 +453,7 @@ class Client extends Model
         $clientBillingDate = $this->billingDetails->billing_date;
         $startDate = $this->getTermStartDate($clientBillingDate);
         $startDate = carbon::parse($startDate);
-        $endDate =  $this->getTermEndDate($startDate, $clientBillingDate);
+        $endDate = $this->getTermEndDate($startDate, $clientBillingDate);
 
         return [
             'startDate' => $startDate,
@@ -559,7 +558,6 @@ class Client extends Model
         return $amount;
     }
 
-
     public function getAmountForTermPerMonth($termStartDate, $termEndDate)
     {
         $termStartDate = Carbon::parse($termStartDate);
@@ -598,7 +596,6 @@ class Client extends Model
         return $totalAmountInQuater;
     }
 
-
     public function getGstAmount($termStartDate, $termEndDate)
     {
         $amount = $this->amountWithoutTaxForTerm($termStartDate, $termEndDate);
@@ -612,6 +609,7 @@ class Client extends Model
     {
         $invoiceService = new InvoiceService();
         $termText = $invoiceService->getTermText($termStartDate, $termEndDate);
+
         return $termText;
     }
 }

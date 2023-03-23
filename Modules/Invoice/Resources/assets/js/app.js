@@ -45,7 +45,7 @@ $(document).ready(function(){
 			var emailSubject = emailSubject.replace(key, mapping[key]);
 			var emailBody = emailBody.replace(key, mapping[key]);
 		}
-		$('#invoiceData').val(invoiceData);
+		$("#invoiceData").val(invoiceData);
 		$("#emailSubject").val(emailSubject); 
 		$("#sendTo").val(invoiceData["billingPersonEmail"]); 
 		$("#sendToName").val(invoiceData["billingPersonName"]); 
@@ -58,7 +58,7 @@ $(document).ready(function(){
 		$("#bcc").val(invoiceData["bccEmails"]);
 		$("#projectId").val(invoiceData["projectId"]); 
 		tinymce.get("emailBody").setContent(emailBody, { format: "html" });
-		$('#invoiceData').val(invoiceData);
+		$("#invoiceData").val(invoiceData);
 		$("#emailPreview").modal("show");
 	});
 

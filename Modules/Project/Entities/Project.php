@@ -462,7 +462,6 @@ class Project extends Model implements Auditable
                 $monthsToAdd = 1;
         }
 
-
         $previousInvoice = $this->invoices()->orderby('sent_on', 'desc')->first();
         if ($previousInvoice) {
             $previousBillingDate = Carbon::parse($previousInvoice->term_end_date)->addDay();
@@ -474,7 +473,7 @@ class Project extends Model implements Auditable
         $nextBillingDate = $previousBillingDate->addMonthsNoOverflow($monthsToAdd)->format('Y-m-d');
         $nextBillingDate = Carbon::parse($nextBillingDate);
 
-        return $nextBillingDate->subDay(2)->format('Y-m-d');
+        return $nextBillingDate->subDays(2)->format('Y-m-d');
     }
 
     public function amcTotalProjectAmount(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
@@ -634,7 +633,7 @@ class Project extends Model implements Auditable
             return $clientName;
         }
 
-        return "";
+        return '';
     }
 
     public function amcBillableHoursDisplay($periodStartDate, $periodEndDate)
@@ -654,12 +653,11 @@ class Project extends Model implements Auditable
             }
         }
 
-        return;
     }
 
-    public function amcBillableHours(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
+    public function amcBillableHours($periodStartDate = null, $periodEndDate = null)
     {
-        return $this->getBillableHoursForMonth($monthToSubtract, $periodStartDate, $periodEndDate);
+        return $this->getBillableHoursForMonth($periodStartDate, $periodEndDate);
     }
 
     public function serviceRateFromProjectBillingDetailsTable()
@@ -680,7 +678,7 @@ class Project extends Model implements Auditable
 
     public function getServiceRateTermAttribute()
     {
-        $billingDetail =$this->billingDetail;
+        $billingDetail = $this->billingDetail;
 
         if ($billingDetail) {
             return $billingDetail->service_rate_term;

@@ -572,7 +572,6 @@ class InvoiceService implements InvoiceServiceContract
             $project = Project::find($decodedInvoiceData['projectId'] ?? null);
         }
 
-        
         $dataArray = [
             'client_id' => optional($client)->id,
             'project_id' => optional($project)->id,
@@ -616,7 +615,7 @@ class InvoiceService implements InvoiceServiceContract
                 'subject' => $data['email_subject'],
             ],
             'pdf' => [
-                 'client' => $client ,
+                 'client' => $client,
                  'project' => $project,
                  'gst' => $decodedInvoiceData['GstAmount'],
                  'totalAmount' => ($project && $project->amountWithTaxForTerm($periodStartDate, $periodEndDate)) ? $project->amountWithTaxForTerm($periodStartDate, $periodEndDate) : 0,
