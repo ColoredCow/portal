@@ -47,7 +47,7 @@
 
                 <div class="col-md-3">
                     <div class="card h-75">
-                        <a class="card-body no-transition" href="{{ route('reports.finance.dashboard.client') }}">
+                        <a class="card-body no-transition" href="{{ route('reports.finance.revenue-by-client.index') }}">
                             <h2 class="text-center">Revenue by client</h2><br>
                         </a>
                     </div>

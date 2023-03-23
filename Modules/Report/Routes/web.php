@@ -18,15 +18,23 @@ Route::prefix('report')->group(function () {
     Route::get('/show/{id}', 'ReportController@show')->name('report.show');
     Route::get('/delete/{id}', 'ReportController@delete')->name('report.delete');
     Route::post('/update/{id}', 'ReportController@update')->name('report.update');
+    Route::get('/get-fte-report/{user}', 'UserReportController@getFteData')->name('reports.fte.get-report-data');
 
     Route::prefix('finance')->group(function () {
         Route::get('dashboard', 'FinanceReportController@dashboard')->name('reports.finance.dashboard');
-        Route::get('/dashboard/client-wise', 'FinanceReportController@clientWiseInvoiceDashboard')->name('reports.finance.dashboard.client');
         Route::get('get-report-data', 'FinanceReportController@getReportData')->name('reports.finance.get-report-data');
 
         Route::prefix('profit-and-loss')->group(function () {
             Route::get('/', 'ProfitAndLossReportController@index')->name('reports.finance.profit-and-loss.index');
             Route::get('/detailed', 'ProfitAndLossReportController@detailed')->name('reports.finance.profit-and-loss.detailed');
+            Route::get('profit-and-loss-report-export', 'ProfitAndLossReportController@profitAndLossReportExport')->name('reports.finance.profit-and-loss.report.export');
+        });
+
+        Route::prefix('revenue-by-client')->group(function () {
+            Route::get('/', 'FinanceReportController@index')->name('reports.finance.revenue-by-client.index');
+            Route::get('/dashboard/client-wise', 'FinanceReportController@clientWiseInvoiceDashboard')->name('reports.finance.dashboard.client');
+            Route::get('/detailed', 'ClientRevenueReportController@detailed')->name('reports.finance.revenue-by-client.detailed');
+            Route::get('client-revenue-report-export', 'ClientRevenueReportController@clientRevenueReportExport')->name('reports.finance.client-revenue.report.export');
         });
     });
 });
