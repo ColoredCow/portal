@@ -18,7 +18,7 @@ class SendPaymentReceivedNotification extends Notification
      */
     public function __construct($invoiceNotificationData)
     {
-        $this->$invoiceNotificationData = $invoiceNotificationData;
+        $this->invoiceNotificationData = $invoiceNotificationData;
     }
 
     public function via($notifiable)
@@ -28,9 +28,9 @@ class SendPaymentReceivedNotification extends Notification
         ];
     }
 
-    public function toGoogleChat($invoiceNotificationData)
+    public function toGoogleChat($notifiable)
     {
         return GoogleChatMessage::create()
-            ->mentionAll('', " We have received the payment for{{$invoiceNotificationData}} successfully!\n");
+            ->mentionAll('', " We have received the payment for" . $this->invoiceNotificationData  . "successfully!\n");
     }
 }
