@@ -36,11 +36,23 @@
                     <input type="hidden" name="is_amc" value="{{ request()->input('is_amc', 0) }}">
                     <select class="fz-14 fz-lg-16 p-1 bg-info ml-3 my-auto text-white rounded border-0" name="projects"
                         onchange="this.form.submit()">
+                        @php
+                            $isUserAdmin =auth()->user()->isAdmin() ||
+                                auth()->user()->isSuperAdmin();
+                        @endphp
                         <option value="my-projects"
-                            {{ request()->get('projects') == 'my-projects' || !request()->has('projects') ? 'selected' : '' }}>
+                            {{ request()->get('projects') == 'my-projects' || (!$isUserAdmin && !request()->has('projects')) ? 'selected' : '' }}>
                             {{ __('My Projects') }} </option>
-                        <option value="all-projects" {{ request()->get('projects') == 'all-projects' ? 'selected' : '' }}>
-                            {{ __('All Projects') }} </option>
+
+                        @if ($isUserAdmin)
+                            <option value="all-projects"
+                                {{ request()->get('projects') == 'all-projects' || !request()->has('projects') ? 'selected' : '' }}>
+                                {{ __('All Projects') }} </option>
+                        @else
+                            <option value="all-projects"
+                                {{ request()->get('projects') == 'all-projects' ? 'selected' : '' }}>
+                                {{ __('All Projects') }} </option>
+                        @endif
                     </select>
                 </div>
                 <div class="d-flex align-items-center">
@@ -84,25 +96,30 @@
                             </tr>
                             @foreach ($client->projects as $project)
                                 <tr>
-                                    @can('projects.update')
-                                        <td class="w-33p">
-                                            <div class="pl-2 pl-xl-3"><a
-                                                href="{{ route('project.show', $project) }}">{{ $project->name }}</a></div>
-                                        </td>
-                                    @else
-                                        <td class="w-33p">
-                                            <div class="pl-2 pl-xl-3">
+                                    <td class="w-33p">
+                                        <div class="pl-2 pl-xl-2">
+                                            @if ($project->getTotalToBeDeployedCount() > 0)
+                                                <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
+                                                      title="There is a requirement of {{ $project->getTotalToBeDeployedCount() }} team members">
+                                                    <i class="fa fa-users text-danger mr-0.5" aria-hidden="true"></i>
+                                                </span>
+                                            @endif
+                                            @can('projects.update')
+                                                <a href="{{ route('project.show', $project) }}">{{$project->name}}</a>
+                                            @else
                                                 @php
-                                                    $team_member_ids = $project->getTeamMembers->pluck('team_member_id')->toArray();
+                                                $teamMemberIds = $project->getTeamMembers->pluck('team_member_id')->toArray();
                                                 @endphp
-                                                @if(in_array(auth()->user()->id, $team_member_ids))
-                                                    <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a>
+                                                @if (in_array(auth()->user()->id, $teamMemberIds))
+                                                    <a href="{{ route('project.show', $project) }}">{{$project->name}}</a>
                                                 @else
-                                                    <div class="pl-2 pl-xl-3"> {{ $project->name }}</div>
+                                                    <span class="pr-2 pr-xl-2">
+                                                        {{$project->name}}
+                                                    </span>
                                                 @endif
-                                            </div>   
-                                        </td>
-                                    @endcan
+                                            @endcan
+                                        </div>
+                                    </td>
                                     <td class="w-20p">
                                         @foreach ($project->getTeamMembers ?: [] as $teamMember)
                                             <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
