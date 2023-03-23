@@ -634,7 +634,7 @@ class Project extends Model implements Auditable
             return $clientName;
         }
 
-            return "";
+        return "";
     }
 
     public function amcBillableHoursDisplay($periodStartDate, $periodEndDate)

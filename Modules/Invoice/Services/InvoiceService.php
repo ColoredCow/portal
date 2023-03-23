@@ -43,7 +43,6 @@ class InvoiceService implements InvoiceServiceContract
             $clientsReadyToSendInvoicesData = [];
             $projectsReadyToSendInvoicesData = [];
             $amcProjectsReadyToSendInvoicesData = [];
-
         } else {
             $invoices = [];
             $clientsReadyToSendInvoicesData = Client::status('active')->whereHas('projects', function ($query) {
@@ -508,7 +507,7 @@ class InvoiceService implements InvoiceServiceContract
         $clientId = $data['client_id'] ?? null;
         $client = Client::find($clientId);
         $project = Project::find($projectId);
-        if($project == null) {
+        if ($project == null) {
             $project = Project::find($data['projectId'] ?? null);
         }
         $year = (int) substr($data['term'], 0, 4);
@@ -569,12 +568,10 @@ class InvoiceService implements InvoiceServiceContract
         $year = (int) substr($term, 0, 4);
         $monthName = date('F', mktime(0, 0, 0, $monthNumber, 10));
         $billingLevel = $client ? 'client' : 'project';
-        if($project == null) {
+        if ($project == null) {
             $project = Project::find($decodedInvoiceData['projectId'] ?? null);
         }
-        // $proj = Project::find($decodedInvoiceData['projectId']);
-        // dd($proj);
-        // dd($data, $decodedInvoiceData['projectId'], $project, $client);
+
         
         $dataArray = [
             'client_id' => optional($client)->id,

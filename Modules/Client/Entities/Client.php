@@ -73,7 +73,7 @@ class Client extends Model
             });
     }
 
-    public function getNextBillingDateAttribute() // In this function nextbilling date comes from client level it can be null. 
+    public function getNextBillingDateAttribute() // In this function nextbilling date comes from client level it can be null.
     {
         $billingFrequencyId = $this->billingDetails->billing_frequency;
         $previousInvoice = invoice::whereNull('project_id')->where('client_id', $this->id)->orderby('sent_on', 'desc')->first();
@@ -187,8 +187,7 @@ class Client extends Model
             return $project->getBillableHoursForMonth($periodStartDate, $periodEndDate);
         });
 
-        if($totalHours == 0)
-        {
+        if ($totalHours == 0) {
             return;
         }
 
@@ -199,8 +198,7 @@ class Client extends Model
     {
         $serviceRateTerm = $this->billingDetails->service_rate_term;
 
-        if(! ($serviceRateTerm == 'per_hour'))
-        {
+        if (! ($serviceRateTerm == 'per_hour')) {
             return $this->billingDetails->service_rates;
         }
 
@@ -233,14 +231,13 @@ class Client extends Model
         });
     }
 
-    public function getClientLevelProjectsBillableHoursForInvoice($periodStartDate, $periodEndDate)
+    public function getClientLevelProjectsBillableHoursForInvoice( $periodStartDate, $periodEndDate)
     {
         $billableHours =  $this->clientLevelBillingProjects->sum(function ($project) use ( $periodStartDate, $periodEndDate) {
             return $project->getBillableHoursForMonth($periodStartDate, $periodEndDate);
         });
 
-        if($billableHours == 0 || $billableHours == null)
-        {
+        if ($billableHours == 0 || $billableHours == null) {
             return 0;
         }
 
@@ -544,12 +541,10 @@ class Client extends Model
 
     public function getAmountForTermPerHour($termStartDate, $termEndDate)
     {
-        // getBillableHoursForMonth($periodStartDate, $periodEndDate)
         $billingFrequencyId = $this->billingDetails->billing_frequency;
         $termStartDate = Carbon::parse($termStartDate);
         $termEndDate = Carbon::parse($termEndDate);
-        // $months = $termStartDate->diffInMonths($termEndDate);
-        $amount = ( $this->billingDetails->service_rates * $this->project->getBillableHoursForMonth($termStartDate, $termEndDate));
+        $amount = ($this->billingDetails->service_rates * $this->project->getBillableHoursForMonth($termStartDate, $termEndDate));
 
         if ($billingFrequencyId == 2) { // monthly
             return $amount;
@@ -614,12 +609,9 @@ class Client extends Model
     }
 
     public function getTermText($termStartDate, $termEndDate)
-    {        
+    {
         $invoiceService = new InvoiceService();
         $termText = $invoiceService->getTermText($termStartDate, $termEndDate);
         return $termText;
-
     }
-
-
 }
