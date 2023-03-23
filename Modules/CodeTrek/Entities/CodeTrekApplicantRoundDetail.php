@@ -9,6 +9,7 @@ class CodeTrekApplicantRoundDetail extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $table = 'codetrek_applicant_round_details';
 
     public function applicant()
     {

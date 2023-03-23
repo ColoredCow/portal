@@ -28,6 +28,8 @@ class CodeTrekService
         $applicant->university = $data['university_name'] ?? null;
         $applicant->save();
 
+        $this->moveApplicantToRound($applicant, $data);
+
         return $applicant;
     }
     public function edit($codeTrekApplicant)
@@ -57,7 +59,18 @@ class CodeTrekService
     {
         $applicant = CodeTrekApplicant::find($codeTrekApplicant->id);
         $roundDetails = CodeTrekApplicantRoundDetail::where('applicant_id', $applicant->id)->get();
-
+        
         return $roundDetails;
+    }
+
+    public function moveApplicantToRound($applicant,$data)
+    {
+        $applicationRound = new CodeTrekApplicantRoundDetail();
+        $applicationRound->applicant_id = $applicant->id; 
+        $applicationRound->round_name = 'level-1'; 
+        $applicationRound->feedback = null ; 
+        $applicationRound->start_date = $data['start_date'];
+        $applicationRound->save();
+
     }
 }

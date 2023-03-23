@@ -16,8 +16,8 @@ class CreateCodetrekApplicantRoundDetailsTable extends Migration
         Schema::create('codetrek_applicant_round_details', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('applicant_id');
-            $table->string('round_name');
-            $table->string('feedback');
+            $table->string('round_name')->default('level-1');
+            $table->string('feedback')->nullable(true);
             $table->timestamps();
 
             //foreign key constraint
@@ -37,7 +37,7 @@ class CreateCodetrekApplicantRoundDetailsTable extends Migration
     {
         Schema::table('codetrek_applicant_round_details', function (Blueprint $table) {
             $table->dropForeign(['applicant_id']);
-            $table->dropColumn(['applicant_id', 'round_name', 'qualified', 'feedback']);
+            $table->dropColumn(['applicant_id', 'round_name', 'feedback']);
         });
     }
 }

@@ -49,7 +49,7 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="d-flex align-items-center">
-                                            <h3>{{ $applicant->first_name }} {{ $applicant->last_name }}</h3>
+                                            <h4>{{ $applicant->first_name }} {{ $applicant->last_name }}</h4>
                                         </div>
                                     </div>
                                     <span class="mr-1 text-truncate"><i
