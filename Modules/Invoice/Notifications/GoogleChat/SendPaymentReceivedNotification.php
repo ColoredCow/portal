@@ -10,7 +10,7 @@ use NotificationChannels\GoogleChat\GoogleChatMessage;
 class SendPaymentReceivedNotification extends Notification
 {
     use Queueable;
-    public $invoice;
+    public $invoiceNotificationData;
     /**
      * Create a new notification instance.
      *
