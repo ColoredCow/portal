@@ -33,9 +33,9 @@ class NotificationToUpdateEffortForProject extends Notification
     {
         $projects = Project::all();
         foreach ($projects as $project) {
-            $diff_in_dates = date_diff($project->end_date, today());
+            $interval = date_diff($project->end_date, today());
 
-            if ($diff_in_dates->days == 1) {
+            if ($interval->days == 1) {
                 return GoogleChatMessage::create()
                     ->mentionAll('', "  Please check and update the efforts sheet to avoid last minutes updates at the end of the billing cycle.\n");
             }
