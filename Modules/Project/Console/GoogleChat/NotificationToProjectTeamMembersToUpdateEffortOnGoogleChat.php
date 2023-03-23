@@ -14,7 +14,7 @@ class NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat extends Command
      *
      * @var string
      */
-    protected $name = 'project:notification-to-update-effort-for-project';
+    protected $name = 'project:reminder-for-effortsheet-lock';
 
     /**
      * The console command description.
