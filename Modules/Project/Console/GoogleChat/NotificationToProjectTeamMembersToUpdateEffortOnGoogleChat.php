@@ -21,7 +21,7 @@ class NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat extends Command
      *
      * @var string
      */
-    protected $description = 'Sends a simple notification on a Google Chat channel to update their effort.';
+    protected $description = 'Sends a simple notification on a Google Chat channel to update their effort before the end date.';
 
     /**
      * Create a new command instance.
