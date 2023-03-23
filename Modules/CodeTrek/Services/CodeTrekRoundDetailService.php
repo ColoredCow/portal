@@ -28,6 +28,7 @@ class CodeTrekRoundDetailService
         $applicant->save();
 
         $this->takeActionApplicantToRound($applicant);
+        
         return $applicant;
     }
 
