@@ -32,6 +32,7 @@
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr class="sticky-top">
+                    <th>Client Id</th>
                     <th>Name</th>
                     <th>Client Type</th>
                     <th>Key Account Manager</th>
@@ -58,7 +59,7 @@
                 @endforelse
             </tbody>
         </table>
-
     </div>
+
 </div>
 @endsection
