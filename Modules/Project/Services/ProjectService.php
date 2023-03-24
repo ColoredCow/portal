@@ -474,7 +474,7 @@ class ProjectService implements ProjectServiceContract
         $data = [];
         $totalAdditionalResourceRequired = 0;
         foreach ($projectsWithTeamMemberRequirement as $project) {
-            $count =  $project->team_member_needed - $project->team_member_count;
+            $count = $project->team_member_needed - $project->team_member_count;
             $totalAdditionalResourceRequired += $count;
             $projectData = [
                 'totalResourceRequirement' => $project->team_member_needed,
