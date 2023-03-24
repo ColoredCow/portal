@@ -37,7 +37,7 @@ class NotificationToUpdateEffortForProject extends Notification
 
             if ($interval->days == 1) {
                 return GoogleChatMessage::create()
-                    ->mentionAll('', "  Please check and update the efforts sheet to avoid last minutes updates at the end of the billing cycle.");
+                    ->mentionAll('', ' Please check and update the efforts sheet to avoid last minutes updates at the end of the billing cycle.');
             }
         }
     }
