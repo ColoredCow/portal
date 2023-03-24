@@ -7,7 +7,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Models\Permission;
 
-class operationsPermissionTableSeeder extends Seeder
+class OperationsPermissionTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
