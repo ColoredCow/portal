@@ -154,7 +154,7 @@ class ProjectService implements ProjectServiceContract
     public function updateProjectData($data, $project)
     {
         $updateSection = $data['update_section'] ?? '';
-        if (! $updateSection) {
+        if (!$updateSection) {
             return false;
         }
 
@@ -211,7 +211,7 @@ class ProjectService implements ProjectServiceContract
         if ($data['status'] == 'active' || $data['status'] == 'halted') {
             $project->client->update(['status' => 'active']);
         } else {
-            if (! $project->client->projects()->where('status', 'active')->exists()) {
+            if (!$project->client->projects()->where('status', 'active')->exists()) {
                 $project->client->update(['status' => 'inactive']);
             }
             $project->getTeamMembers()->update(['ended_on' => now()]);
@@ -244,7 +244,7 @@ class ProjectService implements ProjectServiceContract
                     $member->update($tempArray);
                 }
             }
-            if (! $flag) {
+            if (!$flag) {
                 $member->update(['ended_on' => Carbon::now()]);
             }
         }
@@ -265,7 +265,7 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectRepositories($data, $project)
     {
-        if (! isset($data['url'])) {
+        if (!isset($data['url'])) {
             $project->repositories()->delete();
 
             return;
@@ -349,7 +349,7 @@ class ProjectService implements ProjectServiceContract
         $numberOfWorkingDays = 0;
         $weekend = ['Saturday', 'Sunday'];
         foreach ($period as $date) {
-            if (! in_array($date->format('l'), $weekend)) {
+            if (!in_array($date->format('l'), $weekend)) {
                 $numberOfWorkingDays++;
             }
         }
@@ -445,7 +445,7 @@ class ProjectService implements ProjectServiceContract
     {
         $teamMembers = [];
         foreach ($employees as $employee) {
-            if (! $employee->user) {
+            if (!$employee->user) {
                 continue;
             }
             foreach ($employee->user->activeProjectTeamMembers as $activeProjectTeamMember) {
@@ -462,19 +462,46 @@ class ProjectService implements ProjectServiceContract
         return $teamMembers;
     }
 
-    public function allProjectsAdditionalResourceRequiredCount()
+    public function projectsWithTeamMemberRequirement()
     {
-        $clients = Client::status('active')->orderBy('name')->get();
-        $additionalResourceRequired = 0;
-        foreach ($clients as $client) {
-            foreach ($client->projects as $project) {
-                $count = $project->getTotalToBeDeployedCount();
-                if ($count > 0) {
-                    $additionalResourceRequired += $count;
+        $projectsWithTeamMemberRequirement = Project::with('client')->status('active')
+            ->withCount('getTeamMembers as team_member_count')
+            ->withSum('resourceRequirement as team_member_needed', 'total_requirement')
+            ->havingRaw('team_member_needed - team_member_count')
+            ->get();
+
+        $totalAdditionalResourceRequired = [];
+        $data = [];
+        $totalAdditionalResourceRequired = 0;
+        foreach ($projectsWithTeamMemberRequirement as $project) {
+            $count =  $project->team_member_needed - $project->team_member_count;
+            $totalAdditionalResourceRequired += $count;
+            $projectData = [
+                'totalResourceRequirement' => $project->team_member_needed,
+                'totalResourceDeployed' => $project->team_member_count,
+                'additionalResourceRequired' => $project->team_member_needed - $project->team_member_count,
+                'teamMemberNeededByDesignation' => [],
+                'currentTeamMemberCountByDesignation' => [],
+            ];
+
+            $designations = $this->getDesignations();
+            $designationKeys = array_keys($designations);
+
+            foreach ($designationKeys as $designationName) {
+                $totalResourceRequirementCount = $project->getResourceRequirementByDesignation($designationName)->total_requirement;
+                if ($totalResourceRequirementCount > 0) {
+                    $projectData['teamMemberNeededByDesignation'][$designations[$designationName]] = $totalResourceRequirementCount;
+                }
+                $totalResourceDeployedCount = $project->getDeployedCountForDesignation($designationName);
+                if ($totalResourceDeployedCount > 0){
+                    $projectData['currentTeamMemberCountByDesignation'][$designations[$designationName]] = $totalResourceDeployedCount;
                 }
             }
+            $data[$project->client->name][$project->name] = $projectData;
         }
 
-        return $additionalResourceRequired;
+        return [ 'totalCount' => $totalAdditionalResourceRequired,
+                 'data' => $data,
+        ];
     }
 }
