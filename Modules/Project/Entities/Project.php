@@ -774,16 +774,18 @@ class Project extends Model implements Auditable
     {
         $termStartDate = Carbon::parse($termStartDate);
         $termEndDate = Carbon::parse($termEndDate);
-        $months = $termStartDate->diffInMonths($termEndDate);
-        $amount = ($this->serviceRateFromProjectBillingDetailsTable() * $this->amcBillableHours());
+        // amount will be 0 if Billablehours = 0.
+        // billing_frequency for 15 days & months but amount will be calculated on monthly base.
+        $amount = ($this->serviceRateFromProjectBillingDetailsTable() * $this->getBillableHoursForMonth($termStartDate, $termEndDate));
+        $billing_frequency = $this->billingDetail->billing_frequency;
 
-        if ($months == 0) { // monthly
+        if ($billing_frequency == 1 || $billing_frequency == 2) { // monthly
             return $amount;
         }
-        if ($months == 2) { // Quarterly
+        if ($billing_frequency  == 3) { // Quarterly
             return $amount * 3;
         }
-        if ($months == 11) { // yearly
+        if ($billing_frequency  == 4) { // yearly
             return $amount * 12;
         }
 
@@ -794,15 +796,16 @@ class Project extends Model implements Auditable
     {
         $termStartDate = Carbon::parse($termStartDate);
         $termEndDate = Carbon::parse($termEndDate);
+        $billing_frequency = $this->billingDetail->billing_frequency;
         $totalAmountInMonth = $this->serviceRateFromProjectBillingDetailsTable();
-        $months = $termStartDate->diffInMonths($termEndDate);
-        if ($months == 0) { // monthly
+
+        if ($billing_frequency == 0 || $billing_frequency == 2) { // monthly
             return  $totalAmountInMonth;
         }
-        if ($months == 2) { // Quarterly
+        if ($billing_frequency == 3) { // Quarterly
             return  $totalAmountInMonth * 3;
         }
-        if ($months == 11) { // yearly
+        if ($billing_frequency == 4) { // yearly
             return  $totalAmountInMonth * 12;
         }
 
@@ -814,12 +817,12 @@ class Project extends Model implements Auditable
         $termStartDate = Carbon::parse($termStartDate);
         $termEndDate = Carbon::parse($termEndDate);
         $totalAmountInQuater = $this->serviceRateFromProjectBillingDetailsTable();
-        $months = $termStartDate->diffInMonths($termEndDate);
+        $billing_frequency = $this->billingDetail->billing_frequency;
 
-        if ($months == 2) { // Quarterly
+        if ($billing_frequency == 3) { // Quarterly
             return  $totalAmountInQuater;
         }
-        if ($months == 11) { // yearly
+        if ($billing_frequency == 4) { // yearly
             return  $totalAmountInQuater * 4;
         }
 

@@ -138,7 +138,7 @@
                             $index = 0;
                         @endphp
                         @foreach ($clientsReadyToSendInvoicesData as $client)
-                            
+
                             {{--   may be use later
                                  @if ($client->getClientLevelProjectsBillableHoursForInvoice() == 0 || $client->next_billing_date >= today()) --}}
                             @if ($client->next_billing_date >= today())
@@ -246,15 +246,6 @@
                                     $amount = $currencySymbol . $project->amountWithTaxForTerm($termStartDate, $termEndDate);
                                 }
 
-                                // remove this commented code when client function will be removed.
-
-                                // $billingStartMonth = $project->client->getMonthStartDateAttribute($monthToSubtract)->format('M');
-                                // $billingEndMonth = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('M');
-                                // $billingEndMonthYear = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('Y');
-                                // $monthName = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('F');
-                                // $termText = $billingStartMonth;
-                                // $termText = $client->getTermText($termStartDate, $termEndDate);
-
                                 $billingStartMonth = $termStartDate->addmonths()->subMonthsNoOverflow(1)->format('M');
                                 $billingEndMonth = $termEndDate->addmonths()->subMonthsNoOverflow(1)->format('M');
                                 $billingEndMonthYear = $termEndDate->submonths()->format('Y');
@@ -341,6 +332,7 @@
                                 $termDate = $project->getTermStartAndEndDateForInvoice();
                                 $termStartDate = $termDate['startDate'];
                                 $termEndDate = $termDate['endDate'];
+
                                 if ($project->amountWithoutTaxForTerm($termStartDate, $termEndDate) == 0 || $project->next_billing_date >= today()) {
                                     continue;
                                 }
@@ -352,13 +344,6 @@
                                 } else {
                                     $amount = $currencySymbol . $project->amountWithTaxForTerm($termStartDate, $termEndDate);
                                 }
-                                // remove this commented code when client function will be removed.
-
-                                // $billingStartMonth = $project->client->getMonthStartDateAttribute($monthToSubtract)->format('M');
-                                // $billingEndMonth = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('M');
-                                // $billingEndMonthYear = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('Y');
-                                // $monthName = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('F');
-                                // $termText = $billingStartMonth;
 
                                 $billingStartMonth = $termStartDate->addmonths()->subMonthsNoOverflow(1)->format('M');
                                 $billingEndMonth = $termEndDate->addmonths()->subMonthsNoOverflow(1)->format('M');
@@ -371,7 +356,6 @@
                                     $billingStartMonth = $termText = today()->startOfQuarter()->format('M');
                                     $billingEndMonth  = $termText = today()->endOfQuarter()->format('M');
                                 }
-
                                 $invoiceData = [
                                     'projectName' => $project->name,
                                     'billingPersonName' => optional($project->client->billing_contact)->name,
