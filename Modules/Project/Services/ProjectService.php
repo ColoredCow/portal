@@ -500,8 +500,9 @@ class ProjectService implements ProjectServiceContract
             $data[$project->client->name][$project->name] = $projectData;
         }
 
-        return [ 'totalCount' => $totalAdditionalResourceRequired,
-                 'data' => $data,
+        return [
+            'totalCount' => $totalAdditionalResourceRequired,
+            'data' => $data,
         ];
     }
 }
