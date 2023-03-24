@@ -4,7 +4,7 @@ namespace Modules\Project\Notifications\GoogleChat;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use Modules\Client\Entities\Client;
+use Modules\Project\Entities\Project;
 use NotificationChannels\GoogleChat\GoogleChatChannel;
 use NotificationChannels\GoogleChat\GoogleChatMessage;
 
@@ -31,13 +31,13 @@ class NotificationToUpdateEffortForProject extends Notification
 
     public function toGoogleChat($notifiable)
     {
-        $projects = Client::all();
+        $projects = Project::all();
         foreach ($projects as $project) {
-            $interval = date_diff($project->billingDetails->billing_date, today());
+            $interval = date_diff($project->client->billingDetails->billing_date, today());
 
             if ($interval->days == 1) {
                 return GoogleChatMessage::create()
-                    ->mentionAll('', "  Please check and update the efforts sheet to avoid last minutes updates at the end of the billing cycle.\n");
+                    ->mentionAll('', "  Please check and update the efforts sheet to avoid last minutes updates at the end of the billing cycle.");
             }
         }
     }
