@@ -493,7 +493,7 @@ class ProjectService implements ProjectServiceContract
                     $projectData['teamMemberNeededByDesignation'][$designations[$designationName]] = $totalResourceRequirementCount;
                 }
                 $totalResourceDeployedCount = $project->getDeployedCountForDesignation($designationName);
-                if ($totalResourceDeployedCount > 0){
+                if ($totalResourceDeployedCount > 0) {
                     $projectData['currentTeamMemberCountByDesignation'][$designations[$designationName]] = $totalResourceDeployedCount;
                 }
             }
