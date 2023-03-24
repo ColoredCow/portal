@@ -164,7 +164,7 @@ class InvoiceService implements InvoiceServiceContract
     }
 
     public function update($data, $invoice)
-    {  
+    {
         $invoice->update($data);
         if (isset($data['send_mail'])) {
             $emailData = $this->getSendEmailData($data, $invoice);
