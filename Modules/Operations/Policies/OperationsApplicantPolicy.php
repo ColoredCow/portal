@@ -55,4 +55,5 @@ class OperationsApplicantPolicy
     public function delete(User $user)
     {
     }
+
 }
