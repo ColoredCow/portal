@@ -10,15 +10,15 @@ use NotificationChannels\GoogleChat\GoogleChatMessage;
 class SendPaymentReceivedNotification extends Notification
 {
     use Queueable;
-    public $invoiceNotificationData;
+    public $projectAndClientName;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($invoiceNotificationData)
+    public function __construct($projectAndClientName)
     {
-        $this->$invoiceNotificationData = $invoiceNotificationData;
+        $this->projectAndClientName = $projectAndClientName;
     }
 
     public function via($notifiable)
@@ -28,9 +28,9 @@ class SendPaymentReceivedNotification extends Notification
         ];
     }
 
-    public function toGoogleChat($invoiceNotificationData)
+    public function toGoogleChat($notifiable)
     {
-        return GoogleChatMessage::create()
-            ->mentionAll('', " We have received the payment for{{$invoiceNotificationData}} successfully!\n");
+        return GoogleChatMessage::create()->mentionAll('', ' We have received the payment for ' .
+        $this->projectAndClientName . ' successfully!\n ');
     }
 }
