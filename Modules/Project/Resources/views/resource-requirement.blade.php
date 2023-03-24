@@ -18,9 +18,9 @@
                 <thead class="thead-dark">
                     <tr>
                         <th class="w-30p sticky-top">Client/Project Name</th>
-                        <th class="sticky-top">Additional Resource Required</th>
+                        <th class="sticky-top">Resouce Needed</th>
                         <th class="sticky-top">Resource Deployed</th>
-                        <th class="sticky-top">Resource Needed</th>
+                        <th class="sticky-top">Additional Resource Required</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,8 +43,9 @@
                                     </div>
                                 </td>
                                 <td> 
-                                    <div> Total Resource Required : {{ $projects['totalResourceRequirement'] }} </div>
-                                    <div> Additional Resource Required : {{ $projects['additionalResourceRequired'] }} </div>
+                                    @foreach ($projects['teamMemberNeededByDesignation'] as $designationName => $count)
+                                        <div> {{ $designationName }} : {{ $count }} </div>
+                                    @endforeach 
                                 </td>
                                 <td> 
                                     @foreach ($projects['currentTeamMemberCountByDesignation'] as $designationName => $count)
@@ -52,9 +53,7 @@
                                     @endforeach
                                 </td>  
                                 <td> 
-                                    @foreach ($projects['teamMemberNeededByDesignation'] as $designationName => $count)
-                                        <div> {{ $designationName }} : {{ $count }} </div>
-                                    @endforeach 
+                                    <div class="d-flex justify-content-center"> {{ $projects['additionalResourceRequired'] }} </div>
                                 </td> 
                             </tr>
                             @endforeach
