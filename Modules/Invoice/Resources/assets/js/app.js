@@ -29,7 +29,6 @@ $(document).ready(function(){
 
 	$(".show-preview").on("click", function() {
 		var invoiceData = $(this).data("invoice-data");
-		console.log(invoiceData);
 		var mapping = {
 			"|*project_name*|": invoiceData["projectName"],
 			"|*term*|": invoiceData["term"],

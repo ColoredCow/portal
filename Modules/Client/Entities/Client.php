@@ -522,7 +522,7 @@ class Client extends Model
 
                 return  $totalAmountInQuater;
             case 'per_year':
-                $totalAmountInYear = $this->serviceRateFromProjectBillingDetailsTable(); // this need to be correct
+                $totalAmountInYear = $this->billingDetails->service_rates;
 
                 return $totalAmountInYear;
             case 'per_resource':
@@ -573,7 +573,6 @@ class Client extends Model
         $termEndDate = Carbon::parse($termEndDate);
         $billingFrequencyId = $this->billingDetails->billing_frequency;
         $totalAmountInMonth = $this->billingDetails->service_rates;
-        // $months = $termStartDate->diffInMonths($termEndDate);
         if ($billingFrequencyId == 2) { // monthly
             return  $totalAmountInMonth;
         }
@@ -593,7 +592,6 @@ class Client extends Model
         $termEndDate = Carbon::parse($termEndDate);
         $totalAmountInQuater = $this->billingDetails->service_rates;
         $billingFrequencyId = $this->billingDetails->billing_frequency;
-        // $months = $termStartDate->diffInMonths($termEndDate);
 
         if ($billingFrequencyId == 3) { // Quarterly
             return  $totalAmountInQuater;

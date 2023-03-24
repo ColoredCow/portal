@@ -289,23 +289,6 @@ class Project extends Model implements Auditable
         });
     }
 
-    // public function getBillableHoursForMonth($monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
-    // {
-    //     $startDate = $periodStartDate ?: $this->client->getMonthStartDateAttribute($monthToSubtract);
-    //     $endDate = $periodEndDate ?: $this->client->getMonthEndDateAttribute($monthToSubtract);
-
-    //     return $this->getAllTeamMembers->sum(function ($teamMember) use ($startDate, $endDate) {
-    //         if (! $teamMember->projectTeamMemberEffort) {
-    //             return 0;
-    //         }
-
-    //         return $teamMember->projectTeamMemberEffort()
-    //             ->where('added_on', '>=', $startDate)
-    //             ->where('added_on', '<=', $endDate)
-    //             ->sum('actual_effort');
-    //     });
-    // }
-
     public function getResourceBillableAmount()
     {
         $service_rate = optional($this->billingDetail)->service_rates;
