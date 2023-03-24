@@ -445,7 +445,7 @@ class ProjectService implements ProjectServiceContract
     {
         $teamMembers = [];
         foreach ($employees as $employee) {
-            if (!$employee->user) {
+            if (! $employee->user) {
                 continue;
             }
             foreach ($employee->user->activeProjectTeamMembers as $activeProjectTeamMember) {
