@@ -782,10 +782,10 @@ class Project extends Model implements Auditable
         if ($billing_frequency == 1 || $billing_frequency == 2) { // monthly
             return $amount;
         }
-        if ($billing_frequency  == 3) { // Quarterly
+        if ($billing_frequency == 3) { // Quarterly
             return $amount * 3;
         }
-        if ($billing_frequency  == 4) { // yearly
+        if ($billing_frequency == 4) { // yearly
             return $amount * 12;
         }
 
