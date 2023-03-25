@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Factory;
 class TicketServiceProvider extends ServiceProvider
 {
     /**
-     * @var string $moduleName
+     * @var string
      */
     protected $moduleName = 'Ticket';
 
     /**
-     * @var string $moduleNameLower
+     * @var string
      */
     protected $moduleNameLower = 'ticket';
 
