@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Factory;
 class TicketServiceProvider extends ServiceProvider
 {
     /**
-     * @var string $moduleName
+     * @var string 
      */
     protected $moduleName = 'Ticket';
 
     /**
-     * @var string $moduleNameLower
+     * @var string 
      */
     protected $moduleNameLower = 'ticket';
 
@@ -108,6 +108,7 @@ class TicketServiceProvider extends ServiceProvider
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
+
         return $paths;
     }
 }
