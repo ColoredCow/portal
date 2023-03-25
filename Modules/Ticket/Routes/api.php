@@ -15,4 +15,5 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/ticket', function (Request $request) {
     return $request->user();
+
 });

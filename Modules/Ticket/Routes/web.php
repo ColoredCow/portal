@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('ticket')->group(function() {
+Route::prefix('ticket')->group(function () {
     Route::get('/', 'TicketController@index');
 });
