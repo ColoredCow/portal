@@ -69,8 +69,12 @@
     @endif
 
     @can('task.view')
-        <li class="nav-item">
-            <a class="nav-item nav-link" href="/task">Task</a>
+        <li class="nav-item dropdown">
+            <a id="navbarDropdown_task" class="nav-link dropdown-toggle" href="#" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Task<span class="caret"></span>
+            </a>
+            <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_task">
+                <a class="dropdown-item" href="{{route('ticket.index')}}">Tickets</a>
         </li>
     @endcan
 

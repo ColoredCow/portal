@@ -1,0 +1,13 @@
+{
+    "name": "Ticket",
+    "alias": "ticket",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Ticket\\Providers\\TicketServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
