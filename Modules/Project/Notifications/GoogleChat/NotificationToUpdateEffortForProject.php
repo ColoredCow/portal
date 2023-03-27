@@ -36,7 +36,7 @@ class NotificationToUpdateEffortForProject extends Notification
         foreach ($projects as $project) {
             $date = Carbon::today()->setDay($project->client->billingDetails->billing_date);
             if ($date > today()) {
-                $interval = today()->diffInDays($date);
+                $interval = Carbon::now()->diffInDays($date);
                 if ($interval == 1) {
                     return GoogleChatMessage::create()
                         ->mentionAll('', ' Please check and update the efforts sheet to avoid last minutes updates at the end of the billing cycle.');
