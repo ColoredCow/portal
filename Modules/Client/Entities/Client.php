@@ -177,13 +177,13 @@ class Client extends Model
         return $gstAmount;
     }
 
-    public function getBillableHoursForMonth($periodStartDate, $periodEndDate)
+    public function getBillableHoursForTerm($termStartDate, $termEndDate)
     {
         $projects = $this->clientLevelBillingProjects;
         $projects = $projects ?? collect([]);
 
-        $totalHours = $projects->sum(function ($project) use ($periodStartDate, $periodEndDate) {
-            return $project->getBillableHoursForMonth($periodStartDate, $periodEndDate);
+        $totalHours = $projects->sum(function ($project) use ($termStartDate, $termEndDate) {
+            return $project->getBillableHoursForTerm($termStartDate, $termEndDate);
         });
 
         if ($totalHours == 0) {
@@ -202,19 +202,19 @@ class Client extends Model
         }
 
         $amount = $projects->sum(function ($project) use ($periodStartDate, $periodEndDate) {
-            return round($project->getBillableHoursForMonth($periodStartDate, $periodEndDate) * $this->billingDetails->service_rates, 2);
+            return round($project->getBillableHoursForTerm($periodStartDate, $periodEndDate) * $this->billingDetails->service_rates, 2);
         });
 
         return $amount;
     }
 
-    public function getTotalAmountWithTaxForTerm($periodStartDate, $periodEndDate)
+    public function getTotalAmountWithTaxForTerm($termStartDate, $termEndDate)
     {
         $projects = $this->clientLevelBillingProjects;
         $projects = $projects ?? collect([]);
-        $tax = $this->getTaxAmountForTerm($periodStartDate, $periodEndDate, $projects);
+        $tax = $this->getTaxAmountForTerm($termStartDate, $termEndDate, $projects);
 
-        return $this->getBillableAmountWithoutTaxForTerm($periodStartDate, $periodEndDate, $projects) + optional($this->billingDetails)->bank_charges + $tax;
+        return $this->getBillableAmountWithoutTaxForTerm($termStartDate, $termEndDate, $projects) + optional($this->billingDetails)->bank_charges + $tax;
     }
 
     public function getAmountPaidForTerm(int $monthsToSubtract, $projects)
@@ -233,7 +233,7 @@ class Client extends Model
     public function getClientLevelProjectsBillableHoursForInvoice($periodStartDate, $periodEndDate)
     {
         $billableHours = $this->clientLevelBillingProjects->sum(function ($project) use ($periodStartDate, $periodEndDate) {
-            return $project->getBillableHoursForMonth($periodStartDate, $periodEndDate);
+            return $project->getBillableHoursForTerm($periodStartDate, $periodEndDate);
         });
 
         if ($billableHours == 0 || $billableHours == null) {
@@ -504,6 +504,19 @@ class Client extends Model
         return $endDate;
     }
 
+    public function amountWithTaxForTerm($termStartDate, $termEndDate)
+    {
+        $termStartDate = Carbon::parse($termStartDate);
+        $termEndDate = Carbon::parse($termEndDate);
+        $amount = $this->amountWithoutTaxForTerm($termStartDate, $termEndDate);
+        $bankCharge = optional($this->billingDetails)->bank_charges;
+        $gstPercentage = config('invoice.invoice-details.igst');
+        $totalAmount = $amount + $bankCharge;
+        $gst = $totalAmount * floatval($gstPercentage) / 100;
+
+        return round($totalAmount + $gst, 2);
+    }
+
     public function amountWithoutTaxForTerm($termStartDate, $termEndDate)
     {
         $serviceRateTerm = $this->billingDetails->service_rate_term;
@@ -534,35 +547,12 @@ class Client extends Model
         }
     }
 
-    public function amountWithTaxForTerm($termStartDate, $termEndDate)
-    {
-        $termStartDate = Carbon::parse($termStartDate);
-        $termEndDate = Carbon::parse($termEndDate);
-        $amount = $this->amountWithoutTaxForTerm($termStartDate, $termEndDate);
-        $bankCharge = optional($this->billingDetails)->bank_charges;
-        $gstPercentage = config('invoice.invoice-details.igst');
-        $totalAmount = $amount + $bankCharge;
-        $gst = $totalAmount * floatval($gstPercentage) / 100;
-
-        return round($totalAmount + $gst, 2);
-    }
-
     public function getAmountForTermPerHour($termStartDate, $termEndDate)
     {
-        $billingFrequencyId = $this->billingDetails->billing_frequency;
         $termStartDate = Carbon::parse($termStartDate);
         $termEndDate = Carbon::parse($termEndDate);
-        $amount = ($this->billingDetails->service_rates * $this->project->getBillableHoursForMonth($termStartDate, $termEndDate));
 
-        if ($billingFrequencyId == 2) { // monthly
-            return $amount;
-        }
-        if ($billingFrequencyId == 3) { // Quarterly
-            return $amount * 3;
-        }
-        if ($billingFrequencyId == 4) { // yearly
-            return $amount * 12;
-        }
+        $amount = ($this->billingDetails->service_rates * $this->getBillableHoursForTerm($termStartDate, $termEndDate));
 
         return $amount;
     }

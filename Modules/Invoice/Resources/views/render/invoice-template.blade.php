@@ -300,6 +300,7 @@
                                 <p>{{ $client && $client->country && $client->country->initials == 'IN' && optional($client->addresses->first())->gst_number ? __('GSTIN: ') . optional($client->addresses->first())->gst_number : '' }}</p>
                                 <p>{{ optional($client->billing_contact)->phone }}</p>
                             </td>
+                            
                             <td>
                                 <p class="fw-bold ml-1em">Details</p>
                                 <table>
@@ -392,7 +393,7 @@
                                     $termStartDate = $termStartEndDate['startDate'];
                                     $termEndDate = $termStartEndDate['endDate'];
                                     ?>
-                                        {{ $client->getBillableHoursForMonth($termStartDate, $termEndDate) }}
+                                        {{ $client->getBillableHoursForTerm($termStartDate, $termEndDate) }}
                                     @endif
                                 @else 
                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
@@ -404,7 +405,7 @@
                                                 $termStartEndDate = $project->getTermStartAndEndDateForInvoice();
                                                 $termStartDate = $termStartEndDate['startDate'];
                                                 $termEndDate = $termStartEndDate['endDate'];
-                                                $amcBillableHoursDisplay = $project->getBillableHoursForMonth($termStartDate, $termEndDate);
+                                                $amcBillableHoursDisplay = $project->getBillableHoursForTerm($termStartDate, $termEndDate);
                                                 if($amcBillableHoursDisplay == null || $amcBillableHoursDisplay == 0)
                                                 {$amcBillableHoursDisplay = '';}
                                                 ?>
@@ -414,7 +415,7 @@
                                             @if($project->getBillingLevel() == "project") 
                                             {{ " " }}
                                             @else
-                                            {{ $project->getBillableHoursForMonth($monthsToSubtract, $periodStartDate, $periodEndDate) }}
+                                            {{ $project->getBillableHoursForTerm($periodStartDate, $periodEndDate) }}
                                             @endif
                                         @endif
                                     @endif

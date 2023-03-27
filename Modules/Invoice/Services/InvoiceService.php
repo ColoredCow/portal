@@ -610,6 +610,8 @@ class InvoiceService implements InvoiceServiceContract
             }
         }
 
+        $clientForCurrency = ($billingLevel == 'client') ? $client : Client::find($project->client_id);
+
         $invoiceData = [
             'email' => [
                 'to' => $data['to'] ?? ($client ? optional($client->billing_contact)->email : optional($project->client->billing_contact)->email),
@@ -622,7 +624,7 @@ class InvoiceService implements InvoiceServiceContract
                 'subject' => $data['email_subject'],
             ],
             'pdf' => [
-                 'client' => $client,
+                 'client' => $clientForCurrency,
                  'project' => $project,
                  'gst' => $decodedInvoiceData['GstAmount'],
                  'totalAmount' => ($project && $project->amountWithTaxForTerm($periodStartDate, $periodEndDate)) ? $project->amountWithTaxForTerm($periodStartDate, $periodEndDate) : 0,
@@ -671,8 +673,8 @@ class InvoiceService implements InvoiceServiceContract
             'amount' => $invoiceData['invoice']['amount'],
             'invoice_number' => $invoiceData['invoice']['invoiceNumber'],
             'gst' => $invoiceData['invoice']['gst'],
-            'term_start_date' => substr($invoiceData['invoice']['startAndEndDate']['startDate'], 0, 10),
-            'term_end_date' => substr($invoiceData['invoice']['startAndEndDate']['endDate'], 0, 10),
+            'term_start_date' => substr($invoiceData['invoice']['startAndEndDate']['termStartDate'], 0, 10),
+            'term_end_date' => substr($invoiceData['invoice']['startAndEndDate']['termEndDate'], 0, 10),
         ]);
         Mail::queue(new SendInvoiceMail($invoice, $invoiceNumber, $invoiceData['email']));
     }

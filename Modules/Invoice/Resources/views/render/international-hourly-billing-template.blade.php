@@ -96,7 +96,7 @@
             $termEndDate = $termStartEndDate['endDate'];
             ?>
 
-            @if($project->getBillableHoursForMonth($termStartDate, $termEndDate) == 0)
+            @if($project->getBillableHoursForTerm($termStartDate, $termEndDate) == 0)
                 @continue
             @endif
             <tr class="border-bottom">
@@ -123,9 +123,9 @@
                             @endif
                         @endif
                     @else
-                    {{$project->getBillableHoursForMonth($monthsToSubtract, $periodStartDate, $periodEndDate)}}</td>
+                    {{$project->getBillableHoursForTerm($monthsToSubtract, $periodStartDate, $periodEndDate)}}</td>
                     @endif
-                <td>{{$project->serviceRateFromProjectBillingDetailsTable()}}</td>
+                <td>{{$project->getServiceRateAttribute()}}</td>
                 <td>
                     <?php 
                     $termStartDate = $project->client->getMonthStartDateAttribute($monthToSubtract = 1);

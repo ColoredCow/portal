@@ -138,17 +138,14 @@
                             $index = 0;
                         @endphp
                         @foreach ($clientsReadyToSendInvoicesData as $client)
-
-                            {{--   may be use later
-                                 @if ($client->getClientLevelProjectsBillableHoursForInvoice() == 0 || $client->next_billing_date >= today()) --}}
-                            @if ($client->next_billing_date >= today())
-                                @continue
-                            @endif
                             @php
                                 $index++;
                                 $termStartAndEndDate = $client->getTermStartAndEndDateForInvoice();
                                 $termStartDate = $termStartAndEndDate['startDate'];
                                 $termEndDate = $termStartAndEndDate['endDate'];
+                                if ($client->amountWithoutTaxForTerm($termStartDate, $termEndDate) == 0 || $client->next_billing_date >= today()) {
+                                    continue;
+                                }
                                 $project = $client->clientLevelBillingProjects->first();
                                 $currencySymbol = config('constants.currency.' . $client->currency . '.symbol');
                                 if ($client->hasCustomInvoiceTemplate()) {
@@ -170,7 +167,7 @@
                                     $billingEndMonth = today()->endOfQuarter()->format('M');
                                 }
 
-                                $termStartAndEndDateForInvoice = ['termStartDate' => $termStartDate, 'termEndDate' => $termEndDate];
+                                $termStartAndEndDate = ['termStartDate' => $termStartDate, 'termEndDate' => $termEndDate];
                                 $invoiceData = [
                                     'projectName' => $client->name . ' Projects',
                                     'billingPersonName' => optional($client->billing_contact)->name,
@@ -187,8 +184,9 @@
                                     'bccEmails' => $client->bcc_emails,
                                     'ccEmails' => $client->cc_emails,
                                     'startAndEndDate' => $termStartAndEndDate,
+                                    'GstAmount' => $client->getGstAmount($termStartDate, $termEndDate),
+                                    'totalAmountWithoutTax' => $client->amountWithoutTaxForTerm($termStartDate, $termEndDate),
                                 ];
-
                             @endphp
                             <tr>
                                 <td>{{ $index }}</td>
@@ -200,7 +198,7 @@
                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                         {{ __('-') }}
                                     @else
-                                        {{ $client->getBillableHoursForMonth($termStartDate, $termEndDate)}}
+                                        {{ $client->getBillableHoursForTerm($termStartDate, $termEndDate)}}
                                     @endif
                                 </td>
                                 <td>{{ $amount }}</td>
@@ -263,6 +261,7 @@
                                 if(optional($project->client->billing_contact)->first_name == null) {
                                     $billingPersonFirstName = $project->getClientName($projectClientId);
                                 }
+
                                 $invoiceData = [
                                     'projectName' => $project->name,
                                     'billingPersonName' => optional($project->client->billing_contact)->name,
@@ -290,15 +289,23 @@
                                 <td>
                                     {{ $project->name }}
                                 </td>
-                                <td>{{ config('constants.currency.' . $client->currency . '.symbol') . '' . $project->serviceRateFromProjectBillingDetailsTable() . config('client.service-rate-terms.' . $project->service_rate_term . '.short-label') }}</td>
+                                <td>{{ config('constants.currency.' .$project->client->currency . '.symbol') . '' . $project->getServiceRateAttribute() . config('client.service-rate-terms.' . $project->service_rate_term . '.short-label') }}</td>
                                 <td>
                                     @if(optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                     {{ __('-') }}
                                     @else
                                         @if( $project->service_rate_term == 'per_hour')
-                                        {{ $project->getBillableHoursForMonth($termStartDate, $termEndDate) }}
+                                            @php
+                                                $billableHours = $project->getBillableHoursForTerm($termStartDate, $termEndDate);
+                                                if ( $billableHours == 0 ) {
+                                                    $billableHours = " ";
+                                                }
+                                            @endphp
+                                            {{
+                                                $billableHours;
+                                            }}
                                         @else
-                                        {{ " " }}
+                                            {{ " " }}
                                         @endif
                                     @endif
                                 </td>
@@ -308,6 +315,7 @@
                                     <form action="{{ route('invoice.generate-invoice') }}" target="_blank" method="POST">
                                         @csrf
                                         <input type="hidden" name='project_id' value="{{ $project->id }}">
+                                        <input type="hidden" name='currency' value="{{ $currencySymbol }}">
                                         <input type='submit' class="btn btn-sm btn-info text-light" value="Preview">
                                     </form>
                                 </td>
@@ -332,7 +340,7 @@
                                 $termDate = $project->getTermStartAndEndDateForInvoice();
                                 $termStartDate = $termDate['startDate'];
                                 $termEndDate = $termDate['endDate'];
-
+                                $termStartAndEndDate = ['termStartDate' => $termStartDate, 'termEndDate' => $termEndDate];
                                 if ($project->amountWithoutTaxForTerm($termStartDate, $termEndDate) == 0 || $project->next_billing_date >= today()) {
                                     continue;
                                 }
@@ -375,23 +383,22 @@
                                     'totalAmountWithoutTax' => $amount,
                                     'totalAmcAmountInPdf' => $project->amountWithTaxForTerm($termStartDate, $termEndDate),
                                     'GstAmount' => $project->gstAmountForTerm($termStartDate, $termEndDate),
-                                    'startAndEndDate' => $project->getTermStartAndEndDateForInvoice(), 
+                                    'startAndEndDate' => $termStartAndEndDate,
                                     'is_Amc' => $project->is_amc,
                                 ];
-
                             @endphp
                             <tr>
                                 <td>{{ $index }}</td>
                                 <td>
                                     {{ $project->name }}
                                 </td>
-                                <td>{{ config('constants.currency.' . $project->client->currency . '.symbol') . '' . $project->serviceRateFromProjectBillingDetailsTable() . config('client.service-rate-terms.' . $project->service_rate_term . '.short-label') }}</td>
+                                <td>{{ config('constants.currency.' . $project->client->currency . '.symbol') . '' . $project->getServiceRateAttribute() . config('client.service-rate-terms.' . $project->service_rate_term . '.short-label') }}</td>
                                 <td>
                                     @if(optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                     {{ __('-') }}
                                     @else
                                     <?php
-                                    $amcBillableHours= $project->getBillableHoursForMonth($termStartDate, $termEndDate);
+                                    $amcBillableHours= $project->getBillableHoursForTerm($termStartDate, $termEndDate);
                                     if ($amcBillableHours == 0 || $amcBillableHours == null )
                                     {
                                         $amcBillableHours = '';

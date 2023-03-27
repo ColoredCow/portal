@@ -53,11 +53,11 @@ $(document).ready(function(){
 		if (invoiceData["ccEmails"] != null) {
 			$("#cc").val(invoiceData["ccEmails"]);
 		}
-
 		$("#bcc").val(invoiceData["bccEmails"]);
 		$("#projectId").val(invoiceData["projectId"]); 
 		tinymce.get("emailBody").setContent(emailBody, { format: "html" });
-		$("#invoiceData").val(invoiceData);
+		var invoiceDataJson = JSON.stringify(invoiceData);
+		document.getElementById('invoiceData').value = invoiceDataJson;
 		$("#emailPreview").modal("show");
 	});
 

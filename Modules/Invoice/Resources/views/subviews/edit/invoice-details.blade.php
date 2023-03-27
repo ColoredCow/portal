@@ -46,8 +46,7 @@
                         <label for="client_id" class="mr-5">Amount:</label>
                         <span>
                             @if ($invoice->project->is_amc == 1) 
-                            {{-- <p>{{ $invoice->project->amountWithTaxForTerm($termStartDate, $termEndDate) . " ₹" }}</p> --}}
-                            <p>{{ $invoice->project->amcTotalProjectAmount() . " ₹" }}</p>
+                            <p>{{ $invoice->project->amountWithTaxForTerm($termStartDate, $termEndDate) . " ₹" }}</p>
                             @else 
                                 <p>{{ $invoice->display_amount }}</p>
                             @endif

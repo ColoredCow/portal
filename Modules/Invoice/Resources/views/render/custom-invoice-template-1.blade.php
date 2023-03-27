@@ -109,8 +109,12 @@
                     <tbody class="w-100p">
                         <tr class="w-100p">
                             <div class="font-weight-bold">Dasra</div>
-                            <div>{{ optional($client->addresses->first())->address }}</div>
-                            <div>{{ optional($client->addresses->first())->city . ', ' . optional($client->addresses->first())->state . ', ' . optional($client->addresses->first())->area_code }}</div>
+                            @if($client)
+                                <div>{{ optional($client->addresses->first())->address ?? "" }}</div>
+                                <div>{{ optional($client->addresses->first())->city . ', ' . optional($client->addresses->first())->state . ', ' . optional($client->addresses->first())->area_code }}</div>
+                            @else
+                                <div></div>
+                            @endif
                         </tr>
                     </tbody>
                 </table>
@@ -120,7 +124,11 @@
                     <tbody class="w-100p">
                         <tr class="w-100p">
                             <div class="font-weight-bold underline text-center">
-                                Re: Support and Development for {{ $client->name }} Projects
+                                Re: Support and Development for 
+                                @if($client)
+                                {{ $client->name }}
+                                @endif
+                                Projects
                             </div>
                         </tr>
                     </tbody>
