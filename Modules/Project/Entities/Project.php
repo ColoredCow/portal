@@ -264,15 +264,15 @@ class Project extends Model implements Auditable
         return round($this->getBillableHoursForTerm($periodStartDate, $periodEndDate) * $this->service_rates, 2);
     }
 
-    public function getTaxAmountForTerm($monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
+    public function getTaxAmountForTerm($periodStartDate = null, $periodEndDate = null)
     {
         // Todo: Implement tax calculation correctly as per the GST rules
-        return round($this->getBillableAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) * ($this->client->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
+        return round($this->getBillableAmountForTerm($periodStartDate, $periodEndDate) * ($this->client->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
     }
 
     public function getTotalPayableAmountForTerm(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
-        return $this->getBillableAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
+        return $this->getBillableAmountForTerm($periodStartDate, $periodEndDate) + $this->getTaxAmountForTerm($periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
     }
 
     public function getBillableHoursForTerm($termStartDate, $termEndDate)
@@ -544,11 +544,11 @@ class Project extends Model implements Auditable
 
                 return  $totalAmountInMonth;
             case 'per_month':
-                $totalAmountInMonth = $this->getAmountForTermPerMonth($termStartDate, $termEndDate);
+                $totalAmountInMonth = $this->getAmountForTermPerMonth();
 
                 return  $totalAmountInMonth;
             case 'per_quarter':
-                $totalAmountInQuater = $this->getAmountForTermPerQuarterly($termStartDate, $termEndDate);
+                $totalAmountInQuater = $this->getAmountForTermPerQuarterly();
 
                 return  $totalAmountInQuater;
             case 'per_year':
@@ -570,12 +570,10 @@ class Project extends Model implements Auditable
         $clientServiceRate = $this->client->billingDetails->service_rates;
 
         if (! empty($details) && $details->service_rates) {
-
             return $details->service_rates;
         }
 
         if (! empty($clientServiceRate)) {
-
             return $clientServiceRate;
         }
 
@@ -612,10 +610,8 @@ class Project extends Model implements Auditable
         return $totalAmountInMonth;
     }
 
-    public function getAmountForTermPerQuarterly($termStartDate, $termEndDate)
+    public function getAmountForTermPerQuarterly()
     {
-        $termStartDate = Carbon::parse($termStartDate);
-        $termEndDate = Carbon::parse($termEndDate);
         $totalAmountInQuater = $this->getServiceRateAttribute();
         $billing_frequency = $this->billingDetail->billing_frequency;
 

@@ -57,7 +57,7 @@ $(document).ready(function(){
 		$("#projectId").val(invoiceData["projectId"]); 
 		tinymce.get("emailBody").setContent(emailBody, { format: "html" });
 		var invoiceDataJson = JSON.stringify(invoiceData);
-		document.getElementById('invoiceData').value = invoiceDataJson;
+		document.getElementById("invoiceData").value = invoiceDataJson;
 		$("#emailPreview").modal("show");
 	});
 
