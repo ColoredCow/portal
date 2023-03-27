@@ -61,10 +61,7 @@
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     @if (Module::checkStatus('User'))
-                                    @php
-                                        $params = array_merge(['name' => 'Employee'], ['status' => 'current']);
-                                    @endphp
-                                        <a class="dropdown-item" href="{{ route('employees',$params) }}">My profile</a>
+                                        <a class="dropdown-item" href="{{ route('employees.show', $employee->id) }}">My profile</a>
                                     @endif
                                     @if(auth()->user()->provider == 'google')
                                         <a class="dropdown-item" href="{{ route('profile.gsuite-sync') }}">Sync my profile</a>
