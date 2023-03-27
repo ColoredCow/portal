@@ -53,7 +53,7 @@ class OperationsServiceProvider extends ServiceProvider
         ], 'config');
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'Config/config.php'),
-            $this->moduleNameLower  
+            $this->moduleNameLower
         );
     }
 
@@ -121,6 +121,7 @@ class OperationsServiceProvider extends ServiceProvider
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
+        
         return $paths;
     }
 }
