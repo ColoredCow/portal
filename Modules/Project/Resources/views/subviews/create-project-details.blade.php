@@ -24,9 +24,9 @@
                     placeholder="Enter effort sheet url" value="{{ old('effort_sheet_url') }}">
             </div>
             <div class="form-group offset-md-1 col-md-5">
-                <label for="project_type" class="field-required">{{ __('Project Type') }}</label>
+                <label for="project_type" class="field-required">{{ __('Billing Frequency') }}</label>
                 <select v-model="projectType" name="project_type" id="project_type" class="form-control" required>
-                    <option value="">Select project type</option>
+                    <option value="">Select Billing Frequency</option>
                     @foreach (config('project.type') as $key => $project_type)
                         <option value="{{ $key }}" {{ old('project_type') == $key ? 'selected' : '' }}>{{ $project_type }}</option>
                     @endforeach

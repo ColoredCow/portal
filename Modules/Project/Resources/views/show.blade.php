@@ -60,9 +60,9 @@
                     </div>
                     <div class="form-group offset-md-1 pl-4 col-md-5">
                         <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold mt-0 mb-2">Project Type:</label>
+                            <label for="name" class="font-weight-bold mt-0 mb-2">Billing Frequency:</label>
                         </h4>
-                        <span class="text-capitalize ml-2 fz-lg-22">{{ $project->type }}</span>
+                        <span class="text-capitalize ml-2 fz-lg-22">{{ $project->billing_frequency }}</span>
                     </div>
                 </div>
                 <div class="form-row">

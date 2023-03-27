@@ -103,7 +103,7 @@ class ProjectRequest extends FormRequest
             'effort_sheet_url.max' => 'Url must be less than 191 characters',
             'effort_sheet_url.active_url' => 'Effortsheet url is not valid',
             'google_chat_webhook_url.url' => 'Google Chat Webhook URL is not valid',
-            'type.required' => 'Project type is required',
+            'type.required' => 'Billing Frequency is required',
         ];
     }
 }

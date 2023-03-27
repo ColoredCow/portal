@@ -78,7 +78,7 @@
             data() {
                 return {
                     project: @json($project),
-                    projectType: "{{ $project->type }}",
+                    projectType: "{{ $project->billing_frequency }}",
                     projectTeamMembers: @json($projectTeamMembers),
                     projectRepositories: @json($projectRepositories),
                     workingDaysInMonth: @json($workingDaysInMonth),

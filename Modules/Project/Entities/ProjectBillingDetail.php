@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProjectBillingDetail extends Model
 {
-    protected $fillable = ['project_id', 'service_rates', 'service_rate_term', 'currency'];
+    protected $fillable = ['project_id', 'service_rates', 'service_rate_term', 'currency', 'billing_frequency', 'billing_level'];
 
     public function project()
     {
