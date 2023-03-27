@@ -35,7 +35,7 @@ class NotificationToUpdateEffortForProject extends Notification
         $projects = Project::all();
         foreach ($projects as $project) {
             $date = Carbon::today()->setDay($project->client->billingDetails->billing_date);
-            if($date > today()) {
+            if ($date > today()) {
                 $interval = date_diff(today(), $date);
                 if ($interval->days == 1) {
                     return GoogleChatMessage::create()
