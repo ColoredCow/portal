@@ -59,8 +59,8 @@ class CodeTrekService
     {
         $applicant = CodeTrekApplicant::find($codeTrekApplicant->id);
         $roundDetails = CodeTrekApplicantRoundDetail::where('applicant_id', $applicant->id)->get();
-		
-		return $roundDetails;
+
+        return $roundDetails;
     }
     public function moveApplicantToRound($applicant, $data)
     {
