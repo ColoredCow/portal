@@ -334,6 +334,7 @@
                         @php
                             $index = 0;
                         @endphp
+
                         @foreach ($amcProjectsReadyToSendInvoicesData as $project)
                             @php
                                 $index++;
