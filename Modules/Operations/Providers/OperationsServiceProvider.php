@@ -124,4 +124,5 @@ class OperationsServiceProvider extends ServiceProvider
 
         return $paths;
     }
+
 }
