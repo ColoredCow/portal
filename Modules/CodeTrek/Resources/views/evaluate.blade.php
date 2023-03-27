@@ -8,15 +8,16 @@
                          <div class="card">
                              <div class="card-header" id="headingOne">
                                  <div class="d-flex align-items-center">
-                                     <button class="btn btn-link float-left" type="button" data-toggle="collapse"
-                                         data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                     <button class="btn btn-link float-left" type="button" data-toggle="collapse" data-target="#collapse_{{ $loop->iteration }}" aria-expanded="true"
+                                           aria-controls="collapseOne"
+                                         >
                                          Level-1 <i class="fa fa-info-circle"></i> {{ $applicant->first_name }}
                                          {{ $applicant->last_name }}
                                      </button>
-                                     <div class="ml-auto">Started at:-{{ $applicant->start_date }}</div>
+                                     <div class="ml-auto">Started at:-{{ $roundDetail->start_date }}</div>
                                  </div>
                              </div>
-                             <div id="collapseOne" class="collapse {{ $applicant->round_name == 'level-1' ? 'show' : '' }}"
+                             <div id="collapse_{{ $loop->iteration }}"  class="collapse {{ $roundDetail->id ? ($loop->last ? 'show' : '') : '' }}"
                                  aria-labelledby="headingOne" data-parent="#accordionExample">
                                  <div class="card-body">
                                      <h4 class="mb-3">Applicant Details</h4>
@@ -62,6 +63,7 @@
                                          </div>
                                      </form>
                                  </div>
+                                 @if ($loop->last && $applicant->round_name == 'level-1')
                                  <form action="{{ route('codetrek.action', $applicant->id) }}" method="POST">
                                      @csrf
                                      <div class="card-footer">
@@ -75,6 +77,7 @@
                                              data-target="#confirm-delete">Remove Applicant</button>
                                      </div>
                                  </form>
+                                 @endif
                              </div>
                          </div>
                          <br>
@@ -86,14 +89,14 @@
                          <div class="card-header" id="headingTwo">
                              <div class="d-flex align-items-center">
                                  <button class="btn btn-link float-left" type="button" data-toggle="collapse"
-                                     data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                 data-target="#collapse_{{ $loop->iteration }}" aria-expanded="true" aria-controls="collapseTwo">
                                      Level-2 <i class="fa fa-info-circle"></i> {{ $applicant->first_name }}
                                      {{ $applicant->last_name }}
                                  </button>
-                                 <div class="ml-auto">Started at:-{{ now()->format('Y-m-d') }}</div>
+                                 <div class="ml-auto">Started at:-{{ $roundDetail->start_date }}</div>
                              </div>
                          </div>
-                         <div id="collapseTwo" class="collapse {{ $applicant->round_name == 'level-2' ? 'show' : '' }}"
+                         <div id="collapse_{{ $loop->iteration }}" class="collapse {{ $roundDetail->id ? ($loop->last ? 'show' : '') : '' }}"
                              aria-labelledby="headingTwo" data-parent="#accordionExample">
                              <div class="card-body">
                                  <form action="{{ route('codetrek.update-feedback', $applicant->id) }}" method="POST">
@@ -117,6 +120,7 @@
                                      </div>
                                  </form>
                              </div>
+                             @if ($loop->last && $applicant->round_name == 'level-2')
                              <form action="{{ route('codetrek.action', $applicant->id) }}" method="POST">
                                  @csrf
                                  <div class="card-footer">
@@ -130,6 +134,7 @@
                                          data-target="#confirm-delete">Remove Applicant</button>
                                  </div>
                              </form>
+                             @endif
                          </div>
                      </div>
                      <br>
@@ -141,14 +146,14 @@
                          <div class="card-header" id="headingThree">
                              <div class="d-flex align-items-center">
                                  <button class="btn btn-link float-left" type="button" data-toggle="collapse"
-                                     data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                                 data-target="#collapse_{{ $loop->iteration }}" aria-expanded="true" aria-controls="collapseThree">
                                      Level-3 <i class="fa fa-info-circle"></i> {{ $applicant->first_name }}
                                      {{ $applicant->last_name }}
                                  </button>
-                                 <div class="ml-auto">Started at:-{{ now()->format('Y-m-d') }}</div>
+                                 <div class="ml-auto">Started at:-{{ $roundDetail->start_date }}</div>
                              </div>
                          </div>
-                         <div id="collapseThree" class="collapse {{ $applicant->round_name == 'level-3' ? 'show' : '' }}"
+                         <div id="collapse_{{ $loop->iteration }}" class="collapse {{ $roundDetail->id ? ($loop->last ? 'show' : '') : '' }}"
                              aria-labelledby="headingThree" data-parent="#accordionExample">
                              <div class="card-body">
                                  <form action="{{ route('codetrek.update-feedback', $applicant->id) }}" method="POST">
@@ -173,6 +178,7 @@
                                      </div>
                                  </form>
                              </div>
+                             @if ($loop->last && $applicant->round_name == 'level-3')
                              <form action="{{ route('codetrek.action', $applicant->id) }}" method="POST">
                                  @csrf
                                  <div class="card-footer">
@@ -186,9 +192,11 @@
                                          data-target="#confirm-delete">Remove Applicant</button>
                                  </div>
                              </form>
+                             @endif
                          </div>
                      </div>
              </div>
+             <br>
              @endif
              @endforeach
          </div>

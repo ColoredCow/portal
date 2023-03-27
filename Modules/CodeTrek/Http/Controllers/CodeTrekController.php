@@ -8,6 +8,7 @@ use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 use Modules\CodeTrek\Services\CodeTrekService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
 class CodeTrekController extends Controller
 {
@@ -64,7 +65,7 @@ class CodeTrekController extends Controller
     public function evaluate(CodeTrekApplicant $applicant)
     {
         $roundDetails = $this->service->evaluate($applicant);
-
+        
         return view('codetrek::evaluate')->with(['applicant' => $applicant, 'roundDetails' => $roundDetails]);
     }
     /**
