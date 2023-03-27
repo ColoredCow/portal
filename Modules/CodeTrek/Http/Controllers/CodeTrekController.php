@@ -8,7 +8,6 @@ use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 use Modules\CodeTrek\Services\CodeTrekService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
 class CodeTrekController extends Controller
 {
