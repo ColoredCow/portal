@@ -40,5 +40,5 @@ class CodeTrekRoundDetailService
         $applicationRound->feedback = null;
         $applicationRound->start_date = today();
         $applicationRound->save();
-    }  
+    }
 }
