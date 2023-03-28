@@ -217,6 +217,15 @@ class Client extends Model
         }
     }
 
+    public function getGoogleChatWebhookUrlAttribute()
+    {
+        foreach ($this->clientLevelBillingProjects as $project) {
+            if ($project->google_chat_webhook_url) {
+                return $project->google_chat_webhook_url;
+            }
+        }
+    }
+
     public function getMonthStartDateAttribute($monthsToSubtract)
     {
         $monthsToSubtract = $monthsToSubtract ?? 0;

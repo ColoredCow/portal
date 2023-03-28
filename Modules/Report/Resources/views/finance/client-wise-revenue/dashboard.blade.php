@@ -20,9 +20,9 @@
                 </div>
 
                 <div class="col-md-3">
-                    <div class="card bg-theme-gray-lighter">
+                    <div class="card">
                         <a class="card-body text-decoration-none d-flex"
-                            href="#">
+                            href="{{ route('reports.finance.revenue-by-client.detailed') }}">
                             <h2 class="text-center mb-0">Client Revenue Report</h2><br>
                         </a>
                     </div>

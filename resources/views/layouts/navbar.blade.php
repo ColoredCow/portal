@@ -64,6 +64,9 @@
                 @can('projectscontract.view')
                     <a class="dropdown-item" href="{{ route('projectcontract.index') }}">Project Contract</a>
                 @endcan
+                @can('projects.view')
+                <a class="dropdown-item" href="{{ route('project.resource-requirement') }}">Project Resource</a>
+                @endcan
             </div>
         </li>
     @endif
