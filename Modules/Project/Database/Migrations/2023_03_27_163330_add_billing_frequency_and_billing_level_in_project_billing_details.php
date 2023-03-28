@@ -26,8 +26,6 @@ class AddBillingFrequencyAndBillingLevelInProjectBillingDetails extends Migratio
      */
     public function down()
     {
-        Schema::table('', function (Blueprint $table) {
-
-        });
+        //
     }
 }

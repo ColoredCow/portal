@@ -14,8 +14,8 @@ class MigratingOldDataToUpdatedProjectBillingDetails extends Migration
      */
     public function up()
     {
-        $projects = DB::table('projects')->select('id','billing_frequency')->get();
-        $projects_meta = DB::table('project_meta')->select('project_id','value')->get();
+        $projects = DB::table('projects')->select('id', 'billing_frequency')->get();
+        $projects_meta = DB::table('project_meta')->select('project_id', 'value')->get();
         
         foreach ($projects as $project) {
             DB::table('project_billing_details')->where('project_id', $project->id)->update([
