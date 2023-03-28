@@ -79,7 +79,7 @@ class ProjectService implements ProjectServiceContract
             'end_date' => $data['end_date'] ?? null,
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
             'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
-            'billing_frequency' => $data['project_type'],
+            'type' => $data['project_type'],
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
             'is_amc' => array_key_exists('is_amc', $data) ? filter_var($data['is_amc'], FILTER_VALIDATE_BOOLEAN) : 0,
@@ -220,7 +220,7 @@ class ProjectService implements ProjectServiceContract
     private function updateProjectFinancialDetails($data, $project)
     {
         $isProjectUpdated = $project->update([
-            'billing_frequency' => $data['project_type'],
+            'type' => $data['project_type'],
         ]);
 
         if ($data['billing_level'] ?? null) {
@@ -238,8 +238,11 @@ class ProjectService implements ProjectServiceContract
         ProjectBillingDetail::updateOrCreate(
             ['project_id' => $project->id],
             [
+                'service_rates' => $data['service_rates'],
+                'service_rate_term' => $data['service_rate_term'],
+                'currency' => $data['currency'],
                 'billing_frequency' => $data['project_type'],
-                'billing_level' => $data['billing_level']
+                'billing_level' => $data['billing_level'],
             ]
         );
 
