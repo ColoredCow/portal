@@ -61,6 +61,9 @@
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     @if (Module::checkStatus('User'))
+                                        @php
+                                            $employee = DB::table('employees')->where('user_id' , auth()->user()->id )->first();
+                                        @endphp
                                         <a class="dropdown-item" href="{{ route('employees.show', $employee->id) }}">My profile</a>
                                     @endif
                                     @if(auth()->user()->provider == 'google')
