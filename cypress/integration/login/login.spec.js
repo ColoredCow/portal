@@ -10,7 +10,7 @@ describe("Login", () => {
   it("logs in the employee user", () => {
     const user = Cypress.env("users").employee;
     cy.login(user);
-    cy.get("#wishlist").contains('Your wishlist');
+    cy.get("wishlist").contains('Your wishlist');
     cy.get('ul.navbar-nav').contains('CRM'); // employee should see CRM
     cy.get('ul.navbar-nav').contains('KnowledgeCafe'); // employee should see KnowledgeCafe
   });
