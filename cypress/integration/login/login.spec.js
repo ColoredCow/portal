@@ -23,7 +23,6 @@ describe("Login", () => {
     cy.get('ul.navbar-nav').contains('HR'); // admin should see HR
     cy.get('ul.navbar-nav').contains('Finance'); // admin should see Finance
     cy.get('ul.navbar-nav').contains('Sales'); // admin should see Sales
-    cy.get('ul.navbar-nav').contains('operations'); // admin should see Sales
     cy.get('ul.navbar-nav').contains('Infrastructure'); // admin should see Infrastructure  
     cy.get('ul.navbar-nav').contains('Settings'); //admin should see Settings 
   });
@@ -36,7 +35,6 @@ describe("Login", () => {
     cy.get('ul.navbar-nav').contains('HR'); // superadmin should see HR
     cy.get('ul.navbar-nav').contains('Finance'); // superadmin should see Finance
     cy.get('ul.navbar-nav').contains('Sales'); // superadmin should see Sales
-    cy.get('ul.navbar-nav').contains('operations'); // superadmin should see Sales
     cy.get('ul.navbar-nav').contains('Infrastructure'); // superadmin should see Infrastructure 
     cy.get('ul.navbar-nav').contains('Settings'); //superadmin should see Settings 
     cy.get('#navbarDropdown_settings').then(dropdown =>{
