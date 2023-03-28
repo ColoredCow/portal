@@ -26,6 +26,8 @@ class AddBillingFrequencyAndBillingLevelInProjectBillingDetails extends Migratio
      */
     public function down()
     {
-        //
+        Schema::table('project_billing_details', function (Blueprint $table) {
+            $table->dropColumn(['billing_frequency', 'billing_level']);
+        });
     }
 }

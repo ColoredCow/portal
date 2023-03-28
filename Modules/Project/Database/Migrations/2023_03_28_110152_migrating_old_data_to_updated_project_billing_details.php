@@ -12,16 +12,16 @@ class MigratingOldDataToUpdatedProjectBillingDetails extends Migration
      */
     public function up()
     {
-        $projects = DB::table('projects')->select('id', 'type')->get();
-        $projects_meta = DB::table('project_meta')->select('project_id', 'value')->get();
+        $typesData = DB::table('projects')->select('id', 'type')->get();
+        $valuesData = DB::table('project_meta')->select('project_id', 'value')->get();
 
-        foreach ($projects as $project) {
+        foreach ($typesData as $project) {
             DB::table('project_billing_details')->where('project_id', $project->id)->update([
                 'billing_frequency' => $project->type
             ]);
         }
 
-        foreach ($projects_meta as $meta) {
+        foreach ($valuesData as $meta) {
             DB::table('project_billing_details')->where('project_id', $meta->project_id)->update([
                 'billing_level' => $meta->value
             ]);
@@ -35,6 +35,9 @@ class MigratingOldDataToUpdatedProjectBillingDetails extends Migration
      */
     public function down()
     {
-        //
+        DB::table('project_billing_details')->update([
+            'billing_frequency' => null,
+            'billing_level' => null
+        ]);
     }
 }
