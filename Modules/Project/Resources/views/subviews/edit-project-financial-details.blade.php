@@ -30,7 +30,7 @@
                         <select v-model="projectType"  name="project_type" id="project_type" class="form-control" required="required">
                             @foreach (config('project.type') as $key => $project_type)
                                 @php
-                                    $selected = ($project->billing_frequency == $key || old('project_type') == $key) ? 'selected' : '';
+                                    $selected = ($project->type == $key || old('project_type') == $key) ? 'selected' : '';
                                 @endphp
                                 <option value="{{ $key }}" {{ $selected }}>{{ $project_type }}
                                 </option>
