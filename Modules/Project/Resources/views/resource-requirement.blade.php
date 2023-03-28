@@ -25,7 +25,7 @@
                 </thead>
                 <tbody>
                     @can('projects.view')
-                        @foreach ($resourceData['data'] as $clientName =>$clients)
+                        @foreach ($resourceData['data'] as $clientName =>$clientProjectsData)
                             <tr class="bg-theme-warning-lighter">
                                 <td colspan="4" class="font-weight-bold">
                                     <div class="d-flex justify-content-between">
@@ -35,7 +35,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            @foreach ($clients as $projectName => $projects)
+                            @foreach ($clientProjectsData as $projectName => $projectData)
                             <tr>
                                 <td class="w-33p">
                                     <div class="pl-1 pl-xl-2">
@@ -43,17 +43,17 @@
                                     </div>
                                 </td>
                                 <td> 
-                                    @foreach ($projects['teamMemberNeededByDesignation'] as $designationName => $count)
+                                    @foreach ($projectData['teamMemberNeededByDesignation'] as $designationName => $count)
                                         <div> {{ $designationName }} : {{ $count }} </div>
                                     @endforeach 
                                 </td>
                                 <td> 
-                                    @foreach ($projects['currentTeamMemberCountByDesignation'] as $designationName => $count)
+                                    @foreach ($projectData['currentTeamMemberCountByDesignation'] as $designationName => $count)
                                         <div> {{ $designationName }} : {{ $count }} </div>
                                     @endforeach
                                 </td>  
                                 <td> 
-                                    <div class="d-flex justify-content-center"> {{ $projects['additionalResourceRequired'] }} </div>
+                                    <div class="d-flex justify-content-center"> {{ $projectData['additionalResourceRequired'] }} </div>
                                 </td> 
                             </tr>
                             @endforeach

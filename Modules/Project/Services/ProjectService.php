@@ -462,7 +462,7 @@ class ProjectService implements ProjectServiceContract
         return $teamMembers;
     }
 
-    public function projectsWithTeamMemberRequirement()
+    public function getProjectsWithTeamMemberRequirementData()
     {
         $projectsWithTeamMemberRequirement = Project::with('client')->status('active')
             ->withCount('getTeamMembers as team_member_count')
