@@ -24,6 +24,8 @@ use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Project\Entities\Project;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
 use Modules\Invoice\Entities\LedgerAccount;
+use Illuminate\Support\Facades\Notification;
+use Modules\Invoice\Notifications\GoogleChat\SendPaymentReceivedNotification;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -37,9 +39,9 @@ class InvoiceService implements InvoiceServiceContract
         ];
         if ($invoiceStatus == 'sent') {
             $invoices = Invoice::query()->applyFilters($filters)->leftjoin('clients', 'invoices.client_id', '=', 'clients.id')
-            ->select('invoices.*', 'clients.name')
-            ->orderBy('name', 'asc')->orderBy('sent_on', 'desc')
-            ->get();
+                ->select('invoices.*', 'clients.name')
+                ->orderBy('name', 'asc')->orderBy('sent_on', 'desc')
+                ->get();
             $clientsReadyToSendInvoicesData = [];
             $projectsReadyToSendInvoicesData = [];
         } else {
@@ -167,6 +169,11 @@ class InvoiceService implements InvoiceServiceContract
         if (isset($data['send_mail'])) {
             $emailData = $this->getSendEmailData($data, $invoice);
             Mail::queue(new SendPaymentReceivedMail($invoice, $emailData));
+            $webHookUrl = $invoice->project->google_chat_webhook_url
+            ?? $invoice->client->google_chat_webhook_url;
+            $projectAndClientName = (optional($invoice->project)->name ?? $invoice->client->name);
+            Notification::route('googleChat', $webHookUrl)
+                ->notify(new SendPaymentReceivedNotification($projectAndClientName));
             $invoice->update([
                 'payment_confirmation_mail_sent' => true
             ]);
@@ -771,8 +778,8 @@ class InvoiceService implements InvoiceServiceContract
         }
 
         $invoices = Invoice::query()->applyFilters($filters)
-        ->orderBy('sent_on', 'desc')
-        ->get();
+            ->orderBy('sent_on', 'desc')
+            ->get();
 
         if (isset($filters['client_id'])) {
             $clientId = request()->client_id;

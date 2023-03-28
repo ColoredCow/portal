@@ -145,4 +145,13 @@ class ProjectController extends Controller
 
         return $this->service->projectFTEExport($filters);
     }
+
+    public function projectResource()
+    {
+        $resourceData = $this->service->getProjectsWithTeamMemberRequirementData();
+
+        return view('project::resource-requirement', [
+            'resourceData' => $resourceData,
+        ]);
+    }
 }

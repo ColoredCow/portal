@@ -480,4 +480,48 @@ class ProjectService implements ProjectServiceContract
 
         return $teamMembers;
     }
+
+    public function getProjectsWithTeamMemberRequirementData()
+    {
+        $projectsWithTeamMemberRequirement = Project::with('client')->status('active')
+            ->withCount('getTeamMembers as team_member_count')
+            ->withSum('resourceRequirement as team_member_needed', 'total_requirement')
+            ->havingRaw('team_member_needed - team_member_count')
+            ->get();
+
+        $totalAdditionalResourceRequired = [];
+        $data = [];
+        $totalAdditionalResourceRequired = 0;
+        foreach ($projectsWithTeamMemberRequirement as $project) {
+            $count = $project->team_member_needed - $project->team_member_count;
+            $totalAdditionalResourceRequired += $count;
+            $projectData = [
+                'totalResourceRequirement' => $project->team_member_needed,
+                'totalResourceDeployed' => $project->team_member_count,
+                'additionalResourceRequired' => $project->team_member_needed - $project->team_member_count,
+                'teamMemberNeededByDesignation' => [],
+                'currentTeamMemberCountByDesignation' => [],
+            ];
+
+            $designations = $this->getDesignations();
+            $designationKeys = array_keys($designations);
+
+            foreach ($designationKeys as $designationName) {
+                $totalResourceRequirementCount = $project->getResourceRequirementByDesignation($designationName)->total_requirement;
+                if ($totalResourceRequirementCount > 0) {
+                    $projectData['teamMemberNeededByDesignation'][$designations[$designationName]] = $totalResourceRequirementCount;
+                }
+                $totalResourceDeployedCount = $project->getDeployedCountForDesignation($designationName);
+                if ($totalResourceDeployedCount > 0) {
+                    $projectData['currentTeamMemberCountByDesignation'][$designations[$designationName]] = $totalResourceDeployedCount;
+                }
+            }
+            $data[$project->client->name][$project->name] = $projectData;
+        }
+
+        return [
+            'totalCount' => $totalAdditionalResourceRequired,
+            'data' => $data,
+        ];
+    }
 }
