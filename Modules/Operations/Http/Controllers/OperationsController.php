@@ -13,7 +13,7 @@ class OperationsController extends Controller
      */
     public function index()
     {
-        return view('operations::index');
+        return view('Operations::office-location.index');
     }
 
     /**
