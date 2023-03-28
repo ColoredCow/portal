@@ -100,9 +100,6 @@ class ProjectService implements ProjectServiceContract
         ProjectBillingDetail::updateOrCreate(
             ['project_id' => $project->id],
             [
-                'service_rates' => $data['service_rates'],
-                'service_rate_term' => $data['service_rate_term'],
-                'currency' => $data['currency'],
                 'billing_frequency' => $data['project_type'],
                 'billing_level' => $data['billing_level'],
             ]
