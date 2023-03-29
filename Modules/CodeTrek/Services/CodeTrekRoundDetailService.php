@@ -11,11 +11,18 @@ class CodeTrekRoundDetailService
     {
         $applicant = CodeTrekApplicant::findOrFail($id);
         $roundDetail = CodeTrekApplicantRoundDetail::firstOrCreate([
-                       'applicant_id' => $applicant->id,
-                       'round_name' => $data->round_name,
+            'applicant_id' => $applicant->id,
+            'round_name' => $data->round_name,
         ]);
         $roundDetail->round_name = $data->round_name;
-        $roundDetail->feedback = $data->input('feedback');
+        $roundDetail = CodeTrekApplicantRoundDetail::updateOrCreate(
+            [
+                'id' => $data->primary_id,
+            ],
+            [
+                'feedback' => $data->input('feedback'),
+            ]
+        );
         $roundDetail->save();
 
         return $roundDetail;
