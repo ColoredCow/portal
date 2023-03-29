@@ -14,6 +14,4 @@ class OperationsController extends Controller
     {
         return view('operations::Office_location.coming_soon');
     }
-
-
 }
