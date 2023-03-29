@@ -1,5 +1,9 @@
 @extends('operations::layouts.master')
 
 @section('content')
-<h1 style="text-align: center;">coming soon</h1>
+    <h1>Hello World</h1>
+
+    <p>
+        This view is loaded from module: {!! config('operations.name') !!}
+    </p>
 @endsection

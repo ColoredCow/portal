@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Factory;
 class OperationsServiceProvider extends ServiceProvider
 {
     /**
-     * @var string
+     * @var string $moduleName
      */
     protected $moduleName = 'Operations';
 
     /**
-     * @var string
+     * @var string $moduleNameLower
      */
     protected $moduleNameLower = 'operations';
 
@@ -121,7 +121,6 @@ class OperationsServiceProvider extends ServiceProvider
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
-
         return $paths;
     }
 }
