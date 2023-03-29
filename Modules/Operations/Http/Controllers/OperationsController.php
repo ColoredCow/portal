@@ -26,12 +26,13 @@ class OperationsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store()
+    public function store($request)
     {
     }
 
     /**
      * Show the specified resource.
+     * @param int $id
      */
     public function show($id)
     {
@@ -39,6 +40,7 @@ class OperationsController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * @param int $id
      */
     public function edit($id)
     {
@@ -46,13 +48,16 @@ class OperationsController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param Request $request
+     * @param int $id
      */
-    public function update($id)
+    public function update($request, $id)
     {
     }
 
     /**
      * Remove the specified resource from storage.
+     * @param int $id
      */
     public function destroy($id)
     {
