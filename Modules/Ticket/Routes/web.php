@@ -12,5 +12,5 @@
 */
 
 Route::prefix('ticket')->group(function () {
-    Route::get('/', 'TicketController@index');
+    Route::get('/', 'TicketController@index')->name('ticket.index');
 });
