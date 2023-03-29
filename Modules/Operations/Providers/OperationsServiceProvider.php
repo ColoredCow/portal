@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Factory;
 class OperationsServiceProvider extends ServiceProvider
 {
     /**
-     * @var string
+     * @var string $moduleName
      */
     protected $moduleName = 'Operations';
 
     /**
-     * @var string
+     * @var string $moduleNameLower
      */
     protected $moduleNameLower = 'operations';
 
@@ -27,7 +27,6 @@ class OperationsServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
-        $this->registerFactories();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
     }
 
@@ -52,8 +51,7 @@ class OperationsServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'),
-            $this->moduleNameLower
+            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
         );
     }
 
@@ -92,18 +90,6 @@ class OperationsServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register an additional directory of factories.
-     *
-     * @return void
-     */
-    public function registerFactories()
-    {
-        if (! app()->environment('production') && $this->app->runningInConsole()) {
-            app(Factory::class)->load(module_path($this->moduleName, 'Database/factories'));
-        }
-    }
-
-    /**
      * Get the services provided by the provider.
      *
      * @return array
@@ -121,7 +107,6 @@ class OperationsServiceProvider extends ServiceProvider
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
-
         return $paths;
     }
 }
