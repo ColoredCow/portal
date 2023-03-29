@@ -2,13 +2,15 @@
 
 namespace Modules\Operations\Http\Controllers;
 
-
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class OperationsController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @return Renderable
      */
     public function index()
     {
@@ -24,8 +26,9 @@ class OperationsController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @param Request $request
      */
-    public function store($request)
+    public function store(Request $request)
     {
     }
 
@@ -50,7 +53,7 @@ class OperationsController extends Controller
      * @param Request $request
      * @param int $id
      */
-    public function update($request, $id)
+    public function update(Request $request, $id)
     {
     }
 
