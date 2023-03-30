@@ -7,41 +7,41 @@
                 </a>
             </div>
             <div class="modal-body">
-                <div class="form-row ">
+                <div class="form-row">
                     <div class="form-group col-md-5 mb-5">
-                        <label class="font-weight-bold ">Title :</label>
-                        <span>Correct Velocity of team Member</span>
+                        <label class="font-weight-bold">Title :</label>
+                        <span>{{ 'Title of Issue' }}</span>
                     </div>
-                    <div class="form-group offset-md-1 col-md-5 mb-5">
-                        <label class="font-weight-bold  ">Status : </label>
-                        <span>Closed</span>
-                    </div>
-                    @php
-                        $priority = 'High';
-                    @endphp
                     <div class="form-group col-md-5 mb-5">
+                        <label class="font-weight-bold">Status : </label>
+                        <span>{{ config('ticket.status.closed') }}</span>
+                    </div>
+                    <div class="form-group col-md-5 mb-5">
+                        @php
+                            $priority = config('ticket.priority.high');
+                        @endphp
                         <label class="font-weight-bold">Priority:</label>
                         <span style="color: {{ $priority === 'critical' || $priority === 'High' ? 'red' : 'black' }}">
                             {{ $priority }}
                         </span>
                     </div>
-                    <div class="form-group offset-md-1 col-md-5 mb-5">
-                        <label class="font-weight-bold ">Issue Type : </label>
-                        <span class='text-danger'><i class="fa fa-bug"></i>Bug</span>
+                    <div class="form-group col-md-5 mb-5">
+                        <label class="font-weight-bold">Issue Type : </label>
+                        <span class='text-danger'><i class="fa fa-bug"></i>&nbsp{{ config('ticket.type.bug') }}</span>
                     </div>
                     <div class="form-group col-md-5 mb-5">
-                        <label class="font-weight-bold ">Raised On : </label>
+                        <label class="font-weight-bold">Raised On : </label>
                         <span>{{ now()->format('d-m-Y') }}</span>
                     </div>
-                    <div class="form-group offset-md-1 col-md-5 mb-5">
-                        <label class="font-weight-bold ">Raised By : </label>
-                        <i class="fa fa-user-circle-o" data-toggle="tooltip"
-                            title="{{ 'Gaurav chamoli' }}">{{ 'Gaurav Chamoli' }}</i>
+                    <div class="form-group col-md-5 mb-5">
+                        <label class="font-weight-bold">Raised By : </label>
+                        <i class="fa fa-user-circle-o" data-toggle="tooltip" title="{{ 'Creator Name' }}">&nbsp Creator
+                            Name</i>
                     </div>
                 </div>
-                <div class="d-flex-column ">
-                    <label class="font-weight-bold  ">Description : </label>
-                    <span>{{ 'Show Correct Velocity of Team Member' }}</span>
+                <div class="form-group">
+                    <label class="font-weight-bold">Description : </label>
+                    <span>{{ 'Enter Issue description...' }}</span>
                 </div>
             </div>
             <div class="modal-footer">
