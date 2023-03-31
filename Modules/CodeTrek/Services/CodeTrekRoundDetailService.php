@@ -7,25 +7,12 @@ use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
 class CodeTrekRoundDetailService
 {
-    public function update($data, $id)
+    public function update($data, $applicantDetail)
     {
-        $applicant = CodeTrekApplicant::findOrFail($id);
-        $roundDetail = CodeTrekApplicantRoundDetail::firstOrCreate([
-            'applicant_id' => $applicant->id,
-            'round_name' => $data->round_name,
-        ]);
-        $roundDetail->round_name = $data->round_name;
-        $roundDetail = CodeTrekApplicantRoundDetail::updateOrCreate(
-            [
-                'id' => $data->primary_id,
-            ],
-            [
-                'feedback' => $data->input('feedback'),
-            ]
-        );
-        $roundDetail->save();
+        $applicantDetail->feedback = $data->input('feedback');
+        $applicantDetail->save();
 
-        return $roundDetail;
+        return $applicantDetail;
     }
 
     public function takeAction($data, $id)

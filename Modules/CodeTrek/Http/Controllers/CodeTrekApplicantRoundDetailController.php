@@ -5,6 +5,7 @@ namespace Modules\CodeTrek\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\CodeTrek\Services\CodeTrekRoundDetailService;
+use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
 class CodeTrekApplicantRoundDetailController extends Controller
 {
@@ -48,9 +49,9 @@ class CodeTrekApplicantRoundDetailController extends Controller
     {
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, CodeTrekApplicantRoundDetail $applicantDetail)
     {
-        $this->service->update($request, $id);
+        $this->service->update($request, $applicantDetail);
 
         return redirect()->back();
     }
