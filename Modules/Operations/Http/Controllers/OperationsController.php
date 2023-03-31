@@ -11,7 +11,8 @@ class OperationsController extends Controller
      */
     public function index()
     {
-        return view('operations::office-location.coming_soon');
+        $data = ['name' => 'John'];
+        return view('operations::office-location.coming_soon', $data);
     }
 
     /**
