@@ -13,15 +13,15 @@ git --version
 
 ### 2. Installation Options:
 The portal can be installed in two of the following ways. If you are familiar with Docker, please choose option 1 below, otherwise go with option 2.
-### 1. Dockerized setup	
-### 2. Non Dockerized setup 
+1. Dockerized setup	
+2. Non Dockerized setup 
 
 
 ### Dockerized setup
 #### Lets begin with the Dockerized setup:
-a.1 : If you are a windows user:
+- If you are a windows user:
 		Download Docker Desktop using this [this link](https://docs.docker.com/desktop/install/windows-install/)
-a.2 :	If you are a linux ubuntu user:
+- If you are a Linux ubuntu user:
 		Download Docker and docker-compose following this [this link](https://www.howtogeek.com/devops/how-to-install-docker-and-docker-compose-on-linux/)
 
 #### b. Code Formatter :butterfly:

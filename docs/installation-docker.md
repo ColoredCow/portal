@@ -10,13 +10,15 @@ If you are in the right directory where you want your portal to be saved locally
    cd portal
    ```
 
-2. 
-	Make a copy of the `.env.example` file in the same directory and save it as `.env`:
-     ```sh
-    cp .env.example .env	
-	```
-
-3.  Add the following settings in `.env` file:
+2. Make a copy of the `.env.example` file in the same directory and save it as `.env`:
+   ```sh
+   cp .env.example .env	
+   ```
+3. Create a directory named `mysql` in the root folder `portal`
+   ```sh
+   mkdir mysql
+   ```
+4. Add the following settings in `.env` file:
     1. Laravel app configurations
     ```sh
     APP_NAME="ColoredCow Portal"
@@ -38,33 +40,33 @@ If you are in the right directory where you want your portal to be saved locally
     DB_DATABASE=portal1
     DB_USERNAME=sail
     DB_PASSWORD=password
+    MYSQL_DOCKER_FOLDER=./mysql
     ```
 	
-4. 
-	Build the dockerfile and start the containers using:
-	```sh
-	docker-compose up -d --build
-	```
+5. Build the dockerfile and start the containers using:
+   	```sh
+   	docker-compose up -d --build
+   	```
   
-5. Check if your containers are running:
-  	 ```sh
-  	 docker ps
-  	 ```
-  	 It should give you 3 containers started/running
+6. Check if your containers are running:
+   	```sh
+   	docker ps
+   	```
+   It should give you 3 containers started/running
   	 
-6. Now copy the container-id of portal_laravel.test1,
-     Go to terminal and type
+7. Now copy the container-id of `portal_laravel.test1`,
+   Go to terminal and type
 	```sh
  	docker exec -it <container_id that you copied> bash
    	```   
-7. Now you are inside the /var/www/html i.e inside your container environment,
+8. Now you are inside the /var/www/html i.e inside your container environment,
      Install dependencies
    ```sh
    composer install
    npm install
    ```
 
-8. npm build
+9. npm build
    ```sh
    npm run dev
    ```
@@ -78,17 +80,17 @@ If you are in the right directory where you want your portal to be saved locally
    npm run dev
    ```
 
-9. Run the following command to add the Laravel application key:
+10. Run the following command to add the Laravel application key:
    ```sh
    php artisan key:generate
    ```
 
-10. Run migrations
+11. Run migrations
     ```sh
     php artisan migrate
     ```
 
-11. Run seeders
+12. Run seeders
     1. Portal
         ```sh
         php artisan db:seed
@@ -106,21 +108,21 @@ If you are in the right directory where you want your portal to be saved locally
         php artisan module:seed MODULE_NAME
         ```
 
-12. Exit from the bash shell of laravel container
+13. Exit from the bash shell of laravel container
     ```sh
     exit
     ```
-13. Next, open this url in your browser: http://portal.test
-14. Login to the portal using the newly created user in the database. Go to `http://localhost:8080/index.php` and search for the `users` table and you can find the user email in it (user@coloredcow.com). The default password to log in is `12345678`.
+14. Next, open this url in your browser: http://portal.test
+15. Login to the portal using the newly created user in the database. Go to `http://localhost:8080/index.php` and search for the `users` table and you can find the user email in it (user@coloredcow.com). The default password to log in is `12345678`.
 
-15. To stop the containers
-	```sh
+16. To stop the containers
+    ```sh
     docker-compose down
     ```
 
 **Note** :  To start containers, you do not need to build image everytime. You can use the below command:
 
-```sh
+    ```sh
     docker-compose up -d
     ```
 
