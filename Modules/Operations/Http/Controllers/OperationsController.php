@@ -26,7 +26,7 @@ class OperationsController extends Controller
      * Store a newly created resource in storage.
      * @param Request $request
      */
-    public function store(Request $request)
+    public function store()
     {
     }
 
@@ -51,7 +51,7 @@ class OperationsController extends Controller
      * @param Request $request
      * @param int $id
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
     }
 
