@@ -81,9 +81,9 @@ If you are in the right directory where you want your portal to be saved locally
    ```
 
 10. Run the following command to add the Laravel application key:
-   ```sh
-   php artisan key:generate
-   ```
+    ```sh
+    php artisan key:generate
+    ```
 
 11. Run migrations
     ```sh
@@ -121,8 +121,7 @@ If you are in the right directory where you want your portal to be saved locally
     ```
 
 **Note** :  To start containers, you do not need to build image everytime. You can use the below command:
-
-    ```sh
-    docker-compose up -d
-    ```
+	```sh
+	docker-compose up -d
+	```
 
