@@ -121,7 +121,7 @@ If you are in the right directory where you want your portal to be saved locally
     ```
 
 **Note** :  To start containers, you do not need to build image everytime. You can use the below command:
-	```sh
-	docker-compose up -d
-	```
+    ```sh
+    docker-compose up -d
+    ```
 
