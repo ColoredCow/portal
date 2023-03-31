@@ -2,7 +2,6 @@
 
 namespace Modules\Operations\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -13,7 +12,7 @@ class OperationsController extends Controller
      */
     public function index()
     {
-        return view('operations::index');
+        return view('operations::office-location.coming_soon');
     }
 
     /**
