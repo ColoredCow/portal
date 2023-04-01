@@ -14,8 +14,54 @@ class OperationsController extends Controller
      */
     public function index()
     {
-        $data = ['name' => 'John'];
+         return view('operations::office-location.coming_soon');
+    }
 
-        return view('operations::office-location.coming_soon', $data);
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     * @param Request $request
+     */
+    public function store(Request $request)
+    {
+    }
+
+    /**
+     * Show the specified resource.
+     * @param int $id
+     */
+    public function show($id)
+    {
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     * @param int $id
+     */
+    public function edit($id)
+    {
+    }
+
+    /**
+     * Update the specified resource in storage.
+     * @param Request $request
+     * @param int $id
+     */
+    public function update(Request $request, $id)
+    {
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @param int $id
+     */
+    public function destroy($id)
+    {
     }
 }
