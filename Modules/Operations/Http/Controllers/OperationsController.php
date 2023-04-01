@@ -14,7 +14,6 @@ class OperationsController extends Controller
     {
         return view('operations::office-location.index');
     }
-    
 
     /**
      * Show the form for creating a new resource.
