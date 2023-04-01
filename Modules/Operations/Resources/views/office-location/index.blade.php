@@ -1,7 +1,15 @@
 @extends('operations::layouts.master')
 
 @section('content')
-<div>
-<h1 style="text-align: center;">coming soon</h1>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coming Soon</title>
+</head>
+<body>
+    <h1>Coming Soon!</h1>
+    <p>We are currently working on this page. Please check back later.</p>
+</body>
+</html>
+
 @endsection
