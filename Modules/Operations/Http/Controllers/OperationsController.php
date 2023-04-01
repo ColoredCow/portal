@@ -10,13 +10,12 @@ class OperationsController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @return Renderable
      */
     public function index()
     {
-        $index =('operations::office-location.index');
+        
 
-        return view('codetrek::index');
+        return view('operations::office-location.index');
     }
 
     /**
