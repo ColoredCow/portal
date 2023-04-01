@@ -15,7 +15,8 @@ class OperationsController extends Controller
     public function index()
     {
         $index =('operations::office-location.index');
-        return view($index);
+
+        return view('codetrek::index');
     }
 
     /**
