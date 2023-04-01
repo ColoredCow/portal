@@ -3,7 +3,6 @@
 namespace Modules\Operations\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Illuminate\Http\Request;
 
 class OperationsController extends Controller
 {
