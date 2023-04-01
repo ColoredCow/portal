@@ -13,7 +13,6 @@ class OperationsServiceProvider extends ServiceProvider
     protected $moduleName = 'Operations';
 
     /**
-     * @var
      */
     protected $moduleNameLower = 'operations';
 
