@@ -12,8 +12,8 @@ class OperationsController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {     
-        return view('operations::office-location.index');
+    {
+       return view('operations::office-location.index');
     }
 
     /**
