@@ -39,7 +39,10 @@
                             <tr>
                                 <td class="w-33p">
                                     <div class="pl-1 pl-xl-2">
-                                        {{ $projectName }}
+                                        @php
+                                            $projectId = (DB::table('projects')->where('name', $projectName)->get('id')->first())->id;
+                                        @endphp
+                                        <a href="{{ route('project.show', $projectId) }}">{{ $projectName }}</a>
                                     </div>
                                 </td>
                                 <td> 
