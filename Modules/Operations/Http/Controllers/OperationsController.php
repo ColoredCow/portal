@@ -2,7 +2,6 @@
 
 namespace Modules\Operations\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -10,7 +9,6 @@ class OperationsController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @return Renderable
      */
     public function index()
     {
@@ -19,7 +17,6 @@ class OperationsController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * @return Renderable
      */
     public function create()
     {
@@ -61,7 +58,6 @@ class OperationsController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param int $id
-     * @return Renderable
      */
     public function destroy($id)
     {
