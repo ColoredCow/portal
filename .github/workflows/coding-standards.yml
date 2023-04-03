@@ -51,6 +51,6 @@ jobs:
       - name: Configure application encryption key
         run: php artisan key:generate
       - name: clear cache
-        run: php artisan optimize
+        run: php artisan view:clear
       - name: Larastan
         run: ./vendor/bin/phpstan analyse
