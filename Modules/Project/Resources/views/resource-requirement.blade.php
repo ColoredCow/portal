@@ -41,8 +41,13 @@
                                     <div class="pl-1 pl-xl-2">
                                         @php
                                             $projectId = (DB::table('projects')->where('name', $projectName)->get('id')->first())->id;
+                                            $team_members = DB::table('project_team_members')->where('project_id', $projectId)->pluck('team_member_id')->toArray();
                                         @endphp
-                                        <a href="{{ route('project.show', $projectId) }}">{{ $projectName }}</a>
+                                        @if(in_array(auth()->user()->id, $team_members))
+                                            <a href="{{ route('project.show', $projectId) }}">{{ $projectName }}</a>
+                                        @else
+                                            {{$projectName}}
+                                        @endif
                                     </div>
                                 </td>
                                 <td> 
