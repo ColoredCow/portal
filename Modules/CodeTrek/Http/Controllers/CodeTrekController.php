@@ -16,7 +16,7 @@ class CodeTrekController extends Controller
     public function __construct(CodeTrekService $service)
     {
         $this->service = $service;
-        $this->authorizeResource(CodeTrekApplicant::class, 'applicant');
+        // $this->authorizeResource(CodeTrekApplicant::class);
     }
     /**
      * Display a listing of the resource.
