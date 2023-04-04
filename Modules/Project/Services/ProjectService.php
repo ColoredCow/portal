@@ -497,7 +497,7 @@ class ProjectService implements ProjectServiceContract
                     $projectData['currentTeamMemberCountByDesignation'][$designations[$designationName]] = $totalResourceDeployedCount;
                 }
             }
-            $data[$project->client->name][$project->name] = $projectData;
+            $data[$project->client->name][$project->name] = [$projectData, $project];
         }
 
         return [
