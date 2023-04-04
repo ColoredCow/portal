@@ -40,28 +40,27 @@
                                 <td class="w-33p">
                                     <div class="pl-1 pl-xl-2">
                                         @php
-                                            $projectId = (DB::table('projects')->where('name', $projectName)->get('id')->first())->id;
-                                            $team_members = DB::table('project_team_members')->where('project_id', $projectId)->pluck('team_member_id')->toArray();
+                                            $team_member_ids = $projectData[1]->getTeamMembers->pluck('team_member_id')->toArray();
                                         @endphp
-                                        @if(in_array(auth()->user()->id, $team_members))
-                                            <a href="{{ route('project.show', $projectId) }}">{{ $projectName }}</a>
+                                        @if (in_array(auth()->user()->id, $team_member_ids))
+                                            <a href="{{ route('project.show', $projectData[1]->id) }}">{{ $projectName }}</a> 
                                         @else
-                                            {{$projectName}}
+                                            {{ $projectName }}
                                         @endif
                                     </div>
                                 </td>
                                 <td> 
-                                    @foreach ($projectData['teamMemberNeededByDesignation'] as $designationName => $count)
+                                    @foreach ($projectData[0]['teamMemberNeededByDesignation'] as $designationName => $count)
                                         <div> {{ $designationName }} : {{ $count }} </div>
                                     @endforeach 
                                 </td>
                                 <td> 
-                                    @foreach ($projectData['currentTeamMemberCountByDesignation'] as $designationName => $count)
+                                    @foreach ($projectData[0]['currentTeamMemberCountByDesignation'] as $designationName => $count)
                                         <div> {{ $designationName }} : {{ $count }} </div>
                                     @endforeach
                                 </td>  
                                 <td> 
-                                    <div class="d-flex justify-content-center"> {{ $projectData['additionalResourceRequired'] }} </div>
+                                    <div class="d-flex justify-content-center"> {{ $projectData[0]['additionalResourceRequired'] }} </div>
                                 </td> 
                             </tr>
                             @endforeach
