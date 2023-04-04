@@ -61,6 +61,12 @@ class CodeTrekController extends Controller
         return view('codetrek::edit')->with('applicant', $applicant);
     }
 
+    public function evaluate(CodeTrekApplicant $applicant)
+    {
+        $roundDetails = $this->service->evaluate($applicant);
+
+        return view('codetrek::evaluate')->with(['applicant' => $applicant, 'roundDetails' => $roundDetails]);
+    }
     /**
      * Update the specified resource in storage.
      * @param CodeTrekRequest $request
