@@ -139,13 +139,13 @@
                         @endphp
                         @foreach ($clientsReadyToSendInvoicesData as $client)
                             @php
-                                $index++;
                                 $termStartAndEndDate = $client->getTermStartAndEndDateForInvoice();
                                 $termStartDate = $termStartAndEndDate['startDate'];
                                 $termEndDate = $termStartAndEndDate['endDate'];
                                 if ($client->amountWithoutTaxForTerm($termStartDate, $termEndDate) == 0 || $client->next_billing_date >= today()) {
                                     continue;
                                 }
+                                $index++;
                                 $project = $client->clientLevelBillingProjects->first();
                                 $currencySymbol = config('constants.currency.' . $client->currency . '.symbol');
                                 if ($client->hasCustomInvoiceTemplate()) {
@@ -227,13 +227,13 @@
                         @endphp
                         @foreach ($projectsReadyToSendInvoicesData as $project)
                             @php
-                                $index++;
                                 $termDates = $project->getTermStartAndEndDateForInvoice();
                                 $termStartDate = $termDates['startDate'];
                                 $termEndDate = $termDates['endDate'];
                                 if ($project->amountWithoutTaxForTerm($termStartDate, $termEndDate) == 0 || $project->next_billing_date >= today()) {
                                     continue;
                                 }
+                                $index++;
                                 $termStartAndEndDateForInvoice = ['termStartDate' => $termStartDate, 'termEndDate' => $termEndDate];
                                 $currencySymbol = config('constants.currency.' . $project->client->currency . '.symbol');
                                 if ($project->hasCustomInvoiceTemplate()) {
@@ -334,10 +334,8 @@
                         @php
                             $index = 0;
                         @endphp
-
                         @foreach ($amcProjectsReadyToSendInvoicesData as $project)
                             @php
-                                $index++;
                                 $termDate = $project->getTermStartAndEndDateForInvoice();
                                 $termStartDate = $termDate['startDate'];
                                 $termEndDate = $termDate['endDate'];
@@ -345,6 +343,7 @@
                                 if ($project->amountWithoutTaxForTerm($termStartDate, $termEndDate) == 0 || $project->next_billing_date >= today()) {
                                     continue;
                                 }
+                                $index++;
                                 $currencySymbol = config('constants.currency.' . $project->client->currency . '.symbol');
                                 if ($project->hasCustomInvoiceTemplate()) {
                                     $amount = $currencySymbol . $project->getTotalLedgerAmount($quarter);
