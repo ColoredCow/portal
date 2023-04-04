@@ -20,7 +20,6 @@ class AddRoundToCodetrekApplicantTable extends Migration
         });
     }
 
-
     /**
      * Reverse the migrations.
      *
