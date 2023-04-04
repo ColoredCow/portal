@@ -26,7 +26,7 @@ class AddStartedDateToCodetrekApplicantRoundDetails extends Migration
     public function down()
     {
         Schema::table('codetrek_applicant_round_details', function (Blueprint $table) {
-            Schema::dropIfExists('codetrek_applicant_round_details');
+            $table->dropColumn('start_date');
         });
     }
 }

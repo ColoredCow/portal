@@ -26,8 +26,8 @@ return [
             'slug'  =>'level-3'
         ],
         'onboard'   =>[
-            'label' =>'Onboard',
-            'slug'  =>'onboard'
+            'label' =>'Onboarded',
+            'slug'  =>'onboarded'
         ],
     ]
 ];

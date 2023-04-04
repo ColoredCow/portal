@@ -11,7 +11,7 @@ class CodeTrekService
     {
         $applicants = CodeTrekApplicant::all();
 
-        return ['applicants'=> $applicants];
+        return ['applicants' => $applicants];
     }
     public function store($data)
     {
@@ -55,13 +55,13 @@ class CodeTrekService
         return $applicant;
     }
 
-    public function evaluate($codeTrekApplicant)
+    public function evaluate(CodeTrekApplicant $codeTrekApplicant)
     {
-        $applicant = CodeTrekApplicant::find($codeTrekApplicant->id);
-        $roundDetails = CodeTrekApplicantRoundDetail::where('applicant_id', $applicant->id)->get();
+        $roundDetails = CodeTrekApplicantRoundDetail::where('applicant_id', $codeTrekApplicant->id)->get();
 
         return $roundDetails;
     }
+
     public function moveApplicantToRound($applicant, $data)
     {
         $applicationRound = new CodeTrekApplicantRoundDetail();

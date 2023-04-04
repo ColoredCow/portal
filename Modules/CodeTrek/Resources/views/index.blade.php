@@ -1,5 +1,5 @@
 @extends('codetrek::layouts.master')
-@section('heading','CodeTrek')
+@section('heading', 'CodeTrek')
 @section('content')
     <div class="container" id="applicant">
         <div class="col-lg-12 d-flex justify-content-between align-items-center mx-auto">
@@ -38,8 +38,8 @@
                     <thead class="thead-dark">
                         <tr class="text-center sticky-top">
                             <th class="col-md-4">Name</th>
-                            <th class="col-md-2"> Days in CodeTrek</th>
-                            <th> Status</th>
+                            <th class="col-md-2">Days in CodeTrek</th>
+                            <th>Status</th>
                             <th>Feedbacks</th>
                         </tr>
                     </thead>
@@ -75,7 +75,12 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>-</td>
+                                <td>
+                                    @php
+                                        $daysInCodetrek = now()->diffInDays($applicant->start_date);
+                                    @endphp
+                                    {{ $daysInCodetrek }} days
+                                </td>
                                 <td>{{ config('codetrek.status.' . $applicant->status . '.label') }}</td>
                                 <td>-</td>
                             </tr>

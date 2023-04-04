@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Config;
 
 class AddRoundToCodetrekApplicantTable extends Migration
 {
@@ -14,9 +15,11 @@ class AddRoundToCodetrekApplicantTable extends Migration
     public function up()
     {
         Schema::table('code_trek_applicants', function (Blueprint $table) {
-            $table->string('round_name')->default('level-1')->nullable(false);
+            $defaultRound = Config::get('codetrek.rounds.level-1.slug');
+            $table->string('round_name')->default($defaultRound)->nullable(false);
         });
     }
+
 
     /**
      * Reverse the migrations.
