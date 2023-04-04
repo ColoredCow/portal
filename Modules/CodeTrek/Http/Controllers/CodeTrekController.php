@@ -11,12 +11,10 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CodeTrekController extends Controller
 {
-    use AuthorizesRequests;
     protected $service;
     public function __construct(CodeTrekService $service)
     {
         $this->service = $service;
-        $this->authorizeResource(CodeTrekApplicant::class, 'applicant');
     }
     /**
      * Display a listing of the resource.
