@@ -13,6 +13,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\Job;
+
 class ProjectController extends Controller
 {
     use AuthorizesRequests;
