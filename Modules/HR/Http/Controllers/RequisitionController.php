@@ -41,23 +41,36 @@ class RequisitionController extends Controller
 
     public function store(Request $request)
     {
-        $jobrequisition = $request->validate([
-            'domain' => 'required|integer',
-            'job' => 'required|integer',
-            'user' => 'required|integer'
-        ]);
+        if ($request->has('user') && $request->filled('user') && $request->has('domain') && $request->has('job')) {
+            $jobrequisition = $request->validate([
+                'domain' => 'required|integer',
+                'job' => 'required|integer',
+                'user' => 'required|integer'
+            ]);
 
-        JobRequisition::create([
-            'domain_id' => $jobrequisition['domain'],
-            'job_id' => $jobrequisition['job'],
-            'requested_by'=> $jobrequisition['user']
-        ]);
+            JobRequisition::create([
+                'domain_id' => $jobrequisition['domain'],
+                'job_id' => $jobrequisition['job'],
+                'requested_by' => $jobrequisition['user']
+            ]);
+        } elseif ($request->has('domain') && $request->has('job')) {
+            $jobrequisition = $request->validate([
+                'domain' => 'required|integer',
+                'job' => 'required|integer',
+            ]);
+
+            JobRequisition::create([
+                'domain_id' => $jobrequisition['domain'],
+                'job_id' => $jobrequisition['job'],
+            ]);
+        }
 
         $jobHiring = null;
         Mail::send(new sendHiringMail($jobHiring));
 
         return redirect()->back();
     }
+
 
     public function storeBatchDetails(Request $request)
     {
