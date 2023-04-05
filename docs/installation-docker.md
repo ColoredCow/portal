@@ -14,11 +14,8 @@ If you are in the right directory where you want your portal to be saved locally
    ```sh
    cp .env.example .env	
    ```
-3. Create a directory named `mysql` in the root folder `portal`
-   ```sh
-   mkdir mysql
-   ```
-4. Add the following settings in `.env` file:
+
+3. Add the following settings in `.env` file:
     1. Laravel app configurations
     ```sh
     APP_NAME="ColoredCow Portal"
@@ -43,6 +40,8 @@ If you are in the right directory where you want your portal to be saved locally
     MYSQL_DOCKER_FOLDER=./mysql
     ```
 	
+4. If you are using windows, you might need to change line endings of `start-container`, `Dockerfile`, `docker-compose.yml` and `env` file by going to code editor and changing CRLF to LF.
+
 5. Build the dockerfile and start the containers using:
    	```sh
    	docker-compose up -d --build
@@ -65,8 +64,12 @@ If you are in the right directory where you want your portal to be saved locally
    composer install
    npm install
    ```
+9. Change permissions of mysql folder, 
+    ```sh
+    chmod -R 777 mysql/*
+    ```
 
-9. npm build
+10. npm build
    ```sh
    npm run dev
    ```
@@ -80,17 +83,17 @@ If you are in the right directory where you want your portal to be saved locally
    npm run dev
    ```
 
-10. Run the following command to add the Laravel application key:
+11. Run the following command to add the Laravel application key:
     ```sh
     php artisan key:generate
     ```
 
-11. Run migrations
+12. Run migrations
     ```sh
     php artisan migrate
     ```
 
-12. Run seeders
+13. Run seeders
     1. Portal
         ```sh
         php artisan db:seed
@@ -108,14 +111,14 @@ If you are in the right directory where you want your portal to be saved locally
         php artisan module:seed MODULE_NAME
         ```
 
-13. Exit from the bash shell of laravel container
+14. Exit from the bash shell of laravel container
     ```sh
     exit
     ```
-14. Next, open this url in your browser: http://portal.test
-15. Login to the portal using the newly created user in the database. Go to `http://localhost:8080/index.php` and search for the `users` table and you can find the user email in it (user@coloredcow.com). The default password to log in is `12345678`.
+15. Next, open this url in your browser: http://portal.test
+16. Login to the portal using the newly created user in the database. Go to `http://localhost:8080/index.php` and search for the `users` table and you can find the user email in it (user@coloredcow.com). The default password to log in is `12345678`.
 
-16. To stop the containers
+17. To stop the containers
     ```sh
     docker-compose down
     ```
