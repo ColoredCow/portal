@@ -71,7 +71,6 @@ class RequisitionController extends Controller
         return redirect()->back();
     }
 
-
     public function storeBatchDetails(Request $request)
     {
         $batchMembers = $request->get('teamMembers');
