@@ -40,27 +40,27 @@
                                 <td class="w-33p">
                                     <div class="pl-1 pl-xl-2">
                                         @php
-                                            $team_member_ids = $projectData[1]->getTeamMembers->pluck('team_member_id')->toArray();
+                                            $team_member_ids = $projectData['object']->getTeamMembers->pluck('team_member_id')->toArray();
                                         @endphp
                                         @if (in_array(auth()->user()->id, $team_member_ids))
-                                            <a href="{{ route('project.show', $projectData[1]->id) }}">{{ $projectName }}</a> 
+                                            <a href="{{ route('project.show', $projectData['object']->id) }}">{{ $projectName }}</a> 
                                         @else
                                             {{ $projectName }}
                                         @endif
                                     </div>
                                 </td>
                                 <td> 
-                                    @foreach ($projectData[0]['teamMemberNeededByDesignation'] as $designationName => $count)
+                                    @foreach ($projectData['teamMemberNeededByDesignation'] as $designationName => $count)
                                         <div> {{ $designationName }} : {{ $count }} </div>
                                     @endforeach 
                                 </td>
                                 <td> 
-                                    @foreach ($projectData[0]['currentTeamMemberCountByDesignation'] as $designationName => $count)
+                                    @foreach ($projectData['currentTeamMemberCountByDesignation'] as $designationName => $count)
                                         <div> {{ $designationName }} : {{ $count }} </div>
                                     @endforeach
                                 </td>  
                                 <td> 
-                                    <div class="d-flex justify-content-center"> {{ $projectData[0]['additionalResourceRequired'] }} </div>
+                                    <div class="d-flex justify-content-center"> {{ $projectData['additionalResourceRequired'] }} </div>
                                 </td> 
                             </tr>
                             @endforeach
