@@ -153,7 +153,7 @@ class ProjectController extends Controller
         $resourceData = $this->service->getProjectsWithTeamMemberRequirementData();
         $domainName = HrJobDomain::all();
         $jobName = Job::all();
-       
+
         return view('project::resource-requirement', [
             'resourceData' => $resourceData,
             'domainName' => $domainName,
