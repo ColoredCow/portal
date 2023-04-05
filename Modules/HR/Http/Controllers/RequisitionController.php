@@ -44,11 +44,13 @@ class RequisitionController extends Controller
         $jobrequisition = $request->validate([
             'domain' => 'required|integer',
             'job' => 'required|integer',
+            'user' => 'required|integer'
         ]);
 
         JobRequisition::create([
             'domain_id' => $jobrequisition['domain'],
-            'job_id' => $jobrequisition['job']
+            'job_id' => $jobrequisition['job'],
+            'requested_by'=> $jobrequisition['user']
         ]);
 
         $jobHiring = null;
