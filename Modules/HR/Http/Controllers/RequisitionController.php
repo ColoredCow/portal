@@ -41,17 +41,17 @@ class RequisitionController extends Controller
 
     public function store(Request $request)
     {
-        if ($request->has('user') && $request->filled('user') && $request->has('domain') && $request->has('job')) {
+        if ($request->has('domain') && $request->has('job') && $request->has('user')) {
             $jobrequisition = $request->validate([
                 'domain' => 'required|integer',
                 'job' => 'required|integer',
-                'user' => 'required|integer'
+                'user' => 'required|integer',
             ]);
 
             JobRequisition::create([
                 'domain_id' => $jobrequisition['domain'],
                 'job_id' => $jobrequisition['job'],
-                'requested_by' => $jobrequisition['user']
+                'requested_by' => $jobrequisition['user'],
             ]);
         } elseif ($request->has('domain') && $request->has('job')) {
             $jobrequisition = $request->validate([

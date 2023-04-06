@@ -58,7 +58,7 @@
                                 </td> 
                                 <td>
                                     <div class="d-flex justify-content-between">
-                                        <div><button type="button" class="btn btn-success" data-toggle="modal" data-target="#requisitionModal"><i class="fa fa-plus mr-1"></i>Add Requisition</button></div>
+                                        <div><button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#requisitionModal"><i class="fa fa-plus mr-1"></i>Add Requisition</button></div>
                                     </div>
                                     <div class="d-none alert alert-success " id="successMessage" role="alert">
                                         <strong>Requisition</strong> Submitted successfully!
