@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 use Modules\CodeTrek\Services\CodeTrekService;
+use Illuminate\Support\Facades\Gate;
 
 class CodeTrekController extends Controller
 {
@@ -20,6 +21,10 @@ class CodeTrekController extends Controller
      */
     public function index()
     {
+        if (Gate::denies('codetrek_applicant.view')) {
+            abort(403, 'Unauthorized access');
+        }
+
         return view('codetrek::index', $this->service->getCodeTrekApplicants(request()->all()));
     }
 
