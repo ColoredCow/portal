@@ -7,13 +7,17 @@ use Illuminate\Http\Request;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 use Modules\CodeTrek\Services\CodeTrekService;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CodeTrekController extends Controller
 {
+    use AuthorizesRequests;
+
     protected $service;
+
     public function __construct(CodeTrekService $service)
     {
+        $this->authorizeResource(CodeTrekApplicant::class);
         $this->service = $service;
     }
     /**
@@ -21,10 +25,6 @@ class CodeTrekController extends Controller
      */
     public function index()
     {
-        if (Gate::denies('codetrek_applicant.view')) {
-            abort(403, 'Unauthorized access');
-        }
-
         return view('codetrek::index', $this->service->getCodeTrekApplicants(request()->all()));
     }
 
