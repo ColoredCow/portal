@@ -1,4 +1,7 @@
 <tr>
+    <td>
+        <span>{{$client->client_id}}</span>
+    </td>
     <td> 
         <span class="{{ $level ? 'ml-2' : ''  }}">
             @canany(['clients.update', 'clients.create', 'clients.delete'])

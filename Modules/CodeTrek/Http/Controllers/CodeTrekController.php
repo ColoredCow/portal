@@ -7,16 +7,13 @@ use Illuminate\Http\Request;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 use Modules\CodeTrek\Services\CodeTrekService;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CodeTrekController extends Controller
 {
-    use AuthorizesRequests;
     protected $service;
     public function __construct(CodeTrekService $service)
     {
         $this->service = $service;
-        $this->authorizeResource(CodeTrekApplicant::class, 'applicant');
     }
     /**
      * Display a listing of the resource.
@@ -61,6 +58,12 @@ class CodeTrekController extends Controller
         return view('codetrek::edit')->with('applicant', $applicant);
     }
 
+    public function evaluate(CodeTrekApplicant $applicant)
+    {
+        $roundDetails = $this->service->evaluate($applicant);
+
+        return view('codetrek::evaluate')->with(['applicant' => $applicant, 'roundDetails' => $roundDetails]);
+    }
     /**
      * Update the specified resource in storage.
      * @param CodeTrekRequest $request

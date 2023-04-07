@@ -61,7 +61,10 @@
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     @if (Module::checkStatus('User'))
-                                        <a class="dropdown-item" href="{{ route('user.profile') }}">My profile</a>
+                                        @php
+                                            $employee = DB::table('employees')->where('user_id' , auth()->user()->id )->first();
+                                        @endphp
+                                        <a class="dropdown-item" href="{{ route('employees.show', $employee->id) }}">My profile</a>
                                     @endif
                                     @if(auth()->user()->provider == 'google')
                                         <a class="dropdown-item" href="{{ route('profile.gsuite-sync') }}">Sync my profile</a>
