@@ -95,12 +95,12 @@ class InvoiceController extends Controller
         $invoiceNumber = $data['invoiceNumber'];
         $pdf = $this->showInvoicePdf($data);
 
-        return $pdf->inline(str_replace('-', '', $invoiceNumber) . '.pdf');
+        return $pdf->inline($invoiceNumber . '.pdf');
     }
 
     public function showInvoicePdf($data)
     {
-        $data['invoiceNumber'] = substr($data['invoiceNumber'], 0, -5);
+        $data['invoiceNumber'] = $data['invoiceNumber'];
         $pdf = App::make('snappy.pdf.wrapper');
 
         $template = config('invoice.templates.invoice.clients.' . optional($data['client'])->name) ?: 'invoice-template';
@@ -141,11 +141,11 @@ class InvoiceController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     * @param int $id
+     * @param Invoice $invoice
      */
-    public function destroy($id)
+    public function destroy(Invoice $invoice)
     {
-        return $this->service->delete($id);
+        return $this->service->delete($invoice);
     }
 
     public function getInvoiceFile(Request $request, $invoiceID)
@@ -171,7 +171,7 @@ class InvoiceController extends Controller
 
     public function taxReportExport(Request $request)
     {
-        $this->authorize('tax_report_export', Invoice::class);
+        $this->authorize('taxReportExport', Invoice::class);
         $filters = $request->all();
 
         return $this->service->taxReportExport($filters, $request);

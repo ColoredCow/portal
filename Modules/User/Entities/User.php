@@ -61,6 +61,11 @@ class User extends Authenticatable
         return $this->hasRole('super-admin');
     }
 
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
+    }
+
     public static function scopeInterviewers($query)
     {
         return $query->whereHas('roles', function ($query) {
@@ -81,6 +86,11 @@ class User extends Authenticatable
     public function booksInWishlist()
     {
         return $this->belongsToMany(Book::class, 'book_wishlist', 'user_id', 'library_book_id');
+    }
+
+    public function booksBorrower()
+    {
+        return $this->belongsToMany(Book::class, 'book_borrower', 'user_id', 'library_book_id');
     }
 
     public function totalReadBooks()
@@ -108,7 +118,7 @@ class User extends Authenticatable
 
     public function profile()
     {
-        return $this->hasOne(UserProfile::class);
+        return $this->hasOne(UserProfile::class, 'user_id');
     }
 
     public function appointmentSlots()
@@ -166,24 +176,25 @@ class User extends Authenticatable
         return $totalEffort;
     }
 
-    public function getFteAttribute()
+    public function getFtesAttribute()
     {
         $fte = 0;
-
-        foreach ($this->projectTeamMembers as $projectTeamMember) {
-            $fte += $projectTeamMember->fte;
+        $fteAmc = 0;
+        foreach ($this->projectTeamMembers()->with('project')->get() as $projectTeamMember) {
+            if (! $projectTeamMember->project->is_amc) {
+                $fte += $projectTeamMember->fte;
+            }
+            if ($projectTeamMember->project->is_amc) {
+                $fteAmc += $projectTeamMember->fte;
+            }
         }
 
-        return $fte;
+        return ['main' => $fte, 'amc' => $fteAmc];
     }
 
     public function activeProjects()
     {
-        $userId = $this->id;
-        $efforts = [];
-        $projects = Project::whereHas('getTeamMembers', function ($query) use ($userId) {
-            return $query->where('team_member_id', $userId);
-        })->get();
+        $projects = Project::linkedToTeamMember($this->id)->get();
 
         $projectTeamMembers = ProjectTeamMember::where('team_member_id', $userId)->get();
         foreach ($projectTeamMembers as $projectTeamMember) {

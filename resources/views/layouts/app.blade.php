@@ -30,7 +30,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand min-w-md-150" href="{{ url('/') }}">
                     {{ config('app.name', 'ColoredCow Portal') }}
                 </a>
                 @auth
@@ -61,7 +61,10 @@
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     @if (Module::checkStatus('User'))
-                                        <a class="dropdown-item" href="{{ route('user.profile') }}">My profile</a>
+                                        @php
+                                            $employee = DB::table('employees')->where('user_id' , auth()->user()->id )->first();
+                                        @endphp
+                                        <a class="dropdown-item" href="{{ route('employees.show', $employee->id) }}">My profile</a>
                                     @endif
                                     @if(auth()->user()->provider == 'google')
                                         <a class="dropdown-item" href="{{ route('profile.gsuite-sync') }}">Sync my profile</a>

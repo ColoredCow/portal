@@ -13,7 +13,7 @@
         <a target="_self" class="badge badge-primary p-1 ml-2 text-light pl-3 pr-3 " target="blank"
             href="{{ route('project.effort-tracking', $project) }}">{{ _('FTE') }}</a>
         <br>
-        <div class="mt-2">
+        <div class="mt-2 ml-1">
             <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <a class="nav-link active" data-toggle="pill" data-target="#projectDetails" type="button"
@@ -30,6 +30,14 @@
                 <li class="nav-item" role="presentation">
                     <a class="nav-link" data-toggle="pill" data-target="#projectFinancialDetails" type="button"
                         role="tab" aria-selected="false">Project Financial Details</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-toggle="pill" data-target="#projectTechstack" type="button"
+                        role="tab" aria-selected="false">Project Techstack</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-toggle="pill" data-target="#projectResourceRequirement" type="button"
+                        role="tab" aria-selected="false">Resource Requirement</a>
                 </li>
             </ul>
             @include('status', ['errors' => $errors->all()])
@@ -48,6 +56,14 @@
 
                 <div class="tab-pane fade mb-5" id="projectFinancialDetails" role="tabpanel">
                     @include('project::subviews.edit-project-financial-details')
+                </div>
+
+                <div class="tab-pane fade mb-5" id="projectTechstack" role="tabpanel">
+                    @include('project::subviews.edit-project-techstack-details')
+                </div>
+
+                <div class="tab-pane fade mb-5" id="projectResourceRequirement" role="tabpanel">
+                    @include('project::subviews.edit-resource-requirement')
                 </div>
             </div>
         </div>
@@ -127,6 +143,7 @@
                             $('#project-details-update-message').addClass('d-block');
                             $('#project-details-update-message').removeClass('d-none');
                             this.$toast.success('Project details updated!');
+                            location.reload(true);
                         })
                         .catch((error) => {
                             $('#project-details-update-message').removeClass('d-block');
@@ -139,7 +156,10 @@
                             }
                             $('#edit-project-errors').removeClass('d-none');
                             $('.save-btn').attr('disabled', false);
-                            this.$toast.success('Project details updated!');
+                            if(errors){
+                                var errormessage =  errors[error].join().replace('id','');
+                                this.$toast.error(errormessage);                           
+                            }
                         })
                 },
 
@@ -162,11 +182,8 @@
                     this.projectTeamMembers[index]['pivot']['started_on'] = newDate;
                 },
 
-                updateEndDateForTeamMember($event, index) {
-                    newDate = $event.target.value;
-                    this.projectTeamMembers[index]['pivot']['ended_on'] = newDate;
-                },
 
+                
                 updatedDailyExpectedEffort($event, index, numberOfDays) {
                     value = $event.target.value;
                     maximumExpectedEfforts = 12

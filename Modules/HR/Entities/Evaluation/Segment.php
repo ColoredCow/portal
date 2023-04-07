@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\HR\Entities\ApplicationEvaluationSegment;
 use Modules\HR\Entities\Round;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Segment extends Model
 {
+    use HasFactory;
     use SoftDeletes;
 
     protected $fillable = ['name', 'round_id'];

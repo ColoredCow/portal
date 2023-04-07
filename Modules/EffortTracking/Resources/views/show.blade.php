@@ -44,7 +44,6 @@
         
                 <div class='form-group mr-4 mt-1 w-168'>
                     <select class="form-control bg-light" name="year" onchange="document.getElementById('FilterForm').submit();">
-                        <option {{ request()->input('year') == '' ? "selected=selected" : '' }} value="{{$currentYear}}">{{$currentYear}}</option>
                         @php $year = now()->year; @endphp
                         @while ($year != 1999)
                             <option {{ request()->input('year') == $year ? "selected=selected" : '' }} value="{{ $year }}">
@@ -80,8 +79,8 @@
                         <strong>Last refreshed at:</strong>{{ (Carbon\Carbon::parse($project->last_updated_at)->setTimezone('Asia/Kolkata')->format(' Y-M-d , D h:i:s A')) }}
                         </div > 
                         <div class="fz-14 float-right">
-                        <strong>Timeline:</strong>{{ (Carbon\Carbon::parse($project->client->month_start_date)->format('dS M')) }}                       
-                        -{{ (Carbon\Carbon::parse($project->client->month_end_date)->format('dS M')) }}              
+                        <strong>Timeline:</strong>{{ (Carbon\Carbon::parse($project->client->month_start_date)->format('dS M')) }}
+                        -{{ (Carbon\Carbon::parse($project->client->month_end_date)->format('dS M')) }}
                         </div>
                     </h4>
                 </div>

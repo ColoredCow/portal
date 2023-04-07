@@ -10,8 +10,9 @@ use Modules\HR\Entities\Evaluation\Parameter;
 use Modules\HR\Entities\Evaluation\ParameterOption;
 use Modules\HR\Entities\Evaluation\Segment;
 use Modules\HR\Entities\Round;
-use Modules\HR\Http\Requests\ManageEvaluationRequest;
 use Modules\HR\Http\Requests\EditEvaluationRequest;
+use Modules\HR\Http\Requests\ManageEvaluationRequest;
+use Modules\HR\Entities\ApplicationRoundReview;
 
 class EvaluationController extends Controller
 {
@@ -20,11 +21,15 @@ class EvaluationController extends Controller
      */
     public function index(Request $request)
     {
-        $segments = Segment::all();
+        $roundWithSegments = [];
         $rounds = Round::select('id', 'name')->get();
+        foreach ($rounds as $value) {
+            $attr = Round::find($value->id)->evaluationSegments;
+            $roundWithSegments[$value->id][$value->name] = $attr;
+        }
 
         return view('hr::evaluation.index', [
-            'segments' => $segments,
+            'roundWithSegments' => $roundWithSegments,
             'rounds' => $rounds,
         ]);
     }
@@ -58,7 +63,7 @@ class EvaluationController extends Controller
         $segmentId = Round::select('*')->where('name', $request->rounds)->first()->id;
         $segment = Segment::create([
             'name' => $request->name,
-            'round_id' => $segmentId
+            'round_id' => $segmentId,
         ]);
 
         return redirect(route('hr.evaluation'));
@@ -156,7 +161,7 @@ class EvaluationController extends Controller
     public function show($applicationRoundId)
     {
         $applicationRound = ApplicationRound::find($applicationRoundId)->load('application.applicant');
-
+        $application_Round_Review = $applicationRound->applicationRoundReviews->where('review_key', 'feedback')->first();
         $segmentList = [];
 
         foreach (self::getSegments($applicationRound->hr_application_id, $applicationRound->round) as $segment) {
@@ -167,6 +172,7 @@ class EvaluationController extends Controller
             ->with([
                 'segment' => $segmentList,
                 'applicationRound' => $applicationRound,
+                'applicationRoundReview' => $application_Round_Review,
                 'employees' => Employee::active()
                     ->orderBy('name')
                     ->get(),
@@ -177,8 +183,17 @@ class EvaluationController extends Controller
     public function update($applicationRoundId)
     {
         $request = request()->all();
-
         $applicationRound = ApplicationRound::find($applicationRoundId);
+
+        ApplicationRoundReview::updateorinsert(
+            [
+                'hr_application_round_id' => $applicationRoundId,
+            ],
+            [
+            'review_value' => $request['feedback_submit'],
+            'review_key' => 'feedback',
+            ]
+        );
 
         if (array_key_exists('evaluation', request()->all())) {
             $applicationRound->updateOrCreateEvaluation(request()->all()['evaluation']);

@@ -17,6 +17,7 @@
                         </button>
                         <strong id="editErrors"></strong>
                     </div>
+                </div>    
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name" class="field-required">Segment Name</label>

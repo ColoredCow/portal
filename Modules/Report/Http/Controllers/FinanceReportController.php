@@ -2,7 +2,9 @@
 
 namespace Modules\Report\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Report\Services\Finance\ReportDataService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Report\Services\Finance\ProfitAndLossReportService;
 
@@ -11,31 +13,36 @@ class FinanceReportController extends Controller
     use AuthorizesRequests;
 
     protected $service;
+    protected $reportDataService;
 
     public function __construct(ProfitAndLossReportService $service)
     {
         $this->service = $service;
+        $this->reportDataService = app(ReportDataService::class);
     }
 
-    /**
-     * Main function to fetch the P&L report.
-     */
-    public function profitAndLoss()
+    public function index()
     {
-        $this->authorize('finance_reports.view');
-        $currentYear = date('m') > 03 ? date('Y') + 1 : date('Y');
-        $defaultFilters = [
-            'transaction' => 'revenue',
-            'year' => $currentYear,
-        ];
+        return view('report::finance.client-wise-revenue.dashboard');
+    }
 
-        $filters = array_merge($defaultFilters, request()->all());
-        $reportData = $this->service->profitAndLoss($filters);
+    public function dashboard()
+    {
+        return view('report::finance.dashboard');
+    }
 
-        $allAmounts = array_map(function ($item) {
-            return $item['amounts'];
-        }, $reportData);
+    public function clientWiseInvoiceDashboard(Request $request)
+    {
+        $data = $this->reportDataService->getDataForClientRevenueReportPage($request->all());
 
-        return view('report::finance.profit-and-loss', ['reportData' => $reportData, 'currentYear' => $currentYear, 'allAmounts' => $allAmounts]);
+        return view('report::finance.client-wise-revenue.index', $data);
+    }
+
+    public function getReportData(Request $request)
+    {
+        $type = $request->type;
+        $filters = $request->filters;
+
+        return $this->reportDataService->getData($type, json_decode($filters, true));
     }
 }

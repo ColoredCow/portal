@@ -3,9 +3,11 @@
 namespace Modules\Project\Entities;
 
 use App\Traits\Filters;
+use App\Traits\HasTags;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Modules\Client\Entities\Client;
 use Modules\EffortTracking\Entities\Task;
@@ -14,12 +16,11 @@ use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Services\InvoiceService;
 use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Project extends Model implements Auditable
 {
-    use HasFactory, Filters, SoftDeletes, \OwenIt\Auditing\Auditable;
+    use HasFactory, HasTags, Filters, SoftDeletes, \OwenIt\Auditing\Auditable;
 
     protected $table = 'projects';
 
@@ -32,6 +33,18 @@ class Project extends Model implements Auditable
         return new ProjectFactory();
     }
 
+    public function scopeIsAMC($query, $isAmc)
+    {
+        $query->where('is_amc', $isAmc);
+    }
+
+    public function scopeLinkedToTeamMember($query, $userId)
+    {
+        return $query->whereHas('getTeamMembers', function ($query) use ($userId) {
+            $query->where('team_member_id', $userId);
+        });
+    }
+
     public function teamMembers()
     {
         return $this->belongsToMany(User::class, 'project_team_members', 'project_id', 'team_member_id')
@@ -41,6 +54,41 @@ class Project extends Model implements Auditable
     public function repositories()
     {
         return $this->hasMany(ProjectRepository::class);
+    }
+
+    public function resourceRequirement()
+    {
+        return $this->hasMany(ProjectResourceRequirement::class);
+    }
+
+    public function getResourceRequirementByDesignation($designationName)
+    {
+        return $this->resourceRequirement()->where('designation', $designationName)->first();
+    }
+
+    public function getDeployedCountForDesignation($designation)
+    {
+        return $this->getTeamMembers()->where('designation', '=', $designation)->count();
+    }
+
+    public function getToBeDeployedCountForDesignation($designation)
+    {
+        $resourceRequirementCount = optional($this->getResourceRequirementByDesignation($designation))->total_requirement ?? 0;
+        $deployedCount = $this->getDeployedCountForDesignation($designation);
+        $toBeDeployedCount = $resourceRequirementCount - $deployedCount;
+
+        return ($toBeDeployedCount > 0) ? $toBeDeployedCount : (($toBeDeployedCount < 0) ? $toBeDeployedCount : '0');
+    }
+
+    public function getTotalToBeDeployedCount()
+    {
+        $designations = array_keys(config('project.designation'));
+        $totalToBeDeployedCount = 0;
+        foreach ($designations as $designationName) {
+            $totalToBeDeployedCount += $this->getToBeDeployedCountForDesignation($designationName);
+        }
+
+        return $totalToBeDeployedCount;
     }
 
     public function client()
@@ -153,6 +201,20 @@ class Project extends Model implements Auditable
 
         return $dates;
     }
+    public function getIsReadyToRenewAttribute()
+    {
+        $diff = optional($this->end_date)->diffInDays(today());
+
+        if ($diff === null) {
+            return true;
+        } elseif ($this->end_date <= today()) {
+            return true;
+        } elseif ($diff <= 30) {
+            return false;
+        }
+
+        return false;
+    }
 
     public function getCurrentExpectedHoursAttribute()
     {
@@ -256,6 +318,16 @@ class Project extends Model implements Auditable
     public function meta()
     {
         return $this->hasMany(ProjectMeta::class);
+    }
+
+    public function getMetaValue($metaKey)
+    {
+        $meta = $this->meta()->where('key', $metaKey)->first();
+        if ($meta) {
+            return $meta->value;
+        } else {
+            return;
+        }
     }
 
     public function getBillingLevelAttribute()

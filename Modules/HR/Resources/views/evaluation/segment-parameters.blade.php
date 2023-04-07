@@ -9,8 +9,7 @@
         <div class="d-flex justify-content-between">
             <h1 class="mb-0">{{ $segment->name }}</h1>
             <div>
-                <button data-toggle="modal" data-target="#createNewParameterModal" class="btn btn-primary">Add
-                    New</button>
+                <button data-toggle="modal" data-target="#createNewParameterModal" class="btn btn-primary">Add New</button>
             </div>
         </div>
 

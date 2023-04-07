@@ -24,6 +24,8 @@ use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Project\Entities\Project;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
 use Modules\Invoice\Entities\LedgerAccount;
+use Illuminate\Support\Facades\Notification;
+use Modules\Invoice\Notifications\GoogleChat\SendPaymentReceivedNotification;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -35,10 +37,10 @@ class InvoiceService implements InvoiceServiceContract
             'year' => $filters['year'] ?? null,
             'status' => $filters['status'] ?? null,
         ];
-
         if ($invoiceStatus == 'sent') {
-            $invoices = Invoice::query()->applyFilters($filters)
-                ->orderBy('sent_on', 'desc')
+            $invoices = Invoice::query()->applyFilters($filters)->leftjoin('clients', 'invoices.client_id', '=', 'clients.id')
+                ->select('invoices.*', 'clients.name')
+                ->orderBy('name', 'asc')->orderBy('sent_on', 'desc')
                 ->get();
             $clientsReadyToSendInvoicesData = [];
             $projectsReadyToSendInvoicesData = [];
@@ -117,8 +119,8 @@ class InvoiceService implements InvoiceServiceContract
     public function defaultFilters()
     {
         return [
-            'year' => now()->format('Y'),
-            'month' => now()->format('m'),
+            'year' => null,
+            'month' => null,
             'status' => 'sent',
             'client_id' => '',
         ];
@@ -167,6 +169,13 @@ class InvoiceService implements InvoiceServiceContract
         if (isset($data['send_mail'])) {
             $emailData = $this->getSendEmailData($data, $invoice);
             Mail::queue(new SendPaymentReceivedMail($invoice, $emailData));
+            $webHookUrl = $invoice->project->google_chat_webhook_url
+                ?? $invoice->client->google_chat_webhook_url;
+            if ($webHookUrl) {
+                $projectAndClientName = (optional($invoice->project)->name ?? $invoice->client->name);
+                Notification::route('googleChat', $webHookUrl)
+                    ->notify(new SendPaymentReceivedNotification($projectAndClientName));
+            }
             $invoice->update([
                 'payment_confirmation_mail_sent' => true
             ]);
@@ -197,8 +206,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         $templateVariablesForSubject = config('invoice.templates.setting-key.received-invoice-payment.template-variables.subject');
         $templateVariablesForBody = config('invoice.templates.setting-key.received-invoice-payment.template-variables.body');
-        $year = $invoice->sent_on->subMonth()->year;
-
+        $year = $invoice->client->billingDetails->billing_date == 1 ? $invoice->sent_on->subMonth()->year : $invoice->sent_on->year;
         $subjectData = [
             $templateVariablesForSubject['project-name'] => optional($invoice->project)->name ?: ($invoice->client->name . ' Projects'),
             $templateVariablesForSubject['term'] => $invoice->term,
@@ -229,9 +237,9 @@ class InvoiceService implements InvoiceServiceContract
         ];
     }
 
-    public function delete($invoiceID)
+    public function delete(Invoice $invoice)
     {
-        return Invoice::find($invoiceID)->delete();
+        return $invoice->delete();
     }
 
     public function getUnpaidInvoices()
@@ -280,7 +288,7 @@ class InvoiceService implements InvoiceServiceContract
 
     public function dashboard()
     {
-        return Invoice::status('sent')->get();
+        return Invoice::with('client')->all();
     }
 
     private function setInvoiceNumber($invoice, $sent_date)
@@ -322,7 +330,8 @@ class InvoiceService implements InvoiceServiceContract
     public function taxReport($filters)
     {
         return [
-            'invoices' => $this->taxReportInvoices($filters)
+            'invoices' => $this->taxReportInvoices($filters),
+            'clients' => Client::orderBy('name', 'asc')->get()
         ];
     }
 
@@ -401,7 +410,8 @@ class InvoiceService implements InvoiceServiceContract
 
     private function taxReportInvoices($filters)
     {
-        return Invoice::query()->applyFilters($filters)
+        return Invoice::query()
+            ->applyFilters($filters)
             ->orderBy('sent_on', 'desc')
             ->get();
     }
@@ -480,7 +490,7 @@ class InvoiceService implements InvoiceServiceContract
         $clientType = ($countryId == 1) ? 'IN' : 'EX';
         $lastInvoice = Invoice::where([['client_id', $client ? $client->id : $project->client->id], ['project_id', optional($project)->id]])->orderBy('sent_on', 'DESC')->first();
         $invoiceSequence = $lastInvoice ? (int) Str::substr($lastInvoice->invoice_number, 8, 6) + 1 : '000001';
-        $invoiceNumber = $clientType . sprintf('%03s', $client ? $client->client_id : $project->client->client_id) . '-' . ($billingLevel == 'client' ? '000' : $project->client_project_id) . '-' . sprintf('%06s', $invoiceSequence) . '-' . date('m', strtotime($sentDate)) . date('y', strtotime($sentDate));
+        $invoiceNumber = $clientType . sprintf('%03s', $client ? $client->client_id : $project->client->client_id) . ($billingLevel == 'client' ? '000' : $project->client_project_id) . sprintf('%06s', $invoiceSequence) . date('m', strtotime($sentDate)) . date('y', strtotime($sentDate));
 
         return $invoiceNumber;
     }
@@ -499,16 +509,18 @@ class InvoiceService implements InvoiceServiceContract
         $projectForInvoiceNumber = $billingLevel == 'project' ? $project : null;
         $invoiceNumber = $this->getInvoiceNumberPreview($client, $projectForInvoiceNumber, $data['sent_on'], $billingLevel);
         $billingStartMonth = $client ? $client->getMonthStartDateAttribute(1)->format('M') : $project->client->getMonthStartDateAttribute(1)->format('M');
+        $billingStartMonthYear = $client ? $client->getMonthStartDateAttribute(1)->format('Y') : $project->client->getMonthStartDateAttribute(1)->format('Y');
         if ($data['period_start_date'] ?? false) {
             $billingStartMonth = Carbon::parse($data['period_start_date'])->format('M');
         }
 
         $billingEndMonth = $client ? $client->getMonthEndDateAttribute(1)->format('M') : $project->client->getMonthEndDateAttribute(1)->format('M');
+        $billingEndMonthYear = $client ? $client->getMonthEndDateAttribute(1)->format('Y') : $project->client->getMonthEndDateAttribute(1)->format('Y');
         if ($data['period_end_date'] ?? false) {
-            $billingStartMonth = Carbon::parse($data['period_end_date'])->format('M');
+            $billingEndMonth = Carbon::parse($data['period_end_date'])->format('M');
         }
 
-        $termText = $billingStartMonth . ' - ' . $billingEndMonth;
+        $termText = $billingStartMonth . ' ' . $billingStartMonthYear . ' - ' . $billingEndMonth . ' ' . $billingEndMonthYear;
 
         if ($billingStartMonth == $billingEndMonth) {
             $termText = $monthName;
@@ -573,7 +585,7 @@ class InvoiceService implements InvoiceServiceContract
             'body' => $data['email_body'] ?? null,
             'subject' => $data['email_subject'] ?? null
         ];
-        $invoiceNumber = str_replace('-', '', optional($client)->next_invoice_number ?: $project->next_invoice_number);
+        $invoiceNumber = optional($client)->next_invoice_number ?: $project->next_invoice_number;
         $invoice = $this->createInvoice($client, $project, $term, $periodStartDate, $periodEndDate);
         Mail::queue(new SendInvoiceMail($invoice, $invoiceNumber, $email));
     }
@@ -681,28 +693,28 @@ class InvoiceService implements InvoiceServiceContract
             'period_start_date' => $periodStartDate,
             'period_end_date' => $periodEndDate
         ]);
-        $invoiceNumber = str_replace('-', '', $data['invoiceNumber']);
-        $data['invoiceNumber'] = substr($data['invoiceNumber'], 0, -5);
+        $invoiceNumber = $data['invoiceNumber'];
+        $data['invoiceNumber'] = $data['invoiceNumber'];
         $pdf = App::make('snappy.pdf.wrapper');
         $template = config('invoice.templates.invoice.clients.' . optional($data['client'])->name) ?: 'invoice-template';
         $html = view(('invoice::render.' . $template), $data)->render();
         $data['receivable_date'] = $dueOn;
         $data['project_id'] = null;
-        $tax = 0;
+        $gst = null;
 
         if ($project) {
             if (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
                 $amount = $project->getResourceBillableAmount() + $project->getTotalLedgerAmount();
             } else {
-                $amount = $project->getBillableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate);
-                $tax = $project->getTaxAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate);
+                $amount = $project->getBillableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate) + optional($project->client->billingDetails)->bank_charges;
+                $gst = $project->getTaxAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate);
             }
         } else {
             if (optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
                 $amount = $client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount();
             } else {
-                $amount = $client->getBillableAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate);
-                $tax = $client->getTaxAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate);
+                $amount = $client->getBillableAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate) + optional($client->billingDetails)->bank_charges;
+                $gst = $client->getTaxAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate);
             }
         }
 
@@ -716,7 +728,9 @@ class InvoiceService implements InvoiceServiceContract
             'receivable_date' => $dueOn,
             'currency' => $client ? $client->country->currency : $project->client->country->currency,
             'amount' => $amount,
-            'gst' => $tax
+            'gst' => $gst,
+            'term_start_date' => $periodStartDate,
+            'term_end_date' => $periodEndDate
         ]);
 
         $filePath = $this->getInvoiceFilePath($invoice) . '/' . $invoiceNumber . '.pdf';
@@ -766,8 +780,8 @@ class InvoiceService implements InvoiceServiceContract
         }
 
         $invoices = Invoice::query()->applyFilters($filters)
-        ->orderBy('sent_on', 'desc')
-        ->get();
+            ->orderBy('sent_on', 'desc')
+            ->get();
 
         if (isset($filters['client_id'])) {
             $clientId = request()->client_id;

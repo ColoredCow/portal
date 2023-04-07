@@ -9,7 +9,7 @@
 						@php
 							$active = in_array(\Route::current()->getName(), $tab['active']) ? 'active' : '';
 						@endphp
-						<a class="nav-link {{ $active }}" href="{{ $tab['route'] ? route($tab['route']) : '#' }}" role="tab">{{ $tab['label'] }}</a>
+						<a class="nav-link {{$tab['label'] === "Client Database" ? 'disabled' : ""}} {{ $active }}" href="{{ $tab['route'] ? route($tab['route']) : '#' }}" role="tab">{{ $tab['label'] }}</a>
 					@endforeach
 				</div>
 			</div>

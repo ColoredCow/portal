@@ -10,6 +10,7 @@ use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
@@ -38,7 +39,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $clients = $this->service->getClients();
+        $clients = $this->service->getClients($status = 'all');
 
         return view('project::create')->with('clients', $clients);
     }
@@ -77,10 +78,9 @@ class ProjectController extends Controller
             'daysTillToday' => $daysTillToday,
         ]);
     }
-
     public function destroy(ProjectRequest $request, Project $project)
     {
-        Project::updateOrCreate(
+        $project->update(
             [
                 'reason_for_deletion' => $request['comment']
             ]
@@ -108,14 +108,18 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $designations = $this->service->getDesignations();
+        $designationKeys = array_keys($designations);
+
         return view('project::edit', [
             'project' => $project,
-            'clients' => Client::all(),
+            'clients' => Client::orderBy('name')->get(),
             'teamMembers' => $this->service->getTeamMembers(),
             'projectTeamMembers' => $this->service->getProjectTeamMembers($project),
             'projectRepositories' => $this->service->getProjectRepositories($project),
-            'designations' => $this->service->getDesignations(),
+            'designations' => $designations,
             'workingDaysInMonth' => $this->service->getWorkingDays($project),
+            'designationKeys' => $designationKeys,
         ]);
     }
 
@@ -133,5 +137,21 @@ class ProjectController extends Controller
         }
 
         return $this->service->updateProjectData($request->all(), $project);
+    }
+
+    public function projectFTEExport(Request $request)
+    {
+        $filters = $request->all();
+
+        return $this->service->projectFTEExport($filters);
+    }
+
+    public function projectResource()
+    {
+        $resourceData = $this->service->getProjectsWithTeamMemberRequirementData();
+
+        return view('project::resource-requirement', [
+            'resourceData' => $resourceData,
+        ]);
     }
 }

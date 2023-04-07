@@ -16,7 +16,9 @@ class DatabaseSeeder extends Seeder
         // roles
         $this->call(RolesTableSeeder::class);
         $this->call(CountriesTableSeeder::class);
-        $this->call(UsersTableSeeder::class);
+        if (! app()->environment('production')) {
+            $this->call(UsersTableSeeder::class);
+        }
 
         // books
         $this->call(BooksPermissionsSeeder::class);

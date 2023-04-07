@@ -5,6 +5,7 @@ namespace Modules\Expense\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Client\Entities\Country;
+use Modules\Expense\Http\Requests\RecurringExpenseRequest;
 use Modules\Expense\Services\RecurringExpenseService;
 
 class RecurringExpenseController extends Controller
@@ -28,10 +29,11 @@ class RecurringExpenseController extends Controller
         return view('expense::recurring.create', ['countries' => Country::all()]);
     }
 
-    public function store(Request $request)
+    public function store(RecurringExpenseRequest $request, $data)
     {
-        // ToDo:: we need to add validations here.
-        $this->service->store(request()->all());
+        $validated = $request->validate($data);
+
+        $this->service->store($validated);
 
         return redirect()->route('expense.recurring.index');
     }

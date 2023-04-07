@@ -58,7 +58,7 @@
                     <div class="col-2">
                         <select v-model="projectTeamMember.pivot.designation" :name="`project_team_member[${index}][designation]`" class="custom-select">
                             <option value="">Select Designations</option>
-
+                            
                             <option v-for="(designation, key) in designations" :value="key">@{{ designation }}</option>
                         </select>
                     </div>
@@ -86,21 +86,17 @@
                                 <input class="form-control" type="date" :name="`project_team_member[${index}][started_on]`" @input="updateStartDateForTeamMember($event, index)" :value="projectTeamMember.pivot.started_on | toDate">
                             </div>
                         </div>
-                        <div>
-                            <div class="d-flex flex-column form-group">
-                                <label class="text-dark font-weight-bold fz-16">Ended on</label>
-                                <input class="form-control" type="date" :name="`project_team_member[${index}][ended_on]`" @input="updateEndDateForTeamMember($event, index)" :value="projectTeamMember.pivot.ended_on | toDate">
-                            </div>
-                        </div>
+
                     </div>
                 </div>
 
                 <div>
-                    <span v-on:click="addNewProjectTeamMember()" style="text-decoration: underline;" class="text-underline btn" >Add new team member</span>
-                </div>
 
+                    @if($project -> status == 'active')
+                    <span v-on:click="addNewProjectTeamMember()"  class="text-underline btn" >Add new team member</span>
+                    @endif
+                </div>          
                 <hr class='bg-dark mt-4 mb-5 pb-0.5'>
-
                 <div class="bg-theme-gray-lighter card mt-3">
                     <h4 class="ml-3 mt-2 mb-2 font-weight-bold">Team Members History</h4>
                     <table class="table table-bordered">
