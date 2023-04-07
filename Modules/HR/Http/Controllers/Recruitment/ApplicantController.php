@@ -142,9 +142,9 @@ class ApplicantController extends Controller
     }
 
 
-    public function getOpenAIEvaluation(Request $request) {
-
-        if(!config('services.open_ai.active')) {
+    public function getOpenAIEvaluation(Request $request)
+    {
+        if (!config('services.open_ai.active')) {
             return "";
         }
         
@@ -152,17 +152,16 @@ class ApplicantController extends Controller
 
         $values = $request->values ?? ['Creating opportunities', 'Vulnerability','Lead by example'];
 
-        if($request->type == "summery") {
+        if ($request->type == "summery") {
             $data = ResumeService::getTextFromPDF($application->resume, $request->type);
             return $data['choices'][0]['text'];
         }
         
-        if($request->type == "value_summery") {
+        if ($request->type == "value_summery") {
             $data = ResumeService::getTextFromPDF($application->resume, $request->type, $values);
             return $data['choices'][0]['text'];
         }
 
         return "Something is not right.";
-
     }
 }
