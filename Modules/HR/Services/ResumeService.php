@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 class ResumeService
 {
-   
     public static function getTextFromPDF($url, $type, $values = [])
     {
         $resumeAsText = self::getResumeAsTextFromUrl($url);
@@ -18,8 +17,8 @@ class ResumeService
     }
 
     public static function parseText($questionText)
-    {  
-        if(!config('services.open_ai.active')) {
+    {
+        if (!config('services.open_ai.active')) {
             return "OpenAI Service is not active.";
         }
         
