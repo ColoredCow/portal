@@ -13,32 +13,35 @@ class ResumeService
     public static function getTextFromPDF($url, $type, $values = [])
     {
         $resumeAsText = self::getResumeAsTextFromUrl($url);
+
         return self::parseText(self::buildQuery($resumeAsText, $values, $type));
     }
 
     public static function parseText($questionText)
     {
-        if (!config('services.open_ai.active')) {
-            return "OpenAI Service is not active.";
+        if (! config('services.open_ai.active')) {
+            return 'OpenAI Service is not active.';
         }
-        
+
         $data = Arr::add(config('services.open_ai.default_params'), 'prompt', $questionText);
+
         return  Http::withToken(config('services.open_ai.api_key'))
         ->post('https://api.openai.com/v1/completions', $data)
-        ->json() ;
+        ->json();
     }
 
     public static function downloadTheFile($url)
     {
         $filePath = Str::random(10) . 'resume.pdf';
         Storage::disk('local')->put($filePath, file_get_contents($url));
+
         return Storage::disk('local')->path($filePath);
     }
 
     public static function buildQuery($resumeAsText, $values, $type)
     {
         $separator = '<|endoftext|>';
-        $prefix = "Summarized";
+        $prefix = 'Summarized';
 
         if ($type == 'value_summery') {
             $valuesAsString = self::buildValuesAsString($values);
@@ -48,7 +51,6 @@ class ResumeService
 
         return "{$prefix} this resume {$separator} resume: {$resumeAsText} ";
     }
-
 
     public static function buildValuesAsString($data)
     {
@@ -65,7 +67,7 @@ class ResumeService
     {
         $filePath = self::downloadTheFile($url);
 
-        $resumeAsText =  (new Pdf(config('services.pdf_to_text.lib_path')))
+        $resumeAsText = (new Pdf(config('services.pdf_to_text.lib_path')))
         ->setPdf($filePath)
         ->text();
 

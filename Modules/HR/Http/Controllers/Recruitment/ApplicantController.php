@@ -141,27 +141,28 @@ class ApplicantController extends Controller
         return view('hr.application.verify-details', ['applicantMeta'=> $applicantMeta, 'applicant'=> $applicant]);
     }
 
-
     public function getOpenAIEvaluation(Request $request)
     {
-        if (!config('services.open_ai.active')) {
-            return "";
+        if (! config('services.open_ai.active')) {
+            return '';
         }
-        
+
         $application = Application::find($request->application_id);
 
-        $values = $request->values ?? ['Creating opportunities', 'Vulnerability','Lead by example'];
+        $values = $request->values ?? ['Creating opportunities', 'Vulnerability', 'Lead by example'];
 
-        if ($request->type == "summery") {
+        if ($request->type == 'summery') {
             $data = ResumeService::getTextFromPDF($application->resume, $request->type);
-            return $data['choices'][0]['text'];
-        }
-        
-        if ($request->type == "value_summery") {
-            $data = ResumeService::getTextFromPDF($application->resume, $request->type, $values);
+
             return $data['choices'][0]['text'];
         }
 
-        return "Something is not right.";
+        if ($request->type == 'value_summery') {
+            $data = ResumeService::getTextFromPDF($application->resume, $request->type, $values);
+
+            return $data['choices'][0]['text'];
+        }
+
+        return 'Something is not right.';
     }
 }

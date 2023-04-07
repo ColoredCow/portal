@@ -54,10 +54,10 @@ return [
         'active' => env('OPEN_AI_ACTIVE', false),
         'api_key' => env('OPEN_AI_API_KEY'),
         'default_params' => [
-            "model" => "text-davinci-003",
-            "max_tokens" => 2500,
-            "top_p" => 1,
-            "temperature" => 0.4
+            'model' => 'text-davinci-003',
+            'max_tokens' => 2500,
+            'top_p' => 1,
+            'temperature' => 0.4
         ]
     ]
 
