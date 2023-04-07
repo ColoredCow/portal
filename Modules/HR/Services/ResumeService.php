@@ -15,7 +15,6 @@ class ResumeService
     {
         $resumeAsText = self::getResumeAsTextFromUrl($url);
         return self::parseText(self::buildQuery($resumeAsText, $values, $type));
-
     }
 
     public static function parseText($questionText)
@@ -30,17 +29,19 @@ class ResumeService
         ->json() ;
     }
 
-    public static function downloadTheFile($url) {
+    public static function downloadTheFile($url)
+    {
         $filePath = Str::random(10) . 'resume.pdf';
         Storage::disk('local')->put($filePath, file_get_contents($url));
         return Storage::disk('local')->path($filePath);
     }
 
-    public static function buildQuery($resumeAsText, $values, $type) {
+    public static function buildQuery($resumeAsText, $values, $type)
+    {
         $separator = '<|endoftext|>';
         $prefix = "Summarized";
 
-        if($type == 'value_summery') {
+        if ($type == 'value_summery') {
             $valuesAsString = self::buildValuesAsString($values);
             // $prefix = "Summarized the evaluation based on these ColoredCow values {$valuesAsString}";
             $prefix = "Does this resume reflects these values, if yes can you explain how?, values: {$valuesAsString}";
@@ -50,9 +51,10 @@ class ResumeService
     }
 
 
-    public static function buildValuesAsString($data) {
+    public static function buildValuesAsString($data)
+    {
         $result = "\n";
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             $index = $key + 1;
             $result .= "{$index}. {$value} \n";
         }
@@ -60,7 +62,8 @@ class ResumeService
         return $result;
     }
 
-    public static function getResumeAsTextFromUrl($url) {
+    public static function getResumeAsTextFromUrl($url)
+    {
         $filePath = self::downloadTheFile($url);
 
         $resumeAsText =  (new Pdf(config('services.pdf_to_text.lib_path')))
