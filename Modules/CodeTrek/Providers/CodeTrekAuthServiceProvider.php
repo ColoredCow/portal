@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\CodeTrek\Providers;
 
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
