@@ -8,25 +8,22 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
-
-
 class ResumeService
 {
    
     public static function getTextFromPDF($url, $type, $values = [])
     {
         $resumeAsText = self::getResumeAsTextFromUrl($url);
-        
-        return dd(self::parseText(self::buildQuery($resumeAsText, $values, $type)));
+        return self::parseText(self::buildQuery($resumeAsText, $values, $type));
 
     }
 
     public static function parseText($questionText)
-    { 
+    {  
         if(!config('services.open_ai.active')) {
-            abort("Open AI service is not active.");
+            return "OpenAI Service is not active.";
         }
-
+        
         $data = Arr::add(config('services.open_ai.default_params'), 'prompt', $questionText);
         return  Http::withToken(config('services.open_ai.api_key'))
         ->post('https://api.openai.com/v1/completions', $data)
