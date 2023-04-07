@@ -143,9 +143,14 @@ class ApplicantController extends Controller
 
 
     public function getOpenAIEvaluation(Request $request) {
-        $application = Application::find($request->application_id);
+
+        if(!config('services.open_ai.active')) {
+            return "";
+        }
         
-        $values = ['Creating opportunities', 'Vulnerability','Lead by example'];
+        $application = Application::find($request->application_id);
+
+        $values = $request->values ?? ['Creating opportunities', 'Vulnerability','Lead by example'];
 
         if($request->type == "summery") {
             $data = ResumeService::getTextFromPDF($application->resume, $request->type);

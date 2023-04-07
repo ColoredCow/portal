@@ -567,19 +567,19 @@ function updateClientProjects(form, client_id) {
 }
 
 function setup_open_ai_responses(applicationId) {
-  getDataFromOpenAI(
-    { application_id: applicationId, type: "summery" },
-    function(response) {
-      $("#resume_summery").text(response.data);
-    }
-  );
+  let requestData = {};
+  requestData["application_id"] = applicationId;
+  requestData["type"] = "summery";
 
-  getDataFromOpenAI(
-    { application_id: applicationId, type: "value_summery" },
-    function(response) {
-      $("#resume_evaluation").text(response.data);
-    }
-  );
+  getDataFromOpenAI(requestData, function(response) {
+    $("#resume_summery").text(response.data);
+  });
+
+  requestData["type"] = "value_summery";
+
+  getDataFromOpenAI(requestData, function(response) {
+    $("#resume_evaluation").text(response.data);
+  });
 }
 
 function getDataFromOpenAI(data, callback) {

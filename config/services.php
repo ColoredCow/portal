@@ -51,6 +51,7 @@ return [
     ],
 
     'open_ai' => [
+        'active' => env('OPEN_AI_ACTIVE', false),
         'api_key' => env('OPEN_AI_API_KEY'),
         'default_params' => [
             "model" => "text-davinci-003",

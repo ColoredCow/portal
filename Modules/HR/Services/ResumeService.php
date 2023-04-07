@@ -21,12 +21,16 @@ class ResumeService
     {
         $resumeAsText = self::getResumeAsTextFromUrl($url);
         
-        return self::parseText(self::buildQuery($resumeAsText, $values, $type));
+        return dd(self::parseText(self::buildQuery($resumeAsText, $values, $type)));
 
     }
 
     public static function parseText($questionText)
-    {
+    { 
+        if(!config('services.open_ai.active')) {
+            abort("Open AI service is not active.");
+        }
+
         $data = Arr::add(config('services.open_ai.default_params'), 'prompt', $questionText);
         return  Http::withToken(config('services.open_ai.api_key'))
         ->post('https://api.openai.com/v1/completions', $data)

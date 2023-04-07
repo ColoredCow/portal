@@ -133,14 +133,18 @@
                             @endforeach
                         @endif
 
-                        <br>
+                        @if (config('services.open_ai.active'))
+                            <br>
 
-                        <div id="open_ai_responses" data-application-id="{{ $application->id }}">
-                            <span class="text-muted"> Resume Summery (AI) : <p class="text-dark" id="resume_summery">loading
-                                    ...</p> </span>
-                            <span class="text-muted"> Resume Evaluation (AI) : <p class="text-dark" id="resume_evaluation">
-                                    loading ... </p> </span>
-                        </div>
+                            <div id="open_ai_responses" data-application-id="{{ $application->id }}">
+                                <span class="text-muted"> Resume Summery (AI) : <p class="text-dark" id="resume_summery">
+                                        loading
+                                        ...</p> </span>
+                                <span class="text-muted"> Resume Evaluation (AI) : <p class="text-dark"
+                                        id="resume_evaluation">
+                                        loading ... </p> </span>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
