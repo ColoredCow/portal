@@ -12,11 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ResumeService
 {
-    /**
-     * Fetch book details from $isbn.
-     * @param string $isbn
-     * @return mixed
-     */
+   
     public static function getTextFromPDF($url, $type, $values = [])
     {
         $resumeAsText = self::getResumeAsTextFromUrl($url);
