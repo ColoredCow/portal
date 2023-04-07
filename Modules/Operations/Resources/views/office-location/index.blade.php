@@ -9,7 +9,6 @@
             @include('operations::modals.operation')
         </div>
     </div>
-    @if (request()->input('status','active') == 'active'||request()->status=='applicants')
         <div>
             <br>
             <table class="table table-bordered table-striped">
@@ -26,6 +25,5 @@
                 </tbody>
             </table>
         </div>
-    @endif
 </div>
 @endsection
