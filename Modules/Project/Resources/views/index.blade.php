@@ -147,15 +147,12 @@
                                             </span>
                                         @endforeach
                                     </td>
-                                    <td class="w-20p">
-                                        @php
-                                            $textColor = $project->velocity >= 1 ? 'text-success' : 'text-danger';
-                                        @endphp
-                                        <a class="{{ $textColor }}"
-                                            href="{{ route('project.effort-tracking', $project) }}"><i
-                                                class="mr-0.5 fa fa-external-link-square"></i></a>
-                                        <span
-                                            class="{{ $textColor }} font-weight-bold">{{ $project->velocity . ' (' . $project->current_hours_for_month . ' Hrs.)' }}</span>
+                                    <td class="w-20p">  
+                                        <a class="{{$project->velocity_color_class}}"
+                                                    href="{{ route('project.effort-tracking', $project) }}"><i
+                                                        class="mr-0.5 fa fa-external-link-square"></i></a>
+                                                <span
+                                                    class="{{$project->velocity_color_class}} font-weight-bold">{{ $project->Velocity . ' (' . $project->current_hours_for_month . ' Hrs.)' }}</span> 
                                     </td>
                                 </tr>
                             @endforeach
