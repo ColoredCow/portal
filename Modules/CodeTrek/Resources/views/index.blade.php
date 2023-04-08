@@ -39,6 +39,7 @@
                         <tr class="text-center sticky-top">
                             <th class="col-md-4">Name</th>
                             <th class="col-md-2">Days in CodeTrek</th>
+                            <th>Round</th>
                             <th>Status</th>
                             <th>Feedbacks</th>
                         </tr>
