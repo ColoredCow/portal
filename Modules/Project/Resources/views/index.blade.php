@@ -147,32 +147,12 @@
                                             </span>
                                         @endforeach
                                     </td>
-                                    <td class="w-20p">
-                                        @php
-                                        $textColor="";
-                                        @endphp
-
-                                        @if($project->billing_date == today(config('constants.timezone.indian')))
-                                            <a class="text-dark"
-                                                href="{{ route('project.effort-tracking', $project) }}"><i
-                                                    class="mr-0.5 fa fa-external-link-square"></i></a>
-                                            <span
-                                                class="text-dark font-weight-bold">{{ $project->velocity . ' (' . $project->current_hours_for_month . ' Hrs.)' }}</span>
-                                        @elseif($project->velocity>=1)
-                                        <a class="text-success"
-                                                href="{{ route('project.effort-tracking', $project) }}"><i
-                                                    class="mr-0.5 fa fa-external-link-square"></i></a>
-                                            <span
-                                                class="text-success font-weight-bold">{{ $project->velocity . ' (' . $project->current_hours_for_month . ' Hrs.)' }}</span> 
-                                        @else
-                                            <a class="text-danger"
+                                    <td class="w-20p">  
+                                        <a class="{{$project->velocity_color_class}}"
                                                     href="{{ route('project.effort-tracking', $project) }}"><i
                                                         class="mr-0.5 fa fa-external-link-square"></i></a>
                                                 <span
-                                                    class="text-danger font-weight-bold">{{ $project->velocity . ' (' . $project->current_hours_for_month . ' Hrs.)' }}</span> 
-                                        @endif
-                                        
-                                        
+                                                    class="{{$project->velocity_color_class}} font-weight-bold">{{ $project->Velocity . ' (' . $project->current_hours_for_month . ' Hrs.)' }}</span> 
                                     </td>
                                 </tr>
                             @endforeach
