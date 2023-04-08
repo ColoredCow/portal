@@ -17,7 +17,6 @@ use Modules\Invoice\Services\InvoiceService;
 use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
 use OwenIt\Auditing\Contracts\Auditable;
-use carbon\Carbon;
 
 class Project extends Model implements Auditable
 {
@@ -400,7 +399,7 @@ class Project extends Model implements Auditable
     {
         return $this->hasOne(ProjectBillingDetail::class);
     }
-    
+
     public function getVelocityColorClassAttribute()
     {
         $today = today(config('constants.timezone.indian'));
