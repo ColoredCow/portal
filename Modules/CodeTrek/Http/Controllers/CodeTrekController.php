@@ -18,11 +18,10 @@ class CodeTrekController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('codetrek::index', $this->service->getCodeTrekApplicants(request()->all()));
+        return view('codetrek::index', $this->service->getCodeTrekApplicants($request));
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -57,7 +56,6 @@ class CodeTrekController extends Controller
 
         return view('codetrek::edit')->with('applicant', $applicant);
     }
-
     public function evaluate(CodeTrekApplicant $applicant)
     {
         $roundDetails = $this->service->evaluate($applicant);
