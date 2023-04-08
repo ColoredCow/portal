@@ -39,7 +39,15 @@
                             <tr>
                                 <td class="w-33p">
                                     <div class="pl-1 pl-xl-2">
-                                        {{ $projectName }}
+                                        @php
+                                            $project = $projectData['object'];
+                                            $team_member_ids = $project->getTeamMembers->pluck('team_member_id')->toArray();
+                                        @endphp
+                                        @if (in_array(auth()->user()->id, $team_member_ids))
+                                            <a href="{{ route('project.show', $project->id) }}">{{ $projectName }}</a> 
+                                        @else
+                                            {{ $projectName }}
+                                        @endif
                                     </div>
                                 </td>
                                 <td> 
