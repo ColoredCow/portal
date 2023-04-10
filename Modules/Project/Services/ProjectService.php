@@ -482,6 +482,7 @@ class ProjectService implements ProjectServiceContract
                 'additionalResourceRequired' => $project->team_member_needed - $project->team_member_count,
                 'teamMemberNeededByDesignation' => [],
                 'currentTeamMemberCountByDesignation' => [],
+                'object' => $project,
             ];
 
             $designations = $this->getDesignations();
