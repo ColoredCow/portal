@@ -14,7 +14,7 @@ class AddRequestedByToJobRequisitionTable extends Migration
     public function up()
     {
         Schema::table('job_requisition', function (Blueprint $table) {
-            $table->integer('requested_by')->nullable();
+            $table->string('requested_by')->nullable();
         });
     }
 

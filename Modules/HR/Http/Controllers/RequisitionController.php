@@ -45,7 +45,7 @@ class RequisitionController extends Controller
             $jobrequisition = $request->validate([
                 'domain' => 'required|integer',
                 'job' => 'required|integer',
-                'user' => 'required|integer',
+                'user' => ['required', 'regex:/^[a-zA-Z]+(\s[a-zA-Z]+)+$/'],
             ]);
 
             JobRequisition::create([
@@ -53,7 +53,7 @@ class RequisitionController extends Controller
                 'job_id' => $jobrequisition['job'],
                 'requested_by' => $jobrequisition['user'],
             ]);
-        } elseif ($request->has('domain') && $request->has('job')) {
+        } else {
             $jobrequisition = $request->validate([
                 'domain' => 'required|integer',
                 'job' => 'required|integer',
