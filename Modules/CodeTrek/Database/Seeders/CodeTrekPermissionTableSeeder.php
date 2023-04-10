@@ -41,5 +41,10 @@ class CodeTrekPermissionTableSeeder extends Seeder
         foreach ($applicantPermissions as $permission) {
             $superAdminRole->givePermissionTo($permission['name']);
         }
+        //Give permission to employee role
+        $employeeRole = Role::where(['name' => 'employee'])->first();
+        foreach ($applicantPermissions as $permission) {
+            $employeeRole->givePermissionTo($permission['name']);
+        }
     }
 }
