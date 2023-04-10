@@ -41,29 +41,17 @@ class RequisitionController extends Controller
 
     public function store(Request $request)
     {
-        if ($request->has('domain') && $request->has('job') && $request->has('user')) {
-            $jobrequisition = $request->validate([
-                'domain' => 'required|integer',
-                'job' => 'required|integer',
-                'user' => ['required', 'regex:/^[a-zA-Z]+(\s[a-zA-Z]+)+$/'],
-            ]);
+        $jobrequisition = $request->validate([
+            'domain' => 'required|integer',
+            'job' => 'required|integer',
+            'user' => ['required','regex:/^[a-zA-Z]+(\s[a-zA-Z]+)+$/'],
+        ]);
 
-            JobRequisition::create([
-                'domain_id' => $jobrequisition['domain'],
-                'job_id' => $jobrequisition['job'],
-                'requested_by' => $jobrequisition['user'],
-            ]);
-        } else {
-            $jobrequisition = $request->validate([
-                'domain' => 'required|integer',
-                'job' => 'required|integer',
-            ]);
-
-            JobRequisition::create([
-                'domain_id' => $jobrequisition['domain'],
-                'job_id' => $jobrequisition['job'],
-            ]);
-        }
+        JobRequisition::create([
+            'domain_id' => $jobrequisition['domain'],
+            'job_id' => $jobrequisition['job'],
+            'requested_by' => $jobrequisition['user'],
+        ]);
 
         $jobHiring = null;
         Mail::send(new sendHiringMail($jobHiring));
