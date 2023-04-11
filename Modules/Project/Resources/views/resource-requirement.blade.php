@@ -55,8 +55,8 @@
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
                     <tr>
-                        <th class="w-30p sticky-top">Client/Project Name</th>
-                        <th class="w-20p sticky-top">Resouce Needed</th>
+                        <th class="w-40p sticky-top">Client/Project Name</th>
+                        <th class="w-25p sticky-top">Resouce Needed</th>
                         <th class="w-20p sticky-top">Resource Deployed</th>
                         <th class="w-20p sticky-top">Additional Resource Required</th>
                         <th class="sticky-top">Action</th>
@@ -104,7 +104,7 @@
                                 </td> 
                                 <td>
                                     <div>
-                                        <button type="button" class="btn btn-success d-flex align-items-center mr-1 pl-1 ml-1" data-toggle="modal" data-target="#requisitionModal">
+                                        <button type="button" class="btn btn-success text-truncate" data-toggle="modal" data-target="#requisitionModal">
                                           <i class="fa fa-plus mr-1"></i>Add Requisition
                                         </button>
                                     </div>
