@@ -54,7 +54,7 @@
             <a id="navbarDropdown_pm" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>CRM<span class="caret"></span>
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown_finance">
+            <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_finance">
                 @can('clients.view')
                     <a class="dropdown-item" href="{{ route('client.index') }}">Clients</a>
                 @endcan
@@ -100,7 +100,7 @@
             <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Sales <span class="caret"></span>
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
+            <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_sales">
                 @can('prospect.view')
                     <a class="dropdown-item" href="{{ '/prospect' }}">Prospects</a>
                 @endcan
@@ -124,7 +124,7 @@
         </a>
         <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_operations">
             <a class="dropdown-item"  href="{{route('office-location.index')}}" >Office location</a>
-           
+
         </div>
     </li>
     @endcan
@@ -135,7 +135,7 @@
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>KnowledgeCafe <span
                     class="caret"></span>
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
+            <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_sales">
                 @can('library_books.view')
                     <a class="dropdown-item" href="{{ route('books.index') }}">Library</a>
                 @endcan
@@ -152,7 +152,7 @@
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Infrastructure<span
                     class="caret"></span>
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
+            <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_sales">
                 @can('infrastructure.ec2-instances.view')
                     <a class="dropdown-item" href="{{ route('infrastructure.ec2-instances.index') }}">EC2 Instances</a>
                 @endcan
@@ -179,7 +179,7 @@
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Settings<span
                     class="caret"></span>
             </a>
-            <div id="dropdownMenu_settings" class="dropdown-menu" aria-labelledby="navbarDropdown_settings">
+            <div id="dropdownMenu_settings z-index-1100" class="dropdown-menu" aria-labelledby="navbarDropdown_settings">
                 @canany(['hr_settings.view', 'finance_invoices_settings.view', 'nda_settings.view'])
                     <a class="dropdown-item" href="{{ route('settings.index') }}">Settings</a>
                 @endcanany
