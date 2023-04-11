@@ -2,14 +2,18 @@
 
 namespace Modules\CodeTrek\Services;
 
+use Illuminate\Http\Request;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
 class CodeTrekService
 {
-    public function getCodeTrekApplicants()
+    public function getCodeTrekApplicants(Request $request)
     {
-        $applicants = CodeTrekApplicant::all();
+        $search = $request->get('name');
+        $applicants = $search ? CodeTrekApplicant::where('first_name', 'LIKE', "%$search%")
+        ->orWhere('last_name', 'LIKE', "%$search%")
+        ->get() : CodeTrekApplicant::all();
 
         return ['applicants' => $applicants];
     }
