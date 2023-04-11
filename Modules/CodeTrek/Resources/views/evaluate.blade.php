@@ -62,23 +62,34 @@
                              </form>
                          </div>
                          @if ($loop->last)
+
                              <form action="{{ route('codetrek.action', $applicant->id) }}" method="POST">
                                  @csrf
                                  <div class="card-footer">
-                                     <select name="round" id="rounds" class="w-22p">
-                                         @foreach (config('codetrek.rounds') as $round)
-                                             <option value="{{ $round['slug'] }}">Move to {{ $round['label'] }}</option>
-                                         @endforeach
-                                     </select>
-                                     <button type="submit" class="btn btn-success">Take Action</button>
-                                     <button type="button" class="btn btn-danger">Marked Inactive</button>
-                                 </div>
+                                     <div class="row align-items-center">
+                                         <select name="round" id="rounds" class="w-22p">
+                                             @foreach (config('codetrek.rounds') as $round)
+                                                 <option value="{{ $round['slug'] }}">Move to {{ $round['label'] }}
+                                                 </option>
+                                             @endforeach
+                                         </select>
+                                         <div class="col-md-auto">
+                                         <button type="submit" class="btn btn-success">Take Action</button>
+                                         </div>
                              </form>
-                         @endif
+                             <div class="md-auto">
+                             <form action="{{ route('codetrek.markInactive', $applicant->id) }}" method="POST">
+                                 @csrf
+                                 <button type="submit" class="btn btn-danger">Marked Inactive</button>
+                             </div>
+                             </form>
                      </div>
                  </div>
-                 <br>
-             </div>
-         </div>
+     @endif
+     </div>
+     </div>
+     <br>
+     </div>
+     </div>
      @endforeach
  @endsection

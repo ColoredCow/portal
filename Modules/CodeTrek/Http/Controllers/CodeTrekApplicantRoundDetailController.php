@@ -4,6 +4,7 @@ namespace Modules\CodeTrek\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Services\CodeTrekRoundDetailService;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
@@ -61,6 +62,14 @@ class CodeTrekApplicantRoundDetailController extends Controller
         $this->service->takeAction($request, $id);
 
         return redirect()->back()->with('success', 'Round details updated successfully.');
+    }
+
+    public function markInactive(CodeTrekApplicant $applicant)
+    {
+        $applicant->status = 'inactive';
+        $applicant->save();
+
+        return redirect()->route('codetrek.index');
     }
     /**
      * Remove the specified resource from storage.
