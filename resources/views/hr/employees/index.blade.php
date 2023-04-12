@@ -7,7 +7,7 @@
     <br><br>
     <div class="d-flex justify-content-between">
         <h1 padding-top: 8px;
-        padding-bottom: 8px;>{{request()->get('name')}} ({{count($employees)}})</h1>
+        padding-bottom: 8px; >{{request()->get('name')}} ({{count($employees)}})</h1>
         <form id="employeeFilterForm" class="d-md-flex justify-content-between ml-md-3">
             <input type="hidden" name="status" value="{{ request()->input('status', 'current') }}">
             <div class='form-group w-130' class="d-inline">
