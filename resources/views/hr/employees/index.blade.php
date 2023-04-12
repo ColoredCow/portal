@@ -10,7 +10,7 @@
         <form id="employeeFilterForm" class="d-md-flex justify-content-between ml-md-3">
             <input type="hidden" name="status" value="{{ request()->input('status', 'current') }}">
             <div class='form-group w-130' class="d-inline">
-                <select class="form-control bg-info text-white ml-3" name="status"  onchange="document.getElementById('employeeFilterForm').submit();">
+                <select class="form-control bg-info text-white ml-3 mt-4" name="status"  onchange="document.getElementById('employeeFilterForm').submit();">
                     <option {{ $filters['status'] == 'current' ? "selected=selected" : '' }} value="current">Current</option>
                     <option {{ $filters['status'] == 'previous' ? "selected=selected" : '' }} value="previous">Previous</option>
                 </select>
