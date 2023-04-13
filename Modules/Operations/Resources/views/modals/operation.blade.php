@@ -1,10 +1,8 @@
-@section('popup', 'Add new Centre')
+@section('popup', ' Add new Centre')
 
-<div class="float-right">
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addCentreModal">
-        <i class="fa fa-plus"></i> &nbsp; @yield('popup')
-    </button>
-</div>
+<button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#addCentreModal">
+    <i class="fa fa-plus"></i>@yield('popup')
+</button>
 
 <div id="add_centre_details_form">
     <div class="modal fade" id="addCentreModal" tabindex="-1" role="dialog" aria-labelledby="addCentreModalLabel" aria-hidden="true">
