@@ -1,7 +1,6 @@
 @extends('operations::layouts.master')
 
 @section('heading')
-@endsection
 
 @section('content')
 <div class="container">
