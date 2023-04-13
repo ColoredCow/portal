@@ -26,9 +26,6 @@
                                 <label for="centreHead" class="field-required">Centre Head</label>
                                 <select v-model="location" name="centre_head" id="centreHead" class="form-control" required>
                                     <option value="">Select centre head</option>
-                                    @foreach(App\User::all() as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endforeach
                                 </select>
                             </div>
                         </div>
