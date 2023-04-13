@@ -13,8 +13,6 @@
                 <form action="" method="POST">
                     <div class="modal-header">
                         <h5 class="modal-title"><strong>Add new Centre</strong></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        </button>
                     </div>
                     <div class="card-body">
                         <div class="form-row">
@@ -27,7 +25,7 @@
                                 <select v-model="location" name="centre_head" id="centreHead" class="form-control" required>
                                     <option value="">Select centre head</option>
                                     @foreach(config('operations.centre_heads') as $centre)
-                                        <option value="{{ $centre['slug'] }}">{{ $centre['label'] }}</option>
+                                    <option value="{{ $centre['slug'] }}">{{ $centre['label'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
