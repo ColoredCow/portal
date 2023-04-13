@@ -54,7 +54,7 @@
             <a id="navbarDropdown_pm" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>CRM<span class="caret"></span>
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown_finance">
+            <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_finance">
                 @can('clients.view')
                     <a class="dropdown-item" href="{{ route('client.index') }}">Clients</a>
                 @endcan
@@ -82,7 +82,7 @@
             <a id="navbarDropdown_finance" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Finance <span class="caret"></span>
             </a>
-            <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_finance">
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown_finance">
                 <a class="dropdown-item" href="{{ route('revenue.proceeds.index') }}">Revenue</a>
                 <a class="dropdown-item" href="{{ route('expense.index') }}">Expenses</a>
                 <a class="dropdown-item" href="{{ route('reports.finance.dashboard') }}">Reports</a>
