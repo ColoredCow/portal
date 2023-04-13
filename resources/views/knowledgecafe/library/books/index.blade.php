@@ -17,7 +17,7 @@
             <h3>Books({{count($books)}})</h3>
         </div>
         @can('library_books.create')
-        <div class="col-8 xs-6">
+        <div class="col-8 col-xs-6">
             <a href="{{ route('books.create') }}" class="btn btn-success float-right col-xs-2"><i class="fa fa-plus mr-1"></i> Add New Book</a>
         </div>
         @endcan
