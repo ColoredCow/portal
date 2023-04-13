@@ -19,8 +19,6 @@ class CreateOfficeLocationsTable extends Migration
             $table->integer('centre_head')->unsigned();
             $table->integer('capacity');
             $table->integer('current_people_count')->default(0);
-            $table->timestamp('created_on')->nullable();
-            $table->timestamp('updated_on')->nullable();
             $table->timestamps();
         });
         Schema::table('office_locations', function (Blueprint $table) {

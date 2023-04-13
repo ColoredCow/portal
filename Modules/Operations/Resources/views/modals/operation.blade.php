@@ -1,8 +1,8 @@
-@section('popup', 'Add new centre')
+@section('popup', 'Add new Centre')
 
 <div class="float-right">
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addCentreModal">
-        <a><i class="fa fa-plus"></i> &nbsp; @yield('popup')</a>
+        <i class="fa fa-plus"></i> &nbsp; @yield('popup')
     </button>
 </div>
 
@@ -12,15 +12,15 @@
             <div class="modal-content">
                 <form action="" method="POST">
                     <div class="modal-header">
-                        <h5 class="modal-title"><strong>Add new centre</strong></h5>
+                        <h5 class="modal-title"><strong>Add new Centre</strong></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         </button>
                     </div>
                     <div class="card-body">
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="centerName" class="field-required">Centre Name</label>
-                                <input type="text" class="form-control" name="center_name" id="centerName" placeholder="Center Name" required="required" value="">
+                                <label for="centreName" class="field-required">Centre Name</label>
+                                <input type="text" class="form-control" name="centre_name" id="centreName" placeholder="Centre Name" required="required" value="">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="centreHead" class="field-required">Centre Head</label>
