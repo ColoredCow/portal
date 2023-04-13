@@ -1,11 +1,14 @@
 @section('popup', 'Add new centre')
 
-<button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#addCentreModal">
-    <a><i class="fa fa-plus"></i>@yield('popup')</a>
-</button>
+<div class="float-right">
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addCentreModal">
+        <a><i class="fa fa-plus"></i> &nbsp; @yield('popup')</a>
+    </button>
+</div>
+
 <div id="add_centre_details_form">
     <div class="modal fade" id="addCentreModal" tabindex="-1" role="dialog" aria-labelledby="addCentreModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg mx-auto" role="document">
             <div class="modal-content">
                 <form action="" method="POST">
                     <div class="modal-header">
@@ -15,27 +18,26 @@
                     </div>
                     <div class="card-body">
                         <div class="form-row">
-                            <div class="form-group offset-md-1 col-md-5">
+                            <div class="form-group col-md-6">
                                 <label for="centerName" class="field-required">Centre Name</label>
                                 <input type="text" class="form-control" name="center_name" id="centerName" placeholder="Center Name" required="required" value="">
                             </div>
-                            <div class="form-group offset-md-1 col-md-5">
+                            <div class="form-group col-md-6">
                                 <label for="centreHead" class="field-required">Centre Head</label>
                                 <select v-model="location" name="centre_head" id="centreHead" class="form-control" required>
                                     <option value="">Select centre head</option>
-                                    @foreach(config('operations.centre_heads') as $centre)
-                                        <option value="{{ $centre['slug'] }}">{{ $centre['label'] }}</option>
+                                    @foreach(App\User::all() as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            
                         </div>
                         <div class="form-row">
-                            <div class="form-group offset-md-1 col-md-5">
+                            <div class="form-group col-md-6">
                                 <label for="capacity" class="field-required">Capacity</label>
                                 <input type="number" class="form-control" name="capacity" id="capacity" placeholder="Enter Capacity" required="required" value="">
                             </div>
-                            <div class="form-group offset-md-1 col-md-5">
+                            <div class="form-group col-md-6">
                                 <label for="currentPeopleCount" class="field-required">Current People Count</label>
                                 <input type="number" class="form-control" name="current_people_count" id="currentPeopleCount" placeholder="Enter current people" required="required" value="">
                             </div>
