@@ -1873,7 +1873,7 @@ $(document).ready(function() {
 				$("#requisitionModal").modal("hide");
 				$("#successMessage").toggleClass("d-none");
 				$("#successMessage").fadeToggle(4000);
-				$("#submitSuccessMessage").removeClass("d-none");;
+				$("#submitSuccessMessage").removeClass("d-none");
 				$("#submitSuccessMessage").fadeToggle(4000);
 			},
 			error: function(response) {
