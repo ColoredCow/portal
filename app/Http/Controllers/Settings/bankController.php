@@ -8,6 +8,7 @@ class bankController extends Controller
 {
     public function index()
     {
-        return view('Settings.bank-details');
+        $view = "settings.bank-details";
+        return view($view);
     }
 }
