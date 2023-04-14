@@ -44,7 +44,7 @@ class OperationsController extends Controller
      * Show the form for editing the specified resource.
      * @param int $id
      */
-    public function edit($id)
+    public function edit($)
     {
     }
 
@@ -53,7 +53,7 @@ class OperationsController extends Controller
      * @param Request $request
      * @param int $id
      */
-    public function update(Request $request, $id)
+    public function update()
     {
     }
 
@@ -61,7 +61,7 @@ class OperationsController extends Controller
      * Remove the specified resource from storage.
      * @param int $id
      */
-    public function destroy($id)
+    public function destroy()
     {
     }
 }
