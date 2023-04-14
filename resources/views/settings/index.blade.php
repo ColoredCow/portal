@@ -51,7 +51,7 @@
             @endcan
                 <div class="col-md-4">
                     <div class="card h-75 mx-4 mt-3 mb-5 ">
-                        <a class="card-body no-transition" href="{{ route('settings.bankdetails') }}">
+                        <a class="card-body no-transition" href="{{ route('settings.bank-details') }}">
                             <br>
                             <h2 class="text-center">Bank Details</h2><br>
                         </a>

@@ -8,6 +8,6 @@ class bankController extends Controller
 {
     public function index()
     {
-        return view('Settings.bankdetails');
+        return view('Settings.bank-details');
     }
 }
