@@ -13,8 +13,8 @@
     <br>
     <br>
     <div class="row">
-        <div class="col-4">
-            <h3>Books({{count($books)}})</h3>
+        <div class="col-4 col-xs-6 pl-0">
+            <h4>Books({{count($books)}})</h4>
         </div>
         @can('library_books.create')
         <div class="col-8 col-xs-6">
