@@ -318,6 +318,7 @@ class BookController extends Controller
 
     public function bookAMonthIndex()
     {
+        $books = Book::all();
         $booksCollection = BookAMonth::all()
             ->groupBy(function ($item) {
                 return Carbon::parse($item->created_at)->format('Y');
@@ -328,6 +329,6 @@ class BookController extends Controller
                 }, 'desc');
             });
 
-        return view('knowledgecafe.library.books.book-a-month')->with('booksCollection', $booksCollection);
+        return view('knowledgecafe.library.books.book-a-month')->with('booksCollection', $booksCollection)->with('books', $books);
     }
 }
