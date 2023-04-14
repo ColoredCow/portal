@@ -62,26 +62,25 @@
                              </form>
                          </div>
                          @if ($loop->last)
-
                              <form action="{{ route('codetrek.action', $applicant->id) }}" method="POST">
                                  @csrf
                                  <div class="card-footer">
-                                     <div class="row align-items-center">
+                                     <div class="d-flex align-items-center">
                                          <select name="round" id="rounds" class="w-22p">
                                              @foreach (config('codetrek.rounds') as $round)
                                                  <option value="{{ $round['slug'] }}">Move to {{ $round['label'] }}
                                                  </option>
                                              @endforeach
                                          </select>
-                                         <div class="col-md-auto">
-                                         <button type="submit" class="btn btn-success">Take Action</button>
-                                         </div>
+                                         <button type="submit" class="btn btn-success ml-2">Take Action</button>
                              </form>
-                             <div class="md-auto">
-                             <form action="{{ route('codetrek.markInactive', $applicant->id) }}" method="POST">
+                             <form action="{{ route('codetrek.updateStatus', $applicant->id) }}" method="POST">
                                  @csrf
-                                 <button type="submit" class="btn btn-danger">Marked Inactive</button>
-                             </div>
+                                 <input type="hidden" name="status" value="">
+                                 <button type="submit" name="action" value="completed" class="btn btn-dark ml-2">Mark
+                                     Completed</button>
+                                 <button type="submit" name="action" value="inactive" class="btn btn-danger ml-1">Mark
+                                     Inactive</button>
                              </form>
                      </div>
                  </div>

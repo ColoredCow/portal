@@ -64,9 +64,14 @@ class CodeTrekApplicantRoundDetailController extends Controller
         return redirect()->back()->with('success', 'Round details updated successfully.');
     }
 
-    public function markInactive(CodeTrekApplicant $applicant)
+    public function updateStatus(Request $request, CodeTrekApplicant $applicant)
     {
-        $applicant->status = 'inactive';
+        if ($request->input('action') === 'inactive') {
+            $applicant->status = 'inactive';
+        } else {
+            $applicant->status = 'completed';
+        }
+
         $applicant->save();
 
         return redirect()->route('codetrek.index');

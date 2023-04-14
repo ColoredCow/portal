@@ -11,6 +11,10 @@ return [
             'label' => 'Inactive',
             'slug'  => 'inactive'
         ],
+        'completed' =>[
+            'label' => 'Completed',
+            'slug'  => 'completed'
+        ],
     ],
     'rounds' =>[
         'level-1' =>[
