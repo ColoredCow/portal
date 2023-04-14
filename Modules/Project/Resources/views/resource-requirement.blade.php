@@ -8,7 +8,9 @@
             <h3 class="font-weight-bold">
                 Additional Resources Required in all Projects : {{ $resourceData['totalCount'] }}
             </h3>
-            <div id="submitSuccessMessage"></div>
+        <div class="d-none alert alert-success" id="submitSuccessMessage" role="alert">
+            <strong>Requisition</strong> Submitted successfully!
+        </div>
         <div class="modal fade" id="requisitionModal" tabindex="-1" role="dialog" aria-labelledby="requisition" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -40,7 +42,7 @@
                                     @endforeach 
                                 </select><br>
                             </div><br>
-                            <input type="hidden" name="user" id="user" value="{{ auth()->user()->name }}" pattern="^[a-zA-Z]+(\s[a-zA-Z]+)+$">
+                            <input type="hidden" name="user" id="user" value="{{ auth()->user()->id }}">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary" data-action="sendHiringMail">Submit</button>
                         </form>

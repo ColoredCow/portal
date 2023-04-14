@@ -1873,7 +1873,7 @@ $(document).ready(function() {
 				$("#requisitionModal").modal("hide");
 				$("#successMessage").toggleClass("d-none");
 				$("#successMessage").fadeToggle(4000);
-				$("#submitSuccessMessage").html("<div class='alert alert-success' role='alert'><strong>Requisition</strong> Submitted successfully!</div>");
+				$("#submitSuccessMessage").removeClass("d-none");;
 				$("#submitSuccessMessage").fadeToggle(4000);
 			},
 			error: function(response) {

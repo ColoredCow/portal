@@ -44,7 +44,7 @@ class RequisitionController extends Controller
         $jobrequisition = $request->validate([
             'domain' => 'required|integer',
             'job' => 'required|integer',
-            'user' => ['required', 'regex:/^[a-zA-Z]+(\s[a-zA-Z]+)+$/'],
+            'user' => 'required|integer',
         ]);
 
         JobRequisition::create([

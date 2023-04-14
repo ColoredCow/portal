@@ -6,7 +6,7 @@
             <div class="text-primary"><h1>Recommendations</h1></div>
             <div><button type="button" class="btn btn-success align-right" data-toggle="modal" data-target="#requisitionModal"><i class="fa fa-plus mr-1"></i>Add Requisition</button></div>
         </div>
-        <div class="d-none alert alert-success " id="successMessage" role="alert">
+        <div class="d-none alert alert-success " id="submitSuccessMessage" role="alert">
             <strong>Requisition</strong> Submitted successfully!
             <button type="button" class="close" id="closeSuccessMessage" aria-label="Close">
             </button>
@@ -42,7 +42,7 @@
                                     @endforeach 
                                 </select><br>
                             </div><br>
-                            <input type="hidden" name="user" id="user" value="{{ auth()->user()->name }}" pattern="^[a-zA-Z]+(\s[a-zA-Z]+)+$">
+                            <input type="hidden" name="user" id="user" value="{{ auth()->user()->id }}">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary" data-action="sendHiringMail">Submit</button>
                         </form>

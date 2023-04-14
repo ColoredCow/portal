@@ -55,7 +55,7 @@
                 <span {{ $requisition->id }}>{{$requisition->created_at}}</span>
             </td>
             <td>   
-                {{ $requisition->requested_by }}
+                {{ auth()->user()->name }}
             </td>
             <td>
                 <input class="check-input status" type="checkbox" data-id="{{ $requisition->id }}">
