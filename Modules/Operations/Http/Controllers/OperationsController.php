@@ -44,7 +44,7 @@ class OperationsController extends Controller
      * Show the form for editing the specified resource.
      * @param int $id
      */
-    public function edit($)
+    public function edit()
     {
     }
 
