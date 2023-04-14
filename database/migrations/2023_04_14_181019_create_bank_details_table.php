@@ -18,7 +18,8 @@ class CreateBankDetailsTable extends Migration
             $table->string('key')->nullable(false);
             $table->string('label')->nullable(false);
             $table->string('value')->nullable(false);
-            $table->timestamps();
+            $table->timestamp('created_at')->nullable(false);
+            $table->timestamp('updated_at')->nullable(false);
         });
     }
 
