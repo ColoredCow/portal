@@ -4,6 +4,7 @@ namespace Modules\Operations\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\User\Entities\User;
 
 class OperationsController extends Controller
 {
@@ -12,7 +13,8 @@ class OperationsController extends Controller
      */
     public function index()
     {
-        return view('operations::office-location.index');
+        $users = User::orderBy('name', 'asc')->get();
+        return view('operations::office-location.index', compact('users'));
     }
 
     /**
@@ -26,7 +28,7 @@ class OperationsController extends Controller
      * Store a newly created resource in storage.
      * @param Request $request
      */
-    public function store(Request $request)
+    public function store()
     {
     }
 
@@ -34,7 +36,7 @@ class OperationsController extends Controller
      * Show the specified resource.
      * @param int $id
      */
-    public function show($id)
+    public function show()
     {
     }
 
