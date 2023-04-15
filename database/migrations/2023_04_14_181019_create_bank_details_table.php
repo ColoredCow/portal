@@ -19,7 +19,6 @@ class CreateBankDetailsTable extends Migration
             $table->string('label');
             $table->string('value');
             $table->timestamps();
-            
         });
     }
 
