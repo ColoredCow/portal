@@ -15,11 +15,11 @@ class CreateBankDetailsTable extends Migration
     {
         Schema::create('bank_details', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
-            $table->string('key')->nullable(false);
-            $table->string('label')->nullable(false);
-            $table->string('value')->nullable(false);
-            $table->timestamp('created_at')->nullable(false);
-            $table->timestamp('updated_at')->nullable(false);
+            $table->string('key');
+            $table->string('label');
+            $table->string('value');
+            $table->timestamps();
+            
         });
     }
 
