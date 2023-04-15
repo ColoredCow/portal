@@ -462,13 +462,18 @@ class ProjectService implements ProjectServiceContract
         return $teamMembers;
     }
 
-    public function getProjectsWithTeamMemberRequirementData()
+    public function getProjectsWithTeamMemberRequirementData($input)
     {
-        $projectsWithTeamMemberRequirement = Project::with('client')->status('active')
+        $query = Project::with('client')->status('active')
             ->withCount('getTeamMembers as team_member_count')
             ->withSum('resourceRequirement as team_member_needed', 'total_requirement')
-            ->havingRaw('team_member_needed - team_member_count')
-            ->get();
+            ->havingRaw('team_member_needed - team_member_count');
+
+        if($input != NULL)
+        {
+            $query->where('name', $input);
+        }
+        $projectsWithTeamMemberRequirement = $query->get();
 
         $totalAdditionalResourceRequired = [];
         $data = [];
@@ -482,8 +487,9 @@ class ProjectService implements ProjectServiceContract
                 'additionalResourceRequired' => $project->team_member_needed - $project->team_member_count,
                 'teamMemberNeededByDesignation' => [],
                 'currentTeamMemberCountByDesignation' => [],
+                'object' => $project,
             ];
-
+            
             $designations = $this->getDesignations();
             $designationKeys = array_keys($designations);
 
