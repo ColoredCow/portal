@@ -464,15 +464,16 @@ class ProjectService implements ProjectServiceContract
 
     public function getProjectsWithTeamMemberRequirementData($request)
     {
-        $query = Project::with('client')->status('active')
-            ->withCount('getTeamMembers as team_member_count')
-            ->withSum('resourceRequirement as team_member_needed', 'total_requirement')
-            ->havingRaw('team_member_needed - team_member_count');
-
-        if ($request != null) {
-            $query->where('name', $request);
-        }
-        $projectsWithTeamMemberRequirement = $query->get();
+        $projectsWithTeamMemberRequirement = Project::query()
+        ->with('client')
+        ->status('active')
+        ->withCount('getTeamMembers as team_member_count')
+        ->withSum('resourceRequirement as team_member_needed', 'total_requirement')
+        ->havingRaw('team_member_needed - team_member_count')
+        ->when($request, function ($query, $request) {
+            return $query->where('name', $request['name']);
+        })
+        ->get();
 
         $totalAdditionalResourceRequired = [];
         $data = [];
