@@ -9,4 +9,9 @@ class CodeTrekApplicant extends Model
 {
     use SoftDeletes;
     protected $guarded = [];
+
+    public function roundDetails()
+    {
+        return $this->hasMany(CodeTrekApplicantRoundDetail::class);
+    }
 }

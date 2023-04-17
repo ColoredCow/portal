@@ -471,7 +471,7 @@ class ProjectService implements ProjectServiceContract
         ->withSum('resourceRequirement as team_member_needed', 'total_requirement')
         ->havingRaw('team_member_needed - team_member_count')
         ->when($request, function ($query, $request) {
-            return $query->where('name', $request['name']);
+            return $query->where('name', 'like', '%'.$request['name'].'%');
         })
         ->get();
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\KnowledgeCafe\Library;
 
 use App\Models\KnowledgeCafe\Library\BookCategory;
+use App\Models\KnowledgeCafe\Library\Book;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\KnowledgeCafe\Library\BookCategoryRequest;
 
@@ -21,8 +22,10 @@ class BookCategoryController extends Controller
     public function index()
     {
         $categories = BookCategory::withCount('books')->orderBy('name')->get();
+        $books = Book::all();
 
         return view('knowledgecafe.library.categories.index')
+        ->with('books', $books)
         ->with('categories', $this->formatCategoryData($categories));
     }
 

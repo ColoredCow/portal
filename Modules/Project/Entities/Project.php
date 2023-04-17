@@ -399,4 +399,13 @@ class Project extends Model implements Auditable
     {
         return $this->hasOne(ProjectBillingDetail::class);
     }
+
+    public function getVelocityColorClassAttribute()
+    {
+        $today = today(config('constants.timezone.indian'));
+        $billingDate = $this->client->billingDetails->billing_date;
+        $todayDate = (int) $today->format('j');
+
+        return $billingDate == $todayDate ? 'text-dark' : ($this->velocity >= 1 ? 'text-success' : 'text-danger');
+    }
 }
