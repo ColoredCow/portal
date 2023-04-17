@@ -64,18 +64,31 @@ class CodeTrekApplicantRoundDetailController extends Controller
         return redirect()->back()->with('success', 'Round details updated successfully.');
     }
 
+    // public function updateStatus(Request $request, CodeTrekApplicant $applicant)
+    // {
+    //     if ($request->input('action') === 'inactive') {
+    //         $applicant->status = 'inactive';
+    //     } else {
+    //         $applicant->status = 'completed';
+    //     }
+
+    //     $applicant->save();
+
+    //     return redirect()->route('codetrek.index');
+    // }
     public function updateStatus(Request $request, CodeTrekApplicant $applicant)
     {
-        if ($request->input('action') === 'inactive') {
-            $applicant->status = 'inactive';
+        if ($request->input('action') === config('codetrek.status.inactive.slug')) {
+            $applicant->status = config('codetrek.status.inactive.slug');
         } else {
-            $applicant->status = 'completed';
+            $applicant->status = config('codetrek.status.completed.slug');
         }
 
         $applicant->save();
 
         return redirect()->route('codetrek.index');
     }
+
     /**
      * Remove the specified resource from storage.
      */
