@@ -25,8 +25,7 @@ class CreateOfficeLocationsTable extends Migration
         });
         Schema::table('office_locations', function (Blueprint $table) {
             $table->foreign('centre_head_id')->references('id')->on('users');
-        });
-          
+        });     
     }
 
     /**
