@@ -8,8 +8,10 @@
             <h3 class="font-weight-bold">
                 Additional Resources Required in all Projects : {{ $resourceData['totalCount'] }}
             </h3>
-        <div class="d-none alert alert-success" id="submitSuccessMessage" role="alert">
+        <div class="d-none alert alert-success" id="successMessage" role="alert">
             <strong>Requisition</strong> Submitted successfully!
+            <button type="button" class="close" id="closeSuccessMessage" aria-label="Close">
+            </button>
         </div>
         <div class="modal fade" id="requisitionModal" tabindex="-1" role="dialog" aria-labelledby="requisition" aria-hidden="true">
             <div class="modal-dialog" role="document">
