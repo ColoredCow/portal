@@ -5,8 +5,8 @@
     <br>
     @include('hr.employees.menu')
     <br><br>
-    <div class="d-flex justify-content-between ">
-        <h1  class="d-flex  mt-2" >{{request()->get('name')}} ({{count($employees)}})</h1>
+    <div class="d-flex justify-content-between">
+        <h1  class="mt-2" >{{request()->get('name')}} ({{count($employees)}})</h1>
         <form id="employeeFilterForm" class="d-md-flex justify-content-between ml-md-3">
             <input type="hidden" name="status" value="{{ request()->input('status', 'current') }}">
             <div class='form-group w-130' class="d-inline">
