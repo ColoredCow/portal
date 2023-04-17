@@ -8,7 +8,8 @@
     <div class="modal fade" id="addCentreModal" tabindex="-1" role="dialog" aria-labelledby="addCentreModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg mx-auto" role="document">
             <div class="modal-content">
-                <form action="" method="POST">
+                <form action="{{route('office-location.store')}}" method="POST">
+                    @csrf
                     <div class="modal-header">
                         <h5 class="modal-title"><strong>Add new Centre</strong></h5>
                     </div>
