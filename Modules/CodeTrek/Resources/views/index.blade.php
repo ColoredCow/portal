@@ -40,9 +40,11 @@
         </div>
         </form>
     </ul>
+    @if (request()->get('name'))
     <div class="text-right fz-14 mr-11 mt-3">
-        <span>Result for 'search text'</span><a href="/codetrek"> To clear the filter click here X </a>
+        <span>Result for '{{ request()->get('name') }}'</span><a href="/codetrek"> To clear the filter click here X </a>
     </div>
+    @endif
     @if (request()->input('tab', 'active') == 'active' || request()->tab == 'applicants')
         <div>
             <br>
