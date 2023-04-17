@@ -40,6 +40,9 @@
         </div>
         </form>
     </ul>
+    <div class="text-right fz-14 mr-11 mt-3">
+        <span>Result for 'search text'</span><a href="/codetrek"> To clear the filter click here X </a>
+    </div>
     @if (request()->input('tab', 'active') == 'active' || request()->tab == 'applicants')
         <div>
             <br>
