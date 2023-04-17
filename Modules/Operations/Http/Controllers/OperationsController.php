@@ -4,6 +4,8 @@ namespace Modules\Operations\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Modules\User\Entities\User;
+use Modules\operations\Services\OperationsService;
+use Illuminate\Http\Request;
 
 class OperationsController extends Controller
 {
@@ -27,8 +29,12 @@ class OperationsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store()
+    public function store(Request $request ,OperationsService $service)
     {
+        $data = $request->all();
+        $service->store($data);
+
+        return redirect()->route('office-location.index');
     }
 
     /**
