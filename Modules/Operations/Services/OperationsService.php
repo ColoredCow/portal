@@ -1,9 +1,8 @@
 <?php
 
 namespace Modules\operations\Services;
-use Modules\Operations\Entities\office_location;
 
-
+use Modules\operations\Entities\office_location;
 
 class OperationsService
 {
@@ -17,5 +16,6 @@ class OperationsService
         $office_location->current_people_count = $data['current_people_count'];
         $office_location->save();
         return $office_location;
+
     }  
 }
