@@ -16,6 +16,7 @@ class OperationService
         $centre->capacity = $data['capacity'];
         $centre->current_people_count = $data['current_people_count'];
         $centre->save();
+
         return $centre;
     }
 }
