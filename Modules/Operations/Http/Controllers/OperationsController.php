@@ -4,7 +4,7 @@ namespace Modules\Operations\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Modules\User\Entities\User;
-use Modules\operations\Services\OperationsService;
+use Modules\operations\Services\OperationService;
 use Illuminate\Http\Request;
 
 class OperationsController extends Controller
@@ -14,7 +14,6 @@ class OperationsController extends Controller
      */
     public function index()
     {
-        
         $users = User::orderBy('name', 'asc')->get();
 
         return view('operations::office-location.index', compact('users'));
@@ -22,7 +21,6 @@ class OperationsController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
      */
     public function create()
     {
@@ -30,9 +28,8 @@ class OperationsController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
      */
-    public function store(Request $request ,OperationsService $service)
+    public function store(Request $request ,OperationService $service)
     {
         $data = $request->all();
         $service->store($data);
@@ -41,47 +38,30 @@ class OperationsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Show the specified resource.
      */
-    public function show($id)
+    public function show()
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update()
     {
-        //
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
     }
 }
