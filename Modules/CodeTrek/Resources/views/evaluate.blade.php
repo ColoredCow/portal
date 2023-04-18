@@ -2,6 +2,7 @@
  @section('content')
      @foreach ($roundDetails as $applicantDetail)
          <div class="container d-flex justify-content-around position-relative" id="update_details ">
+            @includeWhen(session('success'), 'toast', ['message' => session('success')])
              <div class="accordion col-9" id="accordionExample">
                  <div class="card">
                      <div class="card-header" id="headingOne">
