@@ -76,7 +76,6 @@
                              </form>
                              <form action="{{ route('codetrek.updateStatus', $applicant->id) }}" method="POST">
                                  @csrf
-                                 <input type="hidden" name="status" value="">
                                  <button type="submit" name="action" value="completed" class="btn btn-dark ml-2">Mark
                                      Completed</button>
                                  <button type="submit" name="action" value="inactive" class="btn btn-danger ml-1">Mark
