@@ -2,7 +2,6 @@
 
 namespace Modules\operations\Services;
 
-use Illuminate\Http\Request;
 use Modules\operations\Entities\OfficeLocation;
 
 class OperationService
