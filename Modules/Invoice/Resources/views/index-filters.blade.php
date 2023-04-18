@@ -1,6 +1,8 @@
 <form action="{{ route('invoice.index')  }}" id="invoiceFilterForm">
     <input type="hidden" name="invoice_status" value="{{ request()->input('invoice_status', 'sent') }}">
+
     <div class="d-flex">
+        <div class="row">
         <div class='form-group mr-4 w-168'>
             <select class="form-control bg-light" name="year"  onchange="document.getElementById('invoiceFilterForm').submit();">
                 <option {{ $filters['year'] == '' ? "selected=selected" : '' }} value="">All Years</option>
@@ -26,7 +28,8 @@
                 <option {{ $filters['month'] == '09' ? "selected=selected" : '' }} value="09">September</option>
                 <option {{ $filters['month'] == '10' ? "selected=selected" : '' }} value="10">October</option>
                 <option {{ $filters['month'] == '11' ? "selected=selected" : '' }} value="11">November</option>
-                <option {{ $filters['month'] == '12' ? "selected=selected" : '' }} value="12">December</option>
+                
+                
             </select>
         </div>
 
@@ -40,7 +43,7 @@
         </div>
 
         
-        <div class='form-group mr-4 w-300'>
+        <div class='form-group mr-4 w-168'>
             <select class="form-control bg-light" name="client_id"  onchange="document.getElementById('invoiceFilterForm').submit();">
                 <option {{ $filters['client_id'] == '' ? "selected=selected" : '' }} value="">All clients</option>
                 @foreach ($clients as $client)
@@ -48,6 +51,6 @@
                 @endforeach
             </select>
         </div>
-
+    </div>
     </div>
 </form>
