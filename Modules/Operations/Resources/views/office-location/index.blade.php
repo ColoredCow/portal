@@ -14,11 +14,21 @@
             <thead class="thead-dark">
                 <tr class="text-center sticky-top">
                     <th class="col-md-4">Centre Name</th>
-                    <th class="col-md-2">Centre Head</th>
+                    <th class="col-md-2">Centre Head Id</th>
                     <th>Capacity</th>
                     <th>Actions</th>
                 </tr>
             </thead>
+            <tbody>
+                @foreach ($centre as $user)
+                <tr>
+                    <td>{{ $user->centre_name }}</td>
+                    <td>{{ $user->centre_head_id }}</td>
+                    <td>{{ $user->capacity }}</td>
+                    <td><!-- actions here --></td>
+                </tr>
+                @endforeach
+            </tbody>
         </table>
     </div>
 </div>

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OfficeLocation extends Model
 {
-    protected $fillable = [
+     protected $fillable = [
         'centre_name',
         'centre_head_id',
         'capacity',
