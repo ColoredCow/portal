@@ -10,21 +10,17 @@ use Illuminate\Http\Request;
 
 class OperationsController extends Controller
 {
-    protected $service;
-    public function __construct(OperationService $service)
-    {
-        $this->service = $service;
-    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $centre = OfficeLocation::all();
-        
+
+ 
         $users = User::orderBy('name', 'asc')->get();
 
-        return view('operations::office-location.index', compact('users','centre'));
+        return view('operations::office-location.index', compact('users', 'centre'));
     }
 
     /**
