@@ -29,7 +29,7 @@ class OperationsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request ,OperationService $service)
+    public function store(Request $request, OperationService $service)
     {
         $data = $request->all();
         $service->store($data);
