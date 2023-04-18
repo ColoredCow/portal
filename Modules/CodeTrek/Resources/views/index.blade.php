@@ -38,13 +38,12 @@
                 placeholder="Enter the Applicant name" value={{ request()->get('name') }}>
             <button class="btn btn-info ml-2 text-white">Search</button>
         </div>
-        </form>
-    </ul>
     @if (request()->get('name'))
-    <div class="text-right fz-14 mr-11 mt-3">
-        <span>Result for '{{ request()->get('name') }}'</span><a href="/codetrek"> To clear the filter click here X </a>
-    </div>
+        <a href="/codetrek">
+            <span class="btn btn-danger ml-2 text-white py-1.5">Clear</span>
+        </a>
     @endif
+    </ul>
     @if (request()->input('tab', 'active') == 'active' || request()->tab == 'applicants')
         <div>
             <br>
