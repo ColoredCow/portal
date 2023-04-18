@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class OfficeLocation extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        'centre_name',
+        'centre_head_id',
+        'capacity',
+        'current_people_count'
+    ];
 }
