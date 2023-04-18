@@ -14,6 +14,7 @@ class OperationsController extends Controller
      */
     public function index()
     {
+        
         $users = User::orderBy('name', 'asc')->get();
 
         return view('operations::office-location.index', compact('users'));
@@ -21,6 +22,7 @@ class OperationsController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      */
     public function create()
     {
@@ -28,8 +30,9 @@ class OperationsController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
      */
-        public function store(Request $request ,OperationsService $service)
+    public function store(Request $request ,OperationsService $service)
     {
         $data = $request->all();
         $service->store($data);
@@ -38,30 +41,47 @@ class OperationsController extends Controller
     }
 
     /**
-     * Show the specified resource.
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
+        //
     }
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function update()
+    public function update(Request $request, $id)
     {
+        //
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy($id)
     {
+        //
     }
 }

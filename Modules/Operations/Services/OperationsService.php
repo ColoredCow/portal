@@ -15,5 +15,6 @@ class OperationsService
         $office_location->capacity = $data['capacity'];
         $office_location->current_people_count = $data['current_people_count'];
         $office_location->save();
+
     }  
 }
