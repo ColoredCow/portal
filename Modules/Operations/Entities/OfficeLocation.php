@@ -10,6 +10,6 @@ class OfficeLocation extends Model
         'centre_name',
         'centre_head_id',
         'capacity',
-        'current_people_count' 
+        'current_people_count'
     ];
 }

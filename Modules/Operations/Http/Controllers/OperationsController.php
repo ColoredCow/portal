@@ -17,7 +17,6 @@ class OperationsController extends Controller
     {
         $centre = OfficeLocation::all();
 
- 
         $users = User::orderBy('name', 'asc')->get();
 
         return view('operations::office-location.index', compact('users', 'centre'));
