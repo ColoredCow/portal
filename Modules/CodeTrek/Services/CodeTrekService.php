@@ -2,15 +2,20 @@
 
 namespace Modules\CodeTrek\Services;
 
+use Illuminate\Http\Request;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
+use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
 class CodeTrekService
 {
-    public function getCodeTrekApplicants()
+    public function getCodeTrekApplicants(Request $request)
     {
-        $applicants = CodeTrekApplicant::all();
+        $search = $request->get('name');
+        $applicants = $search ? CodeTrekApplicant::where('first_name', 'LIKE', "%$search%")
+        ->orWhere('last_name', 'LIKE', "%$search%")
+        ->get() : CodeTrekApplicant::all();
 
-        return ['applicants'=> $applicants];
+        return ['applicants' => $applicants];
     }
     public function store($data)
     {
@@ -26,6 +31,8 @@ class CodeTrekService
         $applicant->graduation_year = $data['graduation_year'] ?? null;
         $applicant->university = $data['university_name'] ?? null;
         $applicant->save();
+
+        $this->moveApplicantToRound($applicant, $data);
 
         return $applicant;
     }
@@ -50,5 +57,22 @@ class CodeTrekService
         $applicant->save();
 
         return $applicant;
+    }
+
+    public function evaluate(CodeTrekApplicant $codeTrekApplicant)
+    {
+        $roundDetails = CodeTrekApplicantRoundDetail::where('applicant_id', $codeTrekApplicant->id)->get();
+
+        return $roundDetails;
+    }
+
+    public function moveApplicantToRound($applicant, $data)
+    {
+        $applicationRound = new CodeTrekApplicantRoundDetail();
+        $applicationRound->applicant_id = $applicant->id;
+        $applicationRound->round_name = 'level-1';
+        $applicationRound->feedback = null;
+        $applicationRound->start_date = $data['start_date'];
+        $applicationRound->save();
     }
 }
