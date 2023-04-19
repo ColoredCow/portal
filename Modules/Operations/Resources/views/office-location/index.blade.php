@@ -12,21 +12,26 @@
         <br>
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
-                <tr class="text-center sticky-top">
-                    <th class="col-md-4">Centre Name</th>
-                    <th class="col-md-2">Centre Head Id</th>
-                    <th>Capacity</th>
-                    <th>Actions</th>
+                <tr>
+                    <th class="col-md-2">Centre Name</th>
+                    <th class="col-md-2">Centre Head</th>
+                    <th class="col-md-2">Capacity</th>
+                    <th class="col-md-2">Current People Count</th>
+                    <th class="col-md-2">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($centre as $user)
-                <tr>
-                    <td>{{ $user->centre_name }}</td>
-                    <td>{{ $user->centre_head_id }}</td>
-                    <td>{{ $user->capacity }}</td>
-                    <td><!-- actions here --></td>
-                </tr>
+                @foreach ($centres as $centre)
+                    <tr>
+                        <td>{{ $centre->centre_name }}</td>
+                        <td>{{ $centre->centre_head->name }}</td>
+                        <td>{{ $centre->capacity }}</td>
+                        <td>{{ $centre->current_people_count }}</td>
+                        <td>
+                            <a class="btn btn-primary">Edit</a>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>

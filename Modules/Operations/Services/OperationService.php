@@ -3,6 +3,7 @@
 namespace Modules\operations\Services;
 
 use Modules\operations\Entities\OfficeLocation;
+use Modules\User\Entities\User;
 
 class OperationService
 {

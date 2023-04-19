@@ -15,11 +15,10 @@ class OperationsController extends Controller
      */
     public function index()
     {
-        $centre = OfficeLocation::all();
-
+        $centres = OfficeLocation::with('centre_head')->get();
         $users = User::orderBy('name', 'asc')->get();
 
-        return view('operations::office-location.index', compact('users', 'centre'));
+        return view('operations::office-location.index', compact('users', 'centres'));
     }
 
     /**
