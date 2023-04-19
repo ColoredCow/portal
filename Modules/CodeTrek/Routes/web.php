@@ -20,4 +20,5 @@ Route::prefix('codetrek')->middleware('auth')->group(function () {
     Route::get('/evaluate/{applicant}', 'CodeTrekController@evaluate')->name('codetrek.evaluate');
     Route::post('/action/{applicant}', 'CodeTrekApplicantRoundDetailController@takeAction')->name('codetrek.action');
     Route::post('/update-feedback/{applicantDetail}', 'CodeTrekApplicantRoundDetailController@update')->name('codetrek.update-feedback');
+    Route::post('/update-Status/{applicant}', 'CodeTrekApplicantRoundDetailController@updateStatus')->name('codetrek.updateStatus');
 });
