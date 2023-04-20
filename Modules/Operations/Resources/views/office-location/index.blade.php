@@ -1,7 +1,7 @@
 @extends('operations::layouts.master')
 
 @section('heading')
-    
+
 @endsection
 
 @section('content')
@@ -30,11 +30,8 @@
                             <td>{{ $centre->capacity }}</td>
                             <td>{{ $centre->current_people_count }}</td>
                             <td>
-                                <a href="" class="btn btn-info"><i class="fa fa-pencil"></i></a>
-                                <form action="" method="POST" style="display: inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                                <a class="btn btn-info"><i class="fa fa-pencil"></i></a>
+                                <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
                                 </form>
                             </td>
                         </tr>
