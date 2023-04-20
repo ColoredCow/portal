@@ -32,13 +32,17 @@
         </li>
         </div>
         <form class="d-md-flex justify-content-between ml-md-3"
-        action="{{ route('codetrek.index') }}">
+        action="{{ route('codetrek.index') }}" method="GET">
         <div class="d-flex justify-content-end">
             <input type="text" name="name" class="form-control" id="name"
-                placeholder="Enter the Applicant name" value={{ request()->get('name') }}>
-            <button class="btn btn-info ml-2 text-white">Search</button>
+                placeholder="Enter the Applicant name" value="{{ request()->name }}">
+            <button type="submit" class="btn btn-info ml-2 text-white">Search</button>
         </div>
-        </form>
+    @if (request()->name)
+        <a href="/codetrek">
+            <span class="btn btn-danger ml-2 text-white py-1.5">Clear</span>
+        </a>
+    @endif
     </ul>
     @if (request()->input('tab', 'active') == 'active' || request()->tab == 'applicants')
         <div>

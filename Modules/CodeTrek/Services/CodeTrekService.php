@@ -10,9 +10,12 @@ class CodeTrekService
 {
     public function getCodeTrekApplicants(Request $request)
     {
-        $search = $request->get('name');
-        $applicants = $search ? CodeTrekApplicant::where('first_name', 'LIKE', "%$search%")
-        ->orWhere('last_name', 'LIKE', "%$search%")
+        $search = $request->name;
+        $applicants = $search ? CodeTrekApplicant::where('first_name', 'LIKE', '%' . $search . '%')
+        ->orWhere('last_name', 'LIKE', '%' . $search . '%')
+        ->orWhereRaw(
+            "concat(' ', first_name, ' ', last_name) like '%" . $search . "%' "
+        )
         ->get() : CodeTrekApplicant::all();
 
         return ['applicants' => $applicants];
