@@ -85,14 +85,6 @@ class CodeTrekController extends Controller
 
         return redirect()->route('codetrek.index');
     }
-    public function filter(Request $request)
-    {
-        $status = request()->input('status', 'active');
-        $applicants = CodeTrekApplicant::where('status', $status)->get();
-        
-        return view('codetrek::index', compact('applicants'));
-    }
-
     /**
      * Remove the specified resource from storage.
      * @param int $id
