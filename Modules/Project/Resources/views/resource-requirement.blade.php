@@ -19,51 +19,6 @@
                 </form>
             </div>
         </div>
-        <div class="d-none alert alert-success mt-1" id="successMessage" role="alert">
-            <strong>Requisition</strong> Submitted successfully!
-            <button type="button" class="close" id="closeSuccessMessage" aria-label="Close">
-            </button>
-        </div>       
-        <div class="modal fade" id="requisitionModal" tabindex="-1" role="dialog" aria-labelledby="requisition" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="requisition">Add Job Requisition</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <div class="spinner-border text-primary d-none" id="formSpinner"></div>
-                    </div>
-                    <div class="modal-body">
-                        <form id="requisitionForm" action="{{ route('requisition.store') }}" method="post">
-                            @csrf
-                            <div>
-                                <label for="domainDropdown">Select Domain</label>
-                                <select class="form-control" name="domain" id="domain"> 
-                                    @foreach ($domainName as $domain)
-                                    <option value="{{ $domain->id }}">{{ $domain->domain }}</option>
-                                    @endforeach 
-                                </select><br>
-                            </div>
-                            <div>
-                                <label for="jobDropdown">Select Job</label>
-                                <select class="form-control" name="job" id="job"> 
-                                    @foreach ($jobName as $job)
-                                        <option value="{{ $job->id }}">{{ $job->title }}</option>
-                                    @endforeach 
-                                </select><br>
-                            </div><br>
-                            <input type="hidden" name="user_id" id="user" value="{{ auth()->user()->id }}">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <br>
 
         <div>
@@ -79,7 +34,7 @@
                 </thead>
                 <tbody>
                     @can('projects.view')
-                        @foreach ($resourceData['data'] as $clientName =>$clientProjectsData)
+                        @forelse ($resourceData['data'] as $clientName =>$clientProjectsData)
                             <tr class="bg-theme-warning-lighter">
                                 <td colspan="5" class="font-weight-bold">
                                     <div class="d-flex justify-content-between">
@@ -125,7 +80,15 @@
                                     </div>
                                 </td>
                             @endforeach
-                        @endforeach
+                            @empty
+                            <tr>
+                                <td colspan="4">
+                                    <p class="my-4 text-left">
+                                        No such projects found.
+                                    </p>
+                                <td>
+                            </tr>
+                        @endforelse
                     @endcan  
                 </tbody>
             </table>
