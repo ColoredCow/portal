@@ -5,14 +5,14 @@
             <h1>Project Resource</h1>
         </div>
         <br>
-            <h3 class="font-weight-bold">
-                Additional Resources Required in all Projects : {{ $resourceData['totalCount'] }}
-            </h3>
+        <h3 class="font-weight-bold">
+            Additional Resources Required in all Projects : {{ $resourceData['totalCount'] }}
+        </h3>
         <div class="d-none alert alert-success" id="successMessage" role="alert">
             <strong>Requisition</strong> Submitted successfully!
             <button type="button" class="close" id="closeSuccessMessage" aria-label="Close">
             </button>
-        </div>
+        </div>       
         <div class="modal fade" id="requisitionModal" tabindex="-1" role="dialog" aria-labelledby="requisition" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -44,9 +44,9 @@
                                     @endforeach 
                                 </select><br>
                             </div><br>
-                            <input type="hidden" name="user" id="user" value="{{ auth()->user()->id }}">
+                            <input type="hidden" name="user_id" id="user" value="{{ auth()->user()->id }}">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" data-action="sendHiringMail">Submit</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
                 </div>

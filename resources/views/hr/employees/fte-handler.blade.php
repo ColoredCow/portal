@@ -42,7 +42,7 @@
                                     @endforeach 
                                 </select><br>
                             </div><br>
-                            <input type="hidden" name="user" id="user" value="{{ auth()->user()->id }}">
+                            <input type="hidden" name="user_id" id="user" value="{{ auth()->user()->id }}">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary" data-action="sendHiringMail">Submit</button>
                         </form>
