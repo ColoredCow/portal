@@ -8,12 +8,17 @@ use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
 class CodeTrekService
 {
-    public function getCodeTrekApplicants(Request $request)
+    public function getCodeTrekApplicants($data = [])
     {
-        $search = $request->get('name');
-        $applicants = $search ? CodeTrekApplicant::where('first_name', 'LIKE', "%$search%")
-        ->orWhere('last_name', 'LIKE', "%$search%")
-        ->get() : CodeTrekApplicant::all();
+        $search = $data['name'] ?? null;
+        $status = $data['status'] ?? null;
+        if (!$status) {
+            return ['applicants' => CodeTrekApplicant::all()];
+        }
+        $query = CodeTrekApplicant::where('status', $status);
+        $applicants = $search ? $query->where('first_name', 'LIKE', "%$search%")
+            ->orWhere('last_name', 'LIKE', "%$search%")
+            ->get() : $query->get();
 
         return ['applicants' => $applicants];
     }

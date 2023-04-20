@@ -25,7 +25,7 @@ class CodeTrekController extends Controller
      */
     public function index(Request $request)
     {
-        return view('codetrek::index', $this->service->getCodeTrekApplicants($request));
+        return view('codetrek::index', $this->service->getCodeTrekApplicants($request->all()));
     }
     /**
      * Show the form for creating a new resource.
@@ -84,6 +84,13 @@ class CodeTrekController extends Controller
         $applicant->delete();
 
         return redirect()->route('codetrek.index');
+    }
+    public function filter(Request $request)
+    {
+        $status = request()->input('status', 'active');
+        $applicants = CodeTrekApplicant::where('status', $status)->get();
+        
+        return view('codetrek::index', compact('applicants'));
     }
 
     /**
