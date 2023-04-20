@@ -2,6 +2,7 @@
 
 namespace Modules\Project\Console\GoogleChat;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Modules\Project\Entities\Project;
 use Illuminate\Support\Facades\Notification;
@@ -40,10 +41,11 @@ class NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat extends Command
      */
     public function handle()
     {
-        $projects = Project::with('getTeamMembers')->whereHas('teamMembers')->where('status', 'active')->get();
+        $projects = Project::whereHas('teamMembers')->where('status', 'active')->get();
         foreach ($projects as $project) {
-            if ($project->google_chat_webhook_url && $project->effort_sheet_url) {
-                Notification::route('googleChat', $project->google_chat_webhook_url)->notify(new NotificationToUpdateEffortForProject($project));
+            $date = Carbon::today()->day($project->client->billingDetails->billing_date);
+            if ($project->google_chat_webhook_url && $project->effort_sheet_url && Carbon::tomorrow() == $date) {
+                Notification::route('googleChat', $project->google_chat_webhook_url)->notify(new NotificationToUpdateEffortForProject());
             }
         }
     }
