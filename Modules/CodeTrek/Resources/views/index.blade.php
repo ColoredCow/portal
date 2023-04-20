@@ -23,7 +23,6 @@
                     <a class="nav-link {{ request()->input('tab', 'applicants') == 'applicants' ? 'active' : '' }} "
                         href="{{ route('codetrek.index', $request) }}"><i class="fa fa-list-ul"></i> Applicants</a>
                 </li>
-
                 <li class="nav-item">
                     @php
                         $request['tab'] = 'reports';
