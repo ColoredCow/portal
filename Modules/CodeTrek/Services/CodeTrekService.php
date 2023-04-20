@@ -2,7 +2,6 @@
 
 namespace Modules\CodeTrek\Services;
 
-use Illuminate\Http\Request;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
@@ -11,7 +10,8 @@ class CodeTrekService
     public function getCodeTrekApplicants($data = [])
     {
         $search = $data['name'] ?? null;
-        $status = $data['status'] ?? null;
+        $status = $data['status'] ?? 'active';
+
         if (!$status) {
             return ['applicants' => CodeTrekApplicant::all()];
         }
