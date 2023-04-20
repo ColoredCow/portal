@@ -12,7 +12,7 @@ class CodeTrekService
         $search = $data['name'] ?? null;
         $status = $data['status'] ?? 'active';
 
-        if (!$status) {
+        if (! $status) {
             return ['applicants' => CodeTrekApplicant::all()];
         }
         $query = CodeTrekApplicant::where('status', $status);
