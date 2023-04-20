@@ -5,10 +5,21 @@
             <h1>Project Resource</h1>
         </div>
         <br>
-        <h3 class="font-weight-bold">
-            Additional Resources Required in all Projects : {{ $resourceData['totalCount'] }}
-        </h3>
-        <div class="d-none alert alert-success" id="successMessage" role="alert">
+        <div class="d-md-flex justify-content-between ml-md-3">
+            <div>
+                <h3 class="font-weight-bold">
+                    Additional Resources Required in all Projects : {{ $resourceData['totalCount'] }}
+                </h3>
+            </div>
+            <div class="d-flex align-items-center">
+                <form  class="d-md-flex justify-content-between ml-md-3" action="{{ route('project.resource-requirement')}}", method="get", role="Search">
+                    <input type="text" name="name" class="form-control" id="name"
+                        placeholder="Enter the project name" value="{{ request()->get('name') }}">
+                    <button class="btn btn-info ml-2 text-white">Search</button>
+                </form>
+            </div>
+        </div>
+        <div class="d-none alert alert-success mt-1" id="successMessage" role="alert">
             <strong>Requisition</strong> Submitted successfully!
             <button type="button" class="close" id="closeSuccessMessage" aria-label="Close">
             </button>

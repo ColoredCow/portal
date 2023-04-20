@@ -150,7 +150,7 @@ class ProjectController extends Controller
 
     public function projectResource()
     {
-        $resourceData = $this->service->getProjectsWithTeamMemberRequirementData();
+        $resourceData = $this->service->getProjectsWithTeamMemberRequirementData(request()->all());
         $domainName = HrJobDomain::all();
         $jobName = Job::all();
 
