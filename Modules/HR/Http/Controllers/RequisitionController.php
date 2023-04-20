@@ -45,16 +45,16 @@ class RequisitionController extends Controller
             'job' => 'required|integer',
             'user_id' => 'required|integer',
         ]);
-    
+
         JobRequisition::create([
             'domain_id' => $jobrequisition['domain'],
             'job_id' => $jobrequisition['job'],
             'requested_by' => $jobrequisition['user_id'],
         ]);
-    
+
         $jobHiring = null;
         SendHiringMailJob::dispatch($jobHiring);
-    
+
         return redirect()->back();
     }
 
