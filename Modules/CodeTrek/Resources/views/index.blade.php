@@ -41,29 +41,22 @@
             </form>
         </ul>
         <br>
-        <nav class="nav nav-tabs d-flex justify-content-around ">
-            <a href="{{ route('codetrek.index', ['status' => 'active']) }}"
-                class="nav-link {{ request()->input('status', 'active') == 'active' ? 'active' : '' }}">
-                <div class="d-flex flex-column align-items-center">
-                    <i class="fas fa-check-circle fa-2x"></i>
-                    <span class="mt-1">Active</span>
-                </div>
-            </a>
-            <a href="{{ route('codetrek.index', ['status' => 'inactive']) }}"
-                class="nav-link {{ request()->input('status') == 'inactive' ? 'active' : '' }}">
-                <div class="d-flex flex-column align-items-center">
-                    <i class="fa fa-times"></i>
-                    <span class="mt-1">Inactive</span>
-                </div>
-            </a>
-            <a href="{{ route('codetrek.index', ['status' => 'completed']) }}"
-                class="nav-link {{ request()->input('status') == 'completed' ? 'active' : '' }}">
-                <div class="d-flex flex-column align-items-center">
-                    <i class="fa fa-check"></i>
-                    <span class="mt-1">Completed</span>
-                </div>
-            </a>
-        </nav>
+        <ul class="nav nav-pills d-flex justify-content-between">
+            <div class='d-flex justify-content-between'>
+                <li class="nav-item mr-3">
+                    <a href="{{ route('codetrek.index', ['status' => 'active']) }}"
+                        class="nav-link btn-nav {{ request()->input('status', 'active') == 'active' ? 'active' : '' }}">Active</a>
+                </li>
+                <li class="nav-item mr-3">
+                    <a href="{{ route('codetrek.index', ['status' => 'inactive']) }}"
+                        class="nav-link btn-nav {{ request()->input('status') == 'inactive' ? 'active' : '' }}">Inactive</a>
+                </li>
+                <li class="nav-item mr-3">
+                    <a href="{{ route('codetrek.index', ['status' => 'completed']) }}"
+                        class="nav-link btn-nav {{ request()->input('status') == 'completed' ? 'active' : '' }}">Completed</a>
+                </li>
+            </div>
+        </ul>
         @if (request()->input('tab', 'active') == 'active' || request()->tab == 'applicants')
             <div>
                 <br>
