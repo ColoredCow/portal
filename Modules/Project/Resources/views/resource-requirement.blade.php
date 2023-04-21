@@ -1,6 +1,7 @@
 @extends('project::layouts.master')
 @section('content')
-    <div class="container">
+    <div class="container" id="vueContainer">
+        @includeWhen(session('success'), 'toast', ['message' => session('success')])
         <div>
             <h1>Project Resource</h1>
         </div>
@@ -22,11 +23,6 @@
         </div>
         <br>
 
-        <div class="d-none alert alert-success" id="successMessage" role="alert">
-            <strong>Requisition</strong> Submitted successfully!
-            <button type="button" class="close" id="closeSuccessMessage" aria-label="Close">
-            </button>
-        </div>  
         <div class="modal fade" id="requisitionModal" tabindex="-1" role="dialog" aria-labelledby="requisition" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
