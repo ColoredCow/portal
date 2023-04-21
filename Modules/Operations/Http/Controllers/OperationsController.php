@@ -5,7 +5,7 @@ namespace Modules\Operations\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Modules\User\Entities\User;
 use Modules\operations\Services\OperationService;
-use Modules\operations\Entities\OfficeLocation;
+use Modules\Operations\Entities\OfficeLocation;
 use Illuminate\Http\Request;
 
 class OperationsController extends Controller

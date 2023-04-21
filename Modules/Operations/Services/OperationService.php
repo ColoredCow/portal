@@ -2,7 +2,7 @@
 
 namespace Modules\operations\Services;
 
-use Modules\operations\Entities\OfficeLocation;
+use Modules\Operations\Entities\OfficeLocation;
 
 class OperationService
 {
