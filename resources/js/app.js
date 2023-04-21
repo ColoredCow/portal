@@ -1871,8 +1871,7 @@ $(document).ready(function() {
 			data: form.serialize(),
 			success: function(response) {
 				$("#requisitionModal").modal("hide");
-				$("#successMessage").toggleClass("d-none");
-				$("#successMessage").fadeToggle(4000);
+				Vue.$toast.success("Requisition submitted successfully");
 			},
 			error: function(response) {
 				alert("there is some problem");

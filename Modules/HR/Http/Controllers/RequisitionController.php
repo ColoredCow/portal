@@ -55,7 +55,7 @@ class RequisitionController extends Controller
         $jobHiring = null;
         SendHiringMailJob::dispatch($jobHiring);
 
-        return redirect()->back()->with('success', 'Requisition submitted successfully');
+        return redirect()->back();
     }
 
     public function storeBatchDetails(Request $request)

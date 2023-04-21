@@ -1,7 +1,6 @@
 @extends('project::layouts.master')
 @section('content')
-    <div class="container" id="vueContainer">
-        @includeWhen(session('success'), 'toast', ['message' => session('success')])
+    <div class="container">
         <div>
             <h1>Project Resource</h1>
         </div>
