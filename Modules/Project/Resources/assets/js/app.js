@@ -3,9 +3,9 @@ $(document).ready(function () {
 		this.value = (this.value).replace(/\s+/g, " ");
 	});
 
-	// window.setTimeout(function() {
-	// 	$(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-	// 		$(this).remove(); 
-	// 	});
-	// }, 6000);
+	window.setTimeout(function() {
+		$(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+			$(this).remove(); 
+		});
+	}, 6000);
 });
