@@ -2,6 +2,7 @@
 
 namespace Modules\CodeTrek\Http\Controllers;
 
+use Composer\XdebugHandler\Status;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
@@ -74,7 +75,7 @@ class CodeTrekApplicantRoundDetailController extends Controller
 
         $applicant->save();
 
-        return redirect()->route('codetrek.index');
+        return redirect()->route('codetrek.index')->with('status', 'Status updated successfully.');
     }
 
     /**
