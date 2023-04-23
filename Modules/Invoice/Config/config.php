@@ -62,21 +62,40 @@ return [
                 ],
             ]
         ],
-        'bank-address' => env('BANK_ADDRESS', ''),
-        'swift-code' => env('SWIFT_CODE', ''),
-        'ifci-code' => env('IFCI_CODE', ''),
-        'account-number' => env('ACCOUNT_NUMBER', ''),
         'holder-name' => 'ColoredCow Consulting Pvt. Ltd.',
         'phone' => env('COLOREDCOW_PHONE', ''),
         'pan' => env('PAN_NUMBER', ''),
         'gstin' => env('GSTIN', ''),
         'cin-no' => env('CIN_NO', ''),
         'hsn-code' => env('HSN_CODE', ''),
-        'correspondent-bank' => env('CORRESPONDENT_BANK', ''),
-        'correspondent-bank-swift-code' => env('CORRESPONDENT_BANK_SWIFT_CODE', ''),
-        'beneficiary-bank-of-usd' => env('BENEFICIARY_BANK_OF_USD', ''),
+        'indian' => [
+            'bank-address' => env('INDIAN_INVOICE_BANK_ADDRESS', ''),
+            'swift-code' => env('INDIAN_INVOICE_SWIFT_CODE', ''),
+            'ifci-code' => env('INDIAN_INVOICE_IFCI_CODE', ''),
+            'account-number' => env('INDIAN_INVOICE_ACCOUNT_NUMBER', ''),
+        ],
+        'international' => [
+            'transaction-method' => [
+                'label' => 'Transaction Method',
+                'value' => [
+                    'bank-transfer' => [
+                        'key' => 'bank-transfer',
+                        'value' => 'Bank Transfer',
+                    ],
+                ]
+            ],
+            'bank-address' => env('INTERNATIONAL_INVOICE_BANK_ADDRESS', ''),
+            'swift-code' => env('INTERNATIONAL_INVOICE_SWIFT_CODE', ''),
+            'ifci-code' => env('INTERNATIONAL_INVOICE_IFCI_CODE', ''),
+            'account-number' => env('INTERNATIONAL_INVOICE_ACCOUNT_NUMBER', ''),
+            'correspondent-bank' => env('CORRESPONDENT_BANK', ''),
+            'correspondent-bank-swift-code' => env('CORRESPONDENT_BANK_SWIFT_CODE', ''),
+            'notstro-account-number' => env('NOSTRO_ACCOUNT_NUMBER', ''),
+            'ad-code' => env('AD_CODE', ''),
+            'purpose-code' => env('PURPOSE_CODE', ''),
+            'beneficiary-bank-of-usd' => env('BENEFICIARY_BANK_OF_USD', ''),
+        ]
     ],
-
     'coloredcow-details' => [
         'name' => 'ColoredCow Consulting Pvt. Ltd.',
         'gurgaon' => [
