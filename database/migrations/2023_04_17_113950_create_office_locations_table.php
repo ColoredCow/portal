@@ -33,10 +33,6 @@ class CreateOfficeLocationsTable extends Migration
      */
     public function down()
     {
-        Schema::table('office_locations', function (Blueprint $table) {
-            $table->dropForeign(['centre_head_id']);
-            $table->dropColumn(['centre_name', 'centre_head_id', 'capacity', 'current_people_count']);
-        });
         Schema::dropIfExists('office_locations');
     }
 }
