@@ -1,6 +1,5 @@
 <form action="{{ route('invoice.index')  }}" id="invoiceFilterForm">
     <input type="hidden" name="invoice_status" value="{{ request()->input('invoice_status', 'sent') }}">
-
     <div class="d-flex">
         <div class="row">
         <div class='form-group mr-4 w-168'>
@@ -28,7 +27,7 @@
                 <option {{ $filters['month'] == '09' ? "selected=selected" : '' }} value="09">September</option>
                 <option {{ $filters['month'] == '10' ? "selected=selected" : '' }} value="10">October</option>
                 <option {{ $filters['month'] == '11' ? "selected=selected" : '' }} value="11">November</option>
-                <option {{ $filters['month'] == '12' ? "selected=selected" : '' }} value="12">December</option>
+                <optigit 
             </select>
         </div>
 
