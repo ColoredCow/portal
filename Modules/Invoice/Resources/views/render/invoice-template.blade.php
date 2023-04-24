@@ -302,7 +302,7 @@
                                         <td align="right">
                                             <p>{{ $termText }}</p>
                                             <p>{{ $invoiceNumber }}</p>
-                                            <p>{{ $termPeriod['term_end_date']->format('F d, Y') }}</p>
+                                            <p>{{ ($termEndDate) }}</p>
                                             <p>{{ date('F d, Y', strtotime($invoiceData['due_on'])) }}</p>
                                         </td>
                                     </tr>

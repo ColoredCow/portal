@@ -87,6 +87,7 @@ class InvoiceController extends Controller
             'client_id' => $request->client_id,
             'project_id' => $request->project_id,
             'term' => today(config('constants.timezone.indian'))->subMonth()->format('Y-m'),
+            'termEndDate' => $request->termEndDate,
             'sent_on' => today(config('constants.timezone.indian')),
             'due_on' => today(config('constants.timezone.indian'))->addDays(6),
             'period_start_date' => $request->period_start_date,
