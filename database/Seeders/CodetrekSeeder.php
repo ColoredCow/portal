@@ -19,9 +19,9 @@ class CodetrekSeeder extends Seeder
 
     
             DB::table('code_trek_applicants')->insert([
-            'first_name'=>$faker->name,
-            'last_name'=>$faker->email,
-            'email'=>$faker->email,
+            'first_name'=>'test',
+            'last_name'=>'last_test',
+            'email'=>'test@gmail.com',
             'github_user_name'=>'test',
             'phone'=>'',
             'course'=>'',
