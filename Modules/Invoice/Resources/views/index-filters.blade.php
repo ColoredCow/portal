@@ -28,8 +28,7 @@
                 <option {{ $filters['month'] == '09' ? "selected=selected" : '' }} value="09">September</option>
                 <option {{ $filters['month'] == '10' ? "selected=selected" : '' }} value="10">October</option>
                 <option {{ $filters['month'] == '11' ? "selected=selected" : '' }} value="11">November</option>
-                
-                
+                <option {{ $filters['month'] == '12' ? "selected=selected" : '' }} value="12">December</option>
             </select>
         </div>
 
