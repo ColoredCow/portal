@@ -17,11 +17,12 @@ class CodetrekSeeder extends Seeder
     {
         $faker = Faker::create();
 
-    
+        for($i=1; $i<=5; $i++)
+        {
             DB::table('code_trek_applicants')->insert([
-            'first_name'=>'test',
-            'last_name'=>'last_test',
-            'email'=>'test@gmail.com',
+            'first_name'=>$faker->name,
+            'last_name'=>$faker->email,
+            'email'=>$faker->email,
             'github_user_name'=>'test',
             'phone'=>'',
             'course'=>'',
@@ -33,7 +34,7 @@ class CodetrekSeeder extends Seeder
             'deleted_at'=>'',
             'round_name'=>'level 1'
         ]);
-    
+        }
         
     }
 }
