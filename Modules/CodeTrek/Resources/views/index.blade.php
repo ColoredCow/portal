@@ -82,6 +82,10 @@
                                     @endphp
                                     {{ $daysInCodetrek }} days
                                 </td>
+                                <td>
+                                    {{ config('codetrek.rounds.' .$applicant->round_name . '.label') }}
+
+                                </td>
                                 <td>{{ config('codetrek.status.' . $applicant->status . '.label') }}</td>
                                 <td>-</td>
                             </tr>
