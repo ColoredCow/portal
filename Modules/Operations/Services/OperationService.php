@@ -31,7 +31,6 @@ class OperationService
         return $centre;
     }
 
-
     public function delete($id)
     {
         $centre = OfficeLocation::find($id);
