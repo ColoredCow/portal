@@ -1,7 +1,7 @@
 <div class="overflow-x-scroll card" style="min-width:660px;">
     <div id="client_projects_container" class="collapse show">
         <div class="card-body">
-        <div class="d-flex px-5">
+            <div class="d-flex px-5">
                 <div class="w-33p ml-2">
                     <h5 class="font-muli-bold">Name</h5>
                 </div>
