@@ -15,21 +15,23 @@
             @php
                 $request = request()->all();
             @endphp
-            <li class="nav-item mr-3">
-                @php
-                    $request['tab'] = 'applicants';
-                @endphp
-                <a class="nav-link {{ request()->input('tab', 'applicants') == 'applicants' ? 'active' : '' }} "
-                    href="{{ route('codetrek.index', $request) }}"><i class="fa fa-list-ul"></i> Applicants</a>
-            </li>
-
-            <li class="nav-item">
-                @php
-                    $request['tab'] = 'reports';
-                @endphp
-                <a class="nav-link {{ request()->input('tab', 'active') == 'reports' ? 'active' : '' }}"
-                    href="{{ route('codetrek.index', $request) }}"><i class="fa fa-pie-chart"></i> Reports</a>
-            </li>
+            <div class="d-flex">
+                <li class="nav-item mr-3">
+                    @php
+                        $request['tab'] = 'applicants';
+                    @endphp
+                    <a class="nav-link {{ request()->input('tab', 'applicants') == 'applicants' ? 'active' : '' }} "
+                        href="{{ route('codetrek.index', $request) }}"><i class="fa fa-list-ul"></i> Applicants</a>
+                </li>
+    
+                <li class="nav-item">
+                    @php
+                        $request['tab'] = 'reports';
+                    @endphp
+                    <a class="nav-link {{ request()->input('tab', 'active') == 'reports' ? 'active' : '' }}"
+                        href="{{ route('codetrek.index', $request) }}"><i class="fa fa-pie-chart"></i> Reports</a>
+                </li>
+            </div>
         </ul>
         @if (request()->input('tab', 'active') == 'active' || request()->tab == 'applicants')
             <div>
