@@ -28,7 +28,6 @@ class CreateOfficeLocationsTable extends Migration
         });
     }
 
-
     /**
      * Reverse the migrations.
      *
