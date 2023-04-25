@@ -73,7 +73,7 @@ class CodeTrekApplicantRoundDetailController extends Controller
         }
         $applicant->save();
 
-        return redirect()->route('codetrek.index')->with('status', 'Status updated successfully.');
+        return redirect()->back()->with('success', 'Status updated successfully.');
     }
 
     /**
