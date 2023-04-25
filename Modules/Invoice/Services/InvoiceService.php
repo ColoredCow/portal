@@ -685,7 +685,7 @@ class InvoiceService implements InvoiceServiceContract
     public function createInvoice($client, $project, $term, $periodStartDate, $periodEndDate)
     {
         $term = $term ?? today(config('constants.timezone.indian'))->subMonth()->format('Y-m');
-        $sentOn = $client ? $client->getMonthEndDateAttribute(1)->format('F d, Y'): $project->client->getMonthEndDateAttribute(1)->format('F d, Y');
+        $sentOn = $client ? $client->getMonthEndDateAttribute(1)->format('F d, Y') : $project->client->getMonthEndDateAttribute(1)->format('F d, Y');
         $dueOn = today(config('constants.timezone.indian'))->addDays(6);
         $monthsToSubtract = 1;
         $data = $this->getInvoiceData([
