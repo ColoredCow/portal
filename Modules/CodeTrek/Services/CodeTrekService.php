@@ -11,10 +11,6 @@ class CodeTrekService
     {
         $search = $data['name'] ?? null;
         $status = $data['status'] ?? 'active';
-
-        if (! $status) {
-            return ['applicants' => CodeTrekApplicant::all()];
-        }
         $query = CodeTrekApplicant::where('status', $status);
         $applicants = $search ? $query->where('first_name', 'LIKE', "%$search%")
             ->orWhere('last_name', 'LIKE', "%$search%")
