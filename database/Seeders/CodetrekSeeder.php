@@ -17,7 +17,7 @@ class CodetrekSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for($i=1; $i<=5; $i++){
+        for ($i=1; $i<=5; $i++) {
             DB::table('code_trek_applicants')->insert([
             'first_name'=>$faker->name,
             'last_name'=>$faker->email,
