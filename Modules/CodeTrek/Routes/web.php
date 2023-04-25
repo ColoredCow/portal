@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('codetrek')->group(function () {
+Route::prefix('codetrek')->middleware('auth')->group(function () {
     Route::get('/', 'CodeTrekController@index')->name('codetrek.index');
     Route::post('/', 'CodeTrekController@store')->name('codetrek.store');
     Route::get('/edit/{applicant}', 'CodeTrekController@edit')->name('codetrek.edit');
@@ -20,4 +20,5 @@ Route::prefix('codetrek')->group(function () {
     Route::get('/evaluate/{applicant}', 'CodeTrekController@evaluate')->name('codetrek.evaluate');
     Route::post('/action/{applicant}', 'CodeTrekApplicantRoundDetailController@takeAction')->name('codetrek.action');
     Route::post('/update-feedback/{applicantDetail}', 'CodeTrekApplicantRoundDetailController@update')->name('codetrek.update-feedback');
+    Route::post('/update-Status/{applicant}', 'CodeTrekApplicantRoundDetailController@updateStatus')->name('codetrek.updateStatus');
 });

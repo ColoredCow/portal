@@ -12,8 +12,6 @@ class CodeTrekApplicant extends Model
 
     public function roundDetails()
     {
-        $data = CodeTrekApplicant::orderBy('name')->get();
-        dd($data);
         return $this->hasMany(CodeTrekApplicantRoundDetail::class);
     }
 }
