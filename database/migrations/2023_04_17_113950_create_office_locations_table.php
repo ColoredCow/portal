@@ -35,4 +35,5 @@ class CreateOfficeLocationsTable extends Migration
     {
         Schema::dropIfExists('office_locations');
     }
+
 }
