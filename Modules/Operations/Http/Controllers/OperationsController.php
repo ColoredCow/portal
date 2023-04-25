@@ -4,7 +4,7 @@ namespace Modules\Operations\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Modules\User\Entities\User;
-use Modules\Operations\Services\OperationService;
+use Modules\operations\Services\OperationService;
 use Modules\Operations\Entities\OfficeLocation;
 use Illuminate\Http\Request;
 

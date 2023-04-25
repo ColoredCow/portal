@@ -18,4 +18,3 @@ Route::prefix('operations')->group(function () {
     Route::put('/office-location/{id}/update', 'OperationsController@update')->name('office-location.update');
     Route::delete('/office-location/{id}', 'OperationsController@destroy')->name('office-location.destroy');
 });
-
