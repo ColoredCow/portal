@@ -18,4 +18,31 @@ class OperationService
 
         return $centre;
     }
+
+    public function update($data, $id)
+    {
+        $centre = OfficeLocation::findOrFail($id);
+    
+        $centre->centre_name = $data['centre_name'];
+        $centre->centre_head_id = $data['centre_head'];
+        $centre->capacity = $data['capacity'];
+        $centre->current_people_count = $data['current_people_count'] ?? null;
+        $centre->save();
+    
+        return $centre;
+    }
+    
+
+    public function delete($id)
+    {
+        $centre = OfficeLocation::find($id);
+
+        if (!$centre) {
+            return null;
+        }
+
+        $centre->delete();
+
+        return true;
+    }
 }
