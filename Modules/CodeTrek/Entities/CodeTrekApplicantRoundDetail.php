@@ -13,6 +13,8 @@ class CodeTrekApplicantRoundDetail extends Model
 
     public function applicant()
     {
+        $data= CodeTrekApplicant::orderBy('name')->get();
+        dd($data);
         return $this->belongsTo(CodeTrekApplicant::class);
     }
 }

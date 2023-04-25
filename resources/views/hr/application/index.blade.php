@@ -73,7 +73,7 @@
             {{-- Commenting, because we need to brainstorm on this feature a bit --}}
             {{--<div class="mr-2 mt-2 mt-md-0 form-group">
                 <label id="sortby">{!! __('SortBy') !!}</label><br>
-                <select class="fz-14 fz-lg-16 w-120 w-140 form-control rounded border-0 bg-white" name="sort_by" id="sortby"
+                <select class="fz-14 fz-lg-16 w-120 w-140 form-control rounded border-0 bg-white" name="sortby" id="sortby"
                     onchange="this.form.submit()">
                     <option value="" {{ request()->has('sort_by') ? '' : 'selected' }}>
                         {!! __('SortBy') !!}

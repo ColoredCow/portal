@@ -47,6 +47,7 @@
                         @foreach ($applicants as $applicant)
                             <tr>
                                 <td>
+                                    
                                     <div class="d-flex align-items-center">
                                         <div class="d-flex align-items-center">
                                             <h4>{{ $applicant->first_name }} {{ $applicant->last_name }}</h4>

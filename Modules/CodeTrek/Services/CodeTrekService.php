@@ -9,7 +9,7 @@ class CodeTrekService
 {
     public function getCodeTrekApplicants()
     {
-        $applicants = CodeTrekApplicant::all();
+        $applicants = CodeTrekApplicant::orderBy('first_name')->get();
 
         return ['applicants' => $applicants];
     }
