@@ -10,22 +10,16 @@
             id="wishlist"
             class="nav-link active c-pointer"
             @click="setActiveTile('wishlist')"
-            >Your wishlist</a
-          >
+            >Your wishlist</a>
         </li>
         <li class="nav-item">
           <a id="read" class="nav-link c-pointer" @click="setActiveTile('read')"
-            >You have read</a
-          >
+            >You have read </a>
         </li>
 
         <li class="nav-item">
-          <a
-            id="recommend"
-            class="nav-link c-pointer py-3"
-            @click="setActiveTile('recommend')"
-           >Recommend</a
-          >
+          <a id="recommend" class="nav-link c-pointer" @click="setActiveTile('recommend')"
+           >Recommend</a>
         </li>
       </ul>
     </div>

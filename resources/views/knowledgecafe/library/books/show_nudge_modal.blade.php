@@ -9,7 +9,7 @@
         <div class="modal-content">
             <div class="modal-header border-bottom-0">
                 <h6 class="modal-title">
-                    <span>You have read</span>    
+                    <span>You have read </span>    
                     <span>{{ auth()->user()->totalReadBooks() }}</span> 
                     <span>books out of</span>     
                     <span>{{ $book->totalBooksCount }}</span>
