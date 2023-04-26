@@ -33,6 +33,6 @@ class CodetrekSeeder extends Seeder
             'deleted_at'=>'',
             'round_name'=>'level 1'
         ]);
-        }   
+        }
     }
 }
