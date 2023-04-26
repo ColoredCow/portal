@@ -17,7 +17,7 @@ class CodetrekSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             DB::table('code_trek_applicants')->insert([
             'first_name'=>$faker->name,
             'last_name'=>$faker->email,
@@ -33,7 +33,6 @@ class CodetrekSeeder extends Seeder
             'deleted_at'=>'',
             'round_name'=>'level 1'
         ]);
-        }
-        
+        }   
     }
 }
