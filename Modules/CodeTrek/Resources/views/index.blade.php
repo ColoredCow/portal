@@ -23,7 +23,6 @@
                     <a class="nav-link {{ request()->input('tab', 'applicants') == 'applicants' ? 'active' : '' }} "
                         href="{{ route('codetrek.index', $request) }}"><i class="fa fa-list-ul"></i> Applicants</a>
                 </li>
-
                 <li class="nav-item">
                     @php
                         $request['tab'] = 'reports';
@@ -120,7 +119,6 @@
                                 </td>
                                 <td>
                                     {{ config('codetrek.rounds.' .$applicant->round_name . '.label') }}
-
                                 </td>
                                 <td>{{ config('codetrek.status.' . $applicant->status . '.label') }}</td>
                                 <td>-</td>
