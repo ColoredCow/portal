@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Models\BankDetails; 
+use App\Models\BankDetails;
 use Illuminate\Http\Request;
 use App\Helpers\ContentHelper;
 
