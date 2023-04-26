@@ -23,13 +23,13 @@
         <br>
 
         <div>
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped" >
                 <thead class="thead-dark">
                     <tr>
                         <th class="w-30p sticky-top">Client/Project Name</th>
                         <th class="sticky-top">Resouce Needed</th>
                         <th class="sticky-top">Resource Deployed</th>
-                        <th class="sticky-top">Additional Resource Required</th>
+                        <th class="sticky-top" colspan="2">Additional Resource Required</th>
                     </tr>
                 </thead>
                 <tbody>
