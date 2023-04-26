@@ -1,4 +1,4 @@
-<div class="overflow-x-scroll card" style="min-width:660px;">
+<div class="overflow-x-scroll card min-w-660">
     <div id="client_projects_container" class="collapse show">
         <div class="card-body">
             <div class="d-flex px-5">
