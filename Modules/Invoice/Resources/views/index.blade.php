@@ -22,9 +22,9 @@
         </ul>
         <div class="d-flex justify-content-between">
             <h4 class="m-1 p-1 fz-28">Invoices</h4>
-            <span>
-                <a href="{{ route('invoice.create-custom-invoice') }}" class="btn btn-info text-white m-1">Custom Invoice</a>
-                <a href="{{ route('invoice.create') }}" class="btn btn-success text-white m-1"><i class="fa fa-plus mr-1"></i>Add Invoice</a>
+            <span class= d-flex>
+                <a href="{{ route('invoice.create-custom-invoice') }}" class="btn btn-info text-white m-1 align-self-center">Custom Invoice</a>
+                <a href="{{ route('invoice.create') }}" class="btn btn-success text-white m-1 align-self-center"><i class="fa fa-plus mr-1"></i>Add Invoice</a>
             </span>
         </div>
         <br>
