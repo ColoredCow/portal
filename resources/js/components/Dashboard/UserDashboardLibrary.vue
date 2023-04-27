@@ -14,7 +14,7 @@
         </li>
         <li class="nav-item">
           <a id="read" class="nav-link c-pointer" @click="setActiveTile('read')"
-            >You have read </a>
+            >You have read</a>
         </li>
 
         <li class="nav-item">
