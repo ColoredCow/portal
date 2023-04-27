@@ -64,9 +64,13 @@ class OperationsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id, OperationService $service)
+    public function destroy($id)
     {
-        $service->delete($id);
+        $centre = OfficeLocation::find($id);
+
+        if ($centre) {
+            $centre->delete();
+        }
 
         return redirect()->route('office-location.index');
     }

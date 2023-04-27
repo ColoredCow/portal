@@ -30,17 +30,4 @@ class OperationService
 
         return $centre;
     }
-
-    public function delete($id)
-    {
-        $centre = OfficeLocation::find($id);
-
-        if (! $centre) {
-            return;
-        }
-
-        $centre->delete();
-
-        return true;
-    }
 }
