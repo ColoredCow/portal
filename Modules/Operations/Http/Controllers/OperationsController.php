@@ -66,10 +66,10 @@ class OperationsController extends Controller
      */
     public function destroy($id)
     {
-        $centre = OfficeLocation::find($id);
+        $centreId = OfficeLocation::find($id);
 
-        if ($centre) {
-            $centre->delete();
+        if ($centreId) {
+            $centreId->delete();
         }
 
         return redirect()->route('office-location.index');
