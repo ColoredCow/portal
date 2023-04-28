@@ -1,42 +1,40 @@
-@extends('operations::layouts.master')
-
-@section('content')
-<div class="container">
-    <div>
-        <br>
-        <form action="{{ route('office-location.update', $centre->id) }}" method="POST">
-            @csrf
-            @method('PUT')
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="centreName" class="field-required">Centre Name</label>
-                    <input type="text" class="form-control" name="centre_name" id="centreName" placeholder="Centre Name" required="required" value="{{ $centre->centre_name }}">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="centreHead" class="field-required">Centre Head</label>
-                    <select v-model="location" name="centre_head" id="centreHead" class="form-control" required>
-                        <option value="">Select centre head</option>
-                        @foreach($users as $user)
-                            <option value="{{ $user->id }}" {{ $user->id == $centre->centre_head->id ? 'selected' : '' }}>{{ $user->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
+<div class="modal fade" id="edit-center-modal-{{ $centre->id }}" tabindex="-1" role="dialog" aria-labelledby="edit-center-modal-label-{{ $centre->id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="edit-center-modal-label-{{ $centre->id }}">Edit Centre</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="capacity" class="field-required">Capacity</label>
-                    <input type="number" class="form-control" name="capacity" id="capacity" placeholder="Enter Capacity" required="required" value="{{ $centre->capacity }}">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="currentPeopleCount" class="field-required">Current People Count</label>
-                    <input type="number" class="form-control" name="current_people_count" id="currentPeopleCount" placeholder="Enter current people" required="required" value="{{ $centre->current_people_count }}">
-                </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ route('office-location.update', $centre->id) }}">
+                    @csrf
+                    @method('PUT')
+                    <div class="form-group">
+                        <label for="centre-name">Centre Name</label>
+                        <input type="text" class="form-control" id="centre-name" name="centre_name" value="{{ $centre->centre_name }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="centre-head">Centre Head</label>
+                        <select class="form-control" id="centre-head" name="centre_head">
+                            @foreach ($users as $user)
+                                <option value="{{ $user->id }}" {{ $user->id == $centre->centre_head_id ? 'selected' : '' }}>{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="capacity">Capacity</label>
+                        <input type="number" class="form-control" id="capacity" name="capacity" value="{{ $centre->capacity }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="current-people-count">Current People Count</label>
+                        <input type="number" class="form-control" id="current-people-count" name="current_people_count" value="{{ $centre->current_people_count }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </form>
             </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Update</button>
-                <a href="{{ route('office-location.index') }}" class="btn btn-secondary">Cancel</a>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-@endsection

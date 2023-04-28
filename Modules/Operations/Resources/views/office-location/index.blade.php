@@ -29,7 +29,8 @@
                     <td>{{ $centre->current_people_count }}</td>
                     <td>
                         <div class="btn-group">
-                            <a href="{{ route('office-location.edit', $centre->id) }}" class="btn btn-info"><i class="fa fa-pencil"></i></a>
+                            <a href="{{ route('office-location.edit', $centre->id) }}" class="btn btn-info" data-toggle="modal" data-target="#edit-center-modal-{{ $centre->id }}"><i class="fa fa-pencil"></i></a>
+
                             <form action="{{ route('office-location.destroy', $centre->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
@@ -44,6 +45,7 @@
                         </div>
                     </td>
                 </tr>
+                @include('operations::office-location.edit', ['centre' => $centre])
                 @endforeach
             </tbody>
         </table>
