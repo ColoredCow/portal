@@ -31,10 +31,13 @@
                         href="{{ route('codetrek.index', $request) }}"><i class="fa fa-pie-chart"></i> Reports</a>
                 </li>
             </div>
+            {{-- @php
+                session()->put("Enter the Applicant name", $request['name']);
+            @endphp --}}
             <form class="d-md-flex justify-content-between ml-md-3" action="{{ route('codetrek.index') }}">
                 <div class="d-flex justify-content-end">
                     <input type="text" name="name" class="form-control" id="name"
-                        placeholder="Enter the Applicant name" value={{ request()->get('name') }}>
+                        placeholder="Enter the Applicant name" value= "{{ request()->get('name') }}">
                     <input type="hidden" name="status" value="{{ $request['status'] ?? '' }}">
                     <button class="btn btn-info ml-2 text-white">Search</button>
                 </div>
