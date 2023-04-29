@@ -31,7 +31,7 @@
                         <div class="btn-group">
                             <a href="{{ route('office-location.edit', $centre->id) }}" class="btn btn-info" data-toggle="modal" data-target="#edit-center-modal-{{ $centre->id }}"><i class="fa fa-pencil"></i></a>
 
-                            <form action="{{ route('office-location.destroy', $centre->id) }}" method="POST">
+                            <form action="{{ route('office-location.delete', $centre->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="button" class="btn btn-danger" style="margin-left: 5px;" data-toggle="modal" data-target="#confirm-delete-{{ $centre->id }}"><i class="fa fa-trash-o"></i></button>
@@ -39,7 +39,7 @@
                                     'modalId' => 'confirm-delete-' . $centre->id,
                                     'title' => 'Confirm Delete',
                                     'body' => 'Are you sure you want to remove this centre?',
-                                    'action' => route('office-location.destroy', $centre->id)
+                                    'action' => route('office-location.delete', $centre->id)
                                 ])
                             </form>
                         </div>
