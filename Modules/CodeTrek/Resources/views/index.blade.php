@@ -31,9 +31,6 @@
                         href="{{ route('codetrek.index', $request) }}"><i class="fa fa-pie-chart"></i> Reports</a>
                 </li>
             </div>
-            {{-- @php
-                session()->put("Enter the Applicant name", $request['name']);
-            @endphp --}}
             <form class="d-md-flex justify-content-between ml-md-3" action="{{ route('codetrek.index') }}">
                 <div class="d-flex justify-content-end">
                     <input type="text" name="name" class="form-control" id="name"
@@ -44,24 +41,27 @@
             </form>
         </ul>
         <br>
+        @php
+            $name = request()->input('name');
+        @endphp
         <ul class="nav nav-pills d-flex justify-content-between">
             <div class='d-flex justify-content-between'>
                 <li class="nav-item mr-3">
-                    <a href="{{ route('codetrek.index', ['status' => 'active']) }}"
+                    <a href="{{ route('codetrek.index', ['name' => $name , 'status' => 'active']) }}"
                         class="nav-link btn-nav {{ request()->input('status', 'active') == 'active' ? 'active' : '' }}"
                         onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
                         <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/clipboard-check.svg')) !!}</span>
                         Active</a>
                 </li>
                 <li class="nav-item mr-3">
-                    <a href="{{ route('codetrek.index', ['status' => 'inactive']) }}"
+                    <a href="{{ route('codetrek.index', ['name' => $name , 'status' => 'inactive']) }}"
                         class="nav-link btn-nav {{ request()->input('status') == 'inactive' ? 'active' : '' }}"
                         onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
                         <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/x-circle.svg')) !!}</span>
                         Inactive</a>
                 </li>
                 <li class="nav-item mr-3">
-                    <a href="{{ route('codetrek.index', ['status' => 'completed']) }}"
+                    <a href="{{ route('codetrek.index', ['name' => $name , 'status' => 'completed']) }}"
                         class="nav-link btn-nav {{ request()->input('status') == 'completed' ? 'active' : '' }}"
                         onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
                         <span class="d-inline-block h-18 w-20"> {!! file_get_contents(public_path('icons/person-check.svg')) !!} </span>
