@@ -25,7 +25,7 @@ class CodeTrekController extends Controller
      */
     public function index(Request $request)
     {
-        return view('codetrek::index', $this->service->getCodeTrekApplicants($request));
+        return view('codetrek::index', $this->service->getCodeTrekApplicants($request->all()));
     }
     /**
      * Show the form for creating a new resource.
@@ -85,7 +85,6 @@ class CodeTrekController extends Controller
 
         return redirect()->route('codetrek.index');
     }
-
     /**
      * Remove the specified resource from storage.
      * @param int $id
