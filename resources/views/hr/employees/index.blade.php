@@ -6,7 +6,7 @@
     @include('hr.employees.menu')
     <br><br>
     <div class="d-flex">
-        <h1>{{request()->get('name')}} ({{count($employees)}})</h1>
+        <h3>{{request()->get('name')}} ({{count($employees)}})</h3>
         <form id="employeeFilterForm" class="d-md-flex justify-content-between ml-md-3">
             <input type="hidden" name="status" value="{{ request()->input('status', 'current') }}">
             <div class='form-group w-130' class="d-inline">
@@ -15,9 +15,9 @@
                     <option {{ $filters['status'] == 'previous' ? "selected=selected" : '' }} value="previous">Previous</option>
                 </select>
             </div>
-            <div class="d-flex align-items-center ml-35">
+            <div class="d-flex align-items-center ml-25">
                     <input type="text" name="employeename" class="form-control" id="name" placeholder="Enter the Employee" value="{{ request()->get('employeename') }}">
-                    <button class="btn btn-info ml-2 text-white">Search</button>
+                    <button class="btn btn-info ml-2 py-1.5 text-white">Search</button>
                 </div>
             <input type="hidden" name="name" value="{{ request()->input('name', 'Employee') }}">
         </form>
