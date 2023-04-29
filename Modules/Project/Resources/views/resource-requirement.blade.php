@@ -23,7 +23,7 @@
         <br>
 
         <div>
-            <table class="table table-bordered table-striped" >
+            <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
                     <tr>
                         <th class="w-30p sticky-top">Client/Project Name</th>
