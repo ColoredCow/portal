@@ -22,6 +22,6 @@ class bankController extends Controller
             $bankDetail = BankDetails::create(['key' => $key, 'value' => $value ? ContentHelper::editorFormat($value) : null]);
         }
 
-        return redirect()->back()->with('status', 'Settings saved!');
+        return redirect()->back()->with('success', 'Settings saved!');
     }
 }
