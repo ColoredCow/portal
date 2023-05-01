@@ -2,15 +2,22 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use Carbon\Factory;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
-class CodeTrekApplicantFactoryRoundDetails extends Factory
+class CodeTrekApplicantFactory extends Factory
 {
-    protected $model = CodetrekApplicantRoundDetail::class;
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    protected $model = CodeTrekApplicantRoundDetail::class;
+
     public function definition()
     {
         return [
-            'feedback' => 'No'
+            'feedback'=>'No'
         ];
     }
 }
