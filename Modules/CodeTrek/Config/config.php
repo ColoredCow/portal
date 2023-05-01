@@ -33,5 +33,9 @@ return [
             'label' =>'Onboarded',
             'slug'  =>'onboarded'
         ],
+        'preparatory' => [
+            'label' => 'Preparatory',
+            'slug' => 'preparatory'
+        ],
     ]
 ];
