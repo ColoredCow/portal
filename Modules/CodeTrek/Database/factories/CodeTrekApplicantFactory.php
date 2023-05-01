@@ -1,6 +1,6 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Modules\CodeTrek\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
@@ -8,7 +8,13 @@ use Faker\Factory as Faker;
 
 class CodeTrekApplicantFactory extends Factory
 {
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
     protected $model = CodeTrekApplicant::class;
+    
     public function definition()
     {
         $faker = Faker::create();
