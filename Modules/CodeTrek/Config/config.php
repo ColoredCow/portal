@@ -17,6 +17,10 @@ return [
         ],
     ],
     'rounds' =>[
+        'preparatory' => [
+            'label' => 'Preparatory',
+            'slug' => 'Preparatory'
+        ],
         'level-1' =>[
             'label' =>'Level-1',
             'slug'  =>'level-1',
@@ -32,10 +36,6 @@ return [
         'onboard'   =>[
             'label' =>'Onboarded',
             'slug'  =>'onboarded'
-        ],
-        'preparatory' => [
-            'label' => 'Preparatory',
-            'slug' => 'Preparatory'
         ],
     ]
 ];
