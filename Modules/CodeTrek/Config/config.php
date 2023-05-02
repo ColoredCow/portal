@@ -35,7 +35,7 @@ return [
         ],
         'preparatory' => [
             'label' => 'Preparatory',
-            'slug' => 'preparatory'
+            'slug' => 'Preparatory'
         ],
     ]
 ];
