@@ -4,7 +4,7 @@ namespace Modules\CodeTrek\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Modules\CodeTrek\Database\factories\CodetrekApplicantRoundFactory;
+use Modules\CodeTrek\Database\factories\CodeTrekApplicantFactory;
 
 class CodeTrekApplicantRoundDetail extends Model
 {
@@ -19,6 +19,6 @@ class CodeTrekApplicantRoundDetail extends Model
 
     public static function newFactory()
     {
-        return new CodetrekApplicantRoundFactory();
+        return new CodetrekApplicantFactory();
     }
 }

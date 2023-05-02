@@ -5,6 +5,9 @@ namespace Modules\CodeTrek\Database\Seeders;
 use Illuminate\Database\Seeder;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
+use Modules\CodeTrek\Database\factories\CodeTrekApplicantFactory;
+use Modules\CodeTrek\Database\factories\CodeTrekApplicantRoundFactory;
+
 
 class CosetrekApplicantsTableSeeder extends Seeder
 {

@@ -3,6 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
 class CodeTrekApplicantFactory extends Factory
