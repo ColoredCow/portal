@@ -7,7 +7,7 @@
 		</div>
 	</div>
 	<table class="table table-striped table-bordered">
-		<thead class="thead-dark mw-100p">
+		<thead class="thead-dark">
 		    <tr>
 		      <th scope="col">Name</th>
 		      <th scope="col">Actions</th>
