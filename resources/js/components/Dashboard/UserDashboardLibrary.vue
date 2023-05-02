@@ -8,21 +8,20 @@
         <li class="nav-item">
           <a
             id="wishlist"
-            class="nav-link active c-pointer pb-5 h-75 d-inline-block"
+            class="nav-link active c-pointer"
             @click="setActiveTile('wishlist')"
-            >Your wishlist</a
-            >
+            >Your wishlist</a>
         </li>
         <li class="nav-item">
-          <a id="read" class="nav-link c-pointer h-75 d-inline-block" @click="setActiveTile('read')"
+          <a id="read" class="nav-link c-pointer" @click="setActiveTile('read')"
             >You have read</a
             >
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item d-flex">
           <a 
           id="recommend" 
-          class="nav-link c-pointer active h-75 d-inline-block" @click="setActiveTile('recommend')"
+          class="nav-link c-pointer active" @click="setActiveTile('recommend')"
            >Recommend</a>
         </li>
       </ul>
