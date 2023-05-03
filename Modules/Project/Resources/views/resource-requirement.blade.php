@@ -65,10 +65,11 @@
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
                     <tr>
-                        <th class="w-30p sticky-top">Client/Project Name</th>
-                        <th class="sticky-top">Resouce Needed</th>
-                        <th class="sticky-top">Resource Deployed</th>
-                        <th class="sticky-top" colspan="2">Additional Resource Required</th>
+                        <th class="w-40p sticky-top">Client/Project Name</th>
+                        <th class="w-25p sticky-top">Resouce Needed</th>
+                        <th class="w-20p sticky-top">Resource Deployed</th>
+                        <th class="w-20p sticky-top">Additional Resource Required</th>
+                        <th class="sticky-top">Action</th>
                     </tr>
                 </thead>
                 <tbody>
