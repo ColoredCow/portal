@@ -447,80 +447,189 @@
                     </table>
                 </div>
                     <br>
-                    <table class="table-borderless transaction-details w-60p">
-                        <thead>
-                            <tr>
-                                <th class="fz-16" align="left">Transaction Details</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="w-40p" >Transaction Method:</td>
-                                <td>{{ config('invoice.finance-details.transaction-method.value.bank-transfer.value') }}</td>
-                            </tr>
-                            <tr>
-                                <td class="w-40p">Bank Name:</td>
-                                <td>{{ config('invoice.finance-details.bank-address') }}</td>
-                            </tr>
-                            <tr>
-                                <td class="w-40p">Swift Code:</td>
-                                <td>{{ config('invoice.finance-details.swift-code') }}</td>
-                            </tr>
-                            <tr>
-                                <td class="w-40p">Bank/IFCI Code:</td>
-                                <td>{{ config('invoice.finance-details.ifci-code') }}</td>
-                            </tr>
-                            <tr>
-                                <td class="w-40p">Account Number:</td>
-                                <td>{{ config('invoice.finance-details.account-number') }}</td>
-                            </tr>
-                            <tr>
-                                <td class="w-40p">A/C Holder Name:</td>
-                                <td>{{ config('invoice.finance-details.holder-name') }}</td>
-                            </tr>
-                            <tr>
-                                <td class="w-40p">Phone:</td>
-                                <td>{{ config('invoice.finance-details.phone') }}</td>
-                            </tr><br>
-                            <tr><td><br></td></tr>
-                            <tr>
-                                <td colspan="2">
-                                    <a href="{{ $billingLevel == 'client' ? $client->effort_sheet_url : $project->effort_sheet_url }}" target="_blank">For more details of this invoice you can visit this sheet.</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    Thank you for your business. It’s a pleasure to work with you on your project.
-                                </td>
-                            </tr>
-                            <tr><td><br></td></tr>
-                            <tr>
-                                <td>
-                                    <p>Sincerely,</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <p>{{ config('invoice.coloredcow-details.name') }}</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <p>{{ config('invoice.coloredcow-details.gurgaon.address-line-1') }}</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <p>{{ config('invoice.coloredcow-details.gurgaon.address-line-2') }}</p>
-                                </td>
-                            </tr>
-                            <tr colspan="2">
-                                <td>
-                                    <img class="stamp" src="{{ storage_path('app/stamp/coloredcow-stamp.png') }}" alt="" height="100" width="100">     
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    @if($client->country->initials == 'IN')
+                        <table class="table-borderless transaction-details w-60p">
+                            <thead>
+                                <tr>
+                                    <th class="fz-16" align="left">Transaction Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="w-40p" >Transaction Method:</td>
+                                    <td>{{ config('invoice.finance-details.transaction-method.value.bank-transfer.value') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="w-40p">Bank Name:</td>
+                                    <td>{{ config('invoice.finance-details.indian.bank-address') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="w-40p">Swift Code:</td>
+                                    <td>{{ config('invoice.finance-details.indian.swift-code') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="w-40p">Bank/IFCI Code:</td>
+                                    <td>{{ config('invoice.finance-details.indian.ifci-code') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="w-40p">Account Number:</td>
+                                    <td>{{ config('invoice.finance-details.indian.account-number') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="w-40p">A/C Holder Name:</td>
+                                    <td>{{ config('invoice.finance-details.holder-name') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="w-40p">Phone:</td>
+                                    <td>{{ config('invoice.finance-details.phone') }}</td>
+                                </tr><br>
+                                <tr><td><br></td></tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <a href="{{ $billingLevel == 'client' ? $client->effort_sheet_url : $project->effort_sheet_url }}" target="_blank">For more details of this invoice you can visit this sheet.</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        Thank you for your business. It’s a pleasure to work with you on your project.
+                                    </td>
+                                </tr>
+                                <tr><td><br></td></tr>
+                                <tr>
+                                    <td>
+                                        <p>Sincerely,</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <p>{{ config('invoice.coloredcow-details.name') }}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <p>{{ config('invoice.coloredcow-details.gurgaon.address-line-1') }}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <p>{{ config('invoice.coloredcow-details.gurgaon.address-line-2') }}</p>
+                                    </td>
+                                </tr>
+                                <tr colspan="2">
+                                    <td>
+                                        <img class="stamp" src="{{ storage_path('app/stamp/coloredcow-stamp.png') }}" alt="" height="100" width="100">     
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    @else
+                        <table class="table-borderless transaction-details w-60p">
+                            <thead>
+                                <tr>
+                                    <th class="fz-16" align="left">Transaction Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="w-40p" >Transaction Method:</td>
+                                    <td>{{ config('invoice.finance-details.transaction-method.value.bank-transfer.value') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="w-40p">Bank Name:</td>
+                                    <td>{{ config('invoice.finance-details.international.bank-address') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="w-40p">Swift Code:</td>
+                                    <td>{{ config('invoice.finance-details.international.swift-code') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="w-40p">Bank/IFCI Code:</td>
+                                    <td>{{ config('invoice.finance-details.international.ifci-code') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="w-40p">Account Number:</td>
+                                    <td>{{ config('invoice.finance-details.international.account-number') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="w-40p">A/C Holder Name:</td>
+                                    <td>{{ config('invoice.finance-details.holder-name') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="w-40p">Phone:</td>
+                                    <td>{{ config('invoice.finance-details.phone') }}</td>
+                                </tr><br>
+                                <tr><td><br></td></tr>
+                            </tbody>
+                            <thead>
+                                <tr>
+                                    <th class="fz-16" align="left">For International Wire Transfer</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="w-40p" >Correspondent Bank:</td>
+                                    <td>{{ config('invoice.finance-details.international.correspondent-bank') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="w-40p">Correspondent Bank SWIFT Code:</td>
+                                    <td>{{ config('invoice.finance-details.international.correspondent-bank-swift-code') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="w-40p">Nostro A/c Number (External) [Field 53D]:</td>
+                                    <td>{{ config('invoice.finance-details.international.notstro-account-number') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="w-40p">AD Code:</td>
+                                    <td>{{ config('invoice.finance-details.international.ad-code') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="w-40p">Wire Transfer Currency:</td>
+                                    <td>{{ $client->country->currency }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="w-40p">Purpose Code:</td>
+                                    <td>{{ config('invoice.finance-details.international.purpose-code') }}</td>
+                                </tr><br>
+                                <tr><td><br></td></tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <a href="{{ $billingLevel == 'client' ? $client->effort_sheet_url : $project->effort_sheet_url }}" target="_blank">For more details of this invoice you can visit this sheet.</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        Thank you for your business. It’s a pleasure to work with you on your project.
+                                    </td>
+                                </tr>
+                                <tr><td><br></td></tr>
+                                <tr>
+                                    <td>
+                                        <p>Sincerely,</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <p>{{ config('invoice.coloredcow-details.name') }}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <p>{{ config('invoice.coloredcow-details.gurgaon.address-line-1') }}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <p>{{ config('invoice.coloredcow-details.gurgaon.address-line-2') }}</p>
+                                    </td>
+                                </tr>
+                                <tr colspan="2">
+                                    <td>
+                                        <img class="stamp" src="{{ storage_path('app/stamp/coloredcow-stamp.png') }}" alt="" height="100" width="100">     
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    @endif
                 </div>
             </div>
         </header>

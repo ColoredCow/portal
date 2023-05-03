@@ -202,13 +202,13 @@
                             <p><br></p>
                             <p>{{ __('For Company ') . config('invoice.coloredcow-details.name') }}</p>
                             <p>{{ 'Address: ' . config('invoice.coloredcow-details.gurgaon.address-line-1') . ', ' . config('invoice.coloredcow-details.gurgaon.address-line-2') }}</p>
-                            <p>{{ __('Bank Name: ') . config('invoice.finance-details.bank-address') }}</p>
-                            <p>{{ __('A/C No: ') . config('invoice.finance-details.account-number') }}</p>
-                            <p>{{ __('IFSC: ') . config('invoice.finance-details.ifci-code') }}</p>
-                            <p>{{ __('SWIFT Code: ') . config('invoice.finance-details.swift-code') }}</p>
-                            <p>{{ __('Correspondent Bank: ') . config('invoice.finance-details.correspondent-bank') }}</p>
-                            <p>{{ __('SWIFT Code: ') . config('invoice.finance-details.correspondent-bank-swift-code') }}</p>
-                            <p>{{ __('Beneficiary Bank of USD: ') . config('invoice.finance-details.beneficiary-bank-of-usd') }}</p>
+                            <p>{{ __('Bank Name: ') . config('invoice.finance-details.international.bank-address') }}</p>
+                            <p>{{ __('A/C No: ') . config('invoice.finance-details.international.account-number') }}</p>
+                            <p>{{ __('IFSC: ') . config('invoice.finance-details.international.ifci-code') }}</p>
+                            <p>{{ __('SWIFT Code: ') . config('invoice.finance-details.international.swift-code') }}</p>
+                            <p>{{ __('Correspondent Bank: ') . config('invoice.finance-details.international.correspondent-bank') }}</p>
+                            <p>{{ __('SWIFT Code: ') . config('invoice.finance-details.international.correspondent-bank-swift-code') }}</p>
+                            <p>{{ __('Beneficiary Bank of USD: ') . config('invoice.finance-details.international.beneficiary-bank-of-usd') }}</p>
                             <p>{{ __('GSTIN: ') . config('invoice.finance-details.gstin') }}</p>
                         </td>
                     </tbody>
