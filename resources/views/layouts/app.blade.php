@@ -28,8 +28,49 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container-fluid">
+        <nav class="navbar navbar-expand-md navbar-light">
+        <div class="container-fluid">
+            <div class="w3-container">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+                <body>
+                
+                <!-- Sidebar -->
+                <div class="w3-sidebar w3-bar-block" style="display:none;z-index:5" id="mySidebar">
+                  <button class="w3-bar-item-left w3-button w3-xlarge" onclick="w3_close()"> &times;</button>
+                  <h2>CodeTrek Interns</h2>
+                  @if(isset($applicants))
+                  <ul>
+                      @foreach($applicants as $applicant)
+                          <li><a href="{{ route('feedback.create', $applicant->id) }}">{{ $applicant->first_name }} {{ $applicant->last_name }}</a></li>
+                      @endforeach
+                  </ul>
+                  @endif
+              
+                </div>
+                
+                <!-- Page Content -->
+                  <button class="w3-button w3-white w3-xlarge" onclick="w3_open()">&#9776;</button>
+                    {{-- <h1>Sidebar Overlay</h1>
+                    <p></p></p> --}}
+                     
+                <script>
+                function w3_open() {
+                  document.getElementById("mySidebar").style.display = "block";
+                  document.getElementById("myOverlay").style.display = "block";
+                }
+                
+                function w3_close() {
+                  document.getElementById("mySidebar").style.display = "none";
+                  document.getElementById("myOverlay").style.display = "none";
+                }
+                </script>
+                          
+                </body>
+                </html>
+            </div>
+                
+
                 <a class="navbar-brand min-w-md-150" href="{{ url('/') }}">
                     {{ config('app.name', 'ColoredCow Portal') }}
                 </a>
@@ -86,7 +127,7 @@
                         @endauth
                     </ul>
                 </div>
-            </div>
+        </div>
         </nav>
 
         @if (session('status'))

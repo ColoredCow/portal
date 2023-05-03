@@ -12,6 +12,9 @@
 */
 
 Route::prefix('codetrek')->middleware('auth')->group(function () {
+    // Route::get('/', 'CodeTrekApplicants@index')->name('codetrekapplicant.index');
+    Route::get('/feedback/{applicant}', 'CodeTrekController@create')->name('feedback.create');
+    Route::post('/feedback', 'CodeTrekController@storeFeedback')->name('feedback.storeFeedback');
     Route::get('/', 'CodeTrekController@index')->name('codetrek.index');
     Route::post('/', 'CodeTrekController@store')->name('codetrek.store');
     Route::get('/edit/{applicant}', 'CodeTrekController@edit')->name('codetrek.edit');

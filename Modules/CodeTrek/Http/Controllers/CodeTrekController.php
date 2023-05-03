@@ -4,6 +4,7 @@ namespace Modules\CodeTrek\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Modules\CodeTrek\Entities\Feedback;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 use Modules\CodeTrek\Services\CodeTrekService;
@@ -30,9 +31,21 @@ class CodeTrekController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(CodeTrekApplicant $applicant)
     {
+    return view('codetrek::feedback.create')->with('CodeTrekApplicant', $applicant);
     }
+
+    public function storeFeedback(Request $request)
+    {
+    $feedback = new Feedback();
+    $feedback->applicant_id = $request->applicant_id;
+    $feedback->feedback = $request->feedback;
+    $feedback->category = $request->category;
+    $feedback->save();
+
+    return redirect('/')->with('success', 'Thank you for your feedback!');
+}
 
     /**
      * Store a newly created resource in storage.

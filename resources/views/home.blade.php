@@ -48,7 +48,7 @@
 
     </div>
 </div>
-@includeWhen($book, 'knowledgecafe.library.books.show_nudge_modal')
+{{-- @includeWhen($book, 'knowledgecafe.library.books.show_nudge_modal') --}}
 
 @endsection
 
