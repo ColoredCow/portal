@@ -2,9 +2,10 @@
 
 namespace Modules\CodeTrek\Entities;
 
+use CodeTrekApplicantRoundFactory as GlobalCodeTrekApplicantRoundFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Modules\CodeTrek\Database\factories\CodeTrekApplicantFactory;
+use Modules\CodeTrek\Database\factories\CodetrekApplicantRoundFactory;
 
 class CodeTrekApplicantRoundDetail extends Model
 {
@@ -19,6 +20,6 @@ class CodeTrekApplicantRoundDetail extends Model
 
     public static function newFactory()
     {
-        return new CodetrekApplicantFactory();
+        return new GlobalCodeTrekApplicantRoundFactory();
     }
 }

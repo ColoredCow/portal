@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
-class CodeTrekApplicantFactory extends Factory
+class CodeTrekApplicantRoundFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,8 @@ class CodeTrekApplicantFactory extends Factory
     public function definition()
     {
         return [
-            'feedback'=>'No'
+            'applicant_id' => CodeTrekApplicant::inRandomOrder()->first()->id,
+            'feedback'=>'No',
         ];
     }
 }

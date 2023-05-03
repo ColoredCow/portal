@@ -12,6 +12,7 @@ class CodeTrekApplicant extends Model
     use SoftDeletes;
     use HasFactory;
     protected $guarded = [];
+    protected $table = 'code_trek_applicants';
 
     public function roundDetails()
     {
