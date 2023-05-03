@@ -1,12 +1,15 @@
 <?php
 
+
+namespace Modules\CodeTrek\Database\Factories;
+
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
-class CodeTrekApplicantRoundFactory extends Factory
+class CodetrekApplicantRoundDetailFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +21,9 @@ class CodeTrekApplicantRoundFactory extends Factory
     public function definition()
     {
         return [
-            'applicant_id' => CodeTrekApplicant::inRandomOrder()->first()->id,
+            //'applicant_id' => CodeTrekApplicant::inRandomOrder()->first()->id,
             'feedback'=>'No',
         ];
     }
 }
+
