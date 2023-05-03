@@ -11,7 +11,7 @@ class CodeTrekService
     {
         $search = $data['name'] ?? null;
         $status = $data['status'] ?? 'active';
-        $query = CodeTrekApplicant::where('status', $status);
+        $query = CodeTrekApplicant::where('status', $status)->orderBy('first_name');
         $applicants = $search ? $query->where('first_name', 'LIKE', "%$search%")
             ->orWhere('last_name', 'LIKE', "%$search%")
             ->get() : $query->get();
