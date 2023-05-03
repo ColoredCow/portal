@@ -1,21 +1,9 @@
 @extends('project::layouts.master')
 @section('content')
     <div class="container" id="vueContainer">
-        @if (session('success'))
-        <div class="toast" text-white bg-success  role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-body">
-              Hello, world! This is a toast message.
-            </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-  </div>
-          </div>
-            <div class="toast aria-live="assertive" aria-atomic="true" role="alert">
-                {{ session('success') }}
-                <button type="button" class="close" data-dismiss="toast" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
+        @includeWhen(session('success'), 'toast', ['message' => session('success')])
+       
+    </div> 
         <div class='d-none d-md-flex justify-content-between'>
             @include('project::menu_header')
             @can('projects.create')
