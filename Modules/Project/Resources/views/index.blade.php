@@ -2,8 +2,7 @@
 @section('content')
     <div class="container" id="vueContainer">
         @includeWhen(session('success'), 'toast', ['message' => session('success')])
-       
-    </div> 
+       </div> 
         <div class='d-none d-md-flex justify-content-between'>
             @include('project::menu_header')
             @can('projects.create')
