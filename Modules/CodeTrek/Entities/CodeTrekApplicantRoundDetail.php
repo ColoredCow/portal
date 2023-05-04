@@ -21,4 +21,5 @@ class CodeTrekApplicantRoundDetail extends Model
     {
         return new CodetrekApplicantRoundDetailFactory();
     }
+
 }
