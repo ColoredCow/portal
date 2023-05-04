@@ -2,10 +2,9 @@
 
 namespace Modules\CodeTrek\Entities;
 
-use Modules\CodeTrek\Database\factories\CodeTrekApplicantRoundDetailFactory;
+use Modules\CodeTrek\Database\Factories\CodeTrekApplicantRoundDetailFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 
 class CodeTrekApplicantRoundDetail extends Model
 {

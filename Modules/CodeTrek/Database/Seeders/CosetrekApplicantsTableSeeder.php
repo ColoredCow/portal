@@ -8,7 +8,6 @@ use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 use Modules\CodeTrek\Database\factories\CodeTrekApplicantFactory;
 use Modules\CodeTrek\Database\factories\CodeTrekApplicantRoundFactory;
 
-
 class CosetrekApplicantsTableSeeder extends Seeder
 {
     /**
