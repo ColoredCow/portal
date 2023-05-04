@@ -16,7 +16,7 @@ class CodeTrekApplicant extends Model
 
     public function roundDetails()
     {
-        return $this->hasMany(CodeTrekApplicantRoundDetail::class);
+        return $this->hasMany(CodeTrekApplicantRoundDetail::class,'Applicant_id');
     }
 
     public static function newFactory()
