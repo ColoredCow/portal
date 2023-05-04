@@ -28,5 +28,4 @@ class CodetrekApplicantRoundDetailFactory extends Factory
             //'start_date' => date(),
         ];
     }
-
 }
