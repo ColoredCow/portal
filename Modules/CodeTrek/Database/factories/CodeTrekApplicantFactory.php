@@ -14,7 +14,6 @@ class CodeTrekApplicantFactory extends Factory
      * @return array
      */
     protected $model = CodeTrekApplicant::class;
-    
     public function definition()
     {
         $faker = Faker::create();

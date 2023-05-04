@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Modules\CodeTrek\Database\Factories;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
