@@ -15,8 +15,6 @@ class CodetrekApplicantRoundDetailFactory extends Factory
      * @return array
      */
     protected $model = CodeTrekApplicantRoundDetail::class;
-
-
     public function definition()
     {
         return [
