@@ -6,8 +6,7 @@ use Modules\CodeTrek\Database\Factories\CodetrekApplicantRoundDetailFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CodeTrekApplicantRoundDetail extends Model
-{
+class CodeTrekApplicantRoundDetail extends Model{
     use HasFactory;
     protected $guarded = [];
     protected $table = 'codetrek_applicant_round_details';
@@ -21,4 +20,3 @@ class CodeTrekApplicantRoundDetail extends Model
     {
         return new CodetrekApplicantRoundDetailFactory();
     }
-}
