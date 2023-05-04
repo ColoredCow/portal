@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Faker\Factory as Faker;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
-class CodetrekApplicantRoundDetailFactory extends Factory{
+class CodetrekApplicantRoundDetailFactory extends Factory
+{
     /**
      * Define the model's default state.
      *
@@ -27,3 +28,4 @@ class CodetrekApplicantRoundDetailFactory extends Factory{
             //'start_date' => date(),
         ];
     }
+}
