@@ -18,7 +18,7 @@
 				<tr>
 					<td>{{ $salesArea->name }}</td>
 					<td class="w-25p">
-					<form action="{{ route('sales-area.update', $salesArea) }}" method="POST">
+						<form action="{{ route('sales-area.update', $salesArea) }}" method="POST">
 							@csrf
 							@method('PUT')
 							<div class="modal fade" id="editSalesAreaModal{{ $index }}" tabindex="-1" role="dialog" aria-labelledby="editSalesAreaModalLabel" aria-hidden="true">
