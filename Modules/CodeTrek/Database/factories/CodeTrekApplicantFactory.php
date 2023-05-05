@@ -2,6 +2,7 @@
 
 namespace Modules\CodeTrek\Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Faker\Factory as Faker;
@@ -25,8 +26,21 @@ class CodeTrekApplicantFactory extends Factory
             'github_user_name'=>$faker->userName,
             'phone'=>$faker->phoneNumber,
             'course'=>$faker->word,
-            'start_date'=>$faker->date($format = 'Y-m-d', $max = 'now'),
-            'graduation_year'=>$faker->year($min = 'now')
+            'start_date' => Carbon::today(),
+            'university' =>$this->getCollegeNames()[array_rand($this->getCollegeNames())],
+            'graduation_year'=>Carbon::now()->year,
+        ];
+    }
+    private function getCollegeNames()
+    {
+        return [
+            'THDC-ihet',
+            'Doon University',
+            'AMU',
+            'Delhi University',
+            'chandigarh University',
+            'Uttaranchal University',
+            'Graphic-Era University',
         ];
     }
 }
