@@ -2,8 +2,6 @@
 
 namespace Modules\CodeTrek\Database\Factories;
 
-/* @var \Illuminate\Database\Eloquent\Factory $factory */
-
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
