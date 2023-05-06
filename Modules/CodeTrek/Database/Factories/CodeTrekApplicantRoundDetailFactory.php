@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
-class CodetrekApplicantRoundDetailFactory extends Factory
+class CodeTrekApplicantRoundDetailFactory extends Factory
 {
     /**
      * Define the model's default state.
