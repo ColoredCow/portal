@@ -2,7 +2,7 @@
 
 namespace Modules\CodeTrek\Entities;
 
-use Modules\CodeTrek\Database\Factories\CodetrekApplicantRoundDetailFactory;
+use Modules\CodeTrek\Database\Factories\CodeTrekApplicantRoundDetailFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,6 +19,6 @@ class CodeTrekApplicantRoundDetail extends Model
 
     public static function newFactory()
     {
-        return new CodetrekApplicantRoundDetailFactory();
+        return new CodeTrekApplicantRoundDetailFactory();
     }
 }
