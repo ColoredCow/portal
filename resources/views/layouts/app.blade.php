@@ -98,9 +98,10 @@
                                 </div>
                             </li>
                         @endauth
-                        <button id="applicant-toggle"><i class="fa fa-bars"></i></button>
+                        <button id="applicant-toggle" style="border: none; background-color: transparent;"><i
+                                class="fa fa-bars" style="border: none;"></i></button>
                         <div id="applicant-sidebar">
-                            <h5 style="color: blue;">CodeTrek Applicants</h5>
+                            <h5 style="font-weight: bold;">CodeTrek Applicants</h5>
                             <ul class="applicant-list">
                                 @include('codetrek::sidebar')
                             </ul>
@@ -161,8 +162,6 @@
                                 });
                             });
                         </script>
-
-
                     </ul>
                 </div>
             </div>
