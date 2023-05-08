@@ -12,7 +12,7 @@
                 <h1>Applications</h1>
             </div>
             <div class="input-group mb-1 col-md-6" style="display: flex;">
-                <div class="d-flex">
+                <div class="d-flex mt-md-10 mt-lg-0">
                     <div class="input-group mb-3 col-md-9">
                         <input type="text" class="form-control w-300" id="search" placeholder="Enter a keyword" aria-describedby="button-addon2"
                         name="search" value= "@if(request()->has('search')){{request()->get('search')}}@endif">
