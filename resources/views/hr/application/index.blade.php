@@ -8,7 +8,7 @@
     <br>
     <form class="form" action="/{{ Request::path() }}">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3 mx-3">
                 <h1>Applications</h1>
             </div>
             <div class="input-group mb-1 col-md-6" style="display: flex;">
