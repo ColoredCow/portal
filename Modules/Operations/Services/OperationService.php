@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\operations\Services;
+namespace Modules\Operations\Services;
 
 use Modules\Operations\Entities\OfficeLocation;
 
@@ -19,9 +19,8 @@ class OperationService
         return $centre;
     }
 
-    public function update($data, $id)
+    public function update($data, $centre)
     {
-        $centre = OfficeLocation::findOrFail($id);
         $centre->centre_name = $data['centre_name'];
         $centre->centre_head_id = $data['centre_head'];
         $centre->capacity = $data['capacity'];

@@ -14,7 +14,7 @@
 Route::prefix('operations')->group(function () {
     Route::get('/office-location', 'OperationsController@index')->name('office-location.index');
     Route::post('/office-location', 'OperationsController@store')->name('office-location.store');
-    Route::get('/office-location/{id}/edit', 'OperationsController@edit')->name('office-location.edit');
-    Route::put('/office-location/{id}/update', 'OperationsController@update')->name('office-location.update');
-    Route::delete('/office-location/{id}', 'OperationsController@delete')->name('office-location.delete');
+    Route::get('/office-location/{centre}/edit', 'OperationsController@edit')->name('office-location.edit');
+    Route::put('/office-location/{centre}', 'OperationsController@update')->name('office-location.update');
+    Route::delete('/office-location/{centre}', 'OperationsController@delete')->name('office-location.delete');
 });
