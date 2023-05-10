@@ -37,7 +37,7 @@ return [
             'slug'  =>'level-3',
             'class' => 'badge badge-dark'
         ],
-        'onboard'   =>[
+        'onboarded'   =>[
             'label' =>'Onboarded',
             'slug'  =>'onboarded',
             'class' => 'badge badge-success'
