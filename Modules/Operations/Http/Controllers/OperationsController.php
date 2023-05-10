@@ -58,7 +58,8 @@ class OperationsController extends Controller
         if ($centre->exists) {
             $centre->delete();
         }
-    
+
+
         return redirect()->route('office-location.index');
     }
 }
