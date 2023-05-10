@@ -59,6 +59,6 @@ class OperationsController extends Controller
             $centre->delete();
         }
 
-        return redirect(->route('office-location.index');
+        return redirect()->route('office-location.index');
     }
 }
