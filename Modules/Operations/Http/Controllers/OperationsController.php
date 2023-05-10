@@ -55,10 +55,11 @@ class OperationsController extends Controller
 
     public function delete(OfficeLocation $centre)
     {
-        if ($centre) {
+        if ($centre->exists) {
             $centre->delete();
         }
-
+    
         return redirect()->route('office-location.index');
     }
+    
 }
