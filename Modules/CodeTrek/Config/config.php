@@ -17,9 +17,9 @@ return [
         ],
     ],
     'rounds' =>[
-        'preparatory' => [
+        'Preparatory' => [
             'label' => 'Preparatory',
-            'slug' => 'Preparatory',
+            'slug'  => 'preparatory',
             'class' => 'badge badge-primary'
         ],
         'level-1' =>[
@@ -37,7 +37,7 @@ return [
             'slug'  =>'level-3',
             'class' => 'badge badge-success'
         ],
-        'onboard'   =>[
+        'onboarded'   =>[
             'label' =>'Onboarded',
             'slug'  =>'onboarded',
             'class' => 'badge badge-info'
