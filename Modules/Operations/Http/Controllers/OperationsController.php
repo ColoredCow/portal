@@ -61,5 +61,4 @@ class OperationsController extends Controller
     
         return redirect()->route('office-location.index');
     }
-
 }
