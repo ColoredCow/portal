@@ -7,7 +7,7 @@ use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
 class CodeTrekService
 {
-    public function getCodeTrekApplicants($data = [], $centerId)
+    public function getCodeTrekApplicants($centerId, $data = [])
     {
         $search = $data['name'] ?? null;
         $status = $data['status'] ?? 'active';
