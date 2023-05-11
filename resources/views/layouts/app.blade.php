@@ -106,62 +106,6 @@
                                 @include('codetrek::sidebar')
                             </ul>
                         </div>
-
-                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                        <script>
-                            $(function() {
-                                // When the hamburger icon is clicked, toggle the sidebar
-                                $('#applicant-toggle').click(function() {
-                                    $('#applicant-sidebar').css('right', '0');
-                                });
-
-                                // When an applicant is clicked, load their details
-                                $('.applicant-list li').click(function() {
-                                    var applicantId = $(this).data('id');
-                                    $.ajax({
-                                        url: '/code-trek-applicants/' + applicantId,
-                                        success: function(data) {
-                                            // Display applicant details in the main content area
-                                            $('#main-content').html(data);
-                                        }
-                                    });
-                                });
-
-                                // When the user clicks outside the sidebar, hide it
-                                $(document).click(function(event) {
-                                    if (!$(event.target).closest('#applicant-toggle, #applicant-sidebar').length) {
-                                        $('#applicant-sidebar').css('right', '-200px');
-                                    }
-                                });
-
-                                // Styles for the sidebar
-                                $('#applicant-sidebar').css({
-                                    position: 'fixed',
-                                    top: '60px',
-                                    right: '-200px',
-                                    width: '200px',
-                                    padding: '10px',
-                                    border: '1px solid #ccc',
-                                    backgroundColor: '#f9f9f9',
-                                    transition: 'right 0.3s ease-in-out'
-                                });
-
-                                $('.applicant-list').css({
-                                    listStyle: 'none',
-                                    padding: '0',
-                                    margin: '0'
-                                });
-
-                                $('.applicant-list li').css({
-                                    cursor: 'pointer',
-                                    padding: '5px'
-                                });
-
-                                $('.applicant-list li:hover').css({
-                                    backgroundColor: '#e6e6e6'
-                                });
-                            });
-                        </script>
                     </ul>
                 </div>
             </div>
