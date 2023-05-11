@@ -14,7 +14,7 @@ class CodeTrekService
         $query = CodeTrekApplicant::where('status', $status)->orderBy('first_name');
         $applicants = $search ? $query->whereRaw("CONCAT(first_name, ' ', last_name) like '%$search%'")
             ->get() : $query->get();
-        if($centerId) {
+        if ($centerId) {
             $applicants = CodeTrekApplicant::where('center_id', $centerId)->get();
         }
 
