@@ -70,6 +70,15 @@
                                     @endfor
                                 </select>
                             </div>
+                            <div class="form-group offset-md-1 col-md-5">
+                                <label for="center">Center Name</label>
+                                <select v-model="centerName" name="center_name" id="centerName" class="form-control">
+                                    <option value="" selected>Select Center Name</option>
+                                    @foreach($centers as $center)
+                                        <option value="{{ $center->id }}">{{ $center->centre_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer">

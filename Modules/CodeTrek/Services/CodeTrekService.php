@@ -7,13 +7,16 @@ use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
 class CodeTrekService
 {
-    public function getCodeTrekApplicants($data = [])
+    public function getCodeTrekApplicants($data = [], $centerId)
     {
         $search = $data['name'] ?? null;
         $status = $data['status'] ?? 'active';
         $query = CodeTrekApplicant::where('status', $status)->orderBy('first_name');
         $applicants = $search ? $query->whereRaw("CONCAT(first_name, ' ', last_name) like '%$search%'")
             ->get() : $query->get();
+        if($centerId) {
+            $applicants = CodeTrekApplicant::where('center_id', $centerId)->get();
+        }
 
         return ['applicants' => $applicants];
     }
@@ -30,6 +33,7 @@ class CodeTrekService
         $applicant->start_date = $data['start_date'];
         $applicant->graduation_year = $data['graduation_year'] ?? null;
         $applicant->university = $data['university_name'] ?? null;
+        $applicant->center_id = $data['center_name'];
         $applicant->save();
 
         $this->moveApplicantToRound($applicant, $data);

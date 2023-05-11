@@ -41,6 +41,26 @@
             </form>
         </ul>
         <br>
+        <form class="md-row d-md-flex flex-md-row-reverse ml-4 ml-md-3 mt-sm-2 mt-md-0" action="{{ route('codetrek.index') }}">
+            <div class="d-flex flex-row">
+                <div class="mr-2 mt-2 mt-md-0 form-group">
+                    <label id="center">{!! __('Centers') !!}</label><br>
+                    <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" name="center_name" id="center">
+                        <option value="" {{ request()->has('center_id') ? '' : 'selected' }}>
+                            {!! __('All Centers') !!}
+                        </option>
+                        @foreach ($centers as $center)
+                            <option value="{{ $center->id }}" {{ request()->get('center_id') == $center->id ? 'selected' : '' }}>
+                                {{ $center->centre_name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <button class="btn h-40 mt-6 mt-md-4 mt-xl-5 w-md-50 mr-md-2 theme-shadow-dark border pt-1">
+                    <i class="fa fa-search c-pointer fz-20" aria-hidden="true"></i>
+                </button>
+            </div>
+        </form>        
         @php
             $name = request()->input('name');
         @endphp
