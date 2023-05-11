@@ -97,15 +97,15 @@
                                     </form>
                                 </div>
                             </li>
+                            <button id="applicant-toggle" style="border: none; background-color: transparent;"><i
+                                    class="fa fa-bars" style="border: none;"></i></button>
+                            <div id="applicant-sidebar">
+                                <h5 style="font-weight: bold;">CodeTrek Applicants</h5>
+                                <ul class="applicant-list">
+                                    @include('codetrek::sidebar')
+                                </ul>
+                            </div>
                         @endauth
-                        <button id="applicant-toggle" style="border: none; background-color: transparent;"><i
-                                class="fa fa-bars" style="border: none;"></i></button>
-                        <div id="applicant-sidebar">
-                            <h5 style="font-weight: bold;">CodeTrek Applicants</h5>
-                            <ul class="applicant-list">
-                                @include('codetrek::sidebar')
-                            </ul>
-                        </div>
                     </ul>
                 </div>
             </div>
@@ -133,6 +133,7 @@
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
     <script src="{{ asset('src/tinymce/js/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     @yield('js_scripts')
     @yield('vue_scripts')
