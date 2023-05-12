@@ -1833,7 +1833,7 @@ $(".status").on("change", function() {
 
 $(function () {
 	$("#applicant-toggle").click(function () {
-		$("#applicant-sidebar").css('right', '0');
+		$("#applicant-sidebar").css("right", "0");
 	});
 
 	$(".applicant-list li").click(function () {
@@ -1848,7 +1848,7 @@ $(function () {
 
 	$(document).click(function (event) {
 		if (!$(event.target).closest("#applicant-toggle, #applicant-sidebar").length) {
-			$("#applicant-sidebar").css('right', '-200px');
+			$("#applicant-sidebar").css("right", "-200px");
 		}
 	});
 
