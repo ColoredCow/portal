@@ -2,8 +2,11 @@
 
 namespace Modules\Operations\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\User\Entities\User;
+use Modules\operations\Services\OperationService;
+use Modules\Operations\Entities\OfficeLocation;
+use Illuminate\Http\Request;
 
 class OperationsController extends Controller
 {
@@ -12,7 +15,10 @@ class OperationsController extends Controller
      */
     public function index()
     {
-        return view('operations::office-location.index');
+        $centres = OfficeLocation::with('centre_head')->get();
+        $users = User::orderBy('name', 'asc')->get();
+
+        return view('operations::office-location.index', compact('users', 'centres'));
     }
 
     /**
@@ -24,42 +30,40 @@ class OperationsController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param Request $request
      */
-    public function store(Request $request)
+    public function store(Request $request, OperationService $service)
     {
+        $data = $request->all();
+        $service->store($data);
+
+        return redirect()->route('office-location.index');
     }
 
     /**
      * Show the specified resource.
-     * @param int $id
      */
-    public function show($id)
+    public function show()
     {
     }
 
     /**
      * Show the form for editing the specified resource.
-     * @param int $id
      */
-    public function edit($id)
+    public function edit()
     {
     }
 
     /**
      * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
      */
-    public function update(Request $request, $id)
+    public function update()
     {
     }
 
     /**
      * Remove the specified resource from storage.
-     * @param int $id
      */
-    public function destroy($id)
+    public function destroy()
     {
     }
 }

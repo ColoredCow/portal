@@ -12,8 +12,7 @@ class CodeTrekService
         $search = $data['name'] ?? null;
         $status = $data['status'] ?? 'active';
         $query = CodeTrekApplicant::where('status', $status)->orderBy('first_name');
-        $applicants = $search ? $query->where('first_name', 'LIKE', "%$search%")
-            ->orWhere('last_name', 'LIKE', "%$search%")
+        $applicants = $search ? $query->whereRaw("CONCAT(first_name, ' ', last_name) like '%$search%'")
             ->get() : $query->get();
 
         return ['applicants' => $applicants];
