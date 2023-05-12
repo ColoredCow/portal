@@ -1,5 +1,5 @@
 /**
- * First we will load all of this project"s JavaScript dependencies which
+ * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
@@ -1831,6 +1831,54 @@ $(".status").on("change", function() {
 	}
 });
 
+$(function () {
+	$("#applicant-toggle").click(function () {
+		$("#applicant-sidebar").css('right', '0');
+	});
+
+	$(".applicant-list li").click(function () {
+		var applicantId = $(this).data("id");
+		$.ajax({
+			url: "/code-trek-applicants/" + applicantId,
+			success: function (data) {
+				$("#main-content").html(data);
+			},
+		});
+	});
+
+	$(document).click(function (event) {
+		if (!$(event.target).closest("#applicant-toggle, #applicant-sidebar").length) {
+			$("#applicant-sidebar").css('right', '-200px');
+		}
+	});
+
+	$("#applicant-sidebar").css({
+		position: "fixed",
+		top: "60px",
+		right: "-200px",
+		width: "200px",
+		padding: "10px",
+		border: "1px solid #ccc",
+		backgroundColor: "#f9f9f9",
+		transition: "right 0.3s ease-in-out",
+	});
+
+	$(".applicant-list").css({
+		listStyle: "none",
+		padding: "0",
+		margin: "0",
+	});
+
+	$(".applicant-list li").css({
+		cursor: "pointer",
+		padding: "5px",
+	});
+
+	$(".applicant-list li:hover").css({
+		backgroundColor: "#e6e6e6",
+	});
+});
+
 $(document).ready(function(){
 	var multipleSelect = new Choices("#choices-multiple", {
 		removeItemButton: true,
@@ -2078,52 +2126,4 @@ $("#responseModal").on("submit",function(e){
 			Vue.$toast.success("Resume flagged Succesfully!");
 		},
 	});
-});
-
-$(function () {
-  $("#applicant-toggle").click(function () {
-    $("#applicant-sidebar").css('right', '0');
-  });
-
-  $(".applicant-list li").click(function () {
-    var applicantId = $(this).data("id");
-    $.ajax({
-      url: "/code-trek-applicants/" + applicantId,
-      success: function (data) {
-        $("#main-content").html(data);
-      },
-    });
-  });
-
-  $(document).click(function (event) {
-    if (!$(event.target).closest("#applicant-toggle, #applicant-sidebar").length) {
-      $("#applicant-sidebar").css('right', '-200px');
-    }
-  });
-
-  $("#applicant-sidebar").css({
-    position: "fixed",
-    top: "60px",
-    right: "-200px",
-    width: "200px",
-    padding: "10px",
-    border: "1px solid #ccc",
-    backgroundColor: "#f9f9f9",
-    transition: "right 0.3s ease-in-out",
-  });
-
-  $(".applicant-list").css({
-    listStyle: "none",
-    padding: "0",
-    margin: "0",
-  });
-
-  $(".applicant-list li").css({
-    cursor: "pointer",
-    padding: "5px",
-  });
-
-  $(".applicant-list li:hover").css({
-    backgroundColor: "#e6e6e6",
-  });
 });
