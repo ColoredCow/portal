@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @yield('css_scripts')
-
+    
     <!-- Reports -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
 
@@ -33,15 +33,13 @@
                 <a class="navbar-brand min-w-md-150" href="{{ url('/') }}">
                     {{ config('app.name', 'ColoredCow Portal') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 @auth
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        @include('layouts.navbar')
-                    </div>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    @include('layouts.navbar')
+                </div>
                 @endauth
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
@@ -53,11 +51,8 @@
                     <ul class="navbar-nav ml-auto">
                         @auth
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle d-flex align-items-center"
-                                    href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false" v-pre>
-                                    <img src="{{ auth()->user()->avatar }}"
-                                        class="user-avatar w-25 h-25 rounded-circle mr-1">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <img src="{{ auth()->user()->avatar }}" class="user-avatar w-25 h-25 rounded-circle mr-1">
                                     <span>
                                         <span class="caret"></span>
                                     </span>
@@ -66,39 +61,31 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     @if (Module::checkStatus('User'))
                                         @php
-                                            $employee = DB::table('employees')
-                                                ->where('user_id', auth()->user()->id)
-                                                ->first();
+                                            $employee = DB::table('employees')->where('user_id' , auth()->user()->id )->first();
                                         @endphp
-                                        <a class="dropdown-item" href="{{ route('employees.show', $employee->id) }}">My
-                                            profile</a>
+                                        <a class="dropdown-item" href="{{ route('employees.show', $employee->id) }}">My profile</a>
                                     @endif
-                                    @if (auth()->user()->provider == 'google')
-                                        <a class="dropdown-item" href="{{ route('profile.gsuite-sync') }}">Sync my
-                                            profile</a>
+                                    @if(auth()->user()->provider == 'google')
+                                        <a class="dropdown-item" href="{{ route('profile.gsuite-sync') }}">Sync my profile</a>
                                     @endif
-                                    @if (auth()->user()->isSuperAdmin())
-                                        <a class="dropdown-item" href="{{ route('profile.gsuite-sync-all') }}">Sync all
-                                            users</a>
-                                    @endif
-                                    @if (auth()->user()->canAccessWebsite())
-                                        <a target="_blank" class="dropdown-item"
-                                            href="{{ config('constants.website_url') . '/wp/wp-admin/' }}">Go to
-                                            website</a>
+                                    @if(auth()->user()->isSuperAdmin())
+                                        <a class="dropdown-item" href="{{ route('profile.gsuite-sync-all') }}">Sync all users</a>
+                                        @endif
+                                    @if(auth()->user()->canAccessWebsite())
+                                        <a target="_blank" class="dropdown-item" href="{{ config('constants.website_url') . '/wp/wp-admin/' }}">Go to website</a>
                                     @endif
                                     <a class="dropdown-item" href="{{ route('user.settings') }}">User Settings</a>
-                                    <a class="dropdown-item" id="logout" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" id="logout" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                        style="display: none;">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
                                 </div>
                             </li>
-                            <button id="applicant-toggle" style="border: none; background-color: transparent;"><i
-                                    class="fa fa-bars" style="border: none;"></i></button>
+                            <button id="applicant-toggle" style="border: none; background-color: transparent;">
+                                <i class="fa fa-bars" style="border: none;"></i>
+                            </button>
                             <div id="applicant-sidebar">
                                 <h5 style="font-weight: bold;">CodeTrek Applicants</h5>
                                 <ul class="applicant-list">
@@ -113,8 +100,7 @@
 
         @if (session('status'))
             <div class="w-full flex-center">
-                <div class="alert alert-success alert-dismissible fade show position-absolute z-index-1100 fz-14 shadow mb-5 ml-5 top-8.33"
-                    role="alert" id="statusAlert">
+                <div class="alert alert-success alert-dismissible fade show position-absolute z-index-1100 fz-14 shadow mb-5 ml-5 top-8.33" role="alert" id="statusAlert">
                     <span>{!! session('status') !!}</span>
                     <button type="button" class="close pt-1.5" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -129,10 +115,10 @@
     </div>
 
     <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
     <script src="{{ asset('src/tinymce/js/tinymce/tinymce.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ mix('js/app.js') }}"></script>
 
     @yield('js_scripts')
@@ -150,5 +136,4 @@
         });
     </script>
 </body>
-
 </html>
