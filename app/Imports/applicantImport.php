@@ -17,8 +17,8 @@ class ApplicantImport implements ToCollection,WithHeadingRow
             Applicant::create([
                 'first_name' => $row['first_name'],
                 'last_name' => $row['lastname'],
-                'email_id' => $row['email'],
-                'github_username' => $row['github_id'],
+                'email' => $row['email'],
+                'github_user_name' => $row['github_id'],
                 'phone' => $row['phone_number'],
                 'course' => $row['course'],
                 'start_date' => $row['start_date'],
