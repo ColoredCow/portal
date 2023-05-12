@@ -8,6 +8,8 @@ use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 use Modules\CodeTrek\Services\CodeTrekService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ApplicantImport;
 
 class CodeTrekController extends Controller
 {
@@ -43,6 +45,26 @@ class CodeTrekController extends Controller
         $applicant = $service->store($data);
 
         return redirect()->route('codetrek.index');
+    }
+
+    /**
+     * Store Excel File.
+     */
+    public function upload(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls'
+        ]);
+        
+        $file = $request->file('file');
+
+        $filename = time() . '_' . $file->getClientOriginalName();
+
+        $file->move(public_path('uploads'), $filename);
+
+        Excel::import(new ApplicantImport, public_path('uploads/' . $filename));
+        
+        return redirect('/codetrek')->with('success', 'Excel file uploaded and imported successfully!');
     }
 
     /**

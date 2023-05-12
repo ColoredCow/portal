@@ -6,9 +6,14 @@
             <div>
                 <h1>@yield('heading')</h1>
             </div>
+           <div class="d-flex flex-row">
+            <div class="mx-1" >
+                @include('codetrek::modals.add-excel-file-modal')
+            </div>
             <div>
                 @include('codetrek::modals.add-applicant-modal')
             </div>
+           </div>
         </div>
         <br><br>
         <ul class="nav nav-pills d-flex justify-content-between">
