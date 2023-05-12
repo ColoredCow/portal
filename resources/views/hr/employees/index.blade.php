@@ -16,8 +16,8 @@
                 </select>
             </div>
             <div class="d-flex align-items-center ml-25">
-                    <input type="text" name="employeename" class="form-control" id="name" placeholder="Enter the Employee" value="{{ request()->get('employeename') }}" button class="pr-3.0">
-                    <button class="btn btn-info ml-1 pr-1 py-1.0 text-white">Search</button>
+                    <input type="text" name="employeename" class="form-control" id="name" placeholder="Enter the Employee" value="{{ request()->get('employeename') }}">
+                    <button class="btn btn-info ml-1 pr-1 py-1 text-white">Search</button> 
                 </div>
             <input type="hidden" name="name" value="{{ request()->input('name', 'Employee') }}">
         </form>
