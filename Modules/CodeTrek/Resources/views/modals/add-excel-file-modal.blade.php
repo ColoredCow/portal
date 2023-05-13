@@ -8,7 +8,7 @@
                 <form action="{{route('codetrek.excel')}}" method="POST" id='excel_file' enctype="multipart/form-data">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><strong>Import excel file </strong></h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Import Excel File</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -18,13 +18,17 @@
                             <div class="form-group">
                                 <label for="first_name" class="field-required">Upload File</label>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="file" id="file"
+                                    <input type="file" class="custom-file-input" name="excel_file" id="file"
                                         placeholder="Select Excel file" required="required"
                                         accept=".xlsx,.xls,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
                                     <label class="custom-file-label" for="customFile">Select Excel file</label>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="mx-3 mb-2">
+                        <a href="{{ url('/sample-files/sample_file.xlsx') }}" class="text-underline"
+                            href="">Download sample file </a>
                     </div>
                     <div class="float-right p-2">
                         <button type="submit" class="btn btn-dark" data-dismiss="modal">Close</button>

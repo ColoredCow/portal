@@ -10,6 +10,19 @@ class CodeTrekApplicant extends Model
     use SoftDeletes;
     protected $guarded = [];
 
+    protected $fillable = [
+
+        'first_name',
+        'last_name',
+        'email',
+        'github_user_name',
+        'phone',
+        'course',
+        'start_date',
+        'graduation_year',
+        'university',
+    ];
+
     public function roundDetails()
     {
         return $this->hasMany(CodeTrekApplicantRoundDetail::class);

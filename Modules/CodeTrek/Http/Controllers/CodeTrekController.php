@@ -53,18 +53,12 @@ class CodeTrekController extends Controller
     public function upload(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:xlsx,xls'
+            'excel_file' => 'required|mimes:xlsx,xls'
         ]);
 
-        $file = $request->file('file');
+        Excel::import(new ApplicantImport,$request->file('excel_file') );
 
-        $filename = time() . '_' . $file->getClientOriginalName();
-
-        $file->move(public_path('uploads'), $filename);
-
-        Excel::import(new ApplicantImport, public_path('uploads/' . $filename));
-
-        return redirect('/codetrek')->with('success', 'Excel file uploaded and imported successfully!');
+        return redirect()->back()->with('success', 'Excel file uploaded and imported successfully!');
     }
 
     /**

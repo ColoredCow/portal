@@ -164,7 +164,6 @@ return [
         OfficeSuite\OfficeSuitesServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -219,7 +218,6 @@ return [
         'Str' => Illuminate\Support\Str::class,
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
     'faker_locale' => 'en_IN',
