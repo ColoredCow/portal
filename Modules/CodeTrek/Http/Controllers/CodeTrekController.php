@@ -56,7 +56,7 @@ class CodeTrekController extends Controller
             'excel_file' => 'required|mimes:xlsx,xls'
         ]);
 
-        Excel::import(new ApplicantImport,$request->file('excel_file') );
+        Excel::import(new ApplicantImport, $request->file('excel_file'));
 
         return redirect()->back()->with('success', 'Excel file uploaded and imported successfully!');
     }
