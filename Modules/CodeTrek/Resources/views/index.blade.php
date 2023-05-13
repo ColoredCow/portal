@@ -54,8 +54,7 @@
                                 {{ $center->centre_name }}
                             </option>
                         @endforeach
-                    </select>
-                    
+                    </select>                   
                 </div>
                 <button class="btn h-40 mt-6 mt-md-4 mt-xl-5 w-md-50 mr-md-2 theme-shadow-dark border pt-1">
                     <i class="fa fa-search c-pointer fz-20" aria-hidden="true"></i>
