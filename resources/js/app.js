@@ -1873,6 +1873,7 @@ $(function () {
     });
 });
 
+
 $(document).ready(function(){
 	var multipleSelect = new Choices("#choices-multiple", {
 		removeItemButton: true,
