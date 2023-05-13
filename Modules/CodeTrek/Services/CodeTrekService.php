@@ -9,12 +9,10 @@ class CodeTrekService
 {
     public function getCodeTrekApplicants($centerId, $data = [])
     {
-        // dd($centerId);
         $search = $data['name'] ?? null;
         $status = $data['status'] ?? 'active';
         $query = CodeTrekApplicant::where('status', $status)->orderBy('first_name');
         $filterCenter = $centerId['center'] ?? null;
-        // dd($search, $status, $centerName);
         $applicants = null;
         if ($filterCenter) {
             $applicants = $query->where('center_id', $centerId['center']);

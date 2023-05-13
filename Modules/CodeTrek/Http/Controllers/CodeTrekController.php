@@ -28,7 +28,7 @@ class CodeTrekController extends Controller
     {
         $centers = OfficeLocation::all();
         $centerId = $request->center;
-        // dd($centerId);
+
         return view('codetrek::index', ['centers' => $centers], $this->service->getCodeTrekApplicants($request->all(), $centerId));
     }
     /**
