@@ -75,4 +75,9 @@ class CodeTrekService
         $applicationRound->start_date = $data['start_date'];
         $applicationRound->save();
     }
+
+    public function getApplicants()
+    {
+        return CodeTrekApplicant::orderBy('first_name', 'ASC')->get();
+    }
 }
