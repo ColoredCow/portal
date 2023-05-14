@@ -3,7 +3,7 @@
 <div id="add_applicant_details_form">
     <div class="modal fade" id="excel_file" tabindex="-1" role="dialog" aria-labelledby="photoGalleryLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form action="{{route('codetrek.excel')}}" method="POST" id='excel_file' enctype="multipart/form-data">
                     @csrf
@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <div class="mx-3 mb-2">
-                        <a href="{{ url('/sample-files/sample_file.xlsx') }}" class="text-underline"
+                        <a href="{{ url('/sample-files/codeTrek_sample_file.xlsx') }}" class="text-underline"
                             href="">Download sample file </a>
                     </div>
                     <div class="float-right p-2">
