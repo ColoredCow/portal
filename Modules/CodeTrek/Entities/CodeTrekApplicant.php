@@ -9,9 +9,9 @@ class CodeTrekApplicant extends Model
 {
     use SoftDeletes;
     protected $guarded = [];
-    
+
     protected $fillable = [
-        
+
         'first_name',
         'last_name',
         'email',
