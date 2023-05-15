@@ -9,7 +9,7 @@ use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 use Modules\CodeTrek\Services\CodeTrekService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\ApplicantImport;
+use App\Imports\CodeTrekApplicantImport;
 
 class CodeTrekController extends Controller
 {
@@ -56,7 +56,7 @@ class CodeTrekController extends Controller
             'excel_file' => 'required|mimes:xlsx,xls'
         ]);
 
-        Excel::import(new ApplicantImport, $request->file('excel_file'));
+        Excel::import(new CodeTrekApplicantImport , $request->file('excel_file'));
 
         return redirect()->back()->with('success', 'Excel file uploaded and imported successfully!');
     }
