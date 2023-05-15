@@ -96,7 +96,7 @@ class CodeTrekController extends Controller
     public function get_applicants()
     {
         $applicants = CodeTrekApplicant::orderBy('first_name', 'ASC')->get();
-        
+
         return view('layouts.app')->with('applicants', $applicants);
     }
 }

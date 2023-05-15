@@ -1831,48 +1831,6 @@ $(".status").on("change", function() {
 	}
 });
 
-$(function () {
-    $("#applicant-toggle").click(function () {
-        $("#applicant-sidebar").css("right", "0");
-    });
-
-    $(".applicant-list li").click(function () {
-        var applicantId = $(this).data("id");
-    });
-
-    $(document).click(function (event) {
-        if (!$(event.target).closest("#applicant-toggle, #applicant-sidebar").length) {
-            $("#applicant-sidebar").css("right", "-200px");
-        }
-    });
-
-    $("#applicant-sidebar").css({
-        position: "fixed",
-        top: "60px",
-        right: "-200px",
-        width: "200px",
-        padding: "10px",
-        border: "1px solid #ccc",
-        backgroundColor: "#f9f9f9",
-        transition: "right 0.3s ease-in-out",
-    });
-
-    $(".applicant-list").css({
-        listStyle: "none",
-        padding: "0",
-        margin: "0",
-    });
-
-    $(".applicant-list li").css({
-        cursor: "default",
-        padding: "5px",
-    });
-
-    $(".applicant-list li:hover").css({
-        backgroundColor: "#e6e6e6",
-    });
-});
-
 $(document).ready(function(){
 	var multipleSelect = new Choices("#choices-multiple", {
 		removeItemButton: true,
@@ -2120,4 +2078,46 @@ $("#responseModal").on("submit",function(e){
 			Vue.$toast.success("Resume flagged Succesfully!");
 		},
 	});
+});
+
+$(function () {
+    $("#applicant-toggle").click(function () {
+        $("#applicant-sidebar").css("right", "0");
+    });
+
+    $(".applicant-list li").click(function () {
+        var applicantId = $(this).data("id");
+    });
+
+    $(document).click(function (event) {
+        if (!$(event.target).closest("#applicant-toggle, #applicant-sidebar").length) {
+            $("#applicant-sidebar").css("right", "-200px");
+        }
+    });
+
+    $("#applicant-sidebar").css({
+        position: "fixed",
+        top: "60px",
+        right: "-200px",
+        width: "200px",
+        padding: "10px",
+        border: "1px solid #ccc",
+        backgroundColor: "#f9f9f9",
+        transition: "right 0.3s ease-in-out",
+    });
+
+    $(".applicant-list").css({
+        listStyle: "none",
+        padding: "0",
+        margin: "0",
+    });
+
+    $(".applicant-list li").css({
+        cursor: "default",
+        padding: "5px",
+    });
+
+    $(".applicant-list li:hover").css({
+        backgroundColor: "#e6e6e6",
+    });
 });
