@@ -1831,29 +1831,6 @@ $(".status").on("change", function() {
 	}
 });
 
-$(document).ready(function(){
-	var multipleSelect = new Choices("#choices-multiple", {
-		removeItemButton: true,
-	});
-});
-
-$(".pending").on("change", function() {
-	$("#completeSpinner").removeClass("d-none");
-	$.ajax({
-		url: "pending/" + this.dataset.id,
-		method: "GET",
-		success: function(res) {
-			location.reload(true);
-		},
-		error: function(err) {
-			alert("there is some problem");
-		},
-		complete: function(data) {
-			$("#completeSpinner").addClass("d-none");
-		},
-	});
-});
-
 $(function () {
     $("#applicant-toggle").click(function () {
         $("#applicant-sidebar").css("right", "0");
@@ -1894,6 +1871,29 @@ $(function () {
     $(".applicant-list li:hover").css({
         backgroundColor: "#e6e6e6",
     });
+});
+
+$(document).ready(function(){
+	var multipleSelect = new Choices("#choices-multiple", {
+		removeItemButton: true,
+	});
+});
+
+$(".pending").on("change", function() {
+	$("#completeSpinner").removeClass("d-none");
+	$.ajax({
+		url: "pending/" + this.dataset.id,
+		method: "GET",
+		success: function(res) {
+			location.reload(true);
+		},
+		error: function(err) {
+			alert("there is some problem");
+		},
+		complete: function(data) {
+			$("#completeSpinner").addClass("d-none");
+		},
+	});
 });
 
 $(document).ready(function() {
