@@ -45,6 +45,11 @@ Before you start following the guidelines, make sure to go through the [prerequi
    npm run dev
    ```
 
+   If you are still getting the error then delete the `package-lock.json` file and make sure your node and npm version are as below
+    ```sh
+    node 
+    ```
+
 
 5. Make a copy of the `.env.example` file in the same directory and save it as `.env`:
      ```sh
