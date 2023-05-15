@@ -26,10 +26,10 @@ class CodeTrekController extends Controller
      */
     public function index(Request $request)
     {
-        $centers = OfficeLocation::all();
-        $centerId = $request->center;
+        $centres = OfficeLocation::all();
+        $centreId = $request->centre;
 
-        return view('codetrek::index', ['centers' => $centers], $this->service->getCodeTrekApplicants($request->all(), $centerId));
+        return view('codetrek::index', ['centres' => $centres], $this->service->getCodeTrekApplicants($centreId, $request->all()));
     }
     /**
      * Show the form for creating a new resource.

@@ -31,57 +31,55 @@
                         href="{{ route('codetrek.index', $request) }}"><i class="fa fa-pie-chart"></i> Reports</a>
                 </li>
             </div>
+            <div>
+            <form action="{{ route('codetrek.index') }}" id="centreFilterForm">
+                <div class="form-group ml-25 w-180">
+                    <select class="form-control bg-light" name="centre" id="centre" onchange="document.getElementById('centreFilterForm').submit();">
+                        <option value="" {{ !request()->has('centre') || empty(request()->get('centre')) ? 'selected' : '' }}>
+                            {!! __('All Centres') !!}
+                        </option>
+                        @foreach ($centres as $centre)
+                            <option value="{{ $centre->id }}" {{ request()->get('centre') == $centre->id ? 'selected' : '' }}>
+                                {{ $centre->centre_name }}
+                            </option>
+                        @endforeach
+                    </select>                   
+                </div>
+            </form>
+            </div>
             <form class="d-md-flex justify-content-between ml-md-3" action="{{ route('codetrek.index') }}">
                 <div class="d-flex justify-content-end">
                     <input type="text" name="name" class="form-control" id="name"
                         placeholder="Enter the Applicant name" value= "{{ request()->get('name') }}">
                     <input type="hidden" name="status" value="{{ $request['status'] ?? '' }}">
-                    <button class="btn btn-info ml-2 text-white">Search</button>
+                    <input type="hidden" name="centre" value="{{ request()->get('centre') }}">
+                    <button class="btn btn-info h-40 ml-2 text-white">Search</button>
                 </div>
             </form>
         </ul>
         <br>
-        <form class="md-row d-md-flex flex-md-row-reverse ml-4 ml-md-3 mt-sm-2 mt-md-0" action="{{ route('codetrek.index') }}">
-            <div class="d-flex flex-row">
-                <div class="mr-2 mt-2 mt-md-0 form-group">
-                    <label id="center">{!! __('Centers') !!}</label><br>
-                    <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" name="center" id="center">
-                        <option value="" {{ !request()->has('center') || empty(request()->get('center')) ? 'selected' : '' }}>
-                            {!! __('All Centers') !!}
-                        </option>
-                        @foreach ($centers as $center)
-                            <option value="{{ $center->id }}" {{ request()->get('center') == $center->id ? 'selected' : '' }}>
-                                {{ $center->centre_name }}
-                            </option>
-                        @endforeach
-                    </select>                   
-                </div>
-                <button class="btn h-40 mt-6 mt-md-4 mt-xl-5 w-md-50 mr-md-2 theme-shadow-dark border pt-1">
-                    <i class="fa fa-search c-pointer fz-20" aria-hidden="true"></i>
-                </button>
-            </div>
-        </form>        
         @php
             $name = request()->input('name');
+            $centre = request()->get('centre');
         @endphp
         <ul class="nav nav-pills d-flex justify-content-between">
             <div class='d-flex justify-content-between'>
                 <li class="nav-item mr-3">
-                    <a href="{{ route('codetrek.index', ['name' => $name , 'status' => 'active']) }}"
+                    <a href="{{ route('codetrek.index', ['name' => $name ,'centre' => $centre , 'status' => 'active']) }}"
                         class="nav-link btn-nav {{ request()->input('status', 'active') == 'active' ? 'active' : '' }}"
                         onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
                         <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/clipboard-check.svg')) !!}</span>
                         Active</a>
                 </li>
                 <li class="nav-item mr-3">
-                    <a href="{{ route('codetrek.index', ['name' => $name , 'status' => 'inactive']) }}"
+                    <a href="{{ route('codetrek.index', ['name' => $name , 'centre' => $centre , 'status' => 'inactive']) }}"
                         class="nav-link btn-nav {{ request()->input('status') == 'inactive' ? 'active' : '' }}"
                         onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
                         <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/x-circle.svg')) !!}</span>
                         Inactive</a>
                 </li>
                 <li class="nav-item mr-3">
-                    <a href="{{ route('codetrek.index', ['name' => $name , 'status' => 'completed']) }}"
+                    <a href="{{ route('codetrek.index', ['name' => $name , 'centre' => $centre , 'status' => 'completed']) }}"
                         class="nav-link btn-nav {{ request()->input('status') == 'completed' ? 'active' : '' }}"
                         onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
                         <span class="d-inline-block h-18 w-20"> {!! file_get_contents(public_path('icons/person-check.svg')) !!} </span>

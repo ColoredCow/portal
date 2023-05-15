@@ -71,11 +71,11 @@
                                 </select>
                             </div>
                             <div class="form-group offset-md-1 col-md-5">
-                                <label for="center">Center Name</label>
-                                <select v-model="center" name="center" id="centerId" class="form-control">
-                                    <option value="" selected>Select Center Name</option>
-                                    @foreach($centers as $center)
-                                        <option value="{{ $center->id }}">{{ $center->centre_name }}</option>
+                                <label for="centre" class="field-required">Centre Name</label>
+                                <select name="centre" id="centreId" class="form-control" required>
+                                    <option value="">Select Centre Name</option>
+                                    @foreach($centres as $centre)
+                                        <option value="{{ $centre->id }}">{{ $centre->centre_name }}</option>
                                     @endforeach
                                 </select>
                             </div>

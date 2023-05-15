@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCenterIdToCodeTrekApplicantTable extends Migration
+class AddCentreIdToCodeTrekApplicantTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,8 @@ class AddCenterIdToCodeTrekApplicantTable extends Migration
     public function up()
     {
         Schema::table('code_trek_applicants', function (Blueprint $table) {
-            $table->unsignedBigInteger('center_id')->nullable();
-            $table->foreign('center_id')->references('id')->on('office_locations');
+            $table->unsignedBigInteger('centre_id')->nullable();
+            $table->foreign('centre_id')->references('id')->on('office_locations');
         });
     }
 
@@ -27,8 +27,8 @@ class AddCenterIdToCodeTrekApplicantTable extends Migration
     public function down()
     {
         Schema::table('code_trek_applicants', function (Blueprint $table) {
-            $table->dropForeign('center_id');
-            $table->dropColumn('center_id');
+            $table->dropForeign('centre_id');
+            $table->dropColumn('centre_id');
         });
     }
 }
