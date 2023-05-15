@@ -13,7 +13,6 @@
 
 Route::prefix('codetrek')->middleware('auth')->group(function () {
     Route::get('/', 'CodeTrekController@index')->name('codetrek.index');
-    Route::get('/applicants', 'CodeTrekController@get_applicants')->name('codetrek.get_applicants');
     Route::post('/', 'CodeTrekController@store')->name('codetrek.store');
     Route::get('/edit/{applicant}', 'CodeTrekController@edit')->name('codetrek.edit');
     Route::post('/edit/{applicant}', 'CodeTrekController@update')->name('codetrek.update');
