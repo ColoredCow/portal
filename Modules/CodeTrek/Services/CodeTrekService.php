@@ -13,7 +13,7 @@ class CodeTrekService
         $status = $data['status'] ?? 'active';
         $centre = $data['centre'] ?? null;
         $query = CodeTrekApplicant::where('status', $status)->orderBy('first_name');
-                $applicants = null;
+        $applicants = null;
         if ($centre) {
             $applicants = $query->where('centre_id', $centre);
         }
