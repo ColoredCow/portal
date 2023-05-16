@@ -60,9 +60,10 @@ class CodeTrekController extends Controller
      */
     public function edit(CodeTrekApplicant $applicant)
     {
+        $centres = OfficeLocation::all();
         $this->service->edit($applicant);
 
-        return view('codetrek::edit')->with('applicant', $applicant);
+        return view('codetrek::edit', ['applicant' => $applicant, 'centres' => $centres]);
     }
     public function evaluate(CodeTrekApplicant $applicant)
     {
