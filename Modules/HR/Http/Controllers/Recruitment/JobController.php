@@ -73,12 +73,13 @@ class JobController extends Controller
     public function store(JobRequest $request)
     {
         $validated = $request->validated();
-
+        
         $opportunity = Job::create([
             'title' => $validated['title'],
             'domain' => $validated['domain'],
             'description' => $validated['description'] ?? null, // null needed for backward compatibility
             'type' => $validated['type'],
+            "status" => $validated['status'],
             'start_date' => $validated['start_date'] ?? null,
             'end_date' => $validated['end_date'] ?? null,
             // 'resources_required' => $validated['resources_required'], // ToDo: Improve this logic to handle requisition in future, currently, its breaking the job opporunity publishing flow
