@@ -7,15 +7,15 @@ use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
 class CodeTrekService
 {
-    public function getCodeTrekApplicants($centreId, $data = [])
+    public function getCodeTrekApplicants($data = [])
     {
         $search = $data['name'] ?? null;
         $status = $data['status'] ?? 'active';
+        $centre = $data['centre'] ?? null;
         $query = CodeTrekApplicant::where('status', $status)->orderBy('first_name');
-        $filterCentreId = $centreId['centre'] ?? null;
-        $applicants = null;
-        if ($filterCentreId) {
-            $applicants = $query->where('centre_id', $filterCentreId);
+                $applicants = null;
+        if ($centre) {
+            $applicants = $query->where('centre_id', $centre);
         }
         $applicants = $search ? $query->whereRaw("CONCAT(first_name, ' ', last_name) like '%$search%'")
             ->get() : $query->get();
