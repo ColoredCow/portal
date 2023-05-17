@@ -189,4 +189,16 @@
             </div>
         </li>
     @endcanany
+
+    @if (Route::is('home.index') || Route::is('codetrek'))
+    <button id="applicant-toggle" style="border: none; background-color: transparent;">
+        <i class="fa fa-bars" style="border: none;"></i>
+    </button>
+    <div id="applicant-sidebar">
+        <h5 style="font-weight: bold;">CodeTrek Applicants</h5>
+        <ul class="applicant-list">
+            @include('codetrek::sidebar')
+        </ul>
+    </div>
+    @endif 
 </ul>
