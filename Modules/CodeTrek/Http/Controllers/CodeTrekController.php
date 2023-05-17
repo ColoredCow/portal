@@ -8,6 +8,7 @@ use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 use Modules\CodeTrek\Services\CodeTrekService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Modules\Operations\Entities\OfficeLocation;
 
 class CodeTrekController extends Controller
 {
@@ -25,7 +26,9 @@ class CodeTrekController extends Controller
      */
     public function index(Request $request)
     {
-        return view('codetrek::index', $this->service->getCodeTrekApplicants($request->all()));
+        $centres = OfficeLocation::all();
+
+        return view('codetrek::index', ['centres' => $centres], $this->service->getCodeTrekApplicants($request->all()));
     }
     /**
      * Show the form for creating a new resource.
@@ -57,9 +60,10 @@ class CodeTrekController extends Controller
      */
     public function edit(CodeTrekApplicant $applicant)
     {
+        $centres = OfficeLocation::all();
         $this->service->edit($applicant);
 
-        return view('codetrek::edit')->with('applicant', $applicant);
+        return view('codetrek::edit', ['applicant' => $applicant, 'centres' => $centres]);
     }
     public function evaluate(CodeTrekApplicant $applicant)
     {

@@ -2,64 +2,63 @@
 
 namespace Modules\Operations\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\User\Entities\User;
+use Modules\Operations\Services\OperationService;
+use Modules\Operations\Entities\OfficeLocation;
+use Illuminate\Http\Request;
 
 class OperationsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $service;
+
+    public function __construct(OperationService $service)
+    {
+        $this->service = $service;
+    }
+
     public function index()
     {
-        return view('operations::office-location.index');
+        $centres = OfficeLocation::with('centre_head')->get();
+        $users = User::orderBy('name', 'asc')->get();
+
+        return view('operations::office-location.index', compact('users', 'centres'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
+        // Logic for create method
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     */
     public function store(Request $request)
     {
+        $data = $request->all();
+        $this->service->store($data);
+
+        return redirect()->route('office-location.index');
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     */
-    public function show($id)
+    public function edit(OfficeLocation $centre)
     {
+        $users = User::orderBy('name', 'asc')->get();
+
+        return view('operations::office-location.edit', compact('centre', 'users'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     */
-    public function edit($id)
+    public function update(Request $request, OfficeLocation $centre)
     {
+        $data = $request->all();
+        $this->service->update($data, $centre);
+
+        return redirect()->route('office-location.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     */
-    public function update(Request $request, $id)
+    public function delete(OfficeLocation $centre)
     {
-    }
+        if ($centre->exists) {
+            $centre->delete();
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     */
-    public function destroy($id)
-    {
+        return redirect()->route('office-location.index');
     }
 }
