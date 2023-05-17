@@ -36,6 +36,9 @@ class UserReportService
 
             $monthStartDate = $startMonth->copy()->firstOfMonth();
             $monthEndDate = $startMonth->copy()->lastOfMonth();
+            if ($startMonth == $endMonth) {
+                $monthEndDate = today();
+            }
             $project = new Project;
             $workingDaysInAMonth = count($project->getWorkingDaysList($monthStartDate, $monthEndDate));
             if ($workingDaysInAMonth > 0) {

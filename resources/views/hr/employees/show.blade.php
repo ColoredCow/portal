@@ -37,12 +37,14 @@
                     <thead>
                         <tr class="bg-theme-gray text-light">
                             <th scope="col" class="pb-lg-4"><div class="ml-7">Project Name</div></th>
-                            <th scope="col" class="pb-lg-4">Expected Monthly Hrs.</th>
-                            <th scope="col" class="pb-lg-4">Hours Booked <span data-toggle="tooltip" data-placement="right" title="Hours in effortsheet for the current month."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
-                            <th scope="col" class="pb-lg-4">Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
+                            <th scope="col" class="pb-lg-4">Project Term</th>
+                            <th scope="col" class="pb-lg-4">Expected Hours For Term</th>
+                            <th scope="col" class="pb-lg-4">Expected Hours Till Today</th>
+                            <th scope="col" class="pb-lg-4">Hours Booked <span data-toggle="tooltip" data-placement="right" title="Hours in effortsheet for the current project term."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
+                            <th scope="col" class="pb-lg-4">Velocity <span data-toggle="tooltip" data-placement="right" title="Its  the productivity of employee in a project for project timeline."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
                             <th scope="col" class="pb-lg-4">
                                 FTE Covered
-                                <span data-toggle="tooltip" data-placement="right" title="{{ __('This is portion of the overall FTE that contributed to this projects by employee till ') . (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time') ?  today(config('constants.timezone.indian'))->subDay()->format('d M') : today(config('constants.timezone.indian'))->format('d M')). "." }}"  >
+                                <span data-toggle="tooltip" data-placement="right" title="This is portion of the overall FTE that is contributed to the projects by the employee from {{ today()->startOfMonth()->format('dS M') }} to {{ today()->format('dS M') }}."  >
                                     <i class="fa fa-question-circle"></i>&nbsp;
                                 </span>
                             </th>
@@ -51,24 +53,64 @@
                     <thead>
                         @if(optional($employee->user)->activeProjectTeamMembers == null || ($employee->user)->activeProjectTeamMembers->isEmpty())
                             </table>
-                            <div class="fz-lg-28 text-center mt-2"><div class="mb-4">Not in any project</div></div>
+                            <div class="fz-lg-28 text-center mt-2">
+                                <div class="mb-4">Not in any project</div>
+                            </div>
                         @else
                             @foreach($employee->user->activeProjectTeamMembers as $activeProjectTeamMember)
                                 @if($activeProjectTeamMember->project->status == 'active')
                                     <tr>
-                                        <td class="c-pointer"><div class="ml-7"><a href={{ route('project.show', $activeProjectTeamMember->project) }}>{{$activeProjectTeamMember->project->name}} @if($activeProjectTeamMember->project->is_amc)
-                                            <div class="badge badge-pill badge-success mr-1  mt-1">AMC</div>
-                                        @endif
-                                        </a></div></td>
-                                        <td><div>{{$activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), today(config('constants.timezone.indian'))->endOfMonth()))}}</div></td>
-                                        <td><div>{{$activeProjectTeamMember->current_actual_effort}}</div></td>
-                                        <td><div><div class="{{$activeProjectTeamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$activeProjectTeamMember->velocity}}</div></td>
-                                        <td><div>{{$activeProjectTeamMember->fte}}</td>
+                                        <td class="c-pointer">
+                                            <div class="ml-7">
+                                                <a href={{ route('project.show', $activeProjectTeamMember->project) }}>
+                                                    {{$activeProjectTeamMember->project->name}}
+                                                    @if($activeProjectTeamMember->project->is_amc)
+                                                        <div class="badge badge-pill badge-success mr-1 mt-1">AMC</div>
+                                                    @endif
+                                                </a>
+                                            </div>
+                                        </td>
+                    
+                                        <td>
+                                            <div>
+                                                {{ (Carbon\Carbon::parse($activeProjectTeamMember->project->start_date)->format('dS M')) }}
+                                                -{{ (Carbon\Carbon::parse($activeProjectTeamMember->project->end_date)->format('dS M')) }}
+                                            </div>
+                                        </td>
+                    
+                                        <td>
+                                            <div>
+                                                {{ $activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->start_date, $activeProjectTeamMember->project->end_date)) }} hrs
+                                                / {{ count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->start_date, $activeProjectTeamMember->project->end_date)) }} days
+                                            </div>
+                                        </td>
+                    
+                                        <td>
+                                            <div>
+                                                {{ $activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->start_date, today(config('constants.timezone.indian')))) }} hrs
+                                                / {{ count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->start_date, today(config('constants.timezone.indian')))) }} days
+                                            </div>
+                                        </td>
+                    
+                                        <td>
+                                            <div>{{$activeProjectTeamMember->current_actual_effort}}</div>
+                                        </td>
+                    
+                                        <td>
+                                            <div>
+                                                <div class="{{$activeProjectTeamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">
+                                                    {{$activeProjectTeamMember->velocity}}
+                                                </div>
+                                            </td>
+                    
+                                        <td>
+                                            <div>{{$activeProjectTeamMember->fte}}</div>
+                                        </td>
                                     </tr>
                                 @endif
                             @endforeach
                         @endif
-                    </thead>
+                    </thead>                    
                 </table>    
             </div>
         </div>
