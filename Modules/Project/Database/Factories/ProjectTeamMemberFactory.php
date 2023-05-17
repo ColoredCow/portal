@@ -25,9 +25,7 @@ class ProjectTeamMemberFactory extends Factory
     public function definition()
     {
         return [
-            'project_id' => function () {
-                return Project::factory()->create()->id;
-            },
+            'project_id' => Project::inRandomOrder()->first()->id,
             'team_member_id' => function () {
                 return User::factory()->create()->id;
             },
