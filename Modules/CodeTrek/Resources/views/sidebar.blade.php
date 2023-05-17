@@ -1,6 +1,4 @@
-@php
-    $applicants = \Modules\CodeTrek\Entities\CodeTrekApplicant::orderBy('first_name', 'ASC')->get();
-@endphp
+
 @foreach ($applicants as $applicant)
     <li data-id="{{ $applicant->id }}">
         <a href="{{ url('/code-trek-applicants/' . $applicant->id) }}">
