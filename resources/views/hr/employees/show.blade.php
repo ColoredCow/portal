@@ -74,26 +74,26 @@
                                         <td>
                                             <div>
                                                 {{ (Carbon\Carbon::parse($activeProjectTeamMember->project->start_date)->format('dS M')) }}
-                                                - {{ (Carbon\Carbon::parse($activeProjectTeamMember->project->end_date)->format('dS M')) }} / {{ $activeProjectTeamMember->project->end_date->diffInDays($activeProjectTeamMember->project->start_date) }} days
+                                                - {{ (Carbon\Carbon::parse($activeProjectTeamMember->project->end_date)->format('dS M')) }} / {{ count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->start_date, $activeProjectTeamMember->project->end_date)) }} days
                                             </div>
                                         </td>
                     
                                         <td>
                                             <div>
-                                                {{ $activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList(today()->startOfMonth(), today()->endOfMonth())) }} hrs
-                                                / {{ count($activeProjectTeamMember->project->getWorkingDaysList(today()->startOfMonth(),today()->endOfMonth())) }} days
+                                                {{ $activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->start_date, $activeProjectTeamMember->project->end_date)) }} hrs
+                                                / {{ count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->start_date, $activeProjectTeamMember->project->end_date)) }} days
                                             </div>
                                         </td>
                     
                                         <td>
                                             <div>
-                                                {{ $activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList(today()->startOfMonth(), today()->subDay())) }} hrs
-                                                / {{ count($activeProjectTeamMember->project->getWorkingDaysList(today()->startOfMonth(), today()->subDay())) }} days
+                                                {{ $activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->start_date, today()->subDay())) }} hrs
+                                                / {{ count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->start_date, today()->subDay())) }} days
                                             </div>
                                         </td>
                     
                                         <td>
-                                            <div class="{{ $activeProjectTeamMember->current_actual_effort >= ($activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList(today()->startOfMonth(), today()->subDay()))) ? 'text-success' : 'text-danger' }}"> {{ $activeProjectTeamMember->current_actual_effort }}
+                                            <div class="{{ $activeProjectTeamMember->current_actual_effort >= ($activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->start_date, today()->subDay()))) ? 'text-success' : 'text-danger' }}"> {{ $activeProjectTeamMember->current_actual_effort }}
                                             </div>
                                         </td>
                     
