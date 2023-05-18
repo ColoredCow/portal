@@ -139,8 +139,8 @@
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <span class="{{ config('codetrek.rounds.' . $applicant->round_name . '.class') }} badge-pill mr-1 mb-1 fz-16">
-                                            {{ config('codetrek.rounds.' . $applicant->round_name . '.label') }}
+                                        <span class="{{ config('codetrek.rounds.' . $applicant->latest_round_name . '.class') }} badge-pill mr-1 mb-1 fz-16">
+                                            {{ config('codetrek.rounds.' . $applicant->latest_round_name . '.label') }}
                                         </span>
                                     </div>                                    
                                 </td>
