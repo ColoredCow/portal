@@ -4,6 +4,8 @@ namespace Modules\CodeTrek\Services;
 
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
+use Illuminate\Support\Facades\Mail;
+use  Modules\CodeTrek\Emails\CodetrekMailApplicant;
 
 class CodeTrekService
 {
@@ -36,6 +38,7 @@ class CodeTrekService
         $applicant->graduation_year = $data['graduation_year'] ?? null;
         $applicant->university = $data['university_name'] ?? null;
         $applicant->centre_id = $data['centre'];
+        Mail::to( $data['email_id'], $data['first_name'])->send(new CodetrekMailApplicant($applicant));
         $applicant->save();
 
         $this->moveApplicantToRound($applicant, $data);
