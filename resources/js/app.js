@@ -2087,8 +2087,8 @@ $(function () {
 			sidebar.css("right", "-200px");
 		} else {
 			sidebar.css("right", "0");
-        }
-		});
+		}
+	});
 
 	$(".applicant-list li").click(function () {
 		var applicantId = $(this).data("id");
