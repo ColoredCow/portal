@@ -14,7 +14,7 @@ class RenameRoundNameColumnOfCodeTrekApplicantsTable extends Migration
     public function up()
     {
         Schema::table('code_trek_applicants', function (Blueprint $table) {
-            $table->renameColumn('round_name', 'current_round_name');
+            $table->renameColumn('round_name', 'latest_round_name');
         });
     }
 
@@ -26,7 +26,7 @@ class RenameRoundNameColumnOfCodeTrekApplicantsTable extends Migration
     public function down()
     {
         Schema::table('code_trek_applicants', function (Blueprint $table) {
-            $table->renameColumn('current_round_name', 'round_name');
+            $table->renameColumn('latest_round_name', 'round_name');
         });
     }
 }
