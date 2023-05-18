@@ -25,7 +25,7 @@ class HomeController extends Controller
     public function index()
     {
         $unreadBook = (session('disable_book_suggestion')) ? null : Book::getRandomUnreadBook();
-        $applicants = CodeTrekApplicant::orderBy('first_name', 'ASC')->get();
+        $applicants = CodeTrekApplicant::orderBy('first_name', 'asc')->get();
 
         return view('home')->with(['book' => $unreadBook, 'applicants' => $applicants]);
     }
