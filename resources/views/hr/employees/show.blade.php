@@ -36,13 +36,13 @@
                 <table class="table">
                     <thead>
                         <tr class="bg-theme-gray text-light">
-                            <th scope="col" class="pb-lg-4"><div class="ml-7">Project Name</div></th>
-                            <th scope="col" class="pb-lg-4">Project Term</th>
-                            <th scope="col" class="pb-lg-4">Expected Hours For Term</th>
-                            <th scope="col" class="pb-lg-4">Expected Hours Till Today</th>
-                            <th scope="col" class="pb-lg-4">Hours Booked <span data-toggle="tooltip" data-placement="right" title="Hours in effortsheet for the current project term."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
-                            <th scope="col" class="pb-lg-4">Velocity <span data-toggle="tooltip" data-placement="right" title="Its  the productivity of employee in a project for project timeline."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
-                            <th scope="col" class="pb-lg-4">
+                            <th scope="col" class="pb-3 lg-4"><div class="ml-2">Project Name</div></th>
+                            <th scope="col" class="pb-3 lg-4">Project Term</th>
+                            <th scope="col" class="lg-4">Expected Hours For Term</th>
+                            <th scope="col" class="lg-4">Expected Hours Till Today</th>
+                            <th scope="col" class="lg-4">Hours Booked <span data-toggle="tooltip" data-placement="right" title="Hours in effortsheet for the current project term."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
+                            <th scope="col" class="lg-4">Velocity <span data-toggle="tooltip" data-placement="right" title="Its  the productivity of employee in a project for project term."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
+                            <th scope="col" class="lg-4">
                                 FTE Covered
                                 <span data-toggle="tooltip" data-placement="right" title="This is portion of the overall FTE that is contributed to the projects by the employee from {{ today()->startOfMonth()->format('dS M') }} to {{ today()->subDay()->format('dS M') }}."  >
                                     <i class="fa fa-question-circle"></i>&nbsp;
@@ -62,7 +62,7 @@
                                 @if($activeProjectTeamMember->project->status == 'active')
                                     <tr>
                                         <td class="c-pointer">
-                                            <div class="ml-7">
+                                            <div class="ml-2">
                                                 <a href={{ route('project.show', $activeProjectTeamMember->project) }}>
                                                     {{$activeProjectTeamMember->project->name}}
                                                     @if($activeProjectTeamMember->project->is_amc)
@@ -71,11 +71,10 @@
                                                 </a>
                                             </div>
                                         </td>
-
                                         <td>
                                             <div>
-                                                {{ today()->startOfMonth()->format('dS M') }}
-                                                - {{ today()->endOfMonth()->format('dS M') }}
+                                                {{ (Carbon\Carbon::parse($activeProjectTeamMember->project->start_date)->format('dS M')) }}
+                                                - {{ (Carbon\Carbon::parse($activeProjectTeamMember->project->end_date)->format('dS M')) }} / {{ $activeProjectTeamMember->project->end_date->diffInDays($activeProjectTeamMember->project->start_date) }} days
                                             </div>
                                         </td>
                     
@@ -94,7 +93,8 @@
                                         </td>
                     
                                         <td>
-                                            <div>{{$activeProjectTeamMember->current_actual_effort}}</div>
+                                            <div class="{{ $activeProjectTeamMember->current_actual_effort >= ($activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList(today()->startOfMonth(), today()->subDay()))) ? 'text-success' : 'text-danger' }}"> {{ $activeProjectTeamMember->current_actual_effort }}
+                                            </div>
                                         </td>
                     
                                         <td>
