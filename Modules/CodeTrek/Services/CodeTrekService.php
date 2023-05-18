@@ -38,7 +38,7 @@ class CodeTrekService
         $applicant->graduation_year = $data['graduation_year'] ?? null;
         $applicant->university = $data['university_name'] ?? null;
         $applicant->centre_id = $data['centre'];
-        Mail::to( $data['email_id'], $data['first_name'])->send(new CodetrekMailApplicant($applicant));
+        Mail::to($data['email_id'], $data['first_name'])->send(new CodetrekMailApplicant($applicant));
         $applicant->save();
 
         $this->moveApplicantToRound($applicant, $data);
