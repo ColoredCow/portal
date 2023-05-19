@@ -73,7 +73,7 @@ class JobController extends Controller
     public function store(JobRequest $request)
     {
         $validated = $request->validated();
-        
+
         $opportunity = Job::create([
             'title' => $validated['title'],
             'domain' => $validated['domain'],
