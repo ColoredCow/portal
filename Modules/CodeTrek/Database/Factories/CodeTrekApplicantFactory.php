@@ -31,7 +31,6 @@ class CodeTrekApplicantFactory extends Factory
             'graduation_year'=>Carbon::now()->year,
         ];
     }
-    
     private function getCodeTrekApplicantsCollegeNames()
     {
         return [
