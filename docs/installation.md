@@ -45,9 +45,9 @@ Before you start following the guidelines, make sure to go through the [prerequi
    npm run dev
    ```
     If you are still getting the error --hide-module then revert all changes by git checkout.
-    **Note:** Check the version of laravel-mix in package-lock.json it should be 5.0.9
+	**Note:** Check the version of laravel-mix in package-lock.json it should be 5.0.9
     ```sh
-      npm install
+      	npm install
         npm run dev
     ```
     **Note:** if laravel-mix version in package-lock.json changes to version 6 then npm run dev will throw error,
