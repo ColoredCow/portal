@@ -20,7 +20,6 @@ class CodetrekMailApplicant extends Mailable
     {
         $this->data = $data;
         $this->build();
-
     }
 
     /**
