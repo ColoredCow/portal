@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
-class CosetrekApplicantsTableSeeder extends Seeder
+class CodeTrekApplicantsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
