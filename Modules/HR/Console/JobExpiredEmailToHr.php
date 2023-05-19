@@ -45,7 +45,7 @@ class JobExpiredEmailToHr extends Command
             ['end_date', '<', $currentDate],
             ['status', 'published']
         ])->get();
-        if ($jobs->count() > 0){
+        if ($jobs->count() > 0) {
             Mail::to(config('hr.default.email'))->send(new SendJobExpiredMail($jobs));
         }
     }
