@@ -27,11 +27,12 @@ class CodeTrekApplicantFactory extends Factory
             'phone'=>$faker->phoneNumber,
             'course'=>$faker->word,
             'start_date' => Carbon::today(),
-            'university' =>$this->getCollegeNames()[array_rand($this->getCollegeNames())],
+            'university' =>$this->getCodeTrekApplicantsCollegeNames()[array_rand($this->getCodeTrekApplicantsCollegeNames())],
             'graduation_year'=>Carbon::now()->year,
         ];
     }
-    private function getCollegeNames()
+    
+    private function getCodeTrekApplicantsCollegeNames()
     {
         return [
             'THDC-ihet',
