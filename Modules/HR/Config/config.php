@@ -96,7 +96,7 @@ return [
         'applicant-name' => '|*applicant_name*|',
         'interview-time' => '|*interview_time*|',
         'job-title' => '|*job_title*|',
-        'round-name' => '|*latest_round_name*|'
+        'round-name' => '|*round_name*|'
     ],
 
     'default' => [
