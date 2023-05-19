@@ -1,5 +1,5 @@
 <div id="applicant-sidebar">
-    <h5 style="font-weight: bold;">CodeTrek Applicants</h5>
+    <h5 class="fw-bold">CodeTrek Applicants</h5>
     <ul class="applicant-list">
         @foreach ($applicants as $applicant)
             <li data-id="{{ $applicant->id }}">
