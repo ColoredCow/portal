@@ -25,13 +25,14 @@
     <form method="POST" action="{{ route('storeDropdownValue') }}">
         @csrf
         <div class="dropdown">
-            <select class="btn bg-light" name="selectedValue" onchange="this.form.submit()">
-                @foreach($centre as $location)
-                    <option value="{{ $location->centre_name }}">{{ $location->centre_name }}</option>
+            <select class="btn bg-light text-left" name="Centre" onchange="this.form.submit()">
+                <option value="" selected="selected">Current Location</option>
+                @foreach($centres as $centre)
+                    <option value="{{ $centre->centre_name }}">{{ $centre->centre_name }}</option>
                 @endforeach
             </select>
         </div>
-    </form>
+    </form>    
     
     <br>
     

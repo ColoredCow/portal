@@ -27,9 +27,9 @@ class HomeController extends Controller
     public function index()
     {
         $unreadBook = (session('disable_book_suggestion')) ? null : Book::getRandomUnreadBook();
-        $centre = OfficeLocation::orderBy('centre_name', 'asc')->get();
+        $centres = OfficeLocation::orderBy('centre_name', 'asc')->get();
 
-        return view('home')->with(['book' => $unreadBook, 'centre' => $centre]);
+        return view('home')->with(['book' => $unreadBook, 'centres' => $centres]);
     }
 
     /**
@@ -67,13 +67,13 @@ class HomeController extends Controller
     public function storeDropdownValue(Request $request)
     {
         $validatedData = $request->validate([
-            'selectedValue' => 'required',
+            'Centre' => 'required',
         ]);
 
         $userMeta = new UserMeta;
         $userMeta->user_id = auth()->user()->id;
         $userMeta->meta_key = 'office_location';
-        $userMeta->meta_value = $request->selectedValue;
+        $userMeta->meta_value = $request->Centre;
         $userMeta->save();
 
         return redirect('home');
