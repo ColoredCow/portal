@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\CodeTrek\Database\Factories\CodeTrekApplicantFactory;
+use Modules\Operations\Entities\OfficeLocation;
 
 class CodeTrekApplicant extends Model
 {
@@ -22,5 +23,10 @@ class CodeTrekApplicant extends Model
     public static function newFactory()
     {
         return new CodeTrekApplicantFactory();
+    }
+
+    public function center()
+    {
+        return $this->belongsTo(OfficeLocation::class, 'center_id');
     }
 }

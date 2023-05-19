@@ -5,7 +5,7 @@
     <td> 
         <span class="{{ $level ? 'ml-2' : ''  }}">
             @canany(['clients.update', 'clients.create', 'clients.delete'])
-            <a href="{{ route('client.edit', $client) }}" >
+            <a href="{{ route('client.edit', $client) }}" class="text-break">
                 {{ $client->name }}
             </a> 
             @else

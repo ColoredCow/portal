@@ -17,21 +17,30 @@ return [
         ],
     ],
     'rounds' =>[
+        'preparatory' => [
+            'label' => 'Preparatory',
+            'slug'  => 'preparatory',
+            'class' => 'badge badge-info'
+        ],
         'level-1' =>[
             'label' =>'Level-1',
             'slug'  =>'level-1',
+            'class' => 'badge badge-primary'
         ],
         'level-2' =>[
             'label' =>'Level-2',
-            'slug'  =>'level-2'
+            'slug'  =>'level-2',
+            'class' => 'badge badge-secondary'
         ],
         'level-3'   =>[
             'label' =>'Level-3',
-            'slug'  =>'level-3'
+            'slug'  =>'level-3',
+            'class' => 'badge badge-dark'
         ],
-        'onboard'   =>[
+        'onboarded'   =>[
             'label' =>'Onboarded',
-            'slug'  =>'onboarded'
+            'slug'  =>'onboarded',
+            'class' => 'badge badge-success'
         ],
     ]
 ];
