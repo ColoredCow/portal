@@ -33,8 +33,7 @@
                 @endforeach
             </select>
         </div>
-    </form>
-    
+    </form>    
 
     <br>
     
