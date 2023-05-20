@@ -4,6 +4,8 @@ namespace Modules\Project\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Modules\Client\Entities\Client;
+use Modules\Client\Entities\ClientAddress;
+use Modules\Client\Entities\ClientBillingDetail;
 use Modules\Project\Entities\Project;
 
 class ProjectDatabaseSeeder extends Seeder
@@ -21,6 +23,10 @@ class ProjectDatabaseSeeder extends Seeder
                 ->count(3)
                 ->for($client)
                 ->create();
+            
+            ClientAddress::factory()->create();
+            ClientBillingDetail::factory()->create();
+
         }
 
         $this->call(ProjectPermissionsTableSeeder::class);
