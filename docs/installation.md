@@ -58,14 +58,14 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
 
 5. Make a copy of the `.env.example` file in the same directory and save it as `.env`:
-        ```sh
+    ```sh
     cp .env.example .env
-        ```
+    ```
 
 6. Run the following command to add the Laravel application key:
-        ```sh
-   php artisan key:generate
-        ```
+    ```sh
+    php artisan key:generate
+    ```
    **Note:** Make sure that the 'php.ini' file in XAMPP/WAMP has this code uncommented/written
     `extension=gd`
 
