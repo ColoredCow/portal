@@ -23,10 +23,8 @@ class ProjectDatabaseSeeder extends Seeder
                 ->count(3)
                 ->for($client)
                 ->create();
-            
             ClientAddress::factory()->create();
             ClientBillingDetail::factory()->create();
-
         }
 
         $this->call(ProjectPermissionsTableSeeder::class);

@@ -22,4 +22,3 @@ class ClientBillingDetailsFactory extends Factory
         ];
     }
 }
-
