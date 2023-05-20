@@ -28,6 +28,7 @@ class ProjectDatabaseSeeder extends Seeder
 
         }
 
+        
         $this->call(ProjectPermissionsTableSeeder::class);
         $this->call(ProjectTeamMemberDatabaseSeeder::class);
         $this->call(ProjectTeamMembersEffortDatabaseSeeder::class);
