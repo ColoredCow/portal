@@ -21,17 +21,20 @@
         <span>Your FTE: <b class="{{ auth()->user()->ftes['main'] < 1 ? 'text-danger' : 'text-success' }}">{{auth()->user()->ftes['main'] }}</b> </span>
     </div>
 
-    <form method="POST" action="{{ route('storeDropdownValue') }}">
+    <form method="POST" action="{{ route('employee.location') }}">
         @csrf
         <div class="dropdown">
             <select class="btn bg-light text-left" name="Centre" onchange="this.form.submit()">
                 <option value="" selected="selected">Current Location</option>
                 @foreach($centres as $centre)
-                    <option value="{{ $centre->centre_name }}">{{ $centre->centre_name }}</option>
+                    <option value="{{ $centre->centre_name }}" {{ $centre->centre_name == $selectedLocation ? 'selected' : '' }}>
+                        {{ $centre->centre_name }}
+                    </option>
                 @endforeach
             </select>
         </div>
     </form>
+    
 
     <br>
     
