@@ -65,9 +65,9 @@ class ApplicationNoShow extends Command
                 $application = $applicationRound->application;
                 $job = $application->job;
 
-                $body = str_replace(config('constants.hr.template-variables.applicant-name'), $application->applicant->name, $body);
-                $body = str_replace(config('constants.hr.template-variables.interview-time'), $applicationRound->scheduled_date->format(config('constants.hr.interview-time-format')), $body);
-                $body = str_replace(config('constants.hr.template-variables.job-title'), "<a href='{$job->link}'>{$job->title}</a>", $body);
+                $modify_body = str_replace(config('constants.hr.template-variables.applicant-name'), $application->applicant->name, $body);
+                $modify_body = str_replace(config('constants.hr.template-variables.interview-time'), $applicationRound->scheduled_date->format(config('constants.hr.interview-time-format')), $body);
+                $modify_body = str_replace(config('constants.hr.template-variables.job-title'), "<a href='{$job->link}'>{$job->title}</a>", $body);
 
                 if ($application->status != config('constants.hr.application-meta.keys.no-show')) {
                     $application->markNoShowReminded();
@@ -77,7 +77,7 @@ class ApplicationNoShow extends Command
                         'value' => json_encode([
                             'round' => $applicationRound->id,
                             'mail_subject' => $subject,
-                            'mail_body' => $body,
+                            'mail_body' => $modify_body,
                         ]),
                     ]);
                 }
