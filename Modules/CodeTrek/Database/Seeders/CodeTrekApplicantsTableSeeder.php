@@ -17,9 +17,9 @@ class CodeTrekApplicantsTableSeeder extends Seeder
     {
         if (! app()->environment('production')) {
            CodeTrekApplicant::factory(2)->has(
-            CodeTrekApplicantRoundDetail::factory()->count(1),
-            'roundDetails'
-        )->create();
+                CodeTrekApplicantRoundDetail::factory()->count(1),
+                'roundDetails'
+            )->create();
         }
     }
 }
