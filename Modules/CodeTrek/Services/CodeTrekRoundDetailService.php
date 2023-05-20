@@ -35,8 +35,8 @@ class CodeTrekRoundDetailService
         $applicationRound->round_name = $applicant->round_name;
         $applicationRound->feedback = null;
         $applicationRound->start_date = today();
-        $codetrekApplicant = CodeTrekApplicant::where("id",$applicant->id)->get();
-        Mail::send(new CodetrekMailApplicantRound($applicationRound,$codetrekApplicant));
+        $codetrekApplicant = CodeTrekApplicant::where("id", $applicant->id)->get();
+        Mail::send(new CodetrekMailApplicantRound($applicationRound, $codetrekApplicant));
         $applicationRound->save();
     }
 }

@@ -18,7 +18,7 @@ class CodetrekMailApplicantRound extends Mailable
      *
      * @return void
      */
-    public function __construct($applicationRound,$codetrekApplicant)
+    public function __construct($applicationRound, $codetrekApplicant)
     {
         $this->applicationRound = $applicationRound;
         $this->codetrekApplicant = $codetrekApplicant;
