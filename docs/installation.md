@@ -54,7 +54,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
     node -v
     #output should be somthing like
     #v14.17.6
-```
+    ```
 
 
 5. Make a copy of the `.env.example` file in the same directory and save it as `.env`:
