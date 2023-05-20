@@ -4,6 +4,8 @@ namespace Modules\CodeTrek\Services;
 
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
+use Illuminate\Support\Facades\Mail;
+use Modules\CodeTrek\Emails\CodetrekMailApplicantRound;
 
 class CodeTrekRoundDetailService
 {
@@ -33,6 +35,8 @@ class CodeTrekRoundDetailService
         $applicationRound->round_name = $applicant->round_name;
         $applicationRound->feedback = null;
         $applicationRound->start_date = today();
+        $codetrekApplicant = CodeTrekApplicant::where("id",$applicant->id)->get();
+        Mail::send(new CodetrekMailApplicantRound($applicationRound,$codetrekApplicant));
         $applicationRound->save();
     }
 }
