@@ -4,7 +4,7 @@
 			line-height: 1px;
 		}
 	</style>
-	<p>Hi, {{ $data['first_name'] }}</p>
+	<p>Hi, {{ $applicant['first_name'] }}</p>
     <br>
 	<p>We're delighted to have you join Codtreak! Get ready to embark on an exciting coding journey filled with learning, challenges, and a supportive community. Feel free to explore our resources and reach out if you need any assistance.</p>
     <br>

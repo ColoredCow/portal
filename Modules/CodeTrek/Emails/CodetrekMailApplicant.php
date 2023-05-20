@@ -9,16 +9,16 @@ use Illuminate\Queue\SerializesModels;
 class CodetrekMailApplicant extends Mailable
 {
     use Queueable, SerializesModels;
-    public $data;
+    public $applicant;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($applicant)
     {
-        $this->data = $data;
+        $this->applicant = $applicant;
         $this->build();
     }
 
@@ -30,7 +30,7 @@ class CodetrekMailApplicant extends Mailable
     public function build()
     {
         return $this->from(config('hr.default.email'))
-            ->to($this->data['email_id'])
+            ->to($this->applicant['email_id'])
             ->subject('ColoredCow Portal - Welcome to the CodeTrek')
             ->view('codetrek::mail.codetrek');
     }
