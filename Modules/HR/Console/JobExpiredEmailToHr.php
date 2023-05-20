@@ -21,7 +21,7 @@ class JobExpiredEmailToHr extends Command
      *
      * @var string
      */
-    protected $description = 'testing this command just to output this command';
+    protected $description = 'Send list of expired jobs to hr';
 
     /**
      * Create a new command instance.
