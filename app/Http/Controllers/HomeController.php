@@ -28,11 +28,11 @@ class HomeController extends Controller
     {
         $unreadBook = (session('disable_book_suggestion')) ? null : Book::getRandomUnreadBook();
         $centres = OfficeLocation::orderBy('centre_name', 'asc')->get();
-    
+
         $selectedLocation = UserMeta::where('user_id', auth()->user()->id)
             ->where('meta_key', 'office_location')
             ->value('meta_value');
-    
+
         return view('home')->with([
             'book' => $unreadBook,
             'centres' => $centres,
@@ -77,12 +77,12 @@ class HomeController extends Controller
         $validatedData = $request->validate([
             'Centre' => 'required',
         ]);
-    
+
         $userMeta = UserMeta::updateOrCreate(
             ['user_id' => auth()->user()->id, 'meta_key' => 'office_location'],
             ['meta_value' => $request->Centre]
         );
-    
+
         return redirect('home');
     }
 }
