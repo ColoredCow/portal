@@ -4,11 +4,11 @@
 			line-height: 1px;
 		}
 	</style>
-	<p>Hi, {{$codetrekApplicant[0]['first_name'] }}</p>
-	<p>This email is to notify you that the your round has been changed in codetrek.</p>
-    <p>Applicant Name : {{$codetrekApplicant[0]->first_name }}</p>
-    <p>Current Round : {{$applicationRound['round_name'] }}</p>
+	<p>Hello, {{$codetrekApplicant[0]['first_name'] }}</p>
+	<p>We hope this email finds you well. We are delighted to inform you that you have successfully advanced to the current round of the internship selection process at ColoredCow. Congratulations on this outstanding achievement!</p>
+    <p>The {{$applicationRound['round_name'] }} of the internship will provide you with an opportunity to delve deeper into the specific projects and tasks relevant to your field of interest.</p>
     <br>
-    <p class="line">Thanks,</p>
-	<p class="line">ColoredCow Portal</p>
+	<p>Wishing you the best of luck in the {{$applicationRound['round_name'] }} of the internship!</p>
+    <p class="line">Best regards,</p>
+	<p class="line">ColoredCow</p>
 </div>
