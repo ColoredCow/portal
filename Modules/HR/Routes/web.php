@@ -74,6 +74,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/applicant/create', 'ApplicantController@create')->name('hr.applicant.create');
             Route::post('/applicant', 'ApplicantController@store')->name('hr.applicant.store');
             Route::get('/applicant/details/show/{applicationID}', 'ApplicantController@show')->name('hr.applicant.details.show');
+            Route::post('/applicant/details/open_ai/show', 'ApplicantController@getOpenAIEvaluation')->name('hr.applicant.details.open_ai');
             Route::post('/excel-import', 'ApplicantController@importExcel')->name('hr.applications.excel-import');
 
             Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update', 'storeReason']);

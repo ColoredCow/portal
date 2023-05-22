@@ -125,6 +125,11 @@ $(document).ready(() => {
 		$("#opportunityId").attr("value", opportunityId);
 	});
 
+	if ($("#open_ai_responses").length) {
+		let applicationId = $("#open_ai_responses").data("applicationId");
+		setup_open_ai_responses(applicationId);
+	}
+
 	if ($(".form-create-invoice").length) {
 		let form = $(".form-create-invoice");
 		let client_id = form.find("#client_id").val();
@@ -132,6 +137,7 @@ $(document).ready(() => {
 			updateClientProjects(form, client_id);
 		}
 	}
+
 	$("[data-toggle=\"tooltip\"]").tooltip();
 
 	$(".status-close").on("click", function() {
@@ -245,13 +251,15 @@ $(document).ready(function() {
 	});
 });
 
-$(document).ready(function () {
-	$("#designationformModal").on("hidden.bs.modal", function () {
-		$(this).find("form").trigger("reset");
+$(document).ready(function() {
+	$("#designationformModal").on("hidden.bs.modal", function() {
+		$(this)
+			.find("form")
+			.trigger("reset");
 		$("#designationerror").addClass("d-none");
 	});
 
-	$("#designationForm").on("submit", function (e) {
+	$("#designationForm").on("submit", function(e) {
 		e.preventDefault();
 		$("#designationFormSpinner").removeClass("d-none");
 		let form = $("#designationForm");
@@ -259,22 +267,26 @@ $(document).ready(function () {
 			type: form.attr("method"),
 			url: form.attr("action"),
 			data: form.serialize(),
-			success: function (response) {
+			success: function(response) {
 				$("#designationFormSpinner").addClass("d-none");
 				$("#designationformModal").modal("hide");
 				$("#successMessage").toggleClass("d-none");
 				$("#successMessage").fadeToggle(3000);
 			},
-			error: function (response) {
+			error: function(response) {
 				$("#designationFormSpinner").addClass("d-none");
 				if (response.responseJSON.errors.name) {
 					let text = response.responseJSON.errors.name[0];
-					$("#designationerror").html(text).removeClass("d-none");
+					$("#designationerror")
+						.html(text)
+						.removeClass("d-none");
 					return false;
 				}
 				if (response.responseJSON.errors.domain) {
 					let text = response.responseJSON.errors.domain[0];
-					$("#domainerror").html(text).removeClass("d-none");
+					$("#domainerror")
+						.html(text)
+						.removeClass("d-none");
 					return false;
 				}
 			},
@@ -282,27 +294,31 @@ $(document).ready(function () {
 	});
 });
 
-$(document).on("click","#viewReject",function(){
-	
-	$("body").on("click",`label[for='${$("#appearRejectButton").data("target")}-no']`,function(){
-		$("#rejectButton").removeClass("d-none");
-		$("#nextButton").addClass("d-none");
+$(document).on("click", "#viewReject", function() {
+	$("body").on(
+		"click",
+		`label[for='${$("#appearRejectButton").data("target")}-no']`,
+		function() {
+			$("#rejectButton").removeClass("d-none");
+			$("#nextButton").addClass("d-none");
+		}
+	);
 
-	});
-
-	$("body").on("click",`label[for='${$("#appearRejectButton").data("target")}-yes']`,function(){
-		$("#nextButton").removeClass("d-none");
-		$("#rejectButton").addClass("d-none");
-
-	});
+	$("body").on(
+		"click",
+		`label[for='${$("#appearRejectButton").data("target")}-yes']`,
+		function() {
+			$("#nextButton").removeClass("d-none");
+			$("#rejectButton").addClass("d-none");
+		}
+	);
 });
 
-$(document).on("click",".reject-button",function(){
+$(document).on("click", ".reject-button", function() {
 	rejectApplication();
 });
 
-function rejectApplication()
-{
+function rejectApplication() {
 	$("#application_reject_modal").modal("show");
 	loadTemplateMail("reject", (res) => {
 		$("#rejectMailToApplicantSubject").val(res.subject);
@@ -550,6 +566,33 @@ function updateClientProjects(form, client_id) {
 	});
 }
 
+function setup_open_ai_responses(applicationId) {
+	let requestData = {};
+	requestData["application_id"] = applicationId;
+	requestData["type"] = "summery";
+
+	getDataFromOpenAI(requestData, function(response) {
+		$("#resume_summery").text(response.data);
+	});
+
+	requestData["type"] = "value_summery";
+
+	getDataFromOpenAI(requestData, function(response) {
+		$("#resume_evaluation").text(response.data);
+	});
+}
+
+function getDataFromOpenAI(data, callback) {
+	axios
+		.post("/hr/recruitment/applicant/details/open_ai/show", data)
+		.then(function(response) {
+			callback(response);
+		})
+		.catch(function(error) {
+			alert("Error fetching application evaluation!");
+		});
+}
+
 function getProjectList(projects) {
 	let html = "";
 	for (var index = 0; index < projects.length; index++) {
@@ -584,10 +627,10 @@ function initRicheditor() {
 		selector: ".richeditor",
 		skin: "lightgray",
 		toolbar:
-			"undo redo formatselect | fontselect fontsizeselect bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+      "undo redo formatselect | fontselect fontsizeselect bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
 		plugins: ["advlist lists autolink link code image print"],
 		font_formats:
-			"Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;AkrutiKndPadmini=Akpdmi-n",
+      "Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;AkrutiKndPadmini=Akpdmi-n",
 		images_upload_url: "postAcceptor.php",
 		content_style: "body{font-size:14pt;}",
 		automatic_uploads: false,
@@ -599,13 +642,13 @@ function initRicheditor() {
 		force_br_newlines: true,
 		force_p_newlines: false,
 		height: "280",
-		convert_urls: 0
+		convert_urls: 0,
 	});
 }
 
 initRicheditor();
 
-$("body").on("click", "#takeAction", function () {
+$("body").on("click", "#takeAction", function() {
 	initRicheditor();
 });
 
@@ -915,7 +958,7 @@ if (document.getElementById("books_listing")) {
 
 			searchBooksByCategoryName: function() {
 				window.location.href = `${this.updateRoute}?category_name=${this.sortKeys}`;
-			},	
+			},
 
 			strLimit: function(str, length) {
 				if (!str) {
@@ -1818,7 +1861,7 @@ $(".status").on("change", function() {
 		$.ajax({
 			url: "completed/change-status/" + this.dataset.id,
 			method: "GET",
-			success: function (res) {
+			success: function(res) {
 				$("#mymodal").modal() + this.dataset.id;
 			},
 			error: function(err) {
@@ -1831,7 +1874,7 @@ $(".status").on("change", function() {
 	}
 });
 
-$(document).ready(function(){
+$(document).ready(function() {
 	var multipleSelect = new Choices("#choices-multiple", {
 		removeItemButton: true,
 	});
@@ -1909,19 +1952,19 @@ $(document).ready(function() {
 
 // fix for tinymce and bootstrap modal
 
-$("body").on("click", "#offerLetter", function (e) {
+$("body").on("click", "#offerLetter", function(e) {
 	e.preventDefault();
 	var originUrl = window.location.origin;
 	let applicationid = $("#getApplicationId").val();
 	$.ajax({
 		url: originUrl + `/hr/recruitment/${applicationid}/save-offer-letter`,
 		type: "GET",
-		success: function (response) {
+		success: function(response) {
 			$("#seeOfferLetter").removeClass("d-none");
 		},
-		error: function () {
+		error: function() {
 			alert("error");
-		}
+		},
 	});
 });
 
@@ -2059,12 +2102,12 @@ $(document).on("click", ".finish_interview", function(e) {
 		dataType: "json",
 		success: function(response) {
 			$("#meet_time").hide();
-			$("#durations").append(response.html);	
+			$("#durations").append(response.html);
 		},
 	});
 });
 
-$("#responseModal").on("submit",function(e){
+$("#responseModal").on("submit", function(e) {
 	e.preventDefault();
 	let form = $("#responseForm");
 	let button = $("#responseBtn");
@@ -2075,7 +2118,7 @@ $("#responseModal").on("submit",function(e){
 		data: form.serialize(),
 		success: function(response) {
 			$("#responseModal").modal("hide");
-			Vue.$toast.success("Resume flagged Succesfully!");
+			Vue.$toast.success("Resume flagged Successfully!");
 		},
 	});
 });

@@ -44,5 +44,21 @@ return [
     'currencylayer' => [
         'access_key' => env('CURRENCYLAYER_API_KEY'),
         'default_rate' => env('DEFAULT_RATE_USDINR')
+    ],
+
+    'pdf_to_text' => [
+        'lib_path' => env('PDF_LIB_PATH')
+    ],
+
+    'open_ai' => [
+        'active' => env('OPEN_AI_ACTIVE', false),
+        'api_key' => env('OPEN_AI_API_KEY'),
+        'default_params' => [
+            'model' => 'text-davinci-003',
+            'max_tokens' => 2500,
+            'top_p' => 1,
+            'temperature' => 0.4
+        ]
     ]
+
 ];
