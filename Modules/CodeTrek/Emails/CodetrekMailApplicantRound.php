@@ -9,7 +9,8 @@ use Illuminate\Queue\SerializesModels;
 class CodetrekMailApplicantRound extends Mailable
 {
     use Queueable, SerializesModels;
-    public $applicationRound, $codetrekApplicant;
+    public $applicationRound;
+    public $codetrekApplicant;
 
     /**
      * Create a new message instance.
