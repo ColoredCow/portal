@@ -4,9 +4,10 @@
 			line-height: 1px;
 		}
 	</style>
-	<p>Hi, {{ $applicant['first_name'] }}</p>
+	<p>Hello, {{ $applicant['first_name'] }}</p>
     <br>
-	<p>We're delighted to have you join Codtreak! Get ready to embark on an exciting coding journey filled with learning, challenges, and a supportive community. Feel free to explore our resources and reach out if you need any assistance.</p>
+	<p>We hope this email finds you well. On behalf of the entire team at ColoredCow, We wanted to take a moment to congratulate you on the commencement of your CodeTrek internship. We are thrilled to have you on board and excited to see the valuable contributions you will bring to our organization. Once again, congratulations on starting your CodeTrek internship! You have the potential to achieve great things, and we look forward to witnessing your growth and accomplishments over the course of your internship.</p>
+	<p>Wishing you a successful and fulfilling CodeTrek internship journey!</p>
     <br>
 	<p class="line">Thanks,</p>
 	<p class="line">ColoredCow Portal</p>
