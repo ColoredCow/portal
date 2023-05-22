@@ -9,8 +9,7 @@ use Illuminate\Queue\SerializesModels;
 class CodetrekMailApplicantRound extends Mailable
 {
     use Queueable, SerializesModels;
-    public $applicationRound;
-    public $codetrekApplicant;
+    public $applicationRound, $codetrekApplicant;
 
     /**
      * Create a new message instance.
@@ -33,7 +32,7 @@ class CodetrekMailApplicantRound extends Mailable
     {
         return $this->from(config('hr.default.email'))
         ->to($this->codetrekApplicant[0]->email)
-        ->subject('ColoredCow Portal - Round Change Notification')
+        ->subject('ColoredCow Portal - CodeTrek Round Update Notification')
         ->view('codetrek::mail.codetrek-round');
     }
 }
