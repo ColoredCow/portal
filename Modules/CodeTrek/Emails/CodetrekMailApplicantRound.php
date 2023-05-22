@@ -31,7 +31,6 @@ class CodetrekMailApplicantRound extends Mailable
      */
     public function build()
     {
-        // dd($this->codetrekApplicant[0]->email);
         return $this->from(config('hr.default.email'))
         ->to($this->codetrekApplicant[0]->email)
         ->subject('ColoredCow Portal - Round Change Notification')
