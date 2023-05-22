@@ -77,7 +77,7 @@ class ApplicationNoShow extends Command
                         'value' => json_encode([
                             'round' => $applicationRound->id,
                             'mail_subject' => $subject,
-                            'mail_body' => $formattedMailBody ,
+                            'mail_body' => $formattedMailBody,
                         ]),
                     ]);
                 }
