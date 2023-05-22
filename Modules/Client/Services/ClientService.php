@@ -5,6 +5,7 @@ namespace Modules\Client\Services;
 use App\Models\Country;
 use Modules\User\Entities\User;
 use Modules\Client\Entities\Client;
+use Modules\Client\Entities\Modals;
 use Modules\Client\Entities\ClientAddress;
 use Modules\Client\Entities\ClientBillingDetail;
 use Modules\Client\Entities\ClientContactPerson;
@@ -43,7 +44,10 @@ class ClientService implements ClientServiceContract
             $clients = $clients->diff($client->linkedAsDepartment);
         }
 
-        return ['clients' => $clients, 'count' => $count];
+        $activeCount = Client::where('status', 'active')->count();
+        $inactiveCount = Client::where('status', 'inactive')->count();
+
+        return ['clients' => $clients, 'count' => $count,'activeCount' => $activeCount, 'inactiveCount'=> $inactiveCount];
     }
 
     public function create()
