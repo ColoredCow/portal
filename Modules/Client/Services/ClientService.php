@@ -47,7 +47,7 @@ class ClientService implements ClientServiceContract
         $activeCount = Client::where('status', 'active')->count();
         $inactiveCount = Client::where('status', 'inactive')->count();
 
-        return ['clients' => $clients, 'count' => $count,'activeCount' => $activeCount, 'inactiveCount'=> $inactiveCount];
+        return ['clients' => $clients, 'count' => $count, 'activeCount' => $activeCount, 'inactiveCount'=> $inactiveCount];
     }
 
     public function create()
