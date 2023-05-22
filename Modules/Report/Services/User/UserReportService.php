@@ -4,6 +4,7 @@ namespace Modules\Report\Services\User;
 
 use Modules\Project\Entities\ProjectTeamMemberEffort;
 use Modules\Project\Entities\Project;
+use Modules\Project\Entities\ProjectTeamMember;
 
 class UserReportService
 {
@@ -18,41 +19,60 @@ class UserReportService
 
     public function fteTrend($user)
     {
-        $projectTeamMemberList = $user->projectTeamMembers->pluck('id');
-        $reportFteData = $this->getMonthsFteAttribute($projectTeamMemberList);
+        $projectsId = $user->projectTeamMembers->pluck('project_id');
+
+        $reportFteData = $this->getMonthsFteAttribute($projectsId);
 
         return  $reportFteData;
     }
 
-    public function getMonthsFteAttribute($projectTeamMemberList)
+    public function getMonthsFteAttribute($projectsId)
     {
-        $startMonth = today()->subMonthsNoOverflow(17);
-        $endMonth = today();
         $months = [];
+        $projectData = [];
         $data = [];
-        while ($startMonth <= $endMonth) {
-            $months[] = $startMonth->format('Y-m');
-            $teamMemberActualEffort = ProjectTeamMemberEffort::whereIn('project_team_member_id', $projectTeamMemberList)->whereMonth('added_on', $startMonth)->whereYear('added_on', $startMonth)->sum('actual_effort');
 
-            $monthStartDate = $startMonth->copy()->firstOfMonth();
-            $monthEndDate = $startMonth->copy()->lastOfMonth();
-            if ($startMonth == $endMonth) {
-                $monthEndDate = today()->subDay();
+        foreach ($projectsId as $projectId) {
+            $projectTeamMembersId = ProjectTeamMember::where('project_id', $projectId)->get('id');
+            $startMonth = today()->subMonthsNoOverflow(17);
+            $endMonth = today();
+            $projectBookedHours = [];
+            $index = 0;
+
+            while ($startMonth <= $endMonth) {
+                $months[$index] = $startMonth->format('Y-m');
+
+                $teamMemberActualEffort = ProjectTeamMemberEffort::whereIn('project_team_member_id', $projectTeamMembersId)->whereMonth('added_on', $startMonth)->whereYear('added_on', $startMonth)->sum('actual_effort');
+
+                $monthStartDate = $startMonth->copy()->firstOfMonth();
+                $monthEndDate = $startMonth->copy()->lastOfMonth();
+                if ($startMonth == $endMonth) {
+                    $monthEndDate = today()->subDay();
+                }
+                $project = new Project;
+                $workingDaysInAMonth = count($project->getWorkingDaysList($monthStartDate, $monthEndDate));
+                if ($workingDaysInAMonth > 0) {
+                    $monthlyFte = round(($teamMemberActualEffort) / ($workingDaysInAMonth * config('efforttracking.minimum_expected_hours')), 2);
+                } else {
+                    $monthlyFte = 0;
+                }
+
+                $projectBookedHours[] = $teamMemberActualEffort;
+                $data[$index] = isset($data[$index]) ? $data[$index] + $monthlyFte : $monthlyFte;
+                $index++;
+
+                $startMonth->addMonth();
             }
-            $project = new Project;
-            $workingDaysInAMonth = count($project->getWorkingDaysList($monthStartDate, $monthEndDate));
-            if ($workingDaysInAMonth > 0) {
-                $monthlyFte = round($teamMemberActualEffort / ($workingDaysInAMonth * config('efforttracking.minimum_expected_hours')), 2);
-            } else {
-                $monthlyFte = 0;
-            }
-            $data[] = $monthlyFte;
-            $startMonth->addMonth();
+            $projectName = Project::where('id', $projectId)->value('name');
+            $projectData[$projectName] = [
+                'projectBookedHours' => $projectBookedHours,
+            ];
         }
 
         return [
             'labels' => $months,
             'data' => $data,
+            'projectData'  => $projectData,
         ];
     }
 }

@@ -199,9 +199,29 @@ function userFteTrendsReport(reportFteData) {
 						beginAtZero: true,
 					}
 				}]
-			}	
+			},
+			tooltips: {
+				callbacks: {
+					label: function (tooltipItem, data) {
+						const index = tooltipItem.index;
+						const fteValue = data.datasets[tooltipItem.datasetIndex].data[index];
+						const projectData = reportFteData.projectData;
+						const projectNames = Object.keys(projectData);
+			
+						let tooltipLabel = `FTE: ${fteValue} \n`;
+			
+						projectNames.forEach((name, i) => {
+							const hours = projectData[name].projectBookedHours[index];
+							tooltipLabel += `${name} Hours: ${hours} \n`;
+						});
+
+						return tooltipLabel;
+					}
+				}
+			}		
 		}
 	};
+	
 
 	new Chart(canvasElementId, chartConfig);
 }
