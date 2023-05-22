@@ -1,154 +1,207 @@
 @extends('codetrek::layouts.master')
 @section('heading', 'CodeTrek')
 @section('content')
-<div class="container" id="applicant">
-    <div class="col-lg-12 d-flex justify-content-between align-items-center mx-auto">
-        <div>
-             <h1>@yield('heading')</h1>
+    <div class="container" id="applicant">
+        <div class="col-lg-12 d-flex justify-content-between align-items-center mx-auto">
+            <div>
+                <h1>@yield('heading')</h1>
+            </div>
+            <div>
+                @include('codetrek::modals.add-applicant-modal')
+            </div>
         </div>
-        <div>
-            @include('codetrek::modals.add-applicant-modal')
-        </div>
-    </div>
-    <br><br>
-    <ul class="nav nav-pills d-flex justify-content-between">
+        <br><br>
+        <ul class="nav nav-pills d-flex justify-content-between">
+            @php
+                $request = request()->all();
+            @endphp
+            <div class="d-flex">
+                <li class="nav-item mr-3">
+                    @php
+                        $request['tab'] = 'applicants';
+                    @endphp
+                    <a class="nav-link {{ request()->input('tab', 'applicants') == 'applicants' ? 'active' : '' }} "
+                        href="{{ route('codetrek.index', $request) }}"><i class="fa fa-list-ul"></i> Applicants</a>
+                </li>
+                <li class="nav-item">
+                    @php
+                        $request['tab'] = 'reports';
+                    @endphp
+                    <a class="nav-link {{ request()->input('tab', 'active') == 'reports' ? 'active' : '' }}"
+                        href="{{ route('codetrek.index', $request) }}"><i class="fa fa-pie-chart"></i> Reports</a>
+                </li>
+            </div>
+            <div>
+            <form action="{{ route('codetrek.index') }}" id="centreFilterForm">
+                <div class="form-group ml-25 w-180">
+                    <select class="form-control bg-light" name="centre" id="centre" onchange="document.getElementById('centreFilterForm').submit();">
+                        <option value="" {{ !request()->has('centre') || empty(request()->get('centre')) ? 'selected' : '' }}>
+                            {!! __('All Centres') !!}
+                        </option>
+                        @foreach ($centres as $centre)
+                            <option value="{{ $centre->id }}" {{ request()->get('centre') == $centre->id ? 'selected' : '' }}>
+                                {{ $centre->centre_name }}
+                            </option>
+                        @endforeach
+                    </select>                   
+                </div>
+            </form>
+            </div>
+            <form class="d-md-flex justify-content-between ml-md-3" action="{{ route('codetrek.index') }}">
+                <div class="d-flex justify-content-end">
+                    <input type="text" name="name" class="form-control" id="name"
+                        placeholder="Enter the Applicant name" value= "{{ request()->get('name') }}">
+                    <input type="hidden" name="status" value="{{ $request['status'] ?? '' }}">
+                    <input type="hidden" name="centre" value="{{ request()->get('centre') }}">
+                    <button class="btn btn-info h-40 ml-2 text-white">Search</button>
+                </div>
+            </form>
+        </ul>
+        <br>
         @php
-          $request = request()->all();
+            $name = request()->input('name');
+            $centre = request()->get('centre');
         @endphp
-        <div class="d-flex">
-        <li class="nav-item mr-3">
-            @php
-                $request['tab'] = 'applicants';
-            @endphp
-             <a class="nav-link {{ (request()->input('tab', 'applicants') == 'applicants')  ? 'active' : '' }} " href="{{ route('codetrek.index', $request)  }}"><i class="fa fa-list-ul"></i> Applicants</a>
-        </li>
-
-        <li class="nav-item">
-            @php
-                $request['tab'] = 'reports';
-            @endphp
-            <a class="nav-link {{ request()->input('tab', 'active') == 'reports' ? 'active' : '' }}"  
-                href="{{ route('codetrek.index', $request) }}"><i class="fa fa-pie-chart"></i> Reports</a>
-        </li>
-        </div>
-        <form class="d-md-flex justify-content-between ml-md-3"
-        action="{{ route('codetrek.index') }}">
-        <div class="d-flex justify-content-end">
-            <input type="text" name="name" class="form-control" id="name"
-                placeholder="Enter the Applicant name" value={{ request()->get('name') }}>
-            <button class="btn btn-info ml-2 text-white">Search</button>
-        </div>
-        </form>
-    </ul>
-    @if (request()->input('tab', 'active') == 'active' || request()->tab == 'applicants')
-        <div>
-            <br>
-            <table class="table table-bordered table-striped">
-                <thead class="thead-dark">
-                    <tr class="text-center sticky-top">
-                        <th class="col-md-4">Name</th>
-                        <th class="col-md-2">Days in CodeTrek</th>
-                        <th>Status</th>
-                        <th>Feedbacks</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($applicants as $applicant)
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <h4>{{ $applicant->first_name }} {{ $applicant->last_name }}</h4>
-                                    </div>
-                                </div>
-                                <span class="mr-1 text-truncate"><i
-                                        class="fa fa-envelope-o mr-1"></i>{{ $applicant->email }}</span>
-                                <br>
-                                @if ($applicant->phone)
-                                    <span class="mr-1"><i class="fa fa-phone mr-1"></i>{{ $applicant->phone }}</span>
-                                    <br>
-                                @endif
-                                <div>
-                                    @if ($applicant->university)
-                                        <span class="mr-1"><i
-                                                class="fa fa-university mr-1"></i>{{ $applicant->university }}</span>
-                                    @endif
-                                </div>
-                                <div class="mb-2 fz-xl-14 text-secondary d-flex flex-column">
-                                    <div class="d-flex text-white my-2">
-                                        <a href="{{ route('codetrek.edit', $applicant->id) }}"
-                                            class="btn-sm btn-primary mr-1 text-decoration-none" target="_self">View</a>
-                                        <a href="{{ route('codetrek.evaluate', $applicant->id) }}"
-                                            class="btn-sm btn-primary mr-1 text-decoration-none"
-                                            target="_self">Evaluate</a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                @php
-                                    $daysInCodetrek = now()->diffInDays($applicant->start_date);
-                                @endphp
-                                {{ $daysInCodetrek }} days
-                            </td>
-                            <td>{{ config('codetrek.status.' . $applicant->status . '.label') }}</td>
-                            <td>-</td>
+        <ul class="nav nav-pills d-flex justify-content-between">
+            <div class='d-flex justify-content-between'>
+                <li class="nav-item mr-3">
+                    <a href="{{ route('codetrek.index', ['name' => $name ,'centre' => $centre , 'status' => 'active']) }}"
+                        class="nav-link btn-nav {{ request()->input('status', 'active') == 'active' ? 'active' : '' }}"
+                        onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
+                        <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/clipboard-check.svg')) !!}</span>
+                        Active</a>
+                </li>
+                <li class="nav-item mr-3">
+                    <a href="{{ route('codetrek.index', ['name' => $name , 'centre' => $centre , 'status' => 'inactive']) }}"
+                        class="nav-link btn-nav {{ request()->input('status') == 'inactive' ? 'active' : '' }}"
+                        onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
+                        <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/x-circle.svg')) !!}</span>
+                        Inactive</a>
+                </li>
+                <li class="nav-item mr-3">
+                    <a href="{{ route('codetrek.index', ['name' => $name , 'centre' => $centre , 'status' => 'completed']) }}"
+                        class="nav-link btn-nav {{ request()->input('status') == 'completed' ? 'active' : '' }}"
+                        onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
+                        <span class="d-inline-block h-18 w-20"> {!! file_get_contents(public_path('icons/person-check.svg')) !!} </span>
+                        Completed</a>
+                </li>
+            </div>
+        </ul>
+        @if (request()->input('tab', 'active') == 'active' || request()->tab == 'applicants')
+            <div>
+                <br>
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr class="text-center sticky-top">
+                            <th class="col-md-4">Name</th>
+                            <th class="col-md-2">Days in CodeTrek</th>
+                            <th>Status</th>
+                            <th>Feedbacks</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    @elseif (request()->status == 'reports')
-        <div>
-            <br><br>
-            <p align="center">Coming Soon</p>
-        </div>
-    @endif
-</div>
+                    </thead>
+                    <tbody>
+                        @foreach ($applicants as $applicant)
+                            <tr>
+                                <td>  
+                                    <div class="d-flex align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <h4>{{ $applicant->first_name }} {{ $applicant->last_name }}</h4>
+                                        </div>
+                                    </div>
+                                    <span class="mr-1 text-truncate"><i
+                                            class="fa fa-envelope-o mr-1"></i>{{ $applicant->email }}</span>
+                                    <br>
+                                    @if ($applicant->phone)
+                                        <span class="mr-1"><i class="fa fa-phone mr-1"></i>{{ $applicant->phone }}</span>
+                                        <br>
+                                    @endif
+                                    <div>
+                                        @if ($applicant->university)
+                                            <span class="mr-1"><i
+                                                    class="fa fa-university mr-1"></i>{{ $applicant->university }}</span>
+                                        @endif
+                                    </div>
+                                    <div class="mb-2 fz-xl-14 text-secondary d-flex flex-column">
+                                        <div class="d-flex text-white my-2">
+                                            <a href="{{ route('codetrek.edit', $applicant->id) }}"
+                                                class="btn-sm btn-primary mr-1 text-decoration-none" target="_self">View</a>
+                                            <a href="{{ route('codetrek.evaluate', $applicant->id) }}"
+                                                class="btn-sm btn-primary mr-1 text-decoration-none"
+                                                target="_self">Evaluate</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    @php
+                                        $daysInCodetrek = now()->diffInDays($applicant->start_date);
+                                    @endphp
+                                    {{ $daysInCodetrek }} days
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-center">
+                                        <span class="{{ config('codetrek.rounds.' . $applicant->round_name . '.class') }} badge-pill mr-1 mb-1 fz-16">
+                                            {{ config('codetrek.rounds.' . $applicant->round_name . '.label') }}
+                                        </span>
+                                    </div>                                    
+                                </td>
+                                <td>-</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @elseif (request()->status == 'reports')
+            <div>
+                <br><br>
+                <p align="center">Coming Soon</p>
+            </div>
+        @endif
+    </div>
 @endsection
 @section('vue_scripts')
-<script>
-    new Vue({
-        el: '#applicant',
-        data() {
-            return {
-                first_name: '',
-                last_name: '',
-                email: '',
-                phone: '',
-                github_username: '',
-                start_date: '',
-                university: '',
-                course: '',
-                graduationyear: ''
-            }
-        },
-        methods: {
-            submitForm: async function(formId) {
-                $('.save-btn').attr('disabled', true);
-                let formData = new FormData(document.getElementById(formId));
-                await axios.post('{{ route('codetrek.store') }}', formData)
-                    .then((response) => {
-                        $('.save-btn').removeClass('btn-dark').addClass('btn-primary');
-                        $('.save-btn').attr('disabled', false);
-                        this.$toast.success("Applicant added successfully", {
-                            duration: 5000
-                        });
-                        $("#photoGallery").modal('hide');
-                        location.reload();
-                    })
-                    .catch((error) => {
-                        let errors = error.response.data.errors;
-                        $('.save-btn').attr('disabled', false);
-                        if (errors) {
-                            Object.keys(errors).forEach(function(key) {
-                                this.$toast.error(errors[key][0]);
+    <script>
+        new Vue({
+            el: '#applicant',
+            data() {
+                return {
+                    first_name: '',
+                    last_name: '',
+                    email: '',
+                    phone: '',
+                    github_username: '',
+                    start_date: '',
+                    university: '',
+                    course: '',
+                    graduationyear: ''
+                }
+            },
+            methods: {
+                submitForm: async function(formId) {
+                    $('.save-btn').attr('disabled', true);
+                    let formData = new FormData(document.getElementById(formId));
+                    await axios.post('{{ route('codetrek.store') }}', formData)
+                        .then((response) => {
+                            $('.save-btn').removeClass('btn-dark').addClass('btn-primary');
+                            $('.save-btn').attr('disabled', false);
+                            this.$toast.success("Applicant added successfully", {
+                                duration: 5000
                             });
-                        } else {
-                            this.$toast.error("Error submitting form, please fill required fields");
-                        }
-                    });
+                            $("#photoGallery").modal('hide');
+                            location.reload();
+                        })
+                        .catch((error) => {
+                            let errors = error.response.data.errors;
+                            $('.save-btn').attr('disabled', false);
+                            if (errors) {
+                                Object.keys(errors).forEach(function(key) {
+                                    this.$toast.error(errors[key][0]);
+                                });
+                            } else {
+                                this.$toast.error("Error submitting form, please fill required fields");
+                            }
+                        });
+                }
             }
-        }
-    });
-</script>
+        });
+    </script>
 @endsection

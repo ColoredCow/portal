@@ -91,7 +91,7 @@ class ClientService implements ClientServiceContract
                 'client' => $client,
                 'section' => $section,
                 'clientBillingAddress' => $this->getClientBillingAddress($client),
-                'keyAccountManagers' => $this->getKeyAccountManagers(),
+                'keyAccountManagers' => $this->getKeyAccountManagers()->whereNull('deleted_at')->sortBy('name'),
                 'clientBillingDetail' => $client->billingDetails,
             ];
         }

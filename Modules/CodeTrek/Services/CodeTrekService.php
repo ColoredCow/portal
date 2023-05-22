@@ -2,18 +2,23 @@
 
 namespace Modules\CodeTrek\Services;
 
-use Illuminate\Http\Request;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
 class CodeTrekService
 {
-    public function getCodeTrekApplicants(Request $request)
+    public function getCodeTrekApplicants($data = [])
     {
-        $search = $request->get('name');
-        $applicants = $search ? CodeTrekApplicant::where('first_name', 'LIKE', "%$search%")
-        ->orWhere('last_name', 'LIKE', "%$search%")
-        ->get() : CodeTrekApplicant::all();
+        $search = $data['name'] ?? null;
+        $status = $data['status'] ?? 'active';
+        $centre = $data['centre'] ?? null;
+        $query = CodeTrekApplicant::where('status', $status)->orderBy('first_name');
+        $applicants = null;
+        if ($centre) {
+            $applicants = $query->where('centre_id', $centre);
+        }
+        $applicants = $search ? $query->whereRaw("CONCAT(first_name, ' ', last_name) like '%$search%'")
+            ->get() : $query->get();
 
         return ['applicants' => $applicants];
     }
@@ -30,6 +35,7 @@ class CodeTrekService
         $applicant->start_date = $data['start_date'];
         $applicant->graduation_year = $data['graduation_year'] ?? null;
         $applicant->university = $data['university_name'] ?? null;
+        $applicant->centre_id = $data['centre'];
         $applicant->save();
 
         $this->moveApplicantToRound($applicant, $data);
