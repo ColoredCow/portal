@@ -6,13 +6,13 @@
         @php
             $request['status'] = 'active';
         @endphp
-        <a class="nav-link {{ (request()->input('status', 'active') == 'active')  ? 'active' : '' }}" href="{{ route('client.index', $request)  }}">Active Clients {{ '('.$activeCount.')' }}</a>
+        <a class="nav-link {{ (request()->input('status', 'active') == 'active')  ? 'active' : '' }}" href="{{ route('client.index', $request)  }}">Active Clients ({{$activeClientsCount}})</a>
     </li>
 
     <li class="nav-item">
         @php
             $request['status'] = 'inactive';
         @endphp
-        <a class="nav-link {{ (request()->input('status', 'active') == 'inactive') ? 'active' : '' }}"  href="{{ route('client.index', $request)  }}">Inactive Clients {{ '('.$inactiveCount.')' }}</a>
+        <a class="nav-link {{ (request()->input('status', 'active') == 'inactive') ? 'active' : '' }}"  href="{{ route('client.index', $request)  }}">Inactive Clients ({{$inactiveClientsCount}})</a>
     </li>
 </ul>
