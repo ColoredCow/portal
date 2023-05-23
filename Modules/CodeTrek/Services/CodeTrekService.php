@@ -17,7 +17,6 @@ class CodeTrekService
         if ($centre) {
             $applicants = $query->where('centre_id', $centre);
         }
-       
         $applicants = $search ? $query->whereRaw("CONCAT(first_name, ' ', last_name) like '%$search%'")->get() : $query->get();
         $applicants = $query->paginate(config('constants.pagination_size'));
 
