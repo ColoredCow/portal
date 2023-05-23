@@ -10,7 +10,7 @@ class SendJobExpiredMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $jobs_data;
+    public $jobsData;
     /**
      * Create a new message instance.
      *
@@ -18,7 +18,7 @@ class SendJobExpiredMail extends Mailable
      */
     public function __construct($data)
     {
-        $this->jobs_data = $data;
+        $this->jobsData = $data;
     }
 
     /**
@@ -29,7 +29,7 @@ class SendJobExpiredMail extends Mailable
     public function build()
     {
         return $this->from(config('hr.default.email'), config('hr.default.name'))
-        ->subject('Job end date is expired')
-        ->view('emails.send-job-closed-mail', $this->jobs_data->toArray());
+        ->subject('You have expired Jobs opening.')
+        ->view('emails.send-job-expired-mail', $this->jobsData->toArray());
     }
 }
