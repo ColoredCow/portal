@@ -45,16 +45,27 @@ Before you start following the guidelines, make sure to go through the [prerequi
    npm run dev
    ```
 
+   If you are still getting the error then delete the `package-lock.json` file and make sure your node and npm version are as below and repeat step 4 again.
+    ```sh
+    npm -v
+    # output should be something like
+    # 6.14.15
+
+    node -v
+    #output should be somthing like
+    #v14.17.6
+    ```
+
 
 5. Make a copy of the `.env.example` file in the same directory and save it as `.env`:
-     ```sh
+    ```sh
     cp .env.example .env
     ```
 
 6. Run the following command to add the Laravel application key:
-   ```sh
-   php artisan key:generate
-   ```
+    ```sh
+    php artisan key:generate
+    ```
    **Note:** Make sure that the 'php.ini' file in XAMPP/WAMP has this code uncommented/written
     `extension=gd`
 

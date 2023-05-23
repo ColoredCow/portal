@@ -11,9 +11,13 @@ class CodeTrekService
     {
         $search = $data['name'] ?? null;
         $status = $data['status'] ?? 'active';
+        $centre = $data['centre'] ?? null;
         $query = CodeTrekApplicant::where('status', $status)->orderBy('first_name');
-        $applicants = $search ? $query->where('first_name', 'LIKE', "%$search%")
-            ->orWhere('last_name', 'LIKE', "%$search%")
+        $applicants = null;
+        if ($centre) {
+            $applicants = $query->where('centre_id', $centre);
+        }
+        $applicants = $search ? $query->whereRaw("CONCAT(first_name, ' ', last_name) like '%$search%'")
             ->get() : $query->get();
 
         return ['applicants' => $applicants];
@@ -31,6 +35,7 @@ class CodeTrekService
         $applicant->start_date = $data['start_date'];
         $applicant->graduation_year = $data['graduation_year'] ?? null;
         $applicant->university = $data['university_name'] ?? null;
+        $applicant->centre_id = $data['centre'];
         $applicant->save();
 
         $this->moveApplicantToRound($applicant, $data);
