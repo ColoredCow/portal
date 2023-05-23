@@ -150,6 +150,7 @@
                     </tbody>
                 </table>
             </div>
+            {{$applicants->links()}}
         @elseif (request()->status == 'reports')
             <div>
                 <br><br>
