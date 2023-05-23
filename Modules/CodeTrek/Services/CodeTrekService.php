@@ -17,10 +17,10 @@ class CodeTrekService
         if ($centre) {
             $applicants = $query->where('centre_id', $centre);
         }
-        if ($search) {
-            $applicants = $search ? $query->whereRaw("CONCAT(first_name, ' ', last_name) like '%$search%'")->get() : $query->get();
-        }
+       
+        $applicants = $search ? $query->whereRaw("CONCAT(first_name, ' ', last_name) like '%$search%'")->get() : $query->get();
         $applicants = $query->paginate(config('constants.pagination_size'));
+
         return ['applicants' => $applicants];
     }
     public function store($data)

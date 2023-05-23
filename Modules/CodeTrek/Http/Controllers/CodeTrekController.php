@@ -30,7 +30,6 @@ class CodeTrekController extends Controller
 
         return view('codetrek::index', ['centres' => $centres], $this->service->getCodeTrekApplicants($request->all()));
     }
-    
     /**
      * Show the form for creating a new resource.
      */
