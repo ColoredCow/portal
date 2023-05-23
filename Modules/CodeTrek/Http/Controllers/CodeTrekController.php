@@ -28,7 +28,7 @@ class CodeTrekController extends Controller
     {
         $centres = OfficeLocation::all();
         $applicants = CodeTrekApplicant::paginate(11);
-        return view('codetrek::index', ['centres' => $centres,'applicants' => $applicants], $this->service->getCodeTrekApplicants($request->all()));
+        return view('codetrek::index', ['centres' => $centres, 'applicants' => $applicants], $this->service->getCodeTrekApplicants($request->all()));
     }
     /**
      * Show the form for creating a new resource.
