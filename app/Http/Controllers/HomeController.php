@@ -72,7 +72,7 @@ class HomeController extends Controller
         return $userGroups;
     }
 
-    public function storeDropdownValue(Request $request)
+    public function storeEmployeeLocation(Request $request)
     {
         $validatedData = $request->validate([
             'Centre' => 'required',
