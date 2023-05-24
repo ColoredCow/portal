@@ -22,7 +22,6 @@ class CodeTrekApplicantRoundMail extends Mailable
         $this->applicationRound = $applicationRound;
         $this->codetrekApplicant = $codetrekApplicant;
         $this->build();
-        
     }
 
     /**
