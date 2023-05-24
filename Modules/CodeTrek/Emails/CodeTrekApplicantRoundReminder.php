@@ -5,8 +5,9 @@ namespace Modules\CodeTrek\Emails;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class CodetrekMailApplicantRound extends Mailable
+class CodeTrekApplicantRoundReminder extends Mailable
 {
     use Queueable, SerializesModels;
     public $applicationRound;
