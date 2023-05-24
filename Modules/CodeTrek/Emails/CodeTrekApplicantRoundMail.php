@@ -22,6 +22,7 @@ class CodeTrekApplicantRoundMail extends Mailable
         $this->applicationRound = $applicationRound;
         $this->codetrekApplicant = $codetrekApplicant;
         $this->build();
+        
     }
 
     /**
@@ -32,7 +33,7 @@ class CodeTrekApplicantRoundMail extends Mailable
     public function build()
     {
         return $this->from(config('hr.default.email'))
-        ->to($this->codetrekApplicant[0]->email)
+        ->to($this->codetrekApplicant->email)
         ->subject('ColoredCow Portal - CodeTrek Round Update Notification')
         ->view('codetrek::mail.codetrek-round');
     }
