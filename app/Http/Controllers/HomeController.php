@@ -25,7 +25,7 @@ class HomeController extends Controller
     {
         $unreadBook = (session('disable_book_suggestion')) ? null : Book::getRandomUnreadBook();
 
-        return view('home')->with(['book' => $unreadBook,]);
+        return view('home')->with(['book' => $unreadBook]);
     }
 
     /**
