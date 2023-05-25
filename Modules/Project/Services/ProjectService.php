@@ -7,7 +7,6 @@ use Carbon\CarbonPeriod;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Maatwebsite\Excel\Facades\Excel;
 use Modules\Client\Entities\Client;
 use Modules\HR\Entities\Employee;
 use Modules\Project\Contracts\ProjectServiceContract;
@@ -16,10 +15,11 @@ use Modules\Project\Entities\ProjectBillingDetail;
 use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectRepository;
-use Modules\Project\Entities\ProjectResourceRequirement;
 use Modules\Project\Entities\ProjectTeamMember;
-use Modules\Project\Exports\ProjectFTEExport;
 use Modules\User\Entities\User;
+use Maatwebsite\Excel\Facades\Excel;
+use Modules\Project\Exports\ProjectFTEExport;
+use Modules\Project\Entities\ProjectResourceRequirement;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -113,8 +113,8 @@ class ProjectService implements ProjectServiceContract
         foreach ($counts as $key => $tabFilters) {
             $query = Project::query()->applyFilter($tabFilters);
             $counts[$key] = $showAllProjects
-            ? $query->count()
-            : $query->linkedToTeamMember($userId)->count();
+                ? $query->count()
+                : $query->linkedToTeamMember($userId)->count();
         }
 
         return $counts;
@@ -436,7 +436,7 @@ class ProjectService implements ProjectServiceContract
 
         $employees = $this->formatProjectFTEFOrExportAll($employees);
         $currentTimeStamp = now();
-        $filename = "FTE-$currentTimeStamp->year $currentTimeStamp->month $currentTimeStamp->day.xlsx";
+        $filename = "FTE-$currentTimeStamp->year$currentTimeStamp->month$currentTimeStamp->day.xlsx";
 
         return Excel::download(new ProjectFTEExport($employees), $filename);
     }
@@ -453,7 +453,7 @@ class ProjectService implements ProjectServiceContract
                     $employee->name,
                     number_format($employee->user->ftes['main'], 2),
                     $activeProjectTeamMember->project->name,
-                    number_format($activeProjectTeamMember->fte, 2),
+                    number_format($activeProjectTeamMember->fte, 2)
                 ];
                 $teamMembers[] = $teamMember;
             }
@@ -465,23 +465,22 @@ class ProjectService implements ProjectServiceContract
     public function getProjectsWithTeamMemberRequirementData($request)
     {
         $projectsWithTeamMemberRequirement = Project::query()
-            ->with('client')
-            ->status('active')
-            ->withCount('getTeamMembers as team_member_count')
-            ->withSum('resourceRequirement as team_member_needed', 'total_requirement')
-            ->havingRaw('team_member_needed - team_member_count')
-            ->when($request, function ($query, $request) {
-                return $query->where('name', 'like', '%' . $request['name'] . '%');
-            })
-            ->get();
+        ->with('client')
+        ->status('active')
+        ->withCount('getTeamMembers as team_member_count')
+        ->withSum('resourceRequirement as team_member_needed', 'total_requirement')
+        ->havingRaw('team_member_needed - team_member_count')
+        ->when($request, function ($query, $request) {
+            return $query->where('name', 'like', '%' . $request['name'] . '%');
+        })
+        ->get();
 
-        $totalAdditionalResourceRequired = 0;
+        $totalAdditionalResourceRequired = [];
         $data = [];
-
+        $totalAdditionalResourceRequired = 0;
         foreach ($projectsWithTeamMemberRequirement as $project) {
             $count = $project->team_member_needed - $project->team_member_count;
             $totalAdditionalResourceRequired += $count;
-
             $projectData = [
                 'totalResourceRequirement' => $project->team_member_needed,
                 'totalResourceDeployed' => $project->team_member_count,
@@ -499,16 +498,11 @@ class ProjectService implements ProjectServiceContract
                 if ($totalResourceRequirementCount > 0) {
                     $projectData['teamMemberNeededByDesignation'][$designations[$designationName]] = $totalResourceRequirementCount;
                 }
-
                 $totalResourceDeployedCount = $project->getDeployedCountForDesignation($designationName);
                 if ($totalResourceDeployedCount > 0) {
                     $projectData['currentTeamMemberCountByDesignation'][$designations[$designationName]] = $totalResourceDeployedCount;
                 }
-
-                $count = $totalResourceRequirementCount - $totalResourceDeployedCount;
-                $projectData['countByDesignation'][$designations[$designationName]] = $count;
             }
-
             $data[$project->client->name][$project->name] = $projectData;
         }
 
