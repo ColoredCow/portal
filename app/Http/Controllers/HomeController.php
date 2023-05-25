@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Google_Client;
 use Google_Service_Directory;
 use App\Models\KnowledgeCafe\Library\Book;
-use Modules\CodeTrek\Entities\CodeTrekApplicant;
 
 class HomeController extends Controller
 {
@@ -25,9 +24,8 @@ class HomeController extends Controller
     public function index()
     {
         $unreadBook = (session('disable_book_suggestion')) ? null : Book::getRandomUnreadBook();
-        $applicants = CodeTrekApplicant::orderBy('first_name', 'asc')->get();
 
-        return view('home')->with(['book' => $unreadBook, 'applicants' => $applicants]);
+        return view('home')->with(['book' => $unreadBook,]);
     }
 
     /**

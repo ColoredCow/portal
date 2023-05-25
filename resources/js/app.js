@@ -2102,13 +2102,14 @@ $(function () {
 
 	$("#applicant-sidebar").css({
 		position: "fixed",
-		top: "60px",
 		right: "-200px",
 		width: "200px",
 		padding: "10px",
 		border: "1px solid #ccc",
 		backgroundColor: "#f9f9f9",
 		transition: "right 0.3s ease-in-out",
+		overflowY: "scroll",
+		height: "750px" 
 	});
 
 	$(".applicant-list").css({
