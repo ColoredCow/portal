@@ -24,8 +24,9 @@
     <form method="POST" action="{{ route('employee.location') }}">
         @csrf
         <div class="dropdown">
+            <span>Office Location</span>
             <select class="btn bg-light text-left" name="Centre" onchange="this.form.submit()">
-                <option value="" selected="selected">Current Location</option>
+                <option value="" selected="selected">Select Location</option>
                 @foreach($centres as $centre)
                     <option value="{{ $centre->centre_name }}" {{ $centre->centre_name == $selectedLocation ? 'selected' : '' }}>
                         {{ $centre->centre_name }}
