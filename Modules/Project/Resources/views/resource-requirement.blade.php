@@ -71,7 +71,7 @@
                                 </td>  
                                 <td> 
                                     @foreach ($projectData['countByDesignation'] as $designationName => $count)
-                                         <div> {{ $designationName }} : {{ $count }} </div>
+                                        <div> {{ $designationName }} : {{ $count }} </div>
                                     @endforeach
                                 </td> 
                             </tr>
