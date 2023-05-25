@@ -70,7 +70,9 @@
                                     @endforeach
                                 </td>  
                                 <td> 
-                                    <div class="d-flex justify-content-center"> {{ $projectData['additionalResourceRequired'] }} </div>
+                                    @foreach ($projectData['countByDesignation'] as $designationName => $count)
+                                        <div> {{ $designationName }} : {{ $count }} </div>
+                                    @endforeach
                                 </td> 
                             </tr>
                             @endforeach
