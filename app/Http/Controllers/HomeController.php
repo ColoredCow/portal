@@ -75,12 +75,12 @@ class HomeController extends Controller
     public function storeEmployeeLocation(Request $request)
     {
         $validatedData = $request->validate([
-            'Centre' => 'required',
+            'centre_name' => 'required | exists:office_locations,centre_name',
         ]);
 
         $userMeta = UserMeta::updateOrCreate(
             ['user_id' => auth()->user()->id, 'meta_key' => 'office_location'],
-            ['meta_value' => $request->Centre]
+            ['meta_value' => $request->centre_name]
         );
 
         return redirect('home');
