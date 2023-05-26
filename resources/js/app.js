@@ -2099,31 +2099,4 @@ $(function () {
 			$("#applicant-sidebar").css("right", "-200px");
 		}
 	});
-
-	$("#applicant-sidebar").css({
-		position: "fixed",
-		right: "-200px",
-		width: "200px",
-		padding: "10px",
-		border: "1px solid #ccc",
-		backgroundColor: "#f9f9f9",
-		transition: "right 0.3s ease-in-out",
-		overflowY: "scroll",
-		height: "750px" 
-	});
-
-	$(".applicant-list").css({
-		listStyle: "none",
-		padding: "0",
-		margin: "0",
-	});
-
-	$(".applicant-list li").css({
-		cursor: "default",
-		padding: "5px",
-	});
-
-	$(".applicant-list li:hover").css({
-		backgroundColor: "#e6e6e6",
-	});
 });
