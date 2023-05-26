@@ -66,13 +66,11 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
 
 5. Make a copy of the `.env.example` file in the same directory and save it as `.env`:
-
     ```sh
     cp .env.example .env
     ```
 
 6. Run the following command to add the Laravel application key:
-
     ```sh
     php artisan key:generate
     ```
