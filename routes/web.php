@@ -117,6 +117,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/nda-template', 'NDAAgreementController@index')->name('setting.agreement.nda');
         Route::get('/invoice-template', 'SettingController@invoiceTemplates')->name('setting.invoice');
         Route::post('/invoice-template', 'SettingController@updateInvoiceTemplates')->name('setting.invoice.update');
+        Route::prefix('bank-details')->group(function () {
+            Route::get('/', 'bankController@index')->name('settings.bank-details');
+        });
     });
 
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {

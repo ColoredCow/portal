@@ -106,8 +106,8 @@ class ProjectService implements ProjectServiceContract
         $counts = [
             'mainProjectsCount' => array_merge($filters, ['status' => 'active', 'is_amc' => false]),
             'AMCProjectCount' => array_merge($filters, ['status' => 'active', 'is_amc' => true]),
-            'haltedProjectsCount' => array_merge($filters, ['status' => 'halted']),
-            'inactiveProjectsCount' => array_merge($filters, ['status' => 'inactive']),
+            'haltedProjectsCount' => array_merge($filters, ['status' => 'halted', 'is_amc' => false]),
+            'inactiveProjectsCount' => array_merge($filters, ['status' => 'inactive', 'is_amc' => false]),
         ];
 
         foreach ($counts as $key => $tabFilters) {
@@ -502,6 +502,8 @@ class ProjectService implements ProjectServiceContract
                 if ($totalResourceDeployedCount > 0) {
                     $projectData['currentTeamMemberCountByDesignation'][$designations[$designationName]] = $totalResourceDeployedCount;
                 }
+                $count = $totalResourceRequirementCount - $totalResourceDeployedCount;
+                $projectData['countByDesignation'][$designations[$designationName]] = $count;
             }
             $data[$project->client->name][$project->name] = $projectData;
         }

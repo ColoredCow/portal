@@ -62,7 +62,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
     node -v
     #output should be somthing like
     #v14.17.6
-```
+    ```
 
 
 5. Make a copy of the `.env.example` file in the same directory and save it as `.env`:
@@ -71,10 +71,11 @@ Before you start following the guidelines, make sure to go through the [prerequi
     ```
 
 6. Run the following command to add the Laravel application key:
-    ```sh
-    php artisan key:generate
-```
-   **Note:** Make sure that the 'php.ini' file in XAMPP/WAMP has this code uncommented/written `extension=gd`
+   ```sh
+   php artisan key:generate
+   ```
+   **Note:** Make sure that the 'php.ini' file in XAMPP/WAMP has this code uncommented/written
+    `extension=gd`
 
 
 7. Add the following settings in `.env` file:
