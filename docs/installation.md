@@ -44,7 +44,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
    npm install
    npm run dev
    ```
-    If you are still getting the error --hide-module then revert all changes by `git checkout.`.
+    If you are still getting the error --hide-module then revert all changes by `git checkout .`
 
 	**Note:** Check the version of laravel-mix in package-lock.json it should be 5.0.9
     ```sh
@@ -66,11 +66,13 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
 
 5. Make a copy of the `.env.example` file in the same directory and save it as `.env`:
+
     ```sh
     cp .env.example .env
     ```
 
 6. Run the following command to add the Laravel application key:
+
     ```sh
     php artisan key:generate
     ```
@@ -80,6 +82,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
 7. Add the following settings in `.env` file:
     1. Laravel app configurations
+
     ```sh
     APP_NAME="ColoredCow Portal"
     APP_ENV=local
@@ -101,6 +104,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
     DB_PASSWORD=
     ```
     **Note:** Use the default values for MySQL database in `.env` file
+
     ```
     DB_USERNAME=root
     DB_PASSWORD=
