@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
-use App\Http\View\Composers\ApplicantsComposer;
+use App\Http\View\Composers\CodeTrekApplicantsComposer;
 
 class ApplicantsComposerServiceProvider extends ServiceProvider
 {
@@ -25,6 +25,6 @@ class ApplicantsComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('*', ApplicantsComposer::class);
+        View::composer('*', CodeTrekApplicantsComposer::class);
     }
 }
