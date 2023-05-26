@@ -28,6 +28,7 @@ class HomeController extends Controller
     {
         $unreadBook = (session('disable_book_suggestion')) ? null : Book::getRandomUnreadBook();
         $centres = OfficeLocation::orderBy('centre_name', 'asc')->get();
+
         $selectedLocation = auth()->user()->office_location;
 
         return view('home')->with([
@@ -35,7 +36,7 @@ class HomeController extends Controller
             'centres' => $centres,
             'selectedLocation' => $selectedLocation,
         ]);
-    }    
+    }
 
     /**
      * Fetch a user's groups from GSuite API.
