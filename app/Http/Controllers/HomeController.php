@@ -28,17 +28,15 @@ class HomeController extends Controller
     {
         $unreadBook = (session('disable_book_suggestion')) ? null : Book::getRandomUnreadBook();
         $centres = OfficeLocation::orderBy('centre_name', 'asc')->get();
-
-        $selectedLocation = UserMeta::where('user_id', auth()->user()->id)
-            ->where('meta_key', 'office_location')
-            ->value('meta_value');
-
+        
+        $selectedLocation = auth()->user()->office_location;
+    
         return view('home')->with([
             'book' => $unreadBook,
             'centres' => $centres,
             'selectedLocation' => $selectedLocation,
         ]);
-    }
+    }    
 
     /**
      * Fetch a user's groups from GSuite API.
@@ -75,7 +73,7 @@ class HomeController extends Controller
     public function storeEmployeeLocation(Request $request)
     {
         $validatedData = $request->validate([
-            'centre_name' => 'required | exists:office_locations,centre_name',
+            'centre_name' => 'required|exists:office_locations,centre_name',
         ]);
 
         $userMeta = UserMeta::updateOrCreate(

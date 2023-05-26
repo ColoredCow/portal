@@ -21,7 +21,7 @@
         <span>Your FTE: <b class="{{ auth()->user()->ftes['main'] < 1 ? 'text-danger' : 'text-success' }}">{{auth()->user()->ftes['main'] }}</b> </span>
     </div>
 
-    <form method="POST" action="{{ route('employee.location') }}">
+    <form method="POST" action="{{ route('update.employee.location') }}">
         @csrf
         <div class="dropdown">
             <span>Your office location</span>
