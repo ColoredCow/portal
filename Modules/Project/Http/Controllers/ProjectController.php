@@ -150,6 +150,7 @@ class ProjectController extends Controller
     {
         $resourceData = $this->service->getProjectsWithTeamMemberRequirementData($request['name']);
 
+
         return view('project::resource-requirement', ['resourceData' => $resourceData,]);
     }
 }
