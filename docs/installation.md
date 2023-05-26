@@ -44,15 +44,14 @@ Before you start following the guidelines, make sure to go through the [prerequi
    npm install
    npm run dev
    ```
-    If you are still getting the error --hide-module then revert all changes by git checkout.
+    If you are still getting the error --hide-module then revert all changes by `git checkout.`.
 
 	**Note:** Check the version of laravel-mix in package-lock.json it should be 5.0.9
     ```sh
 	npm install
-    npm run dev
+        npm run dev
     ```
-    **Note:** if laravel-mix version in package-lock.json changes to version 6 then npm run dev will throw error,
-    so it should be at version 5 only.
+    **Note:** if laravel-mix version in package-lock.json changes to version 6 then npm run dev will throw error,so it should be at version 5 only.
 
    If you are still getting the error then delete the `package-lock.json` file and make sure your node and npm version are as below and repeat step 4 again.
     ```sh
@@ -68,13 +67,13 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
 5. Make a copy of the `.env.example` file in the same directory and save it as `.env`:
      ```sh
-    cp .env.example .env
-    ```
+     cp .env.example .env
+     ```
 
 6. Run the following command to add the Laravel application key:
-   ```sh
-   php artisan key:generate
-   ```
+     ```sh
+     php artisan key:generate
+     ```
    **Note:** Make sure that the 'php.ini' file in XAMPP/WAMP has this code uncommented/written
     `extension=gd`
 
