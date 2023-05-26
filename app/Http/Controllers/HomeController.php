@@ -28,9 +28,9 @@ class HomeController extends Controller
     {
         $unreadBook = (session('disable_book_suggestion')) ? null : Book::getRandomUnreadBook();
         $centres = OfficeLocation::orderBy('centre_name', 'asc')->get();
-        
+
         $selectedLocation = auth()->user()->office_location;
-    
+
         return view('home')->with([
             'book' => $unreadBook,
             'centres' => $centres,
