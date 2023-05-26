@@ -149,8 +149,10 @@ class ProjectController extends Controller
     public function projectResource(Request $request)
     {
         $resourceData = $this->service->getProjectsWithTeamMemberRequirementData($request['name']);
-        
-        return view('project::resource-requirement',[
-            'resourceData' => $resourceData,]);
+
+        return view(
+            'project::resource-requirement',
+            ['resourceData' => $resourceData,]
+        );
     }
 }
