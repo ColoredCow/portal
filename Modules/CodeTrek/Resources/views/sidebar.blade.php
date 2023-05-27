@@ -3,7 +3,10 @@
     <ul class="applicant-list list-unstyled p-0 m-0 ps-3">
         @foreach ($codeTrekApplicants as $codeTrekApplicant)
             <li data-id="{{ $codeTrekApplicant->id }}">
-                <h6 class="ms-1"><i class="fa fa-user me-1"></i> {{ $codeTrekApplicant->first_name }} {{ $codeTrekApplicant->last_name }}</h6>
+                <h6 class="ms-1 mr-1">
+                    <i class="fa fa-user me-1" style="margin-right: 5px;"></i>
+                    {{ $codeTrekApplicant->first_name }} {{ $codeTrekApplicant->last_name }}
+                </h6>
             </li>
         @endforeach
     </ul>
