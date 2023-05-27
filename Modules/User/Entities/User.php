@@ -198,4 +198,9 @@ class User extends Authenticatable
 
         return $projects;
     }
+
+    public function getOfficeLocationAttribute()
+    {
+        return optional($this->meta()->where('meta_key', 'office_location')->first())->meta_value;
+    }
 }
