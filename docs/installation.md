@@ -44,6 +44,14 @@ Before you start following the guidelines, make sure to go through the [prerequi
    npm install
    npm run dev
    ```
+    If you are still getting the error --hide-module then revert all changes by `git checkout .`
+
+	**Note:** Check the version of laravel-mix in package-lock.json it should be 5.0.9
+    ```sh
+     npm install
+     npm run dev
+    ```
+    **Note:** if laravel-mix version in package-lock.json changes to version 6 then npm run dev will throw error, so it should be at version 5 only.
 
    If you are still getting the error then delete the `package-lock.json` file and make sure your node and npm version are as below and repeat step 4 again.
     ```sh
@@ -54,11 +62,11 @@ Before you start following the guidelines, make sure to go through the [prerequi
     node -v
     #output should be somthing like
     #v14.17.6
-```
+    ```
 
 
 5. Make a copy of the `.env.example` file in the same directory and save it as `.env`:
-     ```sh
+    ```sh
     cp .env.example .env
     ```
 
@@ -83,7 +91,6 @@ Before you start following the guidelines, make sure to go through the [prerequi
     - Create a database in your local server. Check out [this link](https://www.youtube.com/watch?v=k9yJR_ZJbvI&ab_channel=1BestCsharpblog) and skip to 0:21.
     - Configure your Laravel app with the right DB settings. Check out [this link](https://www.youtube.com/watch?v=4geOENi3--M). Relevant parts are 2:00-2:42 and 4:20-5:40.
     - Read [the story](https://docs.google.com/document/d/1sWj0F2uXkSE9oHBkChv-yC2L7P7qazsPY5sNPC1PIp4/edit) about how the team discussed which video should be in the docs
-
     ```sh
     DB_CONNECTION=mysql
     DB_HOST=127.0.0.1
@@ -93,7 +100,8 @@ Before you start following the guidelines, make sure to go through the [prerequi
     DB_PASSWORD=
     ```
     **Note:** Use the default values for MySQL database in `.env` file
-    ```
+
+    ```sh
     DB_USERNAME=root
     DB_PASSWORD=
     ```
