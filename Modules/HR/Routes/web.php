@@ -125,7 +125,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/workhistory/{employee}/', 'EmployeeController@employeeWorkHistory')->name('employees.employeeWorkHistory');
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
         Route::get('fte-handler/{domain_id}', 'EmployeeController@showFTEdata')->name('employees.alert');
-        Route::get('employee-self-review/{employee}', 'EmployeeController@review')->name('employees.review');
+        Route::get('fte-handler/{domain_id}', 'EmployeeController@showFTEdata')->name('employees.alert');
 
         Route::resource('requisition', 'RequisitionController')
             ->only(['index', 'show', 'store'])
@@ -140,10 +140,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/details', 'RequisitionController@storeBatchDetails')->name('requisition.storeBatchDetails');
 
         Route::resource('designation', 'HrJobDesignationController')
-            ->only(['index', 'show'])
-            ->names([
-                'index' => 'designation',
-            ]);
+        ->only(['index', 'show'])
+        ->names([
+            'index' => 'designation',
+        ]);
         Route::post('/delete/{id}', 'HrJobDesignationController@destroy')->name('designation.delete');
         Route::get('/{id}/edit', 'HrJobDesignationController@edit')->name('designation.edit');
         Route::post('/store', 'HrJobDesignationController@storeDesignation')->name('hr-job-designation.storeJobDesignation');
