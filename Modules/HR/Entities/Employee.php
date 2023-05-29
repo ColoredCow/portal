@@ -34,7 +34,7 @@ class Employee extends Model
         if ($status == 'current') {
             return $query->wherehas('user');
         } else {
-            return $query->whereDoesntHave('user'); 
+            return $query->whereDoesntHave('user');
         }
     }
 
