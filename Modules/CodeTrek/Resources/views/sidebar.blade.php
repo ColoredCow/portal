@@ -4,7 +4,7 @@
         @foreach ($codeTrekApplicants as $codeTrekApplicant)
             <li data-id="{{ $codeTrekApplicant->id }}">
                 <h6 class="ms-1 mr-1">
-                    <i class="fa fa-user me-1" style="margin-right: 5px;"></i>
+                    <i class="fa fa-user me-1 mr-1"></i>
                     {{ $codeTrekApplicant->first_name }} {{ $codeTrekApplicant->last_name }}
                 </h6>
             </li>
