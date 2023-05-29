@@ -32,20 +32,22 @@
                 </li>
             </div>
             <div>
-            <form action="{{ route('codetrek.index') }}" id="centreFilterForm">
-                <div class="form-group ml-25 w-180">
-                    <select class="form-control bg-light" name="centre" id="centre" onchange="document.getElementById('centreFilterForm').submit();">
-                        <option value="" {{ !request()->has('centre') || empty(request()->get('centre')) ? 'selected' : '' }}>
-                            {!! __('All Centres') !!}
-                        </option>
-                        @foreach ($centres as $centre)
-                            <option value="{{ $centre->id }}" {{ request()->get('centre') == $centre->id ? 'selected' : '' }}>
-                                {{ $centre->centre_name }}
+                <form action="{{ route('codetrek.index') }}" id="centreFilterForm">
+                    <div class="form-group ml-25 w-180">
+                        <select class="form-control bg-light" name="centre" id="centre" onchange="document.getElementById('centreFilterForm').submit();">
+                            <option value="" {{ !request()->has('centre') || empty(request()->get('centre')) ? 'selected' : '' }}>
+                                {!! __('All Centres') !!}
                             </option>
-                        @endforeach
-                    </select>                   
-                </div>
-            </form>
+                            @foreach ($centres as $centre)
+                                <option value="{{ $centre->id }}" {{ request()->get('centre') == $centre->id ? 'selected' : '' }}>
+                                    {{ $centre->centre_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <input type="hidden" name="status" value="{{ $request['status'] ?? '' }}">
+                        <input type="hidden" name="name" value="{{ request()->get('name') }}">
+                    </div>
+                </form>
             </div>
             <form class="d-md-flex justify-content-between ml-md-3" action="{{ route('codetrek.index') }}">
                 <div class="d-flex justify-content-end">
