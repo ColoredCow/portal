@@ -12,6 +12,7 @@ use Modules\HR\Entities\Job;
 use Modules\HR\Events\CustomMailTriggeredForApplication;
 use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Http;
+
 class ApplicationService implements ApplicationServiceContract
 {
     public function index($applicationType)
@@ -103,13 +104,11 @@ class ApplicationService implements ApplicationServiceContract
         $data->save();
     }
 
-    public function addSubscriberToCampaigns($parameters,$subscriptionLists)
+    public function addSubscriberToCampaigns($parameters, $subscriptionLists)
     {
         $name = $parameters['first_name'] . ' ' . $parameters['last_name'];
         $url = (config('hr.send_newSubscriber_to_Campaigns.url'));
         $token = (config('hr.send_newSubscriber_to_Campaigns.token'));
-
-        dd($url,$token,"hay");
 
         $response = Http::withHeaders([
             'Accept' => 'application/json',
@@ -126,9 +125,4 @@ class ApplicationService implements ApplicationServiceContract
 
         $jsonData = $response->json();
     }
-
-
-
-
-
 }
