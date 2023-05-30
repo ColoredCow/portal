@@ -52,7 +52,6 @@ class ApplicantController extends Controller
      *
      * @param  ApplicantRequest  $request
      */
-
     public function store(ApplicantRequest $request)
     {
         $validated = $request->validated();
@@ -71,7 +70,7 @@ class ApplicantController extends Controller
         return redirect(route('applications.job.index'));
     }
 
-    public function addSubscriberToCampaigns($parameters, $subscriptionLists) 
+    public function addSubscriberToCampaigns($parameters, $subscriptionLists)
     {
         $name = $parameters['first_name'] . ' ' . $parameters['last_name'];
 
