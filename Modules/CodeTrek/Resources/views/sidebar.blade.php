@@ -1,6 +1,6 @@
-<div id="applicant-sidebar" class="position-fixed top-0 start-0 bg-white p-1 m-0">
-    <h5 class="fw-bold border-bottom pb-2 ps-3">CodeTrek Applicants</h5>
-    <ul class="applicant-list list-unstyled p-0 m-0 ps-3">
+<div id="applicant-sidebar" class="position-fixed bg-white p-1">
+    <h5 class="fw-bold border-bottom pb-2">CodeTrek Applicants</h5>
+    <ul class="applicant-list list-unstyled">
         @foreach ($codeTrekApplicants as $codeTrekApplicant)
         <li data-id="{{ $codeTrekApplicant->id }}" class="d-flex align-items-center">
             <i class="fa fa-user me-1 mr-1"></i>
