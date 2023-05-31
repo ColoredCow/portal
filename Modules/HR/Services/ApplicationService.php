@@ -108,7 +108,7 @@ class ApplicationService implements ApplicationServiceContract
     {
         $name = $parameters['first_name'] . ' ' . $parameters['last_name'];
         $url = (config('hr.send_newSubscriber_to_Campaigns.url'));
-        $token = (config('hr.send_newSubscriber_to_Campaigns.token'));
+        $token = $this->getToken();
         // IMPORTENT 
         // Change url to this in config file
         // https://campaigns.coloredcow.com/api/v1/addSubscriber
@@ -117,7 +117,6 @@ class ApplicationService implements ApplicationServiceContract
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Content-Type'=>'application/json'
-            // Add more headers if needed
         ])
         ->withToken($token)
         ->post($url, [
@@ -128,5 +127,16 @@ class ApplicationService implements ApplicationServiceContract
         ]);
 
         $jsonData = $response->json();
+    }
+
+    public function getToken()
+    {   
+        $response = Http::asForm()->post(env('URL_FOR_AUTH'), [
+            'grant_type' => 'client_credentials',
+            'client_id' => env('CLIENT_ID'),
+            'client_secret' => env('CLIENT_SECRET'),
+        ]);
+        
+        return $response->json()['access_token'];
     }
 }

@@ -231,9 +231,12 @@ return [
         'ifsc_code' => 'IFSC Code',
     ],
     'send_newSubscriber_to_Campaigns' => [
-        'token' => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiZjc5MWEwYjgyYjdjMDk2MGQ1ZWJiM2I4ZTllMjFhMDkwZDE0ZGYyOGQ3MDFiNjcwYjU5NjBlYzUzOTNmZTk3ZjlmNmQzYWZkMWIzYTc4NzkiLCJpYXQiOjE2ODUxOTA2MzguNDExOTc3LCJuYmYiOjE2ODUxOTA2MzguNDExOTg0LCJleHAiOjE3MTY4MTMwMzguMjMxNjE0LCJzdWIiOiIiLCJzY29wZXMiOltdfQ.n2d73JJFxTIygS224jHfWlM_QCUBYNkGVWxukeZGXpS2iTwV5DPtGIJrAkIkeBSPW8d36WaX6ywTS6crPsfHzOHyJ95VrOKi0csn26S5uxRUMlsF7ceOEqAk7WAysNuL6c7npMJsosxr9YcpmFHc1AYAmWIzlwB_LWLcQ-Ez1MZonqoS59Y7D2oqQ-TiG5Abnok3KlwYNlDMXGuzH5-kVjbjyUqm2luevCls1E_e6YXZrK4ObTEQVDOcP61I49IzWNWUk0f4jWGqq8XEZOsvGW8QfaqxrxEib2Z8vnPvBbFGua5x93M7F2ADrq-jSMFdIdLlCgq0E0nYxCLVPEHvjg1X1UvoT9dcskv904WoY0yZPYFNxdvlvZYDy8fYeJPOhj2AagiMzI0ILtomim1JISNK7ij4uJEwr5sZSE3HybyDxdM3Wyrf-qt8L6PD7I5zAMrosQePxQILMBMCF9KPP3vQYCdlaIiuff9oC7BcmSKnEajGtVDp1LNCGizeydjsLqG9G3NXglW01TBGuK_WRSG9g4OdH6itjAUWoz0bM5k0Y8Dzf9U7bCJSeUnz1QV4D2MCSHyAgEkpIyKL-MuKwRDW2X41_TVIWxi-3q8VZ3u1AxRVshWf9e47Lsm6c4yaPDQ69HNFeO6w6mxbvPwYHV6MgEtqOyg_V2zKrjNMHLw',
-        // 'url' => 'http://127.0.0.1:8000/api/v1/addSubscriber', // use for testing
+        'url' => 'http://127.0.0.1:8000/api/v1/addSubscriber', // use for testing
         // 'url' => env('ROOT_DIR_OF_CAMPAIGNS', 'http://127.0.0.1:8000/api/v1/addSubscriber'),
-        'url' => env('ROOT_DIR_OF_CAMPAIGNS'),
+        // 'url' => env('ROOT_DIR_OF_CAMPAIGNS'),
+        
+        // 'url_for_auth'=>env('URL_FOR_AUTH'),
+        // 'client_secret'=>env('CLIENT_SECRET'),
+        // 'client_id'=>env('CLIENT_ID'),
     ],
 ];
