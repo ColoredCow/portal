@@ -62,6 +62,7 @@ class ApplicantController extends Controller
             return redirect(route('applications.job.index'))->with('error', 'Error occurred while sending data to Campaign');
         }
         $this->service->saveApplication($validated);
+
         return redirect(route('applications.job.index'));
     }
 

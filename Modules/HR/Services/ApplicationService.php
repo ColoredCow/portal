@@ -109,7 +109,7 @@ class ApplicationService implements ApplicationServiceContract
         $name = $parameters['first_name'] . ' ' . $parameters['last_name'];
         $url = (config('hr.send_newSubscriber_to_Campaigns.url'));
         $token = $this->getToken();
-        // IMPORTENT 
+        // IMPORTENT
         // Change url to this in config file
         // https://campaigns.coloredcow.com/api/v1/addSubscriber
         // or after check
@@ -130,13 +130,13 @@ class ApplicationService implements ApplicationServiceContract
     }
 
     public function getToken()
-    {   
+    {
         $response = Http::asForm()->post(env('URL_FOR_AUTH'), [
             'grant_type' => 'client_credentials',
             'client_id' => env('CLIENT_ID'),
             'client_secret' => env('CLIENT_SECRET'),
         ]);
-        
+
         return $response->json()['access_token'];
     }
 }
