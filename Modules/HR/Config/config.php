@@ -231,6 +231,9 @@ return [
         'ifsc_code' => 'IFSC Code',
     ],
     'send_newSubscriber_to_Campaigns' => [
-        'url' => 'http://127.0.0.1:8000/api/v1/addSubscriber', // use for testing
+        'url' => env('ROOT_DIR_OF_CAMPAIGNS'), 
+        'url_for_auth' => env('URL_FOR_AUTH'),
+        'client_secret' => env('CLIENT_SECRET'),
+        'client_id' => env('CLIENT_ID'),
     ],
 ];

@@ -81,8 +81,16 @@ class ApplicationService implements ApplicationServiceContract
         return $attr;
     }
 
-    public function saveApplication($data)
+    public function saveApplication($data, $subscriptionLists)
     {
+
+        try {
+            $this->addSubscriberToCampaigns($data, $subscriptionLists);
+        } catch (\Exception $e) {
+            return redirect(route('applications.job.index'))->with('error', 'Error occurred while sending data to Campaign');
+        }
+
+
         $data['name'] = $data['first_name'] . ' ' . $data['last_name'];
         Applicant::_create($data);
 
@@ -107,15 +115,13 @@ class ApplicationService implements ApplicationServiceContract
     public function addSubscriberToCampaigns($parameters, $subscriptionLists)
     {
         $name = $parameters['first_name'] . ' ' . $parameters['last_name'];
-        $url = (config('hr.send_newSubscriber_to_Campaigns.url'));
         $token = $this->getToken();
-
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Content-Type'=>'application/json'
         ])
         ->withToken($token)
-        ->post($url, [
+        ->post((config('hr.send_newSubscriber_to_Campaigns.url')), [
             'name' => $name,
             'email' =>  $parameters['email'],
             'phone' => $parameters['phone'],
@@ -127,10 +133,10 @@ class ApplicationService implements ApplicationServiceContract
 
     public function getToken()
     {
-        $response = Http::asForm()->post(env('URL_FOR_AUTH'), [
+        $response = Http::asForm()->post((config('hr.send_newSubscriber_to_Campaigns.url_for_auth')), [
             'grant_type' => 'client_credentials',
-            'client_id' => env('CLIENT_ID'),
-            'client_secret' => env('CLIENT_SECRET'),
+            'client_id' => (config('hr.send_newSubscriber_to_Campaigns.client_id')),
+            'client_secret' => (config('hr.send_newSubscriber_to_Campaigns.client_secret')),
         ]);
 
         return $response->json()['access_token'];

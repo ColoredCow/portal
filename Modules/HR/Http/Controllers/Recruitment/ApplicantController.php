@@ -54,14 +54,15 @@ class ApplicantController extends Controller
     public function store(ApplicantRequest $request)
     {
         $validated = $request->validated();
-        $job_title = Job::where('opportunity_id', $validated['opportunity_id'])->get();
-        $subscriptionLists = $job_title->first()->title;
-        try {
-            $this->service->addSubscriberToCampaigns($validated, $subscriptionLists);
-        } catch (\Exception $e) {
-            return redirect(route('applications.job.index'))->with('error', 'Error occurred while sending data to Campaign');
-        }
-        $this->service->saveApplication($validated);
+        $job_title = Job::where('opportunity_id', $validated['opportunity_id'])->first();
+
+        // try {
+        //     $this->service->addSubscriberToCampaigns($validated, $job_title->title);
+        // } catch (\Exception $e) {
+        //     return redirect(route('applications.job.index'))->with('error', 'Error occurred while sending data to Campaign');
+        // }
+
+        $this->service->saveApplication($validated, $job_title->title);
 
         return redirect(route('applications.job.index'));
     }
