@@ -109,7 +109,11 @@ class ApplicationService implements ApplicationServiceContract
         $name = $parameters['first_name'] . ' ' . $parameters['last_name'];
         $url = (config('hr.send_newSubscriber_to_Campaigns.url'));
         $token = (config('hr.send_newSubscriber_to_Campaigns.token'));
-
+        // IMPORTENT 
+        // Change url to this in config file
+        // https://campaigns.coloredcow.com/api/v1/addSubscriber
+        // or after check
+        // https://campaigns.coloredcow.com/campaign/api/v1/addSubscriber
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Content-Type'=>'application/json'
