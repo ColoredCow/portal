@@ -32,20 +32,22 @@
                 </li>
             </div>
             <div>
-            <form action="{{ route('codetrek.index') }}" id="centreFilterForm">
-                <div class="form-group ml-25 w-180">
-                    <select class="form-control bg-light" name="centre" id="centre" onchange="document.getElementById('centreFilterForm').submit();">
-                        <option value="" {{ !request()->has('centre') || empty(request()->get('centre')) ? 'selected' : '' }}>
-                            {!! __('All Centres') !!}
-                        </option>
-                        @foreach ($centres as $centre)
-                            <option value="{{ $centre->id }}" {{ request()->get('centre') == $centre->id ? 'selected' : '' }}>
-                                {{ $centre->centre_name }}
+                <form action="{{ route('codetrek.index') }}" id="centreFilterForm">
+                    <div class="form-group ml-25 w-180">
+                        <select class="form-control bg-light" name="centre" id="centre" onchange="document.getElementById('centreFilterForm').submit();">
+                            <option value="" {{ !request()->has('centre') || empty(request()->get('centre')) ? 'selected' : '' }}>
+                                {!! __('All Centres') !!}
                             </option>
-                        @endforeach
-                    </select>                   
-                </div>
-            </form>
+                            @foreach ($centres as $centre)
+                                <option value="{{ $centre->id }}" {{ request()->get('centre') == $centre->id ? 'selected' : '' }}>
+                                    {{ $centre->centre_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <input type="hidden" name="status" value="{{ $request['status'] ?? '' }}">
+                        <input type="hidden" name="name" value="{{ request()->get('name') }}">
+                    </div>
+                </form>
             </div>
             <form class="d-md-flex justify-content-between ml-md-3" action="{{ route('codetrek.index') }}">
                 <div class="d-flex justify-content-end">
@@ -66,7 +68,7 @@
             <div class='d-flex justify-content-between'>
                 <li class="nav-item mr-3">
                     <a href="{{ route('codetrek.index', ['name' => $name ,'centre' => $centre , 'status' => 'active']) }}"
-                        class="nav-link btn-nav {{ request()->input('status', 'active') == 'active' ? 'active' : '' }}"
+                        class="nav-link btn-nav {{ request()->input('status') !== 'inactive' && request()->input('status') !== 'completed' ? 'active' : '' }}"
                         onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
                         <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/clipboard-check.svg')) !!}</span>
                         Active</a>
@@ -150,6 +152,7 @@
                     </tbody>
                 </table>
             </div>
+            {{$applicants->links()}}
         @elseif (request()->status == 'reports')
             <div>
                 <br><br>
