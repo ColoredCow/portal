@@ -231,8 +231,7 @@ return [
         'ifsc_code' => 'IFSC Code',
     ],
     'send_newSubscriber_to_Campaigns' => [
-        'url' => env('ROOT_DIR_OF_CAMPAIGNS'),
-        'url_for_auth' => env('URL_FOR_AUTH'),
+        'url' => env('CAMPAIGNS_TOOL_URL'),
         'client_secret' => env('CLIENT_SECRET'),
         'client_id' => env('CLIENT_ID'),
     ],

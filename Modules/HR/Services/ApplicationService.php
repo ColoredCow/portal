@@ -114,12 +114,15 @@ class ApplicationService implements ApplicationServiceContract
     {
         $name = $parameters['first_name'] . ' ' . $parameters['last_name'];
         $token = $this->getToken();
+        $CAMPAIGNS_TOOL_URL = (config('hr.send_newSubscriber_to_Campaigns.url'));
+        $url = $CAMPAIGNS_TOOL_URL.'/api/v1/addSubscriber';
+
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Content-Type'=>'application/json'
         ])
         ->withToken($token)
-        ->post((config('hr.send_newSubscriber_to_Campaigns.url')), [
+        ->post($url, [
             'name' => $name,
             'email' =>  $parameters['email'],
             'phone' => $parameters['phone'],
@@ -131,7 +134,10 @@ class ApplicationService implements ApplicationServiceContract
 
     public function getToken()
     {
-        $response = Http::asForm()->post((config('hr.send_newSubscriber_to_Campaigns.url_for_auth')), [
+        $CAMPAIGNS_TOOL_URL = (config('hr.send_newSubscriber_to_Campaigns.url'));
+        $url = $CAMPAIGNS_TOOL_URL.'/oauth/token';
+
+        $response = Http::asForm()->post($url , [
             'grant_type' => 'client_credentials',
             'client_id' => (config('hr.send_newSubscriber_to_Campaigns.client_id')),
             'client_secret' => (config('hr.send_newSubscriber_to_Campaigns.client_secret')),
