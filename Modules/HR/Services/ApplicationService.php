@@ -83,13 +83,11 @@ class ApplicationService implements ApplicationServiceContract
 
     public function saveApplication($data, $subscriptionLists)
     {
-
         try {
             $this->addSubscriberToCampaigns($data, $subscriptionLists);
         } catch (\Exception $e) {
             return redirect(route('applications.job.index'))->with('error', 'Error occurred while sending data to Campaign');
         }
-
 
         $data['name'] = $data['first_name'] . ' ' . $data['last_name'];
         Applicant::_create($data);
