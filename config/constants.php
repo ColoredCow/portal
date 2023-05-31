@@ -263,5 +263,10 @@ return [
         '70' => 'seventy',
         '80' => 'eighty',
         '90' => 'ninety'
-    ]
+    ],
+    'send_newSubscriber_to_Campaigns' => [
+        'url' => env('CAMPAIGNS_TOOL_URL'),
+        'client_secret' => env('CAMPAIGNS_CLIENT_SECRET'),
+        'client_id' => env('CAMPAIGNS_CLIENT_ID'),
+    ],
 ];

@@ -230,9 +230,4 @@ return [
         'acc_number' => 'Account Number',
         'ifsc_code' => 'IFSC Code',
     ],
-    'send_newSubscriber_to_Campaigns' => [
-        'url' => env('CAMPAIGNS_TOOL_URL'),
-        'client_secret' => env('CLIENT_SECRET'),
-        'client_id' => env('CLIENT_ID'),
-    ],
 ];
