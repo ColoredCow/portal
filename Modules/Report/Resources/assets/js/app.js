@@ -190,22 +190,22 @@ function userFteTrendsReport(reportFteData) {
 	};
 
 	const chartConfig = {
-		type: reportFteData.graph_type || 'bar',
+		type: reportFteData.graph_type || "bar",
 		data: chartData,
 		options: {
 		  scales: {
-			yAxes: [{
-			  ticks: {
+				yAxes: [{
+			ticks: {
 				beginAtZero: true,
 			  },
-			}],
+				}],
 		  },
-		  tooltips: {
-			callbacks: {
-				afterFooter: function (tooltipItem, data) {
-					return generateNameTooltip(tooltipItem, reportFteData);
+			tooltips: {
+				callbacks: {
+					afterFooter: function (tooltipItem, data) {
+						return generateNameTooltip(tooltipItem, reportFteData);
+					},
 				},
-			},
 		  },
 		},
 	};
@@ -221,7 +221,7 @@ function userFteTrendsReport(reportFteData) {
 		projectNames.forEach((name) => {
 		  const hours = projectData[name].projectBookedHours[index];
 		  if (hours > 0) {
-			tooltipLabel += `${name}: ${hours} hr \n`;
+				tooltipLabel += `${name}: ${hours} hr \n`;
 		  }
 		});
 
