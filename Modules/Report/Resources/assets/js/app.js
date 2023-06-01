@@ -196,7 +196,7 @@ function userFteTrendsReport(reportFteData) {
 		  scales: {
 				yAxes: [{
 					ticks: {
-					beginAtZero: true,
+						beginAtZero: true,
 			  },
 				}],
 		  },
