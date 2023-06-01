@@ -807,3 +807,25 @@ span.total-chart-count{
 // Bootstrap
 // @import '~bootstrap/scss/bootstrap';
 // @import 'utilities';
+
+#applicant-sidebar {
+	position: fixed;
+	right: -250px;
+	width: 250px;
+	padding: 50px;
+	border: 1px solid #ccc;
+	background-color: #f9f9f9;
+	transition: right 0.3s ease-in-out;
+	overflow-y: scroll;
+	height: 720px;
+	z-index: 999;
+}
+
+.applicant-list li {
+	cursor: default;
+	padding: 5px;
+}
+
+.applicant-list li:hover {
+	background-color: #e6e6e6;
+}
