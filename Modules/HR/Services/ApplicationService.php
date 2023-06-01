@@ -134,13 +134,13 @@ class ApplicationService implements ApplicationServiceContract
 
     public function getToken()
     {
-        $CAMPAIGNS_TOOL_URL = (config('constants.send_newSubscriber_to_Campaigns.url'));
+        $CAMPAIGNS_TOOL_URL = config('constants.send_newSubscriber_to_Campaigns.url');
         $url = $CAMPAIGNS_TOOL_URL . '/oauth/token';
 
         $response = Http::asForm()->post($url, [
             'grant_type' => 'client_credentials',
-            'client_id' => (config('constants.send_newSubscriber_to_Campaigns.client_id')),
-            'client_secret' => (config('constants.send_newSubscriber_to_Campaigns.client_secret')),
+            'client_id' => config('constants.send_newSubscriber_to_Campaigns.client_id'),
+            'client_secret' => config('constants.send_newSubscriber_to_Campaigns.client_secret'),
         ]);
 
         return $response->json()['access_token'];
