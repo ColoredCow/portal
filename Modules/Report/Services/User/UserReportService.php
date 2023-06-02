@@ -23,7 +23,6 @@ class UserReportService
 
         $reportFteData = $this->getMonthsFteAttribute($projectsId, $user);
 
-
         return  $reportFteData;
     }
 
