@@ -40,10 +40,10 @@ class sendNewSubscriber extends Command
      */
     public function handle()
     {
-        $applicants = Applicant::select('name', 'email', 'phone','id')->get();
+        $applicants = Applicant::select('name', 'email', 'phone', 'id')->get();
 
         $count = 0;
-        foreach($applicants as $applicant) {
+        foreach ($applicants as $applicant) {
             $count= $count + 1;
             $name =  $applicant->name;
             $id    = $applicant->id;
@@ -57,14 +57,11 @@ class sendNewSubscriber extends Command
             ];
 
             $jobId = Application::where("hr_applicant_id", $id)->pluck('hr_job_id');
-            if ($jobId)
-            {
+            if ($jobId) {
                 $list =Job::where('id', $jobId)->pluck('title');
                 $subscriptionLists = $list[0];
-                if ($list)
-                {
-                    try 
-                    {
+                if ($list) {
+                    try {
                         ApplicationService::addSubscriberToCampaigns($data, $subscriptionLists);
                     } catch (\Exception $e) {
                         return redirect(route('applications.job.index'))->with('error', 'Error occurred while sending data to Campaign');
@@ -76,7 +73,6 @@ class sendNewSubscriber extends Command
             {
                 dd("stop for each loop on count = 3 ");
             }
-            // dd("for each end hare");
         }
     }
 }
