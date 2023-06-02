@@ -43,9 +43,7 @@ class sendNewSubscriber extends Command
     {
         $applicants = Applicant::select('name', 'email', 'phone', 'id')->get();
 
-        $count = 0;   // this code is for testing need to delete after approval
         foreach ($applicants as $applicant) {
-            $count = $count + 1;    // this code is for testing need to delete after approval
             $name = $applicant->name;
             $id = $applicant->id;
             $nameParts = explode(' ', $name, 2);
@@ -61,20 +59,13 @@ class sendNewSubscriber extends Command
             if ($jobId) {
                 $subscriptionLists = Job::where('id', $jobId)->value('title');
                 if ($subscriptionLists) {
-                    dump($subscriptionLists);
-                    if ($count >= 4) {
-                        try {
-                            $applicationService = new ApplicationService();
-                            $applicationService->addSubscriberToCampaigns($data, $subscriptionLists);
-                        } catch (\Exception $e) {
-                            $this->error('Error occurred while sending data to Campaign');
-                        }
+                    try {
+                        $applicationService = new ApplicationService();
+                        $applicationService->addSubscriberToCampaigns($data, $subscriptionLists);
+                    } catch (\Exception $e) {
+                        $this->error('Error occurred while sending data to Campaign');
                     }
                 }
-            }
-            // this code is for testing need to delete after approval
-            if ($count == 8) {
-                dd('stop for each loop on count = 8');
             }
         }
 
