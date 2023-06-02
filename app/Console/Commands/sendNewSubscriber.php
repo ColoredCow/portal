@@ -15,14 +15,14 @@ class sendNewSubscriber extends Command
      *
      * @var string
      */
-    protected $signature = 'sendNewSubscriber';
+    protected $signature = 'migrate_applicants_to_email_campaign';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'This Command send applicient data to the Campaigns to create new subscriber';
 
     /**
      * Create a new command instance.
@@ -45,29 +45,28 @@ class sendNewSubscriber extends Command
 
         foreach ($applicants as $applicant) {
             $name = $applicant->name;
-            $id = $applicant->id;
             $nameParts = explode(' ', $name, 2);
 
             $data = [
                 'first_name' =>   $nameParts[0],
-                'last_name' =>  isset($nameParts[1]) ? $nameParts[1] : '',
+                'last_name' => $nameParts[1] ?? '',
                 'email' => $applicant->email,
                 'phone' => $applicant->phone,
             ];
 
-            $jobId = Application::where('hr_applicant_id', $id)->value('hr_job_id');
+            $jobId = Application::where('hr_applicant_id', $applicant->id)->value('hr_job_id');
             if ($jobId) {
                 $subscriptionLists = Job::where('id', $jobId)->value('title');
                 if ($subscriptionLists) {
-                    try {
-                        $applicationService = new ApplicationService();
-                        $applicationService->addSubscriberToCampaigns($data, $subscriptionLists);
-                    } catch (\Exception $e) {
-                        $this->error('Error occurred while sending data to Campaign');
+                        try {
+                            $applicationService = new ApplicationService();
+                            $applicationService->addSubscriberToCampaigns($data, $subscriptionLists);
+                        } catch (\Exception $e) {
+                            $this->error('Error occurred while sending data to Campaign');
+                        }
                     }
                 }
             }
-        }
 
         return 0;
     }
