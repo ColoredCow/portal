@@ -69,8 +69,7 @@ class sendNewSubscriber extends Command
                 }
             }
 
-            if($count == 3)
-            {
+            if ($count == 3) {
                 dd("stop for each loop on count = 3 ");
             }
         }
