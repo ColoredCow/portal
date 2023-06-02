@@ -21,19 +21,19 @@ class UserReportService
     {
         $projectsId = $user->projectTeamMembers->pluck('project_id');
 
-        $reportFteData = $this->getMonthsFteAttribute($projectsId);
+        $reportFteData = $this->getMonthsFteAttribute($projectsId, $user);
 
         return  $reportFteData;
     }
 
-    public function getMonthsFteAttribute($projectsId)
+    public function getMonthsFteAttribute($projectsId, $user)
     {
         $months = [];
         $projectData = [];
         $data = [];
 
         foreach ($projectsId as $projectId) {
-            $projectTeamMembersId = ProjectTeamMember::where('project_id', $projectId)->get('id');
+            $projectTeamMembersId = ProjectTeamMember::where('project_id', $projectId)->where('team_member_id', $user->id)->get('id');
             $startMonth = today()->subMonthsNoOverflow(17);
             $endMonth = today();
             $projectBookedHours = [];

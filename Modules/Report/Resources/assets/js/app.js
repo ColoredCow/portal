@@ -211,7 +211,6 @@ function userFteTrendsReport(reportFteData) {
 	};
 
 	new Chart(canvasElementId, chartConfig);
-
 	function generateNameTooltip(tooltipItem, reportFteData) {
 		const index = tooltipItem[0].index;
 		const projectData = reportFteData.projectData;
@@ -220,9 +219,7 @@ function userFteTrendsReport(reportFteData) {
 
 		projectNames.forEach((name) => {
 		  const hours = projectData[name].projectBookedHours[index];
-		  if (hours > 0) {
-				tooltipLabel += `${name}: ${hours} hr \n`;
-		  }
+			tooltipLabel += `${name}: ${hours} hr \n`;
 		});
 
 		return tooltipLabel;
