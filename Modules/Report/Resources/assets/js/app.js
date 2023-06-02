@@ -219,7 +219,7 @@ function userFteTrendsReport(reportFteData) {
 
 		projectNames.forEach((name) => {
 		  const hours = projectData[name].projectBookedHours[index];
-				tooltipLabel += `${name}: ${hours} hr \n`;
+			tooltipLabel += `${name}: ${hours} hr \n`;
 		});
 
 		return tooltipLabel;
