@@ -113,7 +113,6 @@ class ApplicationService implements ApplicationServiceContract
     public function addSubscriberToCampaigns($parameters, $subscriptionLists)
     {
         $name = $parameters['first_name'] . ' ' . $parameters['last_name'];
-        // $token = $this->getToken(); ----------getting token
 
         $CAMPAIGNS_TOOL_URL = config('constants.campaign_tool_credentials.url');
         $url = $CAMPAIGNS_TOOL_URL . '/oauth/token';
@@ -127,8 +126,6 @@ class ApplicationService implements ApplicationServiceContract
 
         $CAMPAIGNS_TOOL_URL = config('constants.campaign_tool_credentials.url');
         $url = $CAMPAIGNS_TOOL_URL . '/api/v1/addSubscriber';
-
-        // dd($token,$url, $subscriptionLists, $parameters);
 
         $response = Http::withHeaders([
             'Accept' => 'application/json',
@@ -144,18 +141,4 @@ class ApplicationService implements ApplicationServiceContract
 
         $jsonData = $response->json();
     }
-
-    // public function getToken()
-    // {
-    //     $CAMPAIGNS_TOOL_URL = config('constants.campaign_tool_credentials.url');
-    //     $url = $CAMPAIGNS_TOOL_URL . '/oauth/token';
-
-    //     $response = Http::asForm()->post($url, [
-    //         'grant_type' => 'client_credentials',
-    //         'client_id' => config('constants.campaign_tool_credentials.client_id'),
-    //         'client_secret' => config('constants.campaign_tool_credentials.client_secret'),
-    //     ]);
-
-    //     return $response->json()['access_token'];
-    // }
 }

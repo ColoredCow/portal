@@ -56,22 +56,24 @@ class sendNewSubscriber extends Command
                 'email' => $applicant->email,
                 'phone' => $applicant->phone,
             ];
-
+            
+            
             $jobId = Application::where('hr_applicant_id', $id)->pluck('hr_job_id');
-            if ($jobId) {
+            if ($jobId->isNotEmpty()) {
                 $list = Job::where('id', $jobId)->pluck('title');
                 $subscriptionLists = $list[0];
-                if ($list) {
+                if ($list->isNotEmpty()) {
                     try {
-                        ApplicationService::addSubscriberToCampaigns($data, $subscriptionLists);
+                        $applicationService = new ApplicationService();
+                        $applicationService->addSubscriberToCampaigns($data, $subscriptionLists);
                     } catch (\Exception $e) {
-                        return redirect(route('applications.job.index'))->with('error', 'Error occurred while sending data to Campaign');
+                        $this->error('Error occurred while sending data to Campaign');
                     }
                 }
             }
             // this code is for testing need to delete after approval
             if ($count == 3) {
-                dd('stop for each loop on count = 3 ');
+                dd('stop for each loop on count = 3');
             }
         }
 
