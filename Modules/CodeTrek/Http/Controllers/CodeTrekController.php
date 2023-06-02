@@ -11,7 +11,6 @@ use Modules\Operations\Entities\OfficeLocation;
 
 class CodeTrekController extends Controller
 {
-
     protected $service;
 
     public function __construct(CodeTrekService $service)
