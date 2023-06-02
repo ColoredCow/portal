@@ -56,7 +56,7 @@ class sendNewSubscriber extends Command
                 'email' => $applicant->email,
                 'phone' => $applicant->phone,
             ];
-    
+
             $jobId = Application::where('hr_applicant_id', $id)->pluck('hr_job_id');
             if ($jobId->isNotEmpty()) {
                 $list = Job::where('id', $jobId)->pluck('title');
