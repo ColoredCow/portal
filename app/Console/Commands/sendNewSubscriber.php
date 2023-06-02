@@ -48,31 +48,34 @@ class sendNewSubscriber extends Command
             $count = $count + 1;    // this code is for testing need to delete after approval
             $name = $applicant->name;
             $id = $applicant->id;
-            $nameParts = explode(' ', trim($name));
+            $nameParts = explode(' ', $name, 2);
+
 
             $data = [
                 'first_name' =>   $nameParts[0],
-                'last_name' =>  $nameParts[1],
+                'last_name' =>  isset($nameParts[1]) ? $nameParts[1] : '',
                 'email' => $applicant->email,
                 'phone' => $applicant->phone,
             ];
 
-            $jobId = Application::where('hr_applicant_id', $id)->pluck('hr_job_id');
-            if ($jobId->isNotEmpty()) {
-                $list = Job::where('id', $jobId)->pluck('title');
-                $subscriptionLists = $list[0];
-                if ($list->isNotEmpty()) {
-                    try {
-                        $applicationService = new ApplicationService();
-                        $applicationService->addSubscriberToCampaigns($data, $subscriptionLists);
-                    } catch (\Exception $e) {
-                        $this->error('Error occurred while sending data to Campaign');
-                    }
+            $jobId = Application::where('hr_applicant_id', $id)->value('hr_job_id');
+            if ($jobId) {
+                $subscriptionLists = Job::where('id', $jobId)->value('title');
+                if ($subscriptionLists) {
+                    dump($subscriptionLists);
+                    if($count >= 4) {
+                            try {
+                                $applicationService = new ApplicationService();
+                                $applicationService->addSubscriberToCampaigns($data, $subscriptionLists);
+                            } catch (\Exception $e) {
+                                $this->error('Error occurred while sending data to Campaign');
+                            }
+                        }
                 }
             }
             // this code is for testing need to delete after approval
-            if ($count == 3) {
-                dd('stop for each loop on count = 3');
+            if ($count == 8) {
+                dd('stop for each loop on count = 8');
             }
         }
 

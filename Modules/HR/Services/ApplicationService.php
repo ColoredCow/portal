@@ -115,7 +115,6 @@ class ApplicationService implements ApplicationServiceContract
         $name = $parameters['first_name'] . ' ' . $parameters['last_name'];
 
         $token = $this->getToken();
-
         $CAMPAIGNS_TOOL_URL = config('constants.campaign_tool_credentials.url');
         $url = $CAMPAIGNS_TOOL_URL . '/api/v1/addSubscriber';
 
