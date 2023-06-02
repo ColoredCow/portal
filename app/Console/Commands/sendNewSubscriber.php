@@ -42,11 +42,11 @@ class sendNewSubscriber extends Command
     {
         $applicants = Applicant::select('name', 'email', 'phone', 'id')->get();
 
-        $count = 0;
+        $count = 0;   // this code is for testing need to delete after approval
         foreach ($applicants as $applicant) {
-            $count= $count + 1;
-            $name =  $applicant->name;
-            $id    = $applicant->id;
+            $count = $count + 1;    // this code is for testing need to delete after approval
+            $name = $applicant->name;
+            $id = $applicant->id;
             $nameParts = explode(' ', trim($name));
 
             $data = [
@@ -56,7 +56,7 @@ class sendNewSubscriber extends Command
                 'phone' => $applicant->phone,
             ];
 
-            $jobId = Application::where("hr_applicant_id", $id)->pluck('hr_job_id');
+            $jobId = Application::where('hr_applicant_id', $id)->pluck('hr_job_id');
             if ($jobId) {
                 $list =Job::where('id', $jobId)->pluck('title');
                 $subscriptionLists = $list[0];
@@ -68,10 +68,12 @@ class sendNewSubscriber extends Command
                     }
                 }
             }
-
+            // this code is for testing need to delete after approval
             if ($count == 3) {
-                dd("stop for each loop on count = 3 ");
+                dd('stop for each loop on count = 3 ');
             }
         }
+
+        return 0;
     }
 }
