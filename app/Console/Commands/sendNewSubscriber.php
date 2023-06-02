@@ -50,7 +50,6 @@ class sendNewSubscriber extends Command
             $id = $applicant->id;
             $nameParts = explode(' ', $name, 2);
 
-
             $data = [
                 'first_name' =>   $nameParts[0],
                 'last_name' =>  isset($nameParts[1]) ? $nameParts[1] : '',
@@ -63,14 +62,14 @@ class sendNewSubscriber extends Command
                 $subscriptionLists = Job::where('id', $jobId)->value('title');
                 if ($subscriptionLists) {
                     dump($subscriptionLists);
-                    if($count >= 4) {
-                            try {
-                                $applicationService = new ApplicationService();
-                                $applicationService->addSubscriberToCampaigns($data, $subscriptionLists);
-                            } catch (\Exception $e) {
-                                $this->error('Error occurred while sending data to Campaign');
-                            }
+                    if ($count >= 4) {
+                        try {
+                            $applicationService = new ApplicationService();
+                            $applicationService->addSubscriberToCampaigns($data, $subscriptionLists);
+                        } catch (\Exception $e) {
+                            $this->error('Error occurred while sending data to Campaign');
                         }
+                    }
                 }
             }
             // this code is for testing need to delete after approval
