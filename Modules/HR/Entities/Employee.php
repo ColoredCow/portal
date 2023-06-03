@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Modules\User\Entities\User;
 use Modules\Salary\Entities\EmployeeSalary;
+use Modules\HR\Entities\Assessment;
+use Carbon\Carbon;
 
 class Employee extends Model
 {
@@ -74,5 +76,35 @@ class Employee extends Model
     public function employeeSalaries()
     {
         return $this->hasMany(EmployeeSalary::class);
+    }
+
+    public function assessments()
+    {
+        return $this->hasMany(Assessment::class, 'reviewee_id');
+    }
+
+    public function reviewStatus()
+    {
+        $assessment = $this->assessments()
+            ->latest('created_at')
+            ->first();
+
+        if (!$assessment) {
+            return 'No review conducted yet.';
+        }
+
+        $reviewDate = Carbon::parse($assessment->created_at);
+
+        if ($reviewDate->isToday()) {
+            return 'Review completed.';
+        }
+
+        $nextReviewDate = $reviewDate->addMonths(3);
+
+        if ($nextReviewDate->isCurrentWeek()) {
+            return 'Review pending this week.';
+        }
+
+        return 'Next review date: ' . $nextReviewDate->toDateString();
     }
 }

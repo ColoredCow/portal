@@ -37,14 +37,24 @@ class EmployeeController extends Controller
         $name = request('name');
         $employeeData = Employee::where('staff_type', $name)
             ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
+            ->leftJoin('assessments', 'employees.id', '=', 'assessments.reviewee_id')
             ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
             ->whereNull('project_team_members.ended_on')
+            ->where(function ($query) {
+                $query->whereNull('assessments.reviewee_id')
+                    ->orWhere(function ($subQuery) {
+                        $subQuery->whereNotNull('assessments.reviewee_id')
+                            ->where('assessments.updated_at', '>=', now())
+                            ->where('assessments.updated_at', '<=', now()->addWeek());
+                    });
+            })
             ->groupBy('employees.user_id')
             ->orderby('project_count', 'desc')
             ->get();
         if ($search != '') {
             $employeeData = Employee::where('name', 'LIKE', "%$search%")
                 ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
+                ->leftJoin('assessments', 'employees.id', '=', 'assessments.reviewee_id')
                 ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
                 ->get();
         }
