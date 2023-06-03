@@ -13,16 +13,15 @@
             @include('project::menu_header')
             @can('projects.create')
                 <span class='mt-4'>
-                    
                     <a href="{{ route('project.create') }}" class="btn btn-success text-white"><i class="fa fa-plus"></i>
                         {{ __('Add new project') }}</a>
                 </span>
             @endcan
         </div>
         <div class="text-right mb-2">
-
             <button data-toggle="modal" data-target="#modalExcelFilters"
-                            class="btn btn-info text-white">Export To Excel</button>
+                            class="btn btn-info text-white">Export To Excel
+            </button>
 
             {{-- <a href="{{ route('project.fte.export')}}" class="btn btn-info text-white">Export To Excel</a> --}}
         </div>
@@ -190,5 +189,5 @@
         </div>
         {{ $clients->withQueryString()->links() }}
     </div>
-    @include('project::subviews.excelDownloadFilters')
+    @include('project::subviews.excel-download-filters')
 @endsection

@@ -431,6 +431,8 @@ class ProjectService implements ProjectServiceContract
 
     public function projectFTEExport($filters)
     {
+        dd($filters);
+        $filter = $filters['month'];
         $employees = Employee::applyFilters($filters)
             ->get();
 
