@@ -117,10 +117,10 @@ class ProjectTeamMember extends Model
         $project = new Project;
         $currentDate = today(config('constants.timezone.indian'));
         $firstDayOfMonth = date('Y-m-01');
-        $firstDayMonth = $filters['year'] . '-' . $filters['month']. '-01';
+        $firstDayMonth = $filters['year'] . '-' . $filters['month'] . '-01';
 
-        if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time') 
-            && $firstDayMonth === $firstDayOfMonth) {
+        if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')
+            && $firstDayMonth == $firstDayOfMonth) {
             $currentDate = $currentDate->subDay();
         } else {
             $currentDate = Carbon::createFromDate($firstDayMonth)->endOfMonth();
