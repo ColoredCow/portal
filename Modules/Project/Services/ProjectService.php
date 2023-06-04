@@ -17,7 +17,6 @@ use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\User\Entities\User;
-use Modules\Project\Entities\ProjectTeamMembersEffort;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Project\Exports\ProjectFTEExport;
 use Modules\Project\Entities\ProjectResourceRequirement;
