@@ -117,7 +117,7 @@ class ProjectTeamMember extends Model
         $project = new Project;
         $currentDate = today(config('constants.timezone.indian'));
         $firstDayOfMonth = date('Y-m-01');
-        $firstDayMonth = date((int)$filters['year'] . '-' . (int)$filters['month'] . '-01');
+        $firstDayMonth = (int) ($filters['year'] . '-' . $filters['month'] . '-01');
 
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')
             && $firstDayMonth == $firstDayOfMonth) {
