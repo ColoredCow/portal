@@ -112,7 +112,7 @@ class ProjectTeamMember extends Model
         return $this->current_actual_effort >= $this->current_expected_effort ? 'border border-success' : 'border border-danger';
     }
 
-    public function fte($filters)
+    public function getFte($filters)
     {
         $project = new Project;
         $currentDate = today(config('constants.timezone.indian'));

@@ -204,16 +204,16 @@ class User extends Authenticatable
         return optional($this->meta()->where('meta_key', 'office_location')->first())->meta_value;
     }
 
-    public function ftes($filters)
+    public function getFtes($filters)
     {
         $fte = 0;
         $fteAmc = 0;
         foreach ($this->projectTeamMembers()->with('project')->get() as $projectTeamMember) {
             if (! $projectTeamMember->project->is_amc) {
-                $fte += $projectTeamMember->fte($filters);
+                $fte += $projectTeamMember->getFte($filters);
             }
             if ($projectTeamMember->project->is_amc) {
-                $fteAmc += $projectTeamMember->fte($filters);
+                $fteAmc += $projectTeamMember->getFte($filters);
             }
         }
 
