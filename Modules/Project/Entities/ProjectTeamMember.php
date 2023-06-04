@@ -116,15 +116,14 @@ class ProjectTeamMember extends Model
     {
         $project = new Project;
         $currentDate = today(config('constants.timezone.indian'));
-        $firstDayOfMonth = date('Y-m-01');
-        $firstDayMonth = (int) ($filters['year'] . '-' . $filters['month'] . '-01');
+        $firstDayOfCurrentMonth = date('Y-m-01');
+        $firstDayOfMonth = (int) ($filters['year'] . '-' . $filters['month'] . '-01');
 
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')
-            && $firstDayMonth == $firstDayOfMonth) {
+            && $firstDayOfMonth == $firstDayOfCurrentMonth) {
             $currentDate = $currentDate->subDay();
         } else {
-            $currentDate = Carbon::createFromDate($firstDayMonth)->endOfMonth();
-            $firstDayOfMonth = $firstDayMonth;
+            $currentDate = Carbon::createFromDate($firstDayOfMonth)->endOfMonth();
         }
 
         $daysTillToday = count($project->getWorkingDaysList($firstDayOfMonth, $currentDate));
