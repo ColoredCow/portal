@@ -4,6 +4,7 @@ namespace Modules\Project\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 use Modules\Project\Database\Factories\ProjectTeamMemberFactory;
 use Modules\User\Entities\User;
 
@@ -109,5 +110,28 @@ class ProjectTeamMember extends Model
         }
 
         return $this->current_actual_effort >= $this->current_expected_effort ? 'border border-success' : 'border border-danger';
+    }
+
+    public function fte($filters)
+    {
+        $project = new Project;
+        $currentDate = today(config('constants.timezone.indian'));
+        $firstDayOfMonth = date('Y-m-01');
+        $firstDayMonth = $filters['year'] . '-' . $filters['month']. '-01';
+
+        if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time') 
+            && $firstDayMonth === $firstDayOfMonth) {
+            $currentDate = $currentDate->subDay();
+        } else {
+            $currentDate = Carbon::createFromDate($firstDayMonth)->endOfMonth();
+            $firstDayOfMonth = $firstDayMonth;
+        }
+
+        $daysTillToday = count($project->getWorkingDaysList($firstDayOfMonth, $currentDate));
+        if ($daysTillToday == 0) {
+            return 0;
+        }
+
+        return round($this->getCurrentActualEffortAttribute($firstDayOfMonth) / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
     }
 }

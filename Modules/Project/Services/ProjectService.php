@@ -17,6 +17,7 @@ use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\User\Entities\User;
+use Modules\Project\Entities\ProjectTeamMembersEffort;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Project\Exports\ProjectFTEExport;
 use Modules\Project\Entities\ProjectResourceRequirement;
@@ -431,19 +432,17 @@ class ProjectService implements ProjectServiceContract
 
     public function projectFTEExport($filters)
     {
-        dd($filters);
-        $filter = $filters['month'];
         $employees = Employee::applyFilters($filters)
             ->get();
 
-        $employees = $this->formatProjectFTEFOrExportAll($employees);
+        $employees = $this->formatProjectFTEFOrExportAll($employees, $filters);
         $currentTimeStamp = now();
         $filename = "FTE-$currentTimeStamp->year$currentTimeStamp->month$currentTimeStamp->day.xlsx";
 
         return Excel::download(new ProjectFTEExport($employees), $filename);
     }
 
-    private function formatProjectFTEFOrExportAll($employees)
+    private function formatProjectFTEFOrExportAll($employees, $filters)
     {
         $teamMembers = [];
         foreach ($employees as $employee) {
@@ -453,9 +452,9 @@ class ProjectService implements ProjectServiceContract
             foreach ($employee->user->activeProjectTeamMembers as $activeProjectTeamMember) {
                 $teamMember = [
                     $employee->name,
-                    number_format($employee->user->ftes['main'], 2),
+                    number_format($employee->user->ftes($filters)['main'], 2),
                     $activeProjectTeamMember->project->name,
-                    number_format($activeProjectTeamMember->fte, 2)
+                    number_format($activeProjectTeamMember->fte($filters), 2)
                 ];
                 $teamMembers[] = $teamMember;
             }

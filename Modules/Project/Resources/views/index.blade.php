@@ -13,17 +13,14 @@
             @include('project::menu_header')
             @can('projects.create')
                 <span class='mt-4'>
+                    
                     <a href="{{ route('project.create') }}" class="btn btn-success text-white"><i class="fa fa-plus"></i>
                         {{ __('Add new project') }}</a>
                 </span>
             @endcan
         </div>
         <div class="text-right mb-2">
-            <button data-toggle="modal" data-target="#modalExcelFilters"
-                            class="btn btn-info text-white">Export To Excel
-            </button>
-
-            {{-- <a href="{{ route('project.fte.export')}}" class="btn btn-info text-white">Export To Excel</a> --}}
+            <button class="btn btn-info text-white" data-toggle="modal" data-target="#modalExcelFilters">Export To Excel</button>
         </div>
         <div class="mb-2">
             <form class="d-md-flex justify-content-between ml-md-3"

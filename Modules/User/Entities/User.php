@@ -203,4 +203,20 @@ class User extends Authenticatable
     {
         return optional($this->meta()->where('meta_key', 'office_location')->first())->meta_value;
     }
+
+    public function ftes($filters)
+    {
+        $fte = 0;
+        $fteAmc = 0;
+        foreach ($this->projectTeamMembers()->with('project')->get() as $projectTeamMember) {
+            if (! $projectTeamMember->project->is_amc) {
+                $fte += $projectTeamMember->fte($filters);
+            }
+            if ($projectTeamMember->project->is_amc) {
+                $fteAmc += $projectTeamMember->fte($filters);
+            }
+        }
+
+        return ['main' => $fte, 'amc' => $fteAmc];
+    }
 }
