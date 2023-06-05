@@ -85,6 +85,7 @@ class ProjectTeamMember extends Model
         return $this->current_expected_effort ? round($this->current_actual_effort / $this->current_expected_effort, 2) : 0;
     }
 
+    // TO DO: Need to rename this function as getCurrentFteAttribute()
     public function getFteAttribute()
     {
         $project = new Project;
