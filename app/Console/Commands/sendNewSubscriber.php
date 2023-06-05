@@ -59,12 +59,12 @@ class sendNewSubscriber extends Command
                 if ($jobId) {
                     $subscriptionLists = Job::where('id', $jobId)->value('title');
                     if ($subscriptionLists) {
-                            try {
-                                $applicationService = new ApplicationService();
-                                $applicationService->addSubscriberToCampaigns($data, $subscriptionLists);
-                            } catch (\Exception $e) {
-                                $this->error('Error occurred while sending data to Campaign');
-                            }
+                        try {
+                            $applicationService = new ApplicationService();
+                            $applicationService->addSubscriberToCampaigns($data, $subscriptionLists);
+                        } catch (\Exception $e) {
+                            $this->error('Error occurred while sending data to Campaign');
+                        }
                     }
                 }
             }
