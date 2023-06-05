@@ -42,7 +42,6 @@ class sendNewSubscriber extends Command
     public function handle()
     {
         $applicants = Applicant::select('name', 'email', 'phone', 'id')->get();
-
         foreach ($applicants as $applicant) {
             $name = $applicant->name;
             $nameParts = explode(' ', $name, 2);
@@ -57,17 +56,16 @@ class sendNewSubscriber extends Command
             $jobIds = Application::where('hr_applicant_id', $applicant->id)->pluck('hr_job_id')->toArray();
 
             if (!empty($jobIds)) {
-                $subscriptionLists = [];
                 foreach ($jobIds as $jobId) {
                     $subscriptionList = Job::where('id', $jobId)->value('title');
-                    $subscriptionLists[] = $subscriptionList;
-                }
-                if (!empty($subscriptionLists)) {
-                    try {
-                        $applicationService = new ApplicationService();
-                        $applicationService->addSubscriberToCampaigns($data, $subscriptionLists);
-                    } catch (\Exception $e) {
-                        $this->error('Error occurred while sending data to Campaign');
+
+                    if ($subscriptionList) {
+                        try {
+                            $applicationService = new ApplicationService();
+                            $applicationService->addSubscriberToCampaigns($data, $subscriptionList);
+                        } catch (\Exception $e) {
+                            $this->error('Error occurred while sending data to Campaign');
+                        }
                     }
                 }
             }
