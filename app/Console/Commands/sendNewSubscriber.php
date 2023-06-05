@@ -62,7 +62,7 @@ class sendNewSubscriber extends Command
                     $subscriptionList = Job::where('id', $jobId)->value('title');
                     $subscriptionLists[] = $subscriptionList;
                 }
-                if ($subscriptionLists) {
+                if (!empty($subscriptionLists)) {
                     try {
                         $applicationService = new ApplicationService();
                         $applicationService->addSubscriberToCampaigns($data, $subscriptionLists);
