@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Google\Service\Spanner\UpdateDatabaseDdlMetadata;
 use Illuminate\Console\Command;
 use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Application;
@@ -55,8 +56,11 @@ class sendNewSubscriber extends Command
             ];
 
             $jobIds = Application::where('hr_applicant_id', $applicant->id)->pluck('hr_job_id');
-            foreach ($jobIds as $jobId) {
-                if ($jobId) {
+            
+            if (! is_null($jobIds)) {
+                $jobIdsArray = $jobIds->toArray();
+
+                foreach ($jobIdsArray as $jobId) {
                     $subscriptionLists = Job::where('id', $jobId)->value('title');
                     if ($subscriptionLists) {
                         try {
