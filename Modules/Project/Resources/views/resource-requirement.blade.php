@@ -17,6 +17,9 @@
                         placeholder="Enter the project name" value="{{ request()->get('name') }}">
                     <button class="btn btn-info ml-2 text-white">Search</button>
                 </form>
+                    <form  class="d-md-flex justify-content-between ml-md-1" action="{{ route('project.resource-requirement')}}", method="get", role="Clear">
+                    <button class="btn btn-danger ml-2 pt-1.5 pb-1.5 text-white" >Clear</button>
+                    </form>
             </div>
         </div>
 
