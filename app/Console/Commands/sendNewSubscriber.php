@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use Google\Service\Spanner\UpdateDatabaseDdlMetadata;
 use Illuminate\Console\Command;
 use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Application;
