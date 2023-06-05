@@ -55,7 +55,7 @@ class sendNewSubscriber extends Command
             ];
 
             $jobIds = Application::where('hr_applicant_id', $applicant->id)->pluck('hr_job_id');
-            foreach($jobIds as $jobId) {
+            foreach ($jobIds as $jobId) {
                 if ($jobId) {
                     $subscriptionLists = Job::where('id', $jobId)->value('title');
                     if ($subscriptionLists) {
