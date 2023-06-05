@@ -117,6 +117,9 @@ class ApplicationService implements ApplicationServiceContract
         $CAMPAIGNS_TOOL_URL = config('constants.campaign_tool_credentials.url');
         $url = $CAMPAIGNS_TOOL_URL . '/api/v1/addSubscriber';
 
+        // check $subscriptionLists is array or not 
+        $subscriptionLists = is_array($subscriptionLists) ? $subscriptionLists : [$subscriptionLists];
+
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Content-Type'=>'application/json'
@@ -126,7 +129,7 @@ class ApplicationService implements ApplicationServiceContract
             'name' => $name,
             'email' =>  $parameters['email'],
             'phone' => $parameters['phone'],
-            'subscription_lists' => [$subscriptionLists],
+            'subscription_lists' => $subscriptionLists,
         ]);
 
         $jsonData = $response->json();
