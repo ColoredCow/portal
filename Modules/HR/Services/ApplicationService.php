@@ -117,7 +117,7 @@ class ApplicationService implements ApplicationServiceContract
         $CAMPAIGNS_TOOL_URL = config('constants.campaign_tool_credentials.url');
         $url = $CAMPAIGNS_TOOL_URL . '/api/v1/addSubscriber';
 
-        // check $subscriptionLists is array or not 
+        // check $subscriptionLists is array or not
         $subscriptionLists = is_array($subscriptionLists) ? $subscriptionLists : [$subscriptionLists];
 
         $response = Http::withHeaders([

@@ -44,7 +44,6 @@ class sendNewSubscriber extends Command
         $applicants = Applicant::select('name', 'email', 'phone', 'id')->get();
 
         foreach ($applicants as $applicant) {
-
             $name = $applicant->name;
             $nameParts = explode(' ', $name, 2);
 
