@@ -54,13 +54,12 @@ class sendNewSubscriber extends Command
                 'phone' => $applicant->phone,
             ];
 
-            $jobIds = Application::where('hr_applicant_id', $applicant->id)->pluck('hr_job_id');
+            $jobIds = Application::where('hr_applicant_id', $applicant->id)->pluck('hr_job_id')->toArray();
 
             if (! $jobIds->isEmpty()) {
-                $jobIdsArray = $jobIds->toArray();
 
                 $subscriptionLists = [];
-                foreach ($jobIdsArray as $jobId) {
+                foreach ($jobIds as $jobId) {
                     $subscriptionList = Job::where('id', $jobId)->value('title');
                     $subscriptionLists[] = $subscriptionList;
                 }
