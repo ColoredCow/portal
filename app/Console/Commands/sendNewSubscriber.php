@@ -56,8 +56,8 @@ class sendNewSubscriber extends Command
             ];
 
             $jobIds = Application::where('hr_applicant_id', $applicant->id)->pluck('hr_job_id');
-            
-            if (! is_null($jobIds)) {
+        
+            if (!$jobIds->isEmpty()) {
                 $jobIdsArray = $jobIds->toArray();
 
                 foreach ($jobIdsArray as $jobId) {
