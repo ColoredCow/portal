@@ -54,15 +54,17 @@ class sendNewSubscriber extends Command
                 'phone' => $applicant->phone,
             ];
 
-            $jobId = Application::where('hr_applicant_id', $applicant->id)->value('hr_job_id');
-            if ($jobId) {
-                $subscriptionLists = Job::where('id', $jobId)->value('title');
-                if ($subscriptionLists) {
-                    try {
-                        $applicationService = new ApplicationService();
-                        $applicationService->addSubscriberToCampaigns($data, $subscriptionLists);
-                    } catch (\Exception $e) {
-                        $this->error('Error occurred while sending data to Campaign');
+            $jobIds = Application::where('hr_applicant_id', $applicant->id)->pluck('hr_job_id');
+            foreach($jobIds as $jobId) {
+                if ($jobId) {
+                    $subscriptionLists = Job::where('id', $jobId)->value('title');
+                    if ($subscriptionLists) {
+                            try {
+                                $applicationService = new ApplicationService();
+                                $applicationService->addSubscriberToCampaigns($data, $subscriptionLists);
+                            } catch (\Exception $e) {
+                                $this->error('Error occurred while sending data to Campaign');
+                            }
                     }
                 }
             }
