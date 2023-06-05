@@ -59,15 +59,17 @@ class sendNewSubscriber extends Command
             if (! $jobIds->isEmpty()) {
                 $jobIdsArray = $jobIds->toArray();
 
+                $subscriptionLists = [];
                 foreach ($jobIdsArray as $jobId) {
-                    $subscriptionLists = Job::where('id', $jobId)->value('title');
-                    if ($subscriptionLists) {
-                        try {
-                            $applicationService = new ApplicationService();
-                            $applicationService->addSubscriberToCampaigns($data, $subscriptionLists);
-                        } catch (\Exception $e) {
-                            $this->error('Error occurred while sending data to Campaign');
-                        }
+                    $subscriptionList = Job::where('id', $jobId)->value('title');
+                    $subscriptionLists[] = $subscriptionList;
+                }
+                if ($subscriptionLists) {
+                    try {
+                        $applicationService = new ApplicationService();
+                        $applicationService->addSubscriberToCampaigns($data, $subscriptionLists);
+                    } catch (\Exception $e) {
+                        $this->error('Error occurred while sending data to Campaign');
                     }
                 }
             }
