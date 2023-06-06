@@ -119,7 +119,7 @@ class ProjectTeamMember extends Model
         $startDate =  Carbon::createFromDate($filters['year'] . '-' . $filters['month'] . '-01');
         $endDate = date('Y-m-d');
 
-        if($startDate < date('Y-m-01')) {
+        if ($startDate < date('Y-m-01')) {
             $endDate = (clone $startDate)->endOfMonth();
         }
 
