@@ -118,7 +118,7 @@ class ProjectTeamMember extends Model
         $project = new Project;
         $year = (int) $filters['year'];
         $month = (int) $filters['month'];
-        $startDate = Carbon::createFromDate(intval($year), $month, 1);
+        $startDate = Carbon::createFromDate($year, $month, 1);
         $endDate = date('Y-m-d');
 
         if ($startDate < date('Y-m-01')) {
