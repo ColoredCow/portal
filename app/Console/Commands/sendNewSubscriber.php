@@ -57,12 +57,8 @@ class sendNewSubscriber extends Command
             $jobIds = Application::where('hr_applicant_id', $applicant->id)->pluck('hr_job_id')->toArray();
             if (! empty($jobIds)) {
                 $uniqueJobIds = array_unique($jobIds);
-                $subscriptionLists = [];
 
-                foreach ($uniqueJobIds as $jobId) {
-                    $subscriptionList = Job::where('id', $jobId)->value('title');
-                    $subscriptionLists[] = $subscriptionList;
-                }
+                $subscriptionLists = Job::whereIn('id', $uniqueJobIds)->pluck('title')->toArray();
 
                 if (! empty($subscriptionLists)) {
                     try {
