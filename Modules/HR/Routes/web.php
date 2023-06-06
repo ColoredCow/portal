@@ -122,6 +122,9 @@ Route::middleware('auth')->group(function () {
                 'index' => 'employees',
                 'show' => 'employees.show',
             ]);
+        Route::get('employee-review-date/{employee}', 'EmployeeController@reviewDate')->name('employees.review-date');
+        Route::post('employee-review-date/{employee}', 'EmployeeController@saveReviewDate')->name('employees.save-review-date');
+        Route::put('employee-review-date/{employee}', 'EmployeeController@updateReviewDate')->name('employees.update-review-date');
         Route::get('/workhistory/{employee}/', 'EmployeeController@employeeWorkHistory')->name('employees.employeeWorkHistory');
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
         Route::get('fte-handler/{domain_id}', 'EmployeeController@showFTEdata')->name('employees.alert');

@@ -11,6 +11,7 @@ use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\Job;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Project\Entities\ProjectTeamMember;
+use Modules\HR\Entities\Assessment;
 
 class EmployeeController extends Controller
 {
@@ -51,7 +52,7 @@ class EmployeeController extends Controller
             ->groupBy('employees.user_id')
             ->orderby('project_count', 'desc')
             ->get();
-        if ($search != '') {
+        if ($search == '') {
             $employeeData = Employee::where('name', 'LIKE', "%$search%")
                 ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
                 ->leftJoin('assessments', 'employees.id', '=', 'assessments.reviewee_id')
@@ -103,5 +104,38 @@ class EmployeeController extends Controller
         $employeesDetails = ProjectTeamMember::where('team_member_id', $employee->user_id)->get()->unique('project_id');
 
         return view('hr.employees.employee-work-history', compact('employeesDetails'));
+    }
+
+    public function reviewDate(Employee $employee)
+    {
+        return view('hr.employees.review-date', ['employee' => $employee]);
+    }
+    public function saveReviewDate(Request $request, Employee $employee)
+    {
+        $request->validate([
+            'review_date' => 'required|date',
+        ]);
+
+        $assessment = new Assessment();
+        $assessment->reviewee_id = $employee->id;
+        $assessment->created_at = $request->input('review_date');
+        $assessment->save();
+
+        return redirect()->back()->with('success', 'Review date added successfully.');
+    }
+
+    public function updateReviewDate(Request $request, Employee $employee)
+    {
+        $request->validate([
+            'review_date' => 'required|date',
+        ]);
+        $assessment = $employee->assessments()->first();
+
+        if ($assessment) {
+            $assessment->created_at = $request->input('review_date');
+            $assessment->save();
+        }
+
+        return redirect()->back()->with('success', 'Review date updated successfully.');
     }
 }

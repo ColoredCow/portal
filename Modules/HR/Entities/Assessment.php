@@ -11,6 +11,6 @@ class Assessment extends Model
 
     public function employee()
     {
-        return $this->belongsTo(Employee::class, 'reviewee_id');
+        return $this->belongsTo(Employee::class);
     }
 }

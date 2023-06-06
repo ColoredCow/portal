@@ -105,6 +105,6 @@ class Employee extends Model
             return 'Review pending this week.';
         }
 
-        return 'Next review date: ' . $nextReviewDate->toDateString();
+        return 'Next review date: ' . $nextReviewDate->format('d-m-Y');
     }
 }

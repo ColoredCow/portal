@@ -45,7 +45,7 @@
                             @elseif ($employee->reviewStatus() === 'Review pending this week.')
                                 <span class="badge badge-warning">Review pending this week</span>
                             @else
-                                <span class="badge badge-secondary">{{ $employee->reviewStatus() }}</span>
+                                <span class="badge badge-warning">{{ $employee->reviewStatus() }}</span>
                             @endif
                         </td>
                         <td>
