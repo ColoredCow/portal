@@ -89,7 +89,7 @@ class Employee extends Model
             ->latest('created_at')
             ->first();
 
-        if (!$assessment) {
+        if (! $assessment) {
             return 'No review conducted yet.';
         }
 
