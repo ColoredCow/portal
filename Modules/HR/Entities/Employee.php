@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Modules\User\Entities\User;
 use Modules\Salary\Entities\EmployeeSalary;
-use Modules\HR\Entities\Assessment;
 use Carbon\Carbon;
 
 class Employee extends Model
