@@ -34,16 +34,18 @@
             <div>
                 <form action="{{ route('codetrek.index') }}" id="centreFilterForm">
                     <div class="form-group ml-25 w-180">
-                        <select class="form-control bg-light" name="centre" id="centre" onchange="document.getElementById('centreFilterForm').submit();">
-                            <option value="" {{ !request()->has('centre') || empty(request()->get('centre')) ? 'selected' : '' }}>
-                                {!! __('All Centres') !!}
-                            </option>
-                            @foreach ($centres as $centre)
-                                <option value="{{ $centre->id }}" {{ request()->get('centre') == $centre->id ? 'selected' : '' }}>
-                                    {{ $centre->centre_name }}
+                        @can('codetrek_applicant.create')     
+                            <select class="form-control bg-light" name="centre" id="centre" onchange="document.getElementById('centreFilterForm').submit();">
+                                <option value="" {{ !request()->has('centre') || empty(request()->get('centre')) ? 'selected' : '' }}>
+                                    {!! __('All Centres') !!}
                                 </option>
-                            @endforeach
-                        </select>
+                                @foreach ($centres as $centre)
+                                    <option value="{{ $centre->id }}" {{ request()->get('centre') == $centre->id ? 'selected' : '' }}>
+                                        {{ $centre->centre_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        @endcan
                         <input type="hidden" name="status" value="{{ $request['status'] ?? '' }}">
                         <input type="hidden" name="name" value="{{ request()->get('name') }}">
                     </div>
@@ -123,6 +125,7 @@
                                                     class="fa fa-university mr-1"></i>{{ $applicant->university }}</span>
                                         @endif
                                     </div>
+                                    @can('codetrek_applicant.update')
                                     <div class="mb-2 fz-xl-14 text-secondary d-flex flex-column">
                                         <div class="d-flex text-white my-2">
                                             <a href="{{ route('codetrek.edit', $applicant->id) }}"
@@ -132,6 +135,7 @@
                                                 target="_self">Evaluate</a>
                                         </div>
                                     </div>
+                                    @endcan
                                 </td>
                                 <td>
                                     @php
