@@ -45,7 +45,6 @@ class CodeTrekController extends Controller
         $this->authorize('create', $applicant);
 
         $data = $request->all();
-        
         $applicant = $service->store($data);
 
         return redirect()->route('codetrek.index');
