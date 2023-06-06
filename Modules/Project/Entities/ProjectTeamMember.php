@@ -116,7 +116,7 @@ class ProjectTeamMember extends Model
     public function getFte($filters)
     {
         $project = new Project;
-        $startDate =  Carbon::createFromDate($filters['year'] . '-' . $filters['month'] . '-01');
+        $startDate = Carbon::createFromDate($filters['year'] . '-' . $filters['month'] . '-01');
         $endDate = date('Y-m-d');
 
         if ($startDate < date('Y-m-01')) {
@@ -129,6 +129,6 @@ class ProjectTeamMember extends Model
 
         $actualEffort = $this->getCurrentActualEffortAttribute($startDate);
 
-        return round($actualEffort/$requiredEffort, 2);
+        return round($actualEffort / $requiredEffort, 2);
     }
 }
