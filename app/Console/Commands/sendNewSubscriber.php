@@ -54,10 +54,13 @@ class sendNewSubscriber extends Command
                 'phone' => $applicant->phone,
             ];
 
-            $jobId = Application::where('hr_applicant_id', $applicant->id)->value('hr_job_id');
-            if ($jobId) {
-                $subscriptionLists = Job::where('id', $jobId)->value('title');
-                if ($subscriptionLists) {
+            $jobIds = Application::where('hr_applicant_id', $applicant->id)->pluck('hr_job_id')->toArray();
+            if (! empty($jobIds)) {
+                $uniqueJobIds = array_unique($jobIds);
+
+                $subscriptionLists = Job::whereIn('id', $uniqueJobIds)->pluck('title')->toArray();
+
+                if (! empty($subscriptionLists)) {
                     try {
                         $applicationService = new ApplicationService();
                         $applicationService->addSubscriberToCampaigns($data, $subscriptionLists);
