@@ -116,9 +116,9 @@ class ProjectTeamMember extends Model
     public function getFte($filters)
     {
         $project = new Project;
-        $year = (int) $filters['year'];
-        $month = (int) $filters['month'];
-        $startDate = Carbon::createFromDate("{$year}-{$month}-01");
+        // $year = (int) $filters['year'];
+        // $month = (int) $filters['month'];
+        $startDate = (int) ($filters['year'] . '-' . $filters['month'] . '-01');
         $endDate = date('Y-m-d');
 
         if ($startDate < date('Y-m-01')) {
