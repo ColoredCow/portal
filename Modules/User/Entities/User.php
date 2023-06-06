@@ -203,21 +203,4 @@ class User extends Authenticatable
     {
         return optional($this->meta()->where('meta_key', 'office_location')->first())->meta_value;
     }
-
-    // TO DO: Need to rename this function as getCurrentFtes() and move it to employee, as Only employees have the FTE.
-    public function getFtes($filters)
-    {
-        $fte = 0;
-        $fteAmc = 0;
-        foreach ($this->projectTeamMembers()->with('project')->get() as $projectTeamMember) {
-            if (! $projectTeamMember->project->is_amc) {
-                $fte += $projectTeamMember->getFte($filters);
-            }
-            if ($projectTeamMember->project->is_amc) {
-                $fteAmc += $projectTeamMember->getFte($filters);
-            }
-        }
-
-        return ['main' => $fte, 'amc' => $fteAmc];
-    }
 }

@@ -116,22 +116,19 @@ class ProjectTeamMember extends Model
     public function getFte($filters)
     {
         $project = new Project;
-        $currentDate = today(config('constants.timezone.indian'));
-        $firstDayOfCurrentMonth = date('Y-m-01');
-        $firstDayOfMonth = (int) ($filters['year'] . '-' . $filters['month'] . '-01');
+        $startDate =  Carbon::createFromDate($filters['year'] . '-' . $filters['month'] . '-01');
+        $endDate = date('Y-m-d');
 
-        if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')
-            && $firstDayOfMonth == $firstDayOfCurrentMonth) {
-            $currentDate = $currentDate->subDay();
-        } else {
-            $currentDate = Carbon::createFromDate($firstDayOfMonth)->endOfMonth();
+        if($startDate < date('Y-m-01')) {
+            $endDate = (clone $startDate)->endOfMonth();
         }
 
-        $daysTillToday = count($project->getWorkingDaysList($firstDayOfMonth, $currentDate));
-        if ($daysTillToday == 0) {
-            return 0;
-        }
+        $workingDays = count($project->getWorkingDaysList($startDate, $endDate));
 
-        return round($this->getCurrentActualEffortAttribute($firstDayOfMonth) / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
+        $requiredEffort = $workingDays * config('efforttracking.minimum_expected_hours');
+
+        $actualEffort = $this->getCurrentActualEffortAttribute($startDate);
+
+        return round($actualEffort/$requiredEffort, 2);
     }
 }
