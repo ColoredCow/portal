@@ -435,8 +435,6 @@ class ProjectService implements ProjectServiceContract
             ->get();
 
         $employees = $this->formatProjectFTEFOrExportAll($employees, $filters);
-        $currentTimeStamp = Carbon::now()->format('Y-m-d');
-
         $filename = 'FTE_Report-' . $filters['year'] . '-' . $filters['month'] . '.xlsx';
 
         return Excel::download(new ProjectFTEExport($employees), $filename);
