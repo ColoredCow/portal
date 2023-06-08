@@ -3,6 +3,7 @@
 namespace Modules\CodeTrek\Services;
 
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
+use Modules\CodeTrek\Entities\CodeTrekCandidateFeedback;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
 class CodeTrekService
@@ -20,8 +21,8 @@ class CodeTrekService
         $applicants = $query->when($search, function ($query) use ($search) {
             return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
         })
-        ->paginate(config('constants.pagination_size'))
-        ->appends(request()->except('page'));
+            ->paginate(config('constants.pagination_size'))
+            ->appends(request()->except('page'));
 
         return ['applicants' => $applicants];
     }
@@ -43,7 +44,8 @@ class CodeTrekService
 
         $this->moveApplicantToRound($applicant, $data);
 
-        return $applicant;
+        // return $applicant;
+        return view('codetrek.index', ['applicant' => $applicant]);
     }
     public function edit($codeTrekApplicant)
     {
@@ -83,5 +85,20 @@ class CodeTrekService
         $applicationRound->feedback = null;
         $applicationRound->start_date = $data['start_date'];
         $applicationRound->save();
+    }
+
+    public function storeFeedback($data)
+    {
+        $feedback = new CodeTrekCandidateFeedback();
+        $feedback->category_id = $data['feedback_category'];
+        $feedback->feedback = $data['feedback'];
+        $feedback->feedback_type = $data['feedback_type'];
+        $feedback->latest_round_name = $data['latest_round_name'];
+        $feedback->candidate_id = $data['candidate_id'];
+        $feedback->posted_by = auth()->user()->id;
+        $feedback->posted_on = date('y-m-d');
+        $feedback->save();
+
+        return redirect()->back();
     }
 }

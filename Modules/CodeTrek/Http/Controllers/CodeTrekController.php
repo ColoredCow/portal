@@ -4,6 +4,7 @@ namespace Modules\CodeTrek\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Modules\CodeTrek\Entities\CodeTrekFeedbackCategories;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 use Modules\CodeTrek\Services\CodeTrekService;
@@ -27,8 +28,9 @@ class CodeTrekController extends Controller
     public function index(Request $request)
     {
         $centres = OfficeLocation::all();
+        $feedback_categories = CodeTrekFeedbackCategories::all();
 
-        return view('codetrek::index', ['centres' => $centres], $this->service->getCodeTrekApplicants($request->all()));
+        return view('codetrek::index', ['centres' => $centres, 'feedback_categories' => $feedback_categories], $this->service->getCodeTrekApplicants($request->all()));
     }
     /**
      * Show the form for creating a new resource.
@@ -40,10 +42,12 @@ class CodeTrekController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, CodeTrekService $service)
+    public function store(Request $request)
     {
         $data = $request->all();
-        $applicant = $service->store($data);
+
+        $this->service->storeFeedback($data);
+        $applicant = $this->service->store($data);
 
         return redirect()->route('codetrek.index');
     }
