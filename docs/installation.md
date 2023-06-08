@@ -129,6 +129,12 @@ Before you start following the guidelines, make sure to go through the [prerequi
     DB_WORDPRESS_PREFIX=
     WORDPRESS_ENABLED=true
     ```
+    DB_WORDPRESS_DATABASE: The name of the WordPress database you want to connect to.For example `Coloredcow`.
+    DB_WORDPRESS_USERNAME: The user name which is difine in the Wp-config.php.For example `root`.
+    DB_WORDPRESS_PASSWORD: If password is define set the password otherwise it should be null.
+    DB_WORDPRESS_PREFIX=  The table prefix used by the WordPress installation. This is typically set to `cc_` by default, but it can be different depending on the configuration. 
+    WORDPRESS_ENABLED: Set this to `true` to enable the integration with the Colored Cow website. If it is set to "false," the integration will not work.
+
 
 8. Run migrations
     ```sh
