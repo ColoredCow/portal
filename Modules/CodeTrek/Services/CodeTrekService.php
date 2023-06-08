@@ -44,8 +44,7 @@ class CodeTrekService
 
         $this->moveApplicantToRound($applicant, $data);
 
-        // return $applicant;
-        return view('codetrek.index', ['applicant' => $applicant]);
+        return $applicant;
     }
     public function edit($codeTrekApplicant)
     {

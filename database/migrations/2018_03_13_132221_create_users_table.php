@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->nullable();
             $table->string('password', 60)->nullable();
             $table->string('provider');
-            $table->string('progit vider_id');
+            $table->string('provider_id');
             $table->rememberToken();
             $table->timestamps();
         });
