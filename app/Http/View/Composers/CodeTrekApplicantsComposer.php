@@ -13,6 +13,6 @@ class CodeTrekApplicantsComposer
         ->orderBy('first_name', 'asc')
         ->get();
 
-    $view->with('codeTrekApplicants', $codeTrekApplicants);    
+        $view->with('codeTrekApplicants', $codeTrekApplicants);
     }
 }
