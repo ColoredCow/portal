@@ -9,7 +9,7 @@ class CodeTrekApplicantsComposer
 {
     public function compose(View $view)
     {
-        $codeTrekApplicants = CodeTrekApplicant::where('status','active')
+        $codeTrekApplicants = CodeTrekApplicant::where('status', 'active')
         ->orderBy('first_name', 'asc')
         ->get();
 
