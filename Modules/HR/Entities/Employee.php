@@ -98,11 +98,7 @@ class Employee extends Model
             return 'Review completed.';
         }
 
-        $nextReviewDate = $reviewDate->addMonths(3);
-
-        if ($nextReviewDate->isCurrentWeek()) {
-            return 'Review pending this week.';
-        }
+        $nextReviewDate = $reviewDate->addMonths(3)->startOfMonth();
 
         return 'Next review date: ' . $nextReviewDate->format('d-m-Y');
     }

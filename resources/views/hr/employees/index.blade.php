@@ -41,11 +41,20 @@
                         <td>
                             <a href={{ route('employees.show', $employee->id) }}>{{ $employee->name }}</a>
                             @if ($employee->reviewStatus() === 'Review completed.')
-                                <span class="badge badge-success">Review completed</span>
-                            @elseif ($employee->reviewStatus() === 'Review pending this week.')
-                                <span class="badge badge-warning">Review pending this week</span>
+                                <div style="display: flex; flex-direction: column;">
+                                    <span class="badge badge-success mb-1 mt-1">Review completed</span>
+                                    <span class="badge badge-warning">Next reviewed date:
+                                        {{ $employee->assessments()->first()->created_at->addMonths(3)->startOfMonth()->format('d-m-Y') }}</span>
+                                </div>
+                            @elseif ($employee->reviewStatus() === 'No review conducted yet.')
+                                <span class="badge badge-secondary mt-1" style="display: flex; flex-direction: column;">No
+                                    review conducted yet.</span>
                             @else
-                                <span class="badge badge-warning">{{ $employee->reviewStatus() }}</span>
+                                <div style="display: flex; flex-direction: column;">
+                                    <span class="badge badge-primary mb-1 mt-1">Last reviewed at:
+                                        {{ $employee->assessments()->first()->created_at->format('d-m-Y') }}</span>
+                                    <span class="badge badge-warning">{{ $employee->reviewStatus() }}</span>
+                                </div>
                             @endif
                         </td>
                         <td>
