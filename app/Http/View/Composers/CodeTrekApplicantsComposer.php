@@ -9,8 +9,10 @@ class CodeTrekApplicantsComposer
 {
     public function compose(View $view)
     {
-        $codeTrekApplicants = CodeTrekApplicant::orderBy('first_name', 'asc')->get();
+        $codeTrekApplicants = CodeTrekApplicant::where('status','active')
+        ->orderBy('first_name', 'asc')
+        ->get();
 
-        $view->with('codeTrekApplicants', $codeTrekApplicants);
+    $view->with('codeTrekApplicants', $codeTrekApplicants);    
     }
 }
