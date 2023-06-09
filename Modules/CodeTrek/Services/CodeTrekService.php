@@ -88,7 +88,6 @@ class CodeTrekService
 
     public function storeFeedback($data)
     {
-       
         $feedback = new CodeTrekCandidateFeedback();
         $feedback->category_id = $data['feedback_category'];
         $feedback->feedback = $data['feedback'];
