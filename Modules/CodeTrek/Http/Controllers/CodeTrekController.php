@@ -27,13 +27,12 @@ class CodeTrekController extends Controller
     public function index(Request $request)
     {
         $centres = OfficeLocation::all();
-        
         $applicantData = $this->service->getCodeTrekApplicants($request->all());
         $applicants = $applicantData['applicants'];
         $activeCount = $applicantData['activeCount'];
         $inactiveCount = $applicantData['inactiveCount'];
         $completedCount = $applicantData['completedCount'];
-    
+
         return view('codetrek::index', [
             'applicants' => $applicants,
             'centres' => $centres,
@@ -42,7 +41,7 @@ class CodeTrekController extends Controller
             'completedCodetrekApplicantsCount' => $completedCount,
         ]);
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */
