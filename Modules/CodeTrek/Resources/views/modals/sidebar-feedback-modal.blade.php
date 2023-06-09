@@ -2,7 +2,7 @@
  <div class="feedback-modal modal fade" id="candidatefeedback{{ $codeTrekApplicant->id }}" tabindex="-1" z-index="1"
     role="dialog" aria-labelledby="candidatefeedback{{ $codeTrekApplicant->id }}" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form action="{{ route('codetrek.store') }}" method="POST" id='applicant_form'>
+        <form action="{{ route('codetrek.storeFeedback') }}" method="POST" id='feedback_form'>
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
@@ -11,6 +11,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+            
                 <div class="card-body">
                     <div class="">
                         <div class="d-flex justify-content-center justify-content-around">
@@ -41,6 +42,7 @@
                         </div>
                     </div>
                     <hr>
+                    
                     <div class="d-flex justify-content-start">
                         <div class="form-group col-lg-6 col-md-5">
                             <div class="mb-2">
@@ -55,7 +57,6 @@
                                 @endforeach
                             </select>
                         </div>
-
                         <div class="justify-content-center">
                             <div class="mb-1 text-center">
                                 <label for="feedback_type">Feedback Type</label>

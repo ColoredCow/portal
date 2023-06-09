@@ -28,15 +28,8 @@ class CodeTrekController extends Controller
     public function index(Request $request)
     {
         $centres = OfficeLocation::all();
-        $feedback_categories = CodeTrekFeedbackCategories::all();
 
-        return view('codetrek::index', ['centres' => $centres, 'feedback_categories' => $feedback_categories], $this->service->getCodeTrekApplicants($request->all()));
-    }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
+        return view('codetrek::index', ['centres' => $centres], $this->service->getCodeTrekApplicants($request->all()));
     }
 
     /**
@@ -45,9 +38,7 @@ class CodeTrekController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-
-        $this->service->storeFeedback($data);
-        $applicant = $this->service->store($data);
+        $this->service->store($data);
 
         return redirect()->route('codetrek.index');
     }
@@ -55,8 +46,12 @@ class CodeTrekController extends Controller
     /**
      * Show the specified resource.
      */
-    public function show($id)
+    public function storeFeedback(Request $request)
     {
+        $data = $request->all();
+        $this->service->storeFeedback($data);
+
+        return redirect()->back();
     }
 
     /**

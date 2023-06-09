@@ -4,6 +4,7 @@ namespace App\Http\View\Composers;
 
 use Illuminate\View\View;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
+use Modules\CodeTrek\Entities\CodeTrekFeedbackCategories;
 
 class CodeTrekApplicantsComposer
 {
@@ -11,6 +12,7 @@ class CodeTrekApplicantsComposer
     {
         $codeTrekApplicants = CodeTrekApplicant::orderBy('first_name', 'asc')->get();
 
-        $view->with('codeTrekApplicants', $codeTrekApplicants);
+        $feedback_categories = CodeTrekFeedbackCategories::all();
+        $view->with('codeTrekApplicants', $codeTrekApplicants)->with('feedback_categories', $feedback_categories);
     }
 }

@@ -88,6 +88,7 @@ class CodeTrekService
 
     public function storeFeedback($data)
     {
+       
         $feedback = new CodeTrekCandidateFeedback();
         $feedback->category_id = $data['feedback_category'];
         $feedback->feedback = $data['feedback'];
@@ -97,7 +98,5 @@ class CodeTrekService
         $feedback->posted_by = auth()->user()->id;
         $feedback->posted_on = date('y-m-d');
         $feedback->save();
-
-        return redirect()->back();
     }
 }
