@@ -102,7 +102,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($applicants as $applicant)
+                        @forelse ($applicants as $applicant)
                             <tr>
                                 <td>  
                                     <div class="d-flex align-items-center">
@@ -148,7 +148,11 @@
                                 </td>
                                 <td>-</td>
                             </tr>
-                        @endforeach
+                        @empty
+                         <tr>
+                            <td colspan="4">No Applicant Found</td>
+                         </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

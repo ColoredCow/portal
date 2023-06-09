@@ -20,7 +20,7 @@
             @endcan
         </div>
         <div class="text-right mb-2">
-            <a href="{{ route('project.fte.export')}}" class="btn btn-info text-white">Export To Excel</a>
+            <button class="btn btn-info text-white" data-toggle="modal" data-target="#modalExcelFilters">Export To Excel</button>
         </div>
         <div class="mb-2">
             <form class="d-md-flex justify-content-between ml-md-3"
@@ -186,4 +186,5 @@
         </div>
         {{ $clients->withQueryString()->links() }}
     </div>
+    @include('project::subviews.excel-download-filters')
 @endsection
