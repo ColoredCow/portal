@@ -71,21 +71,21 @@
                         class="nav-link btn-nav {{ request()->input('status') !== 'inactive' && request()->input('status') !== 'completed' ? 'active' : '' }}"
                         onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
                         <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/clipboard-check.svg')) !!}</span>
-                        Active</a>
+                        Active({{$activeCodetrekApplicantsCount}})</a>
                 </li>
                 <li class="nav-item mr-3">
                     <a href="{{ route('codetrek.index', ['name' => $name , 'centre' => $centre , 'status' => 'inactive']) }}"
                         class="nav-link btn-nav {{ request()->input('status') == 'inactive' ? 'active' : '' }}"
                         onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
                         <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/x-circle.svg')) !!}</span>
-                        Inactive</a>
+                        Inactive({{$inactiveCodetrekApplicantsCount}})</a>
                 </li>
                 <li class="nav-item mr-3">
                     <a href="{{ route('codetrek.index', ['name' => $name , 'centre' => $centre , 'status' => 'completed']) }}"
                         class="nav-link btn-nav {{ request()->input('status') == 'completed' ? 'active' : '' }}"
                         onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
                         <span class="d-inline-block h-18 w-20"> {!! file_get_contents(public_path('icons/person-check.svg')) !!} </span>
-                        Completed</a>
+                        Completed({{$completedCodetrekApplicantsCount}})</a>
                 </li>
             </div>
         </ul>

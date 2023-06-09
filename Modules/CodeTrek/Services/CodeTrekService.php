@@ -23,7 +23,16 @@ class CodeTrekService
         ->paginate(config('constants.pagination_size'))
         ->appends(request()->except('page'));
 
-        return ['applicants' => $applicants];
+        $activeCount = CodeTrekApplicant::where('status', 'active')->count();
+        $inactiveCount = CodeTrekApplicant::where('status', 'inactive')->count();
+        $completedCount = CodeTrekApplicant::where('status', 'completed')->count();
+
+        return [
+            'applicants' => $applicants,
+            'activeCount' => $activeCount,
+            'inactiveCount' => $inactiveCount,
+            'completedCount' => $completedCount,
+        ];
     }
     public function store($data)
     {
