@@ -1,4 +1,4 @@
-<div id="applicant-sidebar" class="position-fixed bg-white p-1" style="z-index: 1050;">
+<div id="applicant-sidebar" class="position-fixed bg-white p-1">
     <h5 class="fw-bold border-bottom pb-2">CodeTrek Applicants</h5>
     <ul class="applicant-list list-unstyled">
         @foreach ($codeTrekApplicants as $codeTrekApplicant)
@@ -15,8 +15,13 @@
 
 
 <style>
+    #applicant-sidebar {
+        z-index: 1050;
+    }
+
     .positive,
-    .negative,.applicant-name {
+    .negative,
+    .applicant-name {
         cursor: pointer;
     }
 
@@ -30,27 +35,26 @@
 </style>
 
 <script>
- $('.positive').on('click', function(event) {
-    event.preventDefault();
-    $('.negative').removeClass('red');
-    $(this).addClass('green');
-    var feedbackType = 'positive';
-    $(this).closest('.modal').find('input[name="feedback_type"]').val(feedbackType);
-});
+    $('.positive').on('click', function(event) {
+        event.preventDefault();
+        $('.negative').removeClass('red');
+        $(this).addClass('green');
+        var feedbackType = 'positive';
+        $(this).closest('.modal').find('input[name="feedback_type"]').val(feedbackType);
+    });
 
-$('.negative').on('click', function(event) {
-    event.preventDefault();
-    $('.positive').removeClass('green');
-    $(this).addClass('red');
-    var feedbackType = 'negative';
-    $(this).closest('.modal').find('input[name="feedback_type"]').val(feedbackType);
-});
+    $('.negative').on('click', function(event) {
+        event.preventDefault();
+        $('.positive').removeClass('green');
+        $(this).addClass('red');
+        var feedbackType = 'negative';
+        $(this).closest('.modal').find('input[name="feedback_type"]').val(feedbackType);
+    });
 
-$('#applicant_form').on('submit', function(event) {
-    event.preventDefault();
-    var feedbackType = $(this).find('input[name="feedback_type"]').val();
-    $(this).append('<input type="hidden" name="feedback_type" value="' + feedbackType + '">');
-    this.submit();
-});
-
+    $('#applicant_form').on('submit', function(event) {
+        event.preventDefault();
+        var feedbackType = $(this).find('input[name="feedback_type"]').val();
+        $(this).append('<input type="hidden" name="feedback_type" value="' + feedbackType + '">');
+        this.submit();
+    });
 </script>
