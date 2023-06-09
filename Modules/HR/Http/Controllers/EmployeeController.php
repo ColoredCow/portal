@@ -52,7 +52,7 @@ class EmployeeController extends Controller
             ->groupBy('employees.user_id')
             ->orderby('project_count', 'desc')
             ->get();
-        if ($search == '') {
+        if ($search != '') {
             $employeeData = Employee::where('name', 'LIKE', "%$search%")
                 ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
                 ->leftJoin('assessments', 'employees.id', '=', 'assessments.reviewee_id')
