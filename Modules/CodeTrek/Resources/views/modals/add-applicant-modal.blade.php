@@ -23,7 +23,7 @@
                             </div>
                             <div class="form-group offset-md-1 col-md-5">
                                  <label for="last_name" class="field-required">Last Name</label>
-                                 <input type="text" class="form-control" name="last_name" id="lastName" placeholder="Enter last name" required="required" value="">
+                                 <input type="text" class="form-control" name="last_name" id="lastName" placeholder="Enter last name" value="" required>
                             </div>
                         </div>
                         <div class="form-row">
