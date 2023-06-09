@@ -1,5 +1,4 @@
-<div class="modal fade bd-create-modal-lg" id="modalExcelFilters" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
+<div class="modal fade" id="modalExcelFilters" tabindex="-1" role="dialog" aria-labelledby="modalExcelFiltersLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-info">

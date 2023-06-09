@@ -226,4 +226,10 @@ class InvoiceController extends Controller
     {
         return view('invoice::create-custom-invoice', $this->service->create());
     }
+
+    public function monthlySalesRegisterReport()
+    {
+        $this->authorize('invoiceDetails', Invoice::class);
+        return view('invoice::monthly-sales-register', $this->service->monthlySalesRegisterReport());
+    }
 }

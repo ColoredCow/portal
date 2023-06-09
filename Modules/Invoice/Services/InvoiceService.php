@@ -917,4 +917,32 @@ class InvoiceService implements InvoiceServiceContract
 
         LedgerAccount::destroy($ledgerAccountsIdToDelete);
     }
+
+    public function monthlySalesRegisterReport()
+    {
+        $invoices = Invoice::query()
+            ->orderBy('sent_on', 'desc');
+
+        $igst = [];
+        $cgst = [];
+        $sgst = [];
+        $clients = [];
+        $clientAddress = [];
+        foreach ($invoices->get() as $invoice) {
+            $clients[] = Client::select('*')->where('id', $invoice->client_id)->first();
+            $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
+            $igst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100;
+            $cgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100;
+            $sgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100;
+        }
+        return [
+            'invoices' => $invoices->paginate(config('constants.pagination_size')),
+            'clients' => $clients,
+            'clientAddress' => $clientAddress,
+            'currentRates' => $this->currencyService()->getCurrentRatesInINR(),
+            'igst' => $igst,
+            'cgst' => $cgst,
+            'sgst' => $sgst
+        ];
+    }
 }
