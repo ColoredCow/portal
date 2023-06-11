@@ -234,14 +234,15 @@ class InvoiceController extends Controller
         if (! $filters) {
             return redirect(route('invoice.msr-report', $this->service->defaultMonthlySalesRegisterReportFilters()));
         }
+
         return view('invoice::monthly-sales-register', $this->service->monthlySalesRegisterReport($request));
     }
 
     public function monthlySalesRegisterReportExport(Request $request)
     {
-        // dd($request);
         $this->authorize('monthlySalesRegisterReportExport', Invoice::class);
         $filters = $request->all();
+        
         return $this->service->monthlySalesRegisterReportExport($filters);
     }
 }

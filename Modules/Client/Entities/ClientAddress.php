@@ -28,7 +28,7 @@ class ClientAddress extends Model
             $address = $address . ', ' . $this->country->name;
         }
         if ($this->area_code) {
-            $address = $address . ', (' . $this->area_code .')';
+            $address = $address . ', (' . $this->area_code . ')';
         }
 
         return $address;

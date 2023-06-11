@@ -973,17 +973,18 @@ class InvoiceService implements InvoiceServiceContract
             $cgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100;
             $sgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100;
             $address = $invoice->client->addresses;
+
             return [
                 'Invoice No.' => $invoice->invoice_number,
                 'Invoice Date' => $invoice->created_at->format(config('invoice.default-date-format')),
                 'Client Name' => $invoice->client->name,
-                'Client complete Address' => $invoice->client->addresses->first() ? $address->first()->completeAddress :'',
+                'Client complete Address' => $invoice->client->addresses->first() ? $address->first()->completeAddress :'' ,
                 'Type (B2B/B2G/B2C)' => 'India',
-                'GSTN_No' => $clientAddress[0]  ? $clientAddress[0]->gst_number : 'B2C',
+                'GSTN_No' => $clientAddress[0] ? $clientAddress[0]->gst_number : 'B2C',
                 'Item Description' => $invoice->project ? $invoice->project->name : '',
                 'Units (Hrs.)' => $invoice->project ? $invoice->project->total_estimated_hours : '',
                 'Unit Rate' => optional($invoice->client->billingDetails)->service_rates,
-                'Total taxable' => (int)($invoice->amount + $invoice->gst),
+                'Total taxable' => (int) ($invoice->amount + $invoice->gst),
                 'GST Rate (%)' => 18,
                 'IGST Value' => $clientAddress[0] ? (($clientAddress[0]->state != config('invoice.invoice-details.billing-state')) && ($clientAddress[0]->country_id == 1) ? $igst[0] : '0') : '',
                 'CGST Value' => $clientAddress[0] ? (($clientAddress[0]->state == config('invoice.invoice-details.billing-state')) && ($clientAddress[0]->country_id == 1) ? $cgst[0] : '0') : '',
@@ -998,11 +999,12 @@ class InvoiceService implements InvoiceServiceContract
         return $invoices->map(function ($invoice) {
             $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
             $address = $invoice->client->addresses;
+
             return [
                 'Invoice No.' => $invoice->invoice_number,
                 'Invoice Date' => $invoice->created_at->format(config('invoice.default-date-format')),
                 'Client Name' => $invoice->client->name,
-                'Client complete Address' => $invoice->client->addresses->first() ? $address->first()->completeAddress :'',
+                'Client complete Address' => $invoice->client->addresses->first() ? $address->first()->completeAddress : '',
                 'Type' => 'Export',
                 'Item Description' => $invoice->project ? $invoice->project->name : '',
                 'Units (Hrs.)' => $invoice->project ? $invoice->project->total_estimated_hours : '',
