@@ -1,9 +1,8 @@
-<form action="{{ route('invoice.msr-report') }}" id="invoiceFilterForm">
+<form action="{{ route('invoice.msr-report', request()) }}" id="msrFilterForm">
     <div class="d-flex">
-
         <div class='form-group mr-4 w-168'>
             <select class="form-control bg-light" name="year"
-                onchange="document.getElementById('invoiceFilterForm').submit();">
+                onchange="document.getElementById('msrFilterForm').submit();">
                 <option {{ request()->input('year') == '' ? 'selected=selected' : '' }} value="">All Years
                 </option>
                 @php $year = now()->year; @endphp
@@ -16,10 +15,9 @@
             </select>
         </div>
 
-
         <div class='form-group mr-4 w-168'>
             <select class="form-control bg-light" name="month"
-                onchange="document.getElementById('invoiceFilterForm').submit();">
+                onchange="document.getElementById('msrFilterForm').submit();">
                 <option {{ request()->input('month') == '' ? 'selected=selected' : '' }} value="">All Months
                 </option>
                 <option {{ request()->input('month') == '01' ? 'selected=selected' : '' }} value="01">January
@@ -47,18 +45,15 @@
         </div>
 
         <div class='form-group mr-4 w-168'>
-            <select class="form-control bg-light" name="invoice_type"
-                onchange="document.getElementById('invoiceFilterForm').submit();">
-                <option {{ request()->input('type') == '' ? 'selected=selected' : '' }} value="">All Type
+            <select class="form-control bg-light" name="region"
+                onchange="document.getElementById('msrFilterForm').submit();">
+                <option {{ request()->input('region') == '' ? 'selected=selected' : '' }} value="">All Types
                 </option>
-                <option {{ request()->input('type') == 'B2B' ? 'selected=selected' : '' }} value="b2b">B2B
+                <option {{ request()->input('region') == 'indian' ? 'selected=selected' : '' }} value="indian">B2B
                 </option>
-                <option {{ request()->input('type') == 'export' ? 'selected=selected' : '' }} value="export">Export
-                </option>
+                <option {{ request()->input('region') == 'international' ? 'selected=selected' : '' }}
+                    value="international">Export</option>
             </select>
         </div>
-
-
-
     </div>
 </form>

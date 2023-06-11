@@ -227,9 +227,21 @@ class InvoiceController extends Controller
         return view('invoice::create-custom-invoice', $this->service->create());
     }
 
-    public function monthlySalesRegisterReport()
+    public function monthlySalesRegisterReport(Request $request)
     {
-        $this->authorize('invoiceDetails', Invoice::class);
-        return view('invoice::monthly-sales-register', $this->service->monthlySalesRegisterReport());
+        $this->authorize('monthlySalesRegisterReport', Invoice::class);
+        $filters = $request->all();
+        if (! $filters) {
+            return redirect(route('invoice.msr-report', $this->service->defaultMonthlySalesRegisterReportFilters()));
+        }
+        return view('invoice::monthly-sales-register', $this->service->monthlySalesRegisterReport($request));
+    }
+
+    public function monthlySalesRegisterReportExport(Request $request)
+    {
+        // dd($request);
+        $this->authorize('monthlySalesRegisterReportExport', Invoice::class);
+        $filters = $request->all();
+        return $this->service->monthlySalesRegisterReportExport($filters);
     }
 }
