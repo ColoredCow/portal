@@ -242,7 +242,7 @@ class InvoiceController extends Controller
     {
         $this->authorize('monthlySalesRegisterReportExport', Invoice::class);
         $filters = $request->all();
-        
+
         return $this->service->monthlySalesRegisterReportExport($filters);
     }
 }

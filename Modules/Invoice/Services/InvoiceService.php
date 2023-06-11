@@ -978,7 +978,7 @@ class InvoiceService implements InvoiceServiceContract
                 'Invoice No.' => $invoice->invoice_number,
                 'Invoice Date' => $invoice->created_at->format(config('invoice.default-date-format')),
                 'Client Name' => $invoice->client->name,
-                'Client complete Address' => $invoice->client->addresses->first() ? $address->first()->completeAddress :'' ,
+                'Client complete Address' => $invoice->client->addresses->first() ? $address->first()->completeAddress : '',
                 'Type (B2B/B2G/B2C)' => 'India',
                 'GSTN_No' => $clientAddress[0] ? $clientAddress[0]->gst_number : 'B2C',
                 'Item Description' => $invoice->project ? $invoice->project->name : '',
