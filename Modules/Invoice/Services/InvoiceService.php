@@ -985,7 +985,9 @@ class InvoiceService implements InvoiceServiceContract
                 'Unit Rate' => optional($invoice->client->billingDetails)->service_rates,
                 'Total taxable' => (int)($invoice->amount + $invoice->gst),
                 'GST Rate (%)' => 18,
-                'IGST Value' => $clientAddress[0] ? (($clientAddress[0]->state != config('invoice.invoice-details.billing-state')) && ($clientAddress[0]->country_id == 1 ) ? $igst[0] : '0') : '',
+                'IGST Value' => $clientAddress[0] ? (($clientAddress[0]->state != config('invoice.invoice-details.billing-state')) && ($clientAddress[0]->country_id == 1) ? $igst[0] : '0') : '',
+                'CGST Value' => $clientAddress[0] ? (($clientAddress[0]->state == config('invoice.invoice-details.billing-state')) && ($clientAddress[0]->country_id == 1) ? $cgst[0] : '0') : '',
+                'SGST Value' => $clientAddress[0] ? (($clientAddress[0]->state == config('invoice.invoice-details.billing-state')) && ($clientAddress[0]->country_id == 1) ? $sgst[0] : '0') : '',
                 'Net Total' => $invoice->totalAmount
             ];
         });
@@ -1009,6 +1011,6 @@ class InvoiceService implements InvoiceServiceContract
                 'Total Amont (INR)' => $invoice->invoiceAmountInInr,
                 'Net Total' => $invoice->totalAmountInInr
             ];
-        });       
+        });
     }
 }
