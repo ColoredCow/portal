@@ -12,6 +12,8 @@ use Modules\HR\Entities\Job;
 use Modules\HR\Events\CustomMailTriggeredForApplication;
 use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
+
 
 class ApplicationService implements ApplicationServiceContract
 {
@@ -137,15 +139,23 @@ class ApplicationService implements ApplicationServiceContract
 
     public function getToken()
     {
+        $savedToken = Cache::get('campaign_token');
+        if ($savedToken) {
+            return $savedToken;
+        }
+
         $CAMPAIGNS_TOOL_URL = config('constants.campaign_tool_credentials.url');
         $url = $CAMPAIGNS_TOOL_URL . '/oauth/token';
-
         $response = Http::asForm()->post($url, [
             'grant_type' => 'client_credentials',
             'client_id' => config('constants.campaign_tool_credentials.client_id'),
             'client_secret' => config('constants.campaign_tool_credentials.client_secret'),
         ]);
 
-        return $response->json()['access_token'];
+        $accessToken = $response->json()['access_token'];
+        // Store the token in the cache for 7 days.
+        Cache::put('campaign_token', $accessToken, 60 * 24);
+
+        return  $accessToken;
     }
 }
