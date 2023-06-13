@@ -18,11 +18,11 @@ class CodeTrekService
             $applicants = $query->where('centre_id', $centre);
         }
         $applicants = $query->when($search, function ($query) use ($search) {
-        return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
+            return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
         })
         ->paginate(config('constants.pagination_size'))
         ->appends(request()->except('page'));
-        
+
         $applicantsData = CodeTrekApplicant::whereIn('status', ['active', 'inactive', 'completed'])
         ->when($search, function ($query) use ($search) {
             return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
