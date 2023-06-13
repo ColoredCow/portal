@@ -14,4 +14,23 @@ class ClientAddress extends Model
     {
         return $this->belongsTo(Country::class);
     }
+    
+    public function getCompleteAddressAttribute()
+    {
+        $address = $this->address;
+        if ($this->city) {
+            $address = $address . ', ' . $this->city;
+        }
+        if ($this->state) {
+            $address = $address . ', ' . $this->state;
+        }
+        if ($this->country) {
+            $address = $address . ', ' . $this->country->name;
+        }
+        if ($this->area_code) {
+            $address = $address . ', (' . $this->area_code . ')';
+        }
+
+        return $address;
+    }
 }
