@@ -14,7 +14,6 @@ use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 
-
 class ApplicationService implements ApplicationServiceContract
 {
     public function index($applicationType)
