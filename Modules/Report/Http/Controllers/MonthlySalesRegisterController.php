@@ -4,11 +4,8 @@ namespace Modules\Report\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\Report\Services\Finance\ReportDataService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Report\Services\Finance\MonthlSalesRegisterService;
-use Modules\Report\Exports\ProfitAndLossReportExport;
-use Maatwebsite\Excel\Facades\Excel;
 
 class MonthlySalesRegisterController extends Controller
 {
