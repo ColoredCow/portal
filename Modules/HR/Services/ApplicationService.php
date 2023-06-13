@@ -152,7 +152,7 @@ class ApplicationService implements ApplicationServiceContract
         ]);
 
         $accessToken = $response->json()['access_token'];
-        // Store the token in the cache for 7 days.
+        // Store the token in the cache for 1 day.
         Cache::put('campaign_token', $accessToken, 60 * 24);
 
         return  $accessToken;
