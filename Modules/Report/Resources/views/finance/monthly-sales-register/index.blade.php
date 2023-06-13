@@ -63,7 +63,7 @@
                         <td>{{ $invoice->client->addresses->first() ? $address->first()->completeAddress :'' }}</td>
                         <td>{{ $clientAddress[$key] ? (($clientAddress[$key]->country_id == 1) ? 'India' : 'Export') : '' }}</td>
                         @if (request()->input('region') == config('invoice.region.indian'))
-                            <td>{{ $clientAddress[$key]  ? $clientAddress[$key]->gst_number : 'B2C' }}</td>
+                            <td>{{ $clientAddress[$key]->gst_number  ? $clientAddress[$key]->gst_number : 'B2C' }}</td>
                         @endif
                         <td>{{ $invoice->project ? $invoice->project->name : ''}}</td>
                         <td>{{ $invoice->project ? $invoice->project->total_estimated_hours : '' }}</td>
