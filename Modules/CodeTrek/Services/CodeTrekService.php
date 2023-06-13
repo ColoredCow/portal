@@ -63,6 +63,7 @@ class CodeTrekService
         $applicant->start_date = $data['start_date'];
         $applicant->graduation_year = $data['graduation_year'] ?? null;
         $applicant->university = $data['university_name'] ?? null;
+        $applicant->centre_id = $data['centre'] ?? null;
         $applicant->save();
 
         return $applicant;
