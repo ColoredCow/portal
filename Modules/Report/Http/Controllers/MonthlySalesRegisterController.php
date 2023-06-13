@@ -4,12 +4,10 @@ namespace Modules\Report\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Report\Services\Finance\MonthlSalesRegisterService;
 
 class MonthlySalesRegisterController extends Controller
 {
-    use AuthorizesRequests;
 
     protected $service;
 
