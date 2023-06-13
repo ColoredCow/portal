@@ -29,16 +29,14 @@ class CodeTrekController extends Controller
         $centres = OfficeLocation::all();
         $applicantData = $this->service->getCodeTrekApplicants($request->all());
         $applicants = $applicantData['applicants'];
-        $activeCount = $applicantData['activeCount'];
-        $inactiveCount = $applicantData['inactiveCount'];
-        $completedCount = $applicantData['completedCount'];
+        $applicantsData = $applicantData['applicantsData'];
+        $statusCounts = $applicantData['statusCounts'];
 
         return view('codetrek::index', [
             'applicants' => $applicants,
             'centres' => $centres,
-            'activeCodetrekApplicantsCount' => $activeCount,
-            'inactiveCodetrekApplicantsCount' => $inactiveCount,
-            'completedCodetrekApplicantsCount' => $completedCount,
+            'applicantsData' => $applicantsData,
+            'statusCounts' => $statusCounts
         ]);
     }
 
