@@ -14,7 +14,7 @@ class ClientAddress extends Model
     {
         return $this->belongsTo(Country::class);
     }
-    
+
     public function getCompleteAddressAttribute()
     {
         $address = $this->address;

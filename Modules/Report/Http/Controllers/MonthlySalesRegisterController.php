@@ -34,6 +34,7 @@ class MonthlySalesRegisterController extends Controller
     public function exportReport(Request $request)
     {
         $filters = $request->all();
+
         return $this->service->exportReport($filters);
     }
 }
