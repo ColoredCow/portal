@@ -7,7 +7,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Modules\Report\Exports\MonthlySalesRegisterReportExport;
 use Modules\Client\Entities\ClientAddress;
 
-class MonthlSalesRegisterService 
+class MonthlSalesRegisterService
 {
     public function index($filters)
     {
