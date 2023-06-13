@@ -8,7 +8,6 @@ use Modules\Report\Services\Finance\MonthlSalesRegisterService;
 
 class MonthlySalesRegisterController extends Controller
 {
-
     protected $service;
 
     public function __construct(MonthlSalesRegisterService $service)
