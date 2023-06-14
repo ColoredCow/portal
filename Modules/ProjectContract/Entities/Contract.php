@@ -9,7 +9,8 @@ class Contract extends Model
     protected $fillable = [
         'user_id',
         'contract_name',
-        'contract_link'
+        'contract_link',
+        'status'
     ];
 
     public function contractMeta()
