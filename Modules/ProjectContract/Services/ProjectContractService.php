@@ -4,7 +4,6 @@ namespace Modules\ProjectContract\Services;
 
 use Illuminate\Support\Facades\Auth;
 use Modules\ProjectContract\Entities\Contract;
-use Modules\ProjectContract\Entities\ContractMeta;
 use Modules\ProjectContract\Entities\ProjectContractMeta;
 use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
 use Illuminate\Support\Facades\DB;
@@ -22,14 +21,14 @@ class ProjectContractService
             'contract_name' => $request['client_name'],
             'status' => 'Saved as draft',
         ];
-        
+
         $contractMeta = [
             ['key' => 'Contract Name', 'value' => $request['contract_name']],
             ['key' => 'Contract Date For Effective', 'value' => $request['contract_date_for_effective']],
             ['key' => 'Contract Date For Signing', 'value' => $request['contract_date_for_signing']],
             ['key' => 'Contract Date For Expiry', 'value' => $request['contract_expiry_date']],
         ];
-        
+
         DB::transaction(function () use ($contractData, $contractMeta) {
             $contract = Contract::create($contractData);
         
@@ -37,6 +36,7 @@ class ProjectContractService
                 $contract->contractMeta()->create($meta);
             }
         });
+
         return $contractMeta;
     }
 
