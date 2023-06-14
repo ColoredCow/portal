@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use Modules\ProjectContract\Services\ProjectContractService;
 use App\Models\Client;
 use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
+use Illuminate\Http\Request;
 
 class ProjectContractController extends Controller
 {
@@ -27,9 +28,10 @@ class ProjectContractController extends Controller
         return view('projectcontract::index');
     }
 
-    public function store(ProjectContractRequest $ProjectContractMeta)
+    public function store(Request $request)
     {
-        $this->service->store($ProjectContractMeta);
+        $data = $request->all();
+        $this->service->store($data);
 
         return redirect(route('projectcontract.index'))->with('success', 'Project Contract created successfully');
     }
