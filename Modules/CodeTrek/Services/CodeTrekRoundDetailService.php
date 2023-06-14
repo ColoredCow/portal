@@ -36,7 +36,7 @@ class CodeTrekRoundDetailService
         $applicationRound->feedback = null;
         $applicationRound->start_date = today();
         $codetrekApplicant = CodeTrekApplicant::find($applicant->id);
-        Mail::send(new CodeTrekApplicantRoundMail($applicationRound, $codetrekApplicant));
+        // Mail::send(new CodeTrekApplicantRoundMail($applicationRound, $codetrekApplicant)); This line will be uncommented in the future when the use of the codeTrek module starts in the proper way.
         $applicationRound->save();
     }
 }
