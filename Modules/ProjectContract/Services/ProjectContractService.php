@@ -7,6 +7,8 @@ use Modules\ProjectContract\Entities\Contract;
 use Modules\ProjectContract\Entities\ContractMeta;
 use Modules\ProjectContract\Entities\ProjectContractMeta;
 use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
+use Illuminate\Support\Facades\DB;
+
 
 class ProjectContractService
 {
@@ -17,34 +19,26 @@ class ProjectContractService
 
     public function store($request)
     {
-        $Contract = new Contract;
-        $ProjectContractMeta = new ContractMeta;
-
-        $Contract->user_id = Auth::id();
-        $Contract->contract_name = $request['client_name'];
-        $Contract->save();
+        $contractData = [
+            'user_id' => Auth::id(),
+            'contract_name' => $request['client_name'],
+        ];
         
-        $ProjectContractMeta->contract_id = $Contract->id;
-        $ProjectContractMeta->key = "Contract Name";
-        $ProjectContractMeta->value = $request['contract_name'];
-        $ProjectContractMeta->save();
-
-        $ProjectContractMeta->contract_id = $Contract->id;
-        $ProjectContractMeta->key = "Contract Date For Effective";
-        $ProjectContractMeta->value = $request['contract_date_for_effective'];
-        $ProjectContractMeta->save();
-
-        $ProjectContractMeta->contract_id = $Contract->id;
-        $ProjectContractMeta->key = "Contract Date For Signing";
-        $ProjectContractMeta->value = $request['contract_date_for_signing'];
-        $ProjectContractMeta->save();
-
-        $ProjectContractMeta->contract_id = $Contract->id;
-        $ProjectContractMeta->key = "Contract Date For Expiry";
-        $ProjectContractMeta->value = $request['contract_expiry_date'];
-        $ProjectContractMeta->save();
-
-        return $ProjectContractMeta;
+        $contractMeta = [
+            ['key' => 'Contract Name', 'value' => $request['contract_name']],
+            ['key' => 'Contract Date For Effective', 'value' => $request['contract_date_for_effective']],
+            ['key' => 'Contract Date For Signing', 'value' => $request['contract_date_for_signing']],
+            ['key' => 'Contract Date For Expiry', 'value' => $request['contract_expiry_date']],
+        ];
+        
+        DB::transaction(function () use ($contractData, $contractMeta) {
+            $contract = Contract::create($contractData);
+        
+            foreach ($contractMeta as $meta) {
+                $contract->contractMeta()->create($meta);
+            }
+        });
+        return $contractMeta;
     }
 
     public function delete($id)

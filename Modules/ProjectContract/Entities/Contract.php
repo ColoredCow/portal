@@ -11,4 +11,9 @@ class Contract extends Model
         'contract_name',
         'contract_link'
     ];
+
+    public function contractMeta()
+    {
+        return $this->hasMany(ContractMeta::class, 'contract_id');
+    }
 }
