@@ -13,6 +13,7 @@
                 <select class="form-control bg-info text-white ml-3" name="status"  onchange="document.getElementById('employeeFilterForm').submit();">
                     <option {{ $filters['status'] == 'current' ? "selected=selected" : '' }} value="current">Current</option>
                     <option {{ $filters['status'] == 'previous' ? "selected=selected" : '' }} value="previous">Previous</option>
+                    <option {{ $filters['status'] == 'pending' ? "selected=selected" : '' }} value="pending">Pending Review</option>
                 </select>
             </div>
             <div class="d-flex align-items-center ml-35">

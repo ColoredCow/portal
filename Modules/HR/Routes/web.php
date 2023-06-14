@@ -122,6 +122,7 @@ Route::middleware('auth')->group(function () {
                 'index' => 'employees',
                 'show' => 'employees.show',
             ]);
+        Route::get('employee-review-details/{employee}', 'EmployeeController@reviewDetails')->name('employees.review-details');
         Route::get('/workhistory/{employee}/', 'EmployeeController@employeeWorkHistory')->name('employees.employeeWorkHistory');
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
         Route::get('fte-handler/{domain_id}', 'EmployeeController@showFTEdata')->name('employees.alert');

@@ -94,4 +94,9 @@ class EmployeeController extends Controller
 
         return view('hr.employees.employee-work-history', compact('employeesDetails'));
     }
+
+    public function reviewDetails(Employee $employee)
+    {
+        return view('hr.employees.review-details', ['employee' => $employee]);
+    }
 }
