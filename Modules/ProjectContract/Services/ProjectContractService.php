@@ -22,6 +22,7 @@ class ProjectContractService
         $contractData = [
             'user_id' => Auth::id(),
             'contract_name' => $request['client_name'],
+            'status' => 'Saved as draft',
         ];
         
         $contractMeta = [
