@@ -9,12 +9,11 @@ use Modules\ProjectContract\Entities\ProjectContractMeta;
 use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
 use Illuminate\Support\Facades\DB;
 
-
 class ProjectContractService
 {
     public function index()
     {
-        return Contract::where('contracts.user_id',Auth::id())->get();
+        return Contract::where('contracts.user_id', Auth::id())->get();
     }
     public function store($request)
     {

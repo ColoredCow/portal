@@ -11,6 +11,6 @@ class ContractMeta extends Model
     protected $fillable = [
         'contract_id',
         'key',
-        'value'	
+        'value'
     ];
 }
