@@ -31,7 +31,7 @@ class ProjectContractService
 
         DB::transaction(function () use ($contractData, $contractMeta) {
             $contract = Contract::create($contractData);
-        
+
             foreach ($contractMeta as $meta) {
                 $contract->contractMeta()->create($meta);
             }
