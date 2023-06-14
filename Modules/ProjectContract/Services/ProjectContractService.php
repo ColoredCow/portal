@@ -14,9 +14,8 @@ class ProjectContractService
 {
     public function index()
     {
-        return ProjectContractMeta::with('client')->orderBy('created_at', 'desc')->get();
+        return Contract::where('contracts.user_id',Auth::id())->get();
     }
-
     public function store($request)
     {
         $contractData = [

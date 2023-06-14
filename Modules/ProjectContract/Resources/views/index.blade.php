@@ -17,23 +17,19 @@
 <table class="table table-bordered table-striped">
     <thead class="thead-dark">
         <tr>
-            <th class="w-30p sticky-top">Client Name</th>
-            <th class="sticky-top">Authority Name</th>
-            <th class="sticky-top">Contract Date for Effective</th>
-            <th class="sticky-top">Contract Expiry Date</th>
-            <th class="sticky-top">Status</th>
+            <th class="w-30p sticky-top">Contract Name</th>
+            <th class="sticky-top">Contract Link</th>
+            <th class="sticky-top">Contract status</th>
             <th class="sticky-top">Action</th>
         </tr>
         @foreach ($projects as $project)
         <tr>
-            <td>{{$project->client->name}}</td>
-            <td>{{$project->authority_name}}</td>
-            <td>{{$project->contract_date_for_effective}}</td>
-            <td>{{$project->contract_expiry_date}}</td>
-            <td></td>
+            <td>{{$project->contract_name}}</td>
+            <td>{{$project->contract_link}}</td>
+            <td>{{$project->status}}</td>
             <td>
                 <a href="{{route('projectcontract.edit', $project->id)}}" class="pl-1 btn btn-link" ><i class="text-success fa fa-edit fa-lg"></i></a>
-                <a href="{{route('projectcontract.delete', $project->id)}}" class="pl-1 btn btn-link" ><i class="text-danger fa fa-trash fa-lg"></i></a>
+                <button type="button" class="btn btn-primary">Send for Review</button>
             </td>
         </tr>
         @endforeach
