@@ -61,7 +61,7 @@
                             </div>
                             <div class="d-flex col-md-5">
                                 <div class="d-flex flex-column text-center mr-3">
-                                    <a id="feedback-positive" name="positive-type" class="positive"
+                                    <a name="positive-type" class="thumbs-up"
                                         onmouseover="this.style.color='green'; this.style.transform='scale(1.1)'"
                                         onmouseout="this.style.color=''; this.style.transform='none'">
                                         <i class="fa fa-thumbs-up fa-2x mb-1" aria-hidden="true"></i>
@@ -69,7 +69,7 @@
                                     <h6>positive</h6>
                                 </div>
                                 <div class="d-flex flex-column text-center">
-                                    <a id="feedback-negative" name="negative-type" class="negative"
+                                    <a name="negative-type" class="thumbs-down"
                                         onmouseover="this.style.color='red'; this.style.transform='scale(1.1)'"
                                         onmouseout="this.style.color=''; this.style.transform='none'">
                                         <i class="fa fa-thumbs-down fa-2x mb-1" aria-hidden="true"></i>
@@ -77,7 +77,7 @@
                                     <h6>negative</h6>
                                 </div>
                             </div>
-                            <input type="hidden" name="feedback_type" id="feedback-type" value="">
+                            <input type="hidden" name="feedback_type" value="">
                         </div>
                     </div>
 

@@ -14,26 +14,6 @@
 </div>
 
 
-<style>
-    #applicant-sidebar {
-        z-index: 1050;
-    }
-
-    .positive,
-    .negative,
-    .applicant-name {
-        cursor: pointer;
-    }
-
-    .positive.green {
-        color: green;
-    }
-
-    .negative.red {
-        color: red;
-    }
-</style>
-
 <script>
     $('.positive').on('click', function(event) {
         event.preventDefault();
