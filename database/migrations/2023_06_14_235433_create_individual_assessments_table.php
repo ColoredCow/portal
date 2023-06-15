@@ -22,9 +22,9 @@ class CreateIndividualAssessmentsTable extends Migration
             $table->timestamps();
             $table->foreign('assessment_id')->references('id')->on('assessments')->onDelete('cascade');
             $table->foreign('reviewer_id')->references('id')->on('employees')->onDelete('cascade');
-
         });
     }
+
     /**
      * Reverse the migrations.
      *
