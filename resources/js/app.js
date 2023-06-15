@@ -2101,6 +2101,7 @@ $(function () {
 	});
 });
 
+
 // feedback modal form
 $(".thumbs-up").on("click", function(event) {
 	event.preventDefault();
@@ -2121,6 +2122,6 @@ $(".thumbs-down").on("click", function(event) {
 $("#applicant_form").on("submit", function(event) {
 	event.preventDefault();
 	var feedbackType = $(this).find("input[name=\"feedback_type\"]").val();
-	$(this).append('<input type="hidden" name="feedback_type" value="' + feedbackType + '">');
+	$(this).append("<input type='hidden' name='feedback_type' value='" + feedbackType + "'>");
 	this.submit();
 });
