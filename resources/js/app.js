@@ -2102,23 +2102,23 @@ $(function () {
 });
 
 // feedback modal form
-$('.thumbs-up').on('click', function(event) {
+$(".thumbs-up").on("click", function(event) {
 	event.preventDefault();
-	$('.thumbs-down').removeClass('red');
-	$(this).addClass('green');
-	var feedbackType = 'positive';
-	$(this).closest('.modal').find('input[name="feedback_type"]').val(feedbackType);
+	$(".thumbs-down").removeClass("red");
+	$(this).addClass("green");
+	var feedbackType = "positive";
+	$(this).closest(".modal").find('input[name="feedback_type"]').val(feedbackType);
 });
 
-$('.thumbs-down').on('click', function(event) {
+$(".thumbs-down").on("click", function(event) {
 	event.preventDefault();
-	$('.thumbs-up').removeClass('green');
-	$(this).addClass('red');
-	var feedbackType = 'negative';
-	$(this).closest('.modal').find('input[name="feedback_type"]').val(feedbackType);
+	$(".thumbs-up").removeClass("green");
+	$(this).addClass("red");
+	var feedbackType = "negative";
+	$(this).closest(".modal").find('input[name="feedback_type"]').val(feedbackType);
 });
 
-$('#applicant_form').on('submit', function(event) {
+$("#applicant_form").on("submit", function(event) {
 	event.preventDefault();
 	var feedbackType = $(this).find('input[name="feedback_type"]').val();
 	$(this).append('<input type="hidden" name="feedback_type" value="' + feedbackType + '">');
