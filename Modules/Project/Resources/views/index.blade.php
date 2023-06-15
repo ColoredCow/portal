@@ -116,11 +116,10 @@
                                             @else
                                                 @php
                                                     $team_member_ids = $project->getTeamMembers->pluck('team_member_id')->toArray();
-                                                    $keyAccountmanager = $project->getKeyAccountManagerAttribute();
-                                                    $userId = auth()->user()->id;
+                                                    $keyAccountmanager = $project->getKeyAccountManagerAttribute(); 
                                                     $keyAccountmanagerId = $keyAccountmanager ? $keyAccountmanager->id : null;
                                                 @endphp
-                                                @if (in_array(auth()->user()->id, $team_member_ids) || $keyAccountmanagerId === $userId)
+                                                @if (in_array(auth()->user()->id, $team_member_ids) || auth()->user()->id === $keyAccountmanagerId)
                                                     <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a>
                                                 @else
                                                     <span class="pr-2 pr-xl-2">
