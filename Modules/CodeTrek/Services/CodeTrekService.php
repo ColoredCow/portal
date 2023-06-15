@@ -80,7 +80,7 @@ class CodeTrekService
     {
         $applicationRound = new CodeTrekApplicantRoundDetail();
         $applicationRound->applicant_id = $applicant->id;
-        $applicationRound->round_name = 'level-1';
+        $applicationRound->latest_round_name = 'level-1';
         $applicationRound->feedback = null;
         $applicationRound->start_date = $data['start_date'];
         $applicationRound->save();
