@@ -16,8 +16,7 @@
                         <div class="d-flex justify-content-center justify-content-around">
                             <div class="form-group col-md-6 text-break">
                                 <h6 class="fw-bold" for="first_name">Name</h6>
-                                <h5>{{ $codeTrekApplicant->first_name }} {{ $codeTrekApplicant->last_name }}
-                                </h5>
+                                <h5>{{ $codeTrekApplicant->first_name }} {{ $codeTrekApplicant->last_name }}</h5>
 
                                 <input type="hidden" name="latest_round_name" id="latest_round_name"
                                     value="{{ $codeTrekApplicant->latest_round_name }}">

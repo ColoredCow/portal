@@ -2101,8 +2101,6 @@ $(function () {
 	});
 });
 
-
-// feedback modal form
 $(".thumbs-up").on("click", function(event) {
 	event.preventDefault();
 	$(".thumbs-down").removeClass("red");
