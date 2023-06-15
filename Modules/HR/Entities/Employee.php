@@ -75,4 +75,20 @@ class Employee extends Model
     {
         return $this->hasMany(EmployeeSalary::class);
     }
+
+    public function getFtes($filters)
+    {
+        $fte = 0;
+        $fteAmc = 0;
+        foreach ($this->user->projectTeamMembers()->with('project')->get() as $projectTeamMember) {
+            if (! $projectTeamMember->project->is_amc) {
+                $fte += $projectTeamMember->getFte($filters);
+            }
+            if ($projectTeamMember->project->is_amc) {
+                $fteAmc += $projectTeamMember->getFte($filters);
+            }
+        }
+
+        return ['main' => $fte, 'amc' => $fteAmc];
+    }
 }

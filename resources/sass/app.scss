@@ -859,16 +859,16 @@ span.total-chart-count {
 // @import 'utilities';
 
 #applicant-sidebar {
-  position: fixed;
-  right: -250px;
-  width: 250px;
-  padding: 50px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  transition: right 0.3s ease-in-out;
-  overflow-y: scroll;
-  height: 720px;
-  z-index: 999;
+	position: fixed;
+	right: -250px;
+	width: 250px;
+	padding: 50px;
+	border: 1px solid #ccc;
+	background-color: #f9f9f9;
+	transition: right 0.3s ease-in-out;
+	overflow-y: scroll;
+	height: 720px;
+	z-index: 9999;
 }
 
 .applicant-list li {
