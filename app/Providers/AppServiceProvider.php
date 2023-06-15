@@ -16,7 +16,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Schema::defaultStringLength(191);
         $this->setupEnvForOldPackages();
         Paginator::useBootstrap();
         Module::macro('checkStatus', function ($moduleName) {

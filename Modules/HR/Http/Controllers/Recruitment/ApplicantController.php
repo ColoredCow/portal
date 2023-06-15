@@ -54,7 +54,9 @@ class ApplicantController extends Controller
     public function store(ApplicantRequest $request)
     {
         $validated = $request->validated();
-        $this->service->saveApplication($validated);
+        $job_title = Job::where('opportunity_id', $validated['opportunity_id'])->first();
+
+        $this->service->saveApplication($validated, $job_title->title);
 
         return redirect(route('applications.job.index'));
     }

@@ -43,7 +43,10 @@ class ClientService implements ClientServiceContract
             $clients = $clients->diff($client->linkedAsDepartment);
         }
 
-        return ['clients' => $clients, 'count' => $count];
+        $activeClientsCount = Client::where('status', 'active')->count();
+        $inactiveClientsCount = Client::where('status', 'inactive')->count();
+
+        return ['clients' => $clients, 'count' => $count, 'activeClientsCount' => $activeClientsCount, 'inactiveClientsCount'=> $inactiveClientsCount];
     }
 
     public function create()

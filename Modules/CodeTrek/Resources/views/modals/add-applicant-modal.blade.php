@@ -70,6 +70,15 @@
                                     @endfor
                                 </select>
                             </div>
+                            <div class="form-group offset-md-1 col-md-5">
+                                <label for="centre" class="field-required">Centre Name</label>
+                                <select name="centre" id="centreId" class="form-control" required>
+                                    <option value="">Select Centre Name</option>
+                                    @foreach($centres as $centre)
+                                        <option value="{{ $centre->id }}">{{ $centre->centre_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer">
