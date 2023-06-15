@@ -31,13 +31,11 @@ class CodeTrekService
         ->selectRaw('count(status) as total, status')
         ->get();
 
-        $statusCounts = [];
-
-        $statusValues = ['active', 'inactive', 'completed'];
-        foreach ($statusValues as $status) {
-            $statusCounts[$status] = 0;
-        }
-
+        $statusCounts = [
+            'active' => 0,
+            'inactive' => 0,
+            'completed' => 0
+        ];
         foreach ($applicantsData as $data) {
             $statusCounts[$data->status] = $data->total;
         }
