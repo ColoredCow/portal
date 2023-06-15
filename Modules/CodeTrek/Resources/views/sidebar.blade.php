@@ -14,7 +14,7 @@
 </div>
 
 
-<script>
+{{-- <script>
     $('.positive').on('click', function(event) {
         event.preventDefault();
         $('.negative').removeClass('red');
@@ -37,4 +37,4 @@
         $(this).append('<input type="hidden" name="feedback_type" value="' + feedbackType + '">');
         this.submit();
     });
-</script>
+</script> --}}
