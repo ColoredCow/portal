@@ -434,14 +434,13 @@ class ProjectService implements ProjectServiceContract
         $employees = Employee::applyFilters($filters)
             ->get();
 
-        $employees = $this->formatProjectFTEFOrExportAll($employees);
-        $currentTimeStamp = now();
-        $filename = "FTE-$currentTimeStamp->year$currentTimeStamp->month$currentTimeStamp->day.xlsx";
+        $employees = $this->formatProjectFTEFOrExportAll($employees, $filters);
+        $filename = 'FTE_Report-' . $filters['year'] . '-' . $filters['month'] . '.xlsx';
 
         return Excel::download(new ProjectFTEExport($employees), $filename);
     }
 
-    private function formatProjectFTEFOrExportAll($employees)
+    private function formatProjectFTEFOrExportAll($employees, $filters)
     {
         $teamMembers = [];
         foreach ($employees as $employee) {
@@ -451,9 +450,9 @@ class ProjectService implements ProjectServiceContract
             foreach ($employee->user->activeProjectTeamMembers as $activeProjectTeamMember) {
                 $teamMember = [
                     $employee->name,
-                    number_format($employee->user->ftes['main'], 2),
+                    number_format($employee->getFtes($filters)['main'], 2),
                     $activeProjectTeamMember->project->name,
-                    number_format($activeProjectTeamMember->fte, 2)
+                    number_format($activeProjectTeamMember->getFte($filters), 2)
                 ];
                 $teamMembers[] = $teamMember;
             }
