@@ -29,7 +29,6 @@
             <td>{{$project->status}}</td>
             <td>
                 <a href="{{route('projectcontract.edit', $project->id)}}" class="pl-1 btn btn-link" ><i class="text-success fa fa-edit fa-lg"></i></a>
-                <button type="button" class="btn btn-primary">Send for Review</button>
             </td>
         </tr>
         @endforeach
