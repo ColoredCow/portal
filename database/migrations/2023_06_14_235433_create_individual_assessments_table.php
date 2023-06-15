@@ -25,7 +25,6 @@ class CreateIndividualAssessmentsTable extends Migration
 
         });
     }
-
     /**
      * Reverse the migrations.
      *
