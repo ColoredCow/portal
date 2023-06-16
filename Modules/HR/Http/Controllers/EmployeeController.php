@@ -35,7 +35,7 @@ class EmployeeController extends Controller
         $filters = $request->all();
         $filters = $filters ?: $this->service->defaultFilters();
         $name = request('name');
-        if ($request->status === "pending" ) {
+        if ($request->status === 'pending' ) {
             $employeeData = Employee::select('employees.*', 'individual_assessments.status')
             ->join('assessments', 'assessments.reviewee_id', '=', 'employees.id')
             ->join('individual_assessments', 'individual_assessments.assessment_id', '=', 'assessments.id')
