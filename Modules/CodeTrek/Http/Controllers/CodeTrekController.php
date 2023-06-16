@@ -41,10 +41,9 @@ class CodeTrekController extends Controller
     /**
      * Show the specified resource.
      */
-    public function storeFeedback(Request $request)
+    public function storeCodeTrekApplicantFeedback(Request $request)
     {
-        $data = $request->all();
-        $this->service->storeFeedback($data);
+        $this->service->storeCodeTrekApplicantFeedback($request->all());
 
         return redirect()->back();
     }
