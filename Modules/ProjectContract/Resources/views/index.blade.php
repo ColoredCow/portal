@@ -28,6 +28,7 @@
             <td>{{$project->contract_link}}</td>
             <td>{{$project->status}}</td>
             <td>
+                <a href="{{route('projectcontract.view-contract', $project->id)}}" class="pl-1 btn btn-link" ><i class="text-primary fa fa-eye fa-lg"></i></a>
                 <a href="{{route('projectcontract.edit', $project->id)}}" class="pl-1 btn btn-link" ><i class="text-success fa fa-edit fa-lg"></i></a>
             </td>
         </tr>
