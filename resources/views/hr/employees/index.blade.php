@@ -13,7 +13,7 @@
                 <select class="form-control bg-info text-white ml-3" name="status"  onchange="document.getElementById('employeeFilterForm').submit();">
                     <option {{ $filters['status'] == 'current' ? "selected=selected" : '' }} value="current">Current</option>
                     <option {{ $filters['status'] == 'previous' ? "selected=selected" : '' }} value="previous">Previous</option>
-                     <option {{ $filters['status'] == 'pending' ? "selected=selected" : '' }} value="pending">Review Status</option>
+                    <option {{ $filters['status'] == 'pending' ? "selected=selected" : '' }} value="pending">Review Status</option>
                 </select>
             </div>
             <div class="d-flex align-items-center ml-35">
@@ -43,10 +43,10 @@
                         {{ $employee->name }} <span class="{{ config('constants.pending_tag.in-progress.class') }} badge-pill mr-1 mb-1">{{ config('constants.pending_tag.in-progress.title') }}</span>
                     @else
                         {{ $employee->name }}
-                    @endif                    
+                    @endif
                     </a>
                 </td>
-                
+
                 <td>
                     @if ($employee->designation_id)
                         {{ $employee->hrJobDesignation->designation }}
