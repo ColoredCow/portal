@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\ProjectContract\Http\Controllers;
 
 use Illuminate\Routing\Controller;
@@ -97,7 +98,7 @@ class ProjectContractController extends Controller
         $contract = $this->service->update_contract($id);
         Mail::to(Auth::user()->email)->send(new ClientApproveReview());
 
-        return "Thank you for finalise";
+        return 'Thank you for finalise';
     }
     public function clientupdate(Request $request)
     {
@@ -105,6 +106,6 @@ class ProjectContractController extends Controller
         $this->service->edit_contract($data);
         Mail::to(Auth::user()->email)->send(new ClientUpdateReview());
 
-        return "Thank you for your update";
+        return 'Thank you for your update';
     }
 }

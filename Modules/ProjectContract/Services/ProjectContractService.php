@@ -113,18 +113,18 @@ class ProjectContractService
             'contract_name' => $request['client_name'],
             'status' => 'Updated by client',
         ];
-        
+
         $contractMeta = [
             ['key' => 'Contract Name', 'value' => $request['contract_name']],
             ['key' => 'Contract Date For Effective', 'value' => $request['contract_date_for_effective']],
             ['key' => 'Contract Date For Signing', 'value' => $request['contract_date_for_signing']],
             ['key' => 'Contract Date For Expiry', 'value' => $request['contract_expiry_date']],
         ];
-        
+
         DB::transaction(function () use ($request, $contractData, $contractMeta) {
-            $contract = Contract::where("id", $request['id'])->first();
+            $contract = Contract::where('id', $request['id'])->first();
             $contract->update($contractData);
-        
+
             foreach ($contractMeta as $meta) {
                 $contract->contractMeta()->updateOrCreate(['key' => $meta['key']], ['value' => $meta['value']]);
             }
