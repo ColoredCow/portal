@@ -62,7 +62,6 @@
                                         <h6>Positive</h6>
                                     </label>
                                 </div>
-
                                 <div class="d-flex flex-column text-center">
                                     <label>
                                         <input class="radio-button" type="radio" name="feedback_type" value="negative" required>
