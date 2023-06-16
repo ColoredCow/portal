@@ -17,50 +17,32 @@
     <div class="container mb-20">
         <br>
         @include('hr.employees.sub-views.menu')
-
         <br>
         <div>
             <br>
             <h2>{{ $employee->name }}'s review details</h2>
             <br>
             <br>
-            <form action="/save-review-details" method="POST" class="d-flex">
+            <form method="POST" action="{{ route('update.employee.reviewers', $employee->id) }}">
                 @csrf
-                <label for="hr_id">HR:</label>
-
-
-                <select class="btn bg-light text-left" name="centre_name" onchange="this.form.submit()">
-                    <option value="" selected="selected">Select HR</option>
-                    @foreach($employees as $employee)
-                        <option value="{{ $employee->id }}">
-                            {{ $employee->name }}
-                        </option>
+                <div class="d-flex justify-content-between">
+                    @foreach(config('constants.employee-reviewers') as $key => $role)
+                        <div>
+                            <label for="{{ $role }}">{{ $role }}:</label>
+                            <select class="pt-0 ml-2 btn bg-light text-left" name="{{ $key }}" onchange="this.form.submit()">
+                                <option value="" selected="selected">Select {{ $role }}</option>
+                                @foreach($employees as $employe)
+                                    <option value="{{ $employe->id }}" {{ $employee->toArray()[$key] == $employe->id ? 'selected' : '' }}>
+                                        {{ $employe->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                     @endforeach
-                </select>
-                
-                <br><br>
-                <label for="mentor_id">Mentor:</label>
-                <select name="mentor_id" id="mentor_id">
-                    <option value="">Select Mentor</option>
-                    @foreach ($employees as $emp)
-                        <option value="{{ $emp->id }}">{{ $emp->name }}</option>
-                    @endforeach
-                </select>
-                <br><br>
-                <label for="manager_id">Manager:</label>
-                <select name="manager_id" id="manager_id">
-                    <option value="">Select Manager</option>
-                    @foreach ($employees as $emp)
-                        <option value="{{ $emp->id }}">{{ $emp->name }}</option>
-                    @endforeach
-                </select>
+                </div>
             </form>
-            <button class="btn btn-primary" type="submit" value="Save">Save</button>
-            <br>
-            <br>
 
-
-            <div class="review-cards">
+            <div class="review-cards mt-5">
                 <input type="hidden" name="assessment_id" value="{{ $employee->id }}">
                 <!-- Quarter 1 Review Card -->
                 <div class="card mb-4">

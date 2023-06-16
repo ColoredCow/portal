@@ -269,4 +269,10 @@ return [
         'client_secret' => env('CAMPAIGNS_CLIENT_SECRET'),
         'client_id' => env('CAMPAIGNS_CLIENT_ID'),
     ],
+    
+    'employee-reviewers' => [
+        'hr_id' => 'HR',
+        'mentor_id' => 'Mentor',
+        'manager_id' => 'Manager'
+    ]
 ];

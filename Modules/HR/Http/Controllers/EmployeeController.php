@@ -117,4 +117,16 @@ class EmployeeController extends Controller
         // Redirect back or return a response as needed
         return redirect()->back()->with('success', 'Review saved successfully.');
     }
+
+    public function updateEmployeeReviewers(Request $request, Employee $employee) {
+
+        // Update the employee reviewers data
+        $employeeData = $employee->update([
+            'hr_id' => $request->hr_id,
+            'mentor_id' => $request->mentor_id,
+            'manager_id' => $request->manager_id,
+        ]);
+        return redirect()->back();
+
+    }
 }
