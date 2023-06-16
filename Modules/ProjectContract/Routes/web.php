@@ -11,7 +11,6 @@
 |
 */
 
-
 Route::prefix('projectcontract')->group(function () {
     Route::get('/', 'ProjectContractController@index')->name('projectcontract.index');
     Route::get('/viewForm', 'ProjectContractController@viewForm')->name('projectcontract.view-form');

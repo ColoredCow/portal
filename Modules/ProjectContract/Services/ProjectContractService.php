@@ -84,7 +84,7 @@ class ProjectContractService
     public function update_contract($id)
     {
         $Contract = Contract::find($id);
-        $Contract->status = "Finalise by client";
+        $Contract->status = 'Finalise by client';
         $Contract->save();
 
         return $Contract;
@@ -102,8 +102,9 @@ class ProjectContractService
         $Reviewer->save();
 
         $Contract = Contract::find($id);
-        $Contract->status = "Sent for client review";
+        $Contract->status = 'Sent for client review';
         $Contract->save();
+
         return $Reviewer;
     }
     public function edit_contract($request)
@@ -128,7 +129,6 @@ class ProjectContractService
                 $contract->contractMeta()->updateOrCreate(['key' => $meta['key']], ['value' => $meta['value']]);
             }
         });
-        
 
         return $contractData;
     }

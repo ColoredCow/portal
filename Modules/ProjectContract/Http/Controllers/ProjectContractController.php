@@ -6,7 +6,6 @@ use Modules\ProjectContract\Services\ProjectContractService;
 use App\Models\Client;
 use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
 use Illuminate\Http\Request;
-use Modules\ProjectContract\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Mail;
 use Modules\ProjectContract\Emails\ClientReview;
 use Modules\ProjectContract\Emails\ClientApproveReview;
@@ -23,6 +22,7 @@ class ProjectContractController extends Controller
     public function index()
     {
         $projects = $this->service->index();
+
         return view('projectcontract::index')->with('projects', $projects);
     }
     public function create()
@@ -33,6 +33,7 @@ class ProjectContractController extends Controller
     {
         $data = $request->all();
         $this->service->store($data);
+
         return redirect(route('projectcontract.index'))->with('success', 'Project Contract created successfully');
     }
     public function show()
@@ -47,6 +48,7 @@ class ProjectContractController extends Controller
             $projectId = $project;
         }
         $clients = client::all();
+
         return view('projectcontract::edit-project-contract')->with([
             'projectId' => $projectId,
             'clients' => $clients,
@@ -55,11 +57,13 @@ class ProjectContractController extends Controller
     public function delete($id)
     {
         $this->service->delete($id);
+
         return redirect(route('projectcontract.index'));
     }
     public function viewForm()
     {
         $clients = client::all();
+
         return view('projectcontract::add-new-client')->with('clients', $clients);
     }
     public function update(ProjectContractRequest $ProjectContractMeta, $id)
@@ -84,6 +88,7 @@ class ProjectContractController extends Controller
         $this->service->store_reveiwer($data);
         $link = ReviewController::review($request['id'], $request['email']);
         Mail::to($request['email'])->send(new ClientReview($link));
+
         return redirect(route('projectcontract.index'))->with('success');
     }
 
@@ -91,6 +96,7 @@ class ProjectContractController extends Controller
     {
         $contract = $this->service->update_contract($id);
         Mail::to(Auth::user()->email)->send(new ClientApproveReview());
+
         return "Thank you for finalise";
     }
     public function clientupdate(Request $request)
@@ -98,6 +104,7 @@ class ProjectContractController extends Controller
         $data = $request->all();
         $this->service->edit_contract($data);
         Mail::to(Auth::user()->email)->send(new ClientUpdateReview());
+
         return "Thank you for your update";
     }
 }

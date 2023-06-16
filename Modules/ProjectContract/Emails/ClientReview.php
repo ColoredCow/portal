@@ -5,7 +5,6 @@ namespace Modules\ProjectContract\Emails;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ClientReview extends Mailable
 {
@@ -19,7 +18,7 @@ class ClientReview extends Mailable
     public $mailData;
     public function __construct($mailData)
     {
-        $this->mailData=$mailData;
+        $this->mailData = $mailData;
     }
 
     /**
