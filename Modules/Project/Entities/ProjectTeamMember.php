@@ -4,6 +4,7 @@ namespace Modules\Project\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 use Modules\Project\Database\Factories\ProjectTeamMemberFactory;
 use Modules\User\Entities\User;
 
@@ -84,6 +85,7 @@ class ProjectTeamMember extends Model
         return $this->current_expected_effort ? round($this->current_actual_effort / $this->current_expected_effort, 2) : 0;
     }
 
+    // TO DO: Need to rename this function as getCurrentFteAttribute()
     public function getFteAttribute()
     {
         $project = new Project;
@@ -109,5 +111,26 @@ class ProjectTeamMember extends Model
         }
 
         return $this->current_actual_effort >= $this->current_expected_effort ? 'border border-success' : 'border border-danger';
+    }
+
+    public function getFte($filters)
+    {
+        $project = new Project;
+        $year = (int) $filters['year'];
+        $month = (int) $filters['month'];
+        $startDate = Carbon::createFromDate($year, $month, 1);
+        $endDate = date('Y-m-d');
+
+        if ($startDate < date('Y-m-01')) {
+            $endDate = (clone $startDate)->endOfMonth();
+        }
+
+        $workingDays = count($project->getWorkingDaysList($startDate, $endDate));
+
+        $requiredEffort = $workingDays * config('efforttracking.minimum_expected_hours');
+
+        $actualEffort = $this->getCurrentActualEffortAttribute($startDate);
+
+        return round($actualEffort / $requiredEffort, 2);
     }
 }

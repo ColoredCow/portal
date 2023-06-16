@@ -164,7 +164,7 @@
     @endcan
     @can('codetrek.view')
         <li class="nav-item">
-            <a class="nav-item nav-link" href="{{('/codetrek') }}">CodeTrek</a>
+            <a class="nav-item nav-link" href="{{ route('codetrek.index') }}">CodeTrek</a>
         </li>
     @endcan
     @can('media.view')

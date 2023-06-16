@@ -2,12 +2,13 @@
  @section('content')
      @foreach ($roundDetails as $applicantDetail)
          <div class="container d-flex justify-content-around position-relative" id="update_details ">
+            @includeWhen(session('success'), 'toast', ['message' => session('success')])
              <div class="accordion col-9" id="accordionExample">
                  <div class="card">
                      <div class="card-header" id="headingOne">
                          <div class="d-flex align-items-center">
                              @foreach (config('codetrek.rounds') as $round)
-                                 @if ($applicantDetail->round_name == $round['slug'])
+                                 @if ($applicantDetail->latest_round_name == $round['slug'])
                                      <button class="btn btn-link float-left" type="button" data-toggle="collapse"
                                          data-target="#collapse_{{ $loop->parent->iteration }}" aria-expanded="true"
                                          aria-controls="collapse">
@@ -49,8 +50,8 @@
                                  <div class="form-group row">
                                      <div class="col-md-12">
                                          @foreach (config('codetrek.rounds') as $round)
-                                             @if ($applicantDetail->round_name == $round['slug'])
-                                                 <input type="hidden" name="round_name" value="{{ $round['slug'] }}">
+                                             @if ($applicantDetail->latest_round_name == $round['slug'])
+                                                 <input type="hidden" name="latest_round_name" value="{{ $round['slug'] }}">
                                                  <textarea class="form-control" id="feedbackTextarea1" name="feedback" rows="6" placeholder="Enter comments">{{ $applicantDetail->feedback }}</textarea>
                                                  <br>
                                                  <button type="submit" class="btn btn-primary float-right">Update
@@ -65,20 +66,29 @@
                              <form action="{{ route('codetrek.action', $applicant->id) }}" method="POST">
                                  @csrf
                                  <div class="card-footer">
-                                     <select name="round" id="rounds" class="w-22p">
-                                         @foreach (config('codetrek.rounds') as $round)
-                                             <option value="{{ $round['slug'] }}">Move to {{ $round['label'] }}</option>
-                                         @endforeach
-                                     </select>
-                                     <button type="submit" class="btn btn-success">Take Action</button>
-                                     <button type="button" class="btn btn-danger">Marked Inactive</button>
-                                 </div>
+                                     <div class="d-flex align-items-center">
+                                         <select name="round" id="rounds" class="w-22p">
+                                             @foreach (config('codetrek.rounds') as $round)
+                                                 <option value="{{ $round['slug'] }}">Move to {{ $round['label'] }}
+                                                 </option>
+                                             @endforeach
+                                         </select>
+                                         <button type="submit" class="btn btn-success ml-2">Take Action</button>
                              </form>
-                         @endif
+                             <form action="{{ route('codetrek.updateStatus', $applicant->id) }}" method="POST">
+                                 @csrf
+                                 <button type="submit" name="action" value="completed" class="btn btn-dark ml-2">Mark
+                                     Completed</button>
+                                 <button type="submit" name="action" value="inactive" class="btn btn-danger ml-1">Mark
+                                     Inactive</button>
+                             </form>
                      </div>
                  </div>
-                 <br>
-             </div>
-         </div>
+     @endif
+     </div>
+     </div>
+     <br>
+     </div>
+     </div>
      @endforeach
  @endsection

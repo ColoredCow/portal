@@ -43,7 +43,10 @@ class ClientService implements ClientServiceContract
             $clients = $clients->diff($client->linkedAsDepartment);
         }
 
-        return ['clients' => $clients, 'count' => $count];
+        $activeClientsCount = Client::where('status', 'active')->count();
+        $inactiveClientsCount = Client::where('status', 'inactive')->count();
+
+        return ['clients' => $clients, 'count' => $count, 'activeClientsCount' => $activeClientsCount, 'inactiveClientsCount'=> $inactiveClientsCount];
     }
 
     public function create()
@@ -91,7 +94,7 @@ class ClientService implements ClientServiceContract
                 'client' => $client,
                 'section' => $section,
                 'clientBillingAddress' => $this->getClientBillingAddress($client),
-                'keyAccountManagers' => $this->getKeyAccountManagers(),
+                'keyAccountManagers' => $this->getKeyAccountManagers()->whereNull('deleted_at')->sortBy('name'),
                 'clientBillingDetail' => $client->billingDetails,
             ];
         }
