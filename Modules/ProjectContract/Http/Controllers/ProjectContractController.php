@@ -6,6 +6,11 @@ use App\Models\Client;
 use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
 use Illuminate\Http\Request;
 use Modules\ProjectContract\Http\Controllers\ReviewController;
+use Illuminate\Support\Facades\Mail;
+use Modules\ProjectContract\Emails\ClientReview;
+use Modules\ProjectContract\Emails\ClientApproveReview;
+use Modules\ProjectContract\Emails\ClientUpdateReview;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectContractController extends Controller
 {
@@ -77,20 +82,21 @@ class ProjectContractController extends Controller
         $data = $request->all();
         $this->service->store_reveiwer($data);
         $link = ReviewController::review($request['id'],$request['email']);
-
-        return redirect(route('projectcontract.index'))->with('success', $link);
+        Mail::to($request['email'])->send(new ClientReview($link));
+        return redirect(route('projectcontract.index'))->with('success');
     }
 
     public function clientresponse($id)
     {
         $contract = $this->service->update_contract($id);
+        Mail::to(Auth::user()->email)->send(new ClientApproveReview());
         return "Thank you for finalise";
     }
     public function clientupdate(Request $request)
     {
         $data = $request->all();
         $this->service->edit_contract($data);
-
+        Mail::to(Auth::user()->email)->send(new ClientUpdateReview());
         return "Thank you for your update";
     }
 }

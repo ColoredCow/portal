@@ -10,8 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use Modules\ProjectContract\Http\Controllers\ReviewController;
-use Illuminate\Http\Request;
+
 
 Route::prefix('projectcontract')->group(function () {
     Route::get('/', 'ProjectContractController@index')->name('projectcontract.index');
@@ -25,5 +24,4 @@ Route::prefix('projectcontract')->group(function () {
     Route::post('sendreview', 'ProjectContractController@sendreview')->name('projectcontract.sendreview');
     Route::get('clientresponse/{id}', 'ProjectContractController@clientresponse')->name('projectcontract.clientresponse');
     Route::post('clientupdate', 'ProjectContractController@clientupdate')->name('projectcontract.clientupdate');
-    Route::get('/generate-signature', [ReviewController::class, 'review']);
 });
