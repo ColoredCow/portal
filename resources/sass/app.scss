@@ -884,8 +884,8 @@ span.total-chart-count {
   z-index: 1050;
 }
 
-.thumbs-up,
-.thumbs-down,
+.fa-thumbs-up,
+.fa-thumbs-down,
 .applicant-name {
   cursor: pointer;
 }
@@ -896,4 +896,19 @@ span.total-chart-count {
 
 .thumbs-down.red {
   color: red;
+}
+
+.radio-button {
+  position: absolute;
+  opacity: 0;
+}
+
+.fa-thumbs-up:hover {
+  color: green;
+  transform: scale(1.1);
+}
+
+.fa-thumbs-down:hover {
+  color: red;
+  transform: scale(1.1);
 }

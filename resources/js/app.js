@@ -2101,25 +2101,14 @@ $(function () {
 	});
 });
 
-$(".thumbs-up").on("click", function(event) {
-	event.preventDefault();
-	$(".thumbs-down").removeClass("red");
-	$(this).addClass("green");
-	var feedbackType = "positive";
-	$(this).closest(".modal").find("input[name=\"feedback_type\"]").val(feedbackType);
-});
-
-$(".thumbs-down").on("click", function(event) {
-	event.preventDefault();
-	$(".thumbs-up").removeClass("green");
-	$(this).addClass("red");
-	var feedbackType = "negative";
-	$(this).closest(".modal").find("input[name=\"feedback_type\"]").val(feedbackType);
-});
-
-$("#applicant_form").on("submit", function(event) {
-	event.preventDefault();
-	var feedbackType = $(this).find("input[name=\"feedback_type\"]").val();
-	$(this).append("<input type='hidden' name='feedback_type' value='" + feedbackType + "'>");
-	this.submit();
-});
+$(document).ready(function() {
+	$('.radio-button').change(function() {
+	  $('.thumbs-up').css('color', '');
+	  $('.thumbs-down').css('color', '');
+	  if ($(this).val() === 'positive') {
+		$(this).siblings('.thumbs-up').css('color', 'green');
+	  } else if ($(this).val() === 'negative') {
+		$(this).siblings('.thumbs-down').css('color', 'red');
+	  }
+	});
+  });
