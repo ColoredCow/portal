@@ -11,6 +11,7 @@ use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\Job;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Project\Entities\ProjectTeamMember;
+use Modules\HR\Entities\IndividualAssessment;
 
 class EmployeeController extends Controller
 {
@@ -97,6 +98,23 @@ class EmployeeController extends Controller
 
     public function reviewDetails(Employee $employee)
     {
-        return view('hr.employees.review-details', ['employee' => $employee]);
+        $employees = Employee::all();
+        return view('hr.employees.review-details', ['employee' => $employee, 'employees' => $employees]);
+    }
+
+    public function saveReviewStatus(Request $request)
+    {
+        $assessmentId = $request->input('assessment_id');
+        $type = $request->input('type');
+        $status = $request->input('status');
+
+        // Update or create the individual assessment entry
+        IndividualAssessment::updateOrCreate(
+            ['assessment_id' => $assessmentId, 'type' => $type],
+            ['status' => $status]
+        );
+
+        // Redirect back or return a response as needed
+        return redirect()->back()->with('success', 'Review saved successfully.');
     }
 }
