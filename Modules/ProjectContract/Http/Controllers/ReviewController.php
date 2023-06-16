@@ -25,13 +25,14 @@ class ReviewController extends Controller
         $contracts = $this->services->view_contract($id);
         $contractsmeta = $this->services->view_contractmeta($id);
         $reviewer = $this->services->view_reviewer($id, $email);
-        return view('projectcontract::review-contract')->with('contracts', $contracts)->with('contractsmeta',$contractsmeta)->with('reviewer',$reviewer);
+        return view('projectcontract::review-contract')->with('contracts', $contracts)->with('contractsmeta', $contractsmeta)->with('reviewer', $reviewer);
     }
 
-    static function review($id, $email)
+    public static function review($id, $email)
     {
         return URL::SignedRoute(
-            'review', ['user' => $id, 'email' => $email]
+            'review',
+            ['user' => $id, 'email' => $email]
         );
     }
 
@@ -94,4 +95,5 @@ class ReviewController extends Controller
     {
         //
     }
+
 }

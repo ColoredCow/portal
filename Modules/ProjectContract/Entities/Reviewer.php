@@ -11,6 +11,7 @@ class Reviewer extends Model
     protected $fillable = [
         'contract_id',
         'name',
-        'email' 
+        'email'
     ];
+
 }

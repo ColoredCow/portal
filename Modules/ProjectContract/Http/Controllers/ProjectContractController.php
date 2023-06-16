@@ -1,5 +1,6 @@
 <?php
 namespace Modules\ProjectContract\Http\Controllers;
+
 use Illuminate\Routing\Controller;
 use Modules\ProjectContract\Services\ProjectContractService;
 use App\Models\Client;
@@ -74,14 +75,14 @@ class ProjectContractController extends Controller
 
         $contractsmeta = $this->service->view_contractmeta($id);
 
-        return view('projectcontract::view-contract')->with('contracts', $contracts)->with('contractsmeta',$contractsmeta);
+        return view('projectcontract::view-contract')->with('contracts', $contracts)->with('contractsmeta', $contractsmeta);
     }
 
     public function sendreview(Request $request)
     {
         $data = $request->all();
         $this->service->store_reveiwer($data);
-        $link = ReviewController::review($request['id'],$request['email']);
+        $link = ReviewController::review($request['id'], $request['email']);
         Mail::to($request['email'])->send(new ClientReview($link));
         return redirect(route('projectcontract.index'))->with('success');
     }
@@ -99,4 +100,5 @@ class ProjectContractController extends Controller
         Mail::to(Auth::user()->email)->send(new ClientUpdateReview());
         return "Thank you for your update";
     }
+
 }

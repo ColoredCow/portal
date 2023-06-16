@@ -36,4 +36,5 @@ class CreateContractReviewerTable extends Migration
             ]);
         });
     }
+
 }
