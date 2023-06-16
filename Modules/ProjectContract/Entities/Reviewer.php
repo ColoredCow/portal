@@ -13,5 +13,4 @@ class Reviewer extends Model
         'name',
         'email'
     ];
-
 }

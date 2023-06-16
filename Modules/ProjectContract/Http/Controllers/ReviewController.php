@@ -95,5 +95,4 @@ class ReviewController extends Controller
     {
         //
     }
-
 }

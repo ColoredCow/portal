@@ -100,5 +100,4 @@ class ProjectContractController extends Controller
         Mail::to(Auth::user()->email)->send(new ClientUpdateReview());
         return "Thank you for your update";
     }
-
 }
