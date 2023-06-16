@@ -31,9 +31,9 @@
                             <label for="{{ $role }}">{{ $role }}:</label>
                             <select class="pt-0 ml-2 btn bg-light text-left" name="{{ $key }}" onchange="this.form.submit()">
                                 <option value="" selected="selected">Select {{ $role }}</option>
-                                @foreach($employees as $employe)
-                                    <option value="{{ $employe->id }}" {{ $employee->toArray()[$key] == $employe->id ? 'selected' : '' }}>
-                                        {{ $employe->name }}
+                                @foreach($employees as $emp)
+                                    <option value="{{ $emp->id }}" {{ $employee->toArray()[$key] == $emp->id ? 'selected' : '' }}>
+                                        {{ $emp->name }}
                                     </option>
                                 @endforeach
                             </select>
@@ -71,7 +71,6 @@
                         </table>
                         <br>
                         <br>
-                        <button class="btn btn-primary">Save</button> <!-- Save button -->
                     </div>
                 </div>
 
