@@ -42,16 +42,19 @@
                 </div>
             </form>
 
+            @foreach($assessments as $assessment)
+            <form method="POST" action="{{ route('review.updateStatus', $employee->id) }}">
+                @csrf
             <div class="review-cards mt-5">
                 <input type="hidden" name="assessment_id" value="{{ $employee->id }}">
                 <!-- Quarter 1 Review Card -->
                 <div class="card mb-4">
                     <div class="card-header review-card-header">
-                        <h4 class="font-weight-bold">Quarterly Review (20/05/2023)</h4>
+                        <h4 class="font-weight-bold">Review date <span class="font-weight-light">{{ $assessment->created_at->format('d-m-Y') }}</span></h4>
                     </div>
                     <div class="card-body review-card-body" style="display: none;">
-                        <div class="mb-2">Last reviewed at: {{ $employee->created_at }}</div>
-                        <div>Next review due: {{ $employee->created_at }}</div>
+                        <div class="mb-2">Last reviewed at: <span class="text-info">{{ $assessment->created_at->format('d-m-Y') }}</span> </div>
+                        <div>Next review due: <span class="text-info">{{ $assessment->created_at->addMonths(3)->startOfMonth()->format('d-m-Y') }}</span></div>
                         <br>
                         <br>
                         <table class="table table-striped table-bordered">
@@ -70,18 +73,10 @@
                                 </tr>
                         </table>
                         <br>
-                        <br>
                     </div>
                 </div>
-
-                <div class="card">
-                    <div class="card-header review-card-header">
-                        <h4 class="font-weight-bold">Quarterly Review (20/01/2023)</h4>
-                    </div>
-                    <div class="card-body review-card-body" style="display: none;">
-                        <button class="btn btn-primary">Save</button> <!-- Save button -->
-                    </div>
-                </div>
+            </form>
+                @endforeach
 
                 <!-- Add more Quarter Review Cards as needed -->
 
