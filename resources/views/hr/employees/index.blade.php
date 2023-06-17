@@ -9,10 +9,11 @@
         <h1>{{request()->get('name')}} ({{count($employees)}})</h1>
         <form id="employeeFilterForm" class="d-md-flex justify-content-between ml-md-3">
             <input type="hidden" name="status" value="{{ request()->input('status', 'current') }}">
-            <div class='form-group w-130' class="d-inline">
+            <div class='form-group w-200' class="">
                 <select class="form-control bg-info text-white ml-3" name="status"  onchange="document.getElementById('employeeFilterForm').submit();">
                     <option {{ $filters['status'] == 'current' ? "selected=selected" : '' }} value="current">Current</option>
                     <option {{ $filters['status'] == 'previous' ? "selected=selected" : '' }} value="previous">Previous</option>
+                    <option {{ $filters['status'] == 'pending' ? "selected=selected" : '' }} value="pending">Review Status</option>
                 </select>
             </div>
             <div class="d-flex align-items-center ml-35">
@@ -35,8 +36,17 @@
         @foreach ($employees as $employee)
             <tr>
                 <td>
-                    <a href={{ route('employees.show', $employee->id) }}>{{ $employee->name }}</a>
+                    <a href="{{ route('employees.show', $employee->id) }}">
+                        @if ($employee->status == 'pending')
+                        {{ $employee->name }} <span class="{{ config('constants.pending_tag.pending.class') }} badge-pill mr-1 mb-1">{{ config('constants.pending_tag.pending.title') }}</span>
+                    @elseif ($employee->status == 'in-progress')
+                        {{ $employee->name }} <span class="{{ config('constants.pending_tag.in-progress.class') }} badge-pill mr-1 mb-1">{{ config('constants.pending_tag.in-progress.title') }}</span>
+                    @else
+                        {{ $employee->name }}
+                    @endif
+                    </a>
                 </td>
+
                 <td>
                     @if ($employee->designation_id)
                         {{ $employee->hrJobDesignation->designation }}

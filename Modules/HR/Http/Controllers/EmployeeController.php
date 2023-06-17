@@ -2,14 +2,15 @@
 
 namespace Modules\HR\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\EmployeeService;
-use Modules\HR\Entities\Employee;
-use Illuminate\Routing\Controller;
-use Modules\HR\Entities\HrJobDomain;
-use Modules\HR\Entities\HrJobDesignation;
-use Modules\HR\Entities\Job;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Modules\HR\Entities\Employee;
+use Modules\HR\Entities\HrJobDesignation;
+use Modules\HR\Entities\HrJobDomain;
+use Modules\HR\Entities\Job;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\HR\Entities\IndividualAssessment;
 use Modules\HR\Entities\Assessment;
@@ -37,13 +38,25 @@ class EmployeeController extends Controller
         $filters = $request->all();
         $filters = $filters ?: $this->service->defaultFilters();
         $name = request('name');
-        $employeeData = Employee::where('staff_type', $name)
-            ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
-            ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
-            ->whereNull('project_team_members.ended_on')
-            ->groupBy('employees.user_id')
-            ->orderby('project_count', 'desc')
-            ->get();
+        $currentQuarter = Carbon::now()->quarter;
+        $currentYear = Carbon::now()->year;
+        if ($request->status === 'pending') {
+            $employeeData = Employee::select('employees.*', 'individual_assessments.status')
+                ->join('assessments', 'assessments.reviewee_id', '=', 'employees.id')
+                ->join('individual_assessments', 'individual_assessments.assessment_id', '=', 'assessments.id')
+                ->whereIn('individual_assessments.status', ['pending', 'in-progress'])
+                ->whereRaw('YEAR(assessments.created_at) = ?', [strval($currentYear)])
+                ->whereRaw('QUARTER(assessments.created_at) = ?', [$currentQuarter])
+                ->get();
+        } else {
+            $employeeData = Employee::where('staff_type', $name)
+                ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
+                ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
+                ->whereNull('project_team_members.ended_on')
+                ->groupBy('employees.user_id')
+                ->orderBy('project_count', 'desc')
+                ->get();
+        }
         if ($search != '') {
             $employeeData = Employee::where('name', 'LIKE', "%$search%")
                 ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
@@ -86,7 +99,7 @@ class EmployeeController extends Controller
         return view('hr.employees.fte-handler')->with([
             'domainName' => $domainName,
             'employees' => $employees,
-            'jobName' => $jobName
+            'jobName' => $jobName,
         ]);
     }
 
@@ -103,9 +116,10 @@ class EmployeeController extends Controller
         ->orderBy('created_at', 'desc')
         ->get();
         $employees = Employee::all();
+
         return view('hr.employees.review-details', ['employee' => $employee, 'employees' => $employees, 'assessments' => $assessments]);
     }
-    
+
     public function updateStatus(Request $request)
     {
         // Retrieve the assessment ID, type, and status from the request
@@ -119,16 +133,17 @@ class EmployeeController extends Controller
             ->update(['status' => $status]);
 
         return redirect()->back()->with('success', 'Review saved successfully.');
-        }
+    }
 
-    public function updateEmployeeReviewers(Request $request, Employee $employee) {
-
+    public function updateEmployeeReviewers(Request $request, Employee $employee)
+    {
         // Update the employee reviewers data
         $employee->update([
             'hr_id' => $request->hr_id,
             'mentor_id' => $request->mentor_id,
             'manager_id' => $request->manager_id,
         ]);
+
         return redirect()->back();
     }
 }
