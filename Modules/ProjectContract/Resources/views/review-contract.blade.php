@@ -13,6 +13,7 @@
                 <div class="form-row mb-4">
                     <div class="col-md-5">
                         <input type="hidden" id="id" name="id" value={{$contracts['id']}}>
+                        <input type="hidden" id="rid" name="rid" value={{$reviewer['id']}}>
                         <div class="form-group">
                             <label for="client_name" class="field-required">Client Name</label>
                             <input type="text" class="form-control" name="client_name" id="client_name"
@@ -76,6 +77,23 @@
                 </div>
             </div>
         </div><br>
+    </div>
+    <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-row mb-4">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="client_name" class="field-required">Comments</label>
+                                <input type="text" class="form-control" name="comment" id="comment"
+                                placeholder="Enter Comment">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
         <div class="container">
             <div class="form-row">
                 <div class="form-group col-md-12">
@@ -84,6 +102,5 @@
                 </div>
             </div>
         </div>
-    </div> 
 </form>
 @endsection

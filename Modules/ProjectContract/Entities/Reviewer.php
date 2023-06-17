@@ -17,6 +17,6 @@ class Reviewer extends Model
 
     public function contractReviews()
     {
-        return $this->morphMany(ContractReview::class, 'reviewtable');
+        return $this->morphMany(ContractReview::class, 'comment');
     }
 }

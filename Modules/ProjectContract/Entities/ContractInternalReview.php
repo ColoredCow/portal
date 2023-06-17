@@ -7,7 +7,7 @@ use Modules\ProjectContract\Entities\ContractReview;
 
 class ContractInternalReview extends Model
 {
-    protected $table = 'contract_internal_review';
+    protected $table = 'contract_internal_reviewer';
 
     protected $fillable = [
         'contract_id',
@@ -18,6 +18,6 @@ class ContractInternalReview extends Model
 
     public function contractReviews()
     {
-        return $this->morphMany(ContractReview::class, 'reviewtable');
+        return $this->morphMany(ContractReview::class, 'comment');
     }
 }

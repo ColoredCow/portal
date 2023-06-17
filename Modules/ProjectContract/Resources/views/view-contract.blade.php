@@ -110,5 +110,32 @@
         </div>
     </div>
 </div>
-
+<h3>Comments</h3>
+<div class="container">
+        @foreach ($comments as $comment)
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="d-flex flex-row mb-3">
+                    <div class="p-2">By: </div>
+                    <div class="p-2">
+                        @if (str_contains($comment['comment_type'],'Reviewer'))
+                            <h4>Client Team</h4>
+                        @else
+                            <h4>Finance Team</h4>
+                        @endif
+                    </div>
+                </div>
+                <div class="d-flex flex-row mb-3">
+                    <div class="p-2"><h4>Date :</h4></div>
+                    <div class="p-2"><h4>{{$comment['created_at']}}</h4></div>
+                </div>
+                <div class="d-flex flex-row mb-3">
+                    <div class="p-2"><h4>Comment: </h4></div>
+                    <div class="p-2"><h4>{{$comment['comment']}}</h4></div>
+                </div>
+            </div>
+        </div>
+        <br>
+        @endforeach
+    </div>
 @endsection

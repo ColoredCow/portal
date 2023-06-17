@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use Modules\ProjectContract\Emails\ClientReview;
 use Modules\ProjectContract\Emails\ClientApproveReview;
 use Modules\ProjectContract\Emails\ClientUpdateReview;
+use Modules\ProjectContract\Emails\FinanceReview;
 use Illuminate\Support\Facades\Auth;
 
 class ProjectContractController extends Controller
@@ -23,8 +24,9 @@ class ProjectContractController extends Controller
     public function index()
     {
         $projects = $this->service->index();
+        $internal = $this->service->internal_reviewer();
 
-        return view('projectcontract::index')->with('projects', $projects);
+        return view('projectcontract::index')->with('projects', $projects)->with('internal', $internal);
     }
     public function create()
     {
@@ -80,7 +82,9 @@ class ProjectContractController extends Controller
 
         $contractsmeta = $this->service->view_contractmeta($id);
 
-        return view('projectcontract::view-contract')->with('contracts', $contracts)->with('contractsmeta', $contractsmeta);
+        $comment = $this->service->view_comments($id);
+
+        return view('projectcontract::view-contract')->with('contracts', $contracts)->with('contractsmeta', $contractsmeta)->with('comments', $comment);
     }
 
     public function sendreview(Request $request)
@@ -111,7 +115,8 @@ class ProjectContractController extends Controller
     public function sendfinancereview(Request $request)
     {
         $data = $request->all();
-        $this->service->store_reveiwer($data);
+        $this->service->store_internal_reveiwer($data);
+        Mail::to($request['email'])->send(new FinanceReview());
 
         return redirect(route('projectcontract.index'))->with('success');
     }

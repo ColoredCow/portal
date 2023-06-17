@@ -7,6 +7,9 @@ use Modules\ProjectContract\Entities\Contract;
 use Modules\ProjectContract\Entities\ProjectContractMeta;
 use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
 use Modules\ProjectContract\Entities\Reviewer;
+use Modules\ProjectContract\Entities\ContractReview;
+use Modules\ProjectContract\Entities\ContractInternalReview;
+use Modules\User\Entities\User;
 use Illuminate\Support\Facades\DB;
 
 class ProjectContractService
@@ -14,6 +17,10 @@ class ProjectContractService
     public function index()
     {
         return Contract::where('contracts.user_id', Auth::id())->get();
+    }
+    public function internal_reviewer()
+    {
+        return Contract::join('contract_internal_reviewer', 'contracts.id', '=', 'contract_internal_reviewer.contract_id')->where('contract_internal_reviewer.user_id', Auth::id())->get();
     }
     public function store($request)
     {
@@ -81,6 +88,10 @@ class ProjectContractService
     {
         return Reviewer::where(['contract_id'=>$id, 'email'=>$email])->first();
     }
+    public function view_comments($id)
+    {
+        return ContractReview::find($id)->orderBy('created_at', 'DESC')->get();
+    }
     public function update_contract($id)
     {
         $Contract = Contract::find($id);
@@ -102,11 +113,7 @@ class ProjectContractService
         $Reviewer->save();
 
         $Contract = Contract::find($id);
-        if ($request['role'] = 'finance') {
-            $Contract->status = 'Sent for finance review';
-        } else {
-            $Contract->status = 'Sent for client review';
-        }
+        $Contract->status = 'Sent for client review';
         $Contract->save();
 
         return $Reviewer;
@@ -133,7 +140,33 @@ class ProjectContractService
                 $contract->contractMeta()->updateOrCreate(['key' => $meta['key']], ['value' => $meta['value']]);
             }
         });
+        $contractReview = new ContractReview();
+        $contractReview->contract_id = $request['id'];
+        $contractReview->comment = $request['comment'];
+        $id = Reviewer::find($request['rid']);
+        $contractReview->comment()->associate($id);
+        $contractReview->save();
 
         return $contractData;
+    }
+    public function store_internal_reveiwer($request)
+    {
+        $id = $request['id'];
+        $name = $request['name'];
+        $email = $request['email'];
+
+        $Reviewer = new ContractInternalReview;
+        $Reviewer->contract_id = $id;
+        $Reviewer->name = $name;
+        $Reviewer->email = $email;
+        $User = User::findByEmail($email);
+        $Reviewer->user_id = $User->id;
+        $Reviewer->save();
+
+        $Contract = Contract::find($id);
+        $Contract->status = 'Sent for finance review';
+        $Contract->save();
+
+        return $Reviewer;
     }
 }
