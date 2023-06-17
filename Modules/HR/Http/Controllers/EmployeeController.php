@@ -13,6 +13,7 @@ use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\Job;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\HR\Entities\IndividualAssessment;
+use Modules\HR\Entities\Assessment;
 
 class EmployeeController extends Controller
 {
@@ -111,35 +112,36 @@ class EmployeeController extends Controller
 
     public function reviewDetails(Employee $employee)
     {
+        $assessments = Assessment::where('reviewee_id', $employee->id)
+        ->orderBy('created_at', 'desc')
+        ->get();
         $employees = Employee::all();
-        return view('hr.employees.review-details', ['employee' => $employee, 'employees' => $employees]);
+        return view('hr.employees.review-details', ['employee' => $employee, 'employees' => $employees, 'assessments' => $assessments]);
     }
-
-    public function saveReviewStatus(Request $request)
+    
+    public function updateStatus(Request $request)
     {
+        // Retrieve the assessment ID, type, and status from the request
         $assessmentId = $request->input('assessment_id');
         $type = $request->input('type');
         $status = $request->input('status');
 
-        // Update or create the individual assessment entry
-        IndividualAssessment::updateOrCreate(
-            ['assessment_id' => $assessmentId, 'type' => $type],
-            ['status' => $status]
-        );
+        // Update the status in the individual_assessments table based on the assessment ID and type
+        IndividualAssessment::where('assessment_id', $assessmentId)
+            ->where('type', $type)
+            ->update(['status' => $status]);
 
-        // Redirect back or return a response as needed
         return redirect()->back()->with('success', 'Review saved successfully.');
-    }
+        }
 
     public function updateEmployeeReviewers(Request $request, Employee $employee) {
 
         // Update the employee reviewers data
-        $employeeData = $employee->update([
+        $employee->update([
             'hr_id' => $request->hr_id,
             'mentor_id' => $request->mentor_id,
             'manager_id' => $request->manager_id,
         ]);
         return redirect()->back();
-
     }
 }
