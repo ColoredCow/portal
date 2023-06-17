@@ -3,6 +3,7 @@
 namespace Modules\HR\Http\Controllers;
 
 use App\Services\EmployeeService;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -35,19 +36,23 @@ class EmployeeController extends Controller
         $filters = $request->all();
         $filters = $filters ?: $this->service->defaultFilters();
         $name = request('name');
+        $currentQuarter = Carbon::now()->quarter;
+        $currentYear = Carbon::now()->year;
         if ($request->status === 'pending') {
             $employeeData = Employee::select('employees.*', 'individual_assessments.status')
-            ->join('assessments', 'assessments.reviewee_id', '=', 'employees.id')
-            ->join('individual_assessments', 'individual_assessments.assessment_id', '=', 'assessments.id')
-            ->whereIn('individual_assessments.status', ['pending', 'in-progress'])
-            ->get();
+                ->join('assessments', 'assessments.reviewee_id', '=', 'employees.id')
+                ->join('individual_assessments', 'individual_assessments.assessment_id', '=', 'assessments.id')
+                ->whereIn('individual_assessments.status', ['pending', 'in-progress'])
+                ->whereYear('assessments.created_at', $currentYear)
+                ->whereRaw('QUARTER(assessments.created_at) = ?', [$currentQuarter])
+                ->get();
         } else {
             $employeeData = Employee::where('staff_type', $name)
                 ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
                 ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
                 ->whereNull('project_team_members.ended_on')
                 ->groupBy('employees.user_id')
-                ->orderby('project_count', 'desc')
+                ->orderBy('project_count', 'desc')
                 ->get();
         }
         if ($search != '') {
