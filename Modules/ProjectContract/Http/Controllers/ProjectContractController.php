@@ -108,4 +108,11 @@ class ProjectContractController extends Controller
 
         return 'Thank you for your update';
     }
+    public function sendfinancereview(Request $request)
+    {
+        $data = $request->all();
+        $this->service->store_reveiwer($data);
+
+        return redirect(route('projectcontract.index'))->with('success');
+    }
 }

@@ -102,7 +102,11 @@ class ProjectContractService
         $Reviewer->save();
 
         $Contract = Contract::find($id);
-        $Contract->status = 'Sent for client review';
+        if ($request['role'] = 'finance') {
+            $Contract->status = 'Sent for finance review';
+        } else {
+            $Contract->status = 'Sent for client review';
+        }
         $Contract->save();
 
         return $Reviewer;

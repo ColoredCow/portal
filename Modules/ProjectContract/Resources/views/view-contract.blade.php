@@ -38,7 +38,7 @@
     <div class="form-group">
         <button type="button" class="btn btn-success round-submit" data-toggle="modal" data-target="#reviewformModal"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send for client review</button>
 
-        <!-- Modal -->
+        <!-- Client Review Modal -->
         <div class="modal fade" id="reviewformModal" tabindex="-1" role="dialog" aria-labelledby="reviewformModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -71,7 +71,44 @@
                 </div>
             </div>
         </div>
-    </div>   
+
+        <button type="button" class="btn btn-primary round-submit" data-toggle="modal" data-target="#financeformModal"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send for finance review</button>
+
+        <!-- Finance Review Modal -->
+        <div class="modal fade" id="financeformModal" tabindex="-1" role="dialog" aria-labelledby="financeformModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="financeformModalLabel">Finance</h5> 
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border text-primary d-none" id="financeFormSpinner"></div>
+                    </div>
+                    <div class="finance modal-body">
+                        <form action="{{ route('projectcontract.sendfinancereview')}}" method="POST" id="financeForm" >
+                            @csrf
+                            <input type="hidden" id="id" name="id" value={{$contracts['id']}}>
+                            <input type="hidden" id="role" name="role" value="finance">
+                            <div class="form-group">
+                                <label for="designationfield">Finance Name</label><strong class="text-danger">*</strong></label>
+                                <input type="text" name="name" class="form-control"  id="name" aria-describedby="Help" placeholder="Name" > 
+                            </div>
+                            <div class='form-group'>
+                                <label class="field-required" for="designationfield">Finance Email</label><br>
+                                <input type="text" name="email" class="form-control"  id="email" aria-describedby="Help" placeholder="Email" >
+                            </div>   
+                            <div class="d-none text-danger" name="error" id="domainerror"></div>   
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="submit">Save changes</button>  
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @endsection

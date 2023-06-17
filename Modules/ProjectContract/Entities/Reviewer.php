@@ -3,6 +3,7 @@
 namespace Modules\ProjectContract\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\ProjectContract\Entities\ContractReview;
 
 class Reviewer extends Model
 {
@@ -13,4 +14,9 @@ class Reviewer extends Model
         'name',
         'email'
     ];
+
+    public function contractReviews()
+    {
+        return $this->morphMany(ContractReview::class, 'reviewtable');
+    }
 }
