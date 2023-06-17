@@ -45,7 +45,7 @@ class EmployeeController extends Controller
                 ->join('assessments', 'assessments.reviewee_id', '=', 'employees.id')
                 ->join('individual_assessments', 'individual_assessments.assessment_id', '=', 'assessments.id')
                 ->whereIn('individual_assessments.status', ['pending', 'in-progress'])
-                ->whereYear('assessments.created_at', $currentYear)
+                ->whereRaw('YEAR(assessments.created_at) = ?', [strval($currentYear)])
                 ->whereRaw('QUARTER(assessments.created_at) = ?', [$currentQuarter])
                 ->get();
         } else {
@@ -143,6 +143,7 @@ class EmployeeController extends Controller
             'mentor_id' => $request->mentor_id,
             'manager_id' => $request->manager_id,
         ]);
+
         return redirect()->back();
     }
 }
