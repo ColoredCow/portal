@@ -116,9 +116,10 @@ class EmployeeController extends Controller
         ->orderBy('created_at', 'desc')
         ->get();
         $employees = Employee::all();
+
         return view('hr.employees.review-details', ['employee' => $employee, 'employees' => $employees, 'assessments' => $assessments]);
     }
-    
+
     public function updateStatus(Request $request)
     {
         // Retrieve the assessment ID, type, and status from the request
@@ -132,10 +133,10 @@ class EmployeeController extends Controller
             ->update(['status' => $status]);
 
         return redirect()->back()->with('success', 'Review saved successfully.');
-        }
+    }
 
-    public function updateEmployeeReviewers(Request $request, Employee $employee) {
-
+    public function updateEmployeeReviewers(Request $request, Employee $employee)
+    {
         // Update the employee reviewers data
         $employee->update([
             'hr_id' => $request->hr_id,

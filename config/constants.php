@@ -282,7 +282,7 @@ return [
             'class' => 'badge badge-warning',
         ],
     ],
-    
+
     'employee-reviewers' => [
         'hr_id' => 'HR',
         'mentor_id' => 'Mentor',
