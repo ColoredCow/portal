@@ -5,12 +5,12 @@ return [
         'gurgaon' => 'Gurgaon',
         'tehri' => 'Tehri',
         'ranchi' => 'Ranchi',
-        'dwarahat' => 'Dwarahat'
+        'dwarahat' => 'Dwarahat',
     ],
     'gsuite' => [
         'service-account-impersonate' => env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'),
         'client-hd' => env('GOOGLE_CLIENT_HD', ''),
-        'config-path' => env('GOOGLE_APPLICATION_CREDENTIALS')
+        'config-path' => env('GOOGLE_APPLICATION_CREDENTIALS'),
     ],
     'google' => [
         'vision-api-key' => env('GOOGLE_VISION_API_KEY'),
@@ -69,7 +69,7 @@ return [
             'applicant-name' => '|*applicant_name*|',
             'interview-time' => '|*interview_time*|',
             'job-title' => '|*job_title*|',
-            'verification-link' => '|*verification_link*|'
+            'verification-link' => '|*verification_link*|',
         ],
 
         'default' => [
@@ -254,7 +254,7 @@ return [
         '16' => 'sixteen',
         '17' => 'seventeen',
         '18' => 'eighteen',
-        '19' =>'nineteen',
+        '19' => 'nineteen',
         '20' => 'twenty',
         '30' => 'thirty',
         '40' => 'forty',
@@ -262,7 +262,7 @@ return [
         '60' => 'sixty',
         '70' => 'seventy',
         '80' => 'eighty',
-        '90' => 'ninety'
+        '90' => 'ninety',
     ],
     'campaign_tool_credentials' => [
         'url' => env('CAMPAIGNS_TOOL_URL'),
@@ -281,5 +281,11 @@ return [
             'title' => 'In progress',
             'class' => 'badge badge-warning',
         ],
-    ]
+    ],
+    
+    'employee-reviewers' => [
+        'hr_id' => 'HR',
+        'mentor_id' => 'Mentor',
+        'manager_id' => 'Manager',
+    ],
 ];
