@@ -274,5 +274,28 @@ return [
         'hr_id' => 'HR',
         'mentor_id' => 'Mentor',
         'manager_id' => 'Manager'
+    ],
+
+    'employee-review-status' => [
+        'Self review' => [
+            'pending' => 'Pending',
+            'in-progress' => 'In Progress',
+            'completed' => 'Completed',
+        ],
+        'Mentor review' => [
+            'pending' => 'Pending',
+            'in-progress' => 'In Progress',
+            'completed' => 'Completed',
+        ],
+        'HR review' => [
+            'pending' => 'Pending',
+            'in-progress' => 'In Progress',
+            'completed' => 'Completed',
+        ],
+        'Manager review' => [
+            'pending' => 'Pending',
+            'in-progress' => 'In Progress',
+            'completed' => 'Completed',
+        ]
     ]
 ];

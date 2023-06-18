@@ -105,24 +105,32 @@ class EmployeeController extends Controller
         $employees = Employee::all();
         return view('hr.employees.review-details', ['employee' => $employee, 'employees' => $employees, 'assessments' => $assessments]);
     }
-    
-    public function updateStatus(Request $request)
+
+    public function createIndividualAssessment(Request $request)
     {
-        // Retrieve the assessment ID, type, and status from the request
-        $assessmentId = $request->input('assessment_id');
-        $type = $request->input('type');
-        $status = $request->input('status');
+        $reviewStatuses = [
+            'Self review' => $request->Self_review,
+            'Mentor review' => $request->Mentor_review,
+            'HR review' => $request->HR_review,
+            'Manager review' => $request->Manager_review,
+        ];
+        $assessmentId = $request->assessmentId;
+        $reviewStatus = $reviewStatuses[$request->review_type] ?? '';
 
-        // Update the status in the individual_assessments table based on the assessment ID and type
-        IndividualAssessment::where('assessment_id', $assessmentId)
-            ->where('type', $type)
-            ->update(['status' => $status]);
+        $individualAssessment = IndividualAssessment::firstOrNew([
+            'assessment_id' => $assessmentId,
+            'type' => $request->review_type,
+        ]);
 
-        return redirect()->back()->with('success', 'Review saved successfully.');
-        }
+        $individualAssessment->fill([
+            'reviewer_id' => $request->reviewer_id,
+            'status' => $reviewStatus,
+        ])->save();
+
+        return redirect()->back()->with('success', $individualAssessment->wasRecentlyCreated ? 'Review saved successfully.' : 'Review status updated successfully.');
+    }
 
     public function updateEmployeeReviewers(Request $request, Employee $employee) {
-
         // Update the employee reviewers data
         $employee->update([
             'hr_id' => $request->hr_id,
