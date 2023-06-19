@@ -36,17 +36,22 @@ class ProjectContractService
             ['key' => 'Contract Date For Signing', 'value' => $request['contract_date_for_signing']],
             ['key' => 'Contract Date For Expiry', 'value' => $request['contract_expiry_date']],
         ];
-
-        DB::transaction(function () use ($contractData, $contractMeta) {
+        
+        $contractId = null;
+        
+        DB::transaction(function () use ($contractData, $contractMeta, &$contractId) {
             $contract = Contract::create($contractData);
 
             foreach ($contractMeta as $meta) {
                 $contract->contractMeta()->create($meta);
             }
+            
+            $contractId = $contract->id;
         });
 
-        return $contractMeta;
+        return $contractId;
     }
+
 
     public function delete($id)
     {
@@ -109,7 +114,11 @@ class ProjectContractService
     public function update_internal_contract($id)
     {
         $Contract = Contract::find($id);
-        $Contract->status = 'Finalise by finance';
+        if ($Contract->user_id == Auth::id()){
+            $Contract->status = 'Finalise by User';
+        }else{
+            $Contract->status = 'Finalise by finance';
+        }
         $Contract->save();
 
         return $Contract;
@@ -189,7 +198,10 @@ class ProjectContractService
             'contract_name' => $request['client_name'],
             'status' => 'Updated by finance',
         ];
-
+        $id = Contract::where('id', $request['id'])->first();
+        if ($id->user_id == Auth::id()){
+            $contractData['status'] = 'Updated by CC team';
+        }
         $contractMeta = [
             ['key' => 'Contract Name', 'value' => $request['contract_name']],
             ['key' => 'Contract Date For Effective', 'value' => $request['contract_date_for_effective']],
@@ -213,5 +225,16 @@ class ProjectContractService
         $contractReview->save();
 
         return $contractData;
+    }
+    public function store_user($id)
+    {
+        $Reviewer = new ContractInternalReview;
+        $Reviewer->contract_id = $id;
+        $Reviewer->name = Auth::user()->name;
+        $Reviewer->email = Auth::user()->email;
+        $Reviewer->user_id = Auth::id();
+        $Reviewer->save();
+
+        return $Reviewer;        
     }
 }

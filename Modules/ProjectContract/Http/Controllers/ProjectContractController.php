@@ -34,8 +34,9 @@ class ProjectContractController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $this->service->store($data);
-
+        $contract = $this->service->store($data);
+        print($contract);
+        $this->service->store_user($contract);
         return redirect(route('projectcontract.index'))->with('success', 'Project Contract created successfully');
     }
     public function show()
