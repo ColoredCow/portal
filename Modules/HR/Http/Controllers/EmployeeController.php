@@ -145,7 +145,8 @@ class EmployeeController extends Controller
         return redirect()->back()->with('success', $individualAssessment->wasRecentlyCreated ? 'Review saved successfully.' : 'Review status updated successfully.');
     }
 
-    public function updateEmployeeReviewers(Request $request, Employee $employee) {
+    public function updateEmployeeReviewers(Request $request, Employee $employee)
+    {
         // Update the employee reviewers data
         $employee->update([
             'hr_id' => $request->hr_id,
