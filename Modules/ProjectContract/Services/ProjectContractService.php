@@ -94,8 +94,8 @@ class ProjectContractService
     }
     public function view_comments($id)
     {
-        if (ContractReview::find($id)) {
-            return ContractReview::find($id)->get();
+        if ($contractReview = ContractReview::find($id)->get()) {
+            return $contractReview;
         }
     }
     public function update_contract($id)
