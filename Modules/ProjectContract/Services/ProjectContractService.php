@@ -36,7 +36,7 @@ class ProjectContractService
             ['key' => 'Contract Date For Signing', 'value' => $request['contract_date_for_signing']],
             ['key' => 'Contract Date For Expiry', 'value' => $request['contract_expiry_date']],
         ];
-        
+
         $contractId = null;
         
         DB::transaction(function () use ($contractData, $contractMeta, &$contractId) {
@@ -45,7 +45,7 @@ class ProjectContractService
             foreach ($contractMeta as $meta) {
                 $contract->contractMeta()->create($meta);
             }
-            
+
             $contractId = $contract->id;
         });
 
