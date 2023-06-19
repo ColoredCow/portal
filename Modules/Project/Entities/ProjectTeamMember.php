@@ -113,17 +113,9 @@ class ProjectTeamMember extends Model
         return $this->current_actual_effort >= $this->current_expected_effort ? 'border border-success' : 'border border-danger';
     }
 
-    public function getFte($filters)
+    public function getFte($startDate, $endDate)
     {
         $project = new Project;
-        $year = (int) $filters['year'];
-        $month = (int) $filters['month'];
-        $startDate = Carbon::createFromDate($year, $month, 1);
-        $endDate = date('Y-m-d');
-
-        if ($startDate < date('Y-m-01')) {
-            $endDate = (clone $startDate)->endOfMonth();
-        }
 
         $workingDays = count($project->getWorkingDaysList($startDate, $endDate));
 

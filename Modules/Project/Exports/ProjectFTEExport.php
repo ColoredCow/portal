@@ -6,8 +6,11 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Style\Font;
 
-class ProjectFTEExport implements FromArray, WithHeadings, ShouldAutoSize, WithTitle
+class ProjectFTEExport implements FromArray, WithHeadings, ShouldAutoSize, WithTitle, WithStyles
 {
     protected $employees;
 
@@ -24,15 +27,30 @@ class ProjectFTEExport implements FromArray, WithHeadings, ShouldAutoSize, WithT
     public function headings(): array
     {
         return [
+            [
                 'Team Member',
                 'Overall FTE',
                 'Project Name',
-                'Team Member Project FTE'
-            ];
+                'Team Member Project FTE',
+                'Committed Hours',
+                'Booked Hours'
+            ]
+        ];
     }
 
     public function title(): string
     {
         return 'FTE';
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            1 => [
+                'font' => [
+                    'bold' => true,
+                ]
+            ]
+        ];
     }
 }
