@@ -110,6 +110,7 @@
         </div>
     </div>
 </div>
+@if ($comments)
 <h3>Comments</h3>
 <div class="container">
         @foreach ($comments as $comment)
@@ -138,4 +139,5 @@
         <br>
         @endforeach
     </div>
+@endif
 @endsection

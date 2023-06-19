@@ -88,14 +88,28 @@ class ProjectContractService
     {
         return Reviewer::where(['contract_id'=>$id, 'email'=>$email])->first();
     }
+    public function view_internal_reviewer($id)
+    {
+        return ContractInternalReview::find($id);
+    }
     public function view_comments($id)
     {
-        return ContractReview::find($id)->orderBy('created_at', 'DESC')->get();
+       if(ContractReview::find($id)){
+        return ContractReview::find($id)->get();
+       }
     }
     public function update_contract($id)
     {
         $Contract = Contract::find($id);
         $Contract->status = 'Finalise by client';
+        $Contract->save();
+
+        return $Contract;
+    }
+    public function update_internal_contract($id)
+    {
+        $Contract = Contract::find($id);
+        $Contract->status = 'Finalise by finance';
         $Contract->save();
 
         return $Contract;
@@ -168,5 +182,35 @@ class ProjectContractService
         $Contract->save();
 
         return $Reviewer;
+    }
+    public function update_internal($request)
+    {
+        $contractData = [
+            'contract_name' => $request['client_name'],
+            'status' => 'Updated by finance',
+        ];
+
+        $contractMeta = [
+            ['key' => 'Contract Name', 'value' => $request['contract_name']],
+            ['key' => 'Contract Date For Effective', 'value' => $request['contract_date_for_effective']],
+            ['key' => 'Contract Date For Signing', 'value' => $request['contract_date_for_signing']],
+            ['key' => 'Contract Date For Expiry', 'value' => $request['contract_expiry_date']],
+        ];
+
+        DB::transaction(function () use ($request, $contractData, $contractMeta) {
+            $contract = Contract::where('id', $request['id'])->first();
+            $contract->update($contractData);
+
+            foreach ($contractMeta as $meta) {
+                $contract->contractMeta()->updateOrCreate(['key' => $meta['key']], ['value' => $meta['value']]);
+            }
+        });
+        $contractReview = new ContractReview();
+        $contractReview->contract_id = $request['id'];
+        $contractReview->comment = $request['comment'];
+        $id = ContractInternalReview::find($request['rid']);
+        $contractReview->comment()->associate($id);
+        $contractReview->save();
+        return $contractData;
     }
 }

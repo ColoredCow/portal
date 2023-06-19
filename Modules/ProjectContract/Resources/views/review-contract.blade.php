@@ -17,7 +17,7 @@
                         <div class="form-group">
                             <label for="client_name" class="field-required">Client Name</label>
                             <input type="text" class="form-control" name="client_name" id="client_name"
-                            placeholder="Enter Client Name" value={{$contracts['contract_name']}}>
+                            placeholder="Enter Client Name" value="{{$contracts['contract_name']}}">
                             <span class="text-danger">
                                 @error('client_name')
                                 {{$message}}
@@ -37,7 +37,7 @@
                         <div class="form-group">
                             <label for="contract_name" class="field-required">Contract Name</label>
                             <input type="text" class="form-control" name="contract_name" id="contract_name"
-                            placeholder="Enter Contract Name" value={{$contractsmeta[0]['value']}}>
+                            placeholder="Enter Contract Name" value="{{$contractsmeta[0]['value']}}">
                             <span class="text-danger">
                                 @error('contract_name')
                                 {{$message}}

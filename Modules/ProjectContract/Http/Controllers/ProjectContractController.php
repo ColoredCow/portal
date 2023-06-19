@@ -45,17 +45,15 @@ class ProjectContractController extends Controller
     }
     public function edit($id)
     {
-        $projectId = [];
-        $projects = $this->service->index($id);
-        foreach ($projects as $project) {
-            $projectId = $project;
-        }
-        $clients = client::all();
+        $contracts = $this->service->view_contract($id);
 
-        return view('projectcontract::edit-project-contract')->with([
-            'projectId' => $projectId,
-            'clients' => $clients,
-        ]);
+        $contractsmeta = $this->service->view_contractmeta($id);
+
+        $comment = $this->service->view_comments($id);
+
+        $reviewer = $this->service->view_internal_reviewer($id);
+
+        return view('projectcontract::edit-project-contract')->with('contracts', $contracts)->with('contractsmeta', $contractsmeta)->with('comments', $comment)->with('reviewer',$reviewer);
     }
     public function delete($id)
     {
@@ -69,9 +67,9 @@ class ProjectContractController extends Controller
 
         return view('projectcontract::add-new-client')->with('clients', $clients);
     }
-    public function update(ProjectContractRequest $ProjectContractMeta, $id)
+    public function update(Request $ProjectContractMeta)
     {
-        $this->service->update($ProjectContractMeta, $id);
+        $this->service->update_internal($ProjectContractMeta);
 
         return redirect(route('projectcontract.index'))->with('success', 'Project Contract updated successfully');
     }
@@ -117,6 +115,12 @@ class ProjectContractController extends Controller
         $data = $request->all();
         $this->service->store_internal_reveiwer($data);
         Mail::to($request['email'])->send(new FinanceReview());
+
+        return redirect(route('projectcontract.index'))->with('success');
+    }
+    public function internalresponse($id)
+    {
+        $contract = $this->service->update_internal_contract($id);
 
         return redirect(route('projectcontract.index'))->with('success');
     }
