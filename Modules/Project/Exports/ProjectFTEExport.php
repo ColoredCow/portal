@@ -8,7 +8,6 @@ use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use PhpOffice\PhpSpreadsheet\Style\Font;
 
 class ProjectFTEExport implements FromArray, WithHeadings, ShouldAutoSize, WithTitle, WithStyles
 {

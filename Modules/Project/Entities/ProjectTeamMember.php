@@ -4,7 +4,6 @@ namespace Modules\Project\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 use Modules\Project\Database\Factories\ProjectTeamMemberFactory;
 use Modules\User\Entities\User;
 
