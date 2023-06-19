@@ -5,7 +5,6 @@ namespace Modules\ProjectContract\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Modules\ProjectContract\Services\ProjectContractService;
 use App\Models\Client;
-use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Modules\ProjectContract\Emails\ClientReview;
@@ -53,7 +52,7 @@ class ProjectContractController extends Controller
 
         $reviewer = $this->service->view_internal_reviewer($id);
 
-        return view('projectcontract::edit-project-contract')->with('contracts', $contracts)->with('contractsmeta', $contractsmeta)->with('comments', $comment)->with('reviewer',$reviewer);
+        return view('projectcontract::edit-project-contract')->with('contracts', $contracts)->with('contractsmeta', $contractsmeta)->with('comments', $comment)->with('reviewer', $reviewer);
     }
     public function delete($id)
     {

@@ -95,7 +95,7 @@ class ProjectContractService
     public function view_comments($id)
     {
        if(ContractReview::find($id)){
-        return ContractReview::find($id)->get();
+            return ContractReview::find($id)->get();
        }
     }
     public function update_contract($id)
@@ -211,6 +211,7 @@ class ProjectContractService
         $id = ContractInternalReview::find($request['rid']);
         $contractReview->comment()->associate($id);
         $contractReview->save();
+
         return $contractData;
     }
 }

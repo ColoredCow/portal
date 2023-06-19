@@ -3,8 +3,6 @@
 namespace Modules\ProjectContract\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Modules\ProjectContract\Entities\ContractInternalReview;
-use Modules\ProjectContract\Entities\Reviewer;
 
 class ContractReview extends Model
 {
