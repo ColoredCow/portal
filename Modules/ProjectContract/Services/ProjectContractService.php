@@ -9,6 +9,7 @@ use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
 use Modules\ProjectContract\Entities\Reviewer;
 use Modules\ProjectContract\Entities\ContractReview;
 use Modules\ProjectContract\Entities\ContractInternalReview;
+use Modules\ProjectContract\Entities\ContractMetaHistory;
 use Modules\User\Entities\User;
 use Illuminate\Support\Facades\DB;
 
@@ -142,35 +143,57 @@ class ProjectContractService
     }
     public function edit_contract($request)
     {
+        $contractId = $request['id'];
+    
+        $contractReview = new ContractReview();
+        $contractReview->contract_id = $contractId;
+        $contractReview->comment = $request['comment'];
+    
+        $id = Reviewer::find($request['rid']);
+        $contractReview->comment()->associate($id);
+        $contractReview->save();
+    
         $contractData = [
             'contract_name' => $request['client_name'],
             'status' => 'Updated by client',
         ];
-
+    
         $contractMeta = [
             ['key' => 'Contract Name', 'value' => $request['contract_name']],
             ['key' => 'Contract Date For Effective', 'value' => $request['contract_date_for_effective']],
             ['key' => 'Contract Date For Signing', 'value' => $request['contract_date_for_signing']],
             ['key' => 'Contract Date For Expiry', 'value' => $request['contract_expiry_date']],
         ];
-
-        DB::transaction(function () use ($request, $contractData, $contractMeta) {
-            $contract = Contract::where('id', $request['id'])->first();
+    
+        DB::transaction(function () use ($contractId, $contractData, $contractMeta, $contractReview) {
+            $contract = Contract::where('id', $contractId)->first();
             $contract->update($contractData);
-
+    
             foreach ($contractMeta as $meta) {
-                $contract->contractMeta()->updateOrCreate(['key' => $meta['key']], ['value' => $meta['value']]);
+                $existingMeta = $contract->contractMeta()->where('key', $meta['key'])->first();
+    
+                if ($existingMeta) {
+                    if ($existingMeta->value !== $meta['value']) {
+                        $contract->contractMetaHistory()->create([
+                            'contract_id' => $contract->id,
+                            'key' => $meta['key'],
+                            'value' => $meta['value'],
+                            'review_id' => $contractReview->id,
+                        ]);
+                    }
+                } else {
+                    $contract->contractMeta()->create([
+                        'key' => $meta['key'],
+                        'value' => $meta['value'],
+                    ]);
+                }
             }
         });
-        $contractReview = new ContractReview();
-        $contractReview->contract_id = $request['id'];
-        $contractReview->comment = $request['comment'];
-        $id = Reviewer::find($request['rid']);
-        $contractReview->comment()->associate($id);
-        $contractReview->save();
-
+    
         return $contractData;
     }
+    
+
     public function store_internal_reveiwer($request)
     {
         $id = $request['id'];

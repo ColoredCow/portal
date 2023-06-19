@@ -17,4 +17,8 @@ class Contract extends Model
     {
         return $this->hasMany(ContractMeta::class, 'contract_id');
     }
+    public function contractMetaHistory()
+    {
+        return $this->hasMany(ContractMetaHistory::class, 'contract_id');
+    }
 }
