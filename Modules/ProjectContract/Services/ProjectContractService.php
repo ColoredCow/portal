@@ -38,7 +38,7 @@ class ProjectContractService
         ];
 
         $contractId = null;
-        
+
         DB::transaction(function () use ($contractData, $contractMeta, &$contractId) {
             $contract = Contract::create($contractData);
 
@@ -51,7 +51,6 @@ class ProjectContractService
 
         return $contractId;
     }
-
 
     public function delete($id)
     {
