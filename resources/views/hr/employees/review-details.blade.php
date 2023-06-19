@@ -1,18 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @php
-        function getStatusOptions()
-        {
-            return '
-                <select class="form-control" name="status">
-                    <option value="pending">Pending</option>
-                    <option value="in-progress">In Progress</option>
-                    <option value="completed">Completed</option>
-                </select>
-            ';
-        }
-    @endphp
 
     <div class="container mb-20">
         <br>
@@ -45,10 +33,10 @@
             </form>
 
             @foreach ($assessments as $assessment)
-                <form method="POST" action="{{ route('review.updateStatus', $employee->id) }}">
+                <form method="POST" action="{{ route('review.updateStatus') }}">
                     @csrf
+                    <input type="hidden" value="{{ $assessment->id }}" name="assessmentId"/>
                     <div class="review-cards mt-5">
-                        <input type="hidden" name="assessment_id" value="{{ $employee->id }}">
                         <!-- Quarter 1 Review Card -->
                         <div class="card mb-4">
                             <div class="card-header review-card-header">
@@ -57,29 +45,42 @@
                                 </h4>
                             </div>
                             <div class="card-body review-card-body" style="display: none;">
+                                <div class="mb-2">Last reviewed at: <span
+                                        class="text-info">{{ $assessment->created_at->format('d-m-Y') }}</span> </div>
                                 <div>Next review due: <span
                                         class="text-info">{{ $assessment->created_at->addMonths(3)->startOfMonth()->format('d-m-Y') }}</span>
                                 </div>
                                 <br>
                                 <br>
-                                <table class="table table-striped table-bordered">
-                                    <thead class="thead-dark">
-                                        <tr class="sticky-top">
-                                            <th>Self review</th>
-                                            <th>Mentor review</th>
-                                            <th>HR review</th>
-                                            <th>Manager review</th>
-                                        </tr>
-                                        <tr>
-                                            <td>{!! getStatusOptions() !!}</td>
-                                            <td>{!! getStatusOptions() !!}</td>
-                                            <td>{!! getStatusOptions() !!}</td>
-                                            <td>{!! getStatusOptions() !!}</td>
-                                        </tr>
-                                </table>
+                                    <table class="table table-striped table-bordered">
+                                        <thead class="thead-dark">
+                                            <tr class="sticky-top">
+                                                @foreach (config('constants.employee-review-status') as $key => $role)
+                                                    <th>{{ $key }}</th>
+                                                @endforeach
+                                            </tr>
+                                        </thead>
+                                            <tr>
+                                                @foreach (config('constants.employee-review-status') as $key => $reviewStatuses)
+                                                    <td>
+                                                        <select class="pt-0 ml-2 btn bg-light text-left"
+                                                            name="{{ $key }}" onchange="updateHiddenField(this)">
+                                                            <option value="" selected="selected">Select Review Status</option>
+                                                            @foreach ($reviewStatuses as $key => $reviewStatus)
+                                                                <option value="{{ $key }}">
+                                                                    {{ $reviewStatus }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                @endforeach
+                                            </tr>
+                                    </table>
                                 <br>
                             </div>
                         </div>
+                        <input type="hidden" id="hidden-review-type" value="" name="review_type" />
+                        <input type="hidden" id="hidden-reviewer-id" value="" name="reviewer_id" />
                 </form>
             @endforeach
 
@@ -96,5 +97,27 @@
                 $(this).next('.review-card-body').slideToggle();
             });
         });
+
+        function updateHiddenField(selectElement) {
+            let headerName = selectElement.name;
+            $('#hidden-review-type').val(headerName);
+            switch (headerName) {
+                case 'Self review':
+                    $('#hidden-reviewer-id').val({{ $employee->id }});
+                    break;
+                case 'Mentor review':
+                    $('#hidden-reviewer-id').val({{ $employee->mentor_id }});
+                    break;
+                case 'HR review':
+                    $('#hidden-reviewer-id').val({{ $employee->hr_id }});
+                    break;
+                case 'Manager review':
+                    $('#hidden-reviewer-id').val({{ $employee->manager_id }});
+                    break;
+                default:
+                    break;
+            }
+            $(selectElement).closest("form").submit();
+        }
     </script>
 @endsection
