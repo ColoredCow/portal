@@ -13,6 +13,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\HR\Entities\IndividualAssessment;
 use Modules\HR\Entities\Assessment;
+use Carbon\Carbon;
 
 class EmployeeController extends Controller
 {
@@ -44,6 +45,25 @@ class EmployeeController extends Controller
             ->groupBy('employees.user_id')
             ->orderby('project_count', 'desc')
             ->get();
+            $currentQuarter = Carbon::now()->quarter;
+            $currentYear = Carbon::now()->year;
+            if ($request->status === 'pending') {
+                $employeeData = Employee::select('employees.*', 'individual_assessments.status')
+                    ->join('assessments', 'assessments.reviewee_id', '=', 'employees.id')
+                    ->join('individual_assessments', 'individual_assessments.assessment_id', '=', 'assessments.id')
+                    ->whereIn('individual_assessments.status', ['pending', 'in-progress'])
+                    ->whereRaw('YEAR(assessments.created_at) = ?', [strval($currentYear)])
+                    ->whereRaw('QUARTER(assessments.created_at) = ?', [$currentQuarter])
+                    ->get();
+            } else {
+                $employeeData = Employee::where('staff_type', $name)
+                    ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
+                    ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
+                    ->whereNull('project_team_members.ended_on')
+                    ->groupBy('employees.user_id')
+                    ->orderBy('project_count', 'desc')
+                    ->get();
+            }
         if ($search != '') {
             $employeeData = Employee::where('name', 'LIKE', "%$search%")
                 ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')

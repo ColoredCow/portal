@@ -254,7 +254,7 @@ return [
         '16' => 'sixteen',
         '17' => 'seventeen',
         '18' => 'eighteen',
-        '19' =>'nineteen',
+        '19' => 'nineteen',
         '20' => 'twenty',
         '30' => 'thirty',
         '40' => 'forty',
@@ -269,7 +269,7 @@ return [
         'client_secret' => env('CAMPAIGNS_CLIENT_SECRET'),
         'client_id' => env('CAMPAIGNS_CLIENT_ID'),
     ],
-    
+
     'employee-reviewers' => [
         'hr_id' => 'HR',
         'mentor_id' => 'Mentor',
@@ -297,5 +297,17 @@ return [
             'in-progress' => 'In Progress',
             'completed' => 'Completed',
         ]
-    ]
+    ],
+    'pending_tag' => [
+        'pending' => [
+            'label' => 'pending',
+            'title' => 'Pending',
+            'class' => 'badge badge-success',
+        ],
+        'in-progress' => [
+            'label' => 'in-progress',
+            'title' => 'In progress',
+            'class' => 'badge badge-warning',
+        ],
+    ],
 ];
