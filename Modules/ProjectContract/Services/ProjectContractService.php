@@ -114,9 +114,9 @@ class ProjectContractService
     public function update_internal_contract($id)
     {
         $Contract = Contract::find($id);
-        if ($Contract->user_id == Auth::id()){
+        if ($Contract->user_id == Auth::id()) {
             $Contract->status = 'Finalise by User';
-        }else{
+        } else {
             $Contract->status = 'Finalise by finance';
         }
         $Contract->save();
@@ -199,7 +199,7 @@ class ProjectContractService
             'status' => 'Updated by finance',
         ];
         $id = Contract::where('id', $request['id'])->first();
-        if ($id->user_id == Auth::id()){
+        if ($id->user_id == Auth::id()) {
             $contractData['status'] = 'Updated by CC team';
         }
         $contractMeta = [
@@ -235,6 +235,6 @@ class ProjectContractService
         $Reviewer->user_id = Auth::id();
         $Reviewer->save();
 
-        return $Reviewer;        
+        return $Reviewer;
     }
 }
