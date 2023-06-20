@@ -56,16 +56,16 @@
                             @csrf
                             <input type="hidden" id="id" name="id" value={{$contracts['id']}}>
                             <div class="form-group">
-                                <label for="designationfield">Reciever Name</label><strong class="text-danger">*</strong></label>
+                                <label for="designationfield">Receiver Name</label><strong class="text-danger">*</strong></label>
                                 <input type="text" name="name" class="form-control"  id="name" aria-describedby="Help" placeholder="Name" > 
                             </div>
                             <div class='form-group'>
-                                <label class="field-required" for="designationfield">Reciever Email</label><br>
+                                <label class="field-required" for="designationfield">Receiver Email</label><br>
                                 <input type="text" name="email" class="form-control"  id="email" aria-describedby="Help" placeholder="Email" >
                             </div>   
                             <div class="d-none text-danger" name="error" id="domainerror"></div>   
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary" id="submit">Save changes</button>  
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </form>
                     </div>
                 </div>
@@ -101,8 +101,8 @@
                                 <input type="text" name="email" class="form-control"  id="email" aria-describedby="Help" placeholder="Email" >
                             </div>   
                             <div class="d-none text-danger" name="error" id="domainerror"></div>   
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary" id="submit">Save changes</button>  
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </form>
                     </div>
                 </div>
