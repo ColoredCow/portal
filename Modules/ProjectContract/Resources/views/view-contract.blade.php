@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center">
+<div class="d-flex justify-content-center align-items-center">
     <h1>Project Contract - {{$contracts['contract_name']}}</h1>
 </div>
 <br>
@@ -16,18 +16,21 @@
 <div class="container">
     <div class="card">
         <div class="card-body text-center">
-            <div class="d-flex flex-row mb-3">
-                <div class="p-2"><h4>Status :</h4></div>
-                <div class="p-2"><h4>{{$contracts['status']}}</h4></div>
+            <div class="d-flex flex-row-reverse">
+                <a class="btn btn-success" href="{{route('projectcontract.edit', $contracts['id'])}}"><i class="fa fa-edit mr-1" ></i>Edit & Approve</a>
             </div>
             <div class="d-flex flex-row mb-3">
-                <div class="p-2"><h4>Contract Link :</h4></div>
-                <div class="p-2"><h4><a href="{{$contracts['contract_link']}}"><i class="fa fa-link" aria-hidden="true"></i></a></h4></div>
+                <div><h4>Status :</h4></div>
+                <div><h4>{{$contracts['status']}}</h4></div>
+            </div>
+            <div class="d-flex flex-row mb-3">
+                <div><h4>Contract Link :</h4></div>
+                <div><h4><a href="{{$contracts['contract_link']}}"><i class="fa fa-link" aria-hidden="true"></i></a></h4></div>
             </div>
             @foreach ($contractsmeta as $contractmeta)        
                 <div class="d-flex flex-row mb-3">
-                    <div class="p-2"><h4>{{$contractmeta['key']}} :</h4></div>
-                    <div class="p-2"><h4>{{$contractmeta['value']}}</h4></div>
+                    <div><h4>{{$contractmeta['key']}} :</h4></div>
+                    <div><h4>{{$contractmeta['value']}}</h4></div>
                 </div>
             @endforeach
         </div>
@@ -36,7 +39,8 @@
 <br>
 <div class="container">        
     <div class="form-group">
-        <button type="button" class="btn btn-success round-submit" data-toggle="modal" data-target="#reviewformModal"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send for client review</button>
+        <a class="btn btn-success" href="{{route('projectcontract.internalresponse', $contracts['id'])}}"><i class="fa fa-eye mr-1" ></i>Approve</a>
+        <button type="button" class="btn btn-primary round-submit" data-toggle="modal" data-target="#reviewformModal"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send for client review</button>
 
         <!-- Client Review Modal -->
         <div class="modal fade" id="reviewformModal" tabindex="-1" role="dialog" aria-labelledby="reviewformModalLabel" aria-hidden="true">
@@ -72,7 +76,7 @@
             </div>
         </div>
 
-        <button type="button" class="btn btn-primary round-submit" data-toggle="modal" data-target="#financeformModal"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send for finance review</button>
+        <button type="button" class="btn btn-secondary round-submit" data-toggle="modal" data-target="#financeformModal"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send for finance review</button>
 
         <!-- Finance Review Modal -->
         <div class="modal fade" id="financeformModal" tabindex="-1" role="dialog" aria-labelledby="financeformModalLabel" aria-hidden="true">
@@ -111,15 +115,17 @@
     </div>
 </div>
 @if ($comments)
-<h3>Comments</h3>
 <div class="container">
+        <h3>Comments</h3>
         @foreach ($comments as $comment)
         <div class="card">
             <div class="card-body text-center">
-                <a href="{{ route('projectcontract.commenthistory',$comment['id'])}}" target="_blank">View History</a>
+                <div class="d-flex flex-row-reverse">
+                    <a href="{{ route('projectcontract.commenthistory',$comment['id'])}}" target="_blank"><i class="fa fa-history"></i> View History</a>
+                </div>
                 <div class="d-flex flex-row mb-3">
-                    <div class="p-2">By: </div>
-                    <div class="p-2">
+                    <div>By: </div>
+                    <div>
                         @if (str_contains($comment['comment_type'],'Reviewer'))
                             <h4>Client Team</h4>
                         @else
@@ -128,12 +134,12 @@
                     </div>
                 </div>
                 <div class="d-flex flex-row mb-3">
-                    <div class="p-2"><h4>Date :</h4></div>
-                    <div class="p-2"><h4>{{$comment['created_at']}}</h4></div>
+                    <div><h4>Date :</h4></div>
+                    <div><h4>{{$comment['created_at']}}</h4></div>
                 </div>
                 <div class="d-flex flex-row mb-3">
-                    <div class="p-2"><h4>Comment: </h4></div>
-                    <div class="p-2"><h4>{{$comment['comment']}}</h4></div>
+                    <div><h4>Comment: </h4></div>
+                    <div><h4>{{$comment['comment']}}</h4></div>
                 </div>
             </div>
         </div>
