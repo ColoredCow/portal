@@ -23,15 +23,15 @@
     <li class="nav-item">
         @php
          $params = array_merge($request,  ['wishlist' => 'booksInWishlist']);
-         $wishlistCount = auth()->user()->booksInWishlist->count();
+         $books = auth()->user()->booksInWishlist->count();
         @endphp
-        <a class="nav-item nav-link  {{ (request()->input('wishlist','active') === 'booksInWishlist') ? 'active' : '' }}"  href="{{ route('books.index', $params)  }}"><i class="fa fa-book"></i>&nbsp;Wish listed Books({{$wishlistCount}})</a>
+        <a class="nav-item nav-link  {{ (request()->input('wishlist','active') === 'booksInWishlist') ? 'active' : '' }}"  href="{{ route('books.index', $params)  }}"><i class="fa fa-book"></i>&nbsp;Wish listed Books({{$books}})</a>
     </li>
     <li class="nav-item">
         @php
           $params = array_merge($request,  ['borrowedBook' => 'markedAsBorrowed']);
-          $borrowedCount = auth()->user()->booksBorrower->count();
+          $books = auth()->user()->booksBorrower->count();
         @endphp
-        <a class="nav-item nav-link {{ (request()->input('borrowedBook','active') === 'markedAsBorrowed') ? 'active' : '' }}"  href="{{ route('books.index', $params)  }}"><i class="fa fa-book"></i>&nbsp;Borrowed Books({{$borrowedCount}})</a>
+        <a class="nav-item nav-link {{ (request()->input('borrowedBook','active') === 'markedAsBorrowed') ? 'active' : '' }}"  href="{{ route('books.index', $params)  }}"><i class="fa fa-book"></i>&nbsp;Borrowed Books({{$books}})</a>
     </li>
 </ul>
