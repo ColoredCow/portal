@@ -124,4 +124,10 @@ class ProjectContractController extends Controller
 
         return redirect(route('projectcontract.index'))->with('success');
     }
+    public function commenthistory($id)
+    {
+        $data = $this->service->get_comment_history($id);
+
+        return $data;
+    }
 }

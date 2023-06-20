@@ -19,6 +19,7 @@ class CreateContractMetaHistoryTable extends Migration
             $table->unsignedBigInteger('review_id');
             $table->string('key');
             $table->string('value');
+            $table->boolean('has_changed')->default(false);
             $table->timestamps();
             $table->foreign('contract_id')->references('id')->on('contracts');
             $table->foreign('review_id')->references('id')->on('contract_review');

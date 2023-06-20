@@ -25,4 +25,5 @@ Route::prefix('projectcontract')->group(function () {
     Route::post('clientupdate', 'ProjectContractController@clientupdate')->name('projectcontract.clientupdate');
     Route::post('sendfinancereview', 'ProjectContractController@sendfinancereview')->name('projectcontract.sendfinancereview');
     Route::get('internalresponse/{id}', 'ProjectContractController@internalresponse')->name('projectcontract.internalresponse');
+    Route::get('commenthistory/{id}', 'ProjectContractController@commenthistory')->name('projectcontract.commenthistory');
 });

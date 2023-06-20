@@ -12,6 +12,7 @@ class ContractMetaHistory extends Model
         'contract_id',
         'review_id',
         'key',
-        'value'
+        'value',
+        'has_changed'
     ];
 }

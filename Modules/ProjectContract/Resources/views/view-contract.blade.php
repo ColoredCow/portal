@@ -116,13 +116,14 @@
         @foreach ($comments as $comment)
         <div class="card">
             <div class="card-body text-center">
+                <a href="{{ route('projectcontract.commenthistory',$comment['id'])}}" target="_blank">View</a>
                 <div class="d-flex flex-row mb-3">
                     <div class="p-2">By: </div>
                     <div class="p-2">
                         @if (str_contains($comment['comment_type'],'Reviewer'))
                             <h4>Client Team</h4>
                         @else
-                            <h4>Finance Team</h4>
+                            <h4>Internal Team</h4>
                         @endif
                     </div>
                 </div>
