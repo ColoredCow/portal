@@ -85,8 +85,8 @@
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label for="client_name" class="field-required">Comments</label>
-                                <input type="text" class="form-control" name="comment" id="comment"
-                                placeholder="Enter Comment">
+                                <textarea type="text" class="form-control" name="comment" id="comment"
+                                placeholder="Enter Comment" rows="5" cols="50" required></textarea>
                             </div>
                         </div>
                     </div>
