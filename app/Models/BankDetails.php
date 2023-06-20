@@ -10,4 +10,5 @@ class BankDetails extends Model
     use HasFactory;
     protected $table = 'bank_details';
     protected $guarded = [];
+    protected $fillable = ['key', 'label', 'value'];
 }
