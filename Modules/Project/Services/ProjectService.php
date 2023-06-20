@@ -374,7 +374,7 @@ class ProjectService implements ProjectServiceContract
     public function getMailDetailsForKeyAccountManagers()
     {
         $zeroEffortProject = ProjectTeamMember::where('daily_expected_effort', 0)->get('project_id');
-        $projects = Project::whereIn('id', $zeroEffortProject)->get();
+        $projects = Project::whereIn('id', $zeroEffortProject)->where('status', 'active')->get();
         $keyAccountManagersDetails = [];
         foreach ($projects as $project) {
             $user = $project->client->keyAccountManager;
