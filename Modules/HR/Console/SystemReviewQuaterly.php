@@ -50,7 +50,7 @@ class SystemReviewQuaterly extends Command
             ]);
 
             IndividualAssessment::create([
-                'assessment_id' => $assessment->reviewee_id,
+                'assessment_id' => $assessment->id,
                 'reviewer_id' => $assessment->reviewee_id,
                 'type' => 'self',
                 'status' => 'pending',
