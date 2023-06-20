@@ -100,7 +100,7 @@ class ProjectContractService
     public function view_comments($id)
     {
         if (ContractReview::find($id)) {
-            return ContractReview::where('contract_id', '=', $id)->orderBy('created_at','desc')->get();
+            return ContractReview::where('contract_id', '=', $id)->orderBy('created_at', 'desc')->get();
         }
     }
     public function update_contract($id)
@@ -144,27 +144,27 @@ class ProjectContractService
     public function edit_contract($request)
     {
         $contractId = $request['id'];
-    
+
         $contractReview = new ContractReview();
         $contractReview->contract_id = $contractId;
         $contractReview->comment = $request['comment'];
-    
+
         $id = Reviewer::find($request['rid']);
         $contractReview->comment()->associate($id);
         $contractReview->save();
-    
+
         $contractData = [
             'contract_name' => $request['client_name'],
             'status' => 'Updated by client',
         ];
-    
+
         $contractMeta = [
             ['key' => 'Contract Name', 'value' => $request['contract_name']],
             ['key' => 'Contract Date For Effective', 'value' => $request['contract_date_for_effective']],
             ['key' => 'Contract Date For Signing', 'value' => $request['contract_date_for_signing']],
             ['key' => 'Contract Date For Expiry', 'value' => $request['contract_expiry_date']],
         ];
-    
+
         DB::transaction(function () use ($contractId, $contractData, $contractMeta, $contractReview) {
             $contract = Contract::where('id', $contractId)->first();
             $contract->update($contractData);
@@ -173,7 +173,7 @@ class ProjectContractService
             foreach ($contractMeta as $meta) {
                 $contract->contractMeta()->updateOrCreate(['key' => $meta['key']], ['value' => $meta['value']]);
                 foreach ($existingMeta as $emeta) {
-                    if ($emeta->key == $meta['key'] and $emeta->value != $meta['value']){
+                    if ($emeta->key == $meta['key'] and $emeta->value != $meta['value']) {
                         $contract->contractMetaHistory()->create([
                             'contract_id' => $contract->id,
                             'key' => $meta['key'],
@@ -182,7 +182,7 @@ class ProjectContractService
                             'has_changed' => true
 
                         ]);
-                    } elseif ($emeta->key == $meta['key'] and $emeta->value == $meta['value']){
+                    } elseif ($emeta->key == $meta['key'] and $emeta->value == $meta['value']) {
                         $contract->contractMetaHistory()->create([
                             'contract_id' => $contract->id,
                             'key' => $meta['key'],
@@ -193,7 +193,7 @@ class ProjectContractService
                 }
             }
         });
-    
+
         return $contractData;
     }
     
@@ -252,24 +252,24 @@ class ProjectContractService
             foreach ($contractMeta as $meta) {
                 $contract->contractMeta()->updateOrCreate(['key' => $meta['key']], ['value' => $meta['value']]);
                 foreach ($existingMeta as $emeta) {
-                    if ($emeta->key == $meta['key'] and $emeta->value != $meta['value']){
-                            $contract->contractMetaHistory()->create([
-                                'contract_id' => $contract->id,
-                                'key' => $meta['key'],
-                                'value' => $emeta['value'],
-                                'review_id' => $contractReview->id,
-                                'has_changed' => true
-                            ]);
-                        } elseif ($emeta->key == $meta['key'] and $emeta->value == $meta['value']){
-                            $contract->contractMetaHistory()->create([
-                                'contract_id' => $contract->id,
-                                'key' => $meta['key'],
-                                'value' => $emeta['value'],
-                                'review_id' => $contractReview->id,
-                            ]);
-                        }
-                    }
+                if ($emeta->key == $meta['key'] and $emeta->value != $meta['value']){
+                    $contract->contractMetaHistory()->create([
+                        'contract_id' => $contract->id,
+                        'key' => $meta['key'],
+                        'value' => $emeta['value'],
+                        'review_id' => $contractReview->id,
+                        'has_changed' => true
+                    ]);
+                } elseif ($emeta->key == $meta['key'] and $emeta->value == $meta['value']){
+                    $contract->contractMetaHistory()->create([
+                        'contract_id' => $contract->id,
+                        'key' => $meta['key'],
+                        'value' => $emeta['value'],
+                        'review_id' => $contractReview->id,
+                    ]);
                 }
+                }
+            }
             });
         
 

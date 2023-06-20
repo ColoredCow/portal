@@ -11,7 +11,6 @@ use Modules\ProjectContract\Emails\ClientReview;
 use Modules\ProjectContract\Emails\ClientApproveReview;
 use Modules\ProjectContract\Emails\ClientUpdateReview;
 use Modules\ProjectContract\Emails\FinanceReview;
-use Illuminate\Support\Facades\Auth;
 
 class ProjectContractController extends Controller
 {
