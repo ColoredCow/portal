@@ -116,7 +116,7 @@
         @foreach ($comments as $comment)
         <div class="card">
             <div class="card-body text-center">
-                <a href="{{ route('projectcontract.commenthistory',$comment['id'])}}" target="_blank">View</a>
+                <a href="{{ route('projectcontract.commenthistory',$comment['id'])}}" target="_blank">View History</a>
                 <div class="d-flex flex-row mb-3">
                     <div class="p-2">By: </div>
                     <div class="p-2">

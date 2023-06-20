@@ -100,7 +100,7 @@ class ProjectContractService
     public function view_comments($id)
     {
         if (ContractReview::find($id)) {
-            return ContractReview::where('contract_id', '=', $id)->get();
+            return ContractReview::where('contract_id', '=', $id)->orderBy('created_at','desc')->get();
         }
     }
     public function update_contract($id)
