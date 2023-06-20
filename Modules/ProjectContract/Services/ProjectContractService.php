@@ -290,4 +290,11 @@ class ProjectContractService
     {
         return ContractMetaHistory::join('contract_review', 'contract_meta_history.review_id', '=', 'contract_review.id')->where('contract_meta_history.review_id', $id)->get();
     }
+    public function get_user_email($id)
+    {
+        $contract = Contract::find($id);
+        $user = User::find($contract->id);
+
+        return $user->email;
+    }
 }
