@@ -31,6 +31,7 @@ class BookController extends Controller
         $categories = BookCategory::orderBy('name')->get();
         $wishlistedBooks = auth()->user()->booksInWishlist;
         $booksBorrower = auth()->user()->booksBorrower;
+
         switch (request()) {
             case request()->has('wishlist'):
                 $books = $wishlistedBooks;
@@ -44,6 +45,7 @@ class BookController extends Controller
             default:
                 $books = Book::getList($searchString);
         }
+        
         $loggedInUser = auth()->user();
         $books->load('wishers');
         $books->load('borrowers');
