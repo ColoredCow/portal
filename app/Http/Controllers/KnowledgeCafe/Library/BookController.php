@@ -45,7 +45,6 @@ class BookController extends Controller
             default:
                 $books = Book::getList($searchString);
         }
-        
         $loggedInUser = auth()->user();
         $books->load('wishers');
         $books->load('borrowers');
