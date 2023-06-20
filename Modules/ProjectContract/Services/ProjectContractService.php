@@ -252,7 +252,7 @@ class ProjectContractService
             foreach ($contractMeta as $meta) {
                 $contract->contractMeta()->updateOrCreate(['key' => $meta['key']], ['value' => $meta['value']]);
                 foreach ($existingMeta as $emeta) {
-                    if ($emeta->key == $meta['key'] and $emeta->value != $meta['value']){
+                    if ($emeta->key == $meta['key'] and $emeta->value != $meta['value']) {
                         $contract->contractMetaHistory()->create([
                             'contract_id' => $contract->id,
                             'key' => $meta['key'],
@@ -260,7 +260,7 @@ class ProjectContractService
                             'review_id' => $contractReview->id,
                             'has_changed' => true
                         ]);
-                    } elseif ($emeta->key == $meta['key'] and $emeta->value == $meta['value']){
+                    } elseif ($emeta->key == $meta['key'] and $emeta->value == $meta['value']) {
                         $contract->contractMetaHistory()->create([
                             'contract_id' => $contract->id,
                             'key' => $meta['key'],
