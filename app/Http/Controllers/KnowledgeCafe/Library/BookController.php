@@ -49,7 +49,8 @@ class BookController extends Controller
         $books->load('borrowers');
         $wishlistedBooksCount = $wishlistedBooks->count();
         $booksBorrowerCount = $booksBorrower->count();
-        
+
+    
         return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories', 'wishlistedBooksCount','booksBorrowerCount'));
     }
 
