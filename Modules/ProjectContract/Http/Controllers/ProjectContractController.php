@@ -98,7 +98,7 @@ class ProjectContractController extends Controller
     public function clientresponse($id)
     {
         $contract = $this->service->update_contract($id);
-        Mail::to(Auth::user()->email)->send(new ClientApproveReview());
+        Mail::to($this->service->get_user_email($id))->send(new ClientApproveReview());
 
         return 'Thank you for finalise';
     }
