@@ -12,6 +12,7 @@ use Modules\Project\Console\SendEffortSummaryCommand;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\Project\Console\GoogleChat\NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat;
 use Modules\HR\Console\JobExpiredEmailToHr;
+use Modules\HR\Console\SystemReviewQuaterly;
 
 class Kernel extends ConsoleKernel
 {
@@ -28,7 +29,8 @@ class Kernel extends ConsoleKernel
         EndedProject::class,
         FixedBudgetProject::class,
         NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat::class,
-        JobExpiredEmailToHr::class
+        JobExpiredEmailToHr::class,
+        SystemReviewQuaterly::class
     ];
 
     /**
@@ -54,6 +56,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('project:ended-project')->dailyAt('09:00');
         $schedule->command('project:zero-expected-hours-in-project')->weekly()->tuesdays()->at('11:00');
         $schedule->command('project:reminder-for-effortsheet-lock')->dailyAt('21:00');
+        $schedule->command('hr:quarterly-review-system')->quarterly();
     }
 
     /**
