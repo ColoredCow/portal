@@ -38,13 +38,6 @@ class EmployeeController extends Controller
         $filters = $request->all();
         $filters = $filters ?: $this->service->defaultFilters();
         $name = request('name');
-        $employeeData = Employee::where('staff_type', $name)
-            ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
-            ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
-            ->whereNull('project_team_members.ended_on')
-            ->groupBy('employees.user_id')
-            ->orderby('project_count', 'desc')
-            ->get();
         $currentQuarter = Carbon::now()->quarter;
         $currentYear = Carbon::now()->year;
         if ($request->status === 'pending') {
@@ -160,7 +153,6 @@ class EmployeeController extends Controller
             'manager_id' => $request->manager_id,
         ]);
 
-        
         return redirect()->back();
     }
 }
