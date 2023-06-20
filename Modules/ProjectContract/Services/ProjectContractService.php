@@ -168,12 +168,12 @@ class ProjectContractService
         DB::transaction(function () use ($contractId, $contractData, $contractMeta, $contractReview) {
             $contract = Contract::where('id', $contractId)->first();
             $contract->update($contractData);
+            $existingMeta = $contract->contractMeta()->where('contract_id', $contractId)->get();
     
             foreach ($contractMeta as $meta) {
-                $existingMeta = $contract->contractMeta()->where('key', $meta['key'])->first();
-    
-                if ($existingMeta) {
-                    if ($existingMeta->value !== $meta['value']) {
+                $contract->contractMeta()->updateOrCreate(['key' => $meta['key']], ['value' => $meta['value']]);
+                foreach ($existingMeta as $emeta) {
+                    if ($emeta->key == $meta['key'] and $emeta->value != $meta['value']){
                         $contract->contractMetaHistory()->create([
                             'contract_id' => $contract->id,
                             'key' => $meta['key'],
@@ -181,11 +181,6 @@ class ProjectContractService
                             'review_id' => $contractReview->id,
                         ]);
                     }
-                } else {
-                    $contract->contractMeta()->create([
-                        'key' => $meta['key'],
-                        'value' => $meta['value'],
-                    ]);
                 }
             }
         });
@@ -216,10 +211,18 @@ class ProjectContractService
     }
     public function update_internal($request)
     {
+        $contractReview = new ContractReview();
+        $contractReview->contract_id = $request['id'];
+        $contractReview->comment = $request['comment'];
+        $id = ContractInternalReview::find($request['rid']);
+        $contractReview->comment()->associate($id);
+        $contractReview->save();
+
         $contractData = [
             'contract_name' => $request['client_name'],
             'status' => 'Updated by finance',
         ];
+
         $id = Contract::where('id', $request['id'])->first();
         if ($id->user_id == Auth::id()) {
             $contractData['status'] = 'Updated by CC team';
@@ -231,20 +234,29 @@ class ProjectContractService
             ['key' => 'Contract Date For Expiry', 'value' => $request['contract_expiry_date']],
         ];
 
-        DB::transaction(function () use ($request, $contractData, $contractMeta) {
+        DB::transaction(function () use ($request, $contractData, $contractMeta, $contractReview) {
             $contract = Contract::where('id', $request['id'])->first();
             $contract->update($contractData);
+            $existingMeta = $contract->contractMeta()->where('contract_id', $request['id'])->get();
+            
 
             foreach ($contractMeta as $meta) {
                 $contract->contractMeta()->updateOrCreate(['key' => $meta['key']], ['value' => $meta['value']]);
+                foreach ($existingMeta as $emeta) {
+                    if ($emeta->key == $meta['key'] and $emeta->value != $meta['value']){
+                        $contract->contractMetaHistory()->create([
+                            'contract_id' => $contract->id,
+                            'key' => $meta['key'],
+                            'value' => $meta['value'],
+                            'review_id' => $contractReview->id,
+                        ]);
+                    }
+                }
+                
+                
             }
         });
-        $contractReview = new ContractReview();
-        $contractReview->contract_id = $request['id'];
-        $contractReview->comment = $request['comment'];
-        $id = ContractInternalReview::find($request['rid']);
-        $contractReview->comment()->associate($id);
-        $contractReview->save();
+        
 
         return $contractData;
     }
