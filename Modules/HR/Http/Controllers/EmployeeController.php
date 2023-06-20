@@ -40,8 +40,6 @@ class EmployeeController extends Controller
         $name = request('name');
         $currentQuarter = Carbon::now()->quarter;
         $currentYear = Carbon::now()->year;
-        $currentQuarter = Carbon::now()->quarter;
-        $currentYear = Carbon::now()->year;
         if ($request->status === 'pending') {
             $employeeData = Employee::select('employees.*', 'individual_assessments.status')
                 ->join('assessments', 'assessments.reviewee_id', '=', 'employees.id')
@@ -118,6 +116,7 @@ class EmployeeController extends Controller
         ->orderBy('created_at', 'desc')
         ->get();
         $employees = Employee::all();
+
         return view('hr.employees.review-details', ['employee' => $employee, 'employees' => $employees, 'assessments' => $assessments]);
     }
 
@@ -153,6 +152,7 @@ class EmployeeController extends Controller
             'mentor_id' => $request->mentor_id,
             'manager_id' => $request->manager_id,
         ]);
+        
         return redirect()->back();
     }
 }
