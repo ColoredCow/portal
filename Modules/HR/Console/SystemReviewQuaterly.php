@@ -41,7 +41,7 @@ class SystemReviewQuaterly extends Command
      */
     public function handle()
     {
-        $employees = Employee::selectRaw('employees.id')->get();
+        $employees = Employee::selectRaw('employees.id, employees.mentor_id, employees.hr_id, employees.manager_id')->get();
 
         foreach ($employees as $employee) {
             $assessment = Assessment::create([
@@ -49,13 +49,24 @@ class SystemReviewQuaterly extends Command
                 'created_at' => Carbon::now(),
             ]);
 
-            IndividualAssessment::create([
-                'assessment_id' => $assessment->id,
-                'reviewer_id' => $assessment->reviewee_id,
-                'type' => 'self',
-                'status' => 'pending',
-                'created_at' => Carbon::now(),
-            ]);
+            $reviewers = [
+                ['type' => 'self', 'reviewer_id' => $employee->id],
+                ['type' => 'mentor', 'reviewer_id' => $employee->mentor_id],
+                ['type' => 'hr', 'reviewer_id' => $employee->hr_id],
+                ['type' => 'manager', 'reviewer_id' => $employee->manager_id],
+            ];
+
+            foreach ($reviewers as $reviewer) {
+                if ($reviewer['reviewer_id'] !== null) {
+                    IndividualAssessment::create([
+                        'assessment_id' => $assessment->id,
+                        'reviewer_id' => $reviewer['reviewer_id'],
+                        'type' => $reviewer['type'],
+                        'status' => 'pending',
+                        'created_at' => Carbon::now(),
+                    ]);
+                }
+            }
         }
     }
 }
