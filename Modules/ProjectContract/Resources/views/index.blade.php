@@ -34,27 +34,4 @@
         @endforeach
     </thead>
 </table>
-@if (count($internal) >= 1)
-<h4>Review Pendings</h4>
-<table class="table table-bordered table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th class="w-30p sticky-top">Contract Name</th>
-            <th class="sticky-top">Contract Link</th>
-            <th class="sticky-top">Contract status</th>
-            <th class="sticky-top">Action</th>
-        </tr>
-        @foreach ($internal as $inter)
-        <tr>
-            <td>{{$inter->contract_name}}</td>
-            <td>{{$inter->contract_link}}</td>
-            <td>{{$inter->status}}</td>
-            <td>
-                <a href="{{route('projectcontract.view-contract', $inter->contract_id)}}" class="pl-1 btn btn-link" ><i class="text-primary fa fa-eye fa-lg"></i></a>
-            </td>
-        </tr>
-        @endforeach
-    </thead>
-</table>
-@endif
 @endsection

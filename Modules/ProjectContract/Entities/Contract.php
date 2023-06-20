@@ -3,6 +3,7 @@
 namespace Modules\ProjectContract\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\User\Entities\User;
 
 class Contract extends Model
 {
@@ -20,5 +21,14 @@ class Contract extends Model
     public function contractMetaHistory()
     {
         return $this->hasMany(ContractMetaHistory::class, 'contract_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function internalReviewers()
+    {
+        return $this->hasMany(ContractInternalReview::class, 'contract_id');
     }
 }

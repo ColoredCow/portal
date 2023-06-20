@@ -17,7 +17,14 @@ class ProjectContractService
 {
     public function index()
     {
-        return Contract::where('contracts.user_id', Auth::id())->get();
+        $user = Auth::user();
+        $userContracts = Contract::where('user_id', $user->id)->with('internalReviewers.user')->get();
+        $reviewerContracts = Contract::whereHas('internalReviewers', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->with('user')->get();
+        $contracts = $userContracts->merge($reviewerContracts);
+
+        return $contracts;
     }
     public function internal_reviewer()
     {
