@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
     <div class="container mb-20">
         <br>
         @include('hr.employees.sub-views.menu')
@@ -35,7 +34,7 @@
             @foreach ($assessments as $assessment)
                 <form method="POST" action="{{ route('review.updateStatus') }}">
                     @csrf
-                    <input type="hidden" value="{{ $assessment->id }}" name="assessmentId"/>
+                    <input type="hidden" value="{{ $assessment->id }}" name="assessmentId" />
                     <div class="review-cards mt-5">
                         <!-- Quarter 1 Review Card -->
                         <div class="card mb-4">
@@ -45,37 +44,35 @@
                                 </h4>
                             </div>
                             <div class="card-body review-card-body" style="display: none;">
-                                <div class="mb-2">Last reviewed at: <span
-                                        class="text-info">{{ $assessment->created_at->format('d-m-Y') }}</span> </div>
                                 <div>Next review due: <span
                                         class="text-info">{{ $assessment->created_at->addMonths(3)->startOfMonth()->format('d-m-Y') }}</span>
                                 </div>
                                 <br>
                                 <br>
-                                    <table class="table table-striped table-bordered">
-                                        <thead class="thead-dark">
-                                            <tr class="sticky-top">
-                                                @foreach (config('constants.employee-review-status') as $key => $role)
-                                                    <th>{{ $key }}</th>
-                                                @endforeach
-                                            </tr>
-                                        </thead>
-                                            <tr>
-                                                @foreach (config('constants.employee-review-status') as $key => $reviewStatuses)
-                                                    <td>
-                                                        <select class="pt-0 ml-2 btn bg-light text-left"
-                                                            name="{{ $key }}" onchange="updateHiddenField(this)">
-                                                            <option value="" selected="selected">Select Review Status</option>
-                                                            @foreach ($reviewStatuses as $key => $reviewStatus)
-                                                                <option value="{{ $key }}">
-                                                                    {{ $reviewStatus }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </td>
-                                                @endforeach
-                                            </tr>
-                                    </table>
+                                <table class="table table-striped table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr class="sticky-top">
+                                            @foreach (config('constants.employee-review-status') as $key => $role)
+                                                <th>{{ $key }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tr>
+                                        @foreach (config('constants.employee-review-status') as $key => $reviewStatuses)
+                                            <td>
+                                                <select class="pt-0 ml-2 btn bg-light text-left" name="{{ $key }}"
+                                                    onchange="updateHiddenField(this)">
+                                                    <option value="" selected="selected">Select Review Status</option>
+                                                    @foreach ($reviewStatuses as $key => $reviewStatus)
+                                                        <option value="{{ $key }}">
+                                                            {{ $reviewStatus }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                        @endforeach
+                                    </tr>
+                                </table>
                                 <br>
                             </div>
                         </div>
