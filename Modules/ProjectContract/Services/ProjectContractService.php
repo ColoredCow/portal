@@ -169,7 +169,7 @@ class ProjectContractService
             $contract = Contract::where('id', $contractId)->first();
             $contract->update($contractData);
             $existingMeta = $contract->contractMeta()->where('contract_id', $contractId)->get();
-    
+
             foreach ($contractMeta as $meta) {
                 $contract->contractMeta()->updateOrCreate(['key' => $meta['key']], ['value' => $meta['value']]);
                 foreach ($existingMeta as $emeta) {
@@ -196,7 +196,6 @@ class ProjectContractService
 
         return $contractData;
     }
-    
 
     public function store_internal_reveiwer($request)
     {
@@ -247,7 +246,6 @@ class ProjectContractService
             $contract = Contract::where('id', $request['id'])->first();
             $contract->update($contractData);
             $existingMeta = $contract->contractMeta()->where('contract_id', $request['id'])->get();
-            
 
             foreach ($contractMeta as $meta) {
                 $contract->contractMeta()->updateOrCreate(['key' => $meta['key']], ['value' => $meta['value']]);
