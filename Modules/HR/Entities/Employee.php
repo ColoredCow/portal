@@ -91,4 +91,9 @@ class Employee extends Model
 
         return ['main' => $fte, 'amc' => $fteAmc];
     }
+
+    public function assessments()
+    {
+        return $this->hasMany(Assessment::class, 'reviewee_id');
+    }
 }
