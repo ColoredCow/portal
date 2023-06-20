@@ -13,7 +13,8 @@ class ContractInternalReview extends Model
         'contract_id',
         'name',
         'email',
-        'user_id'
+        'user_id',
+        'status'
     ];
 
     public function contractReviews()

@@ -18,6 +18,7 @@ class CreateContractReviewerTable extends Migration
             $table->unsignedBigInteger('contract_id');
             $table->string('name');
             $table->string('email');
+            $table->string('status');
             $table->timestamps();
             $table->foreign('contract_id')->references('id')->on('contracts');
         });

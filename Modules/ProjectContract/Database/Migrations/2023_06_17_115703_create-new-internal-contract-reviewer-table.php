@@ -19,6 +19,7 @@ class CreateNewInternalContractReviewerTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->integer('user_id')->unsigned();
+            $table->string('status');
             $table->timestamps();
             $table->foreign('contract_id')->references('id')->on('contracts');
             $table->foreign('user_id')->references('id')->on('users');
