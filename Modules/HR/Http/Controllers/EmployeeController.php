@@ -123,7 +123,7 @@ class EmployeeController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
         $employees = Employee::all();
-        
+
         return view('hr.employees.review-details', ['employee' => $employee, 'employees' => $employees, 'assessments' => $assessments]);
     }
 
