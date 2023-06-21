@@ -46,8 +46,11 @@ class BookController extends Controller
         $loggedInUser = auth()->user();
         $books->load('wishers');
         $books->load('borrowers');
+        $wishlistedBooksCount = auth()->user()->booksInWishlist->count();
+        $booksBorrowedCount = auth()->user()->booksBorrower->count();
 
-        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories'));
+
+        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories', 'wishlistedBooksCount', 'booksBorrowedCount'));
     }
 
     /**
@@ -328,7 +331,13 @@ class BookController extends Controller
                     return Carbon::parse($item->created_at)->format('n');
                 }, 'desc');
             });
+        $wishlistedBooksCount = auth()->user()->booksInWishlist->count();
+        $booksBorrowedCount = auth()->user()->booksBorrower->count();
 
-        return view('knowledgecafe.library.books.book-a-month')->with('booksCollection', $booksCollection)->with('books', $books);
+        return view('knowledgecafe.library.books.book-a-month')
+        ->with('booksCollection', $booksCollection)
+        ->with('books', $books)
+        ->with('wishlistedBooksCount', $wishlistedBooksCount)
+        ->with('booksBorrowedCount', $booksBorrowedCount);
     }
 }

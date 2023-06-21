@@ -23,10 +23,14 @@ class BookCategoryController extends Controller
     {
         $categories = BookCategory::withCount('books')->orderBy('name')->get();
         $books = Book::all();
+        $wishlistedBooksCount = auth()->user()->booksInWishlist->count();
+        $booksBorrowedCount = auth()->user()->booksBorrower->count();
 
         return view('knowledgecafe.library.categories.index')
         ->with('books', $books)
-        ->with('categories', $this->formatCategoryData($categories));
+        ->with('categories', $this->formatCategoryData($categories))
+        ->with('wishlistedBooksCount', $wishlistedBooksCount)
+        ->with('booksBorrowedCount', $booksBorrowedCount );
     }
 
     /**
