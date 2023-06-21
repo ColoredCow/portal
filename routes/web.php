@@ -122,7 +122,6 @@ Route::middleware('auth')->group(function () {
             Route::get('/', 'BankDetailController@index')->name('settings.bank-details');
             Route::get('/create', 'BankDetailController@create')->name('bank-details.create');
             Route::post('/', 'BankDetailController@store')->name('bank-details.store');    
-
         });
     });
 
