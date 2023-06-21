@@ -6,6 +6,8 @@
      $borrowedSelected = request()->input('borrowedBook','active') === 'markedAsBorrowed';
 
      $allBooksSelected =  $active === 'books' && ! $wishlistSelected && ! $borrowedSelected;
+     $wishlistedBooksCount = auth()->user()->booksInWishlist->count();
+     $booksBorrowerCount = auth()->user()->booksBorrower->count();
 
     @endphp
         <a class="nav-item nav-link {{ $allBooksSelected ? 'active' : '' }}"  href="{{ route('books.index', $request) }}"><i class="fa fa-book"></i>&nbsp;Books</a>
