@@ -44,29 +44,45 @@ class QuarterlyReviewSystemForEmployee extends Command
         $employees = Employee::selectRaw('employees.id, employees.mentor_id, employees.hr_id, employees.manager_id')->get();
 
         foreach ($employees as $employee) {
-            $assessment = Assessment::create([
-                'reviewee_id' => $employee->id,
-                'created_at' => Carbon::now(),
-            ]);
+            $assessment = $this->createAssessment($employee);
 
-            $reviewers = [
-                ['type' => 'self', 'reviewer_id' => $employee->id],
-                ['type' => 'mentor', 'reviewer_id' => $employee->mentor_id],
-                ['type' => 'hr', 'reviewer_id' => $employee->hr_id],
-                ['type' => 'manager', 'reviewer_id' => $employee->manager_id],
-            ];
+            $reviewers = $this->getReviewers($employee);
 
-            foreach ($reviewers as $reviewer) {
-                if ($reviewer['reviewer_id'] !== null) {
-                    IndividualAssessment::create([
-                        'assessment_id' => $assessment->id,
-                        'reviewer_id' => $reviewer['reviewer_id'],
-                        'type' => $reviewer['type'],
-                        'status' => 'pending',
-                        'created_at' => Carbon::now(),
-                    ]);
-                }
-            }
+            $this->createIndividualAssessments($assessment, $reviewers);
         }
     }
+
+    private function createAssessment($employee)
+    {
+        return Assessment::create([
+            'reviewee_id' => $employee->id,
+            'created_at' => Carbon::now(),
+        ]);
+    }
+
+    private function getReviewers($employee)
+    {
+        $reviewers = [
+            ['type' => 'self', 'reviewer_id' => $employee->id],
+            ['type' => 'mentor', 'reviewer_id' => $employee->mentor_id],
+            ['type' => 'hr', 'reviewer_id' => $employee->hr_id],
+            ['type' => 'manager', 'reviewer_id' => $employee->manager_id],
+        ];
+
+        return array_filter($reviewers, fn($reviewer) => $reviewer['reviewer_id'] !== null);
+    }
+
+    private function createIndividualAssessments($assessment, $reviewers)
+    {
+        foreach ($reviewers as $reviewer) {
+            IndividualAssessment::create([
+                'assessment_id' => $assessment->id,
+                'reviewer_id' => $reviewer['reviewer_id'],
+                'type' => $reviewer['type'],
+                'status' => 'pending',
+                'created_at' => Carbon::now(),
+            ]);
+        }
+    }
+
 }
