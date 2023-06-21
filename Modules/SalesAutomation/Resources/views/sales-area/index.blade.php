@@ -1,6 +1,7 @@
 @extends('salesautomation::layouts.master')
 
 @section('salesautomation.content')
+@includeWhen(session('status'), 'toast', ['message' => session('status')])
     <div class="row">
 		<div class="offset-md-9 col-md-3 text-right mb-3">
 			<button class="btn btn-primary" data-toggle="modal" data-target="#newSalesArea">New Sales Area</button>
