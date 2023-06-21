@@ -49,7 +49,6 @@ class BookController extends Controller
         $wishlistedBooksCount = auth()->user()->booksInWishlist->count();
         $booksBorrowedCount = auth()->user()->booksBorrower->count();
 
-
         return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories', 'wishlistedBooksCount', 'booksBorrowedCount'));
     }
 
