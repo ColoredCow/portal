@@ -135,8 +135,7 @@ class ProjectTeamMember extends Model
     public function getBookedEfforts($startDate, $endDate)
     {
         return $this->projectTeamMemberEffort()
-        ->where('added_on', '>=', $startDate)
-        ->where('added_on', '<=', $endDate)
-        ->sum('actual_effort');
+            ->whereBetween('added_on', [$startDate, $endDate])
+            ->sum('actual_effort');
     }
 }
