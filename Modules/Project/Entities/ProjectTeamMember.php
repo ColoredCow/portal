@@ -124,4 +124,20 @@ class ProjectTeamMember extends Model
 
         return round($actualEffort / $requiredEffort, 2);
     }
+
+    public function getCommittedEfforts($startDate, $endDate)
+    {
+        $totalWorkingDays = count($this->project->getWorkingDaysList($startDate, $endDate));
+
+        return $this->daily_expected_effort * $totalWorkingDays;
+    }
+
+    public function getBookedEfforts($startDate, $endDate)
+    {
+        return $this->projectTeamMemberEffort()
+        ->where('added_on', '>=', $startDate)
+        ->where('added_on', '<=', $endDate)
+        ->sum('actual_effort');
+    }
+
 }
