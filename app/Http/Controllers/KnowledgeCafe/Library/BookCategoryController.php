@@ -30,7 +30,7 @@ class BookCategoryController extends Controller
         ->with('books', $books)
         ->with('categories', $this->formatCategoryData($categories))
         ->with('wishlistedBooksCount', $wishlistedBooksCount)
-        ->with('booksBorrowedCount', $booksBorrowedCount );
+        ->with('booksBorrowedCount', $booksBorrowedCount);
     }
 
     /**
