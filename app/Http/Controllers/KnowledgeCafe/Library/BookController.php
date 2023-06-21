@@ -46,7 +46,7 @@ class BookController extends Controller
         $loggedInUser = auth()->user();
         $books->load('wishers');
         $books->load('borrowers');
-        
+
         return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories'));
     }
 
