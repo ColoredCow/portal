@@ -8,14 +8,14 @@ use Modules\HR\Entities\Assessment;
 use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\IndividualAssessment;
 
-class SystemReviewQuaterly extends Command
+class QuarterlyReviewSystemForEmployee extends Command
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'hr:quarterly-review-system';
+    protected $name = 'employee:quarterly-review-system-for-employee';
 
     /**
      * The console command description.
