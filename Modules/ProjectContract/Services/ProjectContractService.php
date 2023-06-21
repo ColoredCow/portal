@@ -115,6 +115,9 @@ class ProjectContractService
         $Contract = Contract::find($id);
         $Contract->status = 'Finalise by client';
         $Contract->save();
+        $Reviewer = Reviewer::where(['contract_id' => $id])->first();
+        $Reviewer->status = "Approved";
+        $Reviewer->save();
 
         return $Contract;
     }
@@ -122,8 +125,14 @@ class ProjectContractService
     {
         $Contract = Contract::find($id);
         if ($Contract->user_id == Auth::id()) {
+            $Reviewer = ContractInternalReview::where(['contract_id' => $id, 'user_type' => 'CC Team'])->first();
+            $Reviewer->status = "Approved";
+            $Reviewer->save();
             $Contract->status = 'Finalise by User';
         } else {
+            $Reviewer = ContractInternalReview::where(['contract_id' => $id, 'user_type' => 'Finance Team'])->first();
+            $Reviewer->status = "Approved";
+            $Reviewer->save();
             $Contract->status = 'Finalise by finance';
         }
         $Contract->save();
@@ -140,6 +149,7 @@ class ProjectContractService
         $Reviewer->contract_id = $id;
         $Reviewer->name = $name;
         $Reviewer->email = $email;
+        $Reviewer->status = "Pending";
         $Reviewer->save();
 
         $Contract = Contract::find($id);
@@ -216,6 +226,8 @@ class ProjectContractService
         $Reviewer->email = $email;
         $User = User::findByEmail($email);
         $Reviewer->user_id = $User->id;
+        $Reviewer->status = "Pending";
+        $Reviewer->user_type = "Finance Team";
         $Reviewer->save();
 
         $Contract = Contract::find($id);
@@ -288,6 +300,8 @@ class ProjectContractService
         $Reviewer->name = Auth::user()->name;
         $Reviewer->email = Auth::user()->email;
         $Reviewer->user_id = Auth::id();
+        $Reviewer->status = "Pending";
+        $Reviewer->user_type = "CC Team";
         $Reviewer->save();
 
         return $Reviewer;

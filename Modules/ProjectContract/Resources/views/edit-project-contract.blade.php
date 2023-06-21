@@ -97,7 +97,7 @@
         <div class="container">
             <div class="form-row">
                 <div class="form-group col-md-12">
-                    <button type="submit" class="btn btn-success round-submit"><i class="fa fa-eye mr-1" ></i>Update & Approve</button>
+                    <button type="submit" class="btn btn-success round-submit"><i class="fa fa-check mr-1" ></i>Update & Approve</button>
                 </div>
             </div>
         </div>
