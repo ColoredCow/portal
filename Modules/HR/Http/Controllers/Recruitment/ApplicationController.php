@@ -78,7 +78,6 @@ abstract class ApplicationController extends Controller
         $sort_by = request()->has('sort_by') ? '&sort_by=' . request('sort_by') : '';
         $query_filters = $hr_job_id . $search . $hr_university_id . $sort_by . $graduation_year;
 
-
         //#TO DO: Move this logic to application service.
         $filters = [
             'status' => request()->get('status') ?: 'non-rejected',
