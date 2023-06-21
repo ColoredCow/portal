@@ -24,14 +24,37 @@
         </tr>
         @foreach ($projects as $project)
         <tr>
-            <td>{{$project->contract_name}}</td>
+            <td>
+                <div class="d-flex flex-row">
+                {{$project->contract_name}}
+                @foreach ($project->internalReviewers()->get() as $internal)
+                    @if ($internal->status == 'Approved')
+                    <span class="d-flex flex-column align-items-start">
+                        <span class="badge badge-success badge-pill mr-1 mb-1 fz-12"> {{ $internal->user_type }} - {{$internal->status }}</span>
+                    </span>
+                    @else
+                    <span class="d-flex flex-column align-items-start">
+                        <span class="badge badge-danger badge-pill mr-1 mb-1 fz-12"> {{ $internal->user_type }} - {{$internal->status }}</span>
+                    </span>
+                    @endif
+                @endforeach
+                @foreach ($project->contractReviewers()->get() as $external)
+                    @if ($internal->status == 'Approved')
+                        <span class="badge badge-success badge-pill mr-1 mb-1 fz-12"> Client - {{ $external->status }}</span>
+                    @else
+                        <span class="badge badge-danger badge-pill mr-1 mb-1 fz-12"> Client - {{ $external->status }}</span>
+                    @endif
+                @endforeach
+                </div>
+            </td>
             <td>{{$project->contract_link}}</td>
             <td>{{$project->status}}</td>
             <td>
-                <a href="{{route('projectcontract.view-contract', $project->id)}}" class="pl-1 btn btn-link" ><i class="fa fa-eye"></i></a>
+                <a class="btn btn-success btn-sm pl-1" href="{{route('projectcontract.view-contract', $project->id)}}"><i class="fa fa-edit mr-1" ></i>Edit</a>
             </td>
         </tr>
         @endforeach
     </thead>
 </table>
+
 @endsection

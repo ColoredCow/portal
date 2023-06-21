@@ -31,4 +31,14 @@ class Contract extends Model
     {
         return $this->hasMany(ContractInternalReview::class, 'contract_id');
     }
+    public function statusReviewers($type)
+    {
+        return $this->internalReviewers()->where('user_type', $type);
+    }
+    public function contractReviewers()
+    {
+    return $this->hasMany(Reviewer::class, 'contract_id');
+    }
+
+    
 }

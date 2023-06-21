@@ -22,9 +22,8 @@ class ProjectContractController extends Controller
     public function index()
     {
         $projects = $this->service->index();
-        $internal = $this->service->internal_reviewer();
-
-        return view('projectcontract::index')->with('projects', $projects)->with('internal', $internal);
+        
+        return view('projectcontract::index')->with('projects',$projects);
     }
     public function create()
     {

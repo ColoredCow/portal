@@ -16,16 +16,28 @@ use Illuminate\Support\Facades\DB;
 class ProjectContractService
 {
     public function index()
-    {
-        $user = Auth::user();
-        $userContracts = Contract::where('user_id', $user->id)->with('internalReviewers.user')->get();
-        $reviewerContracts = Contract::whereHas('internalReviewers', function ($query) use ($user) {
-            $query->where('user_id', $user->id);
-        })->with('user')->get();
-        $contracts = $userContracts->merge($reviewerContracts);
+{
+    $user = Auth::user();
 
-        return $contracts;
-    }
+    $userContracts = Contract::where('user_id', $user->id)
+        ->with('internalReviewers.user', 'contractReviewers')
+        ->get();
+
+    $reviewerContracts = Contract::whereHas('internalReviewers', function ($query) use ($user) {
+        $query->where('user_id', $user->id);
+    })
+    ->with(['user', 'internalReviewers' => function ($query) use ($user) {
+        $query->whereIn('user_type', ['CC Team', 'Finance Team']);
+    }, 'contractReviewers'])
+    ->get();
+
+    $contracts = $userContracts->merge($reviewerContracts);
+
+    return $contracts;
+}
+
+
+
     public function internal_reviewer()
     {
         return Contract::join('contract_internal_reviewer', 'contracts.id', '=', 'contract_internal_reviewer.contract_id')->where('contract_internal_reviewer.user_id', Auth::id())->get();
@@ -316,5 +328,9 @@ class ProjectContractService
         $user = User::find($contract->id);
 
         return $user->email;
+    }
+    public function get_user_status()
+    {
+
     }
 }
