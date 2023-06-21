@@ -139,5 +139,4 @@ class ProjectTeamMember extends Model
         ->where('added_on', '<=', $endDate)
         ->sum('actual_effort');
     }
-
 }
