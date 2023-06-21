@@ -277,6 +277,8 @@ class ProjectContractService
             }
         });
 
+        $this->update_internal_contract($request['id']);
+
         return $contractData;
     }
     public function store_user($id)

@@ -97,8 +97,7 @@
         <div class="container">
             <div class="form-row">
                 <div class="form-group col-md-12">
-                    <a href="{{route('projectcontract.internalresponse', $contractsmeta[0]['contract_id'])}}" class="pl-1 btn btn-link" ><i class="text-primary fa fa-eye fa-lg"></i>Finalise</a>
-                    <button type="submit" class="btn btn-primary round-submit">Update</button>
+                    <button type="submit" class="btn btn-success round-submit"><i class="fa fa-eye mr-1" ></i>Update & Approve</button>
                 </div>
             </div>
         </div>
