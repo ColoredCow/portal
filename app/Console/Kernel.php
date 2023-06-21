@@ -3,17 +3,16 @@
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
-use Modules\Project\Console\SyncEffortsheet;
-use Modules\Project\Console\ZeroEffortInProject;
-use Modules\Project\Console\EndedProject;
-use Modules\Project\Console\ZeroExpectedHourInProject;
-use Modules\Project\Console\FixedBudgetProject;
-use Modules\Project\Console\SendEffortSummaryCommand;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Modules\Project\Console\GoogleChat\NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat;
 use Modules\HR\Console\JobExpiredEmailToHr;
 use Modules\HR\Console\QuarterlyReviewSystemForEmployee;
-
+use Modules\Project\Console\EndedProject;
+use Modules\Project\Console\FixedBudgetProject;
+use Modules\Project\Console\GoogleChat\NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat;
+use Modules\Project\Console\SendEffortSummaryCommand;
+use Modules\Project\Console\SyncEffortsheet;
+use Modules\Project\Console\ZeroEffortInProject;
+use Modules\Project\Console\ZeroExpectedHourInProject;
 
 class Kernel extends ConsoleKernel
 {
@@ -32,7 +31,7 @@ class Kernel extends ConsoleKernel
         NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat::class,
         JobExpiredEmailToHr::class,
         QuarterlyReviewSystemForEmployee::class,
-       
+
     ];
 
     /**
