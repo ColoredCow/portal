@@ -7,9 +7,10 @@
 
      $allBooksSelected =  $active === 'books' && ! $wishlistSelected && ! $borrowedSelected;
      $wishlistedBooksCount = auth()->user()->booksInWishlist->count();
-     $booksBorrowerCount = auth()->user()->booksBorrower->count();
+     $booksBorrowedCount = auth()->user()->booksBorrower->count();
 
     @endphp
+    <li>
         <a class="nav-item nav-link {{ $allBooksSelected ? 'active' : '' }}"  href="{{ route('books.index', $request) }}"><i class="fa fa-book"></i>&nbsp;Books</a>
     </li>
 
@@ -32,6 +33,6 @@
         @php
           $params = array_merge($request,  ['borrowedBook' => 'markedAsBorrowed']);
         @endphp
-        <a class="nav-item nav-link {{ (request()->input('borrowedBook','active') === 'markedAsBorrowed') ? 'active' : '' }}"  href="{{ route('books.index', $params)  }}"><i class="fa fa-book"></i>&nbsp;Borrowed Books({{ $booksBorrowerCount}})</a>
+        <a class="nav-item nav-link {{ (request()->input('borrowedBook','active') === 'markedAsBorrowed') ? 'active' : '' }}"  href="{{ route('books.index', $params)  }}"><i class="fa fa-book"></i>&nbsp;Borrowed Books({{ $booksBorrowedCount}})</a>
     </li>
 </ul>
