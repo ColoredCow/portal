@@ -18,17 +18,13 @@
         <div class="modal fade" id="photoGallery" tabindex="-1" role="dialog" aria-labelledby="photoGalleryLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row my-3">
-                            <div class="col-lg-20 mx-auto">
-                                <div class="card shadow">
-                                    <div class="card-header bg-secondary">
+                    <div class="modal-body p-0 pb-3">
+                            <div class="col-lg-30 mx-auto">
+                                    <div class="card-fluid bg-secondary d-flex justify-content-between p-2">
                                         <h3 class="text-light fw-bold">Add New Post</h3>
+                                        <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
                                     <div class="card-body p-4">
                                         <form action="{{ route('media.index') }}" method="POST" enctype="multipart/form-data">
@@ -56,9 +52,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                </div>
                             </div> 
-                        </div>
                     </div>
                 </div>
             </div>
