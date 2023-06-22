@@ -26,7 +26,7 @@ class ProjectContractService
         $reviewerContracts = Contract::whereHas('internalReviewers', function ($query) use ($user) {
             $query->where('user_id', $user->id);
         })
-        ->with(['user', 'internalReviewers' => function ($query) use ($user) {
+        ->with(['user', 'internalReviewers' => function ($query) {
             $query->whereIn('user_type', ['CC Team', 'Finance Team']);
         }, 'contractReviewers'])
         ->get();
@@ -35,8 +35,6 @@ class ProjectContractService
 
         return $contracts;
     }
-
-
 
     public function internal_reviewer()
     {
@@ -138,7 +136,7 @@ class ProjectContractService
         $Contract->status = 'Finalise by client';
         $Contract->save();
         $Reviewer = Reviewer::where(['contract_id' => $id])->first();
-        $Reviewer->status = "Approved";
+        $Reviewer->status = 'Approved';
         $Reviewer->save();
 
         return $Contract;
@@ -148,12 +146,12 @@ class ProjectContractService
         $Contract = Contract::find($id);
         if ($Contract->user_id == Auth::id()) {
             $Reviewer = ContractInternalReview::where(['contract_id' => $id, 'user_type' => 'CC Team'])->first();
-            $Reviewer->status = "Approved";
+            $Reviewer->status = 'Approved';
             $Reviewer->save();
             $Contract->status = 'Finalise by User';
         } else {
             $Reviewer = ContractInternalReview::where(['contract_id' => $id, 'user_type' => 'Finance Team'])->first();
-            $Reviewer->status = "Approved";
+            $Reviewer->status = 'Approved';
             $Reviewer->save();
             $Contract->status = 'Finalise by finance';
         }
@@ -171,7 +169,7 @@ class ProjectContractService
         $Reviewer->contract_id = $id;
         $Reviewer->name = $name;
         $Reviewer->email = $email;
-        $Reviewer->status = "Pending";
+        $Reviewer->status = 'Pending';
         $Reviewer->save();
 
         $Contract = Contract::find($id);
@@ -257,8 +255,8 @@ class ProjectContractService
         $User = User::findByEmail($email);
         $Reviewer->user_id = $User->id;
         $Reviewer->name = $User->name;
-        $Reviewer->status = "Pending";
-        $Reviewer->user_type = "Finance Team";
+        $Reviewer->status = 'Pending';
+        $Reviewer->user_type = 'Finance Team';
         $Reviewer->save();
 
         $Contract = Contract::find($id);
@@ -285,7 +283,7 @@ class ProjectContractService
         if ($id->user_id == Auth::id()) {
             $contractData['status'] = 'Updated by CC team';
         }
-        $gst = $request['gst'] ?? " ";
+        $gst = $request['gst'] ?? ' ';
         $contractMeta = [
             ['key' => 'Contract Name', 'value' => $request['contract_name']],
             ['key' => 'Contract Date For Effective', 'value' => $request['contract_date_for_effective']],
@@ -342,8 +340,8 @@ class ProjectContractService
         $Reviewer->name = Auth::user()->name;
         $Reviewer->email = Auth::user()->email;
         $Reviewer->user_id = Auth::id();
-        $Reviewer->status = "Pending";
-        $Reviewer->user_type = "CC Team";
+        $Reviewer->status = 'Pending';
+        $Reviewer->user_type = 'CC Team';
         $Reviewer->save();
 
         return $Reviewer;
