@@ -24,7 +24,7 @@ class ProjectContractController extends Controller
     {
         $projects = $this->service->index();
         
-        return view('projectcontract::index')->with('projects',$projects);
+        return view('projectcontract::index')->with('projects', $projects);
     }
     public function create()
     {
