@@ -62,10 +62,13 @@
 <br>
 <div class="container">
     <div class="form-group">
+        @if ($user and $client and $finance and $user->status == 'Approved' and $client->status == 'Approved' and $finance->status == 'Approved')
+            <a class="btn btn-success"><i class="fa fa-file-pdf-o mr-1" ></i>Generate Contract</a>
+        @endif
         @if ($user->status == "Pending")
             <a class="btn btn-success" href="{{route('projectcontract.internalresponse', $contracts['id'])}}"><i class="fa fa-check mr-1" ></i>Approve</a>
         @else
-            <a class="btn btn-success" disabled><i class="fa fa-check mr-1" ></i>Approve</a>
+            <a class="btn btn-success" disabled><i class="fa fa-check mr-1" ></i>Approved</a>
         @endif
         <button type="button" class="btn btn-primary round-submit" data-toggle="modal" data-target="#reviewformModal"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send for client review</button>
 
