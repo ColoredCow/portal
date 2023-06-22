@@ -25,8 +25,8 @@
         @foreach ($projects as $project)
         <tr>
             <td>
-                <div class="d-flex flex-row">
                 {{$project->contract_name}}
+                <div class="d-flex flex-row">
                 @foreach ($project->internalReviewers()->get() as $internal)
                     @if ($internal->status == 'Approved')
                     <span class="d-flex flex-column align-items-start">
@@ -34,15 +34,15 @@
                     </span>
                     @else
                     <span class="d-flex flex-column align-items-start">
-                        <span class="badge badge-danger badge-pill mr-1 mb-1 fz-12"> {{ $internal->user_type }} - {{$internal->status }}</span>
+                        <span class="badge badge-warning badge-pill mr-1 mb-1 fz-12"> {{ $internal->user_type }} - {{$internal->status }}</span>
                     </span>
                     @endif
                 @endforeach
                 @foreach ($project->contractReviewers()->get() as $external)
-                    @if ($internal->status == 'Approved')
+                    @if ($external->status == 'Approved')
                         <span class="badge badge-success badge-pill mr-1 mb-1 fz-12"> Client - {{ $external->status }}</span>
                     @else
-                        <span class="badge badge-danger badge-pill mr-1 mb-1 fz-12"> Client - {{ $external->status }}</span>
+                        <span class="badge badge-warning badge-pill mr-1 mb-1 fz-12"> Client - {{ $external->status }}</span>
                     @endif
                 @endforeach
                 </div>
@@ -50,7 +50,7 @@
             <td>{{$project->contract_link}}</td>
             <td>{{$project->status}}</td>
             <td>
-                <a class="btn btn-success btn-sm pl-1" href="{{route('projectcontract.view-contract', $project->id)}}"><i class="fa fa-edit mr-1" ></i>Edit</a>
+                <a class="btn btn-success btn-sm pl-1" href="{{route('projectcontract.view-contract', $project->id)}}"><i class="fa fa-file-pdf-o mr-1" ></i>View</a>
             </td>
         </tr>
         @endforeach

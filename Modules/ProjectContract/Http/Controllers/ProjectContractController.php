@@ -80,7 +80,9 @@ class ProjectContractController extends Controller
 
         $comment = $this->service->view_comments($id);
 
-        return view('projectcontract::view-contract')->with('contracts', $contracts)->with('contractsmeta', $contractsmeta)->with('comments', $comment);
+        $status = $this->service->get_status($contracts->id);
+
+        return view('projectcontract::view-contract')->with('contracts', $contracts)->with('contractsmeta', $contractsmeta)->with('comments', $comment)->with('status',$status);
     }
 
     public function sendreview(Request $request)

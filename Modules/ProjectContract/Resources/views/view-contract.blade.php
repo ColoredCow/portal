@@ -39,7 +39,11 @@
 <br>
 <div class="container">
     <div class="form-group">
-        <a class="btn btn-success" href="{{route('projectcontract.internalresponse', $contracts['id'])}}"><i class="fa fa-check mr-1" ></i>Approve</a>
+        @if ($status->status == "Pending")
+            <a class="btn btn-success" href="{{route('projectcontract.internalresponse', $contracts['id'])}}"><i class="fa fa-check mr-1" ></i>Approve</a>
+        @else
+            <a class="btn btn-success" disabled><i class="fa fa-check mr-1" ></i>Approve</a>
+        @endif
         <button type="button" class="btn btn-primary round-submit" data-toggle="modal" data-target="#reviewformModal"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send for client review</button>
 
         <!-- Client Review Modal -->

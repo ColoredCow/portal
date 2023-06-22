@@ -329,8 +329,8 @@ class ProjectContractService
 
         return $user->email;
     }
-    public function get_user_status()
+    public function get_status($id)
     {
-
+        return ContractInternalReview::select('status')->where(['contract_id' => $id, 'user_id' => Auth::id()])->first();
     }
 }
