@@ -333,10 +333,10 @@ class BookController extends Controller
         $wishlistedBooksCount = auth()->user()->booksInWishlist->count();
         $booksBorrowedCount = auth()->user()->booksBorrower->count();
 
-        return view('knowledgecafe.library.books.book-a-month')
-        ->with('booksCollection', $booksCollection)
-        ->with('books', $books)
-        ->with('wishlistedBooksCount', $wishlistedBooksCount)
-        ->with('booksBorrowedCount', $booksBorrowedCount);
+        return view('knowledgecafe.library.books.book-a-month', [
+        'booksCollection'=> $booksCollection,
+        'books'=> $books,
+        'wishlistedBooksCount'=> $wishlistedBooksCount,
+        'booksBorrowedCount'=> $booksBorrowedCount]);
     }
 }
