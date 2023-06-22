@@ -106,8 +106,8 @@ class ProjectService implements ProjectServiceContract
         $counts = [
             'mainProjectsCount' => array_merge($filters, ['status' => 'active', 'is_amc' => false]),
             'AMCProjectCount' => array_merge($filters, ['status' => 'active', 'is_amc' => true]),
-            'haltedProjectsCount' => array_merge($filters, ['status' => 'halted']),
-            'inactiveProjectsCount' => array_merge($filters, ['status' => 'inactive']),
+            'haltedProjectsCount' => array_merge($filters, ['status' => 'halted', 'is_amc' => false]),
+            'inactiveProjectsCount' => array_merge($filters, ['status' => 'inactive', 'is_amc' => false]),
         ];
 
         foreach ($counts as $key => $tabFilters) {
@@ -373,8 +373,8 @@ class ProjectService implements ProjectServiceContract
 
     public function getMailDetailsForKeyAccountManagers()
     {
-        $zeroEffortProject = ProjectTeamMember::where('daily_expected_effort', 0)->get('project_id');
-        $projects = Project::whereIn('id', $zeroEffortProject)->get();
+        $zeroEffortProject = ProjectTeamMember::where('daily_expected_effort', 0)->whereNull('ended_on')->get('project_id');
+        $projects = Project::whereIn('id', $zeroEffortProject)->where('status', 'active')->get();
         $keyAccountManagersDetails = [];
         foreach ($projects as $project) {
             $user = $project->client->keyAccountManager;
@@ -431,17 +431,25 @@ class ProjectService implements ProjectServiceContract
 
     public function projectFTEExport($filters)
     {
+        $year = (int) $filters['year'];
+        $month = (int) $filters['month'];
+        $startDate = Carbon::createFromDate($year, $month, 1);
+        $endDate = date('Y-m-d');
+
+        if ($startDate < date('Y-m-01')) {
+            $endDate = (clone $startDate)->endOfMonth()->toDateString();
+        }
+
         $employees = Employee::applyFilters($filters)
             ->get();
 
-        $employees = $this->formatProjectFTEFOrExportAll($employees);
-        $currentTimeStamp = now();
-        $filename = "FTE-$currentTimeStamp->year$currentTimeStamp->month$currentTimeStamp->day.xlsx";
+        $employees = $this->formatProjectFTEFOrExportAll($employees, $startDate, $endDate);
+        $filename = 'FTE_Report-' . $endDate . '.xlsx';
 
         return Excel::download(new ProjectFTEExport($employees), $filename);
     }
 
-    private function formatProjectFTEFOrExportAll($employees)
+    private function formatProjectFTEFOrExportAll($employees, $startDate, $endDate)
     {
         $teamMembers = [];
         foreach ($employees as $employee) {
@@ -451,9 +459,11 @@ class ProjectService implements ProjectServiceContract
             foreach ($employee->user->activeProjectTeamMembers as $activeProjectTeamMember) {
                 $teamMember = [
                     $employee->name,
-                    number_format($employee->user->ftes['main'], 2),
+                    number_format($employee->getFtes($startDate, $endDate)['main'], 2),
                     $activeProjectTeamMember->project->name,
-                    number_format($activeProjectTeamMember->fte, 2)
+                    number_format($activeProjectTeamMember->getFte($startDate, $endDate), 2),
+                    number_format($activeProjectTeamMember->getCommittedEfforts($startDate, $endDate), 2),
+                    number_format($activeProjectTeamMember->getBookedEfforts($startDate, $endDate), 2)
                 ];
                 $teamMembers[] = $teamMember;
             }
@@ -462,13 +472,18 @@ class ProjectService implements ProjectServiceContract
         return $teamMembers;
     }
 
-    public function getProjectsWithTeamMemberRequirementData()
+    public function getProjectsWithTeamMemberRequirementData($request)
     {
-        $projectsWithTeamMemberRequirement = Project::with('client')->status('active')
-            ->withCount('getTeamMembers as team_member_count')
-            ->withSum('resourceRequirement as team_member_needed', 'total_requirement')
-            ->havingRaw('team_member_needed - team_member_count')
-            ->get();
+        $projectsWithTeamMemberRequirement = Project::query()
+        ->with('client')
+        ->status('active')
+        ->withCount('getTeamMembers as team_member_count')
+        ->withSum('resourceRequirement as team_member_needed', 'total_requirement')
+        ->havingRaw('team_member_needed - team_member_count')
+        ->when($request, function ($query, $request) {
+            return $query->where('name', 'like', '%' . $request['name'] . '%');
+        })
+        ->get();
 
         $totalAdditionalResourceRequired = [];
         $data = [];
@@ -482,6 +497,7 @@ class ProjectService implements ProjectServiceContract
                 'additionalResourceRequired' => $project->team_member_needed - $project->team_member_count,
                 'teamMemberNeededByDesignation' => [],
                 'currentTeamMemberCountByDesignation' => [],
+                'object' => $project,
             ];
 
             $designations = $this->getDesignations();
@@ -496,6 +512,8 @@ class ProjectService implements ProjectServiceContract
                 if ($totalResourceDeployedCount > 0) {
                     $projectData['currentTeamMemberCountByDesignation'][$designations[$designationName]] = $totalResourceDeployedCount;
                 }
+                $count = $totalResourceRequirementCount - $totalResourceDeployedCount;
+                $projectData['countByDesignation'][$designations[$designationName]] = $count;
             }
             $data[$project->client->name][$project->name] = $projectData;
         }

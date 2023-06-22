@@ -10,9 +10,8 @@ use Modules\Project\Console\ZeroExpectedHourInProject;
 use Modules\Project\Console\FixedBudgetProject;
 use Modules\Project\Console\SendEffortSummaryCommand;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Modules\Project\Console\GoogleChat\SendDailyEffortSummaryForProjectsOnGoogleChat;
-use Modules\Project\Console\GoogleChat\RemindProjectMembersToUpdateEffortOnGoogleChat;
 use Modules\Project\Console\GoogleChat\NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat;
+use Modules\HR\Console\JobExpiredEmailToHr;
 
 class Kernel extends ConsoleKernel
 {
@@ -28,9 +27,8 @@ class Kernel extends ConsoleKernel
         ZeroExpectedHourInProject::class,
         EndedProject::class,
         FixedBudgetProject::class,
-        SendDailyEffortSummaryForProjectsOnGoogleChat::class,
-        RemindProjectMembersToUpdateEffortOnGoogleChat::class,
         NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat::class,
+        JobExpiredEmailToHr::class
     ];
 
     /**
@@ -48,15 +46,14 @@ class Kernel extends ConsoleKernel
         $schedule->command('hr:check-follow-ups')->daily();
         $schedule->command('hr:send-follow-up-mail')->dailyAt('08:00');
         $schedule->command('hr:message-for-email-verified')->dailyAt('7:00');
+        $schedule->command('hr:send-job-expired-email-to-hr')->dailyAt('11:00');
         $schedule->command('mapping-of-jobs-and-hr-rounds');
         $schedule->command('project:fixed-budget-project');
         $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');
         $schedule->command('project:zero-effort-in-project')->weekly()->mondays()->at('09:00');
         $schedule->command('project:ended-project')->dailyAt('09:00');
-        $schedule->command('project:remind-to-update-effort')->weekdays()->at('19:00');
-        $schedule->command('project:send-daily-effort-summary-google-chat')->weekdays()->at('22:30');
         $schedule->command('project:zero-expected-hours-in-project')->weekly()->tuesdays()->at('11:00');
-        $schedule->command('project:reminder-for-effortsheet-lock')->at('21:00');
+        $schedule->command('project:reminder-for-effortsheet-lock')->dailyAt('21:00');
     }
 
     /**
