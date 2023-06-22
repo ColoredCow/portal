@@ -355,7 +355,7 @@ class ProjectContractService
     public function get_user_email($id)
     {
         $contract = Contract::find($id);
-        $user = User::find($contract->id);
+        $user = User::where(['id' =>$contract->user_id])->first();
 
         return $user->email;
     }
