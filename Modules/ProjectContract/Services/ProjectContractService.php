@@ -249,15 +249,14 @@ class ProjectContractService
     public function store_internal_reveiwer($request)
     {
         $id = $request['id'];
-        $name = $request['name'];
         $email = $request['email'];
 
         $Reviewer = new ContractInternalReview;
         $Reviewer->contract_id = $id;
-        $Reviewer->name = $name;
         $Reviewer->email = $email;
         $User = User::findByEmail($email);
         $Reviewer->user_id = $User->id;
+        $Reviewer->name = $User->name;
         $Reviewer->status = "Pending";
         $Reviewer->user_type = "Finance Team";
         $Reviewer->save();
@@ -371,5 +370,9 @@ class ProjectContractService
     public function get_client_status($id)
     {
         return Reviewer::select('status')->where(['contract_id' => $id])->first();
+    }
+    public function get_users()
+    {
+        return User::all();
     }
 }

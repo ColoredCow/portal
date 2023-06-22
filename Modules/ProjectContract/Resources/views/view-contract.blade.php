@@ -124,13 +124,13 @@
                             <input type="hidden" id="id" name="id" value={{$contracts['id']}}>
                             <input type="hidden" id="role" name="role" value="finance">
                             <div class="form-group">
-                                <label for="designationfield">Finance Name</label><strong class="text-danger">*</strong></label>
-                                <input type="text" name="name" class="form-control"  id="name" aria-describedby="Help" placeholder="Name" > 
-                            </div>
-                            <div class='form-group'>
-                                <label class="field-required" for="designationfield">Finance Email</label><br>
-                                <input type="text" name="email" class="form-control"  id="email" aria-describedby="Help" placeholder="Email" >
-                            </div>   
+                                <label for="designationfield">Finance Email</label><strong class="text-danger">*</strong></label>
+                                <select type="text" name="email" id="email" class="form-control">
+                                @foreach ($users as $user)
+                                    <option value="{{$user->email}}">{{$user->email}}</option>
+                                @endforeach
+                                </select>
+                            </div>  
                             <div class="d-none text-danger" name="error" id="domainerror"></div>   
                             <button type="submit" class="btn btn-primary" id="submit">Save changes</button>  
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
