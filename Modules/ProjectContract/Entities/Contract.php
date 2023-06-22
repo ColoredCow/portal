@@ -37,8 +37,6 @@ class Contract extends Model
     }
     public function contractReviewers()
     {
-    return $this->hasMany(Reviewer::class, 'contract_id');
+        return $this->hasMany(Reviewer::class, 'contract_id');
     }
-
-    
 }

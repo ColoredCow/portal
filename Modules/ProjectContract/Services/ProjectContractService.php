@@ -16,25 +16,25 @@ use Illuminate\Support\Facades\DB;
 class ProjectContractService
 {
     public function index()
-{
-    $user = Auth::user();
+    {
+        $user = Auth::user();
 
-    $userContracts = Contract::where('user_id', $user->id)
-        ->with('internalReviewers.user', 'contractReviewers')
+        $userContracts = Contract::where('user_id', $user->id)
+            ->with('internalReviewers.user', 'contractReviewers')
+            ->get();
+
+        $reviewerContracts = Contract::whereHas('internalReviewers', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })
+        ->with(['user', 'internalReviewers' => function ($query) use ($user) {
+            $query->whereIn('user_type', ['CC Team', 'Finance Team']);
+        }, 'contractReviewers'])
         ->get();
 
-    $reviewerContracts = Contract::whereHas('internalReviewers', function ($query) use ($user) {
-        $query->where('user_id', $user->id);
-    })
-    ->with(['user', 'internalReviewers' => function ($query) use ($user) {
-        $query->whereIn('user_type', ['CC Team', 'Finance Team']);
-    }, 'contractReviewers'])
-    ->get();
+        $contracts = $userContracts->merge($reviewerContracts);
 
-    $contracts = $userContracts->merge($reviewerContracts);
-
-    return $contracts;
-}
+        return $contracts;
+    }
 
 
 
@@ -124,7 +124,7 @@ class ProjectContractService
     }
     public function view_internal_reviewer($id)
     {
-        return ContractInternalReview::where('contract_id',$id)->first();
+        return ContractInternalReview::where('contract_id', $id)->first();
     }
     public function view_comments($id)
     {

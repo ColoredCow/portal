@@ -89,7 +89,7 @@ class ProjectContractController extends Controller
 
         $users = $this->service->get_users();
 
-        return view('projectcontract::view-contract')->with('contracts', $contracts)->with('contractsmeta', $contractsmeta)->with('comments', $comment)->with('user',$user)->with('client',$client)->with('finance',$finance)->with('users',$users);
+        return view('projectcontract::view-contract')->with('contracts', $contracts)->with('contractsmeta', $contractsmeta)->with('comments', $comment)->with('user', $user)->with('client', $client)->with('finance', $finance)->with('users', $users);
     }
 
     public function sendreview(Request $request)
