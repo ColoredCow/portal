@@ -55,6 +55,16 @@ class ProjectContractService
             ['key' => 'Contract Date For Effective', 'value' => $request['contract_date_for_effective']],
             ['key' => 'Contract Date For Signing', 'value' => $request['contract_date_for_signing']],
             ['key' => 'Contract Date For Expiry', 'value' => $request['contract_expiry_date']],
+            ['key' => 'Authority Name', 'value' => $request['authority_name']],
+            ['key' => 'Phone number', 'value' => $request['phonenumber']],
+            ['key' => 'Authority Designation', 'value' => $request['designation']],
+            ['key' => 'Authority Email', 'value' => $request['email']],
+            ['key' => 'Project Summary', 'value' => $request['summary']],
+            ['key' => 'Project Cost', 'value' => $request['cost']],
+            ['key' => 'Payment Currency', 'value' => $request['currency']],
+            ['key' => 'Payment methodology', 'value' => $request['methodology']],
+            ['key' => 'Source of Payment', 'value' => $request['source']],
+            ['key' => 'GST Number', 'value' => $request['gst'] | null],
         ];
 
         $contractId = null;
@@ -114,7 +124,7 @@ class ProjectContractService
     }
     public function view_internal_reviewer($id)
     {
-        return ContractInternalReview::find($id);
+        return ContractInternalReview::where('contract_id',$id)->first();
     }
     public function view_comments($id)
     {
@@ -192,6 +202,16 @@ class ProjectContractService
             ['key' => 'Contract Date For Effective', 'value' => $request['contract_date_for_effective']],
             ['key' => 'Contract Date For Signing', 'value' => $request['contract_date_for_signing']],
             ['key' => 'Contract Date For Expiry', 'value' => $request['contract_expiry_date']],
+            ['key' => 'Authority Name', 'value' => $request['authority_name']],
+            ['key' => 'Phone number', 'value' => $request['phonenumber']],
+            ['key' => 'Authority Designation', 'value' => $request['designation']],
+            ['key' => 'Authority Email', 'value' => $request['email']],
+            ['key' => 'Project Summary', 'value' => $request['summary']],
+            ['key' => 'Project Cost', 'value' => $request['cost']],
+            ['key' => 'Payment Currency', 'value' => $request['currency']],
+            ['key' => 'Payment methodology', 'value' => $request['methodology']],
+            ['key' => 'Source of Payment', 'value' => $request['source']],
+            ['key' => 'GST Number', 'value' => $request['gst'] | null],
         ];
 
         DB::transaction(function () use ($contractId, $contractData, $contractMeta, $contractReview) {
@@ -266,11 +286,22 @@ class ProjectContractService
         if ($id->user_id == Auth::id()) {
             $contractData['status'] = 'Updated by CC team';
         }
+        $gst = $request['gst'] ?? " ";
         $contractMeta = [
             ['key' => 'Contract Name', 'value' => $request['contract_name']],
             ['key' => 'Contract Date For Effective', 'value' => $request['contract_date_for_effective']],
             ['key' => 'Contract Date For Signing', 'value' => $request['contract_date_for_signing']],
             ['key' => 'Contract Date For Expiry', 'value' => $request['contract_expiry_date']],
+            ['key' => 'Authority Name', 'value' => $request['authority_name']],
+            ['key' => 'Phone number', 'value' => $request['phonenumber']],
+            ['key' => 'Authority Designation', 'value' => $request['designation']],
+            ['key' => 'Authority Email', 'value' => $request['email']],
+            ['key' => 'Project Summary', 'value' => $request['summary']],
+            ['key' => 'Project Cost', 'value' => $request['cost']],
+            ['key' => 'Payment Currency', 'value' => $request['currency']],
+            ['key' => 'Payment methodology', 'value' => $request['methodology']],
+            ['key' => 'Source of Payment', 'value' => $request['source']],
+            ['key' => 'GST Number', 'value' => $gst],
         ];
 
         DB::transaction(function () use ($request, $contractData, $contractMeta, $contractReview) {

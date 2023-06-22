@@ -78,6 +78,134 @@
             </div>
         </div><br>
     </div>
+    <br>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-row mb-4">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="authority_name" class="field-required">Authority Name</label>
+                            <input type="text" class="form-control" name="authority_name" id="authority_name"
+                            placeholder="Enter Authority Name" value="{{$contractsmeta[4]['value']}}">
+                            <span class="text-danger">
+                                @error('authority_name')
+                                {{$message}}
+                                @enderror
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="designation" class="field-required">Authority Designation</label>
+                            <input type="text" class="form-control" name="designation" id="designation" placeholder="Enter Authority Designation" value="{{$contractsmeta[6]['value']}}">
+                            <span class="text-danger">
+                                @error('designation')
+                                {{$message}}
+                                @enderror
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-5 offset-md-1">
+                        <div class="form-group">
+                            <label for="phonenumber" class="field-required">Phone number</label>
+                            <input type="text" class="form-control" name="phonenumber" id="phonenumber" placeholder="Enter Authority phone number" value="{{$contractsmeta[5]['value']}}">
+                            <span class="text-danger">
+                                @error('phonenumber')
+                                {{$message}}
+                                @enderror
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="contract_expemailiry_date" class="field-required">Email</label>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter Authority Email" value="{{$contractsmeta[7]['value']}}">
+                            <span class="text-danger">
+                                @error('email')
+                                {{$message}}
+                                @enderror
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-row mb-4">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="summary" class="field-required">Project Summary</label>
+                            <textarea type="text" class="form-control" name="summary" id="summary" 
+                            placeholder="Add a summary of the project. 2-5 lines to set the context of what the project is about and aims to do." 
+                            rows="5" required>{{$contractsmeta[8]['value']}}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-row mb-4">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="cost" class="field-required">Project Cost</label>
+                            <textarea type="text" class="form-control" name="cost" id="cost" 
+                            placeholder="Add details about the estimated project cost. The estimated variation can be given. Also, add details of any risk/factors that need to be highlighted which might cause significant disruption to the estimated project costs." 
+                            rows="5" required>{{$contractsmeta[9]['value']}}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-row mb-4">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="currency" class="field-required">Payment Currency</label>
+                            <select name="currency" id="currency" class="form-control">
+                                @foreach ($countries ?? [] as $country)
+                                    <option value="{{ $country->currency }}">{{ $country->currency }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                        <label for="source" class="field-required">Source of Payment</label>
+                            <select name="source" id="source" class="form-control">
+                                <option value="indian">Indian</option>
+                                <option value="international">International</option>
+                            </select>
+                            <span class="badge badge-info mr-1 mb-1 fz-12">Bank charges will be applied to international payments.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-5 offset-md-1">
+                        <div class="form-group">
+                            <label for="methodology" class="field-required">Payment methodology</label>
+                            <select name="methodology" id="methodology" class="form-control">
+                                <option value="cheque">Cheque</option>
+                                <option value="bank-transfer">Bank Transfer</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="gst" class="field">GST Number</label>
+                            <input type="text" class="form-control" name="gst" id="gst"
+                            placeholder="Enter GST Number" value="{{$contractsmeta[13]['value']}}">
+                            <span class="badge badge-info mr-1 mb-1 fz-12">Indian organizations required GST number.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
     <div class="container">
             <div class="card">
                 <div class="card-body">

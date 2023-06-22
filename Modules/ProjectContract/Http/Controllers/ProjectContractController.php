@@ -11,6 +11,7 @@ use Modules\ProjectContract\Emails\ClientReview;
 use Modules\ProjectContract\Emails\ClientApproveReview;
 use Modules\ProjectContract\Emails\ClientUpdateReview;
 use Modules\ProjectContract\Emails\FinanceReview;
+use Modules\Client\Entities\Country;
 
 class ProjectContractController extends Controller
 {
@@ -51,7 +52,7 @@ class ProjectContractController extends Controller
 
         $reviewer = $this->service->view_internal_reviewer($id);
 
-        return view('projectcontract::edit-project-contract')->with('contracts', $contracts)->with('contractsmeta', $contractsmeta)->with('comments', $comment)->with('reviewer', $reviewer);
+        return view('projectcontract::edit-project-contract')->with('contracts', $contracts)->with('contractsmeta', $contractsmeta)->with('comments', $comment)->with('reviewer', $reviewer)->with('countries', Country::all());
     }
     public function delete($id)
     {
@@ -63,7 +64,7 @@ class ProjectContractController extends Controller
     {
         $clients = client::all();
 
-        return view('projectcontract::add-new-client')->with('clients', $clients);
+        return view('projectcontract::add-new-client')->with('clients', $clients)->with('countries', Country::all());
     }
     public function update(Request $ProjectContractMeta)
     {

@@ -21,16 +21,16 @@
             </div>
             <div class="d-flex flex-row mb-3">
                 <div><h4>Status:</h4></div>
-                <div><h4>{{$contracts['status']}}</h4></div>
+                <div>{{$contracts['status']}}</div>
             </div>
             <div class="d-flex flex-row mb-3">
                 <div><h4>Contract Link:</h4></div>
-                <div><h4><a href="{{$contracts['contract_link']}}"><i class="fa fa-link" aria-hidden="true"></i></a></h4></div>
+                <div><a href="{{$contracts['contract_link']}}"><i class="fa fa-link" aria-hidden="true"></i></a></div>
             </div>
             @foreach ($contractsmeta as $contractmeta)        
                 <div class="d-flex flex-row mb-3">
                     <div><h4>{{$contractmeta['key']}}:</h4></div>
-                    <div><h4>{{$contractmeta['value']}}</h4></div>
+                    <div>{{$contractmeta['value']}}</div>
                 </div>
             @endforeach
         </div>
