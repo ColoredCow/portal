@@ -16,6 +16,29 @@
 <div class="container">
     <div class="card">
         <div class="card-body text-center">
+            <div class="container">
+                @if ($user->status == 'Approved')
+                    <span class="badge badge-success badge-pill mr-1 mb-1 fz-12">CC Team: {{$user->status}}</span>
+                @else
+                    <span class="badge badge-warning badge-pill mr-1 mb-1 fz-12">CC Team: {{$user->status}}</span>
+                @endif
+
+                @if ($client)
+                    @if ($client->status == 'Approved')
+                        <span class="badge badge-success badge-pill mr-1 mb-1 fz-12">Client - {{$client->status}}</span>
+                    @else
+                        <span class="badge badge-warning badge-pill mr-1 mb-1 fz-12">Client - {{$client->status}}</span>
+                    @endif
+                @endif
+
+                @if ($finance)
+                    @if ($finance->status == 'Approved')
+                        <span class="badge badge-success badge-pill mr-1 mb-1 fz-12">Finance Team - {{$finance->status}}</span>
+                    @else
+                        <span class="badge badge-warning badge-pill mr-1 mb-1 fz-12">Finance Team - {{$finance->status}}</span>
+                    @endif
+                @endif
+            </div>
             <div class="d-flex flex-row-reverse">
                 <a class="btn btn-success" href="{{route('projectcontract.edit', $contracts['id'])}}"><i class="fa fa-edit mr-1" ></i>Edit & Approve</a>
             </div>
@@ -39,7 +62,7 @@
 <br>
 <div class="container">
     <div class="form-group">
-        @if ($status->status == "Pending")
+        @if ($user->status == "Pending")
             <a class="btn btn-success" href="{{route('projectcontract.internalresponse', $contracts['id'])}}"><i class="fa fa-check mr-1" ></i>Approve</a>
         @else
             <a class="btn btn-success" disabled><i class="fa fa-check mr-1" ></i>Approve</a>

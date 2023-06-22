@@ -364,4 +364,12 @@ class ProjectContractService
     {
         return ContractInternalReview::select('status')->where(['contract_id' => $id, 'user_id' => Auth::id()])->first();
     }
+    public function get_finance_status($id)
+    {
+        return ContractInternalReview::select('status')->where(['contract_id' => $id, 'user_type' => 'Finance Team'])->first();
+    }
+    public function get_client_status($id)
+    {
+        return Reviewer::select('status')->where(['contract_id' => $id])->first();
+    }
 }
