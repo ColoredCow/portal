@@ -28,6 +28,8 @@ class Project extends Model implements Auditable
 
     protected $dates = ['start_date', 'end_date'];
 
+    protected $appends = ['velocity', 'current_hours_for_month', 'velocity_color_class'];
+
     protected static function newFactory()
     {
         return new ProjectFactory();
