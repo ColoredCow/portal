@@ -27,10 +27,11 @@ class BookCategoryController extends Controller
         $booksBorrowedCount = auth()->user()->booksBorrower->count();
 
         return view('knowledgecafe.library.categories.index', [
-        'books'=> $books,
-        'categories'=> $this->formatCategoryData($categories),
-        'wishlistedBooksCount'=> $wishlistedBooksCount,
-        'booksBorrowedCount'=> $booksBorrowedCount]);
+            'books' => $books,
+            'categories' => $this->formatCategoryData($categories),
+            'wishlistedBooksCount' => $wishlistedBooksCount,
+            'booksBorrowedCount' => $booksBorrowedCount
+        ]);
     }
 
     /**
