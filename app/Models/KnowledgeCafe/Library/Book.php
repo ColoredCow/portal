@@ -49,7 +49,7 @@ class Book extends Model
 
     public static function getByCategoryName($categoryName)
     {
-        if (!$categoryName) {
+        if (! $categoryName) {
             return false;
         }
 
