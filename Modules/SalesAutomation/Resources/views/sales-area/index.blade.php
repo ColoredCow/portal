@@ -62,7 +62,7 @@
 						<div class="container-fluid d-flex justify-content-center">
 							<span class="text-primary">NO DATA FOUND</span>
 						</div>
-                    			<td>
+                    			</td>
 	          		 </tr>
 			@endforelse
 	    </tbody>
