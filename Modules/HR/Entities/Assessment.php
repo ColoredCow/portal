@@ -22,6 +22,10 @@ class Assessment extends Model
 
     public function assessmentReviewStatus($assessment, $role, $key)
     {
+        $individualAssessmentId = false;
+        $individualAssessmentStatus = false;
+        $individualAssessmentType = false;
+
         foreach ($assessment->individualAssessments as $individualAssessment) {
             $individualAssessmentId = $individualAssessment->assessment_id == $assessment->id;
             $individualAssessmentType = $individualAssessment->type == $role;

@@ -50,11 +50,11 @@ class EmployeeController extends Controller
                 ->get();
         } else {
             $employeeData = Employee::where('staff_type', $name)
+                ->applyFilters($filters)
                 ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
                 ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
-                ->whereNull('project_team_members.ended_on')
                 ->groupBy('employees.user_id')
-                ->orderBy('project_count', 'desc')
+                ->orderby('project_count', 'desc')
                 ->get();
         }
         if ($search != '') {

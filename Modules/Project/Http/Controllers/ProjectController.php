@@ -78,6 +78,7 @@ class ProjectController extends Controller
             'daysTillToday' => $daysTillToday,
         ]);
     }
+
     public function destroy(ProjectRequest $request, Project $project)
     {
         $project->update(
