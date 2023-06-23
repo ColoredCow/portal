@@ -40,33 +40,31 @@
                 @endif
             </div>
             <div class="d-flex flex-row-reverse">
-                <a class="btn btn-success" href="{{route('projectcontract.edit', $contracts['id'])}}"><i class="fa fa-edit mr-1" ></i>Edit & Approve</a>
+                @if ($user and $client and $finance and $user->status == 'Approved' and $client->status == 'Approved' and $finance->status == 'Approved')
+                    <a class="btn btn-success"><i class="fa fa-file-pdf-o mr-1" ></i>Generate Contract</a>
+                @else    
+                    <a class="btn btn-success" href="{{route('projectcontract.edit', $contracts['id'])}}"><i class="fa fa-edit mr-1" ></i>Edit & Approve</a>
+                @endif
             </div>
             <div>
-                <h2 class="row p-1">Contract Status</h2>
+                <h4 class="row p-1">Contract Status</h4>
                 <div class="col-md-6">
                     <div class="d-flex flex-row">
-                        <div class="p-1"><h4>Status:</h4></div>
-                        <div class="p-1"><h4>{{$contracts['status']}}</h4></div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="d-flex flex-row mb-3">
-                        <div class="p-1"><h4>Contract Link:</h4></div>
-                        <div class="p-1"><h4><a href="{{$contracts['contract_link']}}"><i class="fa fa-link" aria-hidden="true"></i></a></h4></div>
+                        <div><p><strong>Status:</strong></p></div>
+                        <div><p>{{$contracts['status']}}</p></div>
                     </div>
                 </div>
             </div>
             <hr>
-            <div class="">
+            <div>
                 @foreach($contractsmeta as $group => $metadata)
-                    <h2 class="row p-1">{{ $group }}</h2>
+                    <h4 class="row p-1">{{ $group }}</h4>
                     <div> 
                     @foreach($metadata as $item)
                     <div class="d-flex flex-column">
                         <div class="d-flex flex-row">
-                            <h4 class="p-1">{{ $item->key }}:</h4> 
-                            <h4 class="p-1">{{ $item->value }}</h4>
+                            <p><strong>{{ $item->key }}:</strong></p> 
+                            <p>{{ $item->value }}</p>
                         </div>
                     </div>
                     @endforeach
@@ -80,9 +78,6 @@
 <br>
 <div class="container">
     <div class="form-group">
-        @if ($user and $client and $finance and $user->status == 'Approved' and $client->status == 'Approved' and $finance->status == 'Approved')
-            <a class="btn btn-success"><i class="fa fa-file-pdf-o mr-1" ></i>Generate Contract</a>
-        @endif
         @if ($user->status == "Pending")
             <a class="btn btn-success" href="{{route('projectcontract.internalresponse', $contracts['id'])}}"><i class="fa fa-check mr-1" ></i>Approve</a>
         @else
