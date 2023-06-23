@@ -49,20 +49,20 @@ class ProjectContractService
         ];
 
         $contractMeta = [
-            ['key' => 'Contract Name', 'value' => $request['contract_name']],
-            ['key' => 'Contract Date For Effective', 'value' => $request['contract_date_for_effective']],
-            ['key' => 'Contract Date For Signing', 'value' => $request['contract_date_for_signing']],
-            ['key' => 'Contract Date For Expiry', 'value' => $request['contract_expiry_date']],
-            ['key' => 'Authority Name', 'value' => $request['authority_name']],
-            ['key' => 'Phone number', 'value' => $request['phonenumber']],
-            ['key' => 'Authority Designation', 'value' => $request['designation']],
-            ['key' => 'Authority Email', 'value' => $request['email']],
-            ['key' => 'Project Summary', 'value' => $request['summary']],
-            ['key' => 'Project Cost', 'value' => $request['cost']],
-            ['key' => 'Payment Currency', 'value' => $request['currency']],
-            ['key' => 'Payment methodology', 'value' => $request['methodology']],
-            ['key' => 'Source of Payment', 'value' => $request['source']],
-            ['key' => 'GST Number', 'value' => $request['gst'] | null],
+            ['key' => 'Contract Name', 'value' => $request['contract_name'], 'group' => 'Contract Details'],
+            ['key' => 'Contract Date For Effective', 'value' => $request['contract_date_for_effective'], 'group' => 'Contract Details'],
+            ['key' => 'Contract Date For Signing', 'value' => $request['contract_date_for_signing'], 'group' => 'Contract Details'],
+            ['key' => 'Contract Date For Expiry', 'value' => $request['contract_expiry_date'], 'group' => 'Contract Details'],
+            ['key' => 'Authority Name', 'value' => $request['authority_name'], 'group' => 'Signing Authority'],
+            ['key' => 'Phone number', 'value' => $request['phonenumber'], 'group' => 'Signing Authority'],
+            ['key' => 'Authority Designation', 'value' => $request['designation'], 'group' => 'Signing Authority'],
+            ['key' => 'Authority Email', 'value' => $request['email'], 'group' => 'Signing Authority'],
+            ['key' => 'Project Summary', 'value' => $request['summary'], 'group' => 'Project Summary'],
+            ['key' => 'Project Cost', 'value' => $request['cost'], 'group' => 'Project Cost'],
+            ['key' => 'Payment Currency', 'value' => $request['currency'], 'group' => 'Payment Methodology'],
+            ['key' => 'Payment methodology', 'value' => $request['methodology'], 'group' => 'Payment Methodology'],
+            ['key' => 'Source of Payment', 'value' => $request['source'], 'group' => 'Payment Methodology'],
+            ['key' => 'GST Number', 'value' => $request['gst'] | null, 'group' => 'Payment Methodology'],
         ];
 
         $contractId = null;
@@ -115,6 +115,10 @@ class ProjectContractService
     public function view_contractmeta($id)
     {
         return Contract::find($id)->contractMeta()->get();
+    }
+    public function view_contractmeta_group($id)
+    {
+        return Contract::find($id)->contractMeta()->get()->groupBy('group');
     }
     public function view_reviewer($id, $email)
     {

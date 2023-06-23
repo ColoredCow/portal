@@ -77,7 +77,7 @@ class ProjectContractController extends Controller
     {
         $contracts = $this->service->view_contract($id);
 
-        $contractsmeta = $this->service->view_contractmeta($id);
+        $contractsmeta = $this->service->view_contractmeta_group($id);
 
         $comment = $this->service->view_comments($id);
 
