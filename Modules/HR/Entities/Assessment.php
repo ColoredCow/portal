@@ -30,7 +30,7 @@ class Assessment extends Model
             $individualAssessmentId = $individualAssessment->assessment_id == $assessment->id;
             $individualAssessmentType = $individualAssessment->type == $role;
             $individualAssessmentStatus = $individualAssessment->status == $key;
-            
+      
             if ($individualAssessmentId && $individualAssessmentType && $individualAssessmentStatus) {
                 break;
             }
