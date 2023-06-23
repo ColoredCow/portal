@@ -57,7 +57,7 @@
 				<tr>
                     			<td colspan="2">
 						<div class="d-flex justify-content-center">
-							<img src="{{ URL('images/no-result.png') }}" class='img-center' alt="" width="50%">
+							<img src="{{ URL('images/no-result.png') }}" class='img-center' width="50%">
 						</div>
 						<div class="container-fluid d-flex justify-content-center">
 							<span class="text-primary">NO DATA FOUND</span>
