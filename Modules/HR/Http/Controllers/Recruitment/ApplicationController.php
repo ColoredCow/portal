@@ -71,6 +71,13 @@ abstract class ApplicationController extends Controller
             'should_skip_page' => false,
         ]);
 
+        $hrJobId = request()->has('hr_job_id') ? '&hr_job_id=' . request('hr_job_id') : '';
+        $graduationYear = request()->has('end-year') ? '&end-year=' . request('end-year') : '';
+        $search = request()->has('search') ? '&search=' . request('search') : '';
+        $hrUniversityId = request()->has('hr_university_id') ? '&hr_university_id=' . request('hr_university_id') : '';
+        $sortBy = request()->has('sort_by') ? '&sort_by=' . request('sort_by') : '';
+        $queryFilters = $hrJobId . $search . $hrUniversityId . $sortBy . $graduationYear;
+
         //#TO DO: Move this logic to application service.
         $filters = [
             'status' => request()->get('status') ?: 'non-rejected',
@@ -161,7 +168,7 @@ abstract class ApplicationController extends Controller
             }
         }
 
-        return view('hr.application.index')->with($attr);
+        return view('hr.application.index')->with(array_merge($attr, ['queryFilters' => $queryFilters]));
     }
 
     /**
