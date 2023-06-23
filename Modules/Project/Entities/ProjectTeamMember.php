@@ -4,7 +4,6 @@ namespace Modules\Project\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 use Modules\Project\Database\Factories\ProjectTeamMemberFactory;
 use Modules\User\Entities\User;
 
@@ -113,17 +112,9 @@ class ProjectTeamMember extends Model
         return $this->current_actual_effort >= $this->current_expected_effort ? 'border border-success' : 'border border-danger';
     }
 
-    public function getFte($filters)
+    public function getFte($startDate, $endDate)
     {
         $project = new Project;
-        $year = (int) $filters['year'];
-        $month = (int) $filters['month'];
-        $startDate = Carbon::createFromDate($year, $month, 1);
-        $endDate = date('Y-m-d');
-
-        if ($startDate < date('Y-m-01')) {
-            $endDate = (clone $startDate)->endOfMonth();
-        }
 
         $workingDays = count($project->getWorkingDaysList($startDate, $endDate));
 
@@ -132,5 +123,20 @@ class ProjectTeamMember extends Model
         $actualEffort = $this->getCurrentActualEffortAttribute($startDate);
 
         return round($actualEffort / $requiredEffort, 2);
+    }
+
+    public function getCommittedEfforts($startDate, $endDate)
+    {
+        $totalWorkingDays = count($this->project->getWorkingDaysList($startDate, $endDate));
+
+        return $this->daily_expected_effort * $totalWorkingDays;
+    }
+
+    public function getBookedEfforts($startDate, $endDate)
+    {
+        return $this->projectTeamMemberEffort()
+        ->where('added_on', '>=', $startDate)
+        ->where('added_on', '<=', $endDate)
+        ->sum('actual_effort');
     }
 }

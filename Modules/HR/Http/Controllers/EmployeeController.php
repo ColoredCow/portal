@@ -2,14 +2,14 @@
 
 namespace Modules\HR\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\EmployeeService;
-use Modules\HR\Entities\Employee;
-use Illuminate\Routing\Controller;
-use Modules\HR\Entities\HrJobDomain;
-use Modules\HR\Entities\HrJobDesignation;
-use Modules\HR\Entities\Job;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Modules\HR\Entities\Employee;
+use Modules\HR\Entities\HrJobDesignation;
+use Modules\HR\Entities\HrJobDomain;
+use Modules\HR\Entities\Job;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\HR\Entities\IndividualAssessment;
 use Modules\HR\Entities\Assessment;
@@ -50,11 +50,11 @@ class EmployeeController extends Controller
                 ->get();
         } else {
             $employeeData = Employee::where('staff_type', $name)
+                ->applyFilters($filters)
                 ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
                 ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
-                ->whereNull('project_team_members.ended_on')
                 ->groupBy('employees.user_id')
-                ->orderBy('project_count', 'desc')
+                ->orderby('project_count', 'desc')
                 ->get();
         }
         if ($search != '') {
@@ -99,7 +99,7 @@ class EmployeeController extends Controller
         return view('hr.employees.fte-handler')->with([
             'domainName' => $domainName,
             'employees' => $employees,
-            'jobName' => $jobName
+            'jobName' => $jobName,
         ]);
     }
 
@@ -113,8 +113,8 @@ class EmployeeController extends Controller
     public function reviewDetails(Employee $employee)
     {
         $assessments = Assessment::where('reviewee_id', $employee->id)
-        ->orderBy('created_at', 'desc')
-        ->get();
+            ->orderBy('created_at', 'desc')
+            ->get();
         $employees = Employee::all();
 
         return view('hr.employees.review-details', ['employee' => $employee, 'employees' => $employees, 'assessments' => $assessments]);
