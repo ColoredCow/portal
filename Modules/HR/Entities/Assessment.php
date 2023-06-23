@@ -20,7 +20,8 @@ class Assessment extends Model
         return $this->hasMany(IndividualAssessment::class);
     }
 
-    public function assessmentReviewStatus($assessment, $role, $key) {
+    public function assessmentReviewStatus($assessment, $role, $key)
+    {
         $individualAssessmentId = false;
         $individualAssessmentStatus = false;
         $individualAssessmentType = false;
@@ -29,7 +30,7 @@ class Assessment extends Model
             $individualAssessmentId = $individualAssessment->assessment_id == $assessment->id;
             $individualAssessmentType = $individualAssessment->type == $role;
             $individualAssessmentStatus = $individualAssessment->status == $key;
-    
+            
             if ($individualAssessmentId && $individualAssessmentType && $individualAssessmentStatus) {
                 break;
             }
