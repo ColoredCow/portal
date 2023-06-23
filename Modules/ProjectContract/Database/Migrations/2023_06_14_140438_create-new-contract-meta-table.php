@@ -17,7 +17,7 @@ class CreateNewContractMetaTable extends Migration
             $table->id();
             $table->unsignedBigInteger('contract_id');
             $table->string('key');
-            $table->string('value', '65535');
+            $table->string('value', 65535);
             $table->string('group');
             $table->timestamps();
             $table->foreign('contract_id')->references('id')->on('contracts');
