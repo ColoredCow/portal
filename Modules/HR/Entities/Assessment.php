@@ -35,7 +35,7 @@ class Assessment extends Model
                 break;
             }
         }
-    
+
         return $individualAssessmentId && $individualAssessmentType && $individualAssessmentStatus;
     }
 }
