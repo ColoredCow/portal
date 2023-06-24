@@ -40,11 +40,11 @@ class EmployeeController extends Controller
         $name = request('name');
         $currentQuarter = Carbon::now()->quarter;
         $currentYear = Carbon::now()->year;
-        if ($request->status === 'pending') {
+        if ($request->status === 'current') {
             $employeeData = Employee::select('employees.*', 'individual_assessments.status')
                 ->join('assessments', 'assessments.reviewee_id', '=', 'employees.id')
                 ->join('individual_assessments', 'individual_assessments.assessment_id', '=', 'assessments.id')
-                ->whereIn('individual_assessments.status', ['pending', 'in-progress'])
+                ->whereIn('individual_assessments.status', ['pending', 'in-progress', 'completed'])
                 ->whereRaw('YEAR(assessments.created_at) = ?', [strval($currentYear)])
                 ->whereRaw('QUARTER(assessments.created_at) = ?', [$currentQuarter])
                 ->get();
