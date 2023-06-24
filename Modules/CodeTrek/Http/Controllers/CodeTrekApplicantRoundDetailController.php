@@ -54,6 +54,8 @@ class CodeTrekApplicantRoundDetailController extends Controller
     {
         $this->service->update($request, $applicantDetail);
 
+        session()->flash('success', 'Feedback updated successfully!');
+
         return redirect()->back();
     }
 
