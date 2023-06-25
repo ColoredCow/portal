@@ -9,9 +9,14 @@
                 <div v-if="this.projects.length > 0" class="list list-group unstyled-list">
                     <div v-for="(project, index) in this.projects" :key="index">
                         <div class="row" >
-                            <div class="col-9 text-left d-flex align-items-center">
-                                <div class="w-250">
+                            <div class="col-12 text-left d-flex align-items-center">
+                                <div class="w-300">
                                     <a :href="'/projects/'+project.id+'/show/'">{{ project.name }}</a>
+                                    <span :class="project.velocity_color_class + ' font-weight-bold' + ' ml-2'">
+                                    <a :href="'/projects/'+project.id+'/show/'" class="text-danger">
+                                    <i class="mr-0.5 fa fa-external-link-square"></i>
+                                    </a> 
+                                    {{ project.velocity + ' (' + project.current_hours_for_month + ' Hrs.)' }} </span>
                                 </div>
                             </div>
                         </div>
