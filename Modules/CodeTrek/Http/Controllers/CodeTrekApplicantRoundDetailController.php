@@ -71,10 +71,9 @@ class CodeTrekApplicantRoundDetailController extends Controller
         } else {
             $applicant->status = config('codetrek.status.completed.slug');
         }
-
         $applicant->save();
 
-        return redirect()->route('codetrek.index');
+        return redirect()->back()->with('success', 'Status updated successfully.');
     }
 
     /**
