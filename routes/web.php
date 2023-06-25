@@ -120,7 +120,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/invoice-template', 'SettingController@updateInvoiceTemplates')->name('setting.invoice.update');
         Route::prefix('bank-details')->group(function () {
             Route::get('/', 'bankController@index')->name('settings.bank-details');
-            Route::post('/update/', 'bankController@update')->name('settings.bank-details.update');
         });
     });
 
