@@ -2,7 +2,6 @@
 
 namespace Modules\Report\Services\User;
 
-use Carbon\Carbon;
 use Modules\Project\Entities\ProjectTeamMemberEffort;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectTeamMember;
