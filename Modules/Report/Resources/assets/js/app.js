@@ -14,13 +14,13 @@ $(function() {
 		const startDate = $("#startDate").val();
 		const endDate = $("#endDate").val();
 		getData(
-			{ 
-				type: "revenue-trend-client-wise", 
+			{
+				type: "revenue-trend-client-wise",
 				filters: {
 					"client_id": clientId,
 					"start_date": startDate,
 					"end_date": endDate
-				} 
+				}
 			},
 			clientWiseRevenueTrendsReport
 		);
@@ -193,20 +193,40 @@ function userFteTrendsReport(reportFteData) {
 		type: reportFteData.graph_type || "bar",
 		data: chartData,
 		options: {
-			scales: {
+		  scales: {
 				yAxes: [{
 					ticks: {
 						beginAtZero: true,
-					}
-				}]
-			}	
-		}
+			  },
+				}],
+		  },
+			tooltips: {
+				callbacks: {
+					afterFooter: function (tooltipItem, data) {
+						return generateNameTooltip(tooltipItem, reportFteData);
+					},
+				},
+		  },
+		},
 	};
 
 	new Chart(canvasElementId, chartConfig);
+	function generateNameTooltip(tooltipItem, reportFteData) {
+		const index = tooltipItem[0].index;
+		const projectData = reportFteData.projectData;
+		const projectNames = Object.keys(projectData);
+		let tooltipLabel = "";
+
+		projectNames.forEach((name) => {
+			const hours = projectData[name].projectBookedHours[index];
+			if (hours > 0) {
+				tooltipLabel += `${name}: ${hours} hr \n`;
+			}
+		});
+
+		return tooltipLabel;
+	  }
 }
-
-
 
 function getData(params, callback) {
 	url = $("#get_report_data_url").val();
