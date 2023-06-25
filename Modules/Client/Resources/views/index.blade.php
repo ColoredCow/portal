@@ -9,7 +9,7 @@
         @endcan
     </div>
     <div class="d-md-flex justify-content-between mt-5 mb-2">
-        <h4 class="mb-1 pb-1">{{ config('client.status')[request()->input('status', 'active')] }} Clients ({{ $count }})</h4>
+        <h4 class="mb-1 pb-1">{{ config('client.status')[request()->input('status', 'active')] }} Clients</h4>
         <div>
             <form action="{{ route('client.index') }}" method="GET">
                 <div class="d-flex align-items-center">
@@ -23,7 +23,7 @@
     <div class='d-md-none mb-2'>
         @can('clients.create')
             <div class="d-flex flex-row-reverse">
-                <a href= "{{ route('client.create') }}" class="btn btn-success text-white mr-1"><i class="fa fa-plus"></i>Add new client</a>
+                <a href= "{{ route('client.create') }}" class="btn btn-success text-white"><i class="fa fa-plus mr-1"></i>Add new client</a>
             </div>
         @endcan
         @include('client::menu_header')

@@ -71,6 +71,15 @@
                                 @endfor
                             </select>
                         </div>
+                        <div class="form-group offset-md-1 col-md-5">
+                            <label for="centre" class="field-required">Centre Name</label>
+                            <select name="centre" id="centreId" class="form-control" required>
+                                <option value="">Select Centre Name</option>
+                                @foreach($centres as $centre)
+                                    <option value="{{ $centre->id }}" {{ $applicant->centre_id == $centre->id ? 'selected' : '' }}>{{ $centre->centre_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary save-btn">Save</button>
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">Delete</button>
