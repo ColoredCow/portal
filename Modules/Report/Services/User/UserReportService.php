@@ -49,7 +49,7 @@ class UserReportService
 
             foreach ($projectIds as $projectId) {
                 $projectTeamMemberIds = ProjectTeamMember::where('project_id', $projectId)->where('team_member_id', $user->id)->get('id');
-                $teamMemberActualEffort = ProjectTeamMemberEffort::whereIn('project_team_member_id', $projectTeamMemberIds)->whereMonth('added_on', $monthStartDate)->whereYear('added_on', $monthStartDate)->sum('actual_effort');    
+                $teamMemberActualEffort = ProjectTeamMemberEffort::whereIn('project_team_member_id', $projectTeamMemberIds)->whereMonth('added_on', $monthStartDate)->whereYear('added_on', $monthStartDate)->sum('actual_effort');
                 $projectName = Project::where('id', $projectId)->value('name');
                 $projectData[$projectName]['projectBookedHours'][$index] = $teamMemberActualEffort;
                 $totalEffortInMonth += $teamMemberActualEffort;
