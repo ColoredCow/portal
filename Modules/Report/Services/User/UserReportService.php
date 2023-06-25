@@ -64,6 +64,7 @@ class UserReportService
             $index++;
             $startMonth->addMonth();
         }
+
         return [
             'labels' => $months,
             'data' => $fteData,
