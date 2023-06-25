@@ -1,8 +1,10 @@
 @section('popup',' Add new applicant')
 
-<button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#photoGallery">
-    <a><i class="fa fa-plus"></i>@yield('popup')</a>
-</button>
+@can('codetrek_applicant.create')
+    <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#photoGallery">
+        <a><i class="fa fa-plus"></i>@yield('popup')</a>
+    </button>
+@endcan
 <div id="add_applicant_details_form">
     <div class="modal fade" id="photoGallery" tabindex="-1" role="dialog" aria-labelledby="photoGalleryLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
