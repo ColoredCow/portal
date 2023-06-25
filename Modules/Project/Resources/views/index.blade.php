@@ -116,7 +116,7 @@
                                             @else
                                                 @php
                                                     $team_member_ids = $project->getTeamMembers->pluck('team_member_id')->toArray();
-                                                    $keyAccountmanager = $project->getKeyAccountManagerAttribute(); 
+                                                    $keyAccountmanager = $project->key_account_manager; 
                                                     $keyAccountmanagerId = $keyAccountmanager ? $keyAccountmanager->id : null;
                                                 @endphp
                                                 @if (in_array(auth()->user()->id, $team_member_ids) || auth()->user()->id === $keyAccountmanagerId)
