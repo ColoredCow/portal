@@ -83,22 +83,15 @@
                                     </form>
                                 </div>
                             </li>
+                            <button id="applicant-toggle" class="btn btn-link">
+                                <i class="fa fa-bars border-0 text-dark"></i>
+                            </button>
+                            @include('codetrek::sidebar')
                         @endauth
                     </ul>
                 </div>
             </div>
         </nav>
-
-        @if (session('status'))
-            <div class="w-full flex-center">
-                <div class="alert alert-success alert-dismissible fade show position-absolute z-index-1100 fz-14 shadow mb-5 ml-5 top-8.33" role="alert" id="statusAlert">
-                    <span>{!! session('status') !!}</span>
-                    <button type="button" class="close pt-1.5" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>
-        @endif
 
         <main class="py-4 mx-4">
             @yield('content')

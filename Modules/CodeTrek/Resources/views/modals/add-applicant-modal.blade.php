@@ -1,8 +1,10 @@
 @section('popup',' Add new applicant')
 
-<button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#photoGallery">
-    <a><i class="fa fa-plus"></i>@yield('popup')</a>
-</button>
+@can('codetrek_applicant.create')
+    <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#photoGallery">
+        <a><i class="fa fa-plus"></i>@yield('popup')</a>
+    </button>
+@endcan
 <div id="add_applicant_details_form">
     <div class="modal fade" id="photoGallery" tabindex="-1" role="dialog" aria-labelledby="photoGalleryLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -68,6 +70,15 @@
                                     @for ($i=$endYear; $i>=1990; $i--)
                                         <option value="{{$i}}">{{$i}}</option>
                                     @endfor
+                                </select>
+                            </div>
+                            <div class="form-group offset-md-1 col-md-5">
+                                <label for="centre" class="field-required">Centre Name</label>
+                                <select name="centre" id="centreId" class="form-control" required>
+                                    <option value="">Select Centre Name</option>
+                                    @foreach($centres as $centre)
+                                        <option value="{{ $centre->id }}">{{ $centre->centre_name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

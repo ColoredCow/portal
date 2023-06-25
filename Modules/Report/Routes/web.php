@@ -36,5 +36,10 @@ Route::prefix('report')->group(function () {
             Route::get('/detailed', 'ClientRevenueReportController@detailed')->name('reports.finance.revenue-by-client.detailed');
             Route::get('client-revenue-report-export', 'ClientRevenueReportController@clientRevenueReportExport')->name('reports.finance.client-revenue.report.export');
         });
+
+        Route::prefix('monthly-sales-register')->group(function () {
+            Route::get('/', 'MonthlySalesRegisterController@index')->name('reports.finance.monthly-sales-register.index');
+            Route::get('/export', 'MonthlySalesRegisterController@exportReport')->name('reports.finance.monthly-sales-register.export');
+        });
     });
 });

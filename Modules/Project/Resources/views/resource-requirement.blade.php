@@ -17,6 +17,9 @@
                     <input type="text" name="name" class="form-control" id="name"
                         placeholder="Enter the project name" value="{{ request()->get('name') }}">
                     <button class="btn btn-info ml-2 text-white">Search</button>
+                    <a  class="btn btn-danger ml-2 pt-1.5 pb-1.5 text-white" href ="{{ route('project.resource-requirement')}}" >
+                        Clear
+                    </a> 
                 </form>
             </div>
         </div>
@@ -110,7 +113,9 @@
                                     @endforeach
                                 </td>  
                                 <td> 
-                                    <div class="d-flex justify-content-center"> {{ $projectData['additionalResourceRequired'] }} </div>
+                                    @foreach ($projectData['countByDesignation'] as $designationName => $count)
+                                        <div> {{ $designationName }} : {{ $count }} </div>
+                                    @endforeach
                                 </td> 
                                 <td>
                                     <div>

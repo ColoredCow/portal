@@ -84,6 +84,7 @@ class ProjectTeamMember extends Model
         return $this->current_expected_effort ? round($this->current_actual_effort / $this->current_expected_effort, 2) : 0;
     }
 
+    // TO DO: Need to rename this function as getCurrentFteAttribute()
     public function getFteAttribute()
     {
         $project = new Project;
@@ -109,5 +110,33 @@ class ProjectTeamMember extends Model
         }
 
         return $this->current_actual_effort >= $this->current_expected_effort ? 'border border-success' : 'border border-danger';
+    }
+
+    public function getFte($startDate, $endDate)
+    {
+        $project = new Project;
+
+        $workingDays = count($project->getWorkingDaysList($startDate, $endDate));
+
+        $requiredEffort = $workingDays * config('efforttracking.minimum_expected_hours');
+
+        $actualEffort = $this->getCurrentActualEffortAttribute($startDate);
+
+        return round($actualEffort / $requiredEffort, 2);
+    }
+
+    public function getCommittedEfforts($startDate, $endDate)
+    {
+        $totalWorkingDays = count($this->project->getWorkingDaysList($startDate, $endDate));
+
+        return $this->daily_expected_effort * $totalWorkingDays;
+    }
+
+    public function getBookedEfforts($startDate, $endDate)
+    {
+        return $this->projectTeamMemberEffort()
+        ->where('added_on', '>=', $startDate)
+        ->where('added_on', '<=', $endDate)
+        ->sum('actual_effort');
     }
 }

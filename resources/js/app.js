@@ -2079,3 +2079,24 @@ $("#responseModal").on("submit",function(e){
 		},
 	});
 });
+
+$(function () {
+	$("#applicant-toggle").click(function () {
+		var sidebar = $("#applicant-sidebar");
+		if (sidebar.css("right") === "0px") {
+			sidebar.css("right", "-250px");
+		} else {
+			sidebar.css("right", "0");
+		}
+	});
+
+	$(".applicant-list li").click(function () {
+		var applicantId = $(this).data("id");
+	});
+
+	$(document).click(function (event) {
+		if (!$(event.target).closest("#applicant-toggle, #applicant-sidebar").length) {
+			$("#applicant-sidebar").css("right", "-250px");
+		}
+	});
+});

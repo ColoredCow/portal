@@ -80,6 +80,7 @@ class ProjectController extends Controller
             'daysTillToday' => $daysTillToday,
         ]);
     }
+
     public function destroy(ProjectRequest $request, Project $project)
     {
         $project->update(
@@ -148,7 +149,7 @@ class ProjectController extends Controller
         return $this->service->projectFTEExport($filters);
     }
 
-    public function projectResource()
+    public function projectResource(Request $request)
     {
         $resourceData = $this->service->getProjectsWithTeamMemberRequirementData(request()->all());
         $domainName = HrJobDomain::all();
