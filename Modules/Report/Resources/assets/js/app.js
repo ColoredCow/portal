@@ -218,8 +218,10 @@ function userFteTrendsReport(reportFteData) {
 		let tooltipLabel = "";
 
 		projectNames.forEach((name) => {
-		  const hours = projectData[name].projectBookedHours[index];
-			tooltipLabel += `${name}: ${hours} hr \n`;
+			const hours = projectData[name].projectBookedHours[index];
+			if (hours > 0) {
+				tooltipLabel += `${name}: ${hours} hr \n`;
+			}
 		});
 
 		return tooltipLabel;
