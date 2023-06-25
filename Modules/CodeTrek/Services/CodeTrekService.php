@@ -25,7 +25,28 @@ class CodeTrekService
         ->paginate(config('constants.pagination_size'))
         ->appends(request()->except('page'));
 
-        return ['applicants' => $applicants];
+        $applicantsData = CodeTrekApplicant::whereIn('status', ['active', 'inactive', 'completed'])
+        ->when($search, function ($query) use ($search) {
+            return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
+        })
+        ->groupBy('status')
+        ->selectRaw('count(status) as total, status')
+        ->get();
+
+        $statusCounts = [
+            'active' => 0,
+            'inactive' => 0,
+            'completed' => 0
+        ];
+        foreach ($applicantsData as $data) {
+            $statusCounts[$data->status] = $data->total;
+        }
+
+        return [
+            'applicants' => $applicants,
+            'applicantsData' => $applicantsData,
+            'statusCounts' => $statusCounts
+        ];
     }
     public function store($data)
     {
