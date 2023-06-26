@@ -79,8 +79,8 @@
                                  @csrf
                                  <button type="submit" name="action" value="completed" class="btn btn-dark ml-2">Mark
                                      Completed</button>
-                                 <button type="submit" name="action" value="inactive" class="btn btn-danger ml-1">Mark
-                                     Inactive</button>
+                                <button type="submit" name="action" value="{{$applicant->status == "active"? "inactive" : "active"}}" class="btn btn-danger ml-1">
+                                    Mark {{ucfirst( $applicant->status == "active" ? "inactive" : "active")}} </button>  
                              </form>
                      </div>
                  </div>
