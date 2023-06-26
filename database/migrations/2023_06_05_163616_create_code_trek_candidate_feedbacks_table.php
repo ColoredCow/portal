@@ -19,7 +19,7 @@ class CreateCodeTrekCandidateFeedbacksTable extends Migration
             $table->integer('posted_by')->unsigned();
             $table->unsignedInteger('category_id');
             $table->string('latest_round_name');
-            $table->string('feedback');
+            $table->text('feedback');
             $table->string('feedback_type');
             $table->date('posted_on');
             $table->timestamps();

@@ -87,7 +87,7 @@ class CodeTrekService
         $applicationRound->save();
     }
 
-    public function storeCodeTrekApplicantFeedback($data)
+    public function storeFeedback($data)
     {
         $feedback = new CodeTrekCandidateFeedback();
         $feedback->category_id = $data['feedback_category'];

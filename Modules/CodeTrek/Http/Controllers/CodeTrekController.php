@@ -26,7 +26,6 @@ class CodeTrekController extends Controller
 
         return view('codetrek::index', ['centres' => $centres], $this->service->getCodeTrekApplicants($request->all()));
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -41,9 +40,9 @@ class CodeTrekController extends Controller
     /**
      * Show the specified resource.
      */
-    public function storeCodeTrekApplicantFeedback(Request $request)
+    public function storeFeedback(Request $request)
     {
-        $this->service->storeCodeTrekApplicantFeedback($request->all());
+        $this->service->storeFeedback($request->all());
 
         return redirect()->back();
     }
