@@ -1,9 +1,10 @@
 @extends('salesautomation::layouts.master')
 
 @section('salesautomation.content')
+@includeWhen(session('status'), 'toast', ['message' => session('status')])
     <div class="row">
 		<div class="offset-md-9 col-md-3 text-right mb-3">
-			<a href="{{ route('sales-area.create') }}" class="btn btn-primary">New Sales Area</a>
+			<button class="btn btn-primary" data-toggle="modal" data-target="#newSalesArea">New Sales Area</button>
 		</div>
 	</div>
 	<table class="table table-striped table-bordered">
@@ -12,13 +13,13 @@
 		      <th scope="col">Name</th>
 		      <th scope="col">Actions</th>
 		    </tr>
-		    <tbody>
-			@foreach ($salesAreas as $index => $salesArea)
-                
+		</thead>
+		<tbody>
+			@forelse ($salesAreas as $index => $salesArea)
 				<tr>
 					<td>{{ $salesArea->name }}</td>
 					<td class="w-25p">
-					<form action="{{ route('sales-area.update', $salesArea) }}" method="POST">
+						<form action="{{ route('sales-area.update', $salesArea) }}" method="POST">
 							@csrf
 							@method('PUT')
 							<div class="modal fade" id="editSalesAreaModal{{ $index }}" tabindex="-1" role="dialog" aria-labelledby="editSalesAreaModalLabel" aria-hidden="true">
@@ -52,8 +53,43 @@
 						</form>
 					</td>
 				</tr>
-			@endforeach		
-	    </thead>
+				@empty
+				<tr>
+                    			<td colspan="2">
+						<div class="d-flex justify-content-center">
+							<img src="{{ URL('images/no-result.png') }}" class='img-center' width="50%">
+						</div>
+						<div class="container-fluid d-flex justify-content-center">
+							<span class="text-primary">NO DATA FOUND</span>
+						</div>
+                    			</td>
+	          		 </tr>
+			@endforelse
+	    </tbody>
 	</table>
 	{{ $salesAreas->links() }}
 @endsection
+
+<form action="{{ route('sales-area.store') }}" method="POST">
+@csrf
+	<div class="modal fade" id="newSalesArea" tabindex="-1" role="dialog" aria-labelledby="NewSalesAreaModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="newSalesAreaModalLabel">New Sales Area</h5>
+					<button type="button" class="close" data-dismiss="modal"><span>&times</span></button>
+				</div>	
+				<div class="col-md-12">
+					<div class="form-group mt-2">
+						<label for="name">Name<span class="text-danger">*</span></label>
+						<input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}" autofocus required>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary btn-sm">Submit</button>
+				</div>	
+			</div>
+		</div>
+	</div>
+</form>

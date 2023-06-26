@@ -46,8 +46,10 @@ class BookController extends Controller
         $loggedInUser = auth()->user();
         $books->load('wishers');
         $books->load('borrowers');
+        $wishlistedBooksCount = auth()->user()->booksInWishlist->count();
+        $booksBorrowedCount = auth()->user()->booksBorrower->count();
 
-        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories'));
+        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories', 'wishlistedBooksCount', 'booksBorrowedCount'));
     }
 
     /**
@@ -237,8 +239,8 @@ class BookController extends Controller
     public function getBooksCount()
     {
         $books = (request()->has('cat')) ?
-        Book::getByCategoryName(request()->input('cat'))->count() :
-        Book::count();
+            Book::getByCategoryName(request()->input('cat'))->count() :
+            Book::count();
 
         return $books;
     }
@@ -251,8 +253,8 @@ class BookController extends Controller
             $pageNumber = 1;
         }
         $books = (request()->has('cat')) ?
-        Book::getByCategoryName(request()->input('cat')) :
-        Book::with(['categories'])->orderBy('title')->skip(($pageNumber - 1) * 50)->take(50)->get();
+            Book::getByCategoryName(request()->input('cat')) :
+            Book::with(['categories'])->orderBy('title')->skip(($pageNumber - 1) * 50)->take(50)->get();
 
         $data = [];
         foreach ($books as $index => $book) {
@@ -328,7 +330,14 @@ class BookController extends Controller
                     return Carbon::parse($item->created_at)->format('n');
                 }, 'desc');
             });
+        $wishlistedBooksCount = auth()->user()->booksInWishlist->count();
+        $booksBorrowedCount = auth()->user()->booksBorrower->count();
 
-        return view('knowledgecafe.library.books.book-a-month')->with('booksCollection', $booksCollection)->with('books', $books);
+        return view('knowledgecafe.library.books.book-a-month', [
+            'booksCollection' => $booksCollection,
+            'books' => $books,
+            'wishlistedBooksCount' => $wishlistedBooksCount,
+            'booksBorrowedCount' => $booksBorrowedCount
+        ]);
     }
 }

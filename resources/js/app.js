@@ -20,6 +20,7 @@ Vue.use(Laue);
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import moment from "moment";
+import Vue from "vue";
 const options = {
 	timeout: 2000,
 };
@@ -1871,11 +1872,10 @@ $(document).ready(function() {
 			data: form.serialize(),
 			success: function(response) {
 				$("#requisitionModal").modal("hide");
-				$("#successMessage").toggleClass("d-none");
-				$("#successMessage").fadeToggle(4000);
+				Vue.$toast.success("Requisition submitted successfully!");
 			},
 			error: function(response) {
-				alert("there is some problem");
+				Vue.$toast.error("there is some problem");
 			},
 			complete: function(response) {
 				$("#formSpinner").addClass("d-none");

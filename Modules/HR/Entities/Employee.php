@@ -76,16 +76,16 @@ class Employee extends Model
         return $this->hasMany(EmployeeSalary::class);
     }
 
-    public function getFtes($filters)
+    public function getFtes($startDate, $endDate)
     {
         $fte = 0;
         $fteAmc = 0;
         foreach ($this->user->projectTeamMembers()->with('project')->get() as $projectTeamMember) {
             if (! $projectTeamMember->project->is_amc) {
-                $fte += $projectTeamMember->getFte($filters);
+                $fte += $projectTeamMember->getFte($startDate, $endDate);
             }
             if ($projectTeamMember->project->is_amc) {
-                $fteAmc += $projectTeamMember->getFte($filters);
+                $fteAmc += $projectTeamMember->getFte($startDate, $endDate);
             }
         }
 
