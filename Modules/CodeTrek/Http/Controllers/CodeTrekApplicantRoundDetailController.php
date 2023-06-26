@@ -54,7 +54,7 @@ class CodeTrekApplicantRoundDetailController extends Controller
     {
         $this->service->update($request, $applicantDetail);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Feedback updated successfully.');
     }
 
     public function takeAction(Request $request, $id)
@@ -71,10 +71,9 @@ class CodeTrekApplicantRoundDetailController extends Controller
         } else {
             $applicant->status = config('codetrek.status.completed.slug');
         }
-
         $applicant->save();
 
-        return redirect()->route('codetrek.index');
+        return redirect()->back()->with('success', 'Status updated successfully.');
     }
 
     /**

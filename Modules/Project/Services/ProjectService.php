@@ -373,8 +373,8 @@ class ProjectService implements ProjectServiceContract
 
     public function getMailDetailsForKeyAccountManagers()
     {
-        $zeroEffortProject = ProjectTeamMember::where('daily_expected_effort', 0)->get('project_id');
-        $projects = Project::whereIn('id', $zeroEffortProject)->get();
+        $zeroEffortProject = ProjectTeamMember::where('daily_expected_effort', 0)->whereNull('ended_on')->get('project_id');
+        $projects = Project::whereIn('id', $zeroEffortProject)->where('status', 'active')->get();
         $keyAccountManagersDetails = [];
         foreach ($projects as $project) {
             $user = $project->client->keyAccountManager;
@@ -431,16 +431,25 @@ class ProjectService implements ProjectServiceContract
 
     public function projectFTEExport($filters)
     {
+        $year = (int) $filters['year'];
+        $month = (int) $filters['month'];
+        $startDate = Carbon::createFromDate($year, $month, 1);
+        $endDate = date('Y-m-d');
+
+        if ($startDate < date('Y-m-01')) {
+            $endDate = (clone $startDate)->endOfMonth()->toDateString();
+        }
+
         $employees = Employee::applyFilters($filters)
             ->get();
 
-        $employees = $this->formatProjectFTEFOrExportAll($employees, $filters);
-        $filename = 'FTE_Report-' . $filters['year'] . '-' . $filters['month'] . '.xlsx';
+        $employees = $this->formatProjectFTEFOrExportAll($employees, $startDate, $endDate);
+        $filename = 'FTE_Report-' . $endDate . '.xlsx';
 
         return Excel::download(new ProjectFTEExport($employees), $filename);
     }
 
-    private function formatProjectFTEFOrExportAll($employees, $filters)
+    private function formatProjectFTEFOrExportAll($employees, $startDate, $endDate)
     {
         $teamMembers = [];
         foreach ($employees as $employee) {
@@ -450,9 +459,11 @@ class ProjectService implements ProjectServiceContract
             foreach ($employee->user->activeProjectTeamMembers as $activeProjectTeamMember) {
                 $teamMember = [
                     $employee->name,
-                    number_format($employee->getFtes($filters)['main'], 2),
+                    number_format($employee->getFtes($startDate, $endDate)['main'], 2),
                     $activeProjectTeamMember->project->name,
-                    number_format($activeProjectTeamMember->getFte($filters), 2)
+                    number_format($activeProjectTeamMember->getFte($startDate, $endDate), 2),
+                    number_format($activeProjectTeamMember->getCommittedEfforts($startDate, $endDate), 2),
+                    number_format($activeProjectTeamMember->getBookedEfforts($startDate, $endDate), 2)
                 ];
                 $teamMembers[] = $teamMember;
             }
