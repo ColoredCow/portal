@@ -23,8 +23,8 @@ class BankDetailController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'key' => 'required',
             'label' => 'required',
+            'key' => 'required|unique:bank_details,key',
             'value' => 'required',
         ]);
 
@@ -32,5 +32,20 @@ class BankDetailController extends Controller
 
         return redirect()->route('settings.bank-details')
             ->with('success', 'Bank details created successfully.');
+    }
+    public function update(Request $request, BankDetails $bankDetail)
+    {
+        $validatedData = $request->validate([
+            'label' => 'required',
+            'value' => 'required',
+        ]);
+
+        $bankDetail->label = $validatedData['label'];
+        $bankDetail->value = $validatedData['value'];
+        $bankDetail->save();
+
+        // session()->flash('success', 'Bank detail updated successfully.');
+
+        return redirect()->back()->with('success', 'Bank detail updated successfully.');
     }
 }
