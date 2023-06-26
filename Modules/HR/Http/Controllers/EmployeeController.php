@@ -40,23 +40,23 @@ class EmployeeController extends Controller
         $name = request('name');
         $currentQuarter = Carbon::now()->quarter;
         $currentYear = Carbon::now()->year;
-        if ($request->status === 'current') {
-            $employeeData = Employee::select('employees.*', 'individual_assessments.status')
-                ->join('assessments', 'assessments.reviewee_id', '=', 'employees.id')
-                ->join('individual_assessments', 'individual_assessments.assessment_id', '=', 'assessments.id')
-                ->whereIn('individual_assessments.status', ['pending', 'in-progress', 'completed'])
-                ->whereRaw('YEAR(assessments.created_at) = ?', [strval($currentYear)])
-                ->whereRaw('QUARTER(assessments.created_at) = ?', [$currentQuarter])
-                ->get();
-        } else {
-            $employeeData = Employee::where('staff_type', $name)
-                ->applyFilters($filters)
-                ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
-                ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
-                ->groupBy('employees.user_id')
-                ->orderby('project_count', 'desc')
-                ->get();
-        }
+
+        $employeeData = Employee::leftJoin('assessments', 'assessments.reviewee_id', '=', 'employees.id')
+            ->leftJoin('individual_assessments', 'individual_assessments.assessment_id', '=', 'assessments.id')
+            ->where(function ($query) use ($currentYear, $currentQuarter, $name, $filters) {
+                $query->where(function ($subquery) use ($currentYear, $currentQuarter) {
+                    $subquery->whereIn('individual_assessments.status', ['pending', 'in-progress', 'completed'])
+                        ->whereRaw('YEAR(assessments.created_at) = ?', [strval($currentYear)])
+                        ->whereRaw('QUARTER(assessments.created_at) = ?', [$currentQuarter]);
+                })->orWhere('staff_type', $name)
+                    ->applyFilters($filters);
+            })
+            ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
+            ->selectRaw('employees.*, individual_assessments.status, team_member_id, count(team_member_id) as project_count')
+            ->groupBy('employees.user_id')
+            ->orderBy('project_count', 'desc')
+            ->get();
+
         if ($search != '') {
             $employeeData = Employee::where('name', 'LIKE', "%$search%")
                 ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')

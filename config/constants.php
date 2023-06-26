@@ -298,7 +298,7 @@ return [
             'completed' => 'Completed',
         ]
     ],
-    'pending_tag' => [
+    'review-tags' => [
         'pending' => [
             'label' => 'pending',
             'title' => 'Pending',
@@ -309,9 +309,9 @@ return [
             'title' => 'In progress',
             'class' => 'badge badge-warning',
         ],
-        'completed ' => [
+        'completed' => [
             'label' => 'completed ',
-            'title' => 'completed ',
+            'title' => 'Completed ',
             'class' => 'badge badge-success',
         ],
     ],
