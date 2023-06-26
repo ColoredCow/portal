@@ -51,6 +51,7 @@ class EmployeeController extends Controller
                 })->orWhere('staff_type', $name)
                     ->applyFilters($filters);
             })
+            ->Where('staff_type', $name)
             ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
             ->selectRaw('employees.*, individual_assessments.status, team_member_id, count(team_member_id) as project_count')
             ->groupBy('employees.user_id')
