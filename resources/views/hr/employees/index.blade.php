@@ -40,7 +40,6 @@
                     <tr>
                         <td>
                             <a href="{{ route('employees.show', $employee->id) }}">
-                                @dump($employee->status)
                                 @if ($employee->status === 'pending')
                                     {{ $employee->name }} <span
                                         class="{{ config('constants.review-tags.pending.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.pending.title') }}</span>
