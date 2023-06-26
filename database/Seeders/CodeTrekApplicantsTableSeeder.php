@@ -21,7 +21,7 @@ class CodeTrekApplicantsTableSeeder extends Seeder
             $applicant->first_name = $faker->firstName;
             $applicant->last_name = $faker->lastName;
             $applicant->email = $faker->email;
-            $applicant->phone = '7819191919';
+            $applicant->phone = 7819191919;
             $applicant->github_user_name = $faker->name;
             $applicant->start_date = $faker->date;
             $applicant->university = 'B.T.K.I.T';
