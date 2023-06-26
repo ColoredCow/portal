@@ -521,7 +521,7 @@
                                                                                 name="college" id="college_evaluation_2">
                                                                             <label for="college_evaluation_2"
                                                                                 class="c-pointer thumb"><i
-                                                                                    class="fa thumb text-theme-gray-light hover-text-danger checked-text-danger"
+                                                                                    class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger"
                                                                                     aria-hidden="true"></i></label>
                                                                         </div>
                                                                     @endif
