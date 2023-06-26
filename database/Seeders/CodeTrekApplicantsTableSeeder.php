@@ -16,7 +16,7 @@ class CodeTrekApplicantsTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        for ($i = 1; $i <=100 ; $i++) {
+        for ($i = 1; $i <= 100; $i++) {
             $applicant = new CodeTrekApplicant;
             $applicant->first_name = $faker->firstName;
             $applicant->last_name = $faker->lastName;
