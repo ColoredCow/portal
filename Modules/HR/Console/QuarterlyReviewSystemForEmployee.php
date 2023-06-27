@@ -68,7 +68,7 @@ class QuarterlyReviewSystemForEmployee extends Command
             ['type' => 'manager', 'reviewer_id' => $employee->manager_id],
         ];
 
-        return array_filter($reviewers, fn($reviewer) => $reviewer['reviewer_id'] !== null);
+        return array_filter($reviewers, fn ($reviewer) => $reviewer['reviewer_id'] !== null);
     }
 
     private function createIndividualAssessments($assessment, $reviewers)
