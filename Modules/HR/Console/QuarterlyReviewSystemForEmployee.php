@@ -2,7 +2,6 @@
 
 namespace Modules\HR\Console;
 
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Modules\HR\Entities\Assessment;
 use Modules\HR\Entities\Employee;
@@ -41,7 +40,7 @@ class QuarterlyReviewSystemForEmployee extends Command
      */
     public function handle()
     {
-        $employees = Employee::selectRaw('employees.id, employees.mentor_id, employees.hr_id, employees.manager_id')->get();
+        $employees = Employee::Where('staff_type', 'employee')->selectRaw('employees.id, employees.mentor_id, employees.hr_id, employees.manager_id')->get();
 
         foreach ($employees as $employee) {
             $assessment = $this->createAssessment($employee);
@@ -56,7 +55,7 @@ class QuarterlyReviewSystemForEmployee extends Command
     {
         return Assessment::create([
             'reviewee_id' => $employee->id,
-            'created_at' => Carbon::now(),
+            'created_at' => now(),
         ]);
     }
 
@@ -69,7 +68,7 @@ class QuarterlyReviewSystemForEmployee extends Command
             ['type' => 'manager', 'reviewer_id' => $employee->manager_id],
         ];
 
-        return array_filter($reviewers, fn ($reviewer) => $reviewer['reviewer_id'] !== null);
+        return array_filter($reviewers, fn($reviewer) => $reviewer['reviewer_id'] !== null);
     }
 
     private function createIndividualAssessments($assessment, $reviewers)
@@ -80,7 +79,7 @@ class QuarterlyReviewSystemForEmployee extends Command
                 'reviewer_id' => $reviewer['reviewer_id'],
                 'type' => $reviewer['type'],
                 'status' => 'pending',
-                'created_at' => Carbon::now(),
+                'created_at' => now(),
             ]);
         }
     }
