@@ -5,7 +5,7 @@
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><strong>Feedback Form</strong></h5>
+                    <h5 class="modal-title"><strong>Feedback Form</strong></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -48,7 +48,7 @@
                         </div>
                         <div class="justify-content-center">
                             <div class="mb-1 text-center">
-                                <label for="feedback_type">{{__('Feedback Type')}}</label>
+                                <label for="feedbackType">{{__('Feedback Type')}}</label>
                             </div>
                             <div class="d-flex col-md-5">
                                 <div class="d-flex flex-column text-center mr-3">
