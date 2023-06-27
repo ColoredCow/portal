@@ -54,7 +54,7 @@ class CodeTrekApplicantRoundDetailController extends Controller
     {
         $this->service->update($request, $applicantDetail);
 
-        return redirect()->back()->with('success', 'Feedback updated successfully.');
+        return redirect()->back();
     }
 
     public function takeAction(Request $request, $id)
