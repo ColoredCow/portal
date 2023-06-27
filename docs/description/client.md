@@ -21,7 +21,7 @@ The client page also offers information on client status, allowing users to keep
    1. Click on "+Add new client"
   <img width="1271" alt="Screenshot 2023-06-27 at 4 12 10 PM" src="https://github.com/ColoredCow/portal/assets/104312137/7ade6d98-d83b-46e2-92e4-35d831b529d0">
 
-  2. Fill in the necessary details such as the client's name and fill in the required details.
+  2. Fill in the necessary details such as the client's name and choose the required details.
   <img width="1271" alt="Screenshot 2023-06-27 at 4 13 49 PM" src="https://github.com/ColoredCow/portal/assets/104312137/38ff9dae-2c16-4b7b-a417-71b37eb4d5c4">
   
   What is channel partner?
@@ -49,6 +49,11 @@ The client page also offers information on client status, allowing users to keep
   1. The "Contact Page" section comprises essential information including email address, phone number, and role.
    2. The "Remove" button is utilized to delete the details of a specific person, while the "Add New Person" button is used to input contact information for a new individual.
   <img width="1271" alt="Screenshot 2023-06-27 at 4 29 46 PM" src="https://github.com/ColoredCow/portal/assets/104312137/547e43c6-5237-4f5e-827c-a0f7d2eb7eb3">
+
+  3. Role?
+      - ColoredCow collects information such as email addresses, contact numbers, and names of various client members. These members are categorized into roles: Primary, Secondary, and Tertiary. This role distinction is important when ColoredCow sends billing emails to clients. All the listed members receive the email, but there is a differentiation in how they are addressed: the only Primary member is in the "To" field, Secondary members are in the "cc" field, and Tertiary members are in the "bcc" field.
+        <img width="1273" alt="Screenshot 2023-06-27 at 6 01 38 PM" src="https://github.com/ColoredCow/portal/assets/104312137/35765189-30e4-4cbd-8513-61ba0dbf4eb4">
+
    
 ****
   **Address**
@@ -66,5 +71,15 @@ The client page also offers information on client status, allowing users to keep
   3. Key account manager
   - Each client is assigned a dedicated key account manager who serves as the primary point of contact between ColoredCow and the client. The key account manager is responsible for understanding the client's requirements, coordinating with the internal teams, and ensuring the smooth execution of projects. If a client has multiple projects with the ColoredCow but there should be only one key account manager.
   <img width="1271" alt="Screenshot 2023-06-27 at 4 31 07 PM" src="https://github.com/ColoredCow/portal/assets/104312137/a62e4eb4-85f9-4c27-ad7d-85f5a3f415c0">
-  
+  4. Click "Save & Exit"
+    
  ****
+**Congratulations! You have successfully added a client.**
+
+ ****
+ 
+ - Once the button was clicked, the client's data should be displayed on the client page.
+ - From here you can also edit the client's detail by simply clicking on the client's name.
+ <img width="1273" alt="Screenshot 2023-06-27 at 6 07 57 PM" src="https://github.com/ColoredCow/portal/assets/104312137/f410b59e-2755-49e7-861b-db91fc18d743">
+
+
