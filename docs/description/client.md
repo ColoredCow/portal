@@ -35,7 +35,8 @@ The client page also offers information on client status, allowing users to keep
     
   3. click on "create".
  ****
-  Upon clicking the "create" button, a new page should be launched, allowing the user to update additional information such as contact details, address, billing, and more. The user will be able to fill in all the necessary details on the "Person Contact" page, which will be automatically displayed immediately after clicking the "Create" button.
+ - Upon clicking the "create" button, a new page should be launched, allowing the user to update additional information such as contact details, address, billing, and more. The user will be able to fill in all the necessary details on the "Person Contact" page, which will be automatically displayed immediately after clicking the "Create" button.
+  - At each step, the user has the option to click "Save and Exit" if they do not wish to provide any additional details.
  ****
   **Initial Details**
   - This step is identical to the previous one for adding clients. This section is provided to allow users the option of modifying the details if they wish to make any changes at this point.
