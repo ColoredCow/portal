@@ -21,7 +21,7 @@ class UserController extends ModuleBaseController
     public function index()
     {
         $this->authorize('viewAny', User::class);
-        $users = $this->service->index();
+        $users = User::has('roles')->with('roles')->get();
 
         return view('user::index', compact('users'));
     }
