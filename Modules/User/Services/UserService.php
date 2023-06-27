@@ -14,7 +14,7 @@ class UserService implements UserServiceContract
      */
     public function index()
     {
-        return User::with('roles')
+        return User::has('roles')->with('roles')
             ->orderBy('name')
             ->get();
     }
