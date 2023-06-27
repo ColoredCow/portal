@@ -15,7 +15,7 @@ The client page also offers information on client status, allowing users to keep
 <img width="641" alt="Screenshot 2023-06-27 at 2 58 48 PM" src="https://github.com/ColoredCow/portal/assets/104312137/80beb665-d1ac-4ecd-b4af-5981d6f2301b">
 
 ****
-### 1. How a client is created
+### How to add a client
 	 
   **Simple steps must be followed when creating a client on the ColoredCow portal** 
    1. Click on "+Add new client"
