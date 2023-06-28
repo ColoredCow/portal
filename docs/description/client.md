@@ -72,7 +72,7 @@ The client page also offers information on client status, allowing users to keep
 - Key Account manager,Service Rates,Discount,Billing Date, Billing Frequency.
 2. It provides transparency and clarity regarding financial transactions, helping clients and ColoredCow to maintain a mutually beneficial relationship.
   
-  <img width="1271" alt="Screenshot 2023-06-27 at 4 31 07 PM" src="https://github.com/ColoredCow/portal/assets/104312137/a62e4eb4-85f9-4c27-ad7d-85f5a3f415c0">
+    <img width="1271" alt="Screenshot 2023-06-27 at 4 31 07 PM" src="https://github.com/ColoredCow/portal/assets/104312137/a62e4eb4-85f9-4c27-ad7d-85f5a3f415c0">
 
 3. Key account manager
  - Each client is assigned a dedicated key account manager who serves as the primary point of contact between ColoredCow and the client. The key account manager is responsible for understanding the client's requirements, coordinating with the internal teams, and ensuring the 		smooth execution of projects. If a client has multiple projects with the ColoredCow but there should be only one key account manager.
@@ -87,7 +87,7 @@ The client page also offers information on client status, allowing users to keep
 
      <img width="508" alt="Screenshot 2023-06-28 at 1 08 15 PM" src="https://github.com/ColoredCow/portal/assets/104312137/d7ac29aa-a9b0-4832-a57b-83f45147d0b3">
   
- 7. Billing Date: The chosen day on which the invoice will be provided to the client.
+ 7. Billing Date: The chosen date on which the invoices will be provided to the client.
  8. Bank charges: When conducting a Invoice transaction, the bank deducts its charges. If the client is responsible for paying the bank charges, it is noted in the bank charges column.
     
   
