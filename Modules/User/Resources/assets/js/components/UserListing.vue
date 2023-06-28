@@ -58,10 +58,8 @@
 								class="btn btn-edit btn-outline-dark" data-toggle="modal"
 								data-target="#update_staff_type_modal" @click="updateUserRolesModal(index)">
 								<i class="fa fa-cog fa-lg" aria-hidden="true" data-toggle="tooltip"
-								:title="!user.name ? 'No entry in the employee table for this user' : ''"></i>
+									:title="!user.name ? 'No entry in the employee table for this user' : ''"></i>
 							</button>
-
-
 						</div>
 					</td>
 				</tr>
