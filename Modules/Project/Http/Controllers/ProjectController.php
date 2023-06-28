@@ -11,6 +11,8 @@ use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Modules\HR\Entities\HrJobDomain;
+use Modules\HR\Entities\Job;
 
 class ProjectController extends Controller
 {
@@ -149,8 +151,14 @@ class ProjectController extends Controller
 
     public function projectResource(Request $request)
     {
-        $resourceData = $this->service->getProjectsWithTeamMemberRequirementData($request->all());
+        $resourceData = $this->service->getProjectsWithTeamMemberRequirementData(request()->all());
+        $domainName = HrJobDomain::all();
+        $jobName = Job::all();
 
-        return view('project::resource-requirement', ['resourceData' => $resourceData]);
+        return view('project::resource-requirement', [
+            'resourceData' => $resourceData,
+            'domainName' => $domainName,
+            'jobName' => $jobName,
+        ]);
     }
 }
