@@ -32,55 +32,55 @@
             </form>
 
             @foreach ($assessments as $assessment)
-                    <form method="POST" action="{{ route('review.updateStatus') }}">
-                        @csrf
-                        <input type="hidden" value="{{ $assessment->id }}" name="assessmentId" />
-                        <div class="review-cards mt-5">
-                            <!-- Quarter 1 Review Card -->
-                            <div class="card mb-4">
-                                <div class="card-header review-card-header">
-                                    <h4 class="font-weight-bold">Review date <span
-                                            class="font-weight-light">{{ $assessment->created_at->format('d-m-Y') }}</span>
-                                    </h4>
+                <form method="POST" action="{{ route('review.updateStatus') }}">
+                    @csrf
+                    <input type="hidden" value="{{ $assessment->id }}" name="assessmentId" />
+                    <div class="review-cards mt-5">
+                        <!-- Quarter 1 Review Card -->
+                        <div class="card mb-4">
+                            <div class="card-header review-card-header">
+                                <h4 class="font-weight-bold">Review date <span
+                                        class="font-weight-light">{{ $assessment->created_at->format('d-m-Y') }}</span>
+                                </h4>
+                            </div>
+                            <div class="card-body review-card-body" style="display: none;">
+                                <div>Next review due: <span
+                                        class="text-info">{{ $assessment->created_at->addMonths(3)->startOfMonth()->format('d-m-Y') }}</span>
                                 </div>
-                                <div class="card-body review-card-body" style="display: none;">
-                                    <div>Next review due: <span
-                                            class="text-info">{{ $assessment->created_at->addMonths(3)->startOfMonth()->format('d-m-Y') }}</span>
-                                    </div>
-                                    <br>
-                                    <br>
-                                    <table class="table table-striped table-bordered">
-                                        <thead class="thead-dark">
-                                            <tr class="sticky-top">
-                                                @foreach (config('constants.employee-review-status') as $key => $role)
-                                                    <th>{{ $key }}</th>
-                                                @endforeach
-                                            </tr>
-                                        </thead>
-                                        <tr>
-                                            @foreach (config('constants.employee-review-status') as $role => $reviewStatuses)
-                                                <td>
-                                                    <select class="pt-0 ml-2 btn bg-light text-left"
-                                                        name="{{ $role }}" onchange="updateHiddenField(this)">
-                                                        <option value="" selected="selected">Select Review Status
-                                                        </option>
-                                                        @foreach ($reviewStatuses as $key => $reviewStatus)
-                                                            <option value="{{ $key }}" {{ $assessment->assessmentReviewStatus($assessment, $role, $key) ? 'selected' : '' }}>
-                                                                {{ $reviewStatus }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </td>
+                                <br>
+                                <br>
+                                <table class="table table-striped table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr class="sticky-top">
+                                            @foreach (config('constants.employee-review-status') as $key => $role)
+                                                <th>{{ $key }}</th>
                                             @endforeach
                                         </tr>
-                                    </table>
-                                    <br>
-                                </div>
+                                    </thead>
+                                    <tr>
+                                        @foreach (config('constants.employee-review-status') as $role => $reviewStatuses)
+                                            <td>
+                                                <select class="pt-0 ml-2 btn bg-light text-left" name="{{ $role }}"
+                                                    onchange="updateHiddenField(this)">
+                                                    <option value="" selected="selected">Select Review Status
+                                                    </option>
+                                                    @foreach ($reviewStatuses as $key => $reviewStatus)
+                                                        <option value="{{ $key }}"
+                                                            {{ $assessment->assessmentReviewStatus($assessment, $role, $key) ? 'selected' : '' }}>
+                                                            {{ $reviewStatus }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                        @endforeach
+                                    </tr>
+                                </table>
+                                <br>
                             </div>
-                            <input type="hidden" id="hidden-review-type" value="" name="review_type" />
-                            <input type="hidden" id="hidden-reviewer-id" value="" name="reviewer_id" />
-                    </form>
-                
+                        </div>
+                        <input type="hidden" id="hidden-review-type" value="" name="review_type" />
+                        <input type="hidden" id="hidden-reviewer-id" value="" name="reviewer_id" />
+                </form>
             @endforeach
 
             <!-- Add more Quarter Review Cards as needed -->
@@ -101,16 +101,16 @@
             let headerName = selectElement.name;
             $('#hidden-review-type').val(headerName);
             switch (headerName) {
-                case 'Self review':
+                case 'self':
                     $('#hidden-reviewer-id').val({{ $employee->id }});
                     break;
-                case 'Mentor review':
+                case 'mentor':
                     $('#hidden-reviewer-id').val({{ $employee->mentor_id }});
                     break;
-                case 'HR review':
+                case 'hr':
                     $('#hidden-reviewer-id').val({{ $employee->hr_id }});
                     break;
-                case 'Manager review':
+                case 'manager':
                     $('#hidden-reviewer-id').val({{ $employee->manager_id }});
                     break;
                 default:

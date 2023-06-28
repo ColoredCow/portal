@@ -5,12 +5,12 @@ return [
         'gurgaon' => 'Gurgaon',
         'tehri' => 'Tehri',
         'ranchi' => 'Ranchi',
-        'dwarahat' => 'Dwarahat'
+        'dwarahat' => 'Dwarahat',
     ],
     'gsuite' => [
         'service-account-impersonate' => env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'),
         'client-hd' => env('GOOGLE_CLIENT_HD', ''),
-        'config-path' => env('GOOGLE_APPLICATION_CREDENTIALS')
+        'config-path' => env('GOOGLE_APPLICATION_CREDENTIALS'),
     ],
     'google' => [
         'vision-api-key' => env('GOOGLE_VISION_API_KEY'),
@@ -69,7 +69,7 @@ return [
             'applicant-name' => '|*applicant_name*|',
             'interview-time' => '|*interview_time*|',
             'job-title' => '|*job_title*|',
-            'verification-link' => '|*verification_link*|'
+            'verification-link' => '|*verification_link*|',
         ],
 
         'default' => [
@@ -262,7 +262,7 @@ return [
         '60' => 'sixty',
         '70' => 'seventy',
         '80' => 'eighty',
-        '90' => 'ninety'
+        '90' => 'ninety',
     ],
     'campaign_tool_credentials' => [
         'url' => env('CAMPAIGNS_TOOL_URL'),
@@ -271,32 +271,32 @@ return [
     ],
 
     'employee-reviewers' => [
-        'hr_id' => 'HR',
-        'mentor_id' => 'Mentor',
-        'manager_id' => 'Manager'
+        'hr_id' => 'hr',
+        'mentor_id' => 'mentor',
+        'manager_id' => 'manager',
     ],
 
     'employee-review-status' => [
-        'Self review' => [
+        'self' => [
             'pending' => 'Pending',
             'in-progress' => 'In Progress',
             'completed' => 'Completed',
         ],
-        'Mentor review' => [
+        'mentor' => [
             'pending' => 'Pending',
             'in-progress' => 'In Progress',
             'completed' => 'Completed',
         ],
-        'HR review' => [
+        'hr' => [
             'pending' => 'Pending',
             'in-progress' => 'In Progress',
             'completed' => 'Completed',
         ],
-        'Manager review' => [
+        'manager' => [
             'pending' => 'Pending',
             'in-progress' => 'In Progress',
             'completed' => 'Completed',
-        ]
+        ],
     ],
     'review-tags' => [
         'pending' => [

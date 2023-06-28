@@ -110,10 +110,10 @@ class EmployeeController extends Controller
     public function createIndividualAssessment(Request $request)
     {
         $reviewStatuses = [
-            'Self review' => $request->Self_review,
-            'Mentor review' => $request->Mentor_review,
-            'HR review' => $request->HR_review,
-            'Manager review' => $request->Manager_review,
+            'self' => $request->self,
+            'mentor' => $request->mentor,
+            'hr' => $request->hr,
+            'manager' => $request->manager,
         ];
         $assessmentId = $request->assessmentId;
         $reviewStatus = $reviewStatuses[$request->review_type] ?? '';
