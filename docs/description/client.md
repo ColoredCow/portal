@@ -35,7 +35,7 @@ The client page also offers information on client status, allowing users to keep
     
   3. click on "create".
  ****
- - Upon clicking the "create" button, a new page should be launched, allowing the user to update additional information such as contact details, address, billing, and more. The user will be able to fill in all the necessary details on the "Person Contact" page, which will be automatically displayed immediately after clicking the "Create" button.
+ - Upon clicking the "create" button, a new page should be launched, allowing the user to update additional information such as contact details, address, billing, and more. 
   - At each step, the user has the option to click "Save and Exit" if they do not wish to provide any additional details.
  ****
   **Initial Details**
@@ -45,41 +45,61 @@ The client page also offers information on client status, allowing users to keep
 ****
 
   **Contact Persons** 
-  
   1. The "Contact Page" section comprises essential information including email address, phone number, and role.
-   2. The "Remove" button is utilized to delete the details of a specific person, while the "Add New Person" button is used to input contact information for a new individual.
+  2. The "Remove" button is utilized to delete the details of a specific person, while the "Add New Person" button is used to input contact information for a new individual.
+
   <img width="1271" alt="Screenshot 2023-06-27 at 4 29 46 PM" src="https://github.com/ColoredCow/portal/assets/104312137/547e43c6-5237-4f5e-827c-a0f7d2eb7eb3">
 
-  3. Role?
-      - ColoredCow collects information such as email addresses, contact numbers, and names of various client members. These members are categorized into roles: Primary, Secondary, and Tertiary. This role distinction is important when ColoredCow sends billing emails to clients. All the listed members receive the email, but there is a differentiation in how they are addressed: the only Primary member is in the "To" field, Secondary members are in the "cc" field, and Tertiary members are in the "bcc" field.
+  4. Role?
+      - ColoredCow collects information such as email addresses, contact numbers, and names of various client members. These members are categorized into roles: Primary, Secondary, and Tertiary. This role distinction is important when ColoredCow sends billing emails to clients. All the listed 	members receive the email, but there is a differentiation in how they are addressed: the only Primary member is in the "To" field, Secondary members are in the "cc" field, and Tertiary members are in the "bcc" field.
+         
         <img width="1273" alt="Screenshot 2023-06-27 at 6 01 38 PM" src="https://github.com/ColoredCow/portal/assets/104312137/35765189-30e4-4cbd-8513-61ba0dbf4eb4">
 
    
 ****
-  **Address**
-  - The "Address" section encompasses crucial client details that need to be provided, such as the 
-  - country, address, client address, state, GST number, city, and area code.
+**Address**
+ - The "Address" section encompasses crucial client details that need to be provided, such as the 
+ - country, address, client address, state, GST number, city, and area code.
   The user is required to fill in all these necessary fields.
-  <img width="1271" alt="Screenshot 2023-06-27 at 4 30 24 PM" src="https://github.com/ColoredCow/portal/assets/104312137/48307632-4f01-443c-9b38-125f6fc13421">
+
+<img width="1271" alt="Screenshot 2023-06-27 at 4 30 24 PM" src="https://github.com/ColoredCow/portal/assets/104312137/48307632-4f01-443c-9b38-125f6fc13421">
   
   ****
-  **Financial Details**
   
-  1. The financial details section within the client page includes information related to
-  - Key Account manager,Service Rates,Discount,Billing Date, Billing Frequency.
-  2. It provides transparency and clarity regarding financial transactions, helping clients and ColoredCow to maintain a mutually beneficial relationship.
-  3. Key account manager
-  - Each client is assigned a dedicated key account manager who serves as the primary point of contact between ColoredCow and the client. The key account manager is responsible for understanding the client's requirements, coordinating with the internal teams, and ensuring the smooth execution of projects. If a client has multiple projects with the ColoredCow but there should be only one key account manager.
+**Financial Details**
+1. The financial details section within the client page includes information related to
+- Key Account manager,Service Rates,Discount,Billing Date, Billing Frequency.
+2. It provides transparency and clarity regarding financial transactions, helping clients and ColoredCow to maintain a mutually beneficial relationship.
+  
   <img width="1271" alt="Screenshot 2023-06-27 at 4 31 07 PM" src="https://github.com/ColoredCow/portal/assets/104312137/a62e4eb4-85f9-4c27-ad7d-85f5a3f415c0">
-  4. Click "Save & Exit"
+
+3. Key account manager
+ - Each client is assigned a dedicated key account manager who serves as the primary point of contact between ColoredCow and the client. The key account manager is responsible for understanding the client's requirements, coordinating with the internal teams, and ensuring the 		smooth execution of projects. If a client has multiple projects with the ColoredCow but there should be only one key account manager.
+4. Service Rate: The service rate refers to the payment a client is required to make for working on their project.
+5. Discount Rate: The ColoredCow company provides discounts to its clients, resulting in a reduction in the price they need to pay.
+    - There are multiple options available for selecting the service and discount rate. The calculated amount should be based on the chosen time period.
+   
+   <img width="508" alt="Screenshot 2023-06-28 at 1 05 17 PM" src="https://github.com/ColoredCow/portal/assets/104312137/42701f8e-ca10-4d05-ace1-6c3381794c2f">
+   
+  
+6. Billing Frequency: The billing frequency refers to the different options available for providing the bill to the client. These options include net 15 days, monthly, quarterly, yearly, or based on the project terms provided.
+
+  <img width="508" alt="Screenshot 2023-06-28 at 1 08 15 PM" src="https://github.com/ColoredCow/portal/assets/104312137/d7ac29aa-a9b0-4832-a57b-83f45147d0b3">
+  
+7. Billing Date: The chosen day on which the bill will be provided to the client.
+8. Bank charges: When conducting a Invoice transaction, the bank deducts its charges. If the client is responsible for paying the bank charges, it is noted in the bank charges column.
     
- ****
+  
+9. Click "Save & Exit"
+    
+****
+ 
 **Congratulations! You have successfully added a client.**
 
  ****
  
- - Once the button was clicked, the client's data should be displayed on the client page.
- - From here you can also edit the client's detail by simply clicking on the client's name.
+- Once the button was clicked, the client's data should be displayed on the client page.
+- From here you can also edit the client's detail by simply clicking on the client's name.
  <img width="1273" alt="Screenshot 2023-06-27 at 6 07 57 PM" src="https://github.com/ColoredCow/portal/assets/104312137/f410b59e-2755-49e7-861b-db91fc18d743">
 
 
