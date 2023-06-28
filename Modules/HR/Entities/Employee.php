@@ -5,8 +5,8 @@ namespace Modules\HR\Entities;
 use App\Models\Project;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-use Modules\User\Entities\User;
 use Modules\Salary\Entities\EmployeeSalary;
+use Modules\User\Entities\User;
 
 class Employee extends Model
 {
@@ -95,5 +95,25 @@ class Employee extends Model
     public function assessments()
     {
         return $this->hasMany(Assessment::class, 'reviewee_id');
+    }
+
+    public function getOverallStatusAttribute()
+    {
+        $assessments = $this->assessments()
+            ->whereRaw('YEAR(assessments.created_at) = YEAR(CURDATE())')
+            ->whereRaw('QUARTER(assessments.created_at) = QUARTER(CURDATE())')
+            ->first();
+        $overallStatus = null;
+        if ($assessments && $assessments->individualAssessments->isNotEmpty()) {
+            $individualStatuses = $assessments->individualAssessments->pluck('status')->unique();
+
+            if ($individualStatuses->count() === 1) {
+                $overallStatus = $individualStatuses->first();
+            } else {
+                $overallStatus = 'in-progress';
+            }
+        }
+
+        return $overallStatus;
     }
 }

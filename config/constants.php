@@ -298,16 +298,21 @@ return [
             'completed' => 'Completed',
         ]
     ],
-    'pending_tag' => [
+    'review-tags' => [
         'pending' => [
             'label' => 'pending',
             'title' => 'Pending',
-            'class' => 'badge badge-success',
+            'class' => 'badge badge-danger',
         ],
         'in-progress' => [
             'label' => 'in-progress',
             'title' => 'In progress',
             'class' => 'badge badge-warning',
+        ],
+        'completed' => [
+            'label' => 'completed ',
+            'title' => 'Completed ',
+            'class' => 'badge badge-success',
         ],
     ],
 ];

@@ -6,14 +6,13 @@ use App\Services\EmployeeService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\HR\Entities\Assessment;
 use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\HrJobDomain;
+use Modules\HR\Entities\IndividualAssessment;
 use Modules\HR\Entities\Job;
 use Modules\Project\Entities\ProjectTeamMember;
-use Modules\HR\Entities\IndividualAssessment;
-use Modules\HR\Entities\Assessment;
-use Carbon\Carbon;
 
 class EmployeeController extends Controller
 {
@@ -38,25 +37,13 @@ class EmployeeController extends Controller
         $filters = $request->all();
         $filters = $filters ?: $this->service->defaultFilters();
         $name = request('name');
-        $currentQuarter = Carbon::now()->quarter;
-        $currentYear = Carbon::now()->year;
-        if ($request->status === 'pending') {
-            $employeeData = Employee::select('employees.*', 'individual_assessments.status')
-                ->join('assessments', 'assessments.reviewee_id', '=', 'employees.id')
-                ->join('individual_assessments', 'individual_assessments.assessment_id', '=', 'assessments.id')
-                ->whereIn('individual_assessments.status', ['pending', 'in-progress'])
-                ->whereRaw('YEAR(assessments.created_at) = ?', [strval($currentYear)])
-                ->whereRaw('QUARTER(assessments.created_at) = ?', [$currentQuarter])
-                ->get();
-        } else {
-            $employeeData = Employee::where('staff_type', $name)
-                ->applyFilters($filters)
-                ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
-                ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
-                ->groupBy('employees.user_id')
-                ->orderby('project_count', 'desc')
-                ->get();
-        }
+        $employeeData = Employee::where('staff_type', $name)
+            ->applyFilters($filters)
+            ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
+            ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
+            ->groupBy('employees.user_id')
+            ->orderby('project_count', 'desc')
+            ->get();
         if ($search != '') {
             $employeeData = Employee::where('name', 'LIKE', "%$search%")
                 ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
