@@ -86,7 +86,7 @@
     </div>
 </template>
 <script>
-    export default {
+export default {
     	props: ["users", "updateRoute", "userPermissions", "config", "authUser", "stafftypes"],
     
     	data() {
@@ -145,5 +145,5 @@
     			});
     		}
     	}
-    };
+};
 </script>
