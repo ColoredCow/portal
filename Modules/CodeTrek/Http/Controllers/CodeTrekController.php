@@ -17,7 +17,7 @@ class CodeTrekController extends Controller
 
     public function __construct(CodeTrekService $service)
     {
-        // $this->authorizeResource(CodeTrekApplicant::class);    There are some issues in the production, which is why these lines are commented out.
+        $this->authorizeResource(CodeTrekApplicant::class);
         $this->service = $service;
     }
     /**
@@ -25,8 +25,7 @@ class CodeTrekController extends Controller
      */
     public function index(Request $request, CodeTrekApplicant $applicant)
     {
-        // $this->authorize('view', $applicant);     There are some issues in the production, which is why these lines are commented out.
-
+        $this->authorize('view', $applicant);     
         $centres = OfficeLocation::all();
         $applicantData = $this->service->getCodeTrekApplicants($request->all());
         $applicants = $applicantData['applicants'];
@@ -53,7 +52,7 @@ class CodeTrekController extends Controller
      */
     public function store(Request $request, CodeTrekService $service, CodeTrekApplicant $applicant)
     {
-        // $this->authorize('create', $applicant);    There are some issues in the production, which is why these lines are commented out.
+        $this->authorize('create', $applicant);
 
         $data = $request->all();
         $applicant = $service->store($data);
@@ -73,7 +72,7 @@ class CodeTrekController extends Controller
      */
     public function edit(CodeTrekApplicant $applicant)
     {
-        // $this->authorize('update', $applicant);   There are some issues in the production, which is why these lines are commented out.
+        $this->authorize('update', $applicant);
 
         $centres = OfficeLocation::all();
 
@@ -83,7 +82,7 @@ class CodeTrekController extends Controller
     }
     public function evaluate(CodeTrekApplicant $applicant)
     {
-        // $this->authorize('update', $applicant);   There are some issues in the production, which is why these lines are commented out.
+        $this->authorize('update', $applicant);
 
         $roundDetails = $this->service->evaluate($applicant);
 
@@ -95,7 +94,7 @@ class CodeTrekController extends Controller
      */
     public function update(CodeTrekRequest $request, CodeTrekApplicant $applicant)
     {
-        // $this->authorize('update', $applicant);   There are some issues in the production, which is why these lines are commented out.
+        $this->authorize('update', $applicant);
 
         $this->service->update($request->all(), $applicant);
 
@@ -103,8 +102,7 @@ class CodeTrekController extends Controller
     }
     public function delete(CodeTrekApplicant $applicant)
     {
-        // $this->authorize('delete', $applicant);     There are some issues in the production, which is why these lines are commented out.
-
+        $this->authorize('delete', $applicant);
         $applicant->delete();
 
         return redirect()->route('codetrek.index');
