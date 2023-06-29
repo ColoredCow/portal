@@ -3,15 +3,16 @@
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Modules\HR\Console\JobExpiredEmailToHr;
+use Modules\HR\Console\QuarterlyReviewSystemForEmployee;
+use Modules\Project\Console\EndedProject;
+use Modules\Project\Console\FixedBudgetProject;
+use Modules\Project\Console\GoogleChat\NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat;
+use Modules\Project\Console\SendEffortSummaryCommand;
 use Modules\Project\Console\SyncEffortsheet;
 use Modules\Project\Console\ZeroEffortInProject;
-use Modules\Project\Console\EndedProject;
 use Modules\Project\Console\ZeroExpectedHourInProject;
-use Modules\Project\Console\FixedBudgetProject;
-use Modules\Project\Console\SendEffortSummaryCommand;
-use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Modules\Project\Console\GoogleChat\NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat;
-use Modules\HR\Console\JobExpiredEmailToHr;
 
 class Kernel extends ConsoleKernel
 {
@@ -28,7 +29,9 @@ class Kernel extends ConsoleKernel
         EndedProject::class,
         FixedBudgetProject::class,
         NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat::class,
-        JobExpiredEmailToHr::class
+        JobExpiredEmailToHr::class,
+        QuarterlyReviewSystemForEmployee::class,
+
     ];
 
     /**
@@ -54,6 +57,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('project:ended-project')->dailyAt('09:00');
         $schedule->command('project:zero-expected-hours-in-project')->weekly()->tuesdays()->at('11:00');
         $schedule->command('project:reminder-for-effortsheet-lock')->dailyAt('21:00');
+        $schedule->command('employee:quarterly-review-system-for-employee')->quarterly();
     }
 
     /**

@@ -5,12 +5,12 @@ return [
         'gurgaon' => 'Gurgaon',
         'tehri' => 'Tehri',
         'ranchi' => 'Ranchi',
-        'dwarahat' => 'Dwarahat'
+        'dwarahat' => 'Dwarahat',
     ],
     'gsuite' => [
         'service-account-impersonate' => env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'),
         'client-hd' => env('GOOGLE_CLIENT_HD', ''),
-        'config-path' => env('GOOGLE_APPLICATION_CREDENTIALS')
+        'config-path' => env('GOOGLE_APPLICATION_CREDENTIALS'),
     ],
     'google' => [
         'vision-api-key' => env('GOOGLE_VISION_API_KEY'),
@@ -69,7 +69,7 @@ return [
             'applicant-name' => '|*applicant_name*|',
             'interview-time' => '|*interview_time*|',
             'job-title' => '|*job_title*|',
-            'verification-link' => '|*verification_link*|'
+            'verification-link' => '|*verification_link*|',
         ],
 
         'default' => [
@@ -254,7 +254,7 @@ return [
         '16' => 'sixteen',
         '17' => 'seventeen',
         '18' => 'eighteen',
-        '19' =>'nineteen',
+        '19' => 'nineteen',
         '20' => 'twenty',
         '30' => 'thirty',
         '40' => 'forty',
@@ -262,11 +262,57 @@ return [
         '60' => 'sixty',
         '70' => 'seventy',
         '80' => 'eighty',
-        '90' => 'ninety'
+        '90' => 'ninety',
     ],
     'campaign_tool_credentials' => [
         'url' => env('CAMPAIGNS_TOOL_URL'),
         'client_secret' => env('CAMPAIGNS_CLIENT_SECRET'),
         'client_id' => env('CAMPAIGNS_CLIENT_ID'),
+    ],
+
+    'employee-reviewers' => [
+        'hr_id' => 'hr',
+        'mentor_id' => 'mentor',
+        'manager_id' => 'manager',
+    ],
+
+    'employee-review-status' => [
+        'self' => [
+            'pending' => 'Pending',
+            'in-progress' => 'In Progress',
+            'completed' => 'Completed',
+        ],
+        'mentor' => [
+            'pending' => 'Pending',
+            'in-progress' => 'In Progress',
+            'completed' => 'Completed',
+        ],
+        'hr' => [
+            'pending' => 'Pending',
+            'in-progress' => 'In Progress',
+            'completed' => 'Completed',
+        ],
+        'manager' => [
+            'pending' => 'Pending',
+            'in-progress' => 'In Progress',
+            'completed' => 'Completed',
+        ],
+    ],
+    'review-tags' => [
+        'pending' => [
+            'label' => 'pending',
+            'title' => 'Pending',
+            'class' => 'badge badge-danger',
+        ],
+        'in-progress' => [
+            'label' => 'in-progress',
+            'title' => 'In progress',
+            'class' => 'badge badge-warning',
+        ],
+        'completed' => [
+            'label' => 'completed ',
+            'title' => 'Completed ',
+            'class' => 'badge badge-success',
+        ],
     ],
 ];
