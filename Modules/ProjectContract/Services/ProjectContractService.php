@@ -48,9 +48,9 @@ class ProjectContractService
             'status' => 'Saved as draft',
         ];
         if (isset($request['gst'])) {
-            $gst=$request['gst'];
+            $gst = $request['gst'];
         } else {
-            $gst='N/A';
+            $gst = 'N/A';
         }
         $contractMeta = [
             ['key' => 'Contract Name', 'value' => $request['contract_name'], 'group' => 'Contract Details'],
@@ -203,9 +203,9 @@ class ProjectContractService
             'status' => 'Updated by client',
         ];
         if (isset($request['gst'])) {
-            $gst=$request['gst'];
+            $gst = $request['gst'];
         } else {
-            $gst='N/A';
+            $gst = 'N/A';
         }
         $contractMeta = [
             ['key' => 'Contract Name', 'value' => $request['contract_name']],
@@ -296,9 +296,9 @@ class ProjectContractService
             $contractData['status'] = 'Updated by CC team';
         }
         if (isset($request['gst'])) {
-            $gst=$request['gst'];
+            $gst = $request['gst'];
         } else {
-            $gst='N/A';
+            $gst = 'N/A';
         }
         $contractMeta = [
             ['key' => 'Contract Name', 'value' => $request['contract_name']],
