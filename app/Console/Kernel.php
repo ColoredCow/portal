@@ -12,6 +12,7 @@ use Modules\Project\Console\SendEffortSummaryCommand;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\Project\Console\GoogleChat\NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat;
 use Modules\HR\Console\JobExpiredEmailToHr;
+use Modules\HR\Console\Recruitment\SendFollowUpEmailsDaily;
 
 class Kernel extends ConsoleKernel
 {
@@ -28,7 +29,8 @@ class Kernel extends ConsoleKernel
         EndedProject::class,
         FixedBudgetProject::class,
         NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat::class,
-        JobExpiredEmailToHr::class
+        JobExpiredEmailToHr::class,
+        SendFollowUpEmailsDaily::class
     ];
 
     /**
@@ -47,6 +49,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('hr:send-follow-up-mail')->dailyAt('08:00');
         $schedule->command('hr:message-for-email-verified')->dailyAt('7:00');
         $schedule->command('hr:send-job-expired-email-to-hr')->dailyAt('11:00');
+        $schedule->command('hr:send-follow-up-mail-daily')->dailyAt('19:00');
         $schedule->command('mapping-of-jobs-and-hr-rounds');
         $schedule->command('project:fixed-budget-project');
         $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');

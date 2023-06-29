@@ -230,4 +230,8 @@ return [
         'acc_number' => 'Account Number',
         'ifsc_code' => 'IFSC Code',
     ],
+    'follow-up-attempts' => '2',
+    'follow_up_recipients' => [
+        'primary' => env('HR_NEED_FOLLOW_UP_REMINDER_EMAIL', 'ayush.uniyal@coloredcow.in'),
+    ],
 ];
