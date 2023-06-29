@@ -44,6 +44,7 @@ class SendFollowUpEmailsDaily extends Command
 
         if ($followUps->isEmpty()) {
             $this->info('No applications require follow-up.');
+
             return;
         }
 
