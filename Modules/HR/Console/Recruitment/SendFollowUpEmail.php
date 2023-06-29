@@ -21,7 +21,7 @@ class SendFollowUpEmailsDaily extends Command
      *
      * @var string
      */
-    protected $description = 'After more than 2 followup mail send';
+    protected $description = 'After more than 2 followup mail send.';
 
     /**
      * Create a new command instance.
