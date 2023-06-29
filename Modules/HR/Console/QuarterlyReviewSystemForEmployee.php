@@ -40,7 +40,7 @@ class QuarterlyReviewSystemForEmployee extends Command
      */
     public function handle()
     {
-        $employees = Employee::Where('staff_type', 'employee')->selectRaw('employees.id, employees.mentor_id, employees.hr_id, employees.manager_id')->get();
+        $employees = Employee::selectRaw('employees.id, employees.mentor_id, employees.hr_id, employees.manager_id')->get();
 
         foreach ($employees as $employee) {
             $assessment = $this->createAssessment($employee);
