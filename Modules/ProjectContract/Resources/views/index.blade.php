@@ -28,7 +28,7 @@
                 {{$project->contract_name}}
                 <div class="d-flex flex-row">
                 @foreach ($project->internalReviewers()->get() as $internal)
-                    @if ($internal->status == 'Approved')
+                    @if ($internal->status == 'approved')
                     <span class="d-flex flex-column align-items-start">
                         <span class="badge badge-success badge-pill mr-1 mb-1 fz-12"> {{ $internal->user_type }} - {{$internal->status }}</span>
                     </span>
@@ -39,7 +39,7 @@
                     @endif
                 @endforeach
                 @foreach ($project->contractReviewers()->get() as $external)
-                    @if ($external->status == 'Approved')
+                    @if ($external->status == 'approved')
                         <span class="badge badge-success badge-pill mr-1 mb-1 fz-12"> Client - {{ $external->status }}</span>
                     @else
                         <span class="badge badge-warning badge-pill mr-1 mb-1 fz-12"> Client - {{ $external->status }}</span>

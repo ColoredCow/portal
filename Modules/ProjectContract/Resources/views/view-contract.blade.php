@@ -17,14 +17,14 @@
     <div class="card">
         <div class="card-body text-center">
             <div class="container">
-                @if ($user->status == 'Approved')
+                @if ($user->status == 'approved')
                     <span class="badge badge-success badge-pill mr-1 mb-1 fz-12">CC Team: {{$user->status}}</span>
                 @else
                     <span class="badge badge-warning badge-pill mr-1 mb-1 fz-12">CC Team: {{$user->status}}</span>
                 @endif
 
                 @if ($client)
-                    @if ($client->status == 'Approved')
+                    @if ($client->status == 'approved')
                         <span class="badge badge-success badge-pill mr-1 mb-1 fz-12">Client - {{$client->status}}</span>
                     @else
                         <span class="badge badge-warning badge-pill mr-1 mb-1 fz-12">Client - {{$client->status}}</span>
@@ -32,7 +32,7 @@
                 @endif
 
                 @if ($finance)
-                    @if ($finance->status == 'Approved')
+                    @if ($finance->status == 'approved')
                         <span class="badge badge-success badge-pill mr-1 mb-1 fz-12">Finance Team - {{$finance->status}}</span>
                     @else
                         <span class="badge badge-warning badge-pill mr-1 mb-1 fz-12">Finance Team - {{$finance->status}}</span>
@@ -40,7 +40,7 @@
                 @endif
             </div>
             <div class="d-flex flex-row-reverse">
-                @if ($user and $client and $finance and $user->status == 'Approved' and $client->status == 'Approved' and $finance->status == 'Approved')
+                @if ($user and $client and $finance and $user->status == 'approved' and $client->status == 'approved' and $finance->status == 'approved')
                     <a class="btn btn-success"><i class="fa fa-file-pdf-o mr-1" ></i>Generate Contract</a>
                 @else    
                     <a class="btn btn-success" href="{{route('projectcontract.edit', $contracts['id'])}}"><i class="fa fa-edit mr-1" ></i>Edit & Approve</a>
@@ -78,10 +78,10 @@
 <br>
 <div class="container">
     <div class="form-group">
-        @if ($user->status == "Pending")
+        @if ($user->status == "pending")
             <a class="btn btn-success" href="{{route('projectcontract.internalresponse', $contracts['id'])}}"><i class="fa fa-check mr-1" ></i>Approve</a>
         @else
-            <a class="btn btn-success" disabled><i class="fa fa-check mr-1" ></i>Approved</a>
+            <a class="btn btn-success" disabled><i class="fa fa-check mr-1" ></i>approved</a>
         @endif
         <button type="button" class="btn btn-primary round-submit" data-toggle="modal" data-target="#reviewformModal"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send for client review</button>
 

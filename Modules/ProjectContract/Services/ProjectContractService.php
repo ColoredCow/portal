@@ -27,7 +27,7 @@ class ProjectContractService
             $query->where('user_id', $user->id);
         })
         ->with(['user', 'internalReviewers' => function ($query) {
-            $query->whereIn('user_type', ['CC Team', 'Finance Team']);
+            $query->whereIn('user_type', ['cc-team', 'finance-team']);
         }, 'contractReviewers'])
         ->get();
 
@@ -47,7 +47,11 @@ class ProjectContractService
             'contract_name' => $request['client_name'],
             'status' => 'Saved as draft',
         ];
-
+        if (isset($request['gst'])) {
+            $gst=$request['gst'];
+        } else {
+            $gst='N/A';
+        }
         $contractMeta = [
             ['key' => 'Contract Name', 'value' => $request['contract_name'], 'group' => 'Contract Details'],
             ['key' => 'Contract Date For Effective', 'value' => $request['contract_date_for_effective'], 'group' => 'Contract Details'],
@@ -62,7 +66,7 @@ class ProjectContractService
             ['key' => 'Payment Currency', 'value' => $request['currency'], 'group' => 'Payment Methodology'],
             ['key' => 'Payment methodology', 'value' => $request['methodology'], 'group' => 'Payment Methodology'],
             ['key' => 'Source of Payment', 'value' => $request['source'], 'group' => 'Payment Methodology'],
-            ['key' => 'GST Number', 'value' => $request['gst'] | null, 'group' => 'Payment Methodology'],
+            ['key' => 'GST Number', 'value' => $gst, 'group' => 'Payment Methodology'],
         ];
 
         $contractId = null;
@@ -140,7 +144,7 @@ class ProjectContractService
         $Contract->status = 'Finalise by client';
         $Contract->save();
         $Reviewer = Reviewer::where(['contract_id' => $id])->first();
-        $Reviewer->status = 'Approved';
+        $Reviewer->status = 'approved';
         $Reviewer->save();
 
         return $Contract;
@@ -149,13 +153,13 @@ class ProjectContractService
     {
         $Contract = Contract::find($id);
         if ($Contract->user_id == Auth::id()) {
-            $Reviewer = ContractInternalReview::where(['contract_id' => $id, 'user_type' => 'CC Team'])->first();
-            $Reviewer->status = 'Approved';
+            $Reviewer = ContractInternalReview::where(['contract_id' => $id, 'user_type' => 'cc-team'])->first();
+            $Reviewer->status = 'approved';
             $Reviewer->save();
             $Contract->status = 'Finalise by User';
         } else {
-            $Reviewer = ContractInternalReview::where(['contract_id' => $id, 'user_type' => 'Finance Team'])->first();
-            $Reviewer->status = 'Approved';
+            $Reviewer = ContractInternalReview::where(['contract_id' => $id, 'user_type' => 'finance-team'])->first();
+            $Reviewer->status = 'approved';
             $Reviewer->save();
             $Contract->status = 'Finalise by finance';
         }
@@ -173,7 +177,7 @@ class ProjectContractService
         $Reviewer->contract_id = $id;
         $Reviewer->name = $name;
         $Reviewer->email = $email;
-        $Reviewer->status = 'Pending';
+        $Reviewer->status = 'pending';
         $Reviewer->save();
 
         $Contract = Contract::find($id);
@@ -198,7 +202,11 @@ class ProjectContractService
             'contract_name' => $request['client_name'],
             'status' => 'Updated by client',
         ];
-
+        if (isset($request['gst'])) {
+            $gst=$request['gst'];
+        } else {
+            $gst='N/A';
+        }
         $contractMeta = [
             ['key' => 'Contract Name', 'value' => $request['contract_name']],
             ['key' => 'Contract Date For Effective', 'value' => $request['contract_date_for_effective']],
@@ -213,7 +221,7 @@ class ProjectContractService
             ['key' => 'Payment Currency', 'value' => $request['currency']],
             ['key' => 'Payment methodology', 'value' => $request['methodology']],
             ['key' => 'Source of Payment', 'value' => $request['source']],
-            ['key' => 'GST Number', 'value' => $request['gst'] | null],
+            ['key' => 'GST Number', 'value' => $gst],
         ];
 
         DB::transaction(function () use ($contractId, $contractData, $contractMeta, $contractReview) {
@@ -259,8 +267,8 @@ class ProjectContractService
         $User = User::findByEmail($email);
         $Reviewer->user_id = $User->id;
         $Reviewer->name = $User->name;
-        $Reviewer->status = 'Pending';
-        $Reviewer->user_type = 'Finance Team';
+        $Reviewer->status = 'pending';
+        $Reviewer->user_type = 'finance-team';
         $Reviewer->save();
 
         $Contract = Contract::find($id);
@@ -287,7 +295,11 @@ class ProjectContractService
         if ($id->user_id == Auth::id()) {
             $contractData['status'] = 'Updated by CC team';
         }
-        $gst = $request['gst'] ?? ' ';
+        if (isset($request['gst'])) {
+            $gst=$request['gst'];
+        } else {
+            $gst='N/A';
+        }
         $contractMeta = [
             ['key' => 'Contract Name', 'value' => $request['contract_name']],
             ['key' => 'Contract Date For Effective', 'value' => $request['contract_date_for_effective']],
@@ -344,8 +356,8 @@ class ProjectContractService
         $Reviewer->name = Auth::user()->name;
         $Reviewer->email = Auth::user()->email;
         $Reviewer->user_id = Auth::id();
-        $Reviewer->status = 'Pending';
-        $Reviewer->user_type = 'CC Team';
+        $Reviewer->status = 'pending';
+        $Reviewer->user_type = 'cc-team';
         $Reviewer->save();
 
         return $Reviewer;
@@ -367,7 +379,7 @@ class ProjectContractService
     }
     public function get_finance_status($id)
     {
-        return ContractInternalReview::select('status')->where(['contract_id' => $id, 'user_type' => 'Finance Team'])->first();
+        return ContractInternalReview::select('status')->where(['contract_id' => $id, 'user_type' => 'finance-team'])->first();
     }
     public function get_client_status($id)
     {
