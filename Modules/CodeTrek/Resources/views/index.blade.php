@@ -100,7 +100,7 @@
                             <th class="col-md-4">Name</th>
                             <th class="col-md-2">Days in CodeTrek</th>
                             <th>Level</th>
-                            <th>Feedbacks</th>
+                            <th>Mentor Assigned</th>
                         </tr>
                     </thead>
                     <tbody>
