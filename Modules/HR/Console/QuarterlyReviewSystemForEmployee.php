@@ -2,6 +2,7 @@
 
 namespace Modules\HR\Console;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Modules\HR\Entities\Assessment;
 use Modules\HR\Entities\Employee;
@@ -55,7 +56,7 @@ class QuarterlyReviewSystemForEmployee extends Command
     {
         return Assessment::create([
             'reviewee_id' => $employee->id,
-            'created_at' => now(),
+            'created_at' => Carbon::now(),
         ]);
     }
 
@@ -79,7 +80,7 @@ class QuarterlyReviewSystemForEmployee extends Command
                 'reviewer_id' => $reviewer['reviewer_id'],
                 'type' => $reviewer['type'],
                 'status' => 'pending',
-                'created_at' => now(),
+                'created_at' => Carbon::now(),
             ]);
         }
     }
