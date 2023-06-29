@@ -8,7 +8,7 @@
                      <div class="card-header" id="headingOne">
                          <div class="d-flex align-items-center">
                              @foreach (config('codetrek.rounds') as $round)
-                                 @if ($applicantDetail->round_name == $round['slug'])
+                                 @if ($applicantDetail->latest_round_name == $round['slug'])
                                      <button class="btn btn-link float-left" type="button" data-toggle="collapse"
                                          data-target="#collapse_{{ $loop->parent->iteration }}" aria-expanded="true"
                                          aria-controls="collapse">
@@ -50,8 +50,8 @@
                                  <div class="form-group row">
                                      <div class="col-md-12">
                                          @foreach (config('codetrek.rounds') as $round)
-                                             @if ($applicantDetail->round_name == $round['slug'])
-                                                 <input type="hidden" name="round_name" value="{{ $round['slug'] }}">
+                                             @if ($applicantDetail->latest_round_name == $round['slug'])
+                                                 <input type="hidden" name="latest_round_name" value="{{ $round['slug'] }}">
                                                  <textarea class="form-control" id="feedbackTextarea1" name="feedback" rows="6" placeholder="Enter comments">{{ $applicantDetail->feedback }}</textarea>
                                                  <br>
                                                  <button type="submit" class="btn btn-primary float-right">Update
@@ -79,8 +79,8 @@
                                  @csrf
                                  <button type="submit" name="action" value="completed" class="btn btn-dark ml-2">Mark
                                      Completed</button>
-                                 <button type="submit" name="action" value="inactive" class="btn btn-danger ml-1">Mark
-                                     Inactive</button>
+                                <button type="submit" name="action" value="{{ $applicant->status == "active"? "inactive" : "active" }}" class="btn btn-{{ $applicant->status == "active" ? "danger" : "info" }} ml-1">
+                                    Mark {{ ucfirst($applicant->status == "active" ? "inactive" : "active") }} </button>  
                              </form>
                      </div>
                  </div>

@@ -9,7 +9,7 @@
         @endcan
     </div>
     <div class="d-md-flex justify-content-between mt-5 mb-2">
-        <h4 class="mb-1 pb-1">{{ config('client.status')[request()->input('status', 'active')] }} Clients ({{ $count }})</h4>
+        <h4 class="mb-1 pb-1">{{ config('client.status')[request()->input('status', 'active')] }} Clients</h4>
         <div>
             <form action="{{ route('client.index') }}" method="GET">
                 <div class="d-flex align-items-center">

@@ -7,13 +7,17 @@ use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 class CodeTrekApplicantImport implements ToCollection, WithHeadingRow
 {
     public function collection(Collection $rows)
     {
         foreach ($rows as $row) {
-            $startDate = Carbon::createFromFormat('d/m/Y', $row['start_date'])->format('Y-m-d');
+            if ($row['first_name'] == null) {
+                break;
+            }
+            $startDate = Date::excelToDateTimeObject($row['start_date']);
+
             CodeTrekApplicant::create([
                 'first_name' => $row['first_name'],
                 'last_name' => $row['last_name'],

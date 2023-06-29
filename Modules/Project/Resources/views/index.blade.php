@@ -13,14 +13,15 @@
             @include('project::menu_header')
             @can('projects.create')
                 <span class='mt-4'>
-                    
+
                     <a href="{{ route('project.create') }}" class="btn btn-success text-white"><i class="fa fa-plus"></i>
                         {{ __('Add new project') }}</a>
                 </span>
             @endcan
         </div>
         <div class="text-right mb-2">
-            <a href="{{ route('project.fte.export')}}" class="btn btn-info text-white">Export To Excel</a>
+            <button class="btn btn-info text-white" data-toggle="modal" data-target="#modalExcelFilters">Export To
+                Excel</button>
         </div>
         <div class="mb-2">
             <form class="d-md-flex justify-content-between ml-md-3"
@@ -37,8 +38,13 @@
                     <select class="fz-14 fz-lg-16 p-1 bg-info ml-3 my-auto text-white rounded border-0" name="projects"
                         onchange="this.form.submit()">
                         @php
-                            $isUserAdmin =auth()->user()->isAdmin() ||
-                                auth()->user()->isSuperAdmin();
+                            $isUserAdmin =
+                                auth()
+                                    ->user()
+                                    ->isAdmin() ||
+                                auth()
+                                    ->user()
+                                    ->isSuperAdmin();
                         @endphp
                         <option value="my-projects"
                             {{ request()->get('projects') == 'my-projects' || (!$isUserAdmin && !request()->has('projects')) ? 'selected' : '' }}>
@@ -88,6 +94,7 @@
                                     <div class="d-flex justify-content-between">
                                         <div>
                                             {{ $client->name }}
+                                            {{ sprintf("(%03s)",$client->client_id) }}
                                         </div>
                                         <div class="">
                                             {{ __('Total Hours Booked: ') . $client->current_hours_in_projects }}</div>
@@ -95,31 +102,34 @@
                                 </td>
                             </tr>
                             @foreach ($client->projects as $project)
-                            <tr>
-                                <td class="w-33p">
-                                    <div class="pl-1 pl-xl-2">
-                                        @if ($project->getTotalToBeDeployedCount() > 0)
-                                            <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
-                                                  title="There is a requirement of {{ $project->getTotalToBeDeployedCount() }} team members">
-                                                <a href="{{ route('project.resource-requirement', $project) }}"><i class="fa fa-users text-danger mr-0.5" aria-hidden="true"></i></a>
-                                            </span>
-                                        @endif
-                                        @can('projects.update')
-                                            <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a>
-                                        @else
-                                            @php
-                                            $team_member_ids = $project->getTeamMembers->pluck('team_member_id')->toArray();
-                                            @endphp
-                                            @if (in_array(auth()->user()->id, $team_member_ids))
-                                                <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a>
-                                            @else
-                                                <span class="pr-2 pr-xl-2">
-                                                    {{ $project->name }}
+                                <tr>
+                                    <td class="w-33p">
+                                        <div class="pl-1 pl-xl-2">
+                                            @if ($project->getTotalToBeDeployedCount() > 0)
+                                                <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
+                                                    title="There is a requirement of {{ $project->getTotalToBeDeployedCount() }} team members">
+                                                    <a href="{{ route('project.resource-requirement') }}"><i
+                                                            class="fa fa-users text-danger mr-0.5" aria-hidden="true"></i></a>
                                                 </span>
                                             @endif
-                                        @endcan
-                                    </div>
-                                </td>
+                                            @can('projects.update')
+                                                <a href="{{ route('project.show', $project) }}">{{ $project->name }} {{ sprintf("(%03s)",$project->client_project_id) }}</a>
+                                            @else
+                                                @php
+                                                    $team_member_ids = $project->getTeamMembers->pluck('team_member_id')->toArray();
+                                                    $keyAccountmanager = $project->key_account_manager; 
+                                                    $keyAccountmanagerId = $keyAccountmanager ? $keyAccountmanager->id : null;
+                                                @endphp
+                                                @if (in_array(auth()->user()->id, $team_member_ids) || auth()->user()->id === $keyAccountmanagerId)
+                                                    <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a>
+                                                @else
+                                                    <span class="pr-2 pr-xl-2">
+                                                        {{ $project->name }}
+                                                    </span>
+                                                @endif
+                                            @endcan
+                                        </div>
+                                    </td>
                                     <td class="w-20p">
                                         @foreach ($project->getTeamMembers ?: [] as $teamMember)
                                             <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
@@ -147,12 +157,12 @@
                                             </span>
                                         @endforeach
                                     </td>
-                                    <td class="w-20p">  
-                                        <a class="{{$project->velocity_color_class}}"
-                                                    href="{{ route('project.effort-tracking', $project) }}"><i
-                                                        class="mr-0.5 fa fa-external-link-square"></i></a>
-                                                <span
-                                                    class="{{$project->velocity_color_class}} font-weight-bold">{{ $project->Velocity . ' (' . $project->current_hours_for_month . ' Hrs.)' }}</span> 
+                                    <td class="w-20p">
+                                        <a class="{{ $project->velocity_color_class }}"
+                                            href="{{ route('project.effort-tracking', $project) }}"><i
+                                                class="mr-0.5 fa fa-external-link-square"></i></a>
+                                        <span
+                                            class="{{ $project->velocity_color_class }} font-weight-bold">{{ $project->Velocity . ' (' . $project->current_hours_for_month . ' Hrs.)' }}</span>
                                     </td>
                                 </tr>
                             @endforeach
@@ -186,4 +196,5 @@
         </div>
         {{ $clients->withQueryString()->links() }}
     </div>
+    @include('project::subviews.excel-download-filters')
 @endsection

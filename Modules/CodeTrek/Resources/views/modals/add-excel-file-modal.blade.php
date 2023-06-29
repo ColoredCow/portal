@@ -27,8 +27,7 @@
                         </div>
                     </div>
                     <div class="mx-3 mb-2">
-                        <a href="{{ url('/sample-files/codeTrek_sample_file.xlsx') }}" class="text-underline"
-                            href="">Download sample file </a>
+                        <a href="{{ url('/sample-files/CodeTrek_sample_file.xlsx') }}" class="text-underline">Download sample file </a>
                     </div>
                     <div class="float-right p-2">
                         <button type="submit" class="btn btn-dark" data-dismiss="modal">Close</button>

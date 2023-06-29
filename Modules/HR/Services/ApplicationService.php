@@ -11,6 +11,8 @@ use Modules\HR\Entities\Application;
 use Modules\HR\Entities\Job;
 use Modules\HR\Events\CustomMailTriggeredForApplication;
 use Modules\User\Entities\User;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 class ApplicationService implements ApplicationServiceContract
 {
@@ -80,8 +82,14 @@ class ApplicationService implements ApplicationServiceContract
         return $attr;
     }
 
-    public function saveApplication($data)
+    public function saveApplication($data, $subscriptionLists)
     {
+        try {
+            $this->addSubscriberToCampaigns($data, $subscriptionLists);
+        } catch (\Exception $e) {
+            return redirect(route('applications.job.index'))->with('error', 'Error occurred while sending data to Campaign');
+        }
+
         $data['name'] = $data['first_name'] . ' ' . $data['last_name'];
         Applicant::_create($data);
 
@@ -101,5 +109,52 @@ class ApplicationService implements ApplicationServiceContract
         $meetDuration = Carbon::parse($meetDate);
         $data->actual_end_time = $meetDuration;
         $data->save();
+    }
+
+    public function addSubscriberToCampaigns($parameters, $subscriptionLists)
+    {
+        $name = $parameters['first_name'] . ' ' . $parameters['last_name'];
+        $token = $this->getToken();
+        $CAMPAIGNS_TOOL_URL = config('constants.campaign_tool_credentials.url');
+        $url = $CAMPAIGNS_TOOL_URL . '/api/v1/addSubscriber';
+
+        // check $subscriptionLists is array or not
+        $subscriptionLists = is_array($subscriptionLists) ? $subscriptionLists : [$subscriptionLists];
+
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Content-Type'=>'application/json'
+        ])
+        ->withToken($token)
+        ->post($url, [
+            'name' => $name,
+            'email' =>  $parameters['email'],
+            'phone' => $parameters['phone'],
+            'subscription_lists' => $subscriptionLists,
+        ]);
+
+        $jsonData = $response->json();
+    }
+
+    public function getToken()
+    {
+        $savedToken = Cache::get('campaign_token');
+        if ($savedToken) {
+            return $savedToken;
+        }
+
+        $CAMPAIGNS_TOOL_URL = config('constants.campaign_tool_credentials.url');
+        $url = $CAMPAIGNS_TOOL_URL . '/oauth/token';
+        $response = Http::asForm()->post($url, [
+            'grant_type' => 'client_credentials',
+            'client_id' => config('constants.campaign_tool_credentials.client_id'),
+            'client_secret' => config('constants.campaign_tool_credentials.client_secret'),
+        ]);
+
+        $accessToken = $response->json()['access_token'];
+        // Store the token in the cache for 1 day.
+        Cache::put('campaign_token', $accessToken, 60 * 24);
+
+        return  $accessToken;
     }
 }
