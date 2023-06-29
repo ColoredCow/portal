@@ -178,7 +178,7 @@ return [
         ],
     ],
 
-   'Sample-Resume' => 'https://coloredcow.com/wp-content/uploads/2022/08/sample.pdf',
+    'Sample-Resume' => 'https://coloredcow.com/wp-content/uploads/2022/08/sample.pdf',
     'defaults' => [
         'scheduled_person_id' => env('HR_DEFAULT_SCHEDULED_PERSON', 1),
     ],
@@ -195,7 +195,7 @@ return [
         'not-enough-knowledge-inclination-for-coloredcow' => 'Not enough knowledge/inclination for ColoredCow',
         'other' => 'Other',
     ],
-    'verified_application_date' =>[
+    'verified_application_date' => [
         'start_date' => '2022-07-06'
     ],
     'non-verified-application-start-date' => '2022-07-06',
