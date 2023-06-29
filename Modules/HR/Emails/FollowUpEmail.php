@@ -31,7 +31,7 @@ class FollowUpEmail extends Mailable
     public function build()
     {
         return $this->view('hr::application.follow_up')
-            ->subject('Follow-up Required for Applications')
+            ->subject('Follow-up Required for Applications.')
             ->with(['followUps' => $this->followUps]);
     }
 }
