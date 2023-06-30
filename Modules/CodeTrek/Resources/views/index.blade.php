@@ -99,7 +99,20 @@
                         <tr class="text-center sticky-top">
                             <th class="col-md-4">Name</th>
                             <th class="col-md-2">Days in CodeTrek</th>
-                            <th>Level</th>
+                            <th>
+                                <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="statusDropdown">Level</span>
+                                <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                                  <span class="dropdown-item-text fz-12">Filter by status</span>
+                                  @foreach (config('codetrek.rounds') as $round)
+                                    @php
+                                      $target = route('codetrek.filterByRound', ['roundSlug' => $round['slug']]);
+                                    @endphp
+                                    <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
+                                      <span>{{ $round['label'] }}</span>
+                                    </a>
+                                  @endforeach
+                                </div>
+                              </th>
                             <th>Feedbacks</th>
                         </tr>
                     </thead>
@@ -146,7 +159,7 @@
                                 <td>
                                     <div class="d-flex justify-content-center">
                                         <span class="{{ config('codetrek.rounds.' . $applicant->latest_round_name . '.class') }} badge-pill mr-1 mb-1 fz-16">
-                                            {{ config('codetrek.rounds.' . $applicant->latest_round_name . '.label') }}
+                                            {{ config('codetrek.rounds.' . $applicant->round_name . '.label') }}
                                         </span>
                                     </div>                                    
                                 </td>

@@ -22,12 +22,12 @@ class CodeTrekController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, CodeTrekApplicant $applicant)
+    public function index(Request $request, CodeTrekApplicant $applicant, $roundSlug = null)
     {
         $this->authorize('view', $applicant);
 
         $centres = OfficeLocation::all();
-        $applicantData = $this->service->getCodeTrekApplicants($request->all());
+        $applicantData = $this->service->getCodeTrekApplicants($request->all(), $roundSlug);
         $applicants = $applicantData['applicants'];
         $applicantsData = $applicantData['applicantsData'];
         $statusCounts = $applicantData['statusCounts'];

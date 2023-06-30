@@ -9,22 +9,27 @@ use  Modules\CodeTrek\Emails\CodetrekMailApplicant;
 
 class CodeTrekService
 {
-    public function getCodeTrekApplicants($data = [])
+    public function getCodeTrekApplicants($data = [], $roundSlug = null)
     {
         $search = $data['name'] ?? null;
         $status = $data['status'] ?? 'active';
         $centre = $data['centre'] ?? null;
         $query = CodeTrekApplicant::where('status', $status)->orderBy('first_name');
-        $applicants = null;
+        
         if ($centre) {
-            $applicants = $query->where('centre_id', $centre);
+            $query->where('centre_id', $centre);
         }
+        
+        if ($roundSlug) {
+            $query->where('round_name', $roundSlug);
+        }
+        
         $applicants = $query->when($search, function ($query) use ($search) {
             return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
         })
         ->paginate(config('constants.pagination_size'))
         ->appends(request()->except('page'));
-
+    
         $applicantsData = CodeTrekApplicant::whereIn('status', ['active', 'inactive', 'completed'])
         ->when($search, function ($query) use ($search) {
             return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
@@ -32,12 +37,13 @@ class CodeTrekService
         ->groupBy('status')
         ->selectRaw('count(status) as total, status')
         ->get();
-
+    
         $statusCounts = [
             'active' => 0,
             'inactive' => 0,
             'completed' => 0
         ];
+        
         foreach ($applicantsData as $data) {
             $statusCounts[$data->status] = $data->total;
         }
