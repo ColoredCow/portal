@@ -883,3 +883,31 @@ span.total-chart-count {
 #applicant-sidebar {
   z-index: 1050;
 }
+
+.fa-thumbs-up,
+.fa-thumbs-down,
+.applicant-name {
+  cursor: pointer;
+}
+
+.thumbs-up.green {
+  color: green;
+}
+
+.thumbs-down.red {
+  color: red;
+}
+
+.thumbs-radio-button {
+  opacity: 0;
+}
+
+.fa-thumbs-up:hover {
+  color: green;
+  transform: scale(1.1);
+}
+
+.fa-thumbs-down:hover {
+  color: red;
+  transform: scale(1.1);
+}

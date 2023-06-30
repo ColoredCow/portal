@@ -120,7 +120,7 @@ class CodeTrekService
         $feedback->latest_round_name = $data['latest_round_name'];
         $feedback->candidate_id = $data['candidate_id'];
         $feedback->posted_by = auth()->user()->id;
-        $feedback->posted_on = date('y-m-d');
+        $feedback->posted_on = today();
         $feedback->save();
     }
 }
