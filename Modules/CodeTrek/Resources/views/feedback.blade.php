@@ -1,6 +1,6 @@
 @extends('codetrek::layouts.master')
 @section('content')
-    <div class="container vh-100 min-w-696 max-w-1044 bg-white px-5 py-5">
+    <div class="container h-100p min-w-696 max-w-1044 bg-white px-5 py-5">
         <div class="mb-5" id="FeedbackHeading">
             <h1 class="font-weight-bold">Feedbacks</h1>
         </div>
@@ -37,7 +37,7 @@
                 <td class="text-primary font-weight-bold"><span>{{$applicantInfo->phone}}</span></td>
             </tr>
         </table>
-        <hr class="border-secondary mt-5 mb-5" size="10" width="80%" align="left">
+        <hr class="border-secondary mt-5 mb-5" size="10" width="100%" align="left">
         <div class="accordion mt-5" id="FeedbacksAccordion">
             @foreach ($candidateFeedbacks as $candidateFeedback)
             <div class="accordion-item my-2">
