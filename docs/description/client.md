@@ -102,6 +102,22 @@ The client page also offers information on client status, allowing users to keep
 - From here you can also edit the client's detail by simply clicking on the client's name.
 - By simply entering the client's name in the search bar, users can easily search for any client.
   
-<img width="1273" alt="Screenshot 2023-06-27 at 6 07 57 PM" src="https://github.com/ColoredCow/portal/assets/104312137/f410b59e-2755-49e7-861b-db91fc18d743">
+   <img width="1273" alt="Screenshot 2023-06-27 at 6 07 57 PM" src="https://github.com/ColoredCow/portal/assets/104312137/f410b59e-2755-49e7-861b-db91fc18d743">
 
 
+ **What is client_id on Client page?**
+ - The client_id is a unique identifier assigned to each client account created within the ColoredCow portal. It serves as a reference point to distinguish one 
+  client from another, making it easier to retrieve and manage specific client information. The client_id is used throughout the portal to associate actions, 
+   tasks, and data with the respective client.
+
+**Client Projects:**
+ - The client section used to view and manage client projects. Here, users can access information about ongoing and completed projects, 
+   including project names, descriptions, timelines, deliverables, and associated team members. This allows for efficient project tracking, collaboration, and 
+   progress monitoring.
+
+   ![Screenshot 2023-06-30 155336](https://github.com/ColoredCow/portal/assets/104312137/343953a9-2b03-4adc-9545-64c37bfd85b0)
+
+  - To showcase projects in the project section, users need to access the project page via the navigation bar.
+     <img width="641" alt="Screenshot 2023-06-27 at 2 58 48 PM" src="https://github.com/ColoredCow/portal/assets/104312137/80beb665-d1ac-4ecd-b4af-5981d6f2301b">
+
+  -   From there, they can create a new project specifically for the desired client, which will then be displayed in the project section.
