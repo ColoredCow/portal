@@ -88,7 +88,7 @@
                                 <option value="">Select Mentor Name</option>
                                 @foreach($users as $user)
                                     @if ($user->name )
-                                        <option value="{{ $user->id }}">{{$user->name}}</option>
+                                        <option value="{{ $user->id }}"{{ $applicant->mentor_id == $user->id ? 'selected' : '' }}>{{$user->name}}</option>
                                     @endif
                                 @endforeach
                             </select>
