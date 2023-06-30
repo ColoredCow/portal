@@ -15,6 +15,7 @@ class UserService implements UserServiceContract
     public function index()
     {
         return User::with('roles')
+            ->whereNull('deleted_at')
             ->orderBy('name')
             ->get();
     }
