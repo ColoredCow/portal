@@ -118,6 +118,7 @@ The client page also offers information on client status, allowing users to keep
    ![Screenshot 2023-06-30 155336](https://github.com/ColoredCow/portal/assets/104312137/343953a9-2b03-4adc-9545-64c37bfd85b0)
 
   - To showcase projects in the project section, users need to access the project page via the navigation bar.
+    
      <img width="641" alt="Screenshot 2023-06-27 at 2 58 48 PM" src="https://github.com/ColoredCow/portal/assets/104312137/80beb665-d1ac-4ecd-b4af-5981d6f2301b">
 
   -   From there, they can create a new project specifically for the desired client, which will then be displayed in the project section.
