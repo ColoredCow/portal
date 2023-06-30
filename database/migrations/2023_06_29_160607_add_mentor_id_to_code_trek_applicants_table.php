@@ -14,15 +14,9 @@ class AddMentorIdToCodeTrekApplicantsTable extends Migration
     public function up()
     {
         Schema::table('code_trek_applicants', function (Blueprint $table) {
-            $table->integer('mentor_id')->unsigned()->nullable();
-
-           
-        });
-        Schema::table('code_trek_applicants', function (Blueprint $table) {
-
+            $table->integer('mentor_id')->unsigned()->nullable();   
             $table->foreign('mentor_id')->references('id')->on('users');
         });
-       
     }
 
     /**
@@ -33,9 +27,7 @@ class AddMentorIdToCodeTrekApplicantsTable extends Migration
     public function down()
     {
         Schema::table('code_trek_applicants', function (Blueprint $table) {
-            $table->dropForeign([
-                'mentor_id'
-            ]);
+            $table->dropForeign(['mentor_id']);
         });
     }
 }
