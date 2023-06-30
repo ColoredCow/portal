@@ -1,5 +1,4 @@
 @extends('codetrek::layouts.master')
-@section('heading', 'CodeTrek')
 @section('content')
     <div class="container" id="applicant">
         <div class="col-lg-12 d-flex justify-content-between align-items-center mx-auto">
@@ -130,6 +129,9 @@
                                             <a href="{{ route('codetrek.evaluate', $applicant->id) }}"
                                                 class="btn-sm btn-primary mr-1 text-decoration-none"
                                                 target="_self">Evaluate</a>
+                                            <a href="{{ route('codetrek.getCodeTrekApplicantFeedback',['applicant'=> $applicant->id]) }}"
+                                                class="btn-sm btn-primary mr-1 text-decoration-none"
+                                                target="_self">Feedback</a>
                                         </div>
                                     </div>
                                 </td>

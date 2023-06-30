@@ -4,7 +4,9 @@ namespace Modules\CodeTrek\Services;
 
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Entities\CodeTrekCandidateFeedback;
+use Modules\CodeTrek\Entities\CodeTrekFeedbackCategories;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
+use Modules\User\Entities\User;
 
 class CodeTrekService
 {
@@ -98,5 +100,24 @@ class CodeTrekService
         $feedback->posted_by = auth()->user()->id;
         $feedback->posted_on = date('y-m-d');
         $feedback->save();
+    }
+
+    public function getCandidateFeedbacks($data)
+    {
+        $feedbacks = CodeTrekCandidateFeedback::where('candidate_id', $data['applicant'])->get();
+        $candidateFeedbacks = [];
+        foreach ($feedbacks as $feedback)
+        {
+            $candidateFeedback = new \stdClass();
+            $candidateFeedback->id = $feedback['id'];
+            $candidateFeedback->posted_by = User::select('name')->where('id', $feedback['posted_by'])->first()->name;
+            $candidateFeedback->posted_on = $feedback['posted_on'];
+            $candidateFeedback->feedback_category = CodeTrekFeedbackCategories::select('category_name')->where('id', $feedback['category_id'])->first()->category_name;
+            $candidateFeedback->feedback_type = $feedback['feedback_type'];
+            $candidateFeedback->feedback = $feedback['feedback'];
+    
+            $candidateFeedbacks[] = $candidateFeedback;
+        }
+        return $candidateFeedbacks;
     }
 }

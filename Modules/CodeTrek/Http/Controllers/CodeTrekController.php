@@ -89,4 +89,8 @@ class CodeTrekController extends Controller
     public function destroy($id)
     {
     }
+    public function getCodeTrekApplicantFeedback(Request $request)
+    {
+        return view('codetrek::feedback')->with(['candidateFeedbacks'=>$this->service->getCandidateFeedbacks($request->all())]);
+    }
 }
