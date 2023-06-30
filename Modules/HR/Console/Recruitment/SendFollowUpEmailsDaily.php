@@ -53,5 +53,7 @@ class SendFollowUpEmailsDaily extends Command
 
         Mail::to($emailRecipients)
             ->send(new FollowUpEmail($data));
+
+        return 0; // Return 0 to indicate successful execution
     }
 }
