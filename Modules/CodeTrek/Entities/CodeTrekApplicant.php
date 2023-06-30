@@ -21,7 +21,7 @@ class CodeTrekApplicant extends Model
     {
         return $this->belongsTo(OfficeLocation::class, 'center_id');
     }
-    
+
     public function user()
     {
         return $this->belongsTo(User::class, 'mentor_id');
