@@ -33,16 +33,18 @@
             <div>
                 <form action="{{ route('codetrek.index') }}" id="centreFilterForm">
                     <div class="form-group ml-25 w-180">
-                        <select class="form-control bg-light" name="centre" id="centre" onchange="document.getElementById('centreFilterForm').submit();">
-                            <option value="" {{ !request()->has('centre') || empty(request()->get('centre')) ? 'selected' : '' }}>
-                                {!! __('All Centres') !!}
-                            </option>
-                            @foreach ($centres as $centre)
-                                <option value="{{ $centre->id }}" {{ request()->get('centre') == $centre->id ? 'selected' : '' }}>
-                                    {{ $centre->centre_name }}
+                        @can('codetrek_applicant.create')     
+                            <select class="form-control bg-light" name="centre" id="centre" onchange="document.getElementById('centreFilterForm').submit();">
+                                <option value="" {{ !request()->has('centre') || empty(request()->get('centre')) ? 'selected' : '' }}>
+                                    {!! __('All Centres') !!}
                                 </option>
-                            @endforeach
-                        </select>
+                                @foreach ($centres as $centre)
+                                    <option value="{{ $centre->id }}" {{ request()->get('centre') == $centre->id ? 'selected' : '' }}>
+                                        {{ $centre->centre_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        @endcan
                         <input type="hidden" name="status" value="{{ $request['status'] ?? '' }}">
                         <input type="hidden" name="name" value="{{ request()->get('name') }}">
                     </div>
@@ -70,21 +72,21 @@
                         class="nav-link btn-nav {{ request()->input('status') !== 'inactive' && request()->input('status') !== 'completed' ? 'active' : '' }}"
                         onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
                         <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/clipboard-check.svg')) !!}</span>
-                        Active</a>
+                        Active({{$statusCounts['active']}})</a>
                 </li>
                 <li class="nav-item mr-3">
                     <a href="{{ route('codetrek.index', ['name' => $name , 'centre' => $centre , 'status' => 'inactive']) }}"
                         class="nav-link btn-nav {{ request()->input('status') == 'inactive' ? 'active' : '' }}"
                         onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
                         <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/x-circle.svg')) !!}</span>
-                        Inactive</a>
+                        Inactive({{$statusCounts['inactive']}})</a>
                 </li>
                 <li class="nav-item mr-3">
                     <a href="{{ route('codetrek.index', ['name' => $name , 'centre' => $centre , 'status' => 'completed']) }}"
                         class="nav-link btn-nav {{ request()->input('status') == 'completed' ? 'active' : '' }}"
                         onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
                         <span class="d-inline-block h-18 w-20"> {!! file_get_contents(public_path('icons/person-check.svg')) !!} </span>
-                        Completed</a>
+                        Completed({{$statusCounts['completed']}})</a>
                 </li>
             </div>
         </ul>
@@ -96,7 +98,7 @@
                         <tr class="text-center sticky-top">
                             <th class="col-md-4">Name</th>
                             <th class="col-md-2">Days in CodeTrek</th>
-                            <th>Status</th>
+                            <th>Level</th>
                             <th>Feedbacks</th>
                         </tr>
                     </thead>
@@ -122,6 +124,7 @@
                                                     class="fa fa-university mr-1"></i>{{ $applicant->university }}</span>
                                         @endif
                                     </div>
+                                    @can('codetrek_applicant.update')
                                     <div class="mb-2 fz-xl-14 text-secondary d-flex flex-column">
                                         <div class="d-flex text-white my-2">
                                             <a href="{{ route('codetrek.edit', $applicant->id) }}"
@@ -134,6 +137,7 @@
                                                 target="_self">Feedback</a>
                                         </div>
                                     </div>
+                                    @endcan
                                 </td>
                                 <td>
                                     @php
@@ -143,8 +147,8 @@
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <span class="{{ config('codetrek.rounds.' . $applicant->round_name . '.class') }} badge-pill mr-1 mb-1 fz-16">
-                                            {{ config('codetrek.rounds.' . $applicant->round_name . '.label') }}
+                                        <span class="{{ config('codetrek.rounds.' . $applicant->latest_round_name . '.class') }} badge-pill mr-1 mb-1 fz-16">
+                                            {{ config('codetrek.rounds.' . $applicant->latest_round_name . '.label') }}
                                         </span>
                                     </div>                                    
                                 </td>

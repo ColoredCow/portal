@@ -49,7 +49,7 @@
                 onchange="document.getElementById('msrFilterForm').submit();">
                 <option {{ request()->input('region') == '' ? 'selected=selected' : '' }} value="">All Types
                 </option>
-                <option {{ request()->input('region') == 'indian' ? 'selected=selected' : '' }} value="indian">B2B
+                <option {{ request()->input('region') == 'indian' ? 'selected=selected' : '' }} value="indian">Indian
                 </option>
                 <option {{ request()->input('region') == 'international' ? 'selected=selected' : '' }}
                     value="international">Export</option>

@@ -14,7 +14,7 @@ class CodeTrekApplicantsComposer
         ->orderBy('first_name', 'asc')
         ->get();
 
-        $feedback_categories = CodeTrekFeedbackCategories::all();
-        $view->with(['codeTrekApplicants' => $codeTrekApplicants, 'feedback_categories' => $feedback_categories]);
+        $feedbackCategories = CodeTrekFeedbackCategories::all();
+        $view->with(['codeTrekApplicants' => $codeTrekApplicants, 'feedbackCategories' => $feedbackCategories]);
     }
 }
