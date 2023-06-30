@@ -82,6 +82,19 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-row">
+                            <div class="form-group  col-md-5">
+                                <label for="mentor" class="field-required">Mentor Assigned</label>
+                                <select name="mentorId" id="mentorId" class="form-control" required>
+                                    <option value="">Select Mentor Name</option>
+                                    @foreach($users as $user)
+                                        @if ($user->name )
+                                            <option value="{{ $user->id }}">{{$user->name}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary save-btn" v-on:click="submitForm('applicant_form')" >Create</button>

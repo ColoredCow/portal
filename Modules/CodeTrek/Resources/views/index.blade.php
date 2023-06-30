@@ -150,7 +150,20 @@
                                         </span>
                                     </div>                                    
                                 </td>
-                                <td>-</td>
+                                <td>
+                                    <div class="d-flex align-items-center"> 
+                                        @if ($applicant->user)
+                                            <div class="col">
+                                                <div class="d-flex align-items-center"> 
+                                                    <img src="{{ $applicant->user->avatar }}" class="w-35 h-30 rounded-circle ">
+                                                    <h4 class="ml-2 mb-0">{{ $applicant->user->name }}</h4> 
+                                                </div>
+                                            </div>
+                                        @else
+                                            <h4 class="ml-2">No Mentor Assigned</h4>
+                                        @endif
+                                    </div>
+                                </td>
                             </tr>
                         @empty
                          <tr>
