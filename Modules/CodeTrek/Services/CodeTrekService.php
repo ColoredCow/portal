@@ -106,8 +106,7 @@ class CodeTrekService
     {
         $feedbacks = CodeTrekCandidateFeedback::where('candidate_id', $data['applicant'])->get();
         $candidateFeedbacks = [];
-        foreach ($feedbacks as $feedback)
-        {
+        foreach ($feedbacks as $feedback) {
             $candidateFeedback = new \stdClass();
             $candidateFeedback->id = $feedback['id'];
             $candidateFeedback->posted_by = User::select('name')->where('id', $feedback['posted_by'])->first()->name;
