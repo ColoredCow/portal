@@ -21,7 +21,7 @@ class SendFollowUpEmailsDaily extends Command
      *
      * @var string
      */
-    protected $description = 'After more than 2 followup mail send.';
+    protected $description = 'Sending a Follow-Up Email to HR';
 
     /**
      * Create a new command instance.
@@ -53,7 +53,5 @@ class SendFollowUpEmailsDaily extends Command
 
         Mail::to($emailRecipients)
             ->send(new FollowUpEmail($data));
-
-        $this->info('Follow-up email sent successfully!');
     }
 }
