@@ -45,7 +45,7 @@ class SendFollowUpEmailsDaily extends Command
         if ($followUps->isEmpty()) {
             $this->info('No applications require follow-up');
 
-            return;
+            return 0;
         }
 
         $emailRecipients = config('hr.follow_up_recipients');
