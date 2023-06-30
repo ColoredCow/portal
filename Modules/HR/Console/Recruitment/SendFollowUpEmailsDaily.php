@@ -43,7 +43,7 @@ class SendFollowUpEmailsDaily extends Command
         $followUps = FollowUp::where('follow_up_attempts', '>', 2)->get();
 
         if ($followUps->isEmpty()) {
-            $this->info('No applications require follow-up.');
+            $this->info('No applications require follow-up');
 
             return 0;
         }
