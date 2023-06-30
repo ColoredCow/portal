@@ -44,7 +44,7 @@ class SendFollowUpThresholdMail extends Command
         $applications = Application::whereIn('status', ['new', 'in-progress'])->get();
         $applications = $applications->reject(function ($application) {
             $followUpCount = $application->latestApplicationRound ? $application->latestApplicationRound->followUps->count() : 0;
-            if ($followUpCount == config('hr.follow-up-attempts-threshold.')) {
+            if ($followUpCount == config('hr.follow-up-attempts-threshold')) {
                 return $application;
             }
         });
