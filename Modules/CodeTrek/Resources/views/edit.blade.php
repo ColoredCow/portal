@@ -83,7 +83,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group  col-md-5">
-                            <label for="mentor" class="field-required">Mentor Assigned</label>
+                            <label for="mentor" class="field-required">Assign Mentor</label>
                             <select name="mentorId" id="mentorId" class="form-control" required>
                                 <option value="">Select Mentor Name</option>
                                 @foreach($users as $user)
