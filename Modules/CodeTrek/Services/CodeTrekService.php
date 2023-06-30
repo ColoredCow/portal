@@ -138,9 +138,10 @@ class CodeTrekService
             $candidateFeedback->feedback_category = CodeTrekFeedbackCategories::select('category_name')->where('id', $feedback['category_id'])->first()->category_name;
             $candidateFeedback->feedback_type = $feedback['feedback_type'];
             $candidateFeedback->feedback = $feedback['feedback'];
-    
+            
             $candidateFeedbacks[] = $candidateFeedback;
         }
+        
         return $candidateFeedbacks;
     }
 }
