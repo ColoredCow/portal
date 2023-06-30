@@ -106,10 +106,8 @@ The client page also offers information on client status, allowing users to keep
 
 
  **What is client_id on Client page?**
- - The client_id is a unique identifier assigned to each client account created within the ColoredCow portal. It serves as a reference point to distinguish one 
-  client from another, making it easier to retrieve and manage specific client information. The client_id is used throughout the portal to associate actions, 
-   tasks, and data with the respective client.
-
+ - The client_id is a value assigned to each client . The client_id serves as an identifier for clients who added in ColoredCow. It uses as a serialization for tracking the clients' association with ColoredCow. It's important to note that the client_id does not possess any technical characteristics.
+ - **Client_Project_Id** : Similarly, the Client_project_id is same as client_id but it operates as a serialized number assigned to clients' projects within ColoredCow. It serves as an identification mechanism for tracking and managing the various projects undertaken by clients.
 **Client Projects:**
  - The client section used to view and manage client projects. Here, users can access information about ongoing and completed projects, 
    including project names, descriptions, timelines, deliverables, and associated team members. This allows for efficient project tracking, collaboration, and 
