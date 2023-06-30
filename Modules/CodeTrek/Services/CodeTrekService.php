@@ -9,6 +9,7 @@ use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Mail;
 use  Modules\CodeTrek\Emails\CodetrekMailApplicant;
+
 class CodeTrekService
 {
     public function getCodeTrekApplicants($data = [])
