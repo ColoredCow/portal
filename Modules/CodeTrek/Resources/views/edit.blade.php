@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="container" id="update_details">
-    <div  class="card-body">
+    <div  class="card-body hbib">
         <form action="{{route('codetrek.update', $applicant)}}" method="POST" id='updateForm' enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="codetrek" value="applicant->id">
