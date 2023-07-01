@@ -26,6 +26,11 @@ class CreateHrFollowUpsTable extends Migration
             $table->foreign('assigned_to')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('conducted_by')->references('id')->on('users')->onDelete('cascade');
         });
+
+        Schema::create('hr_follow_ups', function (Blueprint $table) {
+            $table->unsignedBigInteger('hr_application_id');
+            $table->foreign('hr_application_id')->references('id')->on('hr_applications')->onDelete('cascade');
+        });
     }
 
     /**

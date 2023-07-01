@@ -49,7 +49,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('hr:send-follow-up-mail')->dailyAt('08:00');
         $schedule->command('hr:message-for-email-verified')->dailyAt('7:00');
         $schedule->command('hr:send-job-expired-email-to-hr')->dailyAt('11:00');
-        $schedule->command('hr:send-follow-up-mail-daily')->dailyAt('19:00');
+        $schedule->command('hr:send-follow-up-mail-daily {hrJobId}')->dailyAt('19:00');
         $schedule->command('mapping-of-jobs-and-hr-rounds');
         $schedule->command('project:fixed-budget-project');
         $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');
