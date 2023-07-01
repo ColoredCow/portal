@@ -87,9 +87,9 @@
                                 <label for="mentor" class="field-required">Assign Mentor</label>
                                 <select name="mentorId" id="mentorId" class="form-control" required>
                                     <option value="">Select Mentor Name</option>
-                                    @foreach($users as $user)
-                                        @if ($user->name )
-                                            <option value="{{ $user->id }}">{{$user->name}}</option>
+                                    @foreach($mentors as $mentor)
+                                        @if ($mentor->name )
+                                            <option value="{{ $mentor->id }}">{{ $mentor->name }}</option>
                                         @endif
                                     @endforeach
                                 </select>

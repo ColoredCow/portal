@@ -29,7 +29,7 @@ class CodeTrekController extends Controller
         // $this->authorize('view', $applicant);     There are some issues in the production, which is why these lines are commented out.
 
         $centres = OfficeLocation::all();
-        $users = User::all();
+        $mentors = User::all();
         $applicantData = $this->service->getCodeTrekApplicants($request->all());
         $applicants = $applicantData['applicants'];
         $applicantsData = $applicantData['applicantsData'];
@@ -38,7 +38,7 @@ class CodeTrekController extends Controller
         return view('codetrek::index', [
             'applicants' => $applicants,
             'centres' => $centres,
-            'users' => $users,
+            'mentors' => $mentors,
             'applicantsData' => $applicantsData,
             'statusCounts' => $statusCounts
         ]);
@@ -79,10 +79,10 @@ class CodeTrekController extends Controller
         // $this->authorize('update', $applicant);   There are some issues in the production, which is why these lines are commented out.
 
         $centres = OfficeLocation::all();
-        $users = User::all();
+        $mentors = User::all();
         $this->service->edit($applicant);
 
-        return view('codetrek::edit', ['applicant' => $applicant, 'centres' => $centres, 'users' => $users]);
+        return view('codetrek::edit', ['applicant' => $applicant, 'centres' => $centres, 'mentors' => $mentors]);
     }
     public function evaluate(CodeTrekApplicant $applicant)
     {
