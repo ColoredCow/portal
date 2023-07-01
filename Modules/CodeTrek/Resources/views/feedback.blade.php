@@ -26,7 +26,7 @@
             </tr>
             <tr>
                 <td class="font-weight-bold" width="35%"><span>Current Round</span></td>
-                <td class="text-primary font-weight-bold"><span>{{$applicantInfo->round_name}}</span></td>
+                <td class="text-primary font-weight-bold"><span>{{$applicantInfo->latest_round_name}}</span></td>
             </tr>
             <tr>
                 <td class="font-weight-bold" width="35%"><span>Email</span></td>
