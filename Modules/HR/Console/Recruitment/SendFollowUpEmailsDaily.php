@@ -44,7 +44,7 @@ class SendFollowUpEmailsDaily extends Command
         $hrJobId = $this->argument('hrJobId');
         $hrApplication = Application::where('hr_job_id', $hrJobId)->first();
 
-        if (!$hrApplication) {
+        if (! $hrApplication) {
             $this->info('No applications found for the given HR job ID.');
 
             return 0;
