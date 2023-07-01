@@ -133,7 +133,7 @@
                                             <a href="{{ route('codetrek.evaluate', $applicant->id) }}"
                                                 class="btn-sm btn-primary mr-1 text-decoration-none"
                                                 target="_self">Evaluate</a>
-                                            <a href="{{ route('codetrek.get-codetrek-applicant-feedback',['applicant'=> $applicant->id]) }}"
+                                            <a href="{{ route('codetrek.get-codetrek-applicant-feedback',['applicantId'=> $applicant->id]) }}"
                                                 class="btn-sm btn-primary mr-1 text-decoration-none"
                                                 target="_self">Feedback</a>
                                         </div>
