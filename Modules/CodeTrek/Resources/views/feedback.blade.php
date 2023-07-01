@@ -56,11 +56,11 @@
                                         <span>&nbsp &nbsp</span>
                                         @if(strcmp($candidateFeedback->feedback_type, "positive") == 0)
                                             <span class="thumbs-up pt-0 max-h-25">
-                                                <i class="fa fa-thumbs-up fa-2x mb-1" aria-hidden="true"></i>
+                                                <i class="fa fa-thumbs-up thumbs-up fa-lg mt-1" aria-hidden="true"></i>
                                             </span>
                                         @else
-                                            <span class="thumbs-down  max-h-25">
-                                                <i class="fa fa-thumbs-down fa-2x mb-1" aria-hidden="true"></i>
+                                            <span class="thumbs-down pt-0 max-h-25">
+                                                <i class="fa fa-thumbs-down thumbs-down fa-lg mt-1" aria-hidden="true"></i>
                                             </span>
                                         @endif
                                     </div>

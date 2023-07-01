@@ -25,3 +25,9 @@
   color: red;
   transform: scale(1.1);
 }
+
+.thumbs-up:hover,
+.thumbs-down:hover {
+  color: inherit;
+  transform: none;
+}
