@@ -102,9 +102,12 @@ class CodeTrekController extends Controller
     }
     public function getCodeTrekApplicantFeedback(Request $request)
     {
+        $candidateFeedbacks = $this->service->getCandidateFeedbacks($request->all());
+        $applicantInfo = CodeTrekApplicant::where('id', $request['applicantId'])->first();
+        
         return view('codetrek::feedback')->with([
-        'candidateFeedbacks' => $this->service->getCandidateFeedbacks($request->all()),
-        'applicantInfo' => CodeTrekApplicant::where('id', $request['applicant'])->first()
+        'candidateFeedbacks' => $candidateFeedbacks,
+        'applicantInfo' =>  $applicantInfo
         ]);
     }
 }
