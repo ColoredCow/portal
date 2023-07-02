@@ -9,6 +9,7 @@ use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 use Modules\CodeTrek\Services\CodeTrekService;
 use Modules\Operations\Entities\OfficeLocation;
+use Carbon\Carbon;
 
 class CodeTrekController extends Controller
 {
@@ -30,15 +31,56 @@ class CodeTrekController extends Controller
         $centres = OfficeLocation::all();
         $applicantData = $this->service->getCodeTrekApplicants($request->all());
         $applicants = $applicantData['applicants'];
-        $applicantsData = $applicantData['applicantsData'];
+        $applicantsData = json_encode($applicantData['applicantsData']);
         $statusCounts = $applicantData['statusCounts'];
+        if($request->application_start_date && $request->application_end_date) {
+            $applicantsGraph = $this->searchBydate($request);
+        }
+        else {
+            $applicantChartData = CodeTrekApplicant::selectRaw('DATE(created_at) as date, COUNT(*) as count')
+                ->groupBy('date')
+                ->orderBy('date')
+                ->get();
+    
+            $dates = $applicantChartData->pluck('date')->toArray();
+            $counts = $applicantChartData->pluck('count')->toArray();
+            $chartData = [
+                'dates' => $dates,
+                'counts' => $counts,
+            ];
+            $applicantsGraph = json_encode($chartData);
+        }
 
         return view('codetrek::index', [
             'applicants' => $applicants,
             'centres' => $centres,
             'applicantsData' => $applicantsData,
-            'statusCounts' => $statusCounts
+            'statusCounts' => $statusCounts,
+            'applicantsGraph' => $applicantsGraph
         ]);
+    }
+
+    public function searchBydate(Request $req)
+    {
+        $req->application_start_date = $req->application_start_date ?? carbon::now()->startOfMonth() == $req->application_end_date = $req->application_end_date ?? Carbon::today();
+
+        // $todayCount = CodeTrekApplicant::whereDate('created_at', '=', Carbon::today())
+        // ->count();
+        
+        $applicantsGraph = CodeTrekApplicant::select(
+            \DB::raw('COUNT(*) as count'),
+            \DB::raw('MONTHNAME(created_at) as month_created_at'),
+            \DB::raw('DATE(created_at) as date_created_at'),
+        )
+            ->wheredate('created_at', '>=', $req->application_start_date)
+            ->wheredate('created_at', '<=', $req->application_end_date)
+            ->groupBy('date_created_at', 'month_created_at')
+            ->orderBy('date_created_at', 'ASC')
+            ->get();
+        $data = [];
+        $data['chartData'] = json_encode($data);
+
+        return $applicantsGraph;
     }
 
     /**

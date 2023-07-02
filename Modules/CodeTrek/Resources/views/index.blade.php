@@ -68,6 +68,7 @@
         @endphp
         <ul class="nav nav-pills d-flex justify-content-between">
             <div class='d-flex justify-content-between'>
+                @if (request()->tab == 'applicants')
                 <li class="nav-item mr-3">
                     <a href="{{ route('codetrek.index', ['name' => $name ,'centre' => $centre , 'status' => 'active']) }}"
                         class="nav-link btn-nav {{ request()->input('status') !== 'inactive' && request()->input('status') !== 'completed' ? 'active' : '' }}"
@@ -89,6 +90,10 @@
                         <span class="d-inline-block h-18 w-20"> {!! file_get_contents(public_path('icons/person-check.svg')) !!} </span>
                         Completed({{$statusCounts['completed']}})</a>
                 </li>
+                @elseif (request()->tab == 'reports')
+                <li class="nav-item mr-3">
+                    <a class="nav-link active">Total Applications</a>
+                @endif
             </div>
         </ul>
         @if (request()->input('tab', 'active') == 'active' || request()->tab == 'applicants')
@@ -161,10 +166,24 @@
                 </table>
             </div>
             {{$applicants->links()}}
-        @elseif (request()->status == 'reports')
+            @elseif (request()->tab == 'reports')
             <div>
-                <br><br>
-                <p align="center">Coming Soon</p>
+                <br>
+                <div class="card-header mt-1" align="left">
+                    <div class="my-2">
+                        <form align="right" action="{{route("codetrek.index")}}">
+                            <input type="hidden" name="_token" value="">
+                            <input type="date" name="application_start_date" id="Startdate" value="" required=""> to
+                            <input type="date" name="application_end_date" id="Enddate" value="" required="">
+                            <input type="submit" class="btn btn-sm btn-primary text-white" value="View">
+                            <br>
+                        </form>
+                        <span class="chart-heading">Applications Received</span>
+                    </div>
+                </div>
+            </div>
+            <div id="BarGraph" class="card-body chart-data" data-target="{{ $applicantsGraph }}">
+                <canvas id="CodeTrekApplications" data-target="{{ $applicantsGraph }}" width="700%" height="250px"></canvas>
             </div>
         @endif
     </div>
