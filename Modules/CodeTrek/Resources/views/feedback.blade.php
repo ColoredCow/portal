@@ -8,33 +8,33 @@
             <tr>
                 <td class="font-weight-bold" width="35%"><span>Applicant Name </span></td>
                 <td class="text-primary font-weight-bold">
-                <span>{{ $applicantInfo->first_name }}</span>
-                <span> {{$applicantInfo->last_name}}</span>
+                <span>{{ $applicantDetails->first_name }}</span>
+                <span> {{$applicantDetails->last_name}}</span>
                 </td>
             </tr>
             <tr>
                 <td class="font-weight-bold" width="35%"><span>Github Username</span></td>
-                <td class="text-primary font-weight-bold"><span>{{$applicantInfo->github_user_name}}</span></td>
+                <td class="text-primary font-weight-bold"><span>{{$applicantDetails->github_user_name}}</span></td>
             </tr>
             <tr>
                 <td class="font-weight-bold" width="35%"><span>University</span></td>
-                <td class="text-primary font-weight-bold"><span>{{$applicantInfo->university}}</span></td>
+                <td class="text-primary font-weight-bold"><span>{{$applicantDetails->university}}</span></td>
             </tr>
             <tr>
                 <td class="font-weight-bold" width="35%"><span>Branch</span></td>
-                <td class="text-primary font-weight-bold"><span>{{$applicantInfo->course}}</span></td>
+                <td class="text-primary font-weight-bold"><span>{{$applicantDetails->course}}</span></td>
             </tr>
             <tr>
                 <td class="font-weight-bold" width="35%"><span>Current Round</span></td>
-                <td class="text-primary font-weight-bold"><span>{{$applicantInfo->latest_round_name}}</span></td>
+                <td class="text-primary font-weight-bold"><span>{{$applicantDetails->latest_round_name}}</span></td>
             </tr>
             <tr>
                 <td class="font-weight-bold" width="35%"><span>Email</span></td>
-                <td class="text-primary font-weight-bold"><span>{{$applicantInfo->email}}</span></td>
+                <td class="text-primary font-weight-bold"><span>{{$applicantDetails->email}}</span></td>
             </tr>
             <tr>
                 <td class="font-weight-bold" width="35%"><span>Phone Number</span></td>
-                <td class="text-primary font-weight-bold"><span>{{$applicantInfo->phone}}</span></td>
+                <td class="text-primary font-weight-bold"><span>{{$applicantDetails->phone}}</span></td>
             </tr>
         </table>
         <hr class="border-secondary mt-5 mb-5" size="10" width="100%" align="left">
