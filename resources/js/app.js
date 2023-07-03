@@ -212,16 +212,16 @@ $(document).ready(() => {
 		this.form.submit();
 	});
 
-	$('.edit-btn').click(function() {
-		var id = $(this).data('id');
-		var label = $(this).data('label');
-		var value = $(this).data('value');
+	$(".edit-btn").click(function() {
+		var id = $(this).data("id");
+		var label = $(this).data("label");
+		var value = $(this).data("value");
 
-		$('#editId').val(id);
-		$('#editLabel').val(label);
-		$('#editValue').val(value);
+		$("#editId").val(id);
+		$("#editLabel").val(label);
+		$("#editValue").val(value);
 
-		$('#editModal').modal('show');
+		$("#editModal").modal("show");
 	});
 });
 
@@ -2114,22 +2114,22 @@ $(function () {
 });
 
 $(document).ready(function() {
-    $('.editBankDetail-btn').click(function() {
-        var bankDetailId = $(this).data('id');
-        var bankDetailLabel = $(this).data('label');
-        var bankDetailValue = $(this).data('value');
+    $(".editBankDetail-btn").click(function() {
+        var bankDetailId = $(this).data("id");
+        var bankDetailLabel = $(this).data("label");
+        var bankDetailValue = $(this).data("value");
 
-        $('#editBankDetailId').val(bankDetailId);
-        $('#editBankDetailLabel').val(bankDetailLabel);
-        $('#editBankDetailValue').val(bankDetailValue);
+        $("#editBankDetailId").val(bankDetailId);
+        $("#editBankDetailLabel").val(bankDetailLabel);
+        $("#editBankDetailValue").val(bankDetailValue);
         
-        var formAction = $('#editBankDetailForm').attr('action');
-        formAction = formAction.replace('__bankDetailId__', bankDetailId);
-        $('#editBankDetailForm').attr('action', formAction);
+        var formAction = $("#editBankDetailForm").attr("action");
+        formAction = formAction.replace("__bankDetailId__", bankDetailId);
+        $("#editBankDetailForm").attr("action", formAction);
 
-        $('#editBankDetailModal').modal('show');
+        $("#editBankDetailModal").modal("show")"
 
-		var successMessage = $('#successMessage');
+		var successMessage = $("#successMessage");
 		if (successMessage.length) {
 			successMessage.delay(5000).fadeOut();
 		}
@@ -2137,17 +2137,17 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-	$('#label').on('input', function() {
+	$("#label").on("input", function() {
 		var label = $(this).val();
 		var key = slugify(label);
-		$('#key').val(key);
+		$("#key").val(key);
 	});
 
 	function slugify(text) {
-		return text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').trim();
+		return text.toLowerCase().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").trim();
 	}
 
-	$('#bank-details-form').submit(function(event) {
+	$("#bank-details-form").submit(function(event) {
 		event.preventDefault(); // Prevents the form from submitting automatically
 
 		this.submit(); // Manually trigger the form submission
