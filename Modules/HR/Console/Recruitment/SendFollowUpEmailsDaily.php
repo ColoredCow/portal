@@ -57,6 +57,6 @@ class SendFollowUpEmailsDaily extends Command
             Mail::to(config('hr.hr-followup-email-daily'))->queue(new FollowUpEmail($applications, $user));
         }
 
-        return;
+        return 0; // for successful execution
     }
 }
