@@ -70,6 +70,7 @@ class UserController extends ModuleBaseController
     public function manage(User $user)
     {
         $users = $this->service->index();
+        
         return view('user::manage-staff', compact('users'));
     }
 }
