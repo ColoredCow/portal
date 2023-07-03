@@ -13,7 +13,10 @@
             </thead>
             <tbody>
                 <tr v-for="(user, index) in filteredUsers" :key="index">
+                    
                     <td>
+                        
+                        
                         <span class="align-items-start d-flex justify-content-start">
                             <div class="mr-2 w-30">
                                 <img style="border-radius:50%" class="w-full" :src="user.avatar" alt="">
@@ -51,11 +54,11 @@
                                 @click="setIndex(index)">
                             <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
                             </button>
-                            <button v-show="userPermissions['can-assign-roles']" :disabled="!user.name"
+                            <button v-show="userPermissions['can-assign-roles']" :disabled="!user.name || !user.employeeId"
                                 class="btn btn-edit btn-outline-dark" data-toggle="modal"
                                 data-target="#update_staff_type_modal" @click="updateUserRolesModal(index)">
                             <i class="fa fa-cog fa-lg" aria-hidden="true" data-toggle="tooltip"
-                                :title="!user.name ? 'No entry in the employee table for this user' : ''"></i>
+                                :title="!user.name || !user.employeeId ? 'No entry in the employee table for this user' : ''"></i>
                             </button>
                         </div>
                     </td>
