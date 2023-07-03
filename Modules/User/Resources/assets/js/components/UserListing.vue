@@ -13,10 +13,10 @@
             </thead>
             <tbody>
                 <tr v-for="(user, index) in filteredUsers" :key="index">
-                    
+
                     <td>
-                        
-                        
+
+
                         <span class="align-items-start d-flex justify-content-start">
                             <div class="mr-2 w-30">
                                 <img style="border-radius:50%" class="w-full" :src="user.avatar" alt="">
@@ -29,13 +29,13 @@
                     </td>
                     <td>
                         <span>{{ formatRoles(user) }}<span v-if="user.websiteUserRole">,
-                        {{ user.websiteUserRole }}</span></span>
+                                {{ user.websiteUserRole }}</span></span>
                     </td>
                     <td>
                         <div class="dropdown d-none">
                             <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Select action
+                                Select action
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a v-show="userPermissions['can-assign-roles']" class="dropdown-item" data-toggle="modal"
@@ -52,13 +52,13 @@
                             <button v-show="userPermissions['can-delete'] && user.id !== authUser.id" type="button"
                                 class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#deleteUserModal"
                                 @click="setIndex(index)">
-                            <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+                                <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
                             </button>
-                            <button v-show="userPermissions['can-assign-roles']" :disabled="!user.name || !user.employeeId"
+                            <button v-show="userPermissions['can-assign-roles']" :disabled="!user.employee"
                                 class="btn btn-edit btn-outline-dark" data-toggle="modal"
                                 data-target="#update_staff_type_modal" @click="updateUserRolesModal(index)">
-                            <i class="fa fa-cog fa-lg" aria-hidden="true" data-toggle="tooltip"
-                                :title="!user.name || !user.employeeId ? 'No entry in the employee table for this user' : ''"></i>
+                                <i class="fa fa-cog fa-lg" aria-hidden="true" data-toggle="tooltip"
+                                    :title="!user.name || !user.employeeId ? 'No entry in the employee table for this user' : ''"></i>
                             </button>
                         </div>
                     </td>
@@ -90,63 +90,63 @@
 </template>
 <script>
 export default {
-    	props: ["users", "updateRoute", "userPermissions", "config", "authUser", "stafftypes"],
-    
-    	data() {
-    		return {
-    			currentUserIndex: 0,
-    			roleInputs: [],
-    			allUsers: this.users,
-    			selectedUser: {},
-    			search: ""
-    		};
-    	},
-    
-    	methods: {
-    		formatRoles(user) {
-    			let roleNames = [];
-    			let userRoles = user.roles;
-    			for (var i in userRoles) {
-    				let role = userRoles[i];
-    				if (role.name == "super-admin") {
-    					return role.label;
-    				}
-    				let roleName = userRoles[i].label;
-    				roleNames.push(roleName);
-    			}
-    
-    			return (roleNames.length) ? roleNames.join(", ") : "-";
-    		},
-    
-    		updateUserRolesModal: function (index) {
-    			this.currentUserIndex = index;
-    			this.selectedUser = this.users[index];
-    		},
-    
-    		onUserRoleUpdated: function (selectedRoles) {
-    			Vue.set(this.selectedUser, "roles", selectedRoles);
-    		},
-    
-    		removeUser: async function () {
-    			let user = this.users[this.currentUserIndex];
-    			let route = `/user/${user.id}/delete`;
-    			let response = await axios.delete(route);
-    			window.location.reload();
-    			this.$toast.success("User removed successfully!");
-    			this.$delete(this.allUsers, index);
-    		},
-    
-    		setIndex: function (index) {
-    			this.currentUserIndex = index;
-    		}
-    	},
-    
-    	computed: {
-    		filteredUsers: function () {
-    			return this.allUsers.filter((user) => {
-    				return user.name.match(this.search.charAt(0).toUpperCase() + this.search.slice(1));
-    			});
-    		}
-    	}
+    props: ["users", "updateRoute", "userPermissions", "config", "authUser", "stafftypes"],
+
+    data() {
+        return {
+            currentUserIndex: 0,
+            roleInputs: [],
+            allUsers: this.users,
+            selectedUser: {},
+            search: ""
+        };
+    },
+
+    methods: {
+        formatRoles(user) {
+            let roleNames = [];
+            let userRoles = user.roles;
+            for (var i in userRoles) {
+                let role = userRoles[i];
+                if (role.name == "super-admin") {
+                    return role.label;
+                }
+                let roleName = userRoles[i].label;
+                roleNames.push(roleName);
+            }
+
+            return (roleNames.length) ? roleNames.join(", ") : "-";
+        },
+
+        updateUserRolesModal: function (index) {
+            this.currentUserIndex = index;
+            this.selectedUser = this.users[index];
+        },
+
+        onUserRoleUpdated: function (selectedRoles) {
+            Vue.set(this.selectedUser, "roles", selectedRoles);
+        },
+
+        removeUser: async function () {
+            let user = this.users[this.currentUserIndex];
+            let route = `/user/${user.id}/delete`;
+            let response = await axios.delete(route);
+            window.location.reload();
+            this.$toast.success("User removed successfully!");
+            this.$delete(this.allUsers, index);
+        },
+
+        setIndex: function (index) {
+            this.currentUserIndex = index;
+        }
+    },
+
+    computed: {
+        filteredUsers: function () {
+            return this.allUsers.filter((user) => {
+                return user.name.match(this.search.charAt(0).toUpperCase() + this.search.slice(1));
+            });
+        }
+    }
 };
 </script>

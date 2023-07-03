@@ -2,6 +2,7 @@
 
 namespace Modules\User\Services;
 
+use Modules\HR\Entities\Employee;
 use Modules\User\Entities\User;
 use OfficeSuite\OfficeSuiteFacade;
 use Modules\User\Events\UserRemovedEvent;
@@ -14,7 +15,7 @@ class UserService implements UserServiceContract
      */
     public function index()
     {
-        return User::with('roles')
+        return User::with('roles', 'employee')
             ->orderBy('name')
             ->get();
     }
@@ -42,7 +43,7 @@ class UserService implements UserServiceContract
 
     public function updateUserRoles($data)
     {
-        if (! isset($data['roles'])) {
+        if (!isset($data['roles'])) {
             return response()->json([
                 'isUpdated' => false,
             ]);

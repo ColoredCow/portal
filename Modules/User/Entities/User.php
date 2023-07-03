@@ -30,7 +30,7 @@ class User extends Authenticatable
         'name', 'email', 'password', 'provider', 'provider_id', 'avatar',
     ];
 
-    protected $appends = ['websiteUserRole', 'websiteUser', 'employeeId'];
+    protected $appends = ['websiteUserRole', 'websiteUser'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -106,10 +106,6 @@ class User extends Authenticatable
         return $this->provider == 'google' && strpos($this->email, config('constants.gsuite.client-hd')) !== false;
     }
 
-    public function getEmployeeIdAttribute()
-    {
-        return $this->employee ? true : false;
-    }
     public function employee()
     {
         return $this->hasOne(Employee::class, 'user_id');
@@ -163,7 +159,7 @@ class User extends Authenticatable
 
     public function getMonthTotalEffortAttribute()
     {
-        if (! $this->projectTeamMembers->first()) {
+        if (!$this->projectTeamMembers->first()) {
             return false;
         }
 
@@ -185,7 +181,7 @@ class User extends Authenticatable
         $fte = 0;
         $fteAmc = 0;
         foreach ($this->projectTeamMembers()->with('project')->get() as $projectTeamMember) {
-            if (! $projectTeamMember->project->is_amc) {
+            if (!$projectTeamMember->project->is_amc) {
                 $fte += $projectTeamMember->fte;
             }
             if ($projectTeamMember->project->is_amc) {
