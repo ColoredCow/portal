@@ -27,7 +27,6 @@ class ApplicationSeeder extends Seeder
                 'email' => $faker->unique()->safeEmail,
                 'phone' => $faker->phoneNumber,
             ];
-    
             $applicants = Applicant::create($applicantData);
             $applicantData = [
                 'hr_applicant_id' => $applicants->id,
@@ -46,6 +45,7 @@ class ApplicationSeeder extends Seeder
     {
         // Get a random hr_applicant_id from the existing applicants
         $applicant = Applicant::inRandomOrder()->first();
+
         return $applicant->id;
     }
 
@@ -53,6 +53,7 @@ class ApplicationSeeder extends Seeder
     {
         // Get a random hr_job_id from the existing jobs
         $job = Job::inRandomOrder()->first();
+
         return $job->id;
     }
 
@@ -68,6 +69,7 @@ class ApplicationSeeder extends Seeder
     {
         // Get a random user id from the existing users
         $user = User::inRandomOrder()->first();
+
         return $user->id;
     }
 
