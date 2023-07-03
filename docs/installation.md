@@ -328,8 +328,6 @@ Before you start following the guidelines, make sure to go through the [prerequi
             </Directory>
             ```
            - Restart MAMP. Next, open this url in your browser: http://portal.test
-           
-
 11. Login to the portal using the newly created user in the database. Go to `http://localhost/phpmyadmin/index.php` click on portal database that we created mostly on the left and search for the `users` table, click on `users` table and you can find the first user email in it. The default password to log in is `12345678`.
 
 12. _(Optional)_ Setup Email configuration:  
