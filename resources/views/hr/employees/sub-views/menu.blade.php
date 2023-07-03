@@ -20,4 +20,8 @@
             href="{{ route('employees.review-details', $employee) }}"><i class="fa fa-details"></i>&nbsp;Review Details
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-item nav-link {{ Request::is('hr/employee-self-review*') ? 'active' : ' ' }}"
+            href="{{ route('employees.review', $employee) }}"><i class="fa fa-details"></i>&nbsp;Self review</a>
+    </li>
 </ul>

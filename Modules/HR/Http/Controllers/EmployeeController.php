@@ -97,6 +97,11 @@ class EmployeeController extends Controller
         return view('hr.employees.employee-work-history', compact('employeesDetails'));
     }
 
+    public function review(Employee $employee)
+    {
+        return view('hr.employees.review', ['employee' => $employee]);
+    }
+
     public function reviewDetails(Employee $employee)
     {
         $assessments = Assessment::where('reviewee_id', $employee->id)
