@@ -2114,26 +2114,21 @@ $(function () {
 });
 
 $(document).ready(function() {
-    $(".editBankDetail-btn").click(function() {
-        var bankDetailId = $(this).data("id");
-        var bankDetailLabel = $(this).data("label");
-        var bankDetailValue = $(this).data("value");
+	$(".editBankDetail-btn").click(function() {
+		var bankDetailId = $(this).data("id");
+		var bankDetailLabel = $(this).data("label");
+		var bankDetailValue = $(this).data("value");
 
-        $("#editBankDetailId").val(bankDetailId);
-        $("#editBankDetailLabel").val(bankDetailLabel);
-        $("#editBankDetailValue").val(bankDetailValue);
-        
-        var formAction = $("#editBankDetailForm").attr("action");
-        formAction = formAction.replace("__bankDetailId__", bankDetailId);
-        $("#editBankDetailForm").attr("action", formAction);
+		$("#editBankDetailId").val(bankDetailId);
+		$("#editBankDetailLabel").val(bankDetailLabel);
+		$("#editBankDetailValue").val(bankDetailValue);
 
-        $("#editBankDetailModal").modal("show");
+		var formAction = $("#editBankDetailForm").attr("action");
+		formAction = formAction.replace("__bankDetailId__", bankDetailId);
+		$("#editBankDetailForm").attr("action", formAction);
 
-		var successMessage = $("#successMessage");
-		if (successMessage.length) {
-			successMessage.delay(5000).fadeOut();
-		}
-    });
+		$("#editBankDetailModal").modal("show");
+	});
 });
 
 $(document).ready(function() {
