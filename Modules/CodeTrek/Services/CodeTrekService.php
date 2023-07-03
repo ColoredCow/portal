@@ -15,7 +15,7 @@ class CodeTrekService
         $status = $data['status'] ?? 'active';
         $centre = $data['centre'] ?? null;
         $sort = $data["order"] ?? null;
-        $query = CodeTrekApplicant::where('status', $status); 
+        $query = CodeTrekApplicant::where('status', $status);
         $applicants = null;
        
         if ($centre) {
@@ -24,7 +24,7 @@ class CodeTrekService
         if ($sort == "date") {
             $applicants = $query->orderBy('start_date','desc');
         } else{
-             $applicants = $query->orderBy('first_name');
+            $applicants = $query->orderBy('first_name');
         }
         $applicants = $query->when($search, function ($query) use ($search) {
             return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
