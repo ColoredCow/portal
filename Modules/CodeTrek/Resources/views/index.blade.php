@@ -152,11 +152,11 @@
                                 </td>
                                 <td>
                                     <div class="d-flex align-items-center"> 
-                                        @if ($applicant->user)
+                                        @if ($applicant->mentor)
                                             <div class="col">
                                                 <div class="d-flex align-items-center"> 
-                                                    <img src="{{ $applicant->user->avatar }}" class="w-35 h-30 rounded-circle ">
-                                                    <h4 class="ml-2 mb-0">{{ $applicant->user->name }}</h4> 
+                                                    <img src="{{ $applicant->mentor->avatar }}" class="w-35 h-30 rounded-circle ">
+                                                    <h4 class="ml-2 mb-0">{{ $applicant->mentor->name }}</h4> 
                                                 </div>
                                             </div>
                                         @else

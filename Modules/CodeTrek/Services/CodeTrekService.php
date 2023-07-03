@@ -25,7 +25,7 @@ class CodeTrekService
         ->paginate(config('constants.pagination_size'))
         ->appends(request()->except('page'));
 
-        $applicantsData = CodeTrekApplicant::whereIn('status', ['active', 'inactive', 'completed'])->with('user')
+        $applicantsData = CodeTrekApplicant::whereIn('status', ['active', 'inactive', 'completed'])->with('mentor')
         ->when($search, function ($query) use ($search) {
             return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
         })
