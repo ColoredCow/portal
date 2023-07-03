@@ -209,7 +209,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
         - Restart XAMPP. Next, open this url in your browser: http://portal.test
 
-    4. For LAMPP(LINUX):
+    3. For LAMPP(LINUX):
         - Go to `etc/hosts` file or edit this in the terminal use the following command.
             ```sh
             sudo nano /etc/hosts
@@ -269,7 +269,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
             ```
            - Restart MAMP. Next, open this url in your browser: http://portal.test
 
-        4. For MAMP(macOS):
+    4. For MAMP(macOS):
         - Go to `etc/hosts` file or edit this in the terminal use the following command.
             ```sh
             sudo nano /etc/hosts
