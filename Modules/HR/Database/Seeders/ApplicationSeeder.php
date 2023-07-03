@@ -27,6 +27,7 @@ class ApplicationSeeder extends Seeder
                 'email' => $faker->unique()->safeEmail,
                 'phone' => $faker->phoneNumber,
             ];
+
             $applicants = Applicant::create($applicantData);
             $applicantData = [
                 'hr_applicant_id' => $applicants->id,
