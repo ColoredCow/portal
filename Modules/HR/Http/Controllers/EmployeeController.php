@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\HrJobDomain;
+use Modules\User\Entities\User;
 use Modules\HR\Entities\Job;
 use Illuminate\Support\Facades\Mail;
 use Modules\HR\Emails\SelfReviewMail;
@@ -97,8 +98,9 @@ class EmployeeController extends Controller
         return view('hr.employees.employee-work-history', compact('employeesDetails'));
     }
 
-    public function sendMail(Request $request){
-        // dd($request->all());
-        Mail::send(new SelfReviewMail($request->all()));
+    public function sendMail($id){    
+        $employee = User::Where('id', $id);
+        dd($employee->get());
+        Mail::send(new SelfReviewMail($employee));
     }
 }

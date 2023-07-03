@@ -88,8 +88,9 @@
                                 class="{{ $employee->user ? ($employee->user->ftes['amc'] > 1 ? 'text-success' : 'text-danger') : 'text-secondary' }} font-weight-bold">{{ $employee->user ? $employee->user->ftes['amc'] : 'NA' }}</span>
                         </td>
                         <td>
-                            <a class="btn btn-info ml-2 text-white"
-                                href="{{ route('employees.sendMail', $employee->id) }}">
+                            {{-- @dd($employee) --}}
+                            <a class="mx-2"
+                                href="{{ route('employees.sendMail', $employee->user_id ) }}">
                                 <i class="fa fa-envelope" aria-hidden="true"></i>
                             </a>
                         </td>

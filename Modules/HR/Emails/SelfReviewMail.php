@@ -10,18 +10,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class SelfReviewMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $employeeId;
+    public $employeeEmail;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($employeeId)
+    public function __construct($employeeEmail)
     {
-        $this->employeeId = $employeeId;
+        $this->employeeEmail = $employeeEmail;
         $this->build();
-        // dd($this->employeeId = $employeeId);
+        // dd($this->employeeEmail = $employeeEmail);
     }
 
     /**
