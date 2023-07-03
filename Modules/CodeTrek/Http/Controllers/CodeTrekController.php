@@ -111,4 +111,5 @@ class CodeTrekController extends Controller
         'applicantDetails' =>  $applicantDetails
         ]);
     }
+    
 }
