@@ -126,7 +126,7 @@ class CodeTrekService
         $feedback->save();
     }
 
-    public function getCandidateFeedbacks($data)
+    public function getCodeTrekApplicantFeedbacks($data)
     {
         $feedbacks = CodeTrekCandidateFeedback::where('candidate_id', $data)->get();
         $candidateFeedbacks = [];
