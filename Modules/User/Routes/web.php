@@ -19,6 +19,7 @@ Route::prefix('user')->middleware('auth')->group(function () {
     Route::get('roles', 'RolesController@index')->name('user.role-index');
     Route::delete('{user}/delete', 'UserController@destroy')->name('user.delete');
     Route::put('update-roles', 'UserController@updateUserRoles')->name('user.update-roles');
+    Route::get('/manage', 'UserController@manage')->name('user.manage');
     Route::post('/add-roles', 'RolesController@addRole')->name('roles.add-roles');
     Route::delete('/delete-roles/{role}', 'RolesController@deleteRole')->name('roles.delete');
 
