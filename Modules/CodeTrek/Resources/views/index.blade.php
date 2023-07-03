@@ -90,6 +90,19 @@
                         Completed({{$statusCounts['completed']}})</a>
                 </li>
             </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="sortDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sort by
+                </button>
+                <div class="dropdown-menu " aria-labelledby="sortDropdown" style="z-index: 9999;">
+                    <a class="dropdown-item " href="{{route('codetrek.index',['order' => 'name'])}}">
+                        <span class="font-weight-bold">Name</span>
+                    </a> 
+                    <a class="dropdown-item" href="{{route('codetrek.index',['order' => 'date'])}}">
+                        <span class="font-weight-bold ">Date</span>
+                    </a>
+                </div>
+            </div>
         </ul>
         @if (request()->input('tab', 'active') == 'active' || request()->tab == 'applicants')
             <div>
