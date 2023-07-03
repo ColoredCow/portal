@@ -7,6 +7,8 @@ use Modules\Client\Entities\Client;
 use Modules\Client\Http\Requests\ClientFormsRequest;
 use Modules\Client\Http\Requests\ClientRequest;
 use Modules\Client\Rules\ClientNameExist;
+use Modules\ClientAnalytics\Http\Controllers\ClientAnalyticsController;
+
 
 class ClientController extends ModuleBaseController
 {

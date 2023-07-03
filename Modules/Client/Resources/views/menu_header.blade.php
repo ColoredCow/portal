@@ -15,4 +15,9 @@
         @endphp
         <a class="nav-link {{ (request()->input('status', 'active') == 'inactive') ? 'active' : '' }}"  href="{{ route('client.index', $request)  }}">Inactive Clients ({{$inactiveClientsCount}})</a>
     </li>
+    <li class="nav-item">
+        
+        <a class="nav-link" href="{{ route('clientanalytics.index')  }}">Client Analytics </a>
+    </li>
+
 </ul>
