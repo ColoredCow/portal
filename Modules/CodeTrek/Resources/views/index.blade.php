@@ -171,19 +171,19 @@
                 <br>
                 <div class="card-header mt-1" align="left">
                     <div class="my-2">
-                        <form align="right" action="{{route("codetrek.index")}}">
-                            <input type="hidden" name="_token" value="">
-                            <input type="date" name="application_start_date" id="Startdate" value="" required=""> to
-                            <input type="date" name="application_end_date" id="Enddate" value="" required="">
+                        <form align="right" action="{{route('codetrek.index')}}" method="get">
+                            <input type="date" name="application_start_date" id="startDate" value="{{ old('application_start_date', request()->get('application_start_date')) }}" required> to
+                            <input type="date" name="application_end_date" id="endDate" value="{{ old('application_end_date', request()->get('application_end_date')) }}" required>
+                            <input type="hidden" name="date_filter_input" value="applicantsDateFilterValue">
                             <input type="submit" class="btn btn-sm btn-primary text-white" value="View">
                             <br>
                         </form>
                         <span class="chart-heading">Applications Received</span>
                     </div>
+                    <div id="BarGraph" class="card-body chart-data" data-target="{{ $applicantsGraph }}">
+                        <canvas id="CodeTrekApplications" data-target="{{ $applicantsGraph }}" width="700%" height="250px"></canvas>
+                    </div>
                 </div>
-            </div>
-            <div id="BarGraph" class="card-body chart-data" data-target="{{ $applicantsGraph }}">
-                <canvas id="CodeTrekApplications" data-target="{{ $applicantsGraph }}" width="700%" height="250px"></canvas>
             </div>
         @endif
     </div>

@@ -1737,17 +1737,8 @@ function roundWiseRejectionsGraph() {
 
 function CodeTrekApplicationsReport() {
 	var value = $("#CodeTrekApplications").data("target");
-	const startDate = $("#startdate").val();
-	const endDate = $("#enddate").val();
 	var cData = value;
 	var ctx = $("#CodeTrekApplications");
-	getData(
-		{
-			filters: {
-				"start_date": startDate,
-				"end_date": endDate
-			}
-		})
 	var data = {
 		labels: cData.dates,
 		datasets: [
