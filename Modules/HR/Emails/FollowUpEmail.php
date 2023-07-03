@@ -15,10 +15,9 @@ class FollowUpEmail extends Mailable
     /**
      * Create a new message instance.
      *
-     * @param  array  $followUps
      * @return void
      */
-    public function __construct(array $applications, $user)
+    public function __construct($applications, $user)
     {
         $this->applications = $applications;
         $this->user = $user;

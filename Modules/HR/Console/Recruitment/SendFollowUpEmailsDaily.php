@@ -51,7 +51,7 @@ class SendFollowUpEmailsDaily extends Command
 
         foreach (config('hr.hr-followup-email-daily') as $email) {
             $user = User::where('email', $email)->first();
-            if (! $user) {
+            if (!$user) {
                 continue;
             }
             Mail::to(config('hr.hr-followup-email-daily'))->queue(new FollowUpEmail($applications, $user));
