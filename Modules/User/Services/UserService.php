@@ -44,7 +44,7 @@ class UserService implements UserServiceContract
 
     public function updateUserRoles($data)
     {
-        if (!isset($data['roles'])) {
+        if (! isset($data['roles'])) {
             return response()->json([
                 'isUpdated' => false,
             ]);
