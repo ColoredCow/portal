@@ -14,7 +14,7 @@ class CodeTrekService
         $search = $data['name'] ?? null;
         $status = $data['status'] ?? 'active';
         $centre = $data['centre'] ?? null;
-        $sort = $data["order"] ?? null;
+        $sort = $data['order'] ?? null;
         $query = CodeTrekApplicant::where('status', $status);
         $applicants = null;
        
