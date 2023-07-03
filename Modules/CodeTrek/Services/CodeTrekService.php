@@ -22,8 +22,8 @@ class CodeTrekService
             $applicants = $query->where('centre_id', $centre);
         }
         if ($sort == "date") {
-            $applicants = $query->orderBy('start_date','desc');
-        } else{
+            $applicants = $query->orderBy('start_date', 'desc');
+        } else {
             $applicants = $query->orderBy('first_name');
         }
         $applicants = $query->when($search, function ($query) use ($search) {
