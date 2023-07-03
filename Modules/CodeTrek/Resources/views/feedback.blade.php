@@ -39,7 +39,7 @@
         </table>
         <hr class="border-secondary mt-5 mb-5" size="10" width="100%" align="left">
         <div class="accordion mt-5" id="FeedbacksAccordion">
-            @foreach ($candidateFeedbacks as $candidateFeedback)
+            @forelse ($candidateFeedbacks as $candidateFeedback)
             <div class="accordion-item my-2">
                 <div class="card py-0">
                     <div class="card-header max-h-52  py-0" id="heading{{$candidateFeedback->id}}">
@@ -75,7 +75,11 @@
                     </div>
                 </div>
             </div>
-            @endforeach
+            @empty
+            <div>
+                No Feedbacks Yet
+            </div>
+            @endforelse
         </div>
     </div>
 @endsection
