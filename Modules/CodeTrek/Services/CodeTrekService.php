@@ -17,7 +17,7 @@ class CodeTrekService
         $sort = $data['order'] ?? null;
         $query = CodeTrekApplicant::where('status', $status);
         $applicants = null;
-       
+
         if ($centre) {
             $applicants = $query->where('centre_id', $centre);
         }
