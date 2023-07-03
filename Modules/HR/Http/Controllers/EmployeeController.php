@@ -10,6 +10,8 @@ use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\Job;
+use Illuminate\Support\Facades\Mail;
+use Modules\HR\Emails\SelfReviewMail;
 use Modules\Project\Entities\ProjectTeamMember;
 
 class EmployeeController extends Controller
@@ -93,5 +95,10 @@ class EmployeeController extends Controller
         $employeesDetails = ProjectTeamMember::where('team_member_id', $employee->user_id)->get()->unique('project_id');
 
         return view('hr.employees.employee-work-history', compact('employeesDetails'));
+    }
+
+    public function sendMail(Request $request){
+        // dd($request->all());
+        Mail::send(new SelfReviewMail($request->all()));
     }
 }
