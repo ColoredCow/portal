@@ -107,18 +107,23 @@ composer --version
 # Composer version 2.1.6 2021-08-19 17:11:08
 ```
 
+In case your composer version is different, run this command to change the version 
+```sh
+composer self-update 2.1.6
+```
+
 ### 6. Nodejs :running:
 For (Windows, Ubuntu, macOS)
-- [Nodejs v15](https://nodejs.org/download/release/v15.14.0/).
+- [Nodejs v18](https://nodejs.org/download/release/v18.16.0/).
 Download and install the file with .msi extension if on windows. After you've successfully installed, you can verify the installation using:
 ```sh
 npm -v
 # output should be something like
-# 6.14.15
+# 9.5.1
 
 node -v
 #output should be somthing like
-#v14.17.6
+#v18.16.0
 ```
 
 ### 7. Code Formatter :butterfly:

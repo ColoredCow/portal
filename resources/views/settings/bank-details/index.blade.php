@@ -25,7 +25,7 @@
                     <td>{{ $bankDetail->label }}</td>
                     <td>{{ $bankDetail->value }}</td>
                     <td>
-                        <a href="#" class="editBankDetail-btn" data-target="#editBankDetailModal" data-id="{{ $bankDetail->id }}" data-label="{{ $bankDetail->label }}" data-value="{{ $bankDetail->value }}">
+                        <a class="editBankDetail-btn" data-target="#editBankDetailModal" data-id="{{ $bankDetail->id }}" data-label="{{ $bankDetail->label }}" data-value="{{ $bankDetail->value }}">
                             Edit
                         </a>
                     </td>
