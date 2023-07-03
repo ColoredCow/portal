@@ -9,7 +9,6 @@ use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 use Modules\CodeTrek\Services\CodeTrekService;
 use Modules\Operations\Entities\OfficeLocation;
-use Carbon\Carbon;
 
 class CodeTrekController extends Controller
 {
@@ -33,17 +32,14 @@ class CodeTrekController extends Controller
         $applicants = $applicantData['applicants'];
         $applicantsData = json_encode($applicantData['applicantsData']);
         $statusCounts = $applicantData['statusCounts'];
-        $graphData = $this->applicantBarGraphData($request);
-        $applicantsGraph = $graphData['applicantsGraph'];
-        $dataToFilterTab = $graphData['dataToFilterTab'];
+        $applicantsGraph = $this->applicantBarGraphData($request);
 
         return view('codetrek::index', [
             'applicants' => $applicants,
             'centres' => $centres,
             'applicantsData' => $applicantsData,
             'applicantsGraph' => $applicantsGraph,
-            'statusCounts' => $statusCounts,
-            'dataToFilterTab'=>$dataToFilterTab
+            'statusCounts' => $statusCounts
         ]);
     }
 
@@ -63,13 +59,9 @@ class CodeTrekController extends Controller
             'dates' => $dates,
             'counts' => $counts,
         ];
-        $dataToFilterTab = ['date_filter_input' => $request->date_filter_input];
         $applicantsGraph = json_encode($chartData);
 
-        return [
-            'applicantsGraph' => $applicantsGraph,
-            'dataToFilterTab' => $dataToFilterTab,
-        ];
+        return $applicantsGraph;
     }
 
     /**

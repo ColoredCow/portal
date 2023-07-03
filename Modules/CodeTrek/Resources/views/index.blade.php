@@ -171,10 +171,10 @@
                 <br>
                 <div class="card-header mt-1" align="left">
                     <div class="my-2">
-                        <form align="right" action="{{route('codetrek.index')}}" method="get">
+                        <form align="right" action="{{ route('codetrek.index', ['tab' => 'reports']) }}" method="get">
                             <input type="date" name="application_start_date" id="startDate" value="{{ old('application_start_date', request()->get('application_start_date')) }}" required> to
                             <input type="date" name="application_end_date" id="endDate" value="{{ old('application_end_date', request()->get('application_end_date')) }}" required>
-                            <input type="hidden" name="date_filter_input" value="applicantsDateFilterValue">
+                            <input type="hidden" name="tab" value="reports">
                             <input type="submit" class="btn btn-sm btn-primary text-white" value="View">
                             <br>
                         </form>

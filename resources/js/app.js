@@ -203,7 +203,7 @@ $(document).ready(() => {
 	}
 
 	if ($("#CodeTrekApplications").length) {
-		CodeTrekApplicationsReport()
+		CodeTrekApplicationsReport();
 	}
 
 	$("#save-btn-action").on("click", function() {
