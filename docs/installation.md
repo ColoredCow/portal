@@ -13,6 +13,10 @@ Before you start following the guidelines, make sure to go through the [prerequi
         ```sh
         cd C:\xampp\htdocs\
         ```
+    - For LAMPP:
+        ```sh
+        cd C:\opt\htdocs\
+        ```
     - For MAMP(macOS):
         ```sh
         cd /Application/MAMP/htdocs/
@@ -205,7 +209,67 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
         - Restart XAMPP. Next, open this url in your browser: http://portal.test
 
-    3. For MAMP(macOS):
+    4. For LAMPP(LINUX):
+        - Go to `etc/hosts` file or edit this in the terminal use the following command.
+            ```sh
+            sudo nano /etc/hosts
+            ```
+        - Add this line
+            ```
+            127.0.0.1   portal.test
+            ```
+
+        - Go to `httpd.conf` file or edit this file in the terminal itself use this command
+            ```sh
+            sudo nano /opt/lampp/conf/apache/httpd.conf
+            ```
+            And search for `vhosts` and uncomment line like this
+            ```sh
+            # Virtual hosts
+            # Include opt/lampp/conf/apache/extra/httpd-vhosts.conf
+            ```
+            Change above to:
+            ```sh
+            # Virtual hosts
+            Include opt/lampp/conf/apache/extra/httpd-vhosts.conf
+            ```
+          - Open the `vhost` file in the terminal
+            ```sh
+            sudo nano /etc/apache2/extra/httpd-vhosts.conf
+            ```
+            Add the following line at the end of the file:
+            Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `/opt/lampp/htdocs/portal/public`. Make sure you type '/public' at the end after your project path.
+
+            ```apacheconf
+             <VirtualHost *:80>
+                 ServerName portal.test
+                 DocumentRoot "/path/to/your/project/public"
+                 <Directory "/path/to/your/project/public">
+                     DirectoryIndex index.php
+                     AllowOverride All
+                     Order allow,deny
+                     Allow from all
+                 </Directory>
+             </VirtualHost>
+            ```
+          - In case you are using Apache version 2.4 or above, the above code will give you a 403 Forbidden error. Make the following changes:
+            ```apacheconf
+            <Directory>
+                # some code above
+                Order allow,deny
+                Allow from all
+            </Directory>
+            ```
+            Change to:
+            ```apacheconf
+            <Directory>
+                 # some code above
+                 Require all granted
+            </Directory>
+            ```
+           - Restart MAMP. Next, open this url in your browser: http://portal.test
+
+        4. For MAMP(macOS):
         - Go to `etc/hosts` file or edit this in the terminal use the following command.
             ```sh
             sudo nano /etc/hosts
@@ -264,6 +328,8 @@ Before you start following the guidelines, make sure to go through the [prerequi
             </Directory>
             ```
            - Restart MAMP. Next, open this url in your browser: http://portal.test
+           
+
 11. Login to the portal using the newly created user in the database. Go to `http://localhost/phpmyadmin/index.php` click on portal database that we created mostly on the left and search for the `users` table, click on `users` table and you can find the first user email in it. The default password to log in is `12345678`.
 
 12. _(Optional)_ Setup Email configuration:  
