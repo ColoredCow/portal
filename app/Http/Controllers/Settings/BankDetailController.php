@@ -44,8 +44,8 @@ class BankDetailController extends Controller
         $bankDetail->value = $validatedData['value'];
         $bankDetail->save();
 
-        // session()->flash('success', 'Bank detail updated successfully.');
+        session()->flash('success', 'Bank Detail updated successfully.');
 
-        return redirect()->back()->with('success', 'Bank detail updated successfully.');
+        return redirect()->back();
     }
 }
