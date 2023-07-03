@@ -6,14 +6,14 @@ use App\Services\EmployeeService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Mail;
+use Modules\HR\Emails\SelfReviewMail;
 use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\HrJobDomain;
-use Modules\User\Entities\User;
 use Modules\HR\Entities\Job;
-use Illuminate\Support\Facades\Mail;
-use Modules\HR\Emails\SelfReviewMail;
 use Modules\Project\Entities\ProjectTeamMember;
+use Modules\User\Entities\User;
 
 class EmployeeController extends Controller
 {
@@ -98,9 +98,9 @@ class EmployeeController extends Controller
         return view('hr.employees.employee-work-history', compact('employeesDetails'));
     }
 
-    public function sendMail($id){    
-        $employee = User::Where('id', $id);
-        dd($employee->get());
+    public function sendMail($id)
+    {
+        $employee = User::Where('id', $id)->get();
         Mail::send(new SelfReviewMail($employee));
     }
 }
