@@ -2127,7 +2127,7 @@ $(document).ready(function() {
         formAction = formAction.replace("__bankDetailId__", bankDetailId);
         $("#editBankDetailForm").attr("action", formAction);
 
-        $("#editBankDetailModal").modal("show")"
+        $("#editBankDetailModal").modal("show");
 
 		var successMessage = $("#successMessage");
 		if (successMessage.length) {
