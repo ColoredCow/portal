@@ -21,7 +21,7 @@ class CodeTrekService
         }
 
         if ($roundSlug) {
-            $query->where('round_name', $roundSlug);
+            $query->where('latest_round_name', $roundSlug);
         }
 
         $applicants = $query->when($search, function ($query) use ($search) {
