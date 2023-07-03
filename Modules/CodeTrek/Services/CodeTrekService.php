@@ -128,7 +128,7 @@ class CodeTrekService
 
     public function getCandidateFeedbacks($data)
     {
-        $feedbacks = CodeTrekCandidateFeedback::where('candidate_id', $data['applicantId'])->get();
+        $feedbacks = CodeTrekCandidateFeedback::where('candidate_id', $data)->get();
         $candidateFeedbacks = [];
         foreach ($feedbacks as $feedback) {
             $candidateFeedback = new \stdClass();
