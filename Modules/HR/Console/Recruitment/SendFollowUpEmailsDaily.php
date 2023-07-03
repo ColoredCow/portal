@@ -4,9 +4,9 @@ namespace Modules\HR\Console\Recruitment;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
-use Modules\HR\Entities\FollowUp;
 use Modules\HR\Emails\FollowUpEmail;
 use Modules\HR\Entities\Application;
+use Modules\User\Entities\User;
 
 class SendFollowUpEmailsDaily extends Command
 {
@@ -15,7 +15,7 @@ class SendFollowUpEmailsDaily extends Command
      *
      * @var string
      */
-    protected $signature = 'hr:send-follow-up-mail-daily {hrJobId}';
+    protected $signature = 'hr:send-follow-up-mail-daily';
 
     /**
      * The console command description.
@@ -41,32 +41,20 @@ class SendFollowUpEmailsDaily extends Command
      */
     public function handle()
     {
-        $hrJobId = $this->argument('hrJobId');
-        $hrApplication = Application::where('hr_job_id', $hrJobId)->first();
+        $applications = Application::whereIn('status', ['new', 'in-progress'])->get();
+        $applications = $applications->reject(function ($application) {
+            $followUpCount = $application->latestApplicationRound ? $application->latestApplicationRound->followUps->count() : 0;
+            if ($followUpCount == config('hr.follow-up-attempts-daily')) {
+                return $application;
+            }
+        });
 
-        if (! $hrApplication) {
-            $this->info('No applications found for the given HR job ID.');
-
-            return 0;
+        foreach (config('hr.hr-followup-email-daily') as $email) {
+            $user = User::where('email', $email)->first();
+            if (! $user) {
+                continue;
+            }
+            Mail::to(config('hr.hr-followup-email-daily'))->queue(new FollowUpEmail($applications, $user));
         }
-
-        // Get the follow-ups associated with the hr_application
-        $followUps = FollowUp::where('hr_application_round_id', $hrApplication->id)
-            ->where('follow_up_attempts', '>', 2)
-            ->get();
-
-        if ($followUps->isEmpty()) {
-            $this->info('No applications require follow-up.');
-
-            return 0;
-        }
-
-        $emailRecipients = config('hr.follow_up_recipients');
-        $data = ['followUps' => $followUps];
-
-        Mail::to($emailRecipients)
-            ->send(new FollowUpEmail($data));
-
-        return 0; // Return 0 to indicate successful execution
     }
 }

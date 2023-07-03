@@ -10,17 +10,18 @@ class FollowUpEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $followUps;
-
+    public $applications;
+    public $user;
     /**
      * Create a new message instance.
      *
      * @param  array  $followUps
      * @return void
      */
-    public function __construct(array $followUps)
+    public function __construct(array $applications, $user)
     {
-        $this->followUps = $followUps;
+        $this->applications = $applications;
+        $this->user = $user;
     }
 
     /**
@@ -30,8 +31,8 @@ class FollowUpEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('hr::application.follow_up')
-            ->subject('Follow-up Required for Applications.')
-            ->with(['followUps' => $this->followUps]);
+        return $this->from(config('hr.default.email'), config('hr.default.name'))
+            ->subject('Follow up with applicants through a follow up mail')
+            ->view('hr::application.follow_up');
     }
 }
