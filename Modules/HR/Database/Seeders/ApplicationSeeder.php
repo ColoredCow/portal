@@ -39,8 +39,6 @@ class ApplicationSeeder extends Seeder
             ];
 
             Application::create($applicantData);
-
-
         }
     }
 
