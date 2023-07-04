@@ -6,7 +6,6 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use Modules\HR\Entities\Application;
 use Modules\User\Entities\User;
-use Modules\HR\Emails\FollowUpEMailToHr;
 
 class SendFollowUpEmailToHr extends Command
 {
@@ -54,9 +53,6 @@ class SendFollowUpEmailToHr extends Command
             if (! $user) {
                 continue;
             }
-            Mail::to(config('hr.hr-followup-email'))->queue(new FollowUpEMailToHr($applications, $user));
         }
-
-        return 0; // for successful execution
     }
 }

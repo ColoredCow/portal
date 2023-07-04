@@ -202,7 +202,7 @@ return [
     'follow-up-attempts-threshold' => '2',
     'follow-up-attempts-daily' => '3',
     'hr-followup-email' => [
-        'primary' => env('HR_NEED_FOLLOW_UP_REMINDER_EMAIL', 'pk@coloredcow.in'),
+        'primary' => env('HR_FOLLOWUP_EMAIL_PRIMARY', 'pk@coloredcow.com'),
     ],
     'applicant_form-details' => [
         'preferred_name' => 'Preferred Name',
