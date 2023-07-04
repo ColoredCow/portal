@@ -78,11 +78,4 @@ mix
     "Modules/Expense/Resources/assets/sass/app.scss",
     "public/css/expense.css"
   );
-
-  // mix
-  // .js("Modules/ClientAnalytics/Resources/assets/js/app.js", "public/js/clientanalytics.js")
-  // .sass(
-  //   "Modules/ClientAnalytics/Resources/assets/sass/app.scss",
-  //   "public/css/clientanalytics.css"
-  // );
 mix.version();

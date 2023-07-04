@@ -11,7 +11,6 @@ class ClientAnalyticsService implements ClientAnalyticsServicesContract
 {
     public function getAllClients(){
         $clients = Client::all();
-      
         return $clients;
-       }
+    }
 }
