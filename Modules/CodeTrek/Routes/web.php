@@ -12,7 +12,7 @@
 */
 
 Route::prefix('codetrek')->middleware('auth')->group(function () {
-    Route::get('/', 'CodeTrekController@index')->name('codetrek.index');
+    Route::get('/{roundSlug?}', 'CodeTrekController@index')->name('codetrek.index');
     Route::post('/', 'CodeTrekController@store')->name('codetrek.store');
     Route::get('/edit/{applicant}', 'CodeTrekController@edit')->name('codetrek.edit');
     Route::post('/edit/{applicant}', 'CodeTrekController@update')->name('codetrek.update');
@@ -21,5 +21,4 @@ Route::prefix('codetrek')->middleware('auth')->group(function () {
     Route::post('/action/{applicant}', 'CodeTrekApplicantRoundDetailController@takeAction')->name('codetrek.action');
     Route::post('/update-feedback/{applicantDetail}', 'CodeTrekApplicantRoundDetailController@update')->name('codetrek.update-feedback');
     Route::post('/update-Status/{applicant}', 'CodeTrekApplicantRoundDetailController@updateStatus')->name('codetrek.updateStatus');
-    Route::get('/filter-by-round/{roundSlug}', 'CodeTrekController@index')->name('codetrek.filterByRound');
 });
