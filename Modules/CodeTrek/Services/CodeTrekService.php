@@ -133,9 +133,9 @@ class CodeTrekService
         foreach ($feedbacks as $feedback) {
             $candidateFeedback = new \stdClass();
             $candidateFeedback->id = $feedback['id'];
-            $candidateFeedback->posted_by = User::select('name')->where('id', $feedback['posted_by'])->first()->name;
+            $candidateFeedback->posted_by = $this->getPostedByUserName($feedback['posted_by']);
             $candidateFeedback->posted_on = $feedback['posted_on'];
-            $candidateFeedback->feedback_category = CodeTrekFeedbackCategories::select('category_name')->where('id', $feedback['category_id'])->first()->category_name;
+            $candidateFeedback->feedback_category = $this->getFeedbackCategoryName($feedback['category_id']);
             $candidateFeedback->feedback_type = $feedback['feedback_type'];
             $candidateFeedback->feedback = $feedback['feedback'];
 
@@ -143,5 +143,15 @@ class CodeTrekService
         }
 
         return $candidateFeedbacks;
+    }
+   
+    public function getPostedByUserName($userId)
+    {
+        return User::select('name')->where('id', $userId)->first()->name;
+    }
+
+    public function getFeedbackCategoryName($categoryId)
+    {
+        return CodeTrekFeedbackCategories::select('category_name')->where('id', $categoryId)->first()->category_name;
     }
 }
