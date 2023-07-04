@@ -94,7 +94,7 @@
                                     <div class="d-flex justify-content-between">
                                         <div>
                                             {{ $client->name }}
-                                            {{ sprintf("(%03s)",$client->client_id) }}
+                                            {{ sprintf('(%03s)', $client->client_id) }}
                                         </div>
                                         <div class="">
                                             {{ __('Total Hours Booked: ') . $client->current_hours_in_projects }}</div>
@@ -113,11 +113,12 @@
                                                 </span>
                                             @endif
                                             @can('projects.update')
-                                                <a href="{{ route('project.show', $project) }}">{{ $project->name }} {{ sprintf("(%03s)",$project->client_project_id) }}</a>
+                                                <a href="{{ route('project.show', $project) }}">{{ $project->name }}
+                                                    {{ sprintf('(%03s)', $project->client_project_id) }}</a>
                                             @else
                                                 @php
                                                     $team_member_ids = $project->getTeamMembers->pluck('team_member_id')->toArray();
-                                                    $keyAccountmanager = $project->key_account_manager; 
+                                                    $keyAccountmanager = $project->key_account_manager;
                                                     $keyAccountmanagerId = $keyAccountmanager ? $keyAccountmanager->id : null;
                                                 @endphp
                                                 @if (in_array(auth()->user()->id, $team_member_ids) || auth()->user()->id === $keyAccountmanagerId)
@@ -134,7 +135,8 @@
                                         @foreach ($project->getTeamMembers ?: [] as $teamMember)
                                             <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
                                                 title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation] }} <br>    Efforts: {{ $teamMember->current_actual_effort }} Hours">
-                                                <a href={{ route('employees.show', $teamMember->user->employee) }}><img
+                                                <a
+                                                    @if (optional($teamMember->user)->employee) href={{ route('employees.show', $teamMember->user->employee) }} @endif><img
                                                         src="{{ $teamMember->user->avatar }}"
                                                         class="w-35 h-30 rounded-circle mb-1 mr-0.5 {{ $teamMember->border_color_class }} border-2"></a>
                                             </span>
