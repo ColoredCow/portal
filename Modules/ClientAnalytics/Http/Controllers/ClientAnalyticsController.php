@@ -5,15 +5,9 @@ namespace Modules\ClientAnalytics\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-
 use Modules\Client\Entities\Client;
-use Modules\Client\Entities\ClientAddress;
 use Modules\ClientAnalytics\Services\ClientAnalyticsService;
-
 use Modules\ClientAnalytics\Contracts\ClientAnalyticsServicesContract;
-
-
-
 
 class ClientAnalyticsController extends Controller
 {
