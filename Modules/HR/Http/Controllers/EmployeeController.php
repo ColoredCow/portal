@@ -102,5 +102,7 @@ class EmployeeController extends Controller
     {
         $employee = User::Where('id', $id)->get();
         Mail::send(new SelfReviewMail($employee));
+
+        return redirect()->back()->with('success', 'Mail sent successfully');
     }
 }
