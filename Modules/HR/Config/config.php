@@ -200,6 +200,7 @@ return [
     ],
     'non-verified-application-start-date' => '2022-07-06',
     'follow-up-attempts-threshold' => '2',
+    'follow-up-attempts-daily' => '3',
     'hr-followup-email' => [
         'primary' => env('HR_NEED_FOLLOW_UP_REMINDER_EMAIL', 'pk@coloredcow.in'),
     ],
@@ -229,5 +230,4 @@ return [
         'acc_number' => 'Account Number',
         'ifsc_code' => 'IFSC Code',
     ],
-    'follow-up-attempts-daily' => '3',
 ];
