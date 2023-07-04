@@ -201,8 +201,7 @@ return [
     'non-verified-application-start-date' => '2022-07-06',
     'follow-up-attempts-threshold' => '2',
     'hr-followup-email' => [
-        'primary' => env('HR_FOLLOWUP_EMAIL_PRIMARY', 'deepak.sharma@coloredcow.in'),
-        'secondary' => env('HR_FOLLOWUP_EMAIL_SECONDARY', 'pk@coloredcow.in'),
+        'primary' => env('HR_NEED_FOLLOW_UP_REMINDER_EMAIL', 'pk@coloredcow.in'),
     ],
     'applicant_form-details' => [
         'preferred_name' => 'Preferred Name',
@@ -231,7 +230,4 @@ return [
         'ifsc_code' => 'IFSC Code',
     ],
     'follow-up-attempts-daily' => '3',
-    'hr-followup-email-daily' => [
-        'primary' => env('HR_NEED_FOLLOW_UP_REMINDER_EMAIL', 'ayush.uniyal@coloredcow.in'),
-    ]
 ];

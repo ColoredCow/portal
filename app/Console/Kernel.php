@@ -12,7 +12,7 @@ use Modules\Project\Console\SendEffortSummaryCommand;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\Project\Console\GoogleChat\NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat;
 use Modules\HR\Console\JobExpiredEmailToHr;
-use Modules\HR\Console\Recruitment\SendFollowUpEmailsDaily;
+use Modules\HR\Console\Recruitment\SendFollowUpEmailToHr;
 
 class Kernel extends ConsoleKernel
 {
@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
         FixedBudgetProject::class,
         NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat::class,
         JobExpiredEmailToHr::class,
-        SendFollowUpEmailsDaily::class
+        SendFollowUpEmailToHr::class
     ];
 
     /**

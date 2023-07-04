@@ -4,11 +4,11 @@ namespace Modules\HR\Console\Recruitment;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
-use Modules\HR\Emails\FollowUpEmail;
 use Modules\HR\Entities\Application;
 use Modules\User\Entities\User;
+use Modules\HR\Emails\FollowUpEMailToHr;
 
-class SendFollowUpEmailsDaily extends Command
+class SendFollowUpEmailToHr extends Command
 {
     /**
      * The name and signature of the console command.
@@ -49,12 +49,12 @@ class SendFollowUpEmailsDaily extends Command
             }
         });
 
-        foreach (config('hr.hr-followup-email-daily') as $email) {
+        foreach (config('hr.hr-followup-email') as $email) {
             $user = User::where('email', $email)->first();
             if (! $user) {
                 continue;
             }
-            Mail::to(config('hr.hr-followup-email-daily'))->queue(new FollowUpEmail($applications, $user));
+            Mail::to(config('hr.hr-followup-email'))->queue(new FollowUpEMailToHr($applications, $user));
         }
 
         return 0; // for successful execution
