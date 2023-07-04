@@ -15,7 +15,7 @@ git --version
 Portal uses PHP v8.2. You can install it using one of the following ways:
 
 1. XAMPP (Windows and Linux)
-    - If you prefer using XAMPP, you can download the full stack with right PHP version from [this link](https://www.apachefriends.org/download.html)
+    - If you prefer using XAMPP, you can download the full stack with right PHP version from [this link](https://www.apachefriends.org/download.html). 
     - If you already have XAMPP installed for Windows, refer [this link](https://stackoverflow.com/questions/45790160/is-there-way-to-use-two-php-versions-in-xampp) for switching to the correct PHP version.
     - If you already have XAMPP installed for Ubuntu, refer [this link](http://www.facweb.iitkgp.ac.in/dashboard/docs/use-different-php-version.html)for switching to the correct PHP version.
 
