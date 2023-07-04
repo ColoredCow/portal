@@ -41,10 +41,10 @@ class CodeTrekController extends Controller
             'applicantsData' => $applicantsData,
             'statusCounts' => $statusCounts
         ]);
-    }
 
         return view('codetrek::index', ['centres' => $centres], $this->service->getCodeTrekApplicants($request->all()));
     }
+
 
     /**
      * Store a newly created resource in storage.
