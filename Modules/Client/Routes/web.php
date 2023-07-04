@@ -1,5 +1,4 @@
 <?php
-use Modules\ClientAnalytics\Http\Controllers\ClientAnalyticsController;
 
 /*
 |--------------------------------------------------------------------------
