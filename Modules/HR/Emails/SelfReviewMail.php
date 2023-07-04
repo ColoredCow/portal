@@ -50,7 +50,7 @@ class SelfReviewMail extends Mailable
      * @param int
      * @return string
      */
-    private function getQuarterMonth($quarterNumber)
+    public function getQuarterMonth($quarterNumber)
     {
         $quarterMonths = [
             1 => 'January - March',
