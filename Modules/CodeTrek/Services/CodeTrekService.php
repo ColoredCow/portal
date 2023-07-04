@@ -144,7 +144,7 @@ class CodeTrekService
 
         return $candidateFeedbacks;
     }
-   
+
     public function getPostedByUserName($userId)
     {
         return User::select('name')->where('id', $userId)->first()->name;
