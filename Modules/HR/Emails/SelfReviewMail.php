@@ -32,7 +32,7 @@ class SelfReviewMail extends Mailable
      */
     public function build()
     {
-        $currentQuarter = ceil(date('n') / 3); // Calculate current quarter
+        $currentQuarter = now()->quarter; // Calculate current quarter
         $currentYear = date('Y'); // Get current year
 
         $subject = 'Quarterly Self Review: ' . $this->getQuarterMonth($currentQuarter) . ' ' . $currentYear;
