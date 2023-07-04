@@ -9,8 +9,10 @@ use Modules\ClientAnalytics\Contracts\ClientAnalyticsServicesContract;
 
 class ClientAnalyticsService implements ClientAnalyticsServicesContract
 {
-    public function getAllClients(){
+    public function getAllClients()
+    {
         $clients = Client::all();
+        
         return $clients;
     }
 }
