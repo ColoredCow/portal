@@ -49,16 +49,16 @@
 								Manage user roles
 							</button>
 							<button v-show="userPermissions['can-delete'] && user.id !== authUser.id
-								" type="button" class="btn btn-sm btn-outline-danger " data-toggle="modal"
-								data-target="#deleteUserModal" @click="setIndex(index)">
+								" type="button" class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#deleteUserModal"
+								@click="setIndex(index)">
 								<i class="fa fa-trash fa-lg" aria-hidden="true"></i>
 							</button>
 							<button v-show="userPermissions['can-assign-roles']" :disabled="!user.employee"
 								class="btn btn-edit btn-outline-dark" data-toggle="modal"
 								data-target="#update_staff_type_modal" @click="updateUserRolesModal(index)">
-								<i class="fa fa-cog fa-lg" aria-hidden="true" data-toggle="tooltip" :title="!user.name || !user.employeeId
-										? 'No entry in the employee table for this user'
-										: ''
+								<i class="fa fa-cog fa-lg" aria-hidden="true" data-toggle="tooltip" :title="!user.employee
+									? 'No entry in the employee table for this user'
+									: ''
 									"></i>
 							</button>
 						</div>
