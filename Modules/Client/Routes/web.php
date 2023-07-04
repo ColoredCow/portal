@@ -19,5 +19,4 @@ Route::prefix('client')->middleware('auth')->group(function () {
     Route::post('/', 'ClientController@store')->name('client.store');
     Route::post('/{client}/update', 'ClientController@update')->name('client.update');
     Route::post('/create/country', 'CountryController@store')->name('country.store');
-    Route::get('/clientanalytics', [ClientAnalyticsController::class, 'index'])->name('clientanalytics.index');
 });

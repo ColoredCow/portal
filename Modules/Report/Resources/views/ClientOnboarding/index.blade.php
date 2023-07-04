@@ -1,4 +1,4 @@
-@extends('clientanalytics::layouts.master')
+@extends('report::layouts.master')
 @section('content')
 <div class="project-effort-tracking-container container py-10">
     <a href="{{ route('client.index') }}" class="text-theme-body text-decoration-none mb-2 mb-xl-4 align-items-center">

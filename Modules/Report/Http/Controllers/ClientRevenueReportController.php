@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Report\Services\Finance\ClientRevenueReportService;
 use Modules\Report\Exports\ClientRevenueReportExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Modules\Client\Entities\Client;
 
 class ClientRevenueReportController extends Controller
 {
@@ -58,5 +59,12 @@ class ClientRevenueReportController extends Controller
         $startYear = $endYear - 1;
 
         return Excel::download(new ClientRevenueReportExport($reportData), "Client Revenue Report $startYear-$endYear.xlsx");
+    }
+
+    public function index()
+    {
+        $clients = Client::all();
+    
+        return view('report::ClientOnboarding.index', compact('clients'));
     }
 }
