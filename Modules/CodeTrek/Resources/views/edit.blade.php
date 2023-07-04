@@ -81,6 +81,19 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-row">
+                        <div class="form-group  col-md-5">
+                            <label for="mentor" class="field-required">Assign Mentor</label>
+                            <select name="mentorId" id="mentorId" class="form-control" required>
+                                <option value="">Select Mentor Name</option>
+                                @foreach($mentors as $mentor)
+                                    @if ($mentor->name )
+                                        <option value="{{ $mentor->id }}"{{ $applicant->mentor_id == $mentor->id ? 'selected' : '' }}>{{ $mentor->name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary save-btn">Save</button>
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">Delete</button>
                 </div>

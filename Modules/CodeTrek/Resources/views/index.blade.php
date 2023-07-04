@@ -113,7 +113,7 @@
                             <th class="col-md-4">Name</th>
                             <th class="col-md-2">Days in CodeTrek</th>
                             <th>Level</th>
-                            <th>Feedbacks</th>
+                            <th>Mentor Assigned</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -163,7 +163,20 @@
                                         </span>
                                     </div>                                    
                                 </td>
-                                <td>-</td>
+                                <td>
+                                    <div class="d-flex align-items-center"> 
+                                        @if ($applicant->mentor)
+                                            <div class="col">
+                                                <div class="d-flex align-items-center"> 
+                                                    <img src="{{ $applicant->mentor->avatar }}" class="w-35 h-30 rounded-circle ">
+                                                    <h4 class="ml-2 mb-0">{{ $applicant->mentor->name }}</h4> 
+                                                </div>
+                                            </div>
+                                        @else
+                                            <h4 class="ml-2">No Mentor Assigned</h4>
+                                        @endif
+                                    </div>
+                                </td>
                             </tr>
                         @empty
                          <tr>
