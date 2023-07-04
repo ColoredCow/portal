@@ -14,7 +14,6 @@
             href="{{ route('employees.basic.details', $employee) }}"><i class="fa fa-details"></i>&nbsp;Basic
             Details</a>
     </li>
-    </li>
     <li class="nav-item">
         <a class="nav-item nav-link {{ Request::is('hr/employee-review-details*') ? 'active' : ' ' }}"
             href="{{ route('employees.review-details', $employee) }}"><i class="fa fa-details"></i>&nbsp;Review Details
