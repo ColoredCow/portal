@@ -88,9 +88,33 @@
                                 class="{{ $employee->user ? ($employee->user->ftes['amc'] > 1 ? 'text-success' : 'text-danger') : 'text-secondary' }} font-weight-bold">{{ $employee->user ? $employee->user->ftes['amc'] : 'NA' }}</span>
                         </td>
                         <td>
-                            <a class="ml-6" href="{{ route('employees.sendMail', $employee->user_id) }}">
+                            <a class="ml-6" data-toggle="modal" data-target="#exampleModal">
                                 <i class="fa fa-envelope" aria-hidden="true"></i>
                             </a>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Self review - Software Engineer
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form method="GET"
+                                            action="{{ route('employees.sendMail', $employee->user_id) }}">
+                                            <div class="form-group pl-4 pr-4 py-4">
+                                                <input type="url" class="form-control" name="self_review_link"
+                                                    placeholder="Enter Self Review Sheet Link" required>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @endforeach

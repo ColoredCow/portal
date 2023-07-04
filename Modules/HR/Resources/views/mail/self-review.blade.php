@@ -11,7 +11,8 @@
         employee based on some holistic growth parameters.</p>
     <br>
     <p>It’s time for you to do your self-assessment for the first quarter!
-        Your assessment sheet</p>
+        <a href="{{ $selfReviewLink }}">Your assessment sheet</a>
+    </p>
     <h5>Your assessment sheet<br>
         Target date: {{ $targetedDate }}</h5>
     <p>Parallely your mentor, manager, and an HR team member are also working on reviewing your performance.

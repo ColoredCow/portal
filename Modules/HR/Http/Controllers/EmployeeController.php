@@ -98,10 +98,14 @@ class EmployeeController extends Controller
         return view('hr.employees.employee-work-history', compact('employeesDetails'));
     }
 
-    public function sendMail($id)
+    public function sendMail($id, Request $request)
     {
+        $selfReviewLink = $request->self_review_link;
         $employee = User::Where('id', $id)->get();
-        Mail::send(new SelfReviewMail($employee));
+
+        // $employeeData = Employee::where('user_id', $id)->get();
+        dd($id);
+        Mail::send(new SelfReviewMail($employee, null, $selfReviewLink));
 
         return redirect()->back()->with('success', 'Mail sent successfully');
     }

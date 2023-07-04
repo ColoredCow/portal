@@ -13,16 +13,18 @@ class SelfReviewMail extends Mailable
 
     public $employee;
     public $targetedDate;
+    public $selfReviewLink;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($employee, $targetedDate = null)
+    public function __construct($employee, $targetedDate, $selfReviewLink)
     {
         $this->employee = $employee;
         $this->targetedDate = $targetedDate ?? Carbon::now()->addDays(7)->format('d-m-y');
+        $this->selfReviewLink = $selfReviewLink;
     }
 
     /**
