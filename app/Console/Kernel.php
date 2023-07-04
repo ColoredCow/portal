@@ -57,7 +57,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('project:ended-project')->dailyAt('09:00');
         $schedule->command('project:zero-expected-hours-in-project')->weekly()->tuesdays()->at('11:00');
         $schedule->command('project:reminder-for-effortsheet-lock')->dailyAt('21:00');
-        // $schedule->command('employee:quarterly-review-system-for-employee')->quarterly(); //This line will be commented for some time. After the feature is completed, it will be uncommented.
+        // $schedule->command('employee:quarterly-review-system-for-employee')->quarterly(); //This command generates assessments corresponding to each employee. Currently this feature is in-progress and will be released shortly.
     }
 
     /**
