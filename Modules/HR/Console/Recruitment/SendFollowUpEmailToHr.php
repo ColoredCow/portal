@@ -3,7 +3,6 @@
 namespace Modules\HR\Console\Recruitment;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
 use Modules\HR\Entities\Application;
 use Modules\User\Entities\User;
 
@@ -54,5 +53,7 @@ class SendFollowUpEmailToHr extends Command
                 continue;
             }
         }
+
+        return 0;
     }
 }
