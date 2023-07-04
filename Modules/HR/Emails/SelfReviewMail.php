@@ -44,12 +44,6 @@ class SelfReviewMail extends Mailable
             ->view('hr::mail.self-review');
     }
 
-    /**
-     * Get the name of the quarter month based on the quarter number.
-     *
-     * @param int
-     * @return string
-     */
     public function getQuarterMonth($quarterNumber)
     {
         $quarterMonths = [
