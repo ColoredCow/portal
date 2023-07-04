@@ -25,9 +25,9 @@
     <p>&#x2022; <a
             href="https://docs.google.com/presentation/d/169wTST4wjzGKvLRhAPq4z8HiB4wkonvelyUqHHQitMk/edit">Training
             model</a>on the holistic growth parameters for all the roles in the organization.</p>
-    <h5>The end goal is to educate ColoredCow Remarkables through a method of case studies. Keep visiting this training
-        model for new learnings and betterment
-    </h5>
+    <h5><i>**The end goal is to educate ColoredCow Remarkables through a method of case studies. Keep visiting this
+            training
+            model for new learnings and betterment</i></h5>
     <p>If you have any inputs to make this whole process better or contribute to it, feel free to reach out.</p>
     <p class="line">Let’s get better together!</p>
     <p class="line">Regards</p>
