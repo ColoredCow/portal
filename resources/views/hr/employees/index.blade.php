@@ -37,7 +37,7 @@
                     <th>AMC FTE</th>
                     <th>Send Mail</th>
                 </tr>
-                @foreach ($employees as $employee)
+                @foreach ($employees as $key => $employee)
                     <tr>
                         <td>
                             <a href={{ route('employees.show', $employee->id) }}>{{ $employee->name }}</a>
@@ -88,10 +88,10 @@
                                 class="{{ $employee->user ? ($employee->user->ftes['amc'] > 1 ? 'text-success' : 'text-danger') : 'text-secondary' }} font-weight-bold">{{ $employee->user ? $employee->user->ftes['amc'] : 'NA' }}</span>
                         </td>
                         <td>
-                            <a class="ml-6" data-toggle="modal" data-target="#exampleModal">
+                            <a class="ml-6" data-toggle="modal" data-target="#reviewModal-{{ $key }}">
                                 <i class="fa fa-envelope" aria-hidden="true"></i>
                             </a>
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="reviewModal-{{ $key }}" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">

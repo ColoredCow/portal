@@ -102,9 +102,7 @@ class EmployeeController extends Controller
     {
         $selfReviewLink = $request->self_review_link;
         $employee = User::Where('id', $id)->get();
-
-        // $employeeData = Employee::where('user_id', $id)->get();
-        dd($id);
+        $employeeData = Employee::where('user_id', $id)->get();
         Mail::send(new SelfReviewMail($employee, null, $selfReviewLink));
 
         return redirect()->back()->with('success', 'Mail sent successfully');
