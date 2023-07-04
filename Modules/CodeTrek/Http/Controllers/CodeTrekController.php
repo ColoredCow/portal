@@ -8,6 +8,7 @@ use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 use Modules\CodeTrek\Services\CodeTrekService;
 use Modules\Operations\Entities\OfficeLocation;
+use Modules\User\Entities\User;
 
 class CodeTrekController extends Controller
 {
@@ -26,6 +27,21 @@ class CodeTrekController extends Controller
         // $this->authorize('view', $applicant);     There are some issues in the production, which is why these lines are commented out.
 
         $centres = OfficeLocation::all();
+
+        $mentors = User::all();
+        $applicantData = $this->service->getCodeTrekApplicants($request->all());
+        $applicants = $applicantData['applicants'];
+        $applicantsData = $applicantData['applicantsData'];
+        $statusCounts = $applicantData['statusCounts'];
+
+        return view('codetrek::index', [
+            'applicants' => $applicants,
+            'centres' => $centres,
+            'mentors' => $mentors,
+            'applicantsData' => $applicantsData,
+            'statusCounts' => $statusCounts
+        ]);
+    }
 
         return view('codetrek::index', ['centres' => $centres], $this->service->getCodeTrekApplicants($request->all()));
     }
@@ -61,9 +77,11 @@ class CodeTrekController extends Controller
         // $this->authorize('update', $applicant);   There are some issues in the production, which is why these lines are commented out.
 
         $centres = OfficeLocation::all();
+
+        $mentors = User::all();
         $this->service->edit($applicant);
 
-        return view('codetrek::edit', ['applicant' => $applicant, 'centres' => $centres]);
+        return view('codetrek::edit', ['applicant' => $applicant, 'centres' => $centres, 'mentors' => $mentors]);
     }
     public function evaluate(CodeTrekApplicant $applicant)
     {
