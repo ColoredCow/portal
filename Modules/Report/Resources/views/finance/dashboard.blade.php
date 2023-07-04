@@ -108,6 +108,13 @@
                         </a>
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="card h-75 ">
+                        <a class="card-body no-transition" href="{{ route('clientanalytics.index')  }}">
+                            <h2 class="text-center">Client Onboarding</h2><br>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
