@@ -68,13 +68,14 @@ class CodeTrekApplicantRoundDetailController extends Controller
     {
         if ($request->input('action') === config('codetrek.status.inactive.slug')) {
             $applicant->status = config('codetrek.status.inactive.slug');
+        } elseif ($request->input('action') === config('codetrek.status.active.slug')) {
+            $applicant->status = config('codetrek.status.active.slug');
         } else {
             $applicant->status = config('codetrek.status.completed.slug');
         }
-
         $applicant->save();
 
-        return redirect()->route('codetrek.index');
+        return redirect()->back()->with('success', 'Status updated successfully.');
     }
 
     /**

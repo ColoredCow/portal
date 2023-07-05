@@ -13,11 +13,6 @@ use Modules\Project\Console\SendEffortSummaryCommand;
 use Modules\Project\Console\SyncEffortsheet;
 use Modules\Project\Console\ZeroEffortInProject;
 use Modules\Project\Console\ZeroExpectedHourInProject;
-use Modules\Project\Console\FixedBudgetProject;
-use Modules\Project\Console\SendEffortSummaryCommand;
-use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Modules\Project\Console\GoogleChat\NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat;
-use Modules\HR\Console\JobExpiredEmailToHr;
 use Modules\HR\Console\Recruitment\SendFollowUpEmailToHr;
 
 class Kernel extends ConsoleKernel
@@ -36,9 +31,8 @@ class Kernel extends ConsoleKernel
         FixedBudgetProject::class,
         NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat::class,
         JobExpiredEmailToHr::class,
-        SendFollowUpEmailToHr::class
         // QuarterlyReviewSystemForEmployee::class, //This line will be commented for some time. After the feature is completed, it will be uncommented.
-
+        SendFollowUpEmailToHr::class
     ];
 
     /**
