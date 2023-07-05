@@ -16,12 +16,13 @@
                     <div>End date: {{ $endDate->format('d-F-Y') }}</div>
                 </div>
                 <div>
-                <h2 class="fz-18 leading-22">Hours Booked: <span>{{ $project->getHoursBookedForMonth($totalMonths, $startDate, $endDate) }}</span>
+                    <h2 class="fz-18 leading-22">Hours Booked:
+                        <span>{{ $project->getHoursBookedForMonth($totalMonths, $startDate, $endDate) }}</span>
                     </h2>
                     <h2 class="fz-18 leading-22" id="projectHours">Expected Hours:
                         <span>{{ $project->getExpectedHoursInMonthAttribute($startDate, $endDate) }}</span>
                     </h2>
-                @if($totalMonths === 0)
+                    @if ($totalMonths === 0)
                         <h2 class="fz-18 leading-22">Expected Hours Till Today:
                             <span>{{ $project->expected_hours_till_today }}</span>
                         </h2>
@@ -98,7 +99,7 @@
                                 <th scope="col" class="pb-lg-4">Hours Booked</th>
                                 <th scope="col" class="w-lg-200">Expected Hours
                                     <div class="ml-lg-3">
-                                        ({{ $days }} Days)
+                                        ({{ $workingDays }} Days)
                                     </div>
                                 </th>
                                 <th scope="col" class="w-lg-200">Expected Hours Till Today ({{ $daysTillToday }} Days)
