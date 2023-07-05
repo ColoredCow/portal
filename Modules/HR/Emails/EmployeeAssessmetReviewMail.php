@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SelfReviewMail extends Mailable
+class EmployeeAssessmetReviewMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -37,24 +37,24 @@ class SelfReviewMail extends Mailable
     {
         $currentQuarter = now()->quarter; // Calculate current quarter
         $currentYear = date('Y'); // Get current year
-        $subject = "";
-        $mailTemplate = "";
+        $subject = '';
+        $mailTemplate = '';
         switch ($this->key) {
             case 'selfMail':
                 $subject = 'Quarterly Self Review: ' . $this->getQuarterMonth($currentQuarter) . ' ' . $currentYear;
-                $mailTemplate = "hr::mail.self-review";
+                $mailTemplate = 'hr::mail.self-review';
                 break;
             case 'hrMail':
                 $subject = 'Quarterly HR Review: ' . $this->getQuarterMonth($currentQuarter) . ' ' . $currentYear;
-                $mailTemplate = "hr::mail.hr-review";
+                $mailTemplate = 'hr::mail.hr-review';
                 break;
             case 'managerMail':
                 $subject = 'Quarterly Manager Review: ' . $this->getQuarterMonth($currentQuarter) . ' ' . $currentYear;
-                $mailTemplate = "hr::mail.manager-review";
+                $mailTemplate = 'hr::mail.manager-review';
                 break;
             default:
                 $subject = 'Quarterly Mentor Review: ' . $this->getQuarterMonth($currentQuarter) . ' ' . $currentYear;
-                $mailTemplate = "hr::mail.mentor-review";
+                $mailTemplate = 'hr::mail.mentor-review';
         }
         return $this
             ->from(config('hr.default.email'))

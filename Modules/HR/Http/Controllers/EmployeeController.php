@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
-use Modules\HR\Emails\SelfReviewMail;
+use Modules\HR\Emails\EmployeeAssessmetReviewMail;
 use Modules\HR\Entities\Assessment;
 use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\HrJobDesignation;
@@ -114,21 +114,21 @@ class EmployeeController extends Controller
         $userIds = Employee::whereIn('id', $employeeIds)->pluck('user_id')->toArray();
         $userData = User::whereIn('id', $userIds)->get();
         $sendEmailto = [
-            'selfMail' => !empty($userData[0]) ? $userData[0] : null,
-            'hrMail' => !empty($userData[1]) ? $userData[1] : null,
-            'managerMail' => !empty($userData[2]) ? $userData[2] : null,
-            'mentorMail' => !empty($userData[3]) ? $userData[3] : null,
+            'selfMail' => ! empty($userData[0]) ? $userData[0] : null,
+            'hrMail' => ! empty($userData[1]) ? $userData[1] : null,
+            'managerMail' => ! empty($userData[2]) ? $userData[2] : null,
+            'mentorMail' => ! empty($userData[3]) ? $userData[3] : null,
         ];
 
         foreach ($sendEmailto as $key => $user) {
-            if (!is_null($user)) {
-                Mail::send(new SelfReviewMail($key, $user, $employee, $links));
+            if (! is_null($user)) {
+                Mail::send(new EmployeeAssessmetReviewMail($key, $user, $employee, $links));
             }
         }
 
         return redirect()->back()->with('success', 'Mail sent successfully');
     }
-    
+
     public function reviewDetails(Employee $employee)
     {
         $assessments = Assessment::where('reviewee_id', $employee->id)
