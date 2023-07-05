@@ -4,17 +4,16 @@
             line-height: 1px;
         }
     </style>
-    <p>Dear, {{ $user->name }}</p>
+    <p>Dear, {{ $user['name'] }}</p>
     <p>I hope this email finds you well and in good spirits!</p>
     <p>At ColoredCow our belief is we build great people who do extraordinary things. To facilitate the growth of
         talent, we are on our way to creating a career progression model, which requires a quarterly review of an
         employee based on some holistic growth parameters.</p>
     <br>
-    <p>It’s time for you to do your self-assessment for the first quarter!</p>
-    <a href="{{ $links['self_review_link'] }}">Your assessment sheet</a>
+    <p>With your active role in the mentorship of  {{ $employee->name }}, It’s time for you to do his assessment for the first quarter!</p>
+    <p><a href="{{ $links['mentor_review_link'] }}">Mentor assessment sheet</a></p>
     <h5>Target date: {{ now()->addDays(7)->format('d-m-y') }}</h5>
-    <p>Parallely your mentor, manager, and an HR team member are also working on reviewing your performance.
-    </p>
+    <p>Parallelly the mentee himself, the manager associated, and an HR team member are also working on reviewing his/her performance.</p>
     <p>We are new to this model and we all need to train ourselves to do a great assessment. That’s why we created a few
         training modules, which you may find helpful and handy.</p>
     <p>&#x2022; <a

@@ -2,7 +2,6 @@
 
 namespace Modules\HR\Emails;
 
-use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -11,21 +10,23 @@ class SelfReviewMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $index;
-    public $targetedDate;
+    public $key;
+    public $user;
+    public $employee;
+    public $links;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($index, $targetedDate)
+    public function __construct($key, $user, $employee, $links)
     {
-        foreach ($index as $i){
+        $this->key = $key;
+        $this->user = $user;
+        $this->employee = $employee;
+        $this->links = $links;
 
-            $this->index = $index;
-        }
-        $this->targetedDate = $targetedDate ?? Carbon::now()->addDays(7)->format('d-m-y');
     }
 
     /**
@@ -37,14 +38,30 @@ class SelfReviewMail extends Mailable
     {
         $currentQuarter = now()->quarter; // Calculate current quarter
         $currentYear = date('Y'); // Get current year
-
-        $subject = 'Quarterly Self Review: ' . $this->getQuarterMonth($currentQuarter) . ' ' . $currentYear;
-
+        $subject = "";
+        $mailTemplate = "";
+        switch ($this->key) {
+            case 'selfMail':
+                $subject = 'Quarterly Self Review: ' . $this->getQuarterMonth($currentQuarter) . ' ' . $currentYear;
+                $mailTemplate = "hr::mail.self-review";
+                break;
+            case 'hrMail':
+                $subject = 'Quarterly HR Review: ' . $this->getQuarterMonth($currentQuarter) . ' ' . $currentYear;
+                $mailTemplate = "hr::mail.hr-review";
+                break;
+            case 'managerMail':
+                $subject = 'Quarterly Manager Review: ' . $this->getQuarterMonth($currentQuarter) . ' ' . $currentYear;
+                $mailTemplate = "hr::mail.manager-review";
+                break;
+            default:
+                $subject = 'Quarterly Mentor Review: ' . $this->getQuarterMonth($currentQuarter) . ' ' . $currentYear;
+                $mailTemplate = "hr::mail.mentor-review";
+        }
         return $this
             ->from(config('hr.default.email'))
-            ->to($this->index->first()->email)
+            ->to($this->user->email)
             ->subject($subject)
-            ->view('hr::mail.self-review');
+            ->view($mailTemplate);
     }
 
     public function getQuarterMonth($quarterNumber)

@@ -106,51 +106,24 @@ class EmployeeController extends Controller
             'manager_review_link' => $request->manager_review_link,
             'mentor_review_link' => $request->mentor_review_link,
         ];
-        $employee = User::Where('id', $id)->get();
-        $hr = $this->sendMailToHr($id);
-        $manager = $this->sendMailTomanager($id);
-        $mentor = $this->sendMailToMentro($id);
-        
 
+        $employee = Employee::where('user_id', $id)->first();
+        $employeeIds = [$id, $employee->hr_id, $employee->mentor_id, $employee->manager_id];
+        $userIds = Employee::whereIn('id', $employeeIds)->pluck('user_id')->toArray();
+        $userData = User::whereIn('id', $userIds)->get();
         $sendEmailto = [
-            'selfMail' => $employee,
-            'hrMail' => $hr,
-            'managerMail' => $manager,
-            'mentorMail' => $mentor,
+            'selfMail' => !empty($userData[0]) ? $userData[0] : null,
+            'hrMail' => !empty($userData[1]) ? $userData[1] : null,
+            'managerMail' => !empty($userData[2]) ? $userData[2] : null,
+            'mentorMail' => !empty($userData[3]) ? $userData[3] : null,
         ];
 
-        foreach ($sendEmailto as $email => $index) {
-            Mail::send(new SelfReviewMail($index, null,));
+        foreach ($sendEmailto as $key => $user) {
+            if (!is_null($user)) {
+                Mail::send(new SelfReviewMail($key, $user, $employee, $links));
+            }
         }
-        // dd($index);
 
         return redirect()->back()->with('success', 'Mail sent successfully');
-    }
-
-    public function sendMailToHr($id)
-    {
-        $employeeData = Employee::find($id);
-        $applicantHR = Employee::find($employeeData->hr_id);
-        $hrinfo = User::find($applicantHR->user_id);
-
-        return $hrinfo;
-    }
-
-    public function sendMailToManager($id)
-    {
-        $employeeData = Employee::find($id);
-        $applicantManager = Employee::find($employeeData->manager_id);
-        $managerinfo = User::find($applicantManager->user_id); 
-
-        return $managerinfo;
-    }
-
-    public function sendMailToMentro($id)
-    {
-        $employeeData = Employee::find($id);
-        $applicantMentor = Employee::find($employeeData->mentor_id);
-        $mentorinfo = User::find($applicantMentor->user_id);
-        
-        return $mentorinfo;
     }
 }
