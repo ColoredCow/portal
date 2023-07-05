@@ -98,7 +98,7 @@ class EffortTrackingService
         $dates = [];
         $weekend = ['Saturday', 'Sunday'];
         foreach ($period as $date) {
-            if (!in_array($date->format('l'), $weekend)) {
+            if (! in_array($date->format('l'), $weekend)) {
                 $dates[] = $date->format('Y-m-d');
             }
         }
@@ -130,7 +130,7 @@ class EffortTrackingService
             $userDetails = $teamMember->user;
             $efforts = $teamMember->projectTeamMemberEffort()->get();
 
-            if (!$userDetails) {
+            if (! $userDetails) {
                 continue;
             }
 
@@ -171,7 +171,7 @@ class EffortTrackingService
         try {
             $effortSheetUrl = $project->effort_sheet_url ?: $project->client->effort_sheet_url;
 
-            if (!$effortSheetUrl) {
+            if (! $effortSheetUrl) {
                 return false;
             }
 
@@ -179,7 +179,7 @@ class EffortTrackingService
 
             $isSyntaxMatching = preg_match('/.*[^-\w]([-\w]{25,})[^-\w]?.*/', $effortSheetUrl, $correctedEffortsheetUrl);
 
-            if (!$isSyntaxMatching) {
+            if (! $isSyntaxMatching) {
                 return false;
             }
 
@@ -262,7 +262,7 @@ class EffortTrackingService
                     $portalUsers = clone $users;
                     $portalUser = $portalUsers->where('nickname', $userNickname)->first();
 
-                    if (!$portalUser) {
+                    if (! $portalUser) {
                         continue;
                     }
 
@@ -327,7 +327,7 @@ class EffortTrackingService
         $currentDate = now(config('constants.timezone.indian'))->today();
         $projectTeamMember = $effortData['portal_user']->projectTeamMembers()->active()->where('project_id', $effortData['sheet_project']['id'])->first();
 
-        if (!$projectTeamMember) {
+        if (! $projectTeamMember) {
             return;
         }
         $latestProjectTeamMemberEffort = $projectTeamMember->projectTeamMemberEffort()
