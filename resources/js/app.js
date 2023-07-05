@@ -2115,6 +2115,7 @@ $(document).ready(function() {
 	});
 });
 
+$(document).ready(function() {
 	$(".editBankDetail-btn").click(function() {
 		var bankDetailId = $(this).data("id");
 		var bankDetailLabel = $(this).data("label");
