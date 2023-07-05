@@ -271,9 +271,9 @@ return [
     ],
 
     'employee-reviewers' => [
-        'hr_id' => 'hr',
-        'mentor_id' => 'mentor',
-        'manager_id' => 'manager',
+        'hr_id' => 'HR',
+        'mentor_id' => 'Mentor',
+        'manager_id' => 'Manager',
     ],
 
     'employee-review-status' => [
