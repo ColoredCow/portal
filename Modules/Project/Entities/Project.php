@@ -160,7 +160,7 @@ class Project extends Model implements Auditable
         $endDate = $endDate ?: $this->client->getMonthEndDateAttribute($monthToSubtract);
 
         return $this->getAllTeamMembers->sum(function ($teamMember) use ($startDate, $endDate) {
-            if (!$teamMember->projectTeamMemberEffort) {
+            if (! $teamMember->projectTeamMemberEffort) {
                 return 0;
             }
 
@@ -204,7 +204,7 @@ class Project extends Model implements Auditable
         $dates = [];
         $weekend = ['Saturday', 'Sunday'];
         foreach ($period as $date) {
-            if (!in_array($date->format('l'), $weekend)) {
+            if (! in_array($date->format('l'), $weekend)) {
                 $dates[] = $date->format('Y-m-d');
             }
         }
@@ -219,7 +219,7 @@ class Project extends Model implements Auditable
         $dates = [];
         $weekend = ['Saturday', 'Sunday'];
         foreach ($period as $date) {
-            if (!in_array($date->format('l'), $weekend)) {
+            if (! in_array($date->format('l'), $weekend)) {
                 $dates[] = $date->format('Y-m-d');
             }
         }
@@ -306,7 +306,7 @@ class Project extends Model implements Auditable
         $endDate = $periodEndDate ?: $this->client->getMonthEndDateAttribute($monthToSubtract);
 
         return $this->getAllTeamMembers->sum(function ($teamMember) use ($startDate, $endDate) {
-            if (!$teamMember->projectTeamMemberEffort) {
+            if (! $teamMember->projectTeamMemberEffort) {
                 return 0;
             }
 
@@ -320,7 +320,7 @@ class Project extends Model implements Auditable
     public function getResourceBillableAmount()
     {
         $service_rate = optional($this->billingDetail)->service_rates;
-        if (!$service_rate) {
+        if (! $service_rate) {
             $service_rate = $this->client->billingDetails->service_rates;
         }
         $totalAmount = 0;
