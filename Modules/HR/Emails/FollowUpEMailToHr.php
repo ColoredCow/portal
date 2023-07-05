@@ -10,16 +10,16 @@ class FollowUpEMailToHr extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $applications;
+    public $filteredApplications;
     public $user;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($applications, $user)
+    public function __construct($filteredApplications, $user)
     {
-        $this->applications = $applications;
+        $this->filteredApplications = $filteredApplications;
         $this->user = $user;
     }
 

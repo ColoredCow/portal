@@ -42,7 +42,7 @@ class SendFollowUpEmailToHr extends Command
     public function handle()
     {
         $applications = Application::whereIn('status', ['new', 'in-progress'])->get();
-        $applications = $applications->reject(function ($application) {
+        $filteredApplications = $applications->reject(function ($application) {
             $followUpCount = $application->latestApplicationRound ? $application->latestApplicationRound->followUps->count() : 0;
             if ($followUpCount == config('hr.follow-up-attempts-daily')) {
                 return $application;
@@ -54,7 +54,7 @@ class SendFollowUpEmailToHr extends Command
             if (! $user) {
                 continue;
             }
-            Mail::to(config('hr.hr-followup-email'))->queue(new FollowUpEMailToHr($applications, $user));
+            Mail::to($email)->queue(new FollowUpEMailToHr($filteredApplications, $user));
         }
 
         return 0;  //for successfully execution
