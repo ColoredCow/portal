@@ -56,6 +56,7 @@ class EmployeeAssessmetReviewMail extends Mailable
                 $subject = 'Quarterly Mentor Review: ' . $this->getQuarterMonth($currentQuarter) . ' ' . $currentYear;
                 $mailTemplate = 'hr::mail.mentor-review';
         }
+
         return $this
             ->from(config('hr.default.email'))
             ->to($this->user->email)
