@@ -5,6 +5,8 @@ namespace Modules\HR\Console\Recruitment;
 use Illuminate\Console\Command;
 use Modules\HR\Entities\Application;
 use Modules\User\Entities\User;
+use Modules\HR\Emails\FollowUpEMailToHr;
+use Illuminate\Support\Facades\Mail;
 
 class SendFollowUpEmailToHr extends Command
 {
@@ -13,7 +15,7 @@ class SendFollowUpEmailToHr extends Command
      *
      * @var string
      */
-    protected $signature = 'hr:send-follow-up-mail-daily';
+    protected $signature = 'hr:send-follow-up-mail-to-hr';
 
     /**
      * The console command description.
@@ -52,8 +54,7 @@ class SendFollowUpEmailToHr extends Command
             if (! $user) {
                 continue;
             }
+            Mail::to(config('hr.hr-followup-email'))->queue(new FollowUpEMailToHr($applications, $user));
         }
-
-        return 0;
     }
 }
