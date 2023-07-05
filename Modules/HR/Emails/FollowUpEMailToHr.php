@@ -32,6 +32,6 @@ class FollowUpEMailToHr extends Mailable
     {
         return $this->from(config('hr.default.email'), config('hr.default.name'))
             ->subject('Follow up mail to HR with applicants.')
-            ->view('hr::application.followUpToHr');
+            ->view('hr::application.followups-to-hr');
     }
 }
