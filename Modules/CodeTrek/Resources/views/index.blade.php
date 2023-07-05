@@ -90,6 +90,24 @@
                         Completed({{$statusCounts['completed']}})</a>
                 </li>
             </div>
+            <form action="{{ route('codetrek.index') }}" id="sortingForm">
+                <div class="form-group w-120">
+                    <select class="form-control bg-light" name="order" id="order" onchange="document.getElementById('sortingForm').submit();">
+                        <option value="">
+                            Sort By
+                        </option>
+                        <option value="name"  {{ request()->get('order') == 'name' ? 'selected' : ''}}>
+                            Name
+                        </option>
+                        <option value="date" {{ request()->get('order') == 'date' ? 'selected' : ''}}>
+                            Date
+                        </option>
+                    </select>
+                    <input type="hidden" name="status" value="{{ $request['status'] ?? '' }}">
+                    <input type="hidden" name="centre" value="{{ $request['centre'] ?? '' }}">
+                    <input type="hidden" name="name" value="{{ request()->get('name') }}">
+                </div>
+            </form>
         </ul>
         @if (request()->input('tab', 'active') == 'active' || request()->tab == 'applicants')
             <div>

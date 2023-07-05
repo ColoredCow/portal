@@ -119,7 +119,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/invoice-template', 'SettingController@invoiceTemplates')->name('setting.invoice');
         Route::post('/invoice-template', 'SettingController@updateInvoiceTemplates')->name('setting.invoice.update');
         Route::prefix('bank-details')->group(function () {
-            Route::get('/', 'bankController@index')->name('settings.bank-details');
+            Route::get('/', 'BankDetailController@index')->name('settings.bank-details');
+            Route::get('/create', 'BankDetailController@create')->name('bank-details.create');
+            Route::post('/', 'BankDetailController@store')->name('bank-details.store');
+            Route::post('/{bankDetail}', 'BankDetailController@update')->name('bank-details.update');
         });
     });
 
