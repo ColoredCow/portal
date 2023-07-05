@@ -11,20 +11,21 @@ class SelfReviewMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $employee;
+    public $index;
     public $targetedDate;
-    public $selfReviewLink;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($employee, $targetedDate, $selfReviewLink)
+    public function __construct($index, $targetedDate)
     {
-        $this->employee = $employee;
+        foreach ($index as $i){
+
+            $this->index = $index;
+        }
         $this->targetedDate = $targetedDate ?? Carbon::now()->addDays(7)->format('d-m-y');
-        $this->selfReviewLink = $selfReviewLink;
     }
 
     /**
@@ -41,7 +42,7 @@ class SelfReviewMail extends Mailable
 
         return $this
             ->from(config('hr.default.email'))
-            ->to($this->employee->first()->email)
+            ->to($this->index->first()->email)
             ->subject($subject)
             ->view('hr::mail.self-review');
     }

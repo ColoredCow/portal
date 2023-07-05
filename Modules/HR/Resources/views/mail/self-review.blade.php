@@ -4,15 +4,15 @@
             line-height: 1px;
         }
     </style>
-    <p>Dear, {{ $employee->first()->name }}</p>
+    {{-- <p>Dear, {{ $index->name }}</p> --}}
     <p>I hope this email finds you well and in good spirits!</p>
     <p>At ColoredCow our belief is we build great people who do extraordinary things. To facilitate the growth of
         talent, we are on our way to creating a career progression model, which requires a quarterly review of an
         employee based on some holistic growth parameters.</p>
     <br>
-    <p>It’s time for you to do your self-assessment for the first quarter!
+    {{-- <p>It’s time for you to do your self-assessment for the first quarter!
         <a href="{{ $selfReviewLink }}">Your assessment sheet</a>
-    </p>
+    </p> --}}
     <h5>Your assessment sheet<br>
         Target date: {{ $targetedDate }}</h5>
     <p>Parallely your mentor, manager, and an HR team member are also working on reviewing your performance.

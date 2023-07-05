@@ -96,7 +96,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Self review - Software Engineer
+                                            <h5 class="modal-title" id="exampleModalLabel">Review - Software Engineer
                                             </h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -104,9 +104,25 @@
                                         </div>
                                         <form method="GET"
                                             action="{{ route('employees.sendMail', $employee->user_id) }}">
-                                            <div class="form-group pl-4 pr-4 py-4">
-                                                <input type="url" class="form-control" name="self_review_link"
-                                                    placeholder="Enter Self Review Sheet Link" required>
+                                            <div class="form-group pl-4 pr-4">
+                                                Self Review Link:<input type="url" class="form-control"
+                                                    name="self_review_link" placeholder="Enter Self Review Sheet Link"
+                                                    required>
+                                            </div>
+                                            <div class="form-group pl-4 pr-4">
+                                                HR Review Link:<input type="url" class="form-control"
+                                                    name="hr_review_link" placeholder="Enter HR Review Sheet Link"
+                                                    required>
+                                            </div>
+                                            <div class="form-group pl-4 pr-4">
+                                                Manager Review Link:<input type="url" class="form-control"
+                                                    name="manager_review_link" placeholder="Enter Manager Review Sheet Link"
+                                                    required>
+                                            </div>
+                                            <div class="form-group pl-4 pr-4">
+                                                Mentor Review Link:<input type="url" class="form-control"
+                                                    name="mentor_review_link" placeholder="Enter Mentro Review Sheet Link"
+                                                    required>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="submit" class="btn btn-primary">Submit</button>
