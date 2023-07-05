@@ -56,6 +56,6 @@ class SendFollowUpEmailToHr extends Command
             }
             Mail::to(config('hr.hr-followup-email'))->queue(new FollowUpEMailToHr($applications, $user));
         }
-        return 0; // for successful execution
+        return 0; // for successful execution.
     }
 }
