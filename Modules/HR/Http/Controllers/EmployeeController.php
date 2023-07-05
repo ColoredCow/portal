@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
 use Modules\HR\Emails\SelfReviewMail;
+use Modules\HR\Entities\Assessment;
 use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\HrJobDomain;
+use Modules\HR\Entities\IndividualAssessment;
 use Modules\HR\Entities\Job;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\User\Entities\User;
@@ -125,5 +127,51 @@ class EmployeeController extends Controller
         }
 
         return redirect()->back()->with('success', 'Mail sent successfully');
+    }
+    
+    public function reviewDetails(Employee $employee)
+    {
+        $assessments = Assessment::where('reviewee_id', $employee->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $employees = Employee::all();
+
+        return view('hr.employees.review-details', ['employee' => $employee, 'employees' => $employees, 'assessments' => $assessments]);
+    }
+
+    public function createIndividualAssessment(Request $request)
+    {
+        $reviewStatuses = [
+            'self' => $request->self,
+            'mentor' => $request->mentor,
+            'hr' => $request->hr,
+            'manager' => $request->manager,
+        ];
+        $assessmentId = $request->assessmentId;
+        $reviewStatus = $reviewStatuses[$request->review_type] ?? '';
+
+        $individualAssessment = IndividualAssessment::firstOrNew([
+            'assessment_id' => $assessmentId,
+            'type' => $request->review_type,
+        ]);
+
+        $individualAssessment->fill([
+            'reviewer_id' => $request->reviewer_id,
+            'status' => $reviewStatus,
+        ])->save();
+
+        return redirect()->back()->with('success', $individualAssessment->wasRecentlyCreated ? 'Review saved successfully.' : 'Review status updated successfully.');
+    }
+
+    public function updateEmployeeReviewers(Request $request, Employee $employee)
+    {
+        // Update the employee reviewers data
+        $employee->update([
+            'hr_id' => $request->hr_id,
+            'mentor_id' => $request->mentor_id,
+            'manager_id' => $request->manager_id,
+        ]);
+
+        return redirect()->back();
     }
 }
