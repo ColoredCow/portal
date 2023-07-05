@@ -122,9 +122,12 @@ Route::middleware('auth')->group(function () {
                 'index' => 'employees',
                 'show' => 'employees.show',
             ]);
+        Route::get('employee-review-details/{employee}', 'EmployeeController@reviewDetails')->name('employees.review-details');
+        Route::post('employee-review-details', 'EmployeeController@createIndividualAssessment')->name('review.updateStatus');
         Route::get('/workhistory/{employee}/', 'EmployeeController@employeeWorkHistory')->name('employees.employeeWorkHistory');
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
         Route::get('fte-handler/{domain_id}', 'EmployeeController@showFTEdata')->name('employees.alert');
+        Route::post('/update-reviewers/{employee}', 'EmployeeController@updateEmployeeReviewers')->name('update.employee.reviewers');
 
         Route::resource('requisition', 'RequisitionController')
             ->only(['index', 'show', 'store'])
