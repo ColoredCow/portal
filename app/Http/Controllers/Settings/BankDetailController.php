@@ -31,7 +31,7 @@ class BankDetailController extends Controller
         BankDetails::create($validatedData);
 
         return redirect()->route('settings.bank-details')
-            ->with('success', 'Bank details created successfully.');
+            ->with('success', 'Bank Detail added successfully.');
     }
     public function update(Request $request, BankDetails $bankDetail)
     {

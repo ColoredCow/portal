@@ -212,17 +212,6 @@ $(document).ready(() => {
 		this.form.submit();
 	});
 
-	$(".edit-btn").click(function() {
-		var id = $(this).data("id");
-		var label = $(this).data("label");
-		var value = $(this).data("value");
-
-		$("#editId").val(id);
-		$("#editLabel").val(label);
-		$("#editValue").val(value);
-
-		$("#editModal").modal("show");
-	});
 });
 
 $(document).ready(function() {
