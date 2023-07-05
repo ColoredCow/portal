@@ -289,7 +289,7 @@ class Project extends Model implements Auditable
         $endDate = $periodEndDate ?: $this->client->getMonthEndDateAttribute($monthToSubtract);
 
         return $this->getAllTeamMembers->sum(function ($teamMember) use ($startDate, $endDate) {
-            if (!$teamMember->projectTeamMemberEffort) {
+            if (! $teamMember->projectTeamMemberEffort) {
                 return 0;
             }
 
