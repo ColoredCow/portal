@@ -26,7 +26,6 @@ class SelfReviewMail extends Mailable
         $this->user = $user;
         $this->employee = $employee;
         $this->links = $links;
-
     }
 
     /**
