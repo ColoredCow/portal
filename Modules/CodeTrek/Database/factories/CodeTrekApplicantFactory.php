@@ -1,7 +1,5 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
-
 namespace Modules\CodeTrek\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
