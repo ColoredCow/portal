@@ -3,6 +3,7 @@
 namespace Modules\CodeTrek\Services;
 
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
+use Modules\CodeTrek\Entities\CodeTrekCandidateFeedback;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 use Illuminate\Support\Facades\Mail;
 use  Modules\CodeTrek\Emails\CodetrekMailApplicant;
@@ -14,18 +15,25 @@ class CodeTrekService
         $search = $data['name'] ?? null;
         $status = $data['status'] ?? 'active';
         $centre = $data['centre'] ?? null;
-        $query = CodeTrekApplicant::where('status', $status)->orderBy('first_name');
+        $sort = $data['order'] ?? null;
+        $query = CodeTrekApplicant::where('status', $status);
         $applicants = null;
+
         if ($centre) {
             $applicants = $query->where('centre_id', $centre);
+        }
+        if ($sort == 'date') {
+            $applicants = $query->orderBy('start_date', 'desc');
+        } else {
+            $applicants = $query->orderBy('first_name');
         }
         $applicants = $query->when($search, function ($query) use ($search) {
             return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
         })
-        ->paginate(config('constants.pagination_size'))
-        ->appends(request()->except('page'));
+            ->paginate(config('constants.pagination_size'))
+            ->appends(request()->except('page'));
 
-        $applicantsData = CodeTrekApplicant::whereIn('status', ['active', 'inactive', 'completed'])
+        $applicantsData = CodeTrekApplicant::whereIn('status', ['active', 'inactive', 'completed'])->with('mentor')
         ->when($search, function ($query) use ($search) {
             return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
         })
@@ -62,6 +70,7 @@ class CodeTrekService
         $applicant->graduation_year = $data['graduation_year'] ?? null;
         $applicant->university = $data['university_name'] ?? null;
         $applicant->centre_id = $data['centre'];
+        $applicant->mentor_id = $data['mentorId'];
         // Mail::queue(new CodetrekMailApplicant($data)); This line will be uncommented in the future when the use of the codeTrek module starts in the proper way.
         $applicant->save();
 
@@ -88,6 +97,7 @@ class CodeTrekService
         $applicant->graduation_year = $data['graduation_year'] ?? null;
         $applicant->university = $data['university_name'] ?? null;
         $applicant->centre_id = $data['centre'] ?? null;
+        $applicant->mentor_id = $data['mentorId'] ?? null;
         $applicant->save();
 
         return $applicant;
@@ -108,5 +118,18 @@ class CodeTrekService
         $applicationRound->feedback = null;
         $applicationRound->start_date = $data['start_date'];
         $applicationRound->save();
+    }
+
+    public function storeCodeTrekApplicantFeedback($data)
+    {
+        $feedback = new CodeTrekCandidateFeedback();
+        $feedback->category_id = $data['feedback_category'];
+        $feedback->feedback = $data['feedback'];
+        $feedback->feedback_type = $data['feedback_type'];
+        $feedback->latest_round_name = $data['latest_round_name'];
+        $feedback->candidate_id = $data['candidate_id'];
+        $feedback->posted_by = auth()->user()->id;
+        $feedback->posted_on = today();
+        $feedback->save();
     }
 }

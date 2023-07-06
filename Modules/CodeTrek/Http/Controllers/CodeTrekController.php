@@ -2,17 +2,16 @@
 
 namespace Modules\CodeTrek\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Request;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 use Modules\CodeTrek\Services\CodeTrekService;
 use Modules\Operations\Entities\OfficeLocation;
+use Modules\User\Entities\User;
 
 class CodeTrekController extends Controller
 {
-    use AuthorizesRequests;
     protected $service;
 
     public function __construct(CodeTrekService $service)
@@ -23,11 +22,13 @@ class CodeTrekController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, CodeTrekApplicant $applicant)
+    public function index(Request $request)
     {
         // $this->authorize('view', $applicant);     There are some issues in the production, which is why these lines are commented out.
 
         $centres = OfficeLocation::all();
+
+        $mentors = User::all();
         $applicantData = $this->service->getCodeTrekApplicants($request->all());
         $applicants = $applicantData['applicants'];
         $applicantsData = $applicantData['applicantsData'];
@@ -36,27 +37,21 @@ class CodeTrekController extends Controller
         return view('codetrek::index', [
             'applicants' => $applicants,
             'centres' => $centres,
+            'mentors' => $mentors,
             'applicantsData' => $applicantsData,
             'statusCounts' => $statusCounts
         ]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, CodeTrekService $service, CodeTrekApplicant $applicant)
+    public function store(Request $request)
     {
         // $this->authorize('create', $applicant);    There are some issues in the production, which is why these lines are commented out.
 
         $data = $request->all();
-        $applicant = $service->store($data);
+        $this->service->store($data);
 
         return redirect()->route('codetrek.index');
     }
@@ -64,8 +59,11 @@ class CodeTrekController extends Controller
     /**
      * Show the specified resource.
      */
-    public function show($id)
+    public function storeCodeTrekApplicantFeedback(Request $request)
     {
+        $this->service->storeCodeTrekApplicantFeedback($request->all());
+
+        return redirect()->back();
     }
 
     /**
@@ -77,9 +75,10 @@ class CodeTrekController extends Controller
 
         $centres = OfficeLocation::all();
 
+        $mentors = User::all();
         $this->service->edit($applicant);
 
-        return view('codetrek::edit', ['applicant' => $applicant, 'centres' => $centres]);
+        return view('codetrek::edit', ['applicant' => $applicant, 'centres' => $centres, 'mentors' => $mentors]);
     }
     public function evaluate(CodeTrekApplicant $applicant)
     {
