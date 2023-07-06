@@ -61,12 +61,33 @@
                     </div>
                 </td>
                 <td>
-                    <form class="d-flex" action="{{ route('universities.destroy',$university) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
                         <a href="{{ route('universities.edit',$university) }}" title="Edit" class="pr-1 btn btn-link"><i class="text-success fa ffa-lga-edit "></i></a>
-                        <button type="submit" class="pl-1 btn btn-link" title="Delete"><i class="text-danger fa fa-trash fa-lg"></i></button>
-                    </form>
+                        <button type="submit" class="pl-1 btn btn-link" title="Delete" data-toggle="modal" data-target="#DeleteUniversity{{$university->id}}"><i class="text-danger fa fa-trash fa-lg"></i></button>
+
+                        <div class="modal fade" id="DeleteUniversity{{$university->id}}" tabindex="-1" role="dialog" aria-labelledby="deleteUniversityLabel{{$university->id}}" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteUniversityLabel{{$university->id}}">Delete University</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to delete this university?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <form action="{{ route('universities.destroy',$university) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </tr>
                 </td>
             </tr>
         
@@ -75,4 +96,6 @@
     </div>
     {{ $universities->links() }}
 </div>
+@endsection
+
 @endsection
