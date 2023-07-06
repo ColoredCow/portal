@@ -48,7 +48,6 @@ class CodeTrekService
             'inactive' => 0,
             'completed' => 0
         ];
-
         foreach ($applicantsData as $data) {
             $statusCounts[$data->status] = $data->total;
         }
