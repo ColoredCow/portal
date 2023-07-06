@@ -23,7 +23,6 @@ class CodeTrekApplicant extends Model
         return new CodeTrekApplicantsFactory();
     }
 
-
     public function center()
     {
         return $this->belongsTo(OfficeLocation::class, 'center_id');
