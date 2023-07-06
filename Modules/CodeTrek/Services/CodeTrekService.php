@@ -128,7 +128,7 @@ class CodeTrekService
             $applicantChartData = CodeTrekApplicant::select(\DB::Raw('DATE(created_at) as date, COUNT(*) as count'))
                 ->whereDate('start_date', '>=', $application_start_date)
                 ->whereDate('start_date', '<=', $application_end_date)
-                ->groupBy('date')
+                ->groupBy('date');
 
             $dates = $applicantChartData->pluck('date')->toArray();
             $counts = $applicantChartData->pluck('count')->toArray();
