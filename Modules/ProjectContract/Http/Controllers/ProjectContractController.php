@@ -7,11 +7,6 @@ use Modules\ProjectContract\Services\ProjectContractService;
 use Modules\ProjectContract\Services\ProjectContractMailService;
 use App\Models\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use Modules\ProjectContract\Emails\ClientReview;
-use Modules\ProjectContract\Emails\ClientApproveReview;
-use Modules\ProjectContract\Emails\ClientUpdateReview;
-use Modules\ProjectContract\Emails\FinanceReview;
 use Modules\Client\Entities\Country;
 
 class ProjectContractController extends Controller

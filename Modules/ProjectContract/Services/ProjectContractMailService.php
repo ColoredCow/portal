@@ -2,16 +2,6 @@
 
 namespace Modules\ProjectContract\Services;
 
-use Illuminate\Support\Facades\Auth;
-use Modules\ProjectContract\Entities\Contract;
-use Modules\ProjectContract\Entities\ProjectContractMeta;
-use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
-use Modules\ProjectContract\Entities\Reviewer;
-use Modules\ProjectContract\Entities\ContractReview;
-use Modules\ProjectContract\Entities\ContractInternalReview;
-use Modules\ProjectContract\Entities\ContractMetaHistory;
-use Modules\User\Entities\User;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Modules\ProjectContract\Emails\ClientReview;
 use Modules\ProjectContract\Emails\ClientApproveReview;
