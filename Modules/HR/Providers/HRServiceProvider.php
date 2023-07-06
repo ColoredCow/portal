@@ -175,6 +175,7 @@ class HRServiceProvider extends ServiceProvider
             \Modules\HR\Console\Recruitment\ResetIsLatestApplicationRound::class,
             \Modules\HR\Console\Recruitment\SendInterviewReminders::class,
             \Modules\HR\Console\Recruitment\SendFollowUpThresholdMail::class,
+            \Modules\HR\Console\Recruitment\SendFollowUpEmailToHr::class,
         ]);
     }
 
