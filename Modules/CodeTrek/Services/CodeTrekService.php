@@ -34,12 +34,12 @@ class CodeTrekService
             ->appends(request()->except('page'));
 
         $applicantsData = CodeTrekApplicant::whereIn('status', ['active', 'inactive', 'completed'])->with('mentor')
-        ->when($search, function ($query) use ($search) {
-            return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
-        })
-        ->groupBy('status')
-        ->selectRaw('count(status) as total, status')
-        ->get();
+            ->when($search, function ($query) use ($search) {
+                return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
+            })
+            ->groupBy('status')
+            ->selectRaw('count(status) as total, status')
+            ->get();
 
         $statusCounts = [
             'active' => 0,
@@ -140,6 +140,8 @@ class CodeTrekService
 
             return $reportApplicantData;
         }
+    }
+
     public function storeCodeTrekApplicantFeedback($data)
     {
         $feedback = new CodeTrekCandidateFeedback();
