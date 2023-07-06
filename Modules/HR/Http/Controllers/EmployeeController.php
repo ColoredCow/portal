@@ -111,8 +111,8 @@ class EmployeeController extends Controller
 
         $employee = Employee::where('user_id', $id)->first();
         $employeeIds = [$employee->id, $employee->hr_id, $employee->mentor_id, $employee->manager_id];
-        $userIds = Employee::whereIn('id', $employeeIds)->orderByRaw("FIELD(id, " . implode(',', $employeeIds) . ")")->pluck('user_id')->toArray();
-        $userData = User::whereIn('id', $userIds)->orderByRaw("FIELD(id, " . implode(',', $userIds) . ")")->get();
+        $userIds = Employee::whereIn('id', $employeeIds)->orderByRaw('FIELD(id, ' . implode(',', $employeeIds) . ')')->pluck('user_id')->toArray();
+        $userData = User::whereIn('id', $userIds)->orderByRaw('FIELD(id, ' . implode(',', $userIds) . ')')->get();
         $sendEmailto = [
             'selfMail' => ! empty($userData[0]) ? $userData[0] : null,
             'hrMail' => ! empty($userData[1]) ? $userData[1] : null,
