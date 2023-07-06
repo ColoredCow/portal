@@ -30,7 +30,6 @@ class CodeTrekApplicant extends Model
         if ($applicant->status == 'completed') {
             return $internDate->diffInDays($applicant->start_date);
         }
-
         return now()->diffInDays($applicant->start_date);
     }
     
