@@ -1,6 +1,7 @@
 <?php
 
 namespace Modules\CodeTrek\Database\Seeders;
+
 use Illuminate\Database\Seeder;
 // use Illuminate\Database\Eloquent\Factories\Factory as EloquentFactory;
 // use Illuminate\Database\Eloquent\Model;
