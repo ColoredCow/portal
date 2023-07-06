@@ -19,9 +19,8 @@ class CodeTrekService
         $applicants = null;
 
         if ($centre) {
-            $query->where('centre_id', $centre);
+            $applicants = $query->where('centre_id', $centre);
         }
-
         if ($roundSlug) {
             $query->where('latest_round_name', $roundSlug);
         }
