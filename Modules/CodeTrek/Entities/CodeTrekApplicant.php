@@ -5,6 +5,8 @@ namespace Modules\CodeTrek\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Operations\Entities\OfficeLocation;
+use Modules\CodeTrek\Database\Factories\CodeTrekApplicantsFactory;
+use Modules\User\Entities\User;
 
 class CodeTrekApplicant extends Model
 {
