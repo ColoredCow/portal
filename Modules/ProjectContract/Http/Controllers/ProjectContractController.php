@@ -112,7 +112,6 @@ class ProjectContractController extends Controller
         $data = $request->all();
         $this->service->editContract($data);
         $this->mailservice->sendClientUpdate($this->service->getUserEmail($request['id']));
-        Mail::to($this->service->getUserEmail($request['id']))->send(new ClientUpdateReview());
 
         return 'Thank you for your update';
     }
