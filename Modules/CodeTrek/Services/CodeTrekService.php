@@ -42,6 +42,8 @@ class CodeTrekService
             $statusCounts[$data->status] = $data->total;
         }
 
+        $statusCounts[$status] = count($applicants);
+
         return [
             'applicants' => $applicants,
             'applicantsData' => $applicantsData,
