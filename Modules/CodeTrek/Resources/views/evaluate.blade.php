@@ -63,7 +63,7 @@
                              </form>
                          </div>
                          @if ($loop->last)
-                         <form class = "{{(($applicant->status == 'inactive') || ($applicant->status == 'completed')) ? 'd-none': '' }}" action="{{ route('codetrek.action', $applicant->id) }}" method="POST">
+                             <form class = "{{(($applicant->status == 'inactive') || ($applicant->status == 'completed')) ? 'd-none': '' }}" action="{{ route('codetrek.action', $applicant->id) }}" method="POST">
                                  @csrf
                                  <div class="card-footer">
                                      <div class="d-flex align-items-center">
