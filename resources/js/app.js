@@ -211,6 +211,7 @@ $(document).ready(() => {
 		}
 		this.form.submit();
 	});
+
 });
 
 $(document).ready(function() {
@@ -2098,5 +2099,41 @@ $(function () {
 		if (!$(event.target).closest("#applicant-toggle, #applicant-sidebar").length) {
 			$("#applicant-sidebar").css("right", "-250px");
 		}
+	});
+});
+
+$(document).ready(function() {
+	$(".editBankDetail-btn").click(function() {
+		var bankDetailId = $(this).data("id");
+		var bankDetailLabel = $(this).data("label");
+		var bankDetailValue = $(this).data("value");
+
+		$("#editBankDetailId").val(bankDetailId);
+		$("#editBankDetailLabel").val(bankDetailLabel);
+		$("#editBankDetailValue").val(bankDetailValue);
+
+		var formAction = $("#editBankDetailForm").attr("action");
+		formAction = formAction.replace("__bankDetailId__", bankDetailId);
+		$("#editBankDetailForm").attr("action", formAction);
+
+		$("#editBankDetailModal").modal("show");
+	});
+});
+
+$(document).ready(function() {
+	$("#label").on("input", function() {
+		var label = $(this).val();
+		var key = slugify(label);
+		$("#key").val(key);
+	});
+
+	function slugify(text) {
+		return text.toLowerCase().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").trim();
+	}
+
+	$("#bank-details-form").submit(function(event) {
+		event.preventDefault(); // Prevents the form from submitting automatically
+
+		this.submit(); // Manually trigger the form submission
 	});
 });

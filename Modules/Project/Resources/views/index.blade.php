@@ -94,6 +94,7 @@
                                     <div class="d-flex justify-content-between">
                                         <div>
                                             {{ $client->name }}
+                                            {{ sprintf("(%03s)",$client->client_id) }}
                                         </div>
                                         <div class="">
                                             {{ __('Total Hours Booked: ') . $client->current_hours_in_projects }}</div>
@@ -112,7 +113,7 @@
                                                 </span>
                                             @endif
                                             @can('projects.update')
-                                                <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a>
+                                                <a href="{{ route('project.show', $project) }}">{{ $project->name }} {{ sprintf("(%03s)",$project->client_project_id) }}</a>
                                             @else
                                                 @php
                                                     $team_member_ids = $project->getTeamMembers->pluck('team_member_id')->toArray();
