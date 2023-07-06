@@ -97,5 +97,3 @@
     {{ $universities->links() }}
 </div>
 @endsection
-
-@endsection
