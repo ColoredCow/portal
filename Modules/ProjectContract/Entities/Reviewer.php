@@ -8,12 +8,7 @@ class Reviewer extends Model
 {
     protected $table = 'contract_reviewer';
 
-    protected $fillable = [
-        'contract_id',
-        'name',
-        'email',
-        'status'
-    ];
+    protected $guarded = [];
 
     public function contractReviews()
     {

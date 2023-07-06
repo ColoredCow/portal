@@ -7,12 +7,7 @@ use Modules\User\Entities\User;
 
 class Contract extends Model
 {
-    protected $fillable = [
-        'user_id',
-        'contract_name',
-        'contract_link',
-        'status'
-    ];
+    protected $guarded = [];
 
     public function contractMeta()
     {

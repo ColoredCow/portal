@@ -9,14 +9,7 @@ class ContractInternalReview extends Model
 {
     protected $table = 'contract_internal_reviewer';
 
-    protected $fillable = [
-        'contract_id',
-        'name',
-        'email',
-        'user_id',
-        'status',
-        'user_type'
-    ];
+    protected $guarded = [];
 
     public function contractReviews()
     {

@@ -8,11 +8,5 @@ class ContractMetaHistory extends Model
 {
     protected $table = 'contract_meta_history';
 
-    protected $fillable = [
-        'contract_id',
-        'review_id',
-        'key',
-        'value',
-        'has_changed'
-    ];
+    protected $guarded = [];
 }
