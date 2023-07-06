@@ -63,7 +63,7 @@
                              </form>
                          </div>
                          @if ($loop->last)
-                             <form action="{{ route('codetrek.action', $applicant->id) }}" method="POST">
+                         <form class = "{{(($applicant->status == 'inactive') || ($applicant->status == 'completed')) ? 'd-none': '' }}" action="{{ route('codetrek.action', $applicant->id) }}" method="POST">
                                  @csrf
                                  <div class="card-footer">
                                      <div class="d-flex align-items-center">
@@ -74,12 +74,14 @@
                                              @endforeach
                                          </select>
                                          <button type="submit" class="btn btn-success ml-2">Take Action</button>
+                                     </div>  
+                                 </div>
                              </form>
-                             <form action="{{ route('codetrek.updateStatus', $applicant->id) }}" method="POST">
+                             <form class = "{{($applicant->status == 'completed') ? 'd-none': '' }}" action="{{ route('codetrek.updateStatus', $applicant->id) }}" method="POST">
                                  @csrf
-                                 <button type="submit" name="action" value="completed" class="btn btn-dark ml-2">Mark
-                                     Completed</button>
-                                <button type="submit" name="action" value="{{ $applicant->status == "active"? "inactive" : "active" }}" class="btn btn-{{ $applicant->status == "active" ? "danger" : "info" }} ml-1">
+                                 <button type="submit" name="action" value="completed" class="btn btn-dark ml-2 {{$applicant->status == 'inactive' ? 'd-none': '' }}">Start
+                                     Internship</button>
+                                <button type="submit" name="action" value="{{ $applicant->status == 'active'? 'inactive' : 'active' }}" class="btn btn-{{ $applicant->status == "active" ? "danger" : "info" }} ml-1">
                                     Mark {{ ucfirst($applicant->status == "active" ? "inactive" : "active") }} </button>  
                              </form>
                      </div>
