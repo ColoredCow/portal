@@ -112,33 +112,33 @@ class ProjectContractService
 
         return $ProjectContractMeta;
     }
-    public function view_contract($id)
+    public function viewContract($id)
     {
         return Contract::find($id);
     }
-    public function view_contractmeta($id)
+    public function viewContractMeta($id)
     {
         return Contract::find($id)->contractMeta()->get();
     }
-    public function view_contractmeta_group($id)
+    public function viewContractMetaGroup($id)
     {
         return Contract::find($id)->contractMeta()->get()->groupBy('group');
     }
-    public function view_reviewer($id, $email)
+    public function viewReviewer($id, $email)
     {
         return Reviewer::where(['contract_id'=>$id, 'email'=>$email])->first();
     }
-    public function view_internal_reviewer($id)
+    public function viewInternalReviewer($id)
     {
         return ContractInternalReview::where('contract_id', $id)->first();
     }
-    public function view_comments($id)
+    public function viewComments($id)
     {
         if (ContractReview::find($id)) {
             return ContractReview::where('contract_id', '=', $id)->orderBy('created_at', 'desc')->get();
         }
     }
-    public function update_contract($id)
+    public function updateContract($id)
     {
         $Contract = Contract::find($id);
         $Contract->status = 'Finalise by client';
@@ -149,7 +149,7 @@ class ProjectContractService
 
         return $Contract;
     }
-    public function update_internal_contract($id)
+    public function updateInternalContract($id)
     {
         $Contract = Contract::find($id);
         if ($Contract->user_id == Auth::id()) {
@@ -167,7 +167,7 @@ class ProjectContractService
 
         return $Contract;
     }
-    public function store_reveiwer($request)
+    public function storeReveiwer($request)
     {
         $id = $request['id'];
         $name = $request['name'];
@@ -186,7 +186,7 @@ class ProjectContractService
 
         return $Reviewer;
     }
-    public function edit_contract($request)
+    public function editContract($request)
     {
         $contractId = $request['id'];
 
@@ -256,7 +256,7 @@ class ProjectContractService
         return $contractData;
     }
 
-    public function store_internal_reveiwer($request)
+    public function storeInternalReveiwer($request)
     {
         $id = $request['id'];
         $email = $request['email'];
@@ -277,7 +277,7 @@ class ProjectContractService
 
         return $Reviewer;
     }
-    public function update_internal($request)
+    public function updateInternal($request)
     {
         $contractReview = new ContractReview();
         $contractReview->contract_id = $request['id'];
@@ -345,11 +345,11 @@ class ProjectContractService
             }
         });
 
-        $this->update_internal_contract($request['id']);
+        $this->updateInternalContract($request['id']);
 
         return $contractData;
     }
-    public function store_user($id)
+    public function storeUser($id)
     {
         $Reviewer = new ContractInternalReview;
         $Reviewer->contract_id = $id;
@@ -362,30 +362,30 @@ class ProjectContractService
 
         return $Reviewer;
     }
-    public function get_comment_history($id)
+    public function getCommentHistory($id)
     {
         return ContractMetaHistory::join('contract_review', 'contract_meta_history.review_id', '=', 'contract_review.id')->where('contract_meta_history.review_id', $id)->get();
     }
-    public function get_user_email($id)
+    public function getUserEmail($id)
     {
         $contract = Contract::find($id);
         $user = User::where(['id' =>$contract->user_id])->first();
 
         return $user->email;
     }
-    public function get_status($id)
+    public function getStatus($id)
     {
         return ContractInternalReview::select('status')->where(['contract_id' => $id, 'user_id' => Auth::id()])->first();
     }
-    public function get_finance_status($id)
+    public function getFinanceStatus($id)
     {
         return ContractInternalReview::select('status')->where(['contract_id' => $id, 'user_type' => 'finance-team'])->first();
     }
-    public function get_client_status($id)
+    public function getClientStatus($id)
     {
         return Reviewer::select('status')->where(['contract_id' => $id])->first();
     }
-    public function get_users()
+    public function getUsers()
     {
         return User::all();
     }

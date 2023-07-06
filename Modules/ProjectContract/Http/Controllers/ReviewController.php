@@ -22,10 +22,10 @@ class ReviewController extends Controller
 
     public function index($id, $email)
     {
-        $contracts = $this->services->view_contract($id);
-        $contractsmeta = $this->services->view_contractmeta($id);
-        $reviewer = $this->services->view_reviewer($id, $email);
-        $comment = $this->services->view_comments($id);
+        $contracts = $this->services->viewContract($id);
+        $contractsmeta = $this->services->viewContractMeta($id);
+        $reviewer = $this->services->viewReviewer($id, $email);
+        $comment = $this->services->viewComments($id);
 
         return view('projectcontract::review-contract')->with('contracts', $contracts)->with('contractsmeta', $contractsmeta)->with('reviewer', $reviewer)->with('comments', $comment)->with('countries', Country::all());
     }

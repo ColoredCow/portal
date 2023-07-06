@@ -34,7 +34,7 @@ class ProjectContractController extends Controller
     {
         $data = $request->all();
         $contract = $this->service->store($data);
-        $this->service->store_user($contract);
+        $this->service->storeUser($contract);
 
         return redirect(route('projectcontract.index'))->with('success', 'Project Contract created successfully');
     }
@@ -44,13 +44,13 @@ class ProjectContractController extends Controller
     }
     public function edit($id)
     {
-        $contracts = $this->service->view_contract($id);
+        $contracts = $this->service->viewContract($id);
 
-        $contractsmeta = $this->service->view_contractmeta($id);
+        $contractsmeta = $this->service->viewContractMeta($id);
 
-        $comment = $this->service->view_comments($id);
+        $comment = $this->service->viewComments($id);
 
-        $reviewer = $this->service->view_internal_reviewer($id);
+        $reviewer = $this->service->viewInternalReviewer($id);
 
         return view('projectcontract::edit-project-contract')->with('contracts', $contracts)->with('contractsmeta', $contractsmeta)->with('comments', $comment)->with('reviewer', $reviewer)->with('countries', Country::all());
     }
@@ -68,72 +68,72 @@ class ProjectContractController extends Controller
     }
     public function update(Request $ProjectContractMeta)
     {
-        $this->service->update_internal($ProjectContractMeta);
+        $this->service->updateInternal($ProjectContractMeta);
 
         return redirect(route('projectcontract.index'))->with('success', 'Project Contract updated successfully');
     }
 
     public function viewContract($id)
     {
-        $contracts = $this->service->view_contract($id);
+        $contracts = $this->service->viewContract($id);
 
-        $contractsmeta = $this->service->view_contractmeta_group($id);
+        $contractsmeta = $this->service->viewContractMetaGroup($id);
 
-        $comment = $this->service->view_comments($id);
+        $comment = $this->service->viewComments($id);
 
-        $user = $this->service->get_status($contracts->id);
+        $user = $this->service->getStatus($contracts->id);
 
-        $client = $this->service->get_client_status($contracts->id);
+        $client = $this->service->getClientStatus($contracts->id);
 
-        $finance = $this->service->get_finance_status($contracts->id);
+        $finance = $this->service->getFinanceStatus($contracts->id);
 
-        $users = $this->service->get_users();
+        $users = $this->service->getUsers();
 
         return view('projectcontract::view-contract')->with('contracts', $contracts)->with('contractsmeta', $contractsmeta)->with('comments', $comment)->with('user', $user)->with('client', $client)->with('finance', $finance)->with('users', $users);
     }
 
-    public function sendreview(Request $request)
+    public function sendReview(Request $request)
     {
         $data = $request->all();
-        $this->service->store_reveiwer($data);
+        $this->service->storeReveiwer($data);
         $link = ReviewController::review($request['id'], $request['email']);
         Mail::to($request['email'])->send(new ClientReview($link));
 
         return redirect(route('projectcontract.index'))->with('success');
     }
 
-    public function clientresponse($id)
+    public function clientResponse($id)
     {
-        $contract = $this->service->update_contract($id);
-        Mail::to($this->service->get_user_email($id))->send(new ClientApproveReview());
+        $contract = $this->service->updateContract($id);
+        Mail::to($this->service->getUserEmail($id))->send(new ClientApproveReview());
 
         return 'Thank you for finalise';
     }
-    public function clientupdate(Request $request)
+    public function clientUpdate(Request $request)
     {
         $data = $request->all();
-        $this->service->edit_contract($data);
-        Mail::to($this->service->get_user_email($request['id']))->send(new ClientUpdateReview());
+        $this->service->editContract($data);
+        Mail::to($this->service->getUserEmail($request['id']))->send(new ClientUpdateReview());
 
         return 'Thank you for your update';
     }
-    public function sendfinancereview(Request $request)
+    public function sendFinanceReview(Request $request)
     {
         $data = $request->all();
-        $this->service->store_internal_reveiwer($data);
+        $this->service->storeInternalReveiwer($data);
         Mail::to($request['email'])->send(new FinanceReview());
 
         return redirect(route('projectcontract.index'))->with('success');
     }
-    public function internalresponse($id)
+    public function internalResponse($id)
     {
-        $contract = $this->service->update_internal_contract($id);
+        $contract = $this->service->updateInternalContract($id);
 
         return redirect(route('projectcontract.index'))->with('success');
     }
-    public function commenthistory($id)
+    public function commentHistory($id)
     {
-        $data = $this->service->get_comment_history($id);
+        $data = $this->service->getCommentHistory($id);
 
         return $data;
     }
