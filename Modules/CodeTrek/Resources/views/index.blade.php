@@ -135,12 +135,7 @@
                                 </td>
                                 <td>
                                     @php
-                                        $intern_date = Carbon\Carbon::parse($applicant->internship_start_date);
-                                        if ($applicant->status == "completed") {
-                                            $daysInCodetrek = $intern_date->diffInDays($applicant->start_date);
-                                        } else {     
-                                            $daysInCodetrek = now()->diffInDays($applicant->start_date);
-                                        }
+                                        $daysInCodetrek = $applicant->getDaysInCodetrekAttribute($applicant);
                                     @endphp
                                     {{ $daysInCodetrek }} days
                                 </td>
