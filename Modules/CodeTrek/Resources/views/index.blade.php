@@ -102,15 +102,16 @@
                             <th>
                                 <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="statusDropdown">Level</span>
                                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                                  <span class="dropdown-item-text fz-12">Filter by status</span>
-                                  @foreach (config('codetrek.rounds') as $round)
-                                    @php
-                                      $target = route('codetrek.index', ['roundSlug' => $round['slug']]);
-                                    @endphp
-                                    <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
-                                      <span>{{ $round['label'] }}</span>
-                                    </a>
-                                  @endforeach
+                                    <span class="dropdown-item-text fz-12">Filter by status</span>
+                                    @foreach (config('codetrek.rounds') as $round)
+                                        @php
+                                            $targetParams = ['roundSlug' => $round['slug'], 'status' => request()->input('status')];
+                                            $target = route('codetrek.index', array_merge(request()->except(['roundSlug', 'status']), $targetParams));
+                                        @endphp
+                                        <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
+                                            <span>{{ $round['label'] }}</span>
+                                        </a>
+                                    @endforeach
                                 </div>
                               </th>
                             <th>Mentor Assigned</th>
