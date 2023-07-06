@@ -125,8 +125,7 @@
                                             </div>
                                             <div class="form-group pl-4 pr-4">
                                                 HR Review Link:<input type="url" class="form-control"
-                                                    name="hr_review_link" placeholder="Enter HR Review Sheet Link"
-                                                    required>
+                                                    name="hr_review_link" placeholder="Enter HR Review Sheet Link" required>
                                             </div>
                                             <div class="form-group pl-4 pr-4">
                                                 Manager Review Link:<input type="url" class="form-control"
@@ -135,7 +134,7 @@
                                             </div>
                                             <div class="form-group pl-4 pr-4">
                                                 Mentor Review Link:<input type="url" class="form-control"
-                                                    name="mentor_review_link" placeholder="Enter Mentro Review Sheet Link"
+                                                    name="mentor_review_link" placeholder="Enter Mentor Review Sheet Link"
                                                     required>
                                             </div>
                                             <div class="modal-footer">

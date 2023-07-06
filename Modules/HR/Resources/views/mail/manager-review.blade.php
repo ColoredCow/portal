@@ -11,14 +11,15 @@
         employee based on some holistic growth parameters.</p>
     <br>
     <p>
-        As part of this process, we would like to request the HR team to perform an assessment of the employee
-        {{ $employee->name }} based on their observations and knowledge of an individual's performance. The aim of this
-        assessment is to
-        gain a comprehensive understanding of the employee's performance, strengths, and areas for improvement from the
-        HR team's perspective.
+        As you are actively involved in managing the deliveries of  {{ $employee->name }},
+        It’s time for you to do his assessment for the first quarter!
     </p>
-    <p><a href="{{ $links['hr_review_link'] }}">HR assessment sheet</a></p>
+    <p><a href="{{ $links['manager_review_link'] }}">Manager assessment sheet</a></p>
     <h5>Target date: {{ now()->addDays(7)->format('d-m-y') }}</h5>
+    <p>
+        Parallelly the mentee himself, the mentor associated, and an HR team member are also working on reviewing
+        his/her performance.
+    </p>
     <p>We are new to this model and we all need to train ourselves to do a great assessment. That’s why we created a few
         training modules, which you may find helpful and handy.</p>
     <p>&#x2022; <a

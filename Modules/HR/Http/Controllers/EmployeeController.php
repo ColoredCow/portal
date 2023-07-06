@@ -105,19 +105,19 @@ class EmployeeController extends Controller
         $links = [
             'self_review_link' => $request->self_review_link,
             'hr_review_link' => $request->hr_review_link,
-            'manager_review_link' => $request->manager_review_link,
             'mentor_review_link' => $request->mentor_review_link,
+            'manager_review_link' => $request->manager_review_link,
         ];
 
         $employee = Employee::where('user_id', $id)->first();
-        $employeeIds = [$id, $employee->hr_id, $employee->mentor_id, $employee->manager_id];
-        $userIds = Employee::whereIn('id', $employeeIds)->pluck('user_id')->toArray();
-        $userData = User::whereIn('id', $userIds)->get();
+        $employeeIds = [$employee->id, $employee->hr_id, $employee->mentor_id, $employee->manager_id];
+        $userIds = Employee::whereIn('id', $employeeIds)->orderByRaw("FIELD(id, " . implode(',', $employeeIds) . ")")->pluck('user_id')->toArray();
+        $userData = User::whereIn('id', $userIds)->orderByRaw("FIELD(id, " . implode(',', $userIds) . ")")->get();
         $sendEmailto = [
             'selfMail' => ! empty($userData[0]) ? $userData[0] : null,
             'hrMail' => ! empty($userData[1]) ? $userData[1] : null,
-            'managerMail' => ! empty($userData[2]) ? $userData[2] : null,
-            'mentorMail' => ! empty($userData[3]) ? $userData[3] : null,
+            'mentorMail' => ! empty($userData[2]) ? $userData[2] : null,
+            'managerMail' => ! empty($userData[3]) ? $userData[3] : null,
         ];
 
         foreach ($sendEmailto as $key => $user) {
