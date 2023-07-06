@@ -26,7 +26,7 @@ class CodeTrekApplicant extends Model
     public function getDaysInCodetrekAttribute(self $applicant)
     {
         $internDate = Carbon::parse($applicant->internship_start_date);
-        if ($applicant->status == 'completed' && $internDate) {
+        if ($applicant->status == 'completed' && $internDate != NULL) {
             return $internDate->diffInDays($applicant->start_date);
         }
 
