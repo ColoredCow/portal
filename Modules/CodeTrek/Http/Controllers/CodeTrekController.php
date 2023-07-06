@@ -14,6 +14,7 @@ class CodeTrekController extends Controller
 {
     use AuthorizesRequests;
     protected $service;
+    protected $CodeTrekApplicant;
 
     public function __construct(CodeTrekService $service)
     {
@@ -33,12 +34,20 @@ class CodeTrekController extends Controller
         $applicantsData = json_encode($applicantData['applicantsData']);
         $statusCounts = $applicantData['statusCounts'];
         $applicantsGraph = $this->applicantBarGraphData($request);
+        $application_start_date = $request->application_start_date ?? today()->subYears(4);
+        dd(today()->subYears(4));
+        $application_end_date = $request->application_end_date ?? today();
+        $counts = CodeTrekApplicant::select(\DB::Raw('DATE(created_at) as date, COUNT(*) as count'))
+            ->whereDate('start_date', '>=', $application_start_date)
+            ->whereDate('start_date', '<=', $application_end_date)
+            ->count();
 
         return view('codetrek::index', [
             'applicants' => $applicants,
             'centres' => $centres,
             'applicantsData' => $applicantsData,
             'applicantsGraph' => $applicantsGraph,
+            'counts' => $counts,
             'statusCounts' => $statusCounts
         ]);
     }
@@ -48,10 +57,10 @@ class CodeTrekController extends Controller
         $application_start_date = $request->application_start_date ?? today()->subYears(4);
         $application_end_date = $request->application_end_date ?? today();
         $applicantChartData = CodeTrekApplicant::select(\DB::Raw('DATE(created_at) as date, COUNT(*) as count'))
-        ->whereDate('created_at', '>=', $application_start_date)
-        ->whereDate('created_at', '<=', $application_end_date)
-        ->groupBy('date')
-        ->get();
+            ->whereDate('start_date', '>=', $application_start_date)
+            ->whereDate('start_date', '<=', $application_end_date)
+            ->groupBy('date')
+            ->get();
 
         $dates = $applicantChartData->pluck('date')->toArray();
         $counts = $applicantChartData->pluck('count')->toArray();
@@ -62,6 +71,14 @@ class CodeTrekController extends Controller
         $applicantsGraph = json_encode($chartData);
 
         return $applicantsGraph;
+    }
+
+    public function getApplicantData(Request $request)
+    {
+        $type = $request->type;
+        $filters = $request->filters;
+
+        return $this->service->getData($type, json_decode($filters, true), $request);
     }
 
     /**
