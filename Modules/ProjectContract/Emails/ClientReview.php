@@ -28,7 +28,7 @@ class ClientReview extends Mailable
      */
     public function build()
     {
-        return $this->from('portal@coloredcow.com')
+        return $this->from(config('projectcontract.portal-email'))
             ->subject('Please review contract with coloredcow')
             ->view('projectcontract::client-review-mail');
     }

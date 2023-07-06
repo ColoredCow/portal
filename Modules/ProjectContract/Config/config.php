@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'name' => 'ProjectContract'
+    'name' => 'ProjectContract',
+    'portal-email' => 'portal@coloredcow.com'
 ];
