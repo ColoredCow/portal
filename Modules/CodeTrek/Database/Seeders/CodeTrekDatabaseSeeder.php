@@ -17,5 +17,7 @@ class CodeTrekDatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call(CodeTrekPermissionTableSeeder::class);
+        $this->call(CodeTrekApplicantsTableSeeder::class);
+        $this->call(CodeTrekApplicantRoundDetailsTableSeeder::class);
     }
 }

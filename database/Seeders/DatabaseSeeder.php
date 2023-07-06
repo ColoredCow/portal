@@ -24,7 +24,5 @@ class DatabaseSeeder extends Seeder
         $this->call(BooksPermissionsSeeder::class);
         $this->call(BookCategoriesTableSeeder::class);
 
-        //codetrekapplicants
-        $this->call([CodeTrekApplicantsTableSeeder::class]);
     }
 }
