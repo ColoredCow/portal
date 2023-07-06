@@ -4,6 +4,7 @@ namespace Modules\ProjectContract\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Modules\ProjectContract\Services\ProjectContractService;
+use Modules\ProjectContract\Services\ProjectContractMailService;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -16,9 +17,11 @@ use Modules\Client\Entities\Country;
 class ProjectContractController extends Controller
 {
     protected $service;
-    public function __construct(ProjectContractService $service)
+    protected $mailservice;
+    public function __construct(ProjectContractService $service, ProjectContractMailService $mailservice)
     {
         $this->service = $service;
+        $this->mailservice = $mailservice;
     }
     public function index()
     {
@@ -97,7 +100,7 @@ class ProjectContractController extends Controller
         $data = $request->all();
         $this->service->storeReveiwer($data);
         $link = ReviewController::review($request['id'], $request['email']);
-        Mail::to($request['email'])->send(new ClientReview($link));
+        $this->mailservice->sendClientReview($request['email'], $link);
 
         return redirect(route('projectcontract.index'))->with('success');
     }
@@ -105,7 +108,7 @@ class ProjectContractController extends Controller
     public function clientResponse($id)
     {
         $contract = $this->service->updateContract($id);
-        Mail::to($this->service->getUserEmail($id))->send(new ClientApproveReview());
+        $this->mailservice->sendClientResponse($this->service->getUserEmail($id));
 
         return 'Thank you for finalise';
     }
@@ -113,6 +116,7 @@ class ProjectContractController extends Controller
     {
         $data = $request->all();
         $this->service->editContract($data);
+        $this->mailservice->sendClientUpdate($this->service->getUserEmail($request['id']));
         Mail::to($this->service->getUserEmail($request['id']))->send(new ClientUpdateReview());
 
         return 'Thank you for your update';
@@ -121,7 +125,7 @@ class ProjectContractController extends Controller
     {
         $data = $request->all();
         $this->service->storeInternalReveiwer($data);
-        Mail::to($request['email'])->send(new FinanceReview());
+        $this->mailservice->sendFinanceReview($request['email']);
 
         return redirect(route('projectcontract.index'))->with('success');
     }
