@@ -17,7 +17,7 @@ class CreateNewContractTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id')->unsigned();
             $table->string('contract_name');
-            $table->string('contract_link');
+            $table->text('contract_link');
             $table->string('status');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');

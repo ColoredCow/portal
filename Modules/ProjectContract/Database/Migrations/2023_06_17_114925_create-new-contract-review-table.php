@@ -17,7 +17,7 @@ class CreateNewContractReviewTable extends Migration
             $table->id();
             $table->unsignedBigInteger('contract_id');
             $table->integer('comment_id');
-            $table->string('comment');
+            $table->text('comment');
             $table->string('comment_type');
             $table->timestamps();
             $table->foreign('contract_id')->references('id')->on('contracts');
