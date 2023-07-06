@@ -29,10 +29,10 @@ class CodeTrekApplicant extends Model
         if ($applicant->status == 'completed') {
             return $internDate->diffInDays($applicant->start_date);
         }
-        
+
         return now()->diffInDays($applicant->start_date);
     }
-    
+
     public function mentor()
     {
         return $this->belongsTo(User::class, 'mentor_id');
