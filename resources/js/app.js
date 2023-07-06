@@ -2104,7 +2104,7 @@ $(function () {
 
 $(document).ready(function() {
 
-	$(".radio-button").change(function() {
+	$(".thumbs-radio-button").change(function() {
 	  $(".thumbs-up").css("color", "");
 	  $(".thumbs-down").css("color", "");
 	  if ($(this).val() === "positive") {
