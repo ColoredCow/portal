@@ -2,14 +2,16 @@
 
 namespace Modules\HR\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\EmployeeService;
-use Modules\HR\Entities\Employee;
-use Illuminate\Routing\Controller;
-use Modules\HR\Entities\HrJobDomain;
-use Modules\HR\Entities\HrJobDesignation;
-use Modules\HR\Entities\Job;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Modules\HR\Entities\Assessment;
+use Modules\HR\Entities\Employee;
+use Modules\HR\Entities\HrJobDesignation;
+use Modules\HR\Entities\HrJobDomain;
+use Modules\HR\Entities\IndividualAssessment;
+use Modules\HR\Entities\Job;
 use Modules\Project\Entities\ProjectTeamMember;
 
 class EmployeeController extends Controller
@@ -36,9 +38,9 @@ class EmployeeController extends Controller
         $filters = $filters ?: $this->service->defaultFilters();
         $name = request('name');
         $employeeData = Employee::where('staff_type', $name)
+            ->applyFilters($filters)
             ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
             ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
-            ->whereNull('project_team_members.ended_on')
             ->groupBy('employees.user_id')
             ->orderby('project_count', 'desc')
             ->get();
@@ -84,7 +86,7 @@ class EmployeeController extends Controller
         return view('hr.employees.fte-handler')->with([
             'domainName' => $domainName,
             'employees' => $employees,
-            'jobName' => $jobName
+            'jobName' => $jobName,
         ]);
     }
 
@@ -93,5 +95,51 @@ class EmployeeController extends Controller
         $employeesDetails = ProjectTeamMember::where('team_member_id', $employee->user_id)->get()->unique('project_id');
 
         return view('hr.employees.employee-work-history', compact('employeesDetails'));
+    }
+
+    public function reviewDetails(Employee $employee)
+    {
+        $assessments = Assessment::where('reviewee_id', $employee->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $employees = Employee::all();
+
+        return view('hr.employees.review-details', ['employee' => $employee, 'employees' => $employees, 'assessments' => $assessments]);
+    }
+
+    public function createIndividualAssessment(Request $request)
+    {
+        $reviewStatuses = [
+            'self' => $request->self,
+            'mentor' => $request->mentor,
+            'hr' => $request->hr,
+            'manager' => $request->manager,
+        ];
+        $assessmentId = $request->assessmentId;
+        $reviewStatus = $reviewStatuses[$request->review_type] ?? '';
+
+        $individualAssessment = IndividualAssessment::firstOrNew([
+            'assessment_id' => $assessmentId,
+            'type' => $request->review_type,
+        ]);
+
+        $individualAssessment->fill([
+            'reviewer_id' => $request->reviewer_id,
+            'status' => $reviewStatus,
+        ])->save();
+
+        return redirect()->back()->with('success', $individualAssessment->wasRecentlyCreated ? 'Review saved successfully.' : 'Review status updated successfully.');
+    }
+
+    public function updateEmployeeReviewers(Request $request, Employee $employee)
+    {
+        // Update the employee reviewers data
+        $employee->update([
+            'hr_id' => $request->hr_id,
+            'mentor_id' => $request->mentor_id,
+            'manager_id' => $request->manager_id,
+        ]);
+
+        return redirect()->back();
     }
 }

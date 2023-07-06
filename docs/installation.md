@@ -13,6 +13,10 @@ Before you start following the guidelines, make sure to go through the [prerequi
         ```sh
         cd C:\xampp\htdocs\
         ```
+    - For LAMPP:
+        ```sh
+        cd C:\opt\htdocs\
+        ```
     - For MAMP(macOS):
         ```sh
         cd /Application/MAMP/htdocs/
@@ -46,22 +50,15 @@ Before you start following the guidelines, make sure to go through the [prerequi
    ```
     If you are still getting the error --hide-module then revert all changes by `git checkout .`
 
-	**Note:** Check the version of laravel-mix in package-lock.json it should be 5.0.9
-    ```sh
-     npm install
-     npm run dev
-    ```
-    **Note:** if laravel-mix version in package-lock.json changes to version 6 then npm run dev will throw error, so it should be at version 5 only.
-
    If you are still getting the error then delete the `package-lock.json` file and make sure your node and npm version are as below and repeat step 4 again.
     ```sh
     npm -v
     # output should be something like
-    # 6.14.15
+    # 9.5.1
 
     node -v
     #output should be somthing like
-    #v14.17.6
+    #v18.16.0
     ```
 
 
@@ -122,13 +119,21 @@ Before you start following the guidelines, make sure to go through the [prerequi
     4. _(Optional)_ ColoredCow website Configurations
     In case you want to use website integration functionality, then you need to enable `WORDPRESS_ENABLED` as `true` and add wordpress database configurations.
 
+       - DB_WORDPRESS_DATABASE: The name of the WordPress database you want to connect to. For example `Coloredcow`.
+       - DB_WORDPRESS_USERNAME: The user name which is define in the Wp-config.php. For example `root`.
+       - DB_WORDPRESS_PASSWORD: If password is define set the password otherwise it should be null.
+       - DB_WORDPRESS_PREFIX: The table prefix used by the WordPress installation. This is typically set to `cc_` by default, but it can be different depending on the configuration. 
+       - WORDPRESS_ENABLED: Set this to `true` to enable the integration with the ColoredCow website. If it is set to `false` the integration will not work.
+
     ```sh
-    DB_WORDPRESS_DATABASE=
-    DB_WORDPRESS_USERNAME=
+    DB_WORDPRESS_DATABASE=Coloredcow
+    DB_WORDPRESS_USERNAME=root
     DB_WORDPRESS_PASSWORD=
-    DB_WORDPRESS_PREFIX=
+    DB_WORDPRESS_PREFIX=cc_
     WORDPRESS_ENABLED=true
     ```
+   
+
 
 8. Run migrations
     ```sh
@@ -204,7 +209,67 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
         - Restart XAMPP. Next, open this url in your browser: http://portal.test
 
-    3. For MAMP(macOS):
+    3. For LAMPP(LINUX):
+        - Go to `etc/hosts` file or edit this in the terminal use the following command.
+            ```sh
+            sudo nano /etc/hosts
+            ```
+        - Add this line
+            ```
+            127.0.0.1   portal.test
+            ```
+
+        - Go to `httpd.conf` file or edit this file in the terminal itself use this command
+            ```sh
+            sudo nano /opt/lampp/conf/apache/httpd.conf
+            ```
+            And search for `vhosts` and uncomment line like this
+            ```sh
+            # Virtual hosts
+            # Include opt/lampp/conf/apache/extra/httpd-vhosts.conf
+            ```
+            Change above to:
+            ```sh
+            # Virtual hosts
+            Include opt/lampp/conf/apache/extra/httpd-vhosts.conf
+            ```
+          - Open the `vhost` file in the terminal
+            ```sh
+            sudo nano /etc/apache2/extra/httpd-vhosts.conf
+            ```
+            Add the following line at the end of the file:
+            Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `/opt/lampp/htdocs/portal/public`. Make sure you type '/public' at the end after your project path.
+
+            ```apacheconf
+             <VirtualHost *:80>
+                 ServerName portal.test
+                 DocumentRoot "/path/to/your/project/public"
+                 <Directory "/path/to/your/project/public">
+                     DirectoryIndex index.php
+                     AllowOverride All
+                     Order allow,deny
+                     Allow from all
+                 </Directory>
+             </VirtualHost>
+            ```
+          - In case you are using Apache version 2.4 or above, the above code will give you a 403 Forbidden error. Make the following changes:
+            ```apacheconf
+            <Directory>
+                # some code above
+                Order allow,deny
+                Allow from all
+            </Directory>
+            ```
+            Change to:
+            ```apacheconf
+            <Directory>
+                 # some code above
+                 Require all granted
+            </Directory>
+            ```
+           - Restart MAMP. Next, open this url in your browser: http://portal.test
+
+    4. For MAMP(macOS):
         - Go to `etc/hosts` file or edit this in the terminal use the following command.
             ```sh
             sudo nano /etc/hosts
