@@ -36,5 +36,4 @@ class ProjectContractMailService
     {
         Mail::to($mail)->send(new FinanceReview());
     }
-
 }
