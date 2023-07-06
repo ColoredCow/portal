@@ -7,7 +7,7 @@ namespace Modules\CodeTrek\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 
-class CodeTrekApplicantsFactory extends Factory
+class CodeTrekApplicantFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
