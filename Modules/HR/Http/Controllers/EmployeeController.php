@@ -102,7 +102,9 @@ class EmployeeController extends Controller
         $assessments = Assessment::where('reviewee_id', $employee->id)
             ->orderBy('created_at', 'desc')
             ->get();
-        $employees = Employee::all();
+        $employees = Employee::whereHas('user', function ($query) {
+            $query->whereNull('deleted_at');
+        })->get();
 
         return view('hr.employees.review-details', ['employee' => $employee, 'employees' => $employees, 'assessments' => $assessments]);
     }
