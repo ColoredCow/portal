@@ -36,5 +36,4 @@ class CodeTrekApplicantsFactory extends Factory
             'university' => $this->faker->company,
         ];
     }
-
 }
