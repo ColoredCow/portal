@@ -33,14 +33,19 @@ class CodeTrekService
             ->paginate(config('constants.pagination_size'))
             ->appends(request()->except('page'));
 
-        $applicantsData = CodeTrekApplicant::whereIn('status', ['active', 'inactive', 'completed'])->with('mentor')
-            ->where('centre_id', $centre ? $centre : '*')->when($search, function ($query) use ($search) {
+        $query = CodeTrekApplicant::whereIn('status', ['active', 'inactive', 'completed'])
+            ->with('mentor')
+            ->when($search, function ($query) use ($search) {
                 return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
             })
             ->groupBy('status')
-            ->selectRaw('count(status) as total, status')
-            ->get();
-        // dd($applicantsData);
+            ->selectRaw('count(status) as total, status');
+
+        if ($centre == null) {
+            $applicantsData = $query->get();
+        } else {
+            $applicantsData = $query->where('centre_id', $centre)->get();
+        }
 
         $statusCounts = [
             'active' => 0,
