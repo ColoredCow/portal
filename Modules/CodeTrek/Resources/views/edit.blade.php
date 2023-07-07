@@ -94,11 +94,11 @@
                             </select>
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
-                                <label for="domain" class="field-required">{{ __('Select Domain Name') }}</label>
+                                <label for="domain" class="field-required">{{ __('Domain Name') }}</label>
                                 <select name="domain_type" id="domain_type" class="form-control" required>
                                     <option value="">Select Domain Name</option>
                                     @foreach (config('codetrek.domain') as $key => $domain)
-                                        <option value="{{ $domain["slug"] }}" {{ old('domain_type') == $key ? 'selected' : '' }}>{{ $domain['label'] }}</option>
+                                        <option value="{{ $domain["slug"] }}" {{ $applicant->domain_name == $domain["slug"] ? 'selected' : '' }}>{{ $domain['label'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
