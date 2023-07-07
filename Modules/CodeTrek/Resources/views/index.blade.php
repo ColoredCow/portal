@@ -156,10 +156,7 @@
                                     @endcan
                                 </td>
                                 <td>
-                                    @php
-                                        $daysInCodetrek = $applicant->days_in_codetrek;
-                                    @endphp
-                                    {{ $daysInCodetrek }} days
+                                    {{ $applicant->days_in_codetrek }} days
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
