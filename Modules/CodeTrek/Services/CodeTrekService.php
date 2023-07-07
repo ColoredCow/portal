@@ -99,7 +99,7 @@ class CodeTrekService
         $applicant->university = $data['university_name'] ?? null;
         $applicant->centre_id = $data['centre'] ?? null;
         $applicant->mentor_id = $data['mentorId'] ?? null;
-        $applicant->domain_name = $data['domian_name'];
+        $applicant->domain_name = $data['domain'];
         $applicant->save();
 
         return $applicant;
