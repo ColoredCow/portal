@@ -120,7 +120,7 @@ class ProjectTeamMember extends Model
 
         $requiredEffort = $workingDays * config('efforttracking.minimum_expected_hours');
 
-        $actualEffort = $this->getCurrentActualEffortAttribute($startDate);
+        $actualEffort = $this->getBookedEfforts($startDate, $endDate);
 
         return round($actualEffort / $requiredEffort, 2);
     }
