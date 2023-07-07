@@ -70,10 +70,12 @@ class CodeTrekService
         $applicant->university = $data['university_name'] ?? null;
         $applicant->centre_id = $data['centre'];
         $applicant->mentor_id = $data['mentorId'];
+        $applicant->domain_name = $data['domain'];
+        $applicant->latest_round_name = "level-1";
         // Mail::queue(new CodetrekMailApplicant($data)); This line will be uncommented in the future when the use of the codeTrek module starts in the proper way.
         $applicant->save();
 
-        $this->moveApplicantToRound($applicant, $data);
+        $this->moveApplicantToRoundOne($applicant, $data);
 
         return $applicant;
     }
@@ -97,6 +99,7 @@ class CodeTrekService
         $applicant->university = $data['university_name'] ?? null;
         $applicant->centre_id = $data['centre'] ?? null;
         $applicant->mentor_id = $data['mentorId'] ?? null;
+        $applicant->domain_name = $data['domian_name'];
         $applicant->save();
 
         return $applicant;
@@ -109,7 +112,7 @@ class CodeTrekService
         return $roundDetails;
     }
 
-    public function moveApplicantToRound($applicant, $data)
+    public function moveApplicantToRoundOne($applicant, $data)
     {
         $applicationRound = new CodeTrekApplicantRoundDetail();
         $applicationRound->applicant_id = $applicant->id;
