@@ -23,39 +23,41 @@ class CodeTrekService
         $applicants = $query->when($search, function ($query) use ($search) {
             return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
         })
-        ->paginate(config('constants.pagination_size'))
-        ->appends(request()->except('page'));
+            ->paginate(config('constants.pagination_size'))
+            ->appends(request()->except('page'));
 
         $applicantsData = CodeTrekApplicant::whereIn('status', ['active', 'inactive', 'completed'])
-        ->when($search, function ($query) use ($search) {
-            return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
-        })
-        ->groupBy('status')
-        ->selectRaw('count(status) as total, status')
-        ->get();
+            ->when($search, function ($query) use ($search) {
+                return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
+            })
+            ->groupBy('status')
+            ->selectRaw('count(status) as total, status')
+            ->get();
 
         $statusCounts = [
             'active' => 0,
             'inactive' => 0,
             'completed' => 0
         ];
+
         foreach ($applicantsData as $data) {
             $statusCounts[$data->status] = $data->total;
         }
-        
+
         $applicant = CodeTrekApplicant::all();
 
         if ($centre) {
-            $statusCounts = [
-                'active' => $applicant->where('centre_id', $centre)->where('status', 'active')->count(),
-                'inactive' => $applicant->where('centre_id', $centre)->where('status', 'inactive')->count(),
-                'completed' => $applicant->where('centre_id', $centre)->where('status', 'completed')->count(),
-            ];
-}
+        $statusCounts = [
+        'active' => $applicant->where('centre_id', $centre)->where('status', 'active')->count(),
+        'inactive' => $applicant->where('centre_id', $centre)->where('status', 'inactive')->count(),
+        'completed' => $applicant->where('centre_id', $centre)->where('status', 'completed')->count(),
+        ];
+        }
+
         return [
-            'applicants' => $applicants,
-            'applicantsData' => $applicantsData,
-            'statusCounts' => $statusCounts,
+        'applicants' => $applicants,
+        'applicantsData' => $applicantsData,
+        'statusCounts' => $statusCounts,
         ];
     }
     public function store($data)
