@@ -1,4 +1,4 @@
- @extends('codetrek::layouts.master')
+@extends('codetrek::layouts.master')
  @section('content')
      @foreach ($roundDetails as $applicantDetail)
          <div class="container d-flex justify-content-around position-relative" id="update_details ">
@@ -74,14 +74,12 @@
                                              @endforeach
                                          </select>
                                          <button type="submit" class="btn btn-success ml-2">Take Action</button>
-                                     </div>  
-                                 </div>
                              </form>
                              <form class = "{{($applicant->status == 'completed') ? 'd-none': '' }}" action="{{ route('codetrek.updateStatus', $applicant->id) }}" method="POST">
                                  @csrf
-                                 <button type="submit" name="action" value="completed" class="btn btn-dark ml-2 {{$applicant->status == 'inactive' ? 'd-none': '' }}">Start
+                                 <button type="submit" name="action" value="completed" class="btn btn-dark ml-2 {{$applicant->latest_round_name != 'onboarded' ? 'd-none': '' }}">Start
                                      Internship</button>
-                                <button type="submit" name="action" value="{{ $applicant->status == 'active'? 'inactive' : 'active' }}" class="btn btn-{{ $applicant->status == "active" ? "danger" : "info" }} ml-1">
+                                <button type="submit" name="action" value="{{ $applicant->status == "active"? "inactive" : "active" }}" class="btn btn-{{ $applicant->status == "active" ? "danger" : "info" }} ml-1">
                                     Mark {{ ucfirst($applicant->status == "active" ? "inactive" : "active") }} </button>  
                              </form>
                      </div>
