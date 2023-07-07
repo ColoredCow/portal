@@ -6,6 +6,7 @@ use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 use Illuminate\Support\Facades\Mail;
 use  Modules\CodeTrek\Emails\CodetrekMailApplicant;
+use Illuminate\Support\Facades\DB;
 
 class CodeTrekService
 {
@@ -41,13 +42,20 @@ class CodeTrekService
         foreach ($applicantsData as $data) {
             $statusCounts[$data->status] = $data->total;
         }
+        
+        $applicant = CodeTrekApplicant::all();
 
-        $statusCounts[$status] = count($applicants);
-
+        if ($centre) {
+            $statusCounts = [
+                'active' => $applicant->where('centre_id', $centre)->where('status', 'active')->count(),
+                'inactive' => $applicant->where('centre_id', $centre)->where('status', 'inactive')->count(),
+                'completed' => $applicant->where('centre_id', $centre)->where('status', 'completed')->count(),
+            ];
+}
         return [
             'applicants' => $applicants,
             'applicantsData' => $applicantsData,
-            'statusCounts' => $statusCounts
+            'statusCounts' => $statusCounts,
         ];
     }
     public function store($data)
