@@ -9,6 +9,7 @@ use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 use Modules\CodeTrek\Services\CodeTrekService;
 use Modules\Operations\Entities\OfficeLocation;
 use Modules\User\Entities\User;
+use Carbon\Carbon;
 
 class CodeTrekController extends Controller
 {
@@ -35,13 +36,12 @@ class CodeTrekController extends Controller
         $applicantsData = json_encode($applicantData['applicantsData']);
         $statusCounts = $applicantData['statusCounts'];
         $applicantsGraph = $this->applicantBarGraphData($request);
-        $application_start_date = $request->application_start_date ?? today()->subYears(4);
-        dd(today()->subYears(4));
-        $application_end_date = $request->application_end_date ?? today();
-        $counts = CodeTrekApplicant::select(\DB::Raw('DATE(created_at) as date, COUNT(*) as count'))
-            ->whereDate('start_date', '>=', $application_start_date)
-            ->whereDate('start_date', '<=', $application_end_date)
-            ->count();
+        $start_date = Carbon::parse($request->application_start_date) ?? today()->subYears(4);
+        $end_date = Carbon::parse($request->application_end_date) ?? today();
+        $counts = CodeTrekApplicant::select(\DB::Raw('DATE(start_date) as date, COUNT(*) as count'))
+        ->whereDate('start_date', '>=', $start_date)
+        ->whereDate('start_date', '<=', $end_date)
+        ->count();
 
         return view('codetrek::index', [
             'applicants' => $applicants,

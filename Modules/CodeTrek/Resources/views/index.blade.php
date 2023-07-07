@@ -67,8 +67,8 @@
             $centre = request()->get('centre');
         @endphp
         <ul class="nav nav-pills d-flex justify-content-between">
+            @if (request()->tab != 'reports')
             <div class='d-flex justify-content-between'>
-                @if (request()->tab == 'applicants')
                 <li class="nav-item mr-3">
                     <a href="{{ route('codetrek.index', ['name' => $name ,'centre' => $centre , 'status' => 'active']) }}"
                         class="nav-link btn-nav {{ request()->input('status') !== 'inactive' && request()->input('status') !== 'completed' ? 'active' : '' }}"
@@ -90,11 +90,12 @@
                         <span class="d-inline-block h-18 w-20"> {!! file_get_contents(public_path('icons/person-check.svg')) !!} </span>
                         Completed({{$statusCounts['completed']}})</a>
                 </li>
-                @elseif (request()->tab == 'reports')
-                <li class="nav-item mr-3">
-                    <a class="nav-link active">Total Applications: {{$counts}}</a>
-                @endif
             </div>
+            @elseif (request()->tab == 'reports')
+            <li class="nav-item mr-3">
+                <a class="nav-link active" >Total Applications</a>
+            </li>
+            @endif
             <form action="{{ route('codetrek.index') }}" id="sortingForm">
                 <div class="form-group w-120">
                     <select class="form-control bg-light" name="order" id="order" onchange="document.getElementById('sortingForm').submit();">
@@ -197,19 +198,19 @@
                 </table>
             </div>
             {{$applicants->links()}}
-            @elseif (request()->tab == 'reports')
-            <div>
+        @elseif (request()->tab == 'reports')
+        <div>
                 <br>
                 <div class="card-header mt-1" align="left">
                     <div class="my-2">
                         <form align="right" action="{{ route('codetrek.index', ['tab' => 'reports']) }}" method="get">
-                            <input type="date" name="application_start_date" id="startDate" value="{{ old('application_start_date', request()->get('application_start_date')) }}" required> to
-                            <input type="date" name="application_end_date" id="endDate" value="{{ old('application_end_date', request()->get('application_end_date')) }}" required>
+                            <input type="date" name="application_start_date" id="start_date" value="{{ old('application_start_date', request()->get('application_start_date')) }}" required> to
+                            <input type="date" name="application_end_date" id="end_date" value="{{ old('application_end_date', request()->get('application_end_date')) }}" required>
                             <input type="hidden" name="tab" value="reports">
                             <input type="submit" class="btn btn-sm btn-primary text-white" value="View">
                             <br>
                         </form>
-                        <span class="chart-heading">Applications Received</span>
+                        <span class="chart-heading">Applications Received: {{$counts}}</span>
                     </div>
                     <div id="BarGraph" class="card-body chart-data" data-target="{{ $applicantsGraph }}">
                     <canvas class="w-full" id="CodeTrekApplicationReport"></canvas>

@@ -7,6 +7,7 @@ use Modules\CodeTrek\Entities\CodeTrekCandidateFeedback;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 use Illuminate\Support\Facades\Mail;
 use  Modules\CodeTrek\Emails\CodetrekMailApplicant;
+use Carbon\Carbon;
 
 class CodeTrekService
 {
@@ -123,11 +124,14 @@ class CodeTrekService
     public function getData($type, $filters, $request)
     {
         if ($type == 'codetrek-application') {
-            $application_start_date = $request->application_start_date ?? today()->subYears(4);
-            $application_end_date = $request->application_end_date ?? today();
-            $applicantChartData = CodeTrekApplicant::select(\DB::Raw('DATE(created_at) as date, COUNT(*) as count'))
-                ->whereDate('start_date', '>=', $application_start_date)
-                ->whereDate('start_date', '<=', $application_end_date)
+            $applicants = CodeTrekApplicant::find('start_date');
+            $defaultStartDate = $applicants->created_at ?? today()->subYear(4);
+            $defaultEndDate = today();
+            $filters['start_date'] = empty($filters['start_date']) ? $defaultStartDate : $filters['start_date'];
+            $filters['end_date'] = empty($filters['end_date']) ? $defaultEndDate : $filters['end_date'];
+            $applicantChartData = CodeTrekApplicant::select(\DB::Raw('DATE(start_date) as date, COUNT(*) as count'))
+                ->whereDate('start_date', '>=', $filters['start_date'])
+                ->whereDate('start_date', '<=', $filters['end_date'])
                 ->groupBy('date');
 
             $dates = $applicantChartData->pluck('date')->toArray();

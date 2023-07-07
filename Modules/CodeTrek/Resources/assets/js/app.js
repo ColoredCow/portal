@@ -3,7 +3,6 @@ $(function() {
   {
     const startDate = $("#start_date").val();
     const endDate = $("#end_date").val();
-    console.log(startDate);
 
     getData(
       {
@@ -19,7 +18,6 @@ $(function() {
 });
 
 function CodeTrekApplicationsReport(applicantsGraph) {
-  console.log(endDate.counts);
   const canvasElementId = "CodeTrekApplicationReport";
   const labels = applicantsGraph.dates;
   const chartData = {

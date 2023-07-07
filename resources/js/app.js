@@ -202,10 +202,6 @@ $(document).ready(() => {
 		rejectedReasonsGraph();
 	}
 
-	// if ($("#CodeTrekApplications").length) {
-	// 	CodeTrekApplicationsReport();
-	// }
-
 	$("#save-btn-action").on("click", function() {
 		this.disabled = true;
 		if (!this.form.checkValidity()) {
@@ -1734,77 +1730,6 @@ function roundWiseRejectionsGraph() {
 		},
 	});
 }
-
-
-// function CodeTrekApplicationsReport() {
-// 	var value = $("#CodeTrekApplications").data("target");
-// 	var cData = value;
-// 	var ctx = $("#CodeTrekApplications");
-// 	var data = {
-// 		labels: cData.dates,
-// 		datasets: [
-// 			{
-// 				label: [],
-// 				data: cData.counts,
-// 				backgroundColor: ["rgba(52, 144, 220)"],
-// 				borderColor: ["rgba(52, 144, 220)"],
-// 				borderWidth: 10,
-// 			},
-// 		],
-// 	};
-// 	var myBar = new Chart(ctx, {
-// 		type: "bar",
-// 		data: data,
-// 		options: {
-// 			tooltip: {
-// 				enabled: true,
-// 				callbacks: {
-// 					label: function(tooltipItem) {
-// 						return tooltipItem.dataset.data;
-// 					},
-// 				},
-// 			},
-// 			indexAxis: "x",
-// 			scales: {
-// 				y: {
-// 					min: 0,
-// 					max: 10,
-// 					ticks: {
-// 						stepSize: 1,
-// 					},
-// 				},
-// 			},
-// 			plugins: {
-// 				legend: {
-// 					labels: {
-// 						boxWidth: 0,
-// 					},
-// 				},
-// 			},
-// 			hover: {
-// 				mode: false,
-// 			},
-// 			animation: {
-// 				duration: 1,
-// 				onProgress: function() {
-// 					var chart = this;
-// 					var ctx = chart.ctx;
-// 					ctx.textAlign = "top";
-// 					ctx.textBaseline = "middle";
-// 					ctx.font = "13px Arial";
-// 					this.data.datasets.forEach(function(dataset, i) {
-// 						var meta = chart.getDatasetMeta(i);
-// 						meta.data.forEach(function(bar, index) {
-// 							var data = dataset.data[index];
-// 							ctx.fillText(data, bar.x + 5, bar.y);
-// 						});
-// 					});
-// 				},
-// 			},
-// 		},
-// 	});
-// }
-
 
 function rejectedReasonsGraph() {
 	var value = $("#myBarGraph").data("target");
