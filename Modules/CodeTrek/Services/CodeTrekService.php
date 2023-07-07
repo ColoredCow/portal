@@ -5,9 +5,6 @@ namespace Modules\CodeTrek\Services;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Entities\CodeTrekCandidateFeedback;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
-use Illuminate\Support\Facades\Mail;
-use  Modules\CodeTrek\Emails\CodetrekMailApplicant;
-use Illuminate\Support\Facades\DB;
 
 class CodeTrekService
 {
