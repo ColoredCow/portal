@@ -1,6 +1,6 @@
 $(function() {
- $("#CodeTrekApplicationReport").length;
- {
+  $("#CodeTrekApplicationReport").length;
+  {
   const startDate = $("#start_date").val();
   const endDate = $("#end_date").val();
 
