@@ -51,8 +51,8 @@ class CodeTrekService
                 'active' => $applicant->where('centre_id', $centre)->where('status', 'active')->count(),
                 'inactive' => $applicant->where('centre_id', $centre)->where('status', 'inactive')->count(),
                 'completed' => $applicant->where('centre_id', $centre)->where('status', 'completed')->count(),
-                ];
-            }
+            ];
+        }
 
         return [
         'applicants' => $applicants,
