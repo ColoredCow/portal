@@ -131,7 +131,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/approve-joinees', 'EmployeeController@showApprovalForm')->name('approve.joinees.show');
         Route::post('/approve-joinees', 'EmployeeController@processApprovalForm')->name('approve.joinees');
 
-
         Route::resource('requisition', 'RequisitionController')
             ->only(['index', 'show', 'store'])
             ->names([
