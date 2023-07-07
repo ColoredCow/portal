@@ -7,7 +7,6 @@ use Modules\CodeTrek\Entities\CodeTrekCandidateFeedback;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 use Illuminate\Support\Facades\Mail;
 use  Modules\CodeTrek\Emails\CodetrekMailApplicant;
-use Carbon\Carbon;
 
 class CodeTrekService
 {
