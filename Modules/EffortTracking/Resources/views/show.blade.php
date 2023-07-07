@@ -123,7 +123,9 @@
                         <tbody>
                             @foreach ($project->getTeamMembers as $teamMember)
                                 <tr>
-                                    <th scope="row" id="user-name<?php echo $teamMember->user->id; ?>">{{ $teamMember->user->name }}</th>
+                                    <th scope="row" id="user-name<?php echo $teamMember
+                                        ->user
+                                        ->id; ?>">{{ $teamMember->user->name }}</th>
                                     <td
                                         class="{{ $teamMember->current_actual_effort >= $teamMember->expected_effort_till_today ? 'text-success' : ($teamMember->current_actual_effort < $teamMember->current_expected_effort ? 'text-danger' : '') }}">
                                         {{ $teamMember->current_actual_effort }}</td>
