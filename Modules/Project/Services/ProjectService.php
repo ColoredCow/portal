@@ -440,6 +440,8 @@ class ProjectService implements ProjectServiceContract
             $endDate = (clone $startDate)->endOfMonth()->toDateString();
         }
 
+        $startDate = $startDate->toDateString();
+
         $employees = Employee::applyFilters($filters)
             ->get();
 
