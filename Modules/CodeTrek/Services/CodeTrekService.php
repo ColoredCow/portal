@@ -2,9 +2,11 @@
 
 namespace Modules\CodeTrek\Services;
 
+use Google\Service\CivicInfo\Office;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Entities\CodeTrekCandidateFeedback;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
+use Modules\Operations\Entities\OfficeLocation;
 
 class CodeTrekService
 {
@@ -32,12 +34,13 @@ class CodeTrekService
             ->appends(request()->except('page'));
 
         $applicantsData = CodeTrekApplicant::whereIn('status', ['active', 'inactive', 'completed'])->with('mentor')
-        ->when($search, function ($query) use ($search) {
-            return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
-        })
-        ->groupBy('status')
-        ->selectRaw('count(status) as total, status')
-        ->get();
+            ->where('centre_id', $centre ? $centre : '*')->when($search, function ($query) use ($search) {
+                return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
+            })
+            ->groupBy('status')
+            ->selectRaw('count(status) as total, status')
+            ->get();
+        // dd($applicantsData);
 
         $statusCounts = [
             'active' => 0,
@@ -49,20 +52,10 @@ class CodeTrekService
             $statusCounts[$data->status] = $data->total;
         }
 
-        $applicant = CodeTrekApplicant::all();
-
-        if ($centre) {
-            $statusCounts = [
-                'active' => $applicant->where('centre_id', $centre)->where('status', 'active')->count(),
-                'inactive' => $applicant->where('centre_id', $centre)->where('status', 'inactive')->count(),
-                'completed' => $applicant->where('centre_id', $centre)->where('status', 'completed')->count(),
-            ];
-        }
-
         return [
-        'applicants' => $applicants,
-        'applicantsData' => $applicantsData,
-        'statusCounts' => $statusCounts,
+            'applicants' => $applicants,
+            'applicantsData' => $applicantsData,
+            'statusCounts' => $statusCounts,
         ];
     }
     public function store($data)
