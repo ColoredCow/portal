@@ -52,7 +52,7 @@ class EmployeeAssessmetReviewMail extends Mailable
                 $subject = 'Quarterly Mentor Review: ' . $this->getQuarterMonth($currentQuarter) . ' ' . $currentYear;
                 $mailTemplate = 'hr::mail.mentor-review';
                 break;
-            default:
+            case 'managerMail':
                 $subject = 'Quarterly Manager Review: ' . $this->getQuarterMonth($currentQuarter) . ' ' . $currentYear;
                 $mailTemplate = 'hr::mail.manager-review';
         }

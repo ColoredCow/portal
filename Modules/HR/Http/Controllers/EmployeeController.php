@@ -110,7 +110,8 @@ class EmployeeController extends Controller
         ];
 
         $employee = Employee::where('user_id', $id)->first();
-        $employeeIds = [$employee->id, $employee->hr_id, $employee->mentor_id, $employee->manager_id];
+        $employeeIds = ([$employee->id, $employee->hr_id, $employee->mentor_id, $employee->manager_id]);
+        
         $userIds = Employee::whereIn('id', $employeeIds)->orderByRaw('FIELD(id, ' . implode(',', $employeeIds) . ')')->pluck('user_id')->toArray();
         $userData = User::whereIn('id', $userIds)->orderByRaw('FIELD(id, ' . implode(',', $userIds) . ')')->get();
         $sendEmailto = [
@@ -119,7 +120,7 @@ class EmployeeController extends Controller
             'mentorMail' => ! empty($userData[2]) ? $userData[2] : null,
             'managerMail' => ! empty($userData[3]) ? $userData[3] : null,
         ];
-
+        dd( $employeeIds, $userIds,  $userData,$sendEmailto);
         foreach ($sendEmailto as $key => $user) {
             if (! is_null($user)) {
                 Mail::send(new EmployeeAssessmetReviewMail($key, $user, $employee, $links));
