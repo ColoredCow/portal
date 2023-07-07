@@ -124,7 +124,7 @@ class CodeTrekService
     {
         if ($type == 'codetrek-application') {
             $applicants = CodeTrekApplicant::find('start_date');
-            $defaultStartDate = $applicants->created_at ?? today()->subYear(4);
+            $defaultStartDate = $applicants->created_at ?? today()->subYear();
             $defaultEndDate = today();
             $filters['start_date'] = empty($filters['start_date']) ? $defaultStartDate : $filters['start_date'];
             $filters['end_date'] = empty($filters['end_date']) ? $defaultEndDate : $filters['end_date'];
