@@ -157,7 +157,7 @@
                                 </td>
                                 <td>
                                     @php
-                                        $daysInCodetrek = $applicant->getDaysInCodetrekAttribute($applicant);
+                                        $daysInCodetrek = $applicant->days_in_codetrek;
                                     @endphp
                                     {{ $daysInCodetrek }} days
                                 </td>

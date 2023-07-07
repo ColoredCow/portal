@@ -23,14 +23,14 @@ class CodeTrekApplicant extends Model
         return $this->belongsTo(OfficeLocation::class, 'center_id');
     }
 
-    public function getDaysInCodetrekAttribute(self $applicant)
+    public function getDaysInCodetrekAttribute()
     {
-        $internDate = Carbon::parse($applicant->internship_start_date);
-        if ($applicant->status == 'completed' && $internDate !== null) {
-            return $internDate->diffInDays($applicant->start_date);
+        $internshipStartDate = Carbon::parse($this->internship_start_date);
+        if ($this->status == 'completed' && $internshipStartDate !== null) {
+            return $internshipStartDate->diffInDays($this->start_date);
         }
 
-        return now()->diffInDays($applicant->start_date);
+        return now()->diffInDays($this->start_date);
     }
 
     public function mentor()
