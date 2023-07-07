@@ -62,10 +62,11 @@
                                  </div>
                              </form>
                          </div>
+                     </div>
                          @if ($loop->last)
+                         <div class="card-footer row">
                              <form class = "{{(($applicant->status == 'inactive') || ($applicant->status == 'completed')) ? 'd-none': '' }}" action="{{ route('codetrek.action', $applicant->id) }}" method="POST">
                                  @csrf
-                                 <div class="card-footer">
                                      <div class="d-flex align-items-center">
                                          <select name="round" id="rounds" class="w-22p">
                                              @foreach (config('codetrek.rounds') as $round)
@@ -74,16 +75,16 @@
                                              @endforeach
                                          </select>
                                          <button type="submit" class="btn btn-success ml-2">Take Action</button>
+                                     </div>
                              </form>
                              <form class = "{{($applicant->status == 'completed') ? 'd-none': '' }}" action="{{ route('codetrek.updateStatus', $applicant->id) }}" method="POST">
                                  @csrf
-                                 <button type="submit" name="action" value="completed" class="btn btn-dark ml-2 {{$applicant->latest_round_name != 'onboarded' ? 'd-none': '' }}">Start
-                                     Internship</button>
-                                <button type="submit" name="action" value="{{ $applicant->status == "active"? "inactive" : "active" }}" class="btn btn-{{ $applicant->status == "active" ? "danger" : "info" }} ml-1">
+                                 <button type="submit" name="action" value="completed" class="btn btn-dark ml-2  {{(($applicant->status == 'inactive') || ($applicant->latest_round_name != 'onboarded')) ? 'd-none': '' }}">Start
+                                     Internship </button>
+                                <button type="submit" name="action" value="{{ $applicant->status == "active"? "inactive" : "active" }}" class="btn btn-{{ $applicant->status == 'active' ? 'danger' : 'info' }} ml-1">
                                     Mark {{ ucfirst($applicant->status == "active" ? "inactive" : "active") }} </button>  
                              </form>
-                     </div>
-                 </div>
+                         </div>      
      @endif
      </div>
      </div>
