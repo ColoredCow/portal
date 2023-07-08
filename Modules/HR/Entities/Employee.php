@@ -81,7 +81,7 @@ class Employee extends Model
         $fte = 0;
         $fteAmc = 0;
         foreach ($this->user->projectTeamMembers()->with('project')->get() as $projectTeamMember) {
-            if (! $projectTeamMember->project->is_amc) {
+            if (!$projectTeamMember->project->is_amc) {
                 $fte += $projectTeamMember->getFte($startDate, $endDate);
             }
             if ($projectTeamMember->project->is_amc) {
@@ -117,15 +117,18 @@ class Employee extends Model
         return $overallStatus;
     }
 
-    public function getHRAttribute() {
+    public function getHRAttribute()
+    {
         return Employee::find($this->hr_id);
     }
 
-    public function getMentorAttribute() {
+    public function getMentorAttribute()
+    {
         return Employee::find($this->mentor_id);
     }
 
-    public function getManagerAttribute() {
+    public function getManagerAttribute()
+    {
         return Employee::find($this->manager_id);
     }
 }

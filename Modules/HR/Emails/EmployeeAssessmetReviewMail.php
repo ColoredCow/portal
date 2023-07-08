@@ -40,13 +40,13 @@ class EmployeeAssessmetReviewMail extends Mailable
         if ($this->key == 'self') {
             $subject = 'Quarterly Self Review: ' . $currentQuarterMonth . ' ' . $currentYear;
             $mailTemplate = 'hr::mail.self-review';
-        } else if ($this->key == 'hr') {
+        } elseif ($this->key == 'hr') {
             $subject = 'Quarterly HR Review: ' . $currentQuarterMonth . ' ' . $currentYear;
             $mailTemplate = 'hr::mail.hr-review';
-        } else if ($this->key == 'mentor') {
+        } elseif ($this->key == 'mentor') {
             $subject = 'Quarterly Mentor Review: ' . $currentQuarterMonth . ' ' . $currentYear;
             $mailTemplate = 'hr::mail.mentor-review';
-        } else if ($this->key == 'manager') {
+        } elseif ($this->key == 'manager') {
             $subject = 'Quarterly Manager Review: ' . $currentQuarterMonth . ' ' . $currentYear;
             $mailTemplate = 'hr::mail.manager-review';
         }
