@@ -94,7 +94,7 @@
                             </select>
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
-                            <label for="domain" class="field-required">{{ __('Domain Name') }}</label>
+                            <label for="domain" class="field-required">Domain Name</label>
                             <select name="domain" id="domain" class="form-control" required>
                                 <option value="">Select Domain Name</option>
                                 @foreach (config('codetrek.domain') as $key => $domain)
