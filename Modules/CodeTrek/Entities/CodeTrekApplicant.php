@@ -18,7 +18,7 @@ class CodeTrekApplicant extends Model
         return $this->hasMany(CodeTrekApplicantRoundDetail::class);
     }
 
-    public static function factory()
+    public static function newFactory()
     {
         return new CodeTrekApplicantFactory();
     }
