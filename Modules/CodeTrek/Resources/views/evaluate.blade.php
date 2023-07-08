@@ -63,7 +63,7 @@
                              </form>
                          </div>
                         @if ($loop->last)
-                        <div class="card-footer row {{($applicant->status == 'completed') ? 'd-none': '' }}">
+                        <div class="card-footer row {{($applicant->status == 'completed') ? 'd-none': '' }} d-flex justify-content-end">
                             <form class = "{{($applicant->status == 'inactive') ? 'd-none': '' }}" action="{{ route('codetrek.action', $applicant->id) }}" method="POST">
                                 @csrf
                                     <div class="d-flex align-items-center">
@@ -80,7 +80,7 @@
                                 @csrf
                                 <button type="submit" name="action" value="completed" class="btn btn-dark ml-2  {{(($applicant->status == 'inactive') || ($applicant->latest_round_name != 'onboarded')) ? 'd-none': '' }}">Start
                                     Internship </button>
-                                <button type="submit" name="action" value="{{ $applicant->status == 'active'? 'inactive' : 'active' }}" class="btn btn-{{ $applicant->status == 'active' ? 'danger' : 'info' }} ml-1">
+                                <button type="submit" name="action" value="{{ $applicant->status == 'active'? 'inactive' : 'active' }}" class="btn btn-{{ $applicant->status == 'active' ? 'danger' : 'info' }} mr-2 ml-1">
                                     Mark {{ ucfirst($applicant->status == "active" ? "inactive" : "active") }} </button>  
                             </form>
                         </div>      
