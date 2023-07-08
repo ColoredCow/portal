@@ -119,16 +119,16 @@ class Employee extends Model
 
     public function getHRAttribute()
     {
-        return Employee::find($this->hr_id);
+        return Self::find($this->hr_id);
     }
 
     public function getMentorAttribute()
     {
-        return Employee::find($this->mentor_id);
+        return Self::find($this->mentor_id);
     }
 
     public function getManagerAttribute()
     {
-        return Employee::find($this->manager_id);
+        return Self::find($this->manager_id);
     }
 }
