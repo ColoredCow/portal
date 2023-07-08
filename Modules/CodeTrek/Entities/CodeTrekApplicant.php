@@ -8,6 +8,7 @@ use Modules\Operations\Entities\OfficeLocation;
 use Modules\CodeTrek\Database\Factories\CodeTrekApplicantsFactory;
 use Modules\User\Entities\User;
 
+
 class CodeTrekApplicant extends Model
 {
     use SoftDeletes;
