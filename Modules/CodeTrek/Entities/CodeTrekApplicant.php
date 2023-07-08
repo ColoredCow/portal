@@ -1,12 +1,12 @@
 <?php
 
 namespace Modules\CodeTrek\Entities;
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Operations\Entities\OfficeLocation;
-use Modules\CodeTrek\Database\Factories\CodeTrekApplicantFactory;
+use Modules\CodeTrek\Database\Factories\CodeTrekApplicantsFactory;
 use Modules\User\Entities\User;
+
 
 class CodeTrekApplicant extends Model
 {
@@ -20,7 +20,7 @@ class CodeTrekApplicant extends Model
 
     public static function factory()
     {
-        return new CodeTrekApplicantFactory();
+        return new CodeTrekApplicantsFactory();
     }
 
     public function center()
