@@ -127,7 +127,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/workhistory/{employee}/', 'EmployeeController@employeeWorkHistory')->name('employees.employeeWorkHistory');
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
         Route::get('fte-handler/{domain_id}', 'EmployeeController@showFTEdata')->name('employees.alert');
-        Route::get('send-mail/{userId}', 'EmployeeController@sendMail')->name('employees.sendMail');
+        Route::get('send-mail/{user}', 'EmployeeController@sendReviewMail')->name('employees.sendMail');
         Route::post('/update-reviewers/{employee}', 'EmployeeController@updateEmployeeReviewers')->name('update.employee.reviewers');
 
         Route::resource('requisition', 'RequisitionController')

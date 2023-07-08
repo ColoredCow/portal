@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use Modules\HR\Entities\Employee;
+use Illuminate\Support\Facades\Mail;
+use Modules\HR\Emails\EmployeeAssessmetReviewMail;
 
 class EmployeeService
 {
@@ -24,5 +26,36 @@ class EmployeeService
         return [
             'status' => 'current',
         ];
+    }
+
+    public function sendReviewMail($employee, $user, $data)
+    {
+        $employeeData = [
+            'self' => [
+                'review_link' => $data['self_review_link'],
+                'user' => $user,
+            ],
+            'hr' => [
+                'review_link' => $data['hr_review_link'],
+                'employee' => ! empty($employee->hr) ? $employee->hr : null,
+                'user' => ! empty($employee->hr) ? $employee->hr->user : null,
+            ],
+            'mentor' => [
+                'review_link' => $data['mentor_review_link'],
+                'employee' => ! empty($employee->mentor) ? $employee->mentor : null,
+                'user' => ! empty($employee->mentor) ? $employee->mentor->user : null,
+            ],
+            'manager' => [
+                'review_link' => $data['manager_review_link'],
+                'employee' => ! empty($employee->manager) ? $employee->manager : null,
+                'user' => ! empty($employee->manager) ? $employee->manager->user : null,
+            ],
+        ];
+
+        foreach ($employeeData as $key => $data) {
+            if (! empty($data['user'])) {
+                Mail::send(new EmployeeAssessmetReviewMail($key, $data));
+            }
+        }
     }
 }

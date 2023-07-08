@@ -11,23 +11,18 @@ class EmployeeAssessmetReviewMail extends Mailable
     use Queueable, SerializesModels;
 
     public $key;
-    public $user;
-    public $employee;
-    public $links;
+    public $data;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($key, $user, $employee, $links)
+    public function __construct($key, $data)
     {
         $this->key = $key;
-        $this->user = $user;
-        $this->employee = $employee;
-        $this->links = $links;
+        $this->data = $data;
     }
-
     /**
      * Build the message.
      *
@@ -35,31 +30,30 @@ class EmployeeAssessmetReviewMail extends Mailable
      */
     public function build()
     {
-        $currentQuarter = now()->quarter; // Calculate current quarter
-        $currentYear = date('Y'); // Get current year
+        $currentQuarter = now()->quarter;
+        $currentYear = date('Y');
         $subject = '';
         $mailTemplate = '';
-        switch ($this->key) {
-            case 'selfMail':
-                $subject = 'Quarterly Self Review: ' . $this->getQuarterMonth($currentQuarter) . ' ' . $currentYear;
-                $mailTemplate = 'hr::mail.self-review';
-                break;
-            case 'hrMail':
-                $subject = 'Quarterly HR Review: ' . $this->getQuarterMonth($currentQuarter) . ' ' . $currentYear;
-                $mailTemplate = 'hr::mail.hr-review';
-                break;
-            case 'mentorMail':
-                $subject = 'Quarterly Mentor Review: ' . $this->getQuarterMonth($currentQuarter) . ' ' . $currentYear;
-                $mailTemplate = 'hr::mail.mentor-review';
-                break;
-            case 'managerMail':
-                $subject = 'Quarterly Manager Review: ' . $this->getQuarterMonth($currentQuarter) . ' ' . $currentYear;
-                $mailTemplate = 'hr::mail.manager-review';
+        $currentQuarterMonth = $this->getQuarterMonth($currentQuarter);
+        $user = $this->data['user'];
+
+        if ($this->key == 'self') {
+            $subject = 'Quarterly Self Review: ' . $currentQuarterMonth . ' ' . $currentYear;
+            $mailTemplate = 'hr::mail.self-review';
+        } else if ($this->key == 'hr') {
+            $subject = 'Quarterly HR Review: ' . $currentQuarterMonth . ' ' . $currentYear;
+            $mailTemplate = 'hr::mail.hr-review';
+        } else if ($this->key == 'mentor') {
+            $subject = 'Quarterly Mentor Review: ' . $currentQuarterMonth . ' ' . $currentYear;
+            $mailTemplate = 'hr::mail.mentor-review';
+        } else if ($this->key == 'manager') {
+            $subject = 'Quarterly Manager Review: ' . $currentQuarterMonth . ' ' . $currentYear;
+            $mailTemplate = 'hr::mail.manager-review';
         }
 
         return $this
             ->from(config('hr.default.email'), 'name')
-            ->to($this->user->email)
+            ->to($user['email'])
             ->subject($subject)
             ->view($mailTemplate);
     }

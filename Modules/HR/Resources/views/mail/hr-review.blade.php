@@ -4,7 +4,7 @@
             line-height: 1px;
         }
     </style>
-    <p>Dear, {{ $user['name'] }}</p>
+    <p>Dear, {{ $data['user']['name'] }}</p>
     <p>I hope this email finds you well and in good spirits!</p>
     <p>At ColoredCow our belief is we build great people who do extraordinary things. To facilitate the growth of
         talent, we are on our way to creating a career progression model, which requires a quarterly review of an
@@ -12,12 +12,13 @@
     <br>
     <p>
         As part of this process, we would like to request the HR team to perform an assessment of the employee
-        {{ $employee->name }} based on their observations and knowledge of an individual's performance. The aim of this
+        {{ $data['employee']['name'] }} based on their observations and knowledge of an individual's performance. The
+        aim of this
         assessment is to
         gain a comprehensive understanding of the employee's performance, strengths, and areas for improvement from the
         HR team's perspective.
     </p>
-    <p><a href="{{ $links['hr_review_link'] }}">HR assessment sheet</a></p>
+    <p><a href="{{ $data['review_link'] }}">HR assessment sheet</a></p>
     <h5>Target date: {{ now()->addDays(7)->format('d-m-y') }}</h5>
     <p>We are new to this model and we all need to train ourselves to do a great assessment. That’s why we created a few
         training modules, which you may find helpful and handy.</p>

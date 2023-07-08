@@ -116,4 +116,16 @@ class Employee extends Model
 
         return $overallStatus;
     }
+
+    public function getHRAttribute() {
+        return Employee::find($this->hr_id);
+    }
+
+    public function getMentorAttribute() {
+        return Employee::find($this->mentor_id);
+    }
+
+    public function getManagerAttribute() {
+        return Employee::find($this->manager_id);
+    }
 }

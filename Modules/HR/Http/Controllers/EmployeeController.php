@@ -6,8 +6,6 @@ use App\Services\EmployeeService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Mail;
-use Modules\HR\Emails\EmployeeAssessmetReviewMail;
 use Modules\HR\Entities\Assessment;
 use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\HrJobDesignation;
@@ -100,32 +98,11 @@ class EmployeeController extends Controller
         return view('hr.employees.employee-work-history', compact('employeesDetails'));
     }
 
-    public function sendMail($id, Request $request)
+    public function sendReviewMail(Request $request, User $user)
     {
-        $links = [
-            'self_review_link' => $request->self_review_link,
-            'hr_review_link' => $request->hr_review_link,
-            'mentor_review_link' => $request->mentor_review_link,
-            'manager_review_link' => $request->manager_review_link,
-        ];
-
-        $employee = Employee::where('user_id', $id)->first();
-        $employeeIds = ([$employee->id, $employee->hr_id, $employee->mentor_id, $employee->manager_id]);
-        
-        $userIds = Employee::whereIn('id', $employeeIds)->orderByRaw('FIELD(id, ' . implode(',', $employeeIds) . ')')->pluck('user_id')->toArray();
-        $userData = User::whereIn('id', $userIds)->orderByRaw('FIELD(id, ' . implode(',', $userIds) . ')')->get();
-        $sendEmailto = [
-            'selfMail' => ! empty($userData[0]) ? $userData[0] : null,
-            'hrMail' => ! empty($userData[1]) ? $userData[1] : null,
-            'mentorMail' => ! empty($userData[2]) ? $userData[2] : null,
-            'managerMail' => ! empty($userData[3]) ? $userData[3] : null,
-        ];
-        dd( $employeeIds, $userIds,  $userData,$sendEmailto);
-        foreach ($sendEmailto as $key => $user) {
-            if (! is_null($user)) {
-                Mail::send(new EmployeeAssessmetReviewMail($key, $user, $employee, $links));
-            }
-        }
+        $data = $request->all();
+        $employee = Employee::where('user_id', $user->id)->first();
+        $this->service->sendReviewMail($employee, $user, $data);
 
         return redirect()->back()->with('success', 'Mail sent successfully');
     }

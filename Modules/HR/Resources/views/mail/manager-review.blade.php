@@ -4,17 +4,17 @@
             line-height: 1px;
         }
     </style>
-    <p>Dear, {{ $user['name'] }}</p>
+    <p>Dear, {{ $data['user']['name'] }}</p>
     <p>I hope this email finds you well and in good spirits!</p>
     <p>At ColoredCow our belief is we build great people who do extraordinary things. To facilitate the growth of
         talent, we are on our way to creating a career progression model, which requires a quarterly review of an
         employee based on some holistic growth parameters.</p>
     <br>
     <p>
-        As you are actively involved in managing the deliveries of  {{ $employee->name }},
+        As you are actively involved in managing the deliveries of {{ $data['employee']['name'] }},
         It’s time for you to do his assessment for the first quarter!
     </p>
-    <p><a href="{{ $links['manager_review_link'] }}">Manager assessment sheet</a></p>
+    <p><a href="{{ $data['review_link'] }}">Manager assessment sheet</a></p>
     <h5>Target date: {{ now()->addDays(7)->format('d-m-y') }}</h5>
     <p>
         Parallelly the mentee himself, the mentor associated, and an HR team member are also working on reviewing
