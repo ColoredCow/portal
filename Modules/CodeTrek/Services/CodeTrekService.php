@@ -39,10 +39,10 @@ class CodeTrekService
             ->groupBy('status')
             ->selectRaw('count(status) as total, status');
 
-        if ($centre == null) {
-            $applicantsData = $query->get();
-        } else {
+        if ($centre) {
             $applicantsData = $query->where('centre_id', $centre)->get();
+        } else {
+            $applicantsData = $query->get();
         }
 
         $statusCounts = [
