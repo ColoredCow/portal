@@ -2103,6 +2103,19 @@ $(function () {
 });
 
 $(document).ready(function() {
+
+	$(".thumbs-radio-button").change(function() {
+	  $(".thumbs-up").css("color", "");
+	  $(".thumbs-down").css("color", "");
+	  if ($(this).val() === "positive") {
+			$(this).siblings(".thumbs-up").css("color", "green");
+	  } else if ($(this).val() === "negative") {
+			$(this).siblings(".thumbs-down").css("color", "red");
+	  }
+	});
+});
+
+$(document).ready(function() {
 	$(".editBankDetail-btn").click(function() {
 		var bankDetailId = $(this).data("id");
 		var bankDetailLabel = $(this).data("label");
@@ -2137,3 +2150,4 @@ $(document).ready(function() {
 		this.submit(); // Manually trigger the form submission
 	});
 });
+
