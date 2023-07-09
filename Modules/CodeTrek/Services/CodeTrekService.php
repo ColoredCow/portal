@@ -71,7 +71,7 @@ class CodeTrekService
         $applicant->centre_id = $data['centre'];
         $applicant->mentor_id = $data['mentorId'];
         $applicant->domain_name = $data['domain'];
-        $applicant->latest_round_name = 'level-1';
+        $applicant->latest_round_name = config('codetrek.rounds.level-1.slug');
         // Mail::queue(new CodetrekMailApplicant($data)); This line will be uncommented in the future when the use of the codeTrek module starts in the proper way.
         $applicant->save();
 
