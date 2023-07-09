@@ -93,6 +93,15 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group offset-md-1 col-md-5">
+                            <label for="domain" class="field-required">Domain Name</label>
+                            <select name="domain" id="domain" class="form-control" required>
+                                <option value="">Select Domain Name</option>
+                                @foreach (config('codetrek.domain') as $key => $domain)
+                                    <option value="{{ $domain["slug"] }}" {{ $applicant->domain_name == $domain["slug"] ? 'selected' : '' }}>{{ $domain['label'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary save-btn">Save</button>
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">Delete</button>
