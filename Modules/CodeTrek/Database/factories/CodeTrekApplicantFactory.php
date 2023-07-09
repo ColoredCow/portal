@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\CodeTrek\Database\Factories;
+namespace Modules\CodeTrek\Database\factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\factories\Factory;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 
 class CodeTrekApplicantFactory extends Factory
