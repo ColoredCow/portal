@@ -4,11 +4,12 @@ namespace Modules\CodeTrek\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\CodeTrek\Database\factories\CodeTrekApplicantRoundDetailsFactory;
 
 class CodeTrekApplicantRoundDetail extends Model
 {
-    use HasFactory;
+    use SoftDeletes, HasFactory;
     protected $guarded = [];
     protected $table = 'codetrek_applicant_round_details';
 
