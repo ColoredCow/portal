@@ -16,7 +16,6 @@ class CodeTrekApplicant extends Model
     protected $guarded = [];
 
     protected $table = 'code_trek_applicants';
-    
     /**
      * Custom create method that creates an applicant and fires specific events.
      *

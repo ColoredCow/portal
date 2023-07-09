@@ -2,8 +2,8 @@
 
 namespace Modules\CodeTrek\Database\Factories;
 
-use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\CodeTrek\Entities\CodeTrekApplicant;
 
 class CodeTrekApplicantsFactory extends Factory
 {
