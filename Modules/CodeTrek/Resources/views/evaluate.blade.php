@@ -66,15 +66,15 @@
                         <div class="card-footer row {{($applicant->status == 'completed') ? 'd-none': '' }} ml-1">
                             <form class = "{{($applicant->status == 'inactive') ? 'd-none': '' }}" action="{{ route('codetrek.action', $applicant->id) }}" method="POST">
                                 @csrf
-                                    <div class="d-flex align-items-center">
-                                        <select name="round" id="rounds" class="w-22p">
-                                            @foreach (config('codetrek.rounds') as $round)
-                                                <option value="{{ $round['slug'] }}">Move to {{ $round['label'] }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <button type="submit" class="btn btn-success ml-2">Take Action</button>
-                                    </div>
+                                <div class="d-flex align-items-center">
+                                    <select name="round" id="rounds" class="w-22p">
+                                        @foreach (config('codetrek.rounds') as $round)
+                                            <option value="{{ $round['slug'] }}">Move to {{ $round['label'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <button type="submit" class="btn btn-success ml-2">Take Action</button>
+                                </div>
                             </form>
                             <form action="{{ route('codetrek.updateStatus', $applicant->id) }}" method="POST">
                                 @csrf
