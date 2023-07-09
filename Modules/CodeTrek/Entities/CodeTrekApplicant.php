@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Operations\Entities\OfficeLocation;
 use Modules\CodeTrek\Database\factories\CodeTrekApplicantFactory;
 use Modules\User\Entities\User;
+
 class CodeTrekApplicant extends Model
 {
     use SoftDeletes, HasFactory;
