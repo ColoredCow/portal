@@ -1,6 +1,7 @@
 <?php
 
 namespace Modules\CodeTrek\Database\Factories;
+
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
