@@ -5,14 +5,19 @@ namespace Modules\CodeTrek\Database\Factories;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CodeTrekApplicantFactory extends Factory
+class CodeTrekApplicantsFactory extends Factory
 {
+    /**
+     * Define the model's default state.
+     *
+     * @var string
+     */
+    protected $model = CodeTrekApplicant::class;
     /**
      * Define the model's default state.
      *
      * @return array
      */
-    protected $model = CodeTrekApplicant::class;
     public function definition()
     {
         return [
