@@ -36,7 +36,7 @@ class CodeTrekController extends Controller
         $applicantsData = json_encode($applicantData['applicantsData']);
         $statusCounts = $applicantData['statusCounts'];
         $applicantsGraph = $this->applicantBarGraphData($request);
-        $start_date = Carbon::parse($request->application_start_date) ?? today()->subYears(4);
+        $start_date = Carbon::parse($request->application_start_date) ?? today()->subYears(2);
         $end_date = Carbon::parse($request->application_end_date) ?? today();
         $counts = CodeTrekApplicant::select(\DB::Raw('DATE(start_date) as date, COUNT(*) as count'))
             ->whereDate('start_date', '>=', $start_date)
