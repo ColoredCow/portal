@@ -34,3 +34,4 @@ class CodeTrekApplicantRoundDetailsFactory extends Factory
             ];
     }
 }
+
