@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\CodeTrek\Database\Factories;
+namespace Modules\CodeTrek\Database\factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
@@ -13,7 +13,6 @@ class CodeTrekApplicantFactory extends Factory
      * @var string
      */
     protected $model = CodeTrekApplicant::class;
-
     /**
      * Define the model's default state.
      *
