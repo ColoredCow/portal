@@ -18,5 +18,6 @@ class CodeTrekDatabaseSeeder extends Seeder
 
         $this->call(CodeTrekPermissionTableSeeder::class);
         $this->call(CodeTrekApplicantsTableSeeder::class);
+        $this->call(CodeTrekApplicantRoundDetailsTableSeeder::class);
     }
 }
