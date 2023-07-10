@@ -63,11 +63,11 @@
                              </form>
                          </div>
                         @if ($loop->last)
-                        <div class="card-footer row {{($applicant->status == 'completed') ? 'd-none': '' }} ml-1">
+                        <div class="card-footer row {{($applicant->status == 'completed') ? 'd-none': '' }} pl-5">
                             <form class = "{{($applicant->status == 'inactive') ? 'd-none': '' }}" action="{{ route('codetrek.action', $applicant->id) }}" method="POST">
                                 @csrf
                                 <div class="d-flex align-items-center">
-                                    <select name="round" id="rounds" class="w-22p">
+                                    <select name="round" id="rounds" class="w-22p ml-1">
                                         @foreach (config('codetrek.rounds') as $round)
                                             <option value="{{ $round['slug'] }}">Move to {{ $round['label'] }}
                                             </option>
