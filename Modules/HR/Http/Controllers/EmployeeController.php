@@ -3,9 +3,13 @@
 namespace Modules\HR\Http\Controllers;
 
 use App\Services\EmployeeService;
+use Google_Client;
+use Google_Service_Sheets;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Mail;
+use Modules\HR\Emails\NewJoinerEmailForInfraTeam;
 use Modules\HR\Entities\Assessment;
 use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\HrJobDesignation;
@@ -13,8 +17,6 @@ use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\IndividualAssessment;
 use Modules\HR\Entities\Job;
 use Modules\Project\Entities\ProjectTeamMember;
-use Google_Client;
-use Google_Service_Sheets;
 use Modules\User\Entities\User;
 
 class EmployeeController extends Controller
@@ -151,7 +153,7 @@ class EmployeeController extends Controller
     public function showApprovalForm()
     {
         $client = new Google_Client();
-        $client->setAuthConfig('E:\Downloads\ninth-nebula-392106-8478ffdda8b1.json');
+        $client->setAuthConfig('C:\xampp\htdocs\portal\ninth-nebula-392106-8478ffdda8b1.json');
         $client->addScope(Google_Service_Sheets::SPREADSHEETS_READONLY);
 
         $service = new Google_Service_Sheets($client);
@@ -172,5 +174,14 @@ class EmployeeController extends Controller
         $user->save();
 
         return redirect()->back()->with('success', 'Users added successfully');
+    }
+
+    public function sendMailToInfraTeam(Request $request)
+    {
+        $data = $request->input('data');
+
+        Mail::send(new NewJoinerEmailForInfraTeam($data));
+
+        return redirect()->back()->with('success', 'Mail sent successfully');
     }
 }

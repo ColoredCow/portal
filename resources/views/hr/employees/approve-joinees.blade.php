@@ -27,8 +27,15 @@
                         <tr>
                             <td>{{ $row[1] }}</td>
                             <td>{{ $row[0] }}</td>
-                            <td> <a href="">Send email</a> </td>
-                            <td>                     <input type="text" id="email" name="email" class="save email" placeholder="email" required>
+                            <td>
+                                <form method="GET" action="{{ route('infra.mail') }}">
+                                    @csrf
+                                    <input type="hidden" name="data[0]" value="{{ $row[0] }}">
+                                    <input type="hidden" name="data[1]" value="{{ $row[1] }}">
+                                    <button type="submit"class="btn btn-transparent text-primary">Send email</button>
+                                </form>
+                            </td>
+                            <td> <input type="text" id="email" name="email" class="save email" placeholder="email">
                             </td>
                             <td>
                                 <input type="hidden" name="timestamp[]" value="{{ $row[0] }}">

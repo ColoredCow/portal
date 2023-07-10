@@ -130,6 +130,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/update-reviewers/{employee}', 'EmployeeController@updateEmployeeReviewers')->name('update.employee.reviewers');
         Route::get('/approve-joinees', 'EmployeeController@showApprovalForm')->name('approve.joinees.show');
         Route::post('/approve-joinees', 'EmployeeController@processApprovalForm')->name('approve.joinees');
+        Route::GET('/infra-mail', 'EmployeeController@sendMailToInfraTeam')->name('infra.mail');
+
 
         Route::resource('requisition', 'RequisitionController')
             ->only(['index', 'show', 'store'])

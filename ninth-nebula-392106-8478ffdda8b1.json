@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "ninth-nebula-392106",
+  "private_key_id": "8478ffdda8b1e31385449eefb87eefdba915e1c1",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQD4sngydkbN90p1\nqroq4dBIF/0b3Q/2fWRfBtnFDkDXVfP1OjcrNQjjjqmKS0/PsBshvjBiWwF6kBlz\nBh1N8uaXUhhbrOLyudXsMoqYp5EZfgOkagzRZWwOjbst5dQx2sVcbdyi2kefcSGU\ng2EoV1oHfImnrnFp3eK/7fEKScxFQy5umelxgZAGuoM5hen1q8IvV0NRNEhsVJEP\n4IjHgKb5mjOuZffy/Sl7qkPSrvkiw7goGFUzGb7SPaVp3oK7fdsT7gGCIN+n2J2P\nC/caLKZTAwjPxWSmcBlFmpqT9zlbZwt6o2vfqHWBqKxgPrsQA/4lSqu3Dhc8XXQB\n8nFtaWj9AgMBAAECggEAC8uVi5/0Q/C7UKRfZKKsJb2Zhn8Wf24IDie9hiz8YoCU\nBWjHu0SUxNiV1ImcFSSFmbT/1EWVTUWIJ3fxRaqqr1LR9YfxuNBoKhkyXWlV81V4\nmvPHfHQo5ItqIGDa23h3gHN0RPcN8ZNEilr6BzDjA+4Ve0uSdN9BhP4/vrZF7XAm\nOkHwZfOyDm16U/y54GXDE5IxrpDN2qQPB30WxfX0uRj6PwDv+9DUvX/hj3b82nK9\njFbWJmVwn4Yt6W6Y/f1BJuUYErPkNdWOphkfO5Hd3ib7xHAz3K4e61u/MWiOaFWD\njCvYu3OP80gK/Bv2ESkKoiaSBjshQt9+IvicuUtjwQKBgQD/y7z3qo+0pU05KbKi\nFMdqpN0Y/UjhJGs5v54K8Aag5t9hPF1DZz6wweMhckxJvdRC//ksvrGLe0KLjUrf\neFL/9sKl4Xj7vhyhg/Yl2Y7mRdYuQEtYs04ILwtqv5zG1FKoZrUr6J69IemIqrmU\nRD6hbJ5M2mfC6OQGdy1Q3hvxnQKBgQD45UfxL1QYbqawkfMqVX6HzznDetPfHHco\n0Tv0j0s4RGrnh/v9aeriQE+3I8wjNuFO98998Rv9ue2ZZ1HfBiJ8F0sV70ecN2cQ\nfR+bg1pJMizmzCEUy/B2FouuqvR+ES3pdTcF4oGLuzEQFA66VYrSNXC8Uva8/TS0\nsA8FZ7Pm4QKBgQD0kxMdIwHAUYUisNHR01hQiU21hQfX7QBw+NvdzV4pHlZbHGJ3\n/hGc4+WNp0F2CIEZhrHyrGoJ2VLpJ7F9Ngj2IDRAcvNAkKfDbu89hWTym7eMBYGF\nT/u+K20ZJhh6q6xUw89aKlMMt44ZVFOYhh/0LGy3QuSPIipUXEMB3TyOqQKBgAq/\na+HgV1NOw+fwBX4YfwRCUI4+aZPC2OpsTph675aYbb1dw+XngvsOJ+MSqqgCoKwW\nS2F23eyQ8M+lBIYK78ZIAzgJQyBdzBeML6c5ftaWUhYNTohlXhbbVmDOhQxElaT1\nKNEaPNnZ1X6KPzCQrRPyttGLC5iRnosG5z8mgUBBAoGBAOlLBlLcR2aOuCEo82cj\nqeMYRESNIKuvOQKO8ebfYimsWgqCyZTSZIvnClNj/vUp+BokALXPWT0rHYyT0t8f\nAWl/MRr25ryc5NjEl/7iPMmNI9jPcYk0t4JkMsF0CTxEJLo79Hvmmybi0LkCpOH8\nCBoowuuovBTwVh0mEOwN8aGt\n-----END PRIVATE KEY-----\n",
+  "client_email": "google-sheets-api@ninth-nebula-392106.iam.gserviceaccount.com",
+  "client_id": "111979648204663340683",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/google-sheets-api%40ninth-nebula-392106.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
