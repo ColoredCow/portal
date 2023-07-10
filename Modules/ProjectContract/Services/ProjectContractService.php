@@ -140,32 +140,32 @@ class ProjectContractService
     }
     public function updateContract($id)
     {
-        $Contract = Contract::find($id);
-        $Contract->status = 'Finalise by client';
-        $Contract->save();
-        $Reviewer = Reviewer::where(['contract_id' => $id])->first();
-        $Reviewer->status = 'approved';
-        $Reviewer->save();
+        $contract = Contract::find($id);
+        $contract->status = 'finalise-by-client';
+        $contract->save();
+        $reviewer = Reviewer::where(['contract_id' => $id])->first();
+        $reviewer->status = 'approved';
+        $reviewer->save();
 
-        return $Contract;
+        return $contract;
     }
     public function updateInternalContract($id)
     {
-        $Contract = Contract::find($id);
-        if ($Contract->user_id == Auth::id()) {
-            $Reviewer = ContractInternalReview::where(['contract_id' => $id, 'user_type' => 'cc-team'])->first();
-            $Reviewer->status = 'approved';
-            $Reviewer->save();
-            $Contract->status = 'Finalise by User';
+        $contract = Contract::find($id);
+        if ($contract->user_id == Auth::id()) {
+            $reviewer = ContractInternalReview::where(['contract_id' => $id, 'user_type' => 'cc-team'])->first();
+            $reviewer->status = 'approved';
+            $reviewer->save();
+            $contract->status = 'finalise-by-User';
         } else {
-            $Reviewer = ContractInternalReview::where(['contract_id' => $id, 'user_type' => 'finance-team'])->first();
-            $Reviewer->status = 'approved';
-            $Reviewer->save();
-            $Contract->status = 'Finalise by finance';
+            $reviewer = ContractInternalReview::where(['contract_id' => $id, 'user_type' => 'finance-team'])->first();
+            $reviewer->status = 'approved';
+            $reviewer->save();
+            $contract->status = 'finalise-by-finance';
         }
-        $Contract->save();
+        $contract->save();
 
-        return $Contract;
+        return $contract;
     }
     public function storeReveiwer($request)
     {
@@ -173,18 +173,18 @@ class ProjectContractService
         $name = $request['name'];
         $email = $request['email'];
 
-        $Reviewer = new Reviewer;
-        $Reviewer->contract_id = $id;
-        $Reviewer->name = $name;
-        $Reviewer->email = $email;
-        $Reviewer->status = 'pending';
-        $Reviewer->save();
+        $reviewer = new Reviewer;
+        $reviewer->contract_id = $id;
+        $reviewer->name = $name;
+        $reviewer->email = $email;
+        $reviewer->status = 'pending';
+        $reviewer->save();
 
         $Contract = Contract::find($id);
-        $Contract->status = 'Sent for client review';
+        $Contract->status = 'sent-for-client-review';
         $Contract->save();
 
-        return $Reviewer;
+        return $reviewer;
     }
     public function editContract($request)
     {
@@ -200,7 +200,7 @@ class ProjectContractService
 
         $contractData = [
             'contract_name' => $request['client_name'],
-            'status' => 'Updated by client',
+            'status' => 'updated-by-client',
         ];
         if (isset($request['gst'])) {
             $gst = $request['gst'];
@@ -272,7 +272,7 @@ class ProjectContractService
         $Reviewer->save();
 
         $Contract = Contract::find($id);
-        $Contract->status = 'Sent for finance review';
+        $Contract->status = 'sent-for-finance-review';
         $Contract->save();
 
         return $Reviewer;
@@ -288,12 +288,12 @@ class ProjectContractService
 
         $contractData = [
             'contract_name' => $request['client_name'],
-            'status' => 'Updated by finance',
+            'status' => 'updated-by-finance',
         ];
 
         $id = Contract::where('id', $request['id'])->first();
         if ($id->user_id == Auth::id()) {
-            $contractData['status'] = 'Updated by CC team';
+            $contractData['status'] = 'updated-by-cc-team';
         }
         if (isset($request['gst'])) {
             $gst = $request['gst'];
@@ -351,16 +351,16 @@ class ProjectContractService
     }
     public function storeUser($id)
     {
-        $Reviewer = new ContractInternalReview;
-        $Reviewer->contract_id = $id;
-        $Reviewer->name = Auth::user()->name;
-        $Reviewer->email = Auth::user()->email;
-        $Reviewer->user_id = Auth::id();
-        $Reviewer->status = 'pending';
-        $Reviewer->user_type = 'cc-team';
-        $Reviewer->save();
+        $reviewer = new ContractInternalReview;
+        $reviewer->contract_id = $id;
+        $reviewer->name = Auth::user()->name;
+        $reviewer->email = Auth::user()->email;
+        $reviewer->user_id = Auth::id();
+        $reviewer->status = 'pending';
+        $reviewer->user_type = 'cc-team';
+        $reviewer->save();
 
-        return $Reviewer;
+        return $reviewer;
     }
     public function getCommentHistory($id)
     {

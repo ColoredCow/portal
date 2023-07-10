@@ -12,18 +12,18 @@ class ProjectContractMailService
 {
     public function sendClientReview($mail, $link)
     {
-        Mail::to($mail)->send(new ClientReview($link));
+        Mail::to($mail)->queue(new ClientReview($link));
     }
     public function sendClientResponse($mail)
     {
-        Mail::to($mail)->send(new ClientApproveReview());
+        Mail::to($mail)->queue(new ClientApproveReview());
     }
     public function sendClientUpdate($mail)
     {
-        Mail::to($mail)->send(new ClientUpdateReview());
+        Mail::to($mail)->queue(new ClientUpdateReview());
     }
     public function sendFinanceReview($mail)
     {
-        Mail::to($mail)->send(new FinanceReview());
+        Mail::to($mail)->queue(new FinanceReview());
     }
 }
