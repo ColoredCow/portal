@@ -17,6 +17,7 @@
                         <th>Full Name</th>
                         <th>Last Updated</th>
                         <th>Send email to infra</th>
+                        <th>Enter new email</th>
                         <!-- Add other fields as needed -->
                         <th>Approve</th>
                     </tr>
@@ -27,6 +28,8 @@
                             <td>{{ $row[1] }}</td>
                             <td>{{ $row[0] }}</td>
                             <td> <a href="">Send email</a> </td>
+                            <td>                     <input type="text" id="email" name="email" class="save email" placeholder="email" required>
+                            </td>
                             <td>
                                 <input type="hidden" name="timestamp[]" value="{{ $row[0] }}">
                                 <input type="hidden" name="full_name[]" value="{{ $row[1] }}">
