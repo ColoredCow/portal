@@ -4,7 +4,6 @@ namespace Modules\HR\Services;
 
 use Modules\HR\Entities\University;
 use Modules\HR\Contracts\UniversityServiceContract;
-use Illuminate\Support\Facades\DB;
 
 class UniversityService implements UniversityServiceContract
 {
