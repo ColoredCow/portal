@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Operations\Entities\OfficeLocation;
 use Modules\User\Entities\User;
+use App\Models\Session;
 
 class CodeTrekApplicant extends Model
 {
@@ -25,5 +26,10 @@ class CodeTrekApplicant extends Model
     public function mentor()
     {
         return $this->belongsTo(User::class, 'mentor_id');
+    }
+
+    public function sessions()
+    {
+        return $this->morphToMany(Session::class, 'model','model_has_sessions');
     }
 }
