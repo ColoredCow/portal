@@ -77,7 +77,7 @@ mix
   .sass(
     "Modules/Expense/Resources/assets/sass/app.scss",
     "public/css/expense.css"
-);
+  );
 mix
   .js("Modules/CodeTrek/Resources/assets/js/app.js", "public/js/app.js");
 mix.version();
