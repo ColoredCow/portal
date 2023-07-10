@@ -40,9 +40,9 @@ class CodeTrekService
             ->selectRaw('count(status) as total, status');
 
         if ($centre) {
-            $applicantsData = $applicantCountData->where('centre_id', $centre)->get();
+            $applicantCountData = $applicantCountData->where('centre_id', $centre)->get();
         } else {
-            $applicantsData = $applicantCountData->get();
+            $applicantCountData = $applicantCountData->get();
         }
 
         $statusCounts = [
@@ -51,13 +51,13 @@ class CodeTrekService
             'completed' => 0
         ];
 
-        foreach ($applicantsData as $data) {
+        foreach ($applicantCountData as $data) {
             $statusCounts[$data->status] = $data->total;
         }
 
         return [
             'applicants' => $applicants,
-            'applicantsData' => $applicantsData,
+            'applicantsData' => $applicantCountData,
             'statusCounts' => $statusCounts,
         ];
     }
