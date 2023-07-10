@@ -62,9 +62,9 @@
                 </td>
                 <td>
                     <a href="{{ route('universities.edit', $university) }}" title="Edit" class="pr-1 btn btn-link"><i class="text-success fa ffa-lga-edit "></i></a>
-                    <button type="submit" class="pl-1 btn btn-link" title="Delete" data-toggle="modal" data-target="#DeleteUniversity{{ $university->id }}"><i class="text-danger fa fa-trash fa-lg"></i></button>
+                    <button type="submit" class="pl-1 btn btn-link" title="Delete" data-toggle="modal" data-target="#DeleteUniversityModal{{ $university->id }}"><i class="text-danger fa fa-trash fa-lg"></i></button>
                     @include('component.delete-modal', [
-                            modalId' => 'DeleteUniversity' . $university->id,
+                            modalId' => 'DeleteUniversityModal' . $university->id,
                             'title' => 'Delete University',
                             'body' => 'Are you sure you want to delete this university?',
                             'action' => route('universities.destroy', $university)
