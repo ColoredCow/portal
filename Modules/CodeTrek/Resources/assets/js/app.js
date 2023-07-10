@@ -25,7 +25,6 @@ function CodeTrekApplicationsReport(applicantsGraph) {
 				data: applicantsGraph.counts,
 				backgroundColor: "rgba(52, 144, 220)",
 				borderColor: "rgba(52, 144, 220)",
-				// borderWidth: 10,
 			},
 		],
 	};

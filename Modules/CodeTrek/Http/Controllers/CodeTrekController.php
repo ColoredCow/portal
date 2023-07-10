@@ -35,7 +35,6 @@ class CodeTrekController extends Controller
         $applicants = $applicantData['applicants'];
         $applicantsData = json_encode($applicantData['applicantsData']);
         $statusCounts = $applicantData['statusCounts'];
-        $applicantsGraph = $this->applicantBarGraphData($request);
         $start_date = Carbon::parse($request->application_start_date) ?? today()->subYears(4);
         $end_date = Carbon::parse($request->application_end_date) ?? today();
         $counts = CodeTrekApplicant::select(\DB::Raw('DATE(start_date) as date, COUNT(*) as count'))
@@ -48,31 +47,9 @@ class CodeTrekController extends Controller
             'centres' => $centres,
             'mentors' => $mentors,
             'applicantsData' => $applicantsData,
-            'applicantsGraph' => $applicantsGraph,
             'counts' => $counts,
             'statusCounts' => $statusCounts
         ]);
-    }
-
-    public function applicantBarGraphData(Request $request)
-    {
-        $application_start_date = $request->application_start_date ?? today()->subYears(4);
-        $application_end_date = $request->application_end_date ?? today();
-        $applicantChartData = CodeTrekApplicant::select(\DB::Raw('DATE(created_at) as date, COUNT(*) as count'))
-            ->whereDate('start_date', '>=', $application_start_date)
-            ->whereDate('start_date', '<=', $application_end_date)
-            ->groupBy('date')
-            ->get();
-
-        $dates = $applicantChartData->pluck('date')->toArray();
-        $counts = $applicantChartData->pluck('count')->toArray();
-        $chartData = [
-            'dates' => $dates,
-            'counts' => $counts,
-        ];
-        $applicantsGraph = json_encode($chartData);
-
-        return $applicantsGraph;
     }
 
     public function getApplicantData(Request $request)

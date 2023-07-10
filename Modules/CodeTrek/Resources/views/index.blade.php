@@ -212,7 +212,6 @@
                         </form>
                         <span class="chart-heading">Applications Received: {{$counts}}</span>
                     </div>
-                    <div id="BarGraph" class="card-body chart-data" data-target="{{ $applicantsGraph }}">
                     <canvas class="w-full" id="CodeTrekApplicationReport"></canvas>
                     </div>
                 </div>
