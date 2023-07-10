@@ -106,14 +106,12 @@ The client page also offers information on client status, allowing users to keep
 
     - Click "Save & Exit"
 
----
-### You have successfully added a client.
-
-#### Once the button was clicked, the client's data should be displayed on the client page.
-   - From here you can also edit the client's detail by simply clicking on the client's name.
-   - By simply entering the client's name in the search bar, users can easily search for any client.
-
-  <img width="1273" alt="Screenshot 2023-06-27 at 6 07 57 PM" src="https://github.com/ColoredCow/portal/assets/104312137/f410b59e-2755-49e7-861b-db91fc18d743">
+    #### Once the button was clicked, the client's data should be displayed on the client page.
+   
+     - From here you can also edit the client's detail by simply clicking on the client's name.
+     - By simply entering the client's name in the search bar, users can easily search for any client.
+       
+       <img width="1273" alt="Screenshot 2023-06-27 at 6 07 57 PM" src="https://github.com/ColoredCow/portal/assets/104312137/f410b59e-2755-49e7-861b-db91fc18d743">
 
 ---
 
