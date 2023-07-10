@@ -150,7 +150,7 @@ class EmployeeController extends Controller
 
     public function showApprovalForm()
     {
-        
+
         $client = new Google_Client();
         $client->setAuthConfig('E:\Downloads\ninth-nebula-392106-8478ffdda8b1.json');
         $client->addScope(Google_Service_Sheets::SPREADSHEETS_READONLY);
@@ -167,18 +167,11 @@ class EmployeeController extends Controller
 
     public function processApprovalForm(Request $request)
     {
-        $names = $request->input('full_name');
-        $approvals = $request->input('approved');
-
-        foreach ($approvals as $index => $approval) {
-            if ($approval == 'approved') { // Check if the checkbox value is 'approved'
-                // Create new user with the approved data
-                $user = new User();
-                $user->name = $names[$index];
-
-                $user->save();
-            }
-        }
+        $name = $request->input('full_name');
+        $user = new User();
+        $user->name = $name;
+        
+        $user->save();
 
         return redirect()->back()->with('success', 'Users added successfully');
     }
