@@ -3,7 +3,6 @@
 namespace Modules\CodeTrek\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-// use Modules\CodeTrek\Database\Factories\CodeTrekApplicantRoundDetailsFactory;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
 class CodeTrekApplicantRoundDetailsTableSeeder extends Seeder
