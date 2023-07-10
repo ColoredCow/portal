@@ -440,6 +440,8 @@ class ProjectService implements ProjectServiceContract
             $endDate = (clone $startDate)->endOfMonth()->toDateString();
         }
 
+        $startDate = $startDate->toDateString();
+
         $employees = Employee::applyFilters($filters)
             ->get();
 
@@ -463,7 +465,7 @@ class ProjectService implements ProjectServiceContract
                     $activeProjectTeamMember->project->name,
                     number_format($activeProjectTeamMember->getFte($startDate, $endDate), 2),
                     number_format($activeProjectTeamMember->getCommittedEfforts($startDate, $endDate), 2),
-                    number_format($activeProjectTeamMember->getBookedEfforts($startDate, $endDate), 2)
+                    number_format($activeProjectTeamMember->getActualEffortBetween($startDate, $endDate), 2)
                 ];
                 $teamMembers[] = $teamMember;
             }

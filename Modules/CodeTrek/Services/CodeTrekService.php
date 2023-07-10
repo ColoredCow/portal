@@ -3,6 +3,7 @@
 namespace Modules\CodeTrek\Services;
 
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
+use Modules\CodeTrek\Entities\CodeTrekCandidateFeedback;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 use Illuminate\Support\Facades\Mail;
 use  Modules\CodeTrek\Emails\CodetrekMailApplicant;
@@ -29,8 +30,8 @@ class CodeTrekService
         $applicants = $query->when($search, function ($query) use ($search) {
             return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
         })
-        ->paginate(config('constants.pagination_size'))
-        ->appends(request()->except('page'));
+            ->paginate(config('constants.pagination_size'))
+            ->appends(request()->except('page'));
 
         $applicantsData = CodeTrekApplicant::whereIn('status', ['active', 'inactive', 'completed'])->with('mentor')
         ->when($search, function ($query) use ($search) {
@@ -70,10 +71,12 @@ class CodeTrekService
         $applicant->university = $data['university_name'] ?? null;
         $applicant->centre_id = $data['centre'];
         $applicant->mentor_id = $data['mentorId'];
+        $applicant->domain_name = $data['domain'];
+        $applicant->latest_round_name = config('codetrek.rounds.level-1.slug');
         // Mail::queue(new CodetrekMailApplicant($data)); This line will be uncommented in the future when the use of the codeTrek module starts in the proper way.
         $applicant->save();
 
-        $this->moveApplicantToRound($applicant, $data);
+        $this->moveApplicantToRoundOne($applicant, $data);
 
         return $applicant;
     }
@@ -97,6 +100,7 @@ class CodeTrekService
         $applicant->university = $data['university_name'] ?? null;
         $applicant->centre_id = $data['centre'] ?? null;
         $applicant->mentor_id = $data['mentorId'] ?? null;
+        $applicant->domain_name = $data['domain'];
         $applicant->save();
 
         return $applicant;
@@ -109,7 +113,7 @@ class CodeTrekService
         return $roundDetails;
     }
 
-    public function moveApplicantToRound($applicant, $data)
+    public function moveApplicantToRoundOne($applicant, $data)
     {
         $applicationRound = new CodeTrekApplicantRoundDetail();
         $applicationRound->applicant_id = $applicant->id;
@@ -117,5 +121,18 @@ class CodeTrekService
         $applicationRound->feedback = null;
         $applicationRound->start_date = $data['start_date'];
         $applicationRound->save();
+    }
+
+    public function storeCodeTrekApplicantFeedback($data)
+    {
+        $feedback = new CodeTrekCandidateFeedback();
+        $feedback->category_id = $data['feedback_category'];
+        $feedback->feedback = $data['feedback'];
+        $feedback->feedback_type = $data['feedback_type'];
+        $feedback->latest_round_name = $data['latest_round_name'];
+        $feedback->candidate_id = $data['candidate_id'];
+        $feedback->posted_by = auth()->user()->id;
+        $feedback->posted_on = today();
+        $feedback->save();
     }
 }
