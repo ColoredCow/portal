@@ -28,7 +28,7 @@ class CodeTrekApplicantRoundDetailsFactory extends Factory
             'applicant_id' => function () {
                 return CodeTrekApplicant::factory()->create()->id;
             },
-            'round_name' => 'level-1',
+            'latest_round_name' => 'level-1',
             'feedback' => $this->faker->sentence
                 // define other attributes here
             ];
