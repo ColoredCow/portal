@@ -42,5 +42,15 @@ return [
             'slug'  =>'onboarded',
             'class' => 'badge badge-success'
         ],
+    ],
+    'domain' => [
+        'engineering' => [
+            'label' => 'Engineering',
+            'slug' => 'engineering',
+        ],
+        'design' => [
+            'label' => 'Design',
+            'slug' => 'design',
+        ],
     ]
 ];
