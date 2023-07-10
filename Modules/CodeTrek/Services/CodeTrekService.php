@@ -57,8 +57,7 @@ class CodeTrekService
 
         return [
             'applicants' => $applicants,
-            'applicantsData' => $applicantCountData,
-            'statusCounts' => $statusCounts,
+            'statusCounts' => $statusCounts
         ];
     }
     public function store($data)
