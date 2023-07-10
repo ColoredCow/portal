@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Operations\Entities\OfficeLocation;
-use Modules\CodeTrek\Database\Factories\CodeTrekApplicantFactory;
+use Modules\CodeTrek\Database\factories\CodeTrekApplicantFactory;
 use Carbon\Carbon;
 use Modules\User\Entities\User;
 
