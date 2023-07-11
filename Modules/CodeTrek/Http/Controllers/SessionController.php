@@ -3,7 +3,6 @@
 namespace Modules\CodeTrek\Http\Controllers;
 
 use App\Models\Session;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Http\Requests\SessionRequest;
