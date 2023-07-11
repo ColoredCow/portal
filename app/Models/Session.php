@@ -15,5 +15,6 @@ class Session extends Model
     public function codetrekApplicants()
     {
         return $this->morphedByMany(CodeTrekApplicant::class, 'model', 'model_has_sessions');
+        
     }   
 }

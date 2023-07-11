@@ -6,7 +6,7 @@ use App\Models\Session;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
-use Modules\CodeTrek\Http\Requests\SessionRequest;  
+use Modules\CodeTrek\Http\Requests\SessionRequest;
 
 class SessionController extends Controller
 {
@@ -49,7 +49,7 @@ class SessionController extends Controller
             'summary' => $request->input('summary'),
         ]);
 
-         return redirect()->route('codetrek.session.show', $codeTrekApplicant->id)->with('success', 'Session created successfully.');
+        return redirect()->route('codetrek.session.show', $codeTrekApplicant->id)->with('success', 'Session created successfully.');
     }
 
     /**
@@ -65,7 +65,7 @@ class SessionController extends Controller
         ->orderBy('date', 'desc')
         ->get();
 
-         return view('codetrek::Sessions.index')->with(['codeTrekApplicant' => $codeTrekApplicant,'sessions' =>$sessions]);
+        return view('codetrek::Sessions.index')->with(['codeTrekApplicant' => $codeTrekApplicant,'sessions' =>$sessions]);
     }
 
     /**
@@ -100,7 +100,7 @@ class SessionController extends Controller
         ]);
         $session->save();
 
-        return redirect()->route('codetrek.session.show', $hiddenValue )->with('success', 'Session updated successfully.');
+        return redirect()->route('codetrek.session.show', $hiddenValue)->with('success', 'Session updated successfully.');
     }
 
     /**
@@ -114,6 +114,6 @@ class SessionController extends Controller
         $session = Session::find($session_id);
         $session->delete();
 
-        return redirect()->route('codetrek.session.show',$applicant_id)->with('success', 'Session deleted successfully.');
+        return redirect()->route('codetrek.session.show', $applicant_id)->with('success', 'Session deleted successfully.');
     }
 }

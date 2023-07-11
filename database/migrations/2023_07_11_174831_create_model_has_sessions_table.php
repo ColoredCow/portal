@@ -14,7 +14,7 @@ class CreateModelHasSessionsTable extends Migration
     public function up()
     {
         Schema::create('model_has_sessions', function (Blueprint $table) {
-             $table->unsignedBigInteger('session_id');
+            $table->unsignedBigInteger('session_id');
             $table->unsignedBigInteger('model_id');
             $table->string('model_type');
             $table->timestamps();
