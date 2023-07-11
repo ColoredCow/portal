@@ -7,7 +7,6 @@ use Modules\CodeTrek\Entities\CodeTrekApplicant;
 
 class ReportDataService
 {
-
     public function getData($type, $filters)
     {
         if ($type == 'revenue-trend') {
