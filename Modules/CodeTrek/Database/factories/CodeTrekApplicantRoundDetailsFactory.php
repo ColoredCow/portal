@@ -30,7 +30,6 @@ class CodeTrekApplicantRoundDetailsFactory extends Factory
             },
             'latest_round_name' => 'level-1',
             'feedback' => $this->faker->sentence
-                // define other attributes here
             ];
     }
 }

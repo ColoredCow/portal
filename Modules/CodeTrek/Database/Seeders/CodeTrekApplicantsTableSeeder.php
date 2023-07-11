@@ -17,6 +17,6 @@ class CodeTrekApplicantsTableSeeder extends Seeder
     {
         // Model::unguard();
 
-        CodeTrekApplicant::factory()->count(50)->create();
+        CodeTrekApplicant::factory()->count(10)->create();
     }
 }

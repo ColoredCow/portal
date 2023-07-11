@@ -9,6 +9,6 @@ class CodeTrekApplicantRoundDetailsTableSeeder extends Seeder
 {
     public function run()
     {
-        CodeTrekApplicantRoundDetail::factory()->count(50)->create();
+        CodeTrekApplicantRoundDetail::factory()->count(10)->create();
     }
 }
