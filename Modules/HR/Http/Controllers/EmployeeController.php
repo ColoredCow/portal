@@ -169,8 +169,10 @@ class EmployeeController extends Controller
     public function processApprovalForm(Request $request)
     {
         $name = $request->input('full_name');
+        $email = $request->input('email');
         $user = new User();
         $user->name = $name;
+        $user->email = $email;
         $user->save();
 
         return redirect()->back()->with('success', 'Users added successfully');
