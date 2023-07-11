@@ -18,7 +18,6 @@ class CodeTrekRequest extends FormRequest
             'university_name' => 'nullable|string',
             'course' => 'nullable|string',
             'graduation_year' => 'nullable|numeric|digits:4',
-            'topic_name' => 'required|string'
         ];
     }
 

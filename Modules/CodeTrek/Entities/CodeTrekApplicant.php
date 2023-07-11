@@ -30,6 +30,6 @@ class CodeTrekApplicant extends Model
 
     public function sessions()
     {
-        return $this->morphToMany(Session::class, 'model','model_has_sessions');
+        return $this->morphToMany(Session::class, 'model', 'model_has_sessions');
     }
 }

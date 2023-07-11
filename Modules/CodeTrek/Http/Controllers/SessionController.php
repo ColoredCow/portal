@@ -48,12 +48,14 @@ class SessionController extends Controller
         $topicName = $request->input('topic_name');
         $date = $request->input('date');
         $link = $request->input('link');
+        $level = $request->input('level');
         $summary = $request->input('summary');
 
         $session = $codeTrekApplicant->sessions()->create([
             'topic_name' => $topicName,
             'date' => $date,
             'link' => $link,
+            'level' => $level,
             'summary' => $summary,
         ]);
 
@@ -106,6 +108,7 @@ class SessionController extends Controller
         $topicName = $request->input('topic_name');
         $date = $request->input('date');
         $link = $request->input('link');
+        $level = $request->input('level');
         $summary = $request->input('summary');
 
         $session = Session::find($id);
@@ -113,16 +116,14 @@ class SessionController extends Controller
             'topic_name' => $topicName,
             'date' => $date,
             'link' => $link,
+            'level'=> $level,
             'summary' => $summary
         ]);
 
         $session->save();
 
         return redirect()->route('codetrek.session.show',$hiddenValue)
-            ->with('success', 'Session created successfully.');
-
-        
-
+            ->with('success', 'Session updated successfully.');
     }
 
     /**
@@ -131,7 +132,7 @@ class SessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(int $session_id,int $applicant_id )
+    public function destroy($session_id, $applicant_id )
     {   
         
         $session = Session::find($session_id);

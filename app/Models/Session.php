@@ -8,7 +8,7 @@ use Modules\CodeTrek\Entities\CodeTrekApplicant;
 
 class Session extends Model
 {
-    protected $fillable = ['topic_name', 'date','link', 'summary'];
+    protected $fillable = ['topic_name', 'date', 'link', 'level', 'summary'];
 
     use HasFactory;
 

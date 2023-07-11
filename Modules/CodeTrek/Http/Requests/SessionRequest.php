@@ -12,6 +12,7 @@ class SessionRequest extends FormRequest
             'topic_name' => 'required|string',
             'link' => 'required|string',
             'date' => 'required|date',
+            'level' => 'required',
             'summary' => 'required|string|max:250',
         ];
     }
@@ -28,8 +29,8 @@ class SessionRequest extends FormRequest
             'link.required' => 'Please enter the session link.',
             'date.required' => 'Please enter the session date.',
             'date.date' => 'Please enter a valid date.',
+            'level.required' => 'Please select level ',
             'summary.required' => 'Please enter the summary.',
-            'summry.max' => "Summary is more than 250 cahracters"
         ];
     }
 }
