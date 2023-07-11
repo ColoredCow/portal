@@ -130,6 +130,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/update-reviewers/{employee}', 'EmployeeController@updateEmployeeReviewers')->name('update.employee.reviewers');
         Route::get('/approve-joinees', 'EmployeeController@showApprovalForm')->name('approve.joinees.show');
         Route::post('/approve-joinees', 'EmployeeController@processApprovalForm')->name('approve.joinees');
+        Route::post('/send-basic-detail-mail', 'EmployeeController@sendMailBasicDetail')->name('approve.send-basic-mail');
 
         Route::resource('requisition', 'RequisitionController')
             ->only(['index', 'show', 'store'])
