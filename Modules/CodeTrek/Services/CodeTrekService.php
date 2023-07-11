@@ -5,8 +5,6 @@ namespace Modules\CodeTrek\Services;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Entities\CodeTrekCandidateFeedback;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
-use Illuminate\Support\Facades\Mail;
-use  Modules\CodeTrek\Emails\CodetrekMailApplicant;
 
 class CodeTrekService
 {
@@ -33,26 +31,32 @@ class CodeTrekService
             ->paginate(config('constants.pagination_size'))
             ->appends(request()->except('page'));
 
-        $applicantsData = CodeTrekApplicant::whereIn('status', ['active', 'inactive', 'completed'])->with('mentor')
-        ->when($search, function ($query) use ($search) {
-            return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
-        })
-        ->groupBy('status')
-        ->selectRaw('count(status) as total, status')
-        ->get();
+        $applicantCountData = CodeTrekApplicant::whereIn('status', ['active', 'inactive', 'completed'])
+            ->with('mentor')
+            ->when($search, function ($applicantCountData) use ($search) {
+                return $applicantCountData->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
+            })
+            ->groupBy('status')
+            ->selectRaw('count(status) as total, status');
+
+        if ($centre) {
+            $applicantCountData = $applicantCountData->where('centre_id', $centre)->get();
+        } else {
+            $applicantCountData = $applicantCountData->get();
+        }
 
         $statusCounts = [
             'active' => 0,
             'inactive' => 0,
             'completed' => 0
         ];
-        foreach ($applicantsData as $data) {
+
+        foreach ($applicantCountData as $data) {
             $statusCounts[$data->status] = $data->total;
         }
 
         return [
             'applicants' => $applicants,
-            'applicantsData' => $applicantsData,
             'statusCounts' => $statusCounts
         ];
     }
