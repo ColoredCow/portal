@@ -15,10 +15,9 @@ Please add the action items that you performed and the time they took. For examp
 - [ ] Action item 2: 4 - 8 hours
 -->
 
+**Expected Time Range:**
 
-    **Expected Time Range:**
-
-    **Actual Time:** 
+**Actual Time:** 
 
 ## Feedback Cycle
 <!-- 
