@@ -25,18 +25,9 @@ Route::prefix('codetrek')->middleware('auth')->group(function () {
     Route::resource('session', 'SessionController')
             ->only(['index', 'edit', 'update', 'store'])
             ->names(['index' => 'codetrek.session.index', 'edit' => 'codetrek.session.edit', 'update' => 'codetrek.session.update', 'store' => 'codetrek.session.store']);
-    
+            
     Route::get('/session', 'SessionController@index')->name('codetrek.session.index');
     Route::get('/session/{applicant}', 'SessionController@show')->name('codetrek.session.show');
     Route::put('sessions/{session}', 'SessionController@update')->name('codetrek.session.update');
-    Route::post('/session/{session_id}/{applicant_id}','SessionController@destroy')->name('codetrek.session.delete');
-
-
-    
-
-
-
-
-    
-            
+    Route::post('/session/{session_id}/{applicant_id}','SessionController@destroy')->name('codetrek.session.delete');           
 });

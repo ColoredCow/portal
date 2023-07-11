@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 namespace Modules\CodeTrek\Http\Controllers;
 
@@ -29,7 +29,6 @@ class SessionController extends Controller
      */
     public function create(CodeTrekApplicant $codeTrekApplicant)
     {
-
     }
 
     /**
@@ -40,8 +39,6 @@ class SessionController extends Controller
      */
     public function store(SessionRequest $request, CodeTrekApplicant $codeTrekApplicant)
     {
-
-        
         $hiddenValue = $request->input('applicant_id');
         $codeTrekApplicant = CodeTrekApplicant::find($hiddenValue);
         
@@ -72,15 +69,13 @@ class SessionController extends Controller
      */
     public function show(CodeTrekApplicant $codeTrekApplicant, int $applicant)
     {
-        
         $codeTrekApplicant = CodeTrekApplicant::findOrFail($applicant);
-    
+
         $sessions= $codeTrekApplicant->sessions()
         ->orderBy('date', 'desc')
         ->get();
 
         return view('codetrek::Sessions.index')->with(['codeTrekApplicant' => $codeTrekApplicant,'sessions' =>$sessions]);
-
     }
     /**
      * Show the form for editing the specified resource.
@@ -100,9 +95,10 @@ class SessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
     public function update(SessionRequest $request, int $id)
     {
-
         $hiddenValue = $request->input('applicant');
 
         $topicName = $request->input('topic_name');
@@ -132,6 +128,8 @@ class SessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
     public function destroy($session_id, $applicant_id )
     {   
         
@@ -139,6 +137,5 @@ class SessionController extends Controller
         $session->delete();
 
         return redirect()->route('codetrek.session.show',$applicant_id)->with('success', 'Session deleted successfully.');
-
     }
 }
