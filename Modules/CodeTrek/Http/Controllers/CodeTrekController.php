@@ -33,7 +33,6 @@ class CodeTrekController extends Controller
         $mentors = User::all();
         $applicantData = $this->service->getCodeTrekApplicants($request->all());
         $applicants = $applicantData['applicants'];
-        $applicantsData = json_encode($applicantData['applicantsData']);
         $statusCounts = $applicantData['statusCounts'];
         $start_date = Carbon::parse($request->application_start_date) ?? today()->subYears();
         $end_date = Carbon::parse($request->application_end_date) ?? today();
@@ -46,7 +45,6 @@ class CodeTrekController extends Controller
             'applicants' => $applicants,
             'centres' => $centres,
             'mentors' => $mentors,
-            'applicantsData' => $applicantsData,
             'counts' => $counts,
             'statusCounts' => $statusCounts
         ]);

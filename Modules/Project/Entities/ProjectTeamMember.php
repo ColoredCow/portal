@@ -120,7 +120,7 @@ class ProjectTeamMember extends Model
 
         $requiredEffort = $workingDays * config('efforttracking.minimum_expected_hours');
 
-        $actualEffort = $this->getCurrentActualEffortAttribute($startDate);
+        $actualEffort = $this->getActualEffortBetween($startDate, $endDate);
 
         return round($actualEffort / $requiredEffort, 2);
     }
@@ -132,7 +132,7 @@ class ProjectTeamMember extends Model
         return $this->daily_expected_effort * $totalWorkingDays;
     }
 
-    public function getBookedEfforts($startDate, $endDate)
+    public function getActualEffortBetween($startDate, $endDate)
     {
         return $this->projectTeamMemberEffort()
         ->where('added_on', '>=', $startDate)
