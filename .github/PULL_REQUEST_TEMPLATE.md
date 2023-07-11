@@ -29,6 +29,6 @@ Number of times feedbacks are given in the PR. This needs to be updated by revie
 <!--- Mark the checkboxes accordingly. -->
 <!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
 - [ ] The PR title follows this syntax: <#IssueID> \<PR Title>
-- [ ] I have linked the issue id in the PR description
+- [ ] I have linked the issue id in the PR description.
 - [ ] I have performed a self-review of my own code.
 - [ ] I have added comments on my code changes where required.
