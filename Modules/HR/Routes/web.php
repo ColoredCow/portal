@@ -132,7 +132,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/approve-joinees', 'EmployeeController@processApprovalForm')->name('approve.joinees');
         Route::GET('/infra-mail', 'EmployeeController@sendMailToInfraTeam')->name('infra.mail');
 
-
         Route::resource('requisition', 'RequisitionController')
             ->only(['index', 'show', 'store'])
             ->names([
