@@ -18,11 +18,11 @@ class EffortTrackingService
     {
         $teamMembers = $project->getTeamMembers()->get();
         $teamMembersDetails = $this->getTeamMembersDetails($teamMembers);
-        $currentDate = now(config('constants.timezone.indian'));
+        $currentWorkingDate = now(config('constants.timezone.indian'));
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
-            $currentDate = now(config('constants.timezone.indian'))->subDay();
+            $currentWorkingDate = now(config('constants.timezone.indian'))->subDay();
         }
-        $workingDays = $this->getWorkingDays($project->client->month_start_date, $currentDate);
+        $workingDays = count($this->getWorkingDays($project->client->month_start_date, $currentWorkingDate));
         $currentDate = now(config('constants.timezone.indian'));
         $currentMonth = $data['month'] ?? Carbon::now()->format('F');
         $currentYear = $data['year'] ?? Carbon::now()->format('Y');
@@ -31,8 +31,7 @@ class EffortTrackingService
         $endDate = $project->client->getMonthEndDateAttribute($totalMonths);
         $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
         $totalEffort = $project->getCurrentHoursForMonthAttribute($startDate, $endDate);
-        $totalWorkingDays = count($this->getworkingDays($startDate, $endDate));
-        $daysTillToday = count($project->getWorkingDaysList($project->client->month_start_date, $currentDate));
+        $daysTillToday = count($this->getWorkingDays($project->client->month_start_date, $currentDate));
 
         return [
             'project' => $project,

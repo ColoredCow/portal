@@ -31,14 +31,12 @@ class CodeTrekController extends Controller
         $mentors = User::all();
         $applicantData = $this->service->getCodeTrekApplicants($request->all());
         $applicants = $applicantData['applicants'];
-        $applicantsData = $applicantData['applicantsData'];
         $statusCounts = $applicantData['statusCounts'];
 
         return view('codetrek::index', [
             'applicants' => $applicants,
             'centres' => $centres,
             'mentors' => $mentors,
-            'applicantsData' => $applicantsData,
             'statusCounts' => $statusCounts
         ]);
     }
