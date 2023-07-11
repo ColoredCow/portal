@@ -58,7 +58,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="subject">Subject</label>
-                                <input type="text" name="subject" class="form-control" value="{{ $verifyMail['applicant_verification_subject']->setting_value ? $verifyMail['applicant_verification_subject']->setting_value : '' }}">
+                                {{-- <input type="text" name="subject" class="form-control" value="{{ $verifyMail['applicant_verification_subject']->setting_value ? $verifyMail['applicant_verification_subject']->setting_value : '' }}"> --}}
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="body">Mail body:</label>
-                                <textarea name="body" rows="10" class="richeditor form-control" placeholder="Body">{{ $verifyMail['applicant_verification_body']->setting_value ? $verifyMail['applicant_verification_body']->setting_value : ''  }}</textarea>
+                                {{-- <textarea name="body" rows="10" class="richeditor form-control" placeholder="Body">{{ $verifyMail['applicant_verification_body']->setting_value ? $verifyMail['applicant_verification_body']->setting_value : ''  }}</textarea> --}}
                             </div>
                         </div>
                     </div> 

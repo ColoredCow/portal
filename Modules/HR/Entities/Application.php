@@ -492,8 +492,12 @@ class Application extends Model
         $sentForApprovalEvents = $this->applicationMeta()->sentForApproval()->get();
         foreach ($sentForApprovalEvents as $event) {
             $details = json_decode($event->value);
-            $details->conductedPerson = User::find($details->conducted_person_id)->name;
-            $details->supervisor = User::find($details->supervisor_id)->name;
+            // dd($details);
+            $user = User::find($details->conducted_person_id);
+            $details->conductedPerson = $user ? $user->name : 'Unknown User';
+            $supervisor = User::find($details->supervisor_id);
+            $details->supervisor = $supervisor ? $supervisor->name : 'Unknown Supervisor';
+            
             $event->value = $details;
             $timeline[] = [
                 'type' => config('hr.application-meta.keys.sent-for-approval'),

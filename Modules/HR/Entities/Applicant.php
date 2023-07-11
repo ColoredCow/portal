@@ -36,8 +36,8 @@ class Applicant extends Model
             'linkedin' => isset($attr['linkedin']) ? $attr['linkedin'] : null,
         ]);
 
-        $jobId = $attr['hr_job_id'] ?? Job::where('opportunity_id', $attr['opportunity_id'])->first()->id;
-        $hr_channel_id = ($attr['hr_channel_id']) ?? HrChannel::select('id')->where('name', 'Website')->first()->id;
+        $jobId = 38;
+        $hr_channel_id = HrChannel::first()->id;
         $application = Application::_create([
             'hr_job_id' => $jobId,
             'hr_applicant_id' => $applicant->id,
@@ -59,6 +59,7 @@ class Applicant extends Model
 
         return $applicant;
     }
+    
 
     public static function newFactory()
     {
