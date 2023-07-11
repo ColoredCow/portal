@@ -4,7 +4,6 @@ namespace Modules\Report\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Modules\Report\Entities\Report;
-use Illuminate\Http\Request;
 use Modules\Report\Http\Requests\ReportRequest;
 use Modules\Report\Services\Finance\ReportDataService;
 
