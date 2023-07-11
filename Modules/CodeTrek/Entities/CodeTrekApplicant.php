@@ -9,6 +9,7 @@ use Modules\Operations\Entities\OfficeLocation;
 use Modules\CodeTrek\Database\factories\CodeTrekApplicantFactory;
 use Carbon\Carbon;
 use Modules\User\Entities\User;
+use App\Models\Session;
 
 class CodeTrekApplicant extends Model
 {
@@ -43,5 +44,10 @@ class CodeTrekApplicant extends Model
     public function mentor()
     {
         return $this->belongsTo(User::class, 'mentor_id');
+    }
+
+    public function sessions()
+    {
+        return $this->morphToMany(Session::class, 'model', 'model_has_sessions');
     }
 }
