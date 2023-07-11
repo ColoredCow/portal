@@ -22,7 +22,6 @@ class BasicDetailsOfJoinee extends Mailable
     {
         $this->joinneeMail = $joinneeMail;
         $this->joinneeName = $joinneeName;
-
     }
 
     /**

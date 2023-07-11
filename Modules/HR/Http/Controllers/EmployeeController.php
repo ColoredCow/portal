@@ -180,12 +180,10 @@ class EmployeeController extends Controller
 
     public function sendMailBasicDetail(Request $request)
     {
-
         $joinneeMail = $request->email;
         $joinneeName = $request->name;
         Mail::queue(new BasicDetailsOfJoinee($joinneeMail, $joinneeName));
 
         return redirect()->back()->with('success', 'Mail send successfully');
     }
-
 }
