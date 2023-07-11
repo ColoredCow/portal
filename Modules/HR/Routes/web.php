@@ -131,6 +131,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/approve-joinees', 'EmployeeController@showApprovalForm')->name('approve.joinees.show');
         Route::post('/approve-joinees', 'EmployeeController@processApprovalForm')->name('approve.joinees');
         Route::GET('/infra-mail', 'EmployeeController@sendMailToInfraTeam')->name('infra.mail');
+        Route::post('/send-basic-detail-mail', 'EmployeeController@sendMailBasicDetail')->name('approve.send-basic-mail');
 
         Route::resource('requisition', 'RequisitionController')
             ->only(['index', 'show', 'store'])

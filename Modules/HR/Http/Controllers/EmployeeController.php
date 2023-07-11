@@ -8,8 +8,6 @@ use Google_Service_Sheets;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Mail;
-use Modules\HR\Emails\NewJoinerEmailForInfraTeam;
 use Modules\HR\Entities\Assessment;
 use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\HrJobDesignation;
@@ -176,17 +174,5 @@ class EmployeeController extends Controller
         $user->save();
 
         return redirect()->back()->with('success', 'Users added successfully');
-    }
-
-    public function sendMailToInfraTeam(Request $request)
-    {
-        $data = [
-            'date' => $request->input('data')['date'],
-            'name' => $request->input('data')['name'],
-        ];
-
-        Mail::queue(new NewJoinerEmailForInfraTeam($data));
-
-        return redirect()->back()->with('success', 'Mail sent successfully');
     }
 }
