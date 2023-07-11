@@ -7,12 +7,6 @@ use Modules\CodeTrek\Entities\CodeTrekApplicant;
 
 class ReportDataService
 {
-    protected $service;
-
-    public function __construct(RevenueReportService $service)
-    {
-        $this->service = $service;
-    }
 
     public function getData($type, $filters)
     {

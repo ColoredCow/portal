@@ -93,7 +93,7 @@
             </div>
             @elseif (request()->tab == 'reports')
             <li class="nav-item mr-3">
-                <a class="nav-link active" >Total Applications</a>
+                <a class="nav-link active">Total Applications</a>
             </li>
             @endif
             <form action="{{ route('codetrek.index') }}" id="sortingForm">
@@ -197,22 +197,21 @@
             {{$applicants->links()}}
         @elseif (request()->tab == 'reports')
         <div>
-                <br>
-                <div class="card-header mt-1" align="left">
-                    <div class="my-2">
-                        <form align="right" action="{{ route('codetrek.index', ['tab' => 'reports']) }}" method="get">
-                            <input type="date" name="application_start_date" id="start_date" value="{{ old('application_start_date', request()->get('application_start_date')) }}" required> to
-                            <input type="date" name="application_end_date" id="end_date" value="{{ old('application_end_date', request()->get('application_end_date')) }}" required>
-                            <input type="hidden" name="tab" value="reports">
-                            <input type="submit" class="btn btn-sm btn-primary text-white" value="View">
-                            <br>
-                        </form>
-                        <span class="chart-heading">Applications Received: {{$counts}}</span>
-                    </div>
-                    <canvas class="w-full" id="CodeTrekApplicationReport"></canvas>
-                    </div>
+            <br>
+            <div class="card-header mt-1" align="left">
+                <div class="my-2">
+                    <form align="right" action="{{ route('codetrek.index', ['tab' => 'reports']) }}" method="GET">
+                        <input type="date" name="application_start_date" id="start_date" value="{{ old('application_start_date', request()->get('application_start_date')) }}" required> to
+                        <input type="date" name="application_end_date" id="end_date" value="{{ old('application_end_date', request()->get('application_end_date')) }}" required>
+                        <input type="hidden" name="tab" value="reports">
+                        <input type="submit" class="btn btn-sm btn-primary text-white" value="View">
+                        <br>
+                    </form>
+                    <span class="chart-heading">Applications Received: {{$counts}}</span>
                 </div>
+                <canvas class="w-full" id="CodeTrekApplicationReport"></canvas>
             </div>
+        </div>     
         @endif
     </div>
 @endsection
