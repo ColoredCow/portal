@@ -5,7 +5,7 @@ If there is an open issue, please link to the issue here by replacing [ISSUE_ID]
 
 ## Describe changes you made
 <!--- 
-Describe your changes or approach in detail. Why these changes are required? What was implemented earlier and what you implemented 
+Describe your changes or approach in detail. Why these changes are required? What was implemented earlier and what you implemented?
 -->
 
 ## Breakdown & Estimates 
