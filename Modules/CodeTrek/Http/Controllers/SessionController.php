@@ -61,7 +61,7 @@ class SessionController extends Controller
     public function show(CodeTrekApplicant $codeTrekApplicant, int $applicant)
     {
         $codeTrekApplicant = CodeTrekApplicant::findOrFail($applicant);
-        $sessions= $codeTrekApplicant->sessions()
+        $sessions = $codeTrekApplicant->sessions()
         ->orderBy('date', 'desc')
         ->get();
 
