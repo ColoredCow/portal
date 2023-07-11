@@ -66,11 +66,4 @@ class UserController extends ModuleBaseController
         $this->authorize('delete', $user);
         $this->service->delete($user);
     }
-
-    public function manage(User $user)
-    {
-        $users = $this->service->index();
-
-        return view('user::manage-staff', compact('users'));
-    }
 }
