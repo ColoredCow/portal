@@ -4,8 +4,9 @@ namespace Modules\CodeTrek\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Modules\CodeTrek\Entities\CodeTrekApplicant;
 
-class CodeTrekDatabaseSeeder extends Seeder
+class CodeTrekApplicantsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,9 +15,8 @@ class CodeTrekDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
+        // Model::unguard();
 
-        $this->call(CodeTrekPermissionTableSeeder::class);
-        $this->call(CodeTrekApplicantRoundDetailsTableSeeder::class);
+        CodeTrekApplicant::factory()->count(10)->create();
     }
 }
