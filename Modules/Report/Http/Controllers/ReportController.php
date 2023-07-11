@@ -6,7 +6,7 @@ use Illuminate\Routing\Controller;
 use Modules\Report\Entities\Report;
 use Illuminate\Http\Request;
 use Modules\Report\Http\Requests\ReportRequest;
-use Modules\report\Services\Finance\ReportDataService;
+use Modules\Report\Services\Finance\ReportDataService;
 
 class ReportController extends Controller
 {
