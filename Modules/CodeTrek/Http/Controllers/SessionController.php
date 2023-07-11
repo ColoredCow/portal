@@ -65,7 +65,7 @@ class SessionController extends Controller
         ->orderBy('date', 'desc')
         ->get();
 
-        return view('codetrek::Sessions.index')->with(['codeTrekApplicant' => $codeTrekApplicant,'sessions' =>$sessions]);
+        return view('codetrek::Sessions.index')->with(['codeTrekApplicant' => $codeTrekApplicant, 'sessions' =>$sessions]);
     }
 
     /**
