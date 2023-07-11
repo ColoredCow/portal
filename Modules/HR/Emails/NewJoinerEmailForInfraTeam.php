@@ -30,7 +30,7 @@ class NewJoinerEmailForInfraTeam extends Mailable
     public function build()
     {
         return $this->from(config('mail.from.address'), config('mail.from.name'))
-            ->subject('Subject: Request for Email Creation ' . $this->data[1])
+            ->subject('Subject: Request for Email Creation ' . $this->data['name'])
             ->to('infrasupport@coloredcow.in')
             ->view('hr::mail.infra-team');
     }

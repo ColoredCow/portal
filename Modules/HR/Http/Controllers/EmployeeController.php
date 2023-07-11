@@ -180,9 +180,12 @@ class EmployeeController extends Controller
 
     public function sendMailToInfraTeam(Request $request)
     {
-        $data = $request->input('data');
+        $data = [
+            'date' => $request->input('data')['date'],
+            'name' => $request->input('data')['name'],
+        ];
 
-        Mail::send(new NewJoinerEmailForInfraTeam($data));
+        Mail::queue(new NewJoinerEmailForInfraTeam($data));
 
         return redirect()->back()->with('success', 'Mail sent successfully');
     }

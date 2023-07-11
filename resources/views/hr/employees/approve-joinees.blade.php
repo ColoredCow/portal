@@ -25,19 +25,17 @@
                 <tbody>
                     @foreach ($data as $key => $row)
                         <tr>
-                            <td>{{ $row[1] }}</td>
-                            <td>{{ $row[0] }}</td>
-                            <td>
-                                <form method="GET" action="{{ route('infra.mail') }}">
-                                    @csrf
-                                    <input type="hidden" name="data[0]" value="{{ $row[0] }}">
-                                    <input type="hidden" name="data[1]" value="{{ $row[1] }}">
-                                    <button type="submit"class="btn btn-transparent text-primary">Send email</button>
-                                </form>
-                            </td>
-                            <td> <input type="text" id="email" name="email" class="save email" placeholder="email">
-                            </td>
+                            <td class="align-middle">{{ $row[1] }}</td>
+                            <td class="align-middle">{{ $row[0] }}</td>
                             <td class="align-middle">
+                                <button type="button" data-date="{{ $row[0] }}" data-name="{{ $row[1] }}"
+                                    class="btn btn-transparent text-primary send-email">Send email</button>
+                            </td>
+                            <td class="align-middle" class="align-middle">
+                                <input type="email" id="email_{{ $key }}" name="email[]"
+                                    class="form-control email" placeholder="Enter new email" required>
+                            </td>
+                            <td class="align-middle" class="align-middle">
                                 <input type="hidden" name="timestamp[]" value="{{ $row[0] }}">
                                 <input type="hidden" name="full_name[]" value="{{ $row[1] }}">
                                 <input type="checkbox" class="approved-checkbox" name="approved[]" value="approved"
@@ -49,9 +47,24 @@
                 </tbody>
             </table>
         </form>
+
+        <form id="emailForm" method="GET" action="{{ route('infra.mail') }}">
+            @csrf
+            <input type="hidden" name="data[date]" id="emailDate">
+            <input type="hidden" name="data[name]" id="emailName">
+        </form>
     </div>
 
     <script>
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('send-email')) {
+                var date = event.target.dataset.date;
+                var name = event.target.dataset.name;
+                document.getElementById('emailDate').value = date;
+                document.getElementById('emailName').value = name;
+                document.getElementById('emailForm').submit();
+            }
+        });
         $(document).ready(function() {
             // Handle email input change event
             $('.email').on('input', function() {
