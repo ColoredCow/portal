@@ -29,4 +29,8 @@
     <li class="nav-item">
         <a class="nav-item nav-link {{ Request::is('hr/employee-reports*') ? 'active' : '' }}" href="{{ route('employees.reports') }}"><i class="fa fa-pie-chart"></i>&nbsp;Reports</a>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-item nav-link {{ Request::is('hr/approve-joinees*') ? 'active' : '' }}" href="{{ route('approve.joinees.show') }}"><i class="fa fa-check"></i>&nbsp;Approve joinees</a>
+    </li>
 </ul>

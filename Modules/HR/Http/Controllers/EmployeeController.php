@@ -13,6 +13,9 @@ use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\IndividualAssessment;
 use Modules\HR\Entities\Job;
 use Modules\Project\Entities\ProjectTeamMember;
+use Google_Client;
+use Google_Service_Sheets;
+use Modules\User\Entities\User;
 
 class EmployeeController extends Controller
 {
@@ -143,5 +146,33 @@ class EmployeeController extends Controller
         ]);
 
         return redirect()->back();
+    }
+
+    public function showApprovalForm()
+    {
+        $client = new Google_Client();
+        $client->setAuthConfig('E:\Downloads\ninth-nebula-392106-8478ffdda8b1.json');
+        $client->addScope(Google_Service_Sheets::SPREADSHEETS_READONLY);
+
+        $service = new Google_Service_Sheets($client);
+        $spreadsheetId = '1zXy4MPMN0OouU_YlGg-60R535fZk0i_WItTIRRQxubA';
+        $range = 'Sheet1!A2:Z'; // Assuming data starts from cell A2 and ends at column Z
+
+        $response = $service->spreadsheets_values->get($spreadsheetId, $range);
+        $data = $response->getValues();
+
+        return view('hr.employees.approve-joinees', ['data' => $data]);
+    }
+
+    public function processApprovalForm(Request $request)
+    {
+        $name = $request->input('full_name');
+        $email = $request->input('email');
+        $user = new User();
+        $user->name = $name;
+        $user->email = $email;
+        $user->save();
+
+        return redirect()->back()->with('success', 'Users added successfully');
     }
 }

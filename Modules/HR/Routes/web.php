@@ -128,6 +128,8 @@ Route::middleware('auth')->group(function () {
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
         Route::get('fte-handler/{domain_id}', 'EmployeeController@showFTEdata')->name('employees.alert');
         Route::post('/update-reviewers/{employee}', 'EmployeeController@updateEmployeeReviewers')->name('update.employee.reviewers');
+        Route::get('/approve-joinees', 'EmployeeController@showApprovalForm')->name('approve.joinees.show');
+        Route::post('/approve-joinees', 'EmployeeController@processApprovalForm')->name('approve.joinees');
 
         Route::resource('requisition', 'RequisitionController')
             ->only(['index', 'show', 'store'])
