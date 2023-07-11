@@ -153,7 +153,7 @@ class EmployeeController extends Controller
     public function showApprovalForm()
     {
         $client = new Google_Client();
-        $client->setAuthConfig('C:\xampp\htdocs\portal\ninth-nebula-392106-8478ffdda8b1.json');
+        $client->setAuthConfig('');
         $client->addScope(Google_Service_Sheets::SPREADSHEETS_READONLY);
 
         $service = new Google_Service_Sheets($client);
