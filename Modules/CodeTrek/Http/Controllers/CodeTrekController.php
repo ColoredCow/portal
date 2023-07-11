@@ -50,14 +50,6 @@ class CodeTrekController extends Controller
         ]);
     }
 
-    public function getApplicantData(Request $request)
-    {
-        $type = $request->type;
-        $filters = $request->filters;
-
-        return $this->service->getData($type, json_decode($filters, true), $request);
-    }
-
     /**
      * Store a newly created resource in storage.
      */

@@ -4,10 +4,18 @@ namespace Modules\Report\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Modules\Report\Entities\Report;
+use Illuminate\Http\Request;
 use Modules\Report\Http\Requests\ReportRequest;
+use Modules\report\Services\Finance\ReportDataService;
 
 class ReportController extends Controller
 {
+    protected $service;
+
+    public function __construct(ReportDataService $service)
+    {
+        $this->service = $service;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -17,6 +25,14 @@ class ReportController extends Controller
         $data = compact('reports');
 
         return view('report::index')->with($data);
+    }
+
+    public function getApplicantData(Request $request)
+    {
+        $type = $request->type;
+        $filters = $request->filters;
+
+        return $this->service->getDataForCodeTrekApplications($type, json_decode($filters, true), $request);
     }
 
     /**
