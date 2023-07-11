@@ -35,11 +35,6 @@
             href="{{ route('employees.reports') }}"><i class="fa fa-pie-chart"></i>&nbsp;Reports</a>
     </li>
 
-    <li class="nav-item ml-25">
-        <a class="nav-item nav-link {{ Request::is('user') ? 'active' : '' }}" href="{{ route('user.manage') }}"><i
-                class="fa fa-cog"></i>&nbsp;Manage working staff</a>
-    </li>
-
     <li class="nav-item">
         <a class="nav-item nav-link {{ Request::is('hr/approve-joinees*') ? 'active' : '' }}" href="{{ route('approve.joinees.show') }}"><i class="fa fa-check"></i>&nbsp;Approve joinee's</a>
     </li>
