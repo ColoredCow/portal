@@ -35,7 +35,7 @@
                     <th>Projects Count</th>
                     <th>Current FTE</th>
                     <th>AMC FTE</th>
-                    <th>Send Mail</th>
+                    <th>Reminder Mail</th>
                 </tr>
                 @foreach ($employees as $key => $employee)
                     <tr>
@@ -101,22 +101,22 @@
                             <span
                                 class="{{ $employee->user ? ($employee->user->ftes['amc'] > 1 ? 'text-success' : 'text-danger') : 'text-secondary' }} font-weight-bold">{{ $employee->user ? $employee->user->ftes['amc'] : 'NA' }}</span>
                         </td>
-                        <td>
-                            <a class="ml-6" data-toggle="modal" data-target="#reviewModal-{{ $key }}">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                        <td class="text-center">
+                            <a data-toggle="modal" data-target="#reviewModal-{{ $key }}">
+                                <i class="fa fa-envelope text-primary" aria-hidden="true"></i>
                             </a>
-                            <div class="modal fade" id="reviewModal-{{ $key }}" tabindex="-1" role="dialog"
+                            <div class="modal fade text-left" id="reviewModal-{{ $key }}" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Review - Software Engineer
+                                            <h5 class="modal-title" id="exampleModalLabel">Enter the following links:
                                             </h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form method="GET"
+                                        <form method="GET" class="mt-3"
                                             action="{{ route('employees.sendMail', $employee->user_id) }}">
                                             <div class="form-group pl-4 pr-4">
                                                 Self Review Link:<input type="url" class="form-control"
