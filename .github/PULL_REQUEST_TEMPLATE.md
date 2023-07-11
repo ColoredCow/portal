@@ -1,9 +1,9 @@
-Targets #{ISSUE_ID}
+Targets #ISSUE_ID
 <!--- 
 If there is an open issue, please link to the issue here by replacing [ISSUE_ID]. For eg. #1202
 -->
 
-## Describe changes you made
+## Description of the changes
 <!--- 
 Describe your changes or approach in detail. Why these changes are required? What was implemented earlier and what you implemented?
 -->
@@ -21,7 +21,7 @@ Please add the action items that you performed and the time they took. For examp
 
 ## Feedback Cycle
 <!-- 
-Number of times feedbacks are given in the PR. This needs to be updated by reviewer
+The number of times feedbacks are given in the PR. This needs to be updated by the reviewer
 -->
 **Cycle Count: 0**
 
