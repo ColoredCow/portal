@@ -9,6 +9,11 @@ use Modules\Session\Http\Requests\SessionRequest;
 
 class CodeTrekSessionController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index(CodeTrekApplicant $codeTrekApplicant)
     {
         $codeTrekApplicant = CodeTrekApplicant::findOrFail($codeTrekApplicant->id);
