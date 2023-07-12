@@ -40,6 +40,9 @@ class CodeTrekService
             ->when($search, function ($applicantCountData) use ($search) {
                 return $applicantCountData->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
             })
+            ->when($roundSlug, function ($query) use ($roundSlug) {
+                return $query->where('latest_round_name', $roundSlug);
+            })
             ->groupBy('status')
             ->selectRaw('count(status) as total, status');
 
