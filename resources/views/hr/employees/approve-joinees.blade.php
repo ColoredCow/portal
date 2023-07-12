@@ -5,10 +5,46 @@
         <br>
         @include('hr.employees.menu')
         <br><br>
-        <div class="col-md-12">
-            <h1>New Joinees</h1>
-            <br>
-        </div>
+        <form action="{{ route('approve.send-basic-mail') }}" method="POST">
+            @csrf
+            <div class="d-flex mb-3">
+                <h1>New Joinees</h1>
+                <button type="button" class="btn btn-success ml-auto" data-toggle="modal" data-target="#popupModal">
+                    Send Basic Details
+                </button>
+                <br>
+            </div>
+
+            <div class="modal fade" id="popupModal" tabindex="-1" role="dialog" aria-labelledby="popupModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="popupModalLabel">Send Basic Details Email</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body col-md-12">
+                            <div class="form-group col-md-12">
+                                <label for="first_name" class="field-required">Name</label>
+                                <input type="text" class="form-control" name="name" id="firstName"
+                                    placeholder="Enter your name" required="required" value="">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="first_name" class="field-required">Email</label>
+                                <input type="text" class="form-control" name="email" id="firstName"
+                                    placeholder="Enter your email" required="required" value="">
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary save-btn"
+                                v-on:click="submitForm('applicant_form')">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
         <form id="approvalForm" method="POST" action="{{ route('approve.joinees') }}">
             @csrf
             <table class="table table-striped table-bordered">
