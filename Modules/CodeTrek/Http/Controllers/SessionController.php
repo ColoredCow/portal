@@ -16,7 +16,7 @@ class SessionController extends Controller
      */
     public function index()
     {
-        //
+        return null;
     }
 
     /**
@@ -26,7 +26,7 @@ class SessionController extends Controller
      */
     public function create()
     {
-        //
+        return null;
     }
 
     /**
