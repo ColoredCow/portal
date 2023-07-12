@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class SessionRequest extends FormRequest
 {
-     public function rules()
+    public function rules()
     {
         return [
             'topic_name' => 'required|string',

@@ -11,9 +11,9 @@
 |
 */
 
-Route::prefix('session')->group(function() {
+Route::prefix('session')->group(function () {
     Route::get('/', 'SessionController@index');
-    Route::prefix('codetrek')->group(function(){
+    Route::prefix('codetrek')->group(function () {
         Route::get('/{codeTrekApplicant}', 'CodeTrekSessionController@index')->name('codetrek.session.index');
         Route::post('/{codeTrekApplicant}', 'CodeTrekSessionController@store')->name('codetrek.session.store');
         Route::put('/session/{session}/codetrekapplicant/{codeTrekApplicant}', 'CodeTrekSessionController@update')->name('codetrek.session.update');
