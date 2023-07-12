@@ -198,6 +198,7 @@ class Project extends Model implements Auditable
     public function getWorkingDaysList($startDate, $endDate)
     {
         $period = CarbonPeriod::create($startDate, $endDate);
+
         $dates = [];
         $weekend = ['Saturday', 'Sunday'];
         foreach ($period as $date) {
@@ -208,6 +209,7 @@ class Project extends Model implements Auditable
 
         return $dates;
     }
+
     public function getIsReadyToRenewAttribute()
     {
         $diff = optional($this->end_date)->diffInDays(today());
