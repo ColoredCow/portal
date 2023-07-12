@@ -14,7 +14,7 @@
                     + Add new session
                 </button>
 
-                <!-- Modal -->
+                <!--Create Session Modal -->
                 <div class="modal fade" id="createSessionModal" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -37,7 +37,7 @@
                                             <label for="topic_name" class="field-required">Session Name</label>
                                             <input type="text" class="form-control" name="topic_name" id="topicName"
                                                 placeholder="Enter topic name" required="required" value="">
-                                            <div class="text-danger d-none" id="sessionTopicNameError"></div>
+                                            <div class="text-danger d-none" id="sessionTopicNameError"></div> <!-- this is for toast notification -->
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="link" class="field-required">Session Link</label>
@@ -93,7 +93,10 @@
             <h5>📩 {{ $codeTrekApplicant->email }}</h5>
         </div>
         <div class="col-lg-12 d-flex justify-content-between align-items-center mx-auto">
-            <h5>🏫 {{ $codeTrekApplicant->university }}</h5>
+            @if ($codeTrekApplicant->university !== Null)
+                <h5>🏫 {{ $codeTrekApplicant->university }}</h5>
+            @endif
+            
         </div>
         <br>
         <br>
@@ -113,7 +116,7 @@
                         <tr>
                             <td>
                                 <h4 class="">
-                                    <a href="{{ $session->link }}">{{ $session->topic_name }}</a>
+                                    <a href="{{ $session->link }}" target="_blank" rel="noopener noreferrer">{{ $session->topic_name }}</a>
                                 </h4>
                             </td>
                             <td>
