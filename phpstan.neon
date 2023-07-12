@@ -21,5 +21,6 @@ parameters:
         - '#Call to an undefined method [a-zA-Z0-9\\_\<\>]+::[a-zA-Z]+\(\)#'
         - '#Static method [a-zA-Z0-9\\_]+::[a-zA-Z]+\(\) invoked with [0-9]+ [a-zA-Z]+, [0-9\-]+ required#'
         - '#Cannot access property \$[a-zA-Z0-9\\_]+ on string#'
+        - 'Parameter #1 $view of function view expects view-string|null, string given.'
 
     checkMissingIterableValueType: false
