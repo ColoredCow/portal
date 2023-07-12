@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Factory;
 class SessionServiceProvider extends ServiceProvider
 {
     /**
-     * @var string $moduleName
+     * @var string
      */
     protected $moduleName = 'Session';
 
     /**
-     * @var string $moduleNameLower
+     * @var string
      */
     protected $moduleNameLower = 'session';
 
