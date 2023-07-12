@@ -9,32 +9,16 @@ use Modules\CodeTrek\Http\Requests\SessionRequest;
 
 class SessionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(SessionRequest $request, CodeTrekApplicant $codeTrekApplicant)
     {
         $hiddenValue = $request->input('applicant_id');
@@ -51,12 +35,6 @@ class SessionController extends Controller
         return redirect()->route('codetrek.session.show', $codeTrekApplicant->id)->with('success', 'Session created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(CodeTrekApplicant $codeTrekApplicant, int $applicant)
     {
         $codeTrekApplicant = CodeTrekApplicant::findOrFail($applicant);
@@ -67,24 +45,11 @@ class SessionController extends Controller
         return view('codetrek::Sessions.index')->with(['codeTrekApplicant' => $codeTrekApplicant, 'sessions' =>$sessions]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(SessionRequest $request, $id)
     {
         $hiddenValue = $request->input('applicant');
@@ -102,12 +67,6 @@ class SessionController extends Controller
         return redirect()->route('codetrek.session.show', $hiddenValue)->with('success', 'Session updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($session_id, $applicant_id)
     {
         $session = Session::find($session_id);
