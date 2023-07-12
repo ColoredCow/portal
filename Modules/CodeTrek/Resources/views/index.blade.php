@@ -123,8 +123,8 @@
                                     <span class="dropdown-item-text fz-12">Filter by status</span>
                                     @foreach (config('codetrek.rounds') as $round)
                                         @php
-                                            $targetParams = ['roundSlug' => $round['slug'], 'status' => request()->input('status'), 'centre' => request()->input('centre'),'order' => request()->input('order'),'name' => request()->input('name')];
-                                            $target = route('codetrek.index', array_merge(request()->except(['roundSlug', 'status', 'centre', 'order', 'name']), $targetParams));
+                                            $targetParams = ['roundSlug' => $round['slug'], 'status' => request()->input('status')];
+                                            $target = route('codetrek.index', array_merge(request()->except(['roundSlug', 'status']), $targetParams));
                                         @endphp
                                         <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
                                             <span>{{ $round['label'] }}</span>

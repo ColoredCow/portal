@@ -29,7 +29,7 @@ class CodeTrekController extends Controller
         $centres = OfficeLocation::all();
 
         $mentors = User::all();
-        $applicantData = $this->service->getCodeTrekApplicants($request->all());
+        $applicantData = $this->service->getCodeTrekApplicants($request->all(), $roundSlug);
         $applicants = $applicantData['applicants'];
         $applicantsData = $applicantData['applicantsData'];
         $statusCounts = $applicantData['statusCounts'];
