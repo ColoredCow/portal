@@ -42,7 +42,7 @@ class CodeTrekSessionController extends Controller
 
     public function show(CodeTrekApplicant $codeTrekApplicant, int $applicant)
     {
-        //        
+        //
     }
 
     public function edit($id)

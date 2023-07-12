@@ -53,7 +53,7 @@ class SessionServiceProvider extends ServiceProvider
         ], 'config');
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'Config/config.php'), 
-                $this->moduleNameLower
+            $this->moduleNameLower
         );
     }
 
