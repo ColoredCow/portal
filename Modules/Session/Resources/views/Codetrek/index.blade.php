@@ -28,9 +28,8 @@
                             <div class="d-flex justify-content-center">
                                 <div class="spinner-border text-primary d-none " id="sessionFormSpinner"></div>
                             </div>
-                            <form action="{{ route('codetrek.session.store') }}" method="post" id="sessionForm">
+                            <form action="{{ route('codetrek.session.store', $codeTrekApplicant->id) }}" method="post" id="sessionForm">
                                 @csrf
-                                <input type="hidden" name="applicant_id" value="{{ $codeTrekApplicant->id }}">
                                 <div class="modal-body">
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
@@ -149,12 +148,10 @@
                                                     <div class="spinner-border text-primary d-none "
                                                         id="sessionFormSpinner"></div>
                                                 </div>
-                                                <form action="{{ route('codetrek.session.update', $session->id) }}"
+                                                <form action="{{ route('codetrek.session.update', ['session' => $session->id, 'codeTrekApplicant' => $codeTrekApplicant->id]) }}"
                                                     method="post" id="editSessionForm">
                                                     @csrf
                                                     @method('PUT')
-                                                    <input type="hidden" name="applicant"
-                                                        value="{{ $codeTrekApplicant->id }}">
                                                     <div class="modal-body">
                                                         <div class="form-row">
                                                             <div class="form-group col-md-6">
@@ -227,7 +224,7 @@
                                         </div>
                                     </div>
                                     <form
-                                        action="{{ route('codetrek.session.delete', ['session_id' => $session->id, 'applicant_id' => $codeTrekApplicant->id]) }}"
+                                        action="{{ route('codetrek.session.delete', ['session' => $session->id, 'codeTrekApplicant' => $codeTrekApplicant->id]) }}"
                                         method="post">
                                         @csrf
                                         <button type="submit" class="p-0 m-0 btn btn-link"

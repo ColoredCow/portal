@@ -14,9 +14,9 @@
 Route::prefix('session')->group(function() {
     Route::get('/', 'SessionController@index');
     Route::prefix('codetrek')->group(function(){
-        Route::get('/{applicant}', 'CodeTrekSessionController@show')->name('codetrek.session.show');
-        Route::post('/', 'CodeTrekSessionController@store')->name('codetrek.session.store');
-        Route::put('/{session}', 'CodeTrekSessionController@update')->name('codetrek.session.update');
-        Route::post('/{session_id}/{applicant_id}', 'CodeTrekSessionController@destroy')->name('codetrek.session.delete');
+        Route::get('/{codeTrekApplicant}', 'CodeTrekSessionController@index')->name('codetrek.session.index');
+        Route::post('/{codeTrekApplicant}', 'CodeTrekSessionController@store')->name('codetrek.session.store');
+        Route::put('/session/{session}/codetrekapplicant/{codeTrekApplicant}', 'CodeTrekSessionController@update')->name('codetrek.session.update');
+        Route::post('/session/{session}/codetrekapplicant/{codeTrekApplicant}', 'CodeTrekSessionController@destroy')->name('codetrek.session.delete');
     });
 });

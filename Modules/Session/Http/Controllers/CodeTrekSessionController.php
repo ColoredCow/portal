@@ -9,9 +9,15 @@ use Modules\Session\Http\Requests\SessionRequest;
 
 class CodeTrekSessionController extends Controller
 {
-    public function index()
+    public function index(CodeTrekApplicant $codeTrekApplicant)
     {
-        //
+        $codeTrekApplicant = CodeTrekApplicant::findOrFail($codeTrekApplicant->id);
+
+        $sessions = $codeTrekApplicant->sessions()
+        ->orderBy('date', 'desc')
+        ->get();
+
+        return view('session::codetrek.index')->with(['codeTrekApplicant' => $codeTrekApplicant, 'sessions' =>$sessions]);
     }
 
     public function create()
@@ -21,8 +27,7 @@ class CodeTrekSessionController extends Controller
 
     public function store(SessionRequest $request, CodeTrekApplicant $codeTrekApplicant)
     {
-        $hiddenValue = $request->input('applicant_id');
-        $codeTrekApplicant = CodeTrekApplicant::find($hiddenValue);
+        $codeTrekApplicant = CodeTrekApplicant::find($codeTrekApplicant->id);
 
         $session = $codeTrekApplicant->sessions()->create([
             'topic_name' => $request->input('topic_name'),
@@ -32,17 +37,12 @@ class CodeTrekSessionController extends Controller
             'summary' => $request->input('summary'),
         ]);
 
-        return redirect()->route('codetrek.session.show', $codeTrekApplicant->id)->with('success', 'Session created successfully.');
+        return redirect()->route('codetrek.session.index', $codeTrekApplicant->id)->with('success', 'Session created successfully.');
     }
 
     public function show(CodeTrekApplicant $codeTrekApplicant, int $applicant)
     {
-        $codeTrekApplicant = CodeTrekApplicant::findOrFail($applicant);
-        $sessions = $codeTrekApplicant->sessions()
-        ->orderBy('date', 'desc')
-        ->get();
-
-        return view('session::Codetrek.index')->with(['codeTrekApplicant' => $codeTrekApplicant, 'sessions' =>$sessions]);
+        //        
     }
 
     public function edit($id)
@@ -50,11 +50,9 @@ class CodeTrekSessionController extends Controller
         //
     }
 
-    public function update(SessionRequest $request, $id)
+    public function update(SessionRequest $request, Session $session, CodeTrekApplicant $codeTrekApplicant)
     {
-        $hiddenValue = $request->input('applicant');
-
-        $session = Session::find($id);
+        $session = Session::find($session->id);
         $session->update([
             'topic_name' => $request->input('topic_name'),
             'date' => $request->input('date'),
@@ -64,14 +62,14 @@ class CodeTrekSessionController extends Controller
         ]);
         $session->save();
 
-        return redirect()->route('codetrek.session.show', $hiddenValue)->with('success', 'Session updated successfully.');
+        return redirect()->route('codetrek.session.index', $codeTrekApplicant->id)->with('success', 'Session updated successfully.');
     }
 
-    public function destroy($session_id, $applicant_id)
+    public function destroy(Session $session, CodeTrekApplicant $codeTrekApplicant)
     {
-        $session = Session::find($session_id);
+        $session = Session::find($session->id);
         $session->delete();
 
-        return redirect()->route('codetrek.session.show', $applicant_id)->with('success', 'Session deleted successfully.');
+        return redirect()->route('codetrek.session.index', $codeTrekApplicant->id)->with('success', 'Session deleted successfully.');
     }
 }

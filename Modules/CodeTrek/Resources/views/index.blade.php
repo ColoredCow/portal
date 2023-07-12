@@ -151,7 +151,7 @@
                                             <a href="{{ route('codetrek.evaluate', $applicant->id) }}"
                                                 class="btn-sm btn-primary mr-1 text-decoration-none"
                                                 target="_self">Evaluate</a>
-                                            <a href="{{ route('codetrek.session.show', $applicant->id) }}"
+                                            <a href="{{ route('codetrek.session.index', $applicant->id) }}"
                                                 class="btn-sm btn-primary mr-1 text-decoration-none"
                                                 target="_self">Sessions</a>
                                         </div>
