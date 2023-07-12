@@ -9,12 +9,12 @@ class SessionController extends Controller
 {
     public function index()
     {
-        return view('session::index');
+        //
     }
 
     public function create()
     {
-        return view('session::create');
+        //
     }
 
     public function store(Request $request)
@@ -24,12 +24,12 @@ class SessionController extends Controller
 
     public function show($id)
     {
-        return view('session::show');
+        //
     }
 
     public function edit($id)
     {
-        return view('session::edit');
+        //
     }
 
     public function update(Request $request, $id)
