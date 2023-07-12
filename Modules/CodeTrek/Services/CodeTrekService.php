@@ -10,12 +10,13 @@ use  Modules\CodeTrek\Emails\CodetrekMailApplicant;
 
 class CodeTrekService
 {
-    public function getCodeTrekApplicants($data = [], $roundSlug = null)
+    public function getCodeTrekApplicants($data = [])
     {
         $search = $data['name'] ?? null;
         $status = $data['status'] ?? 'active';
         $centre = $data['centre'] ?? null;
         $sort = $data['order'] ?? null;
+        $roundSlug = $data['roundSlug'] ?? null;
         $query = CodeTrekApplicant::where('status', $status);
         $applicants = null;
 
