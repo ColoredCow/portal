@@ -17,7 +17,7 @@ class CodeTrekSessionController extends Controller
         ->orderBy('date', 'desc')
         ->get();
 
-        return view('session::codetrek.index')->with(['Success','codeTrekApplicant' => $codeTrekApplicant, 'sessions' =>$sessions]);
+        return view('session::codetrek.index')->with(['Success', 'codeTrekApplicant' => $codeTrekApplicant, 'sessions' =>$sessions]);
     }
 
     public function create()
