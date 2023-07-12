@@ -30,6 +30,6 @@
             training
             model for new learnings and betterment</i></h5>
     <p>If you have any inputs to make this whole process better or contribute to it, feel free to reach out.</p>
-    <p class="margin-bottom+">Let’s get better together!</p>
+    <p class="margin-bottom">Let’s get better together!</p>
     <p class="line">Regards</p>
 </div>
