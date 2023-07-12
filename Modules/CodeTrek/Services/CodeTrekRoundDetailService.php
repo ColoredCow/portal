@@ -41,14 +41,16 @@ class CodeTrekRoundDetailService
         $applicationRound->start_date = today();
         $codetrekApplicant = CodeTrekApplicant::find($applicant->id);
         // Mail::send(new CodeTrekApplicantRoundMail($applicationRound, $codetrekApplicant)); This line will be uncommented in the future when the use of the codeTrek module starts in the proper way.
+       if($applicationRound->latest_round_name === 'onboarded')
         $this->codetrekApplicantStore($applicant);
+        else
         $applicationRound->save();
     }
 
     public function codetrekApplicantStore($applicant)
     {
-
         $hrApplicant = new Applicant();
+
         $hrApplicant->name = $applicant->first_name . ' ' . $applicant->last_name;
         $hrApplicant->email = $applicant->email;
         $hrApplicant->phone = $applicant->phone;
@@ -60,10 +62,10 @@ class CodeTrekRoundDetailService
         $hrApplicant->college = $applicant->university;
         
         $hrApplicant->save();
-        $this->codetrekApplicationStore($hrApplicant,$applicant);
+        $this->codetrekApplicationStore($hrApplicant, $applicant);
     }
 
-    public function codetrekApplicationStore($hrApplicant,$applicant)
+    public function codetrekApplicationStore($hrApplicant, $applicant)
     {
         $hrApplication = new Application();
         
@@ -79,15 +81,14 @@ class CodeTrekRoundDetailService
         $hrApplication->autoresponder_body = $applicant->null;
         $hrApplication->pending_approval_from = $applicant->null;
 
-
         $hrApplication->save();
-        $this->codetrekApplicationMetaStore($hrApplication,$applicant);
-        $this->codetrekApplicationRoundStore($hrApplication,$applicant);
+        $this->codetrekApplicationMetaStore($hrApplication, $applicant);
+        $this->codetrekApplicationRoundStore($hrApplication, $applicant);
     }
 
-    public function codetrekApplicationMetaStore($hrApplication,$applicant)
+    public function codetrekApplicationMetaStore($hrApplication, $applicant)
     {
-         ApplicationMeta::create([
+        ApplicationMeta::create([
             'hr_application_id' => $hrApplication->id,
             'value' => json_encode([
                 'conducted_person_id' => $applicant->mentor_id,
@@ -96,7 +97,7 @@ class CodeTrekRoundDetailService
         ]);
     }
 
-    public function codetrekApplicationRoundStore($hrApplication,$applicant)
+    public function codetrekApplicationRoundStore($hrApplication, $applicant)
     {
         $hrApplicationRound = new ApplicationRound();
 
@@ -107,5 +108,4 @@ class CodeTrekRoundDetailService
         
         $hrApplicationRound->save();
     }
-
 }
