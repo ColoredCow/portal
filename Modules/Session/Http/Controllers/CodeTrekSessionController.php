@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\CodeTrek\Http\Controllers;
+namespace Modules\Session\Http\Controllers;
 
-use App\Models\Session;
+use Modules\Session\Entities\Session;
 use Illuminate\Routing\Controller;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
-use Modules\CodeTrek\Http\Requests\SessionRequest;
+use Modules\Session\Http\Requests\SessionRequest;
 
-class SessionController extends Controller
+class CodeTrekSessionController extends Controller
 {
     public function index()
     {
@@ -42,7 +42,7 @@ class SessionController extends Controller
         ->orderBy('date', 'desc')
         ->get();
 
-        return view('codetrek::Sessions.index')->with(['codeTrekApplicant' => $codeTrekApplicant, 'sessions' =>$sessions]);
+        return view('session::Codetrek.index')->with(['codeTrekApplicant' => $codeTrekApplicant, 'sessions' =>$sessions]);
     }
 
     public function edit($id)

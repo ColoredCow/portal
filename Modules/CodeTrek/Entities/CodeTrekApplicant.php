@@ -9,7 +9,7 @@ use Modules\Operations\Entities\OfficeLocation;
 use Modules\CodeTrek\Database\factories\CodeTrekApplicantFactory;
 use Carbon\Carbon;
 use Modules\User\Entities\User;
-use App\Models\Session;
+use Modules\Session\Entities\Session;
 
 class CodeTrekApplicant extends Model
 {

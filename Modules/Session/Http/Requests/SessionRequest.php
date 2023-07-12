@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\CodeTrek\Http\Requests;
+namespace Modules\Session\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 class SessionRequest extends FormRequest
 {
-    public function rules()
+     public function rules()
     {
         return [
             'topic_name' => 'required|string',
