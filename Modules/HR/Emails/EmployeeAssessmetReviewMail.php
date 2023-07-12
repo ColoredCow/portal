@@ -37,22 +37,27 @@ class EmployeeAssessmetReviewMail extends Mailable
         $currentQuarterMonth = $this->getQuarterMonth($currentQuarter);
         $user = $this->data['user'];
 
-        if ($this->key == 'self') {
-            $subject = 'Quarterly Self Review: ' . $currentQuarterMonth . ' ' . $currentYear;
-            $mailTemplate = 'hr::mail.self-review';
-        } elseif ($this->key == 'hr') {
-            $subject = 'Quarterly HR Review: ' . $currentQuarterMonth . ' ' . $currentYear;
-            $mailTemplate = 'hr::mail.hr-review';
-        } elseif ($this->key == 'mentor') {
-            $subject = 'Quarterly Mentor Review: ' . $currentQuarterMonth . ' ' . $currentYear;
-            $mailTemplate = 'hr::mail.mentor-review';
-        } elseif ($this->key == 'manager') {
-            $subject = 'Quarterly Manager Review: ' . $currentQuarterMonth . ' ' . $currentYear;
-            $mailTemplate = 'hr::mail.manager-review';
+        switch ($this->key) {
+            case 'self':
+                $subject = 'Quarterly Self Review: ' . $currentQuarterMonth . ' ' . $currentYear;
+                $mailTemplate = 'hr::mail.self-review';
+                break;
+            case 'hr':
+                $subject = 'Quarterly HR Review: ' . $currentQuarterMonth . ' ' . $currentYear;
+                $mailTemplate = 'hr::mail.hr-review';
+                break;
+            case 'mentor':
+                $subject = 'Quarterly Mentor Review: ' . $currentQuarterMonth . ' ' . $currentYear;
+                $mailTemplate = 'hr::mail.mentor-review';
+                break;
+            case 'manager':
+                $subject = 'Quarterly Manager Review: ' . $currentQuarterMonth . ' ' . $currentYear;
+                $mailTemplate = 'hr::mail.manager-review';
+                break;
         }
 
         return $this
-            ->from(config('hr.default.email'), 'name')
+            ->from(config('hr.default.email'), config('hr.default.name'))
             ->to($user['email'])
             ->subject($subject)
             ->view($mailTemplate);

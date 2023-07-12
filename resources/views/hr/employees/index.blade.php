@@ -9,7 +9,7 @@
             <h1>{{ request()->get('name') }} ({{ count($employees) }})</h1>
             <form id="employeeFilterForm" class="d-md-flex justify-content-between ml-md-3">
                 <input type="hidden" name="status" value="{{ request()->input('status', 'current') }}">
-                <div class='form-group w-130' class="d-inline">
+                 <div class='form-group w-130 d-inline'>
                     <select class="form-control bg-info text-white ml-3" name="status"
                         onchange="document.getElementById('employeeFilterForm').submit();">
                         <option {{ $filters['status'] == 'current' ? 'selected=selected' : '' }} value="current">Current
@@ -117,7 +117,7 @@
                                             </button>
                                         </div>
                                         <form method="GET" class="mt-3"
-                                            action="{{ route('employees.sendMail', $employee->user_id) }}">
+                                            action="{{ route('employees.sendReviewMail', $employee->user_id) }}">
                                             <div class="form-group pl-4 pr-4">
                                                 Self Review Link:<input type="url" class="form-control"
                                                     name="self_review_link" placeholder="Enter Self Review Sheet Link"

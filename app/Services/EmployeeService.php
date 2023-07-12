@@ -28,7 +28,7 @@ class EmployeeService
         ];
     }
 
-    public function sendReviewMail($employee, $user, $data)
+    public function sendEmployeeReviewMail($employee, $user, $data)
     {
         $employeeData = [
             'self' => [
@@ -54,7 +54,7 @@ class EmployeeService
 
         foreach ($employeeData as $key => $data) {
             if (! empty($data['user'])) {
-                Mail::send(new EmployeeAssessmetReviewMail($key, $data));
+                Mail::queue(new EmployeeAssessmetReviewMail($key, $data));
             }
         }
     }

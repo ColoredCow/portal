@@ -3,14 +3,16 @@
         .line {
             line-height: 1px;
         }
+        .margin-bottom {
+            margin-bottom: 25px;
+        }
     </style>
-    <p>Dear, {{ $data['user']['name'] }}</p>
+    <p class="margin-bottom">Dear, {{ $data['user']['name'] }}</p>
     <p>I hope this email finds you well and in good spirits!</p>
     <p>At ColoredCow our belief is we build great people who do extraordinary things. To facilitate the growth of
         talent, we are on our way to creating a career progression model, which requires a quarterly review of an
         employee based on some holistic growth parameters.</p>
-    <br>
-    <p>With your active role in the mentorship of {{ $data['employee']['name'] }}, It’s time for you to do his
+    <p class="margin-bottom">With your active role in the mentorship of {{ $data['employee']['name'] }}, It’s time for you to do his
         assessment for the first quarter!</p>
     <p><a href="{{ $data['review_link'] }}">Mentor assessment sheet</a></p>
     <h5>Target date: {{ now()->addDays(7)->format('d-m-y') }}</h5>
@@ -28,6 +30,6 @@
             training
             model for new learnings and betterment</i></h5>
     <p>If you have any inputs to make this whole process better or contribute to it, feel free to reach out.</p>
-    <p class="line">Let’s get better together!</p>
+    <p class="margin-bottom">Let’s get better together!</p>
     <p class="line">Regards</p>
 </div>

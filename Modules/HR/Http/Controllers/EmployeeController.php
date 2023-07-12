@@ -98,11 +98,11 @@ class EmployeeController extends Controller
         return view('hr.employees.employee-work-history', compact('employeesDetails'));
     }
 
-    public function sendReviewMail(Request $request, User $user)
+    public function sendEmployeeReviewMail(Request $request, User $user)
     {
         $data = $request->all();
         $employee = Employee::where('user_id', $user->id)->first();
-        $this->service->sendReviewMail($employee, $user, $data);
+        $this->service->sendEmployeeReviewMail($employee, $user, $data);
 
         return redirect()->back()->with('success', 'Mail sent successfully');
     }
