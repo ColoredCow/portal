@@ -100,20 +100,27 @@
             </div>
         </div>
 
-        <div>
-            @if ($application->applicant->linkedin)
-                <a href="{{ $application->applicant->linkedin }}" target="_blank" data-toggle="tooltip"
-                    data-placement="top" title="LinkedIn" class="mr-1 text-decoration-none">
-                    <span><i class="fa fa-linkedin-square" aria-hidden="true"></i></span>
-                </a>
-            @endif
-            @if ($application->resume)
-                <a href="{{ $application->resume }}" target="_blank" data-toggle="tooltip" data-placement="top"
-                    title="Resume" class="mr-1 text-decoration-none">
-                    <span><i class="fa fa-file-text" aria-hidden="true"></i></span>
-                </a>
-            @endif
-        </div>
+        <div class="d-flex justify-content-between">
+            <div>
+                @if ($application->applicant->linkedin)
+                    <a href="{{ $application->applicant->linkedin }}" target="_blank" data-toggle="tooltip"
+                        data-placement="top" title="LinkedIn" class="mr-1 text-decoration-none">
+                        <span><i class="fa fa-linkedin-square" aria-hidden="true"></i></span>
+                    </a>
+                @endif
+                @if ($application->resume)
+                    <a href="{{ $application->resume }}" target="_blank" data-toggle="tooltip" data-placement="top"
+                        title="Resume" class="mr-1 text-decoration-none">
+                        <span><i class="fa fa-file-text" aria-hidden="true"></i></span>
+                    </a>
+                @endif
+            </div>
+            <div class="">
+                @if ($application->applicant_type === 'codetrek')
+                <span class="badge badge-pill badge-dark">Codetrek</span>
+                @endif
+            </div>
+           </div>
     </td>
     <td>
         <div class="d-flex flex-column">
