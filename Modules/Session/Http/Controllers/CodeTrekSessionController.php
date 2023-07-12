@@ -9,11 +9,6 @@ use Modules\Session\Http\Requests\SessionRequest;
 
 class CodeTrekSessionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
-     */
     public function index(CodeTrekApplicant $codeTrekApplicant)
     {
         $codeTrekApplicant = CodeTrekApplicant::findOrFail($codeTrekApplicant->id);
@@ -22,6 +17,7 @@ class CodeTrekSessionController extends Controller
         ->orderBy('date', 'desc')
         ->get();
 
+        // @phpstan-ignore argument.type
         return view('session::codetrek.index')->with([
             'codeTrekApplicant' => $codeTrekApplicant,
             'sessions' => $sessions
