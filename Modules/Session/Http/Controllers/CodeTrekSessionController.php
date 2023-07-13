@@ -10,7 +10,7 @@ use Modules\Session\Http\Requests\SessionRequest;
 class CodeTrekSessionController extends Controller
 {
     public function index(CodeTrekApplicant $codeTrekApplicant)
-    {   
+    {
         $codeTrekApplicant = CodeTrekApplicant::findOrFail($codeTrekApplicant->id);
 
         $sessions = $codeTrekApplicant->sessions()
