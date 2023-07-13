@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Module Session</title>
 
-       {{-- Laravel Mix - CSS File --}}
-       {{-- <link rel="stylesheet" href="{{ mix('css/session.css') }}"> --}}
+@extends('layouts.app')
 
-    </head>
-    <body>
-        @yield('content')
+@section('css_scripts')
+<link href="{{ mix('css/session.css') }}" rel="stylesheet">
+@endsection
 
-        {{-- Laravel Mix - JS File --}}
-        {{-- <script src="{{ mix('js/session.js') }}"></script> --}}
-    </body>
-</html>
+@section('js_scripts')
+<script src="{{ mix('js/session.js') }}"></script>
+@endsection

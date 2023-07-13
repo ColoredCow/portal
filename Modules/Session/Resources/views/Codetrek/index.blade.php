@@ -1,11 +1,11 @@
-@extends('codetrek::layouts.master')
-@section('heading', 'CodeTrek')
+@extends('session::layouts.master')
+@section('heading', 'Sessions')
 @section('content')
     <div class="container" id="applicant">
         @includeWhen(session('success'), 'toast', ['message' => session('success')])
         <div class="col-lg-12 d-flex justify-content-between align-items-center mx-auto">
             <div>
-                <h1>Sessions</h1>
+                <h1>@yield('heading')</h1>
             </div>
 
             <div>
@@ -28,7 +28,8 @@
                             <div class="d-flex justify-content-center">
                                 <div class="spinner-border text-primary d-none " id="sessionFormSpinner"></div>
                             </div>
-                            <form action="{{ route('codetrek.session.store', $codeTrekApplicant->id) }}" method="post" id="sessionForm">
+                            <form action="{{ route('codetrek.session.store', $codeTrekApplicant->id) }}" method="post"
+                                id="sessionForm">
                                 @csrf
                                 <div class="modal-body">
                                     <div class="form-row">
@@ -36,7 +37,8 @@
                                             <label for="topic_name" class="field-required">Session Name</label>
                                             <input type="text" class="form-control" name="topic_name" id="topicName"
                                                 placeholder="Enter topic name" required="required" value="">
-                                            <div class="text-danger d-none" id="sessionTopicNameError"></div> <!-- this is for toast notification -->
+                                            <div class="text-danger d-none" id="sessionTopicNameError"></div>
+                                            <!-- This line is toast notification -->
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="link" class="field-required">Session Link</label>
@@ -52,17 +54,6 @@
                                                 placeholder="Enter date" required="required" value="">
                                             <div class="text-danger d-none" id="sessionDateError"></div>
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="level" class="field-required">Level</label>
-                                            <select name="level" id="levelId" class="form-control" required>
-                                                <option value="">Level at Session</option>
-                                                <option value="1">level 1</option>
-                                                <option value="2">level 2</option>
-                                                <option value="3">level3</option>
-                                            </select>
-                                            <div class="text-danger d-none" id="sessionLevelError">
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-12">
@@ -71,6 +62,8 @@
                                                 rows="4"></textarea>
                                             <div class="text-danger d-none" id="sessionSummaryError"></div>
                                         </div>
+                                        <input type="hidden" name="level"
+                                            value={{ $codeTrekApplicant->latest_round_name }}>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -80,10 +73,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
         <br>
         <div class="col-lg-12 d-flex justify-content-between align-items-center mx-auto">
             <h3> Name : {{ $codeTrekApplicant->first_name . ' ' . $codeTrekApplicant->last_name }}</h3>
@@ -92,10 +83,10 @@
             <h5>📩 {{ $codeTrekApplicant->email }}</h5>
         </div>
         <div class="col-lg-12 d-flex justify-content-between align-items-center mx-auto">
-            @if ($codeTrekApplicant->university !== Null)
+            @if ($codeTrekApplicant->university !== null)
                 <h5>🏫 {{ $codeTrekApplicant->university }}</h5>
             @endif
-            
+
         </div>
         <br>
         <br>
@@ -115,14 +106,15 @@
                         <tr>
                             <td>
                                 <h4 class="">
-                                    <a href="{{ $session->link }}" target="_blank" rel="noopener noreferrer">{{ $session->topic_name }}</a>
+                                    <a href="{{ $session->link }}" target="_blank"
+                                        rel="noopener noreferrer">{{ $session->topic_name }}</a>
                                 </h4>
                             </td>
                             <td>
                                 <h4>{{ $session->date }}</h4>
                             </td>
                             <td>
-                                <h4>level-{{ $session->level }}</h4>
+                                <h4>{{ $session->level }}</h4>
                             </td>
                             <td>
                                 <h4>{{ $session->summary }}</h4>
@@ -148,7 +140,8 @@
                                                     <div class="spinner-border text-primary d-none "
                                                         id="sessionFormSpinner"></div>
                                                 </div>
-                                                <form action="{{ route('codetrek.session.update', ['session' => $session->id, 'codeTrekApplicant' => $codeTrekApplicant->id]) }}"
+                                                <form
+                                                    action="{{ route('codetrek.session.update', ['session' => $session->id, 'codeTrekApplicant' => $codeTrekApplicant->id]) }}"
                                                     method="post" id="editSessionForm">
                                                     @csrf
                                                     @method('PUT')
@@ -173,7 +166,6 @@
                                                                     required="required" value="{{ $session->link }}">
                                                                 <div class="text-danger d-none" id="sessionLinkError">
                                                                 </div>
-
                                                             </div>
                                                         </div>
                                                         <div class="form-row">
@@ -184,24 +176,8 @@
                                                                     required="required" value="{{ $session->date }}">
                                                                 <div class="text-danger d-none" id="sessionDateError">
                                                                 </div>
-                                                            </div>
-                                                            <div class="form-group col-md-6">
-                                                                <label for="level" class="field-required">Level</label>
-                                                                <select name="level" id="levelId"
-                                                                    class="form-control" required>
-                                                                    <option value="">Level at Session</option>
-                                                                    <option value="1"
-                                                                        {{ $session->level == 1 ? 'selected' : '' }}>level
-                                                                        1</option>
-                                                                    <option value="2"
-                                                                        {{ $session->level == 2 ? 'selected' : '' }}>level
-                                                                        2</option>
-                                                                    <option value="3"
-                                                                        {{ $session->level == 3 ? 'selected' : '' }}>level3
-                                                                    </option>
-                                                                </select>
-                                                                <div class="text-danger d-none" id="sessionLevelError">
-                                                                </div>
+                                                                <input type="hidden" name="level"
+                                                                    value={{ $session->level }}>
                                                             </div>
                                                         </div>
                                                         <div class="form-row">
@@ -212,7 +188,6 @@
                                                                     required="required" rows="4"></textarea>
                                                                 <div class="text-danger d-none" id="sessionSummaryError">
                                                                 </div>
-
                                                             </div>
                                                         </div>
                                                     </div>

@@ -85,4 +85,10 @@ mix
     "Modules/CodeTrek/Resources/assets/sass/app.scss",
     "public/css/codetrek.css"
   );
+mix
+	.js("Modules/Session/Resources/assets/js/app.js", "public/js/session.js")
+	.sass(
+		"Modules/Session/Resources/assets/sass/app.scss",
+		"public/css/session.css"
+	);
 mix.version();
