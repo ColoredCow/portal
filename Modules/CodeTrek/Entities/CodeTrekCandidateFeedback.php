@@ -4,7 +4,6 @@ namespace Modules\CodeTrek\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Modules\User\Entities\User;
-use Modules\CodeTrek\Entities\CodeTrekFeedbackCategories;
 
 class CodeTrekCandidateFeedback extends Model
 {
