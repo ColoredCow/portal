@@ -11,7 +11,7 @@ class CodeTrekSessionController extends Controller
 {
     public function index(CodeTrekApplicant $codeTrekApplicant)
     {
-        $codeTrekApplicant = CodeTrekApplicant::findOrFail($codeTrekApplicant->id); //Find the record of a candidateb by given id 
+        $codeTrekApplicant = CodeTrekApplicant::findOrFail($codeTrekApplicant->id); //Find the record of a candidate by given id
 
         $sessions = $codeTrekApplicant->sessions()
         ->orderBy('date', 'desc')
