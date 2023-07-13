@@ -63,12 +63,15 @@
                         <tr>
                             <td class="align-middle">{{ $row[1] }}</td>
                             <td class="align-middle">{{ $row[0] }}</td>
-                            <td class="align-middle"><a href="">Send email</a></td>
                             <td class="align-middle">
+                                <button type="button" data-date="{{ $row[0] }}" data-name="{{ $row[1] }}"
+                                    class="btn btn-transparent text-primary send-email">Send email</button>
+                            </td>
+                            <td class="align-middle" class="align-middle">
                                 <input type="email" id="email_{{ $key }}" name="email[]"
                                     class="form-control email" placeholder="Enter new email" required>
                             </td>
-                            <td class="align-middle">
+                            <td class="align-middle" class="align-middle">
                                 <input type="hidden" name="timestamp[]" value="{{ $row[0] }}">
                                 <input type="hidden" name="full_name[]" value="{{ $row[1] }}">
                                 <input type="checkbox" class="approved-checkbox" name="approved[]" value="approved"
@@ -80,9 +83,24 @@
                 </tbody>
             </table>
         </form>
+
+        <form id="emailForm" method="GET" action="{{ route('infra.mail') }}">
+            @csrf
+            <input type="hidden" name="data[date]" id="emailDate">
+            <input type="hidden" name="data[name]" id="emailName">
+        </form>
     </div>
 
     <script>
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('send-email')) {
+                var date = event.target.dataset.date;
+                var name = event.target.dataset.name;
+                document.getElementById('emailDate').value = date;
+                document.getElementById('emailName').value = name;
+                document.getElementById('emailForm').submit();
+            }
+        });
         $(document).ready(function() {
             // Handle email input change event
             $('.email').on('input', function() {
