@@ -38,13 +38,14 @@
                                             <input type="text" class="form-control" name="topic_name" id="topicName"
                                                 placeholder="Enter topic name" required="required" value="">
                                             <div class="text-danger d-none" id="sessionTopicNameError"></div>
-                                            <!-- This line is toast notification -->
+                                            <!-- This line is used to display the error message -->
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="link" class="field-required">Session Link</label>
                                             <input type="text" class="form-control" name="link" id="topicLink"
                                                 placeholder="Enter session link" required="required" value="">
                                             <div class="text-danger d-none" id="sessionLinkError"></div>
+                                            <!-- This line is used to display the error message -->
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -53,6 +54,7 @@
                                             <input type="date" class="form-control" name="date" id="date"
                                                 placeholder="Enter date" required="required" value="">
                                             <div class="text-danger d-none" id="sessionDateError"></div>
+                                            <!-- This line is used to display the error message -->
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -61,6 +63,7 @@
                                             <textarea class="form-control" name="summary" id="summary" placeholder="Enter session summary" required="required"
                                                 rows="4"></textarea>
                                             <div class="text-danger d-none" id="sessionSummaryError"></div>
+                                            <!-- This line is used to display the error message -->
                                         </div>
                                         <input type="hidden" name="level"
                                             value={{ $codeTrekApplicant->latest_round_name }}>
