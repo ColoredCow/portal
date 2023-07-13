@@ -121,7 +121,7 @@ class CodeTrekService
     {
         $applicationRound = new CodeTrekApplicantRoundDetail();
         $applicationRound->applicant_id = $applicant->id;
-        $applicationRound->latest_round_name = config('codetrek.rounds.introductory-call.slug')';
+        $applicationRound->latest_round_name = config('codetrek.rounds.introductory-call.slug');
         $applicationRound->feedback = null;
         $applicationRound->start_date = $data['start_date'];
         $applicationRound->save();
