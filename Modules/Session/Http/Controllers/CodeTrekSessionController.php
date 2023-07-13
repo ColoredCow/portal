@@ -49,11 +49,6 @@ class CodeTrekSessionController extends Controller
         //
     }
 
-    public function edit($id)
-    {
-        //
-    }
-
     public function update(SessionRequest $request, Session $session, CodeTrekApplicant $codeTrekApplicant)
     {
         $session = Session::find($session->id);
