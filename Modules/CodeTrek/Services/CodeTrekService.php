@@ -130,14 +130,4 @@ class CodeTrekService
 
         return $feedbacks;
     }
-
-    public function getPostedByUserName($userId)
-    {
-        return User::select('name')->where('id', $userId)->first()->name;
-    }
-
-    public function getFeedbackCategoryName($categoryId)
-    {
-        return CodeTrekFeedbackCategories::select('category_name')->where('id', $categoryId)->first()->category_name;
-    }
 }
