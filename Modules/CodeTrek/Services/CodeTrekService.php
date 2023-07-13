@@ -129,20 +129,8 @@ class CodeTrekService
     public function getCodeTrekApplicantFeedbacks($data)
     {
         $feedbacks = CodeTrekCandidateFeedback::where('candidate_id', $data)->get();
-        $candidateFeedbacks = [];
-        foreach ($feedbacks as $feedback) {
-            $candidateFeedback = new \stdClass();
-            $candidateFeedback->id = $feedback['id'];
-            $candidateFeedback->posted_by = $this->getPostedByUserName($feedback['posted_by']);
-            $candidateFeedback->posted_on = $feedback['posted_on'];
-            $candidateFeedback->feedback_category = $this->getFeedbackCategoryName($feedback['category_id']);
-            $candidateFeedback->feedback_type = $feedback['feedback_type'];
-            $candidateFeedback->feedback = $feedback['feedback'];
 
-            $candidateFeedbacks[] = $candidateFeedback;
-        }
-
-        return $candidateFeedbacks;
+        return $feedbacks;
     }
 
     public function getPostedByUserName($userId)
