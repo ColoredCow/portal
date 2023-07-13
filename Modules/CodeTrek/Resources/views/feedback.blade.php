@@ -47,12 +47,12 @@
                             <button class="btn accordion-button w-100p" type="button" data-toggle="collapse" data-target="#collapse{{$candidateFeedback->id}}" aria-expanded="false" aria-controls="collapse{{$candidateFeedback->id}}">
                                 <div class="row bg-light my-0">
                                     <div class="col-6 mx-0 d-flex justify-content-start align-items-center text-primary my-0">
-                                        <span class="font-weight-bold">{{$candidateFeedback->posted_by}}</span>
+                                        <span class="font-weight-bold">{{$candidateFeedback->getPostedByUserName($candidateFeedback->posted_by)}}</span>
                                         <span class="mx-1">-</span>
                                         <span>{{$candidateFeedback->posted_on}}</span>
                                     </div>
                                     <div class="col-6 mx-0 d-flex justify-content-end py-1">
-                                        <span class="badge badge-primary max-h-25 mt-1 item-align-center">{{$candidateFeedback->feedback_category}}</span>
+                                        <span class="badge badge-primary max-h-25 mt-1 item-align-center">{{$candidateFeedback->getFeedbackCategoryName($candidateFeedback->category_id)}}</span>
                                         <span>&nbsp &nbsp</span>
                                         @if(strcmp($candidateFeedback->feedback_type, "positive") == 0)
                                             <span class="thumbs-up pt-0 max-h-25">
