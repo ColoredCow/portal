@@ -97,7 +97,7 @@
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
                     <tr class="text-center sticky-top">
-                        <th class="col-md-3">Tpoic Name</th>
+                        <th class="col-md-3">Topic Name</th>
                         <th class="col-md-2">Date</th>
                         <th class="col-md-1">Level</th>
                         <th class="col-md-4">Summary</th>
