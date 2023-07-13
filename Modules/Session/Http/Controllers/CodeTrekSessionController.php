@@ -11,9 +11,9 @@ class CodeTrekSessionController extends Controller
 {
     public function index(CodeTrekApplicant $codeTrekApplicant)
     {
-        $codeTrekApplicant = CodeTrekApplicant::findOrFail($codeTrekApplicant->id); //Find the record of a candidate by given id
+        $codeTrekApplicant = CodeTrekApplicant::findOrFail($codeTrekApplicant->id); //Find the record of a applicant by given id
 
-        $sessions = $codeTrekApplicant->sessions()
+        $sessions = $codeTrekApplicant->sessions() //get all session of the particular applicant order by date in descending order
         ->orderBy('date', 'desc')
         ->get();
 
@@ -39,7 +39,7 @@ class CodeTrekSessionController extends Controller
             'link' => $request->input('link'),
             'level' => $request->input('level'),
             'summary' => $request->input('summary'),
-        ]);
+        ]); //Stores the session data to the particular applicant
 
         return redirect()->route('codetrek.session.index', $codeTrekApplicant->id)->with('success', 'Session created successfully.');
     }
