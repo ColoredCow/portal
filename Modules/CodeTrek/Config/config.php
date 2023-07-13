@@ -17,6 +17,11 @@ return [
         ],
     ],
     'rounds' =>[
+        'introductory-call' => [
+            'label' => 'Introductory Call',
+            'slug'  => 'introductory-call',
+            'class' => 'badge badge-info'
+        ],
         'preparatory' => [
             'label' => 'Preparatory',
             'slug'  => 'preparatory',
