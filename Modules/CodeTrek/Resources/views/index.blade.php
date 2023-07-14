@@ -48,6 +48,7 @@
                         @endcan
                         <input type="hidden" name="status" value="{{ $request['status'] ?? '' }}">
                         <input type="hidden" name="name" value="{{ request()->get('name') }}">
+                        <input type="hidden" name="roundSlug" value="{{ request()->input('roundSlug') }}">
                     </div>
                 </form>
             </div>
@@ -57,6 +58,7 @@
                         placeholder="Enter the Applicant name" value= "{{ request()->get('name') }}">
                     <input type="hidden" name="status" value="{{ $request['status'] ?? '' }}">
                     <input type="hidden" name="centre" value="{{ request()->get('centre') }}">
+                    <input type="hidden" name="roundSlug" value="{{ request()->input('roundSlug') }}">
                     <button class="btn btn-info h-40 ml-2 text-white">Search</button>
                 </div>
             </form>
@@ -69,26 +71,44 @@
         <ul class="nav nav-pills d-flex justify-content-between">
             <div class='d-flex justify-content-between'>
                 <li class="nav-item mr-3">
-                    <a href="{{ route('codetrek.index', ['name' => $name ,'centre' => $centre , 'status' => 'active']) }}"
-                        class="nav-link btn-nav {{ request()->input('status') !== 'inactive' && request()->input('status') !== 'completed' ? 'active' : '' }}"
-                        onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
+                    @php
+                        $activeParams = array_merge(request()->except(['status']), ['status' => 'active']);
+                        if (request()->has('roundSlug')) {
+                            $activeParams['roundSlug'] = request()->input('roundSlug');
+                        }
+                        $activeUrl = route('codetrek.index', $activeParams);
+                    @endphp
+                    <a href="{{ $activeUrl }}" class="nav-link btn-nav {{ request()->input('status') !== 'inactive' && request()->input('status') !== 'completed' ? 'active' : '' }}" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
                         <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/clipboard-check.svg')) !!}</span>
-                        Active({{$statusCounts['active']}})</a>
-                </li>
+                        Active({{ $statusCounts['active'] }})
+                    </a>
+                </li>                
                 <li class="nav-item mr-3">
-                    <a href="{{ route('codetrek.index', ['name' => $name , 'centre' => $centre , 'status' => 'inactive']) }}"
-                        class="nav-link btn-nav {{ request()->input('status') == 'inactive' ? 'active' : '' }}"
-                        onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
+                    @php
+                        $inactiveParams = array_merge(request()->except(['status']), ['status' => 'inactive']);
+                        if (request()->has('roundSlug')) {
+                            $inactiveParams['roundSlug'] = request()->input('roundSlug');
+                        }
+                        $inactiveUrl = route('codetrek.index', $inactiveParams);
+                    @endphp
+                    <a href="{{ $inactiveUrl }}" class="nav-link btn-nav {{ request()->input('status') == 'inactive' ? 'active' : '' }}" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
                         <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/x-circle.svg')) !!}</span>
-                        Inactive({{$statusCounts['inactive']}})</a>
-                </li>
+                        Inactive({{ $statusCounts['inactive'] }})
+                    </a>
+                </li>                
                 <li class="nav-item mr-3">
-                    <a href="{{ route('codetrek.index', ['name' => $name , 'centre' => $centre , 'status' => 'completed']) }}"
-                        class="nav-link btn-nav {{ request()->input('status') == 'completed' ? 'active' : '' }}"
-                        onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
-                        <span class="d-inline-block h-18 w-20"> {!! file_get_contents(public_path('icons/person-check.svg')) !!} </span>
-                        Completed({{$statusCounts['completed']}})</a>
-                </li>
+                    @php
+                        $completedParams = ['name' => $name, 'centre' => $centre, 'status' => 'completed'];
+                        if (request()->has('roundSlug')) {
+                            $completedParams['roundSlug'] = request()->input('roundSlug');
+                        }
+                        $completedUrl = route('codetrek.index', $completedParams);
+                    @endphp
+                    <a href="{{ $completedUrl }}" class="nav-link btn-nav {{ request()->input('status') == 'completed' ? 'active' : '' }}" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
+                        <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/person-check.svg')) !!}</span>
+                        Completed({{ $statusCounts['completed'] }})
+                    </a>
+                </li>    
             </div>
             <form action="{{ route('codetrek.index') }}" id="sortingForm">
                 <div class="form-group w-120">
@@ -106,6 +126,7 @@
                     <input type="hidden" name="status" value="{{ $request['status'] ?? '' }}">
                     <input type="hidden" name="centre" value="{{ $request['centre'] ?? '' }}">
                     <input type="hidden" name="name" value="{{ request()->get('name') }}">
+                    <input type="hidden" name="roundSlug" value="{{ request()->input('roundSlug') }}">
                 </div>
             </form>
         </ul>
