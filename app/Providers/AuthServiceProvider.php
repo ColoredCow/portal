@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use App\Models\Setting;
+use App\Policies\SettingPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -36,5 +38,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::before(function ($user, $ability) {
             return $user->hasRole('super-admin') ? true : null;
         });
+
+        Gate::resource('settings', SettingPolicy::class);
+        Gate::define('view-bank-details', [SettingPolicy::class, 'viewBankDetails']);
     }
 }

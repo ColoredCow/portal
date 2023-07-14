@@ -15,7 +15,7 @@ class SettingPolicy
             'hr_settings.view',
             'nda_settings.view',
             'finance_invoices_settings.view',
-        ]);
+        ]) || $user->hasAnyRole(['super-admin', 'admin', 'finance-manager']);
     }
 
     public function update(User $user)
@@ -34,5 +34,10 @@ class SettingPolicy
             'nda_settings.view',
             'finance_invoices_settings.view',
         ]);
+    }
+
+    public function viewBankDetails(User $user)
+    {
+        return $user->hasAnyRole(['super-admin', 'admin', 'finance-manager']);
     }
 }
