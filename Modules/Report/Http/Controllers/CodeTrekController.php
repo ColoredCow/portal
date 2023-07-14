@@ -20,6 +20,6 @@ class CodeTrekController extends Controller
         $type = $request->type;
         $filters = $request->filters;
 
-        return $this->service->getDataForCodeTrekApplications($type, json_decode($filters, true), $request);
+        return $this->service->getDataForDailyCodeTrekApplications($type, json_decode($filters, true), $request);
     }
 }

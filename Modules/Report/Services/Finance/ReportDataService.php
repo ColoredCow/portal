@@ -18,7 +18,7 @@ class ReportDataService
         return $filters;
     }
 
-    public function getDataForCodeTrekApplications($type, $filters, $request)
+    public function getDataForDailyCodeTrekApplications($type, $filters, $request)
     {
         if ($type == 'codetrek-application') {
             $applicants = CodeTrekApplicant::find('start_date');

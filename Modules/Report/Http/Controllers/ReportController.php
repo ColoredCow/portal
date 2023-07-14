@@ -5,16 +5,9 @@ namespace Modules\Report\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Modules\Report\Entities\Report;
 use Modules\Report\Http\Requests\ReportRequest;
-use Modules\Report\Services\Finance\ReportDataService;
 
 class ReportController extends Controller
 {
-    protected $service;
-
-    public function __construct(ReportDataService $service)
-    {
-        $this->service = $service;
-    }
     /**
      * Display a listing of the resource.
      */
