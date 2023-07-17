@@ -934,7 +934,7 @@ class InvoiceService implements InvoiceServiceContract
             $currencySymbol = config('constants.currency.' . $project->client->currency . '.symbol');
             if ($project->hasCustomInvoiceTemplate()) {
                 $amount = $currencySymbol . $project->getTotalLedgerAmount($quarter);
-            } else if (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
+            } elseif (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
                 $amount = $currencySymbol . $project->getResourceBillableAmount();
             } else {
                 $amount = $currencySymbol . $project->getTotalPayableAmountForTerm($monthToSubtract);
