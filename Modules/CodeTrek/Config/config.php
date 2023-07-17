@@ -20,7 +20,7 @@ return [
         'introductory-call' => [
             'label' => 'Introductory Call',
             'slug'  => 'introductory-call',
-            'class' => 'badge badge-info'
+            'class' => 'badge badge-warning'
         ],
         'preparatory' => [
             'label' => 'Preparatory',
