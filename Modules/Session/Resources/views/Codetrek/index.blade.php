@@ -188,7 +188,7 @@
                                                                 <label for="summary"
                                                                     class="field-required">Summary</label>
                                                                 <textarea class="form-control" name="summary" id="summary" placeholder="Enter session summary"
-                                                                    required="required" rows="4"></textarea>
+                                                                    required="required" rows="4">{{$session->summary}}</textarea>
                                                                 <div class="text-danger d-none" id="sessionSummaryError">
                                                                 </div>
                                                             </div>
