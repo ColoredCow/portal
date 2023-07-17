@@ -143,39 +143,7 @@
                             @endif
                             @php
                                 $index++;
-                                $currencySymbol = config('constants.currency.' . $client->currency . '.symbol');
-                                if ($client->hasCustomInvoiceTemplate()) {
-                                    $amount = $currencySymbol . ($client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount($quarter));
-                                } else {
-                                    $amount = $currencySymbol . $client->getTotalPayableAmountForTerm($monthToSubtract, $client->clientLevelBillingProjects);
-                                }
-                                $billingStartMonth = $client->getMonthStartDateAttribute($monthToSubtract)->format('M');
-                                $billingEndMonth = $client->getMonthEndDateAttribute($monthToSubtract)->format('M');
-                                $billingEndMonthYear = $client->getMonthEndDateAttribute($monthToSubtract)->format('Y');
-                                $monthName = $client->getMonthEndDateAttribute($monthToSubtract)->format('F');
-                                $termText = $billingStartMonth;
-                                if (optional($client->billingDetails)->billing_frequency == config('client.billing-frequency.quarterly.id')) {
-                                    $termText = today()->startOfQuarter()->format('M');
-                                    $billingStartMonth = today()->startOfQuarter()->addQuarter()->format('M');
-                                    $billingEndMonth = today()->endOfQuarter()->format('M');
-                                }
-                                $invoiceData = [
-                                    'projectName' => $client->name . ' Projects',
-                                    'billingPersonName' => optional($client->billing_contact)->name,
-                                    'billingPersonFirstName' => optional($client->billing_contact)->first_name,
-                                    'billingPersonEmail' => optional($client->billing_contact)->email,
-                                    'senderEmail' => config('invoice.mail.send-invoice.email'),
-                                    'invoiceNumber' => $client->next_invoice_number,
-                                    'totalAmount' => $amount,
-                                    'year' => $billingEndMonthYear,
-                                    'term' => $billingStartMonth != $billingEndMonth ? $termText . ' - ' . $billingEndMonth : $monthName,
-                                    'emailSubject' => $sendInvoiceEmailSubject,
-                                    'emailBody' => $sendInvoiceEmailBody,
-                                    'clientId' => $client->id,
-                                    'projectId' => null,
-                                    'bccEmails' => $client->bcc_emails,
-                                    'ccEmails' => $client->cc_emails
-                                ];
+                                $invoiceData = $client->getNextInvoiceData();
                             @endphp
                             <tr>
                                 <td>{{ $index }}</td>
@@ -191,7 +159,7 @@
                                         {{-- <i class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal" data-target="#InvoiceDetailsForClient{{ $client->id }}"></i> --}}
                                     @endif
                                 </td>
-                                <td>{{ $amount }}</td>
+                                <td>{{ $invoiceData['totalAmount']}}</td>
                                 <td align="center"> <a class="btn btn-sm btn-info text-light" href="{{ $client->effort_sheet_url }}" target="_blank">{{ __('Link') }}</a></td>
                                 <td class="text-center">
                                     <form action="{{ route('invoice.generate-invoice') }}" target="_blank" method="POST">
@@ -220,42 +188,7 @@
                             @endif
                             @php
                                 $index++;
-                               
-                                $currencySymbol = config('constants.currency.' . $project->client->currency . '.symbol');
-                                if ($project->hasCustomInvoiceTemplate()) {
-                                    $amount = $currencySymbol . $project->getTotalLedgerAmount($quarter);
-                                } else if (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
-                                    $amount = $currencySymbol . $project->getResourceBillableAmount();
-                                } else {
-                                    $amount = $currencySymbol . $project->getTotalPayableAmountForTerm($monthToSubtract);
-                                }
-                                $billingStartMonth = $project->client->getMonthStartDateAttribute($monthToSubtract)->format('M');
-                                $billingEndMonth = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('M');
-                                $billingEndMonthYear = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('Y');
-                                $monthName = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('F');
-                                $termText = $billingStartMonth;
-                                if (optional($project->client->billingDetails)->billing_frequency == config('client.billing-frequency.quarterly.id')) {
-                                    $termText = today()->startOfQuarter()->format('M');
-                                    $billingStartMonth = $termText = today()->startOfQuarter()->format('M');
-                                    $billingEndMonth  = $termText = today()->endOfQuarter()->format('M');
-                                }
-                                $invoiceData = [
-                                    'projectName' => $project->name,
-                                    'billingPersonName' => optional($project->client->billing_contact)->name,
-                                    'billingPersonFirstName' => optional($project->client->billing_contact)->first_name,
-                                    'billingPersonEmail' => optional($project->client->billing_contact)->email,
-                                    'senderEmail' => config('invoice.mail.send-invoice.email'),
-                                    'invoiceNumber' => str_replace('-', '', $project->next_invoice_number),
-                                    'totalAmount' => $amount,
-                                    'year' => $billingEndMonthYear,
-                                    'term' => $billingStartMonth != $billingEndMonth ? $termText . ' - ' . $billingEndMonth : $monthName,
-                                    'emailSubject' => $sendInvoiceEmailSubject,
-                                    'emailBody' => $sendInvoiceEmailBody,
-                                    'projectId' => $project->id,
-                                    'clientId' => null,
-                                    'bccEmails' => $project->client->bcc_emails,
-                                    'ccEmails' => $project->client->cc_emails
-                                ];
+                                $invoiceData  = $project->getNextInvoiceData();
                             @endphp
                             <tr>
                                 <td>{{ $index }}</td>
@@ -270,7 +203,7 @@
                                         {{ $project->getBillableHoursForMonth($monthToSubtract) }}
                                     @endif
                                 </td>
-                                <td>{{ $amount }}</td>
+                                <td>{{ $invoiceData['totalAmount'] }}</td>
                                 <td align="center"> <a class="btn btn-sm btn-info text-light" href="{{ $project->effort_sheet_url }}" target="_blank">{{ __('Link') }}</a></td>
                                 <td class="text-center">
                                     <form action="{{ route('invoice.generate-invoice') }}" target="_blank" method="POST">

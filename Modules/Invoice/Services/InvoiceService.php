@@ -23,8 +23,6 @@ use Carbon\Carbon;
 use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Project\Entities\Project;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
-use Modules\Invoice\Entities\LedgerAccount;
-use Illuminate\Support\Facades\Notification;
 use Modules\Invoice\Notifications\GoogleChat\SendPaymentReceivedNotification;
 
 class InvoiceService implements InvoiceServiceContract
@@ -331,7 +329,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         return [
             'invoices' => $this->taxReportInvoices($filters),
-            'clients' => Client::orderBy('name', 'asc')->get()
+            'clients' => Client::orderBy('name', 'asc')->get(),
         ];
     }
 
@@ -510,7 +508,7 @@ class InvoiceService implements InvoiceServiceContract
         $invoiceNumber = $this->getInvoiceNumberPreview($client, $projectForInvoiceNumber, $data['sent_on'], $billingLevel);
         $termPeriod = [
             'term_start_date' => $client ? $client->getMonthStartDateAttribute(1) : $project->client->getMonthStartDateAttribute(1),
-            'term_end_date' => $client ? $client->getMonthEndDateAttribute(1) : $project->client->getMonthEndDateAttribute(1)
+            'term_end_date' => $client ? $client->getMonthEndDateAttribute(1) : $project->client->getMonthEndDateAttribute(1),
         ];
         $billingStartMonth = $client ? $client->getMonthStartDateAttribute(1)->format('M') : $project->client->getMonthStartDateAttribute(1)->format('M');
         $billingStartMonthYear = $client ? $client->getMonthStartDateAttribute(1)->format('Y') : $project->client->getMonthStartDateAttribute(1)->format('Y');
@@ -916,5 +914,93 @@ class InvoiceService implements InvoiceServiceContract
         }
 
         LedgerAccount::destroy($ledgerAccountsIdToDelete);
+    }
+
+    public function getNextInvoiceData($project, $client)
+    {
+        $monthToSubtract = 1;
+        $quarter = now()->quarter;
+        $emailSubjectSetting = optional(Setting::where([
+            'module' => 'invoice',
+            'setting_key' => config('invoice.templates.setting-key.send-invoice.subject'),
+        ])->first());
+
+        $emailBodySetting = optional(Setting::where([
+            'module' => 'invoice',
+            'setting_key' => config('invoice.templates.setting-key.send-invoice.body'),
+        ])->first());
+        if ($client === null) {
+            //  Project Level Billing Projects
+            $currencySymbol = config('constants.currency.' . $project->client->currency . '.symbol');
+            if ($project->hasCustomInvoiceTemplate()) {
+                $amount = $currencySymbol . $project->getTotalLedgerAmount($quarter);
+            } else if (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
+                $amount = $currencySymbol . $project->getResourceBillableAmount();
+            } else {
+                $amount = $currencySymbol . $project->getTotalPayableAmountForTerm($monthToSubtract);
+            }
+            $billingStartMonth = $project->client->getMonthStartDateAttribute($monthToSubtract)->format('M');
+            $billingEndMonth = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('M');
+            $billingEndMonthYear = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('Y');
+            $monthName = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('F');
+            $termText = $billingStartMonth;
+            if (optional($project->client->billingDetails)->billing_frequency == config('client.billing-frequency.quarterly.id')) {
+                $termText = today()->startOfQuarter()->format('M');
+                $billingStartMonth = $termText = today()->startOfQuarter()->format('M');
+                $billingEndMonth = $termText = today()->endOfQuarter()->format('M');
+            }
+            return [
+                'projectName' => $project->name,
+                'billingPersonName' => optional($project->client->billing_contact)->name,
+                'billingPersonFirstName' => optional($project->client->billing_contact)->first_name,
+                'billingPersonEmail' => optional($project->client->billing_contact)->email,
+                'senderEmail' => config('invoice.mail.send-invoice.email'),
+                'invoiceNumber' => str_replace('-', '', $project->next_invoice_number),
+                'totalAmount' => $amount,
+                'year' => $billingEndMonthYear,
+                'term' => $billingStartMonth != $billingEndMonth ? $termText . ' - ' . $billingEndMonth : $monthName,
+                'emailSubject' => $emailSubjectSetting->setting_value,
+                'emailBody' => $emailBodySetting->setting_value,
+                'projectId' => $project->id,
+                'clientId' => null,
+                'bccEmails' => $project->client->bcc_emails,
+                'ccEmails' => $project->client->cc_emails,
+            ];
+        } else {
+            //Client Level Billing Projects
+            $currencySymbol = config('constants.currency.' . $client->currency . '.symbol');
+            if ($client->hasCustomInvoiceTemplate()) {
+                $amount = $currencySymbol . ($client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount($quarter));
+            } else {
+                $amount = $currencySymbol . $client->getTotalPayableAmountForTerm($monthToSubtract, $client->clientLevelBillingProjects);
+            }
+            $billingStartMonth = $client->getMonthStartDateAttribute($monthToSubtract)->format('M');
+            $billingEndMonth = $client->getMonthEndDateAttribute($monthToSubtract)->format('M');
+            $billingEndMonthYear = $client->getMonthEndDateAttribute($monthToSubtract)->format('Y');
+            $monthName = $client->getMonthEndDateAttribute($monthToSubtract)->format('F');
+            $termText = $billingStartMonth;
+            if (optional($client->billingDetails)->billing_frequency == config('client.billing-frequency.quarterly.id')) {
+                $termText = today()->startOfQuarter()->format('M');
+                $billingStartMonth = today()->startOfQuarter()->addQuarter()->format('M');
+                $billingEndMonth = today()->endOfQuarter()->format('M');
+            }
+            return [
+                'projectName' => $client->name . ' Projects',
+                'billingPersonName' => optional($client->billing_contact)->name,
+                'billingPersonFirstName' => optional($client->billing_contact)->first_name,
+                'billingPersonEmail' => optional($client->billing_contact)->email,
+                'senderEmail' => config('invoice.mail.send-invoice.email'),
+                'invoiceNumber' => $client->next_invoice_number,
+                'totalAmount' => $amount,
+                'year' => $billingEndMonthYear,
+                'term' => $billingStartMonth != $billingEndMonth ? $termText . ' - ' . $billingEndMonth : $monthName,
+                'emailSubject' => $emailSubjectSetting->setting_value,
+                'emailBody' => $emailBodySetting->setting_value,
+                'clientId' => $client->id,
+                'projectId' => null,
+                'bccEmails' => $client->bcc_emails,
+                'ccEmails' => $client->cc_emails,
+            ];
+        }
     }
 }
