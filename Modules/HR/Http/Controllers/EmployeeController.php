@@ -18,6 +18,8 @@ use Modules\HR\Entities\IndividualAssessment;
 use Modules\HR\Entities\Job;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\User\Entities\User;
+use Modules\HR\Emails\RetainershipAgreement;
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 class EmployeeController extends Controller
 {
@@ -153,7 +155,7 @@ class EmployeeController extends Controller
     public function showApprovalForm()
     {
         $client = new Google_Client();
-        $client->setAuthConfig('');
+        $client->setAuthConfig('E:\Downloads\ninth-nebula-392106-8478ffdda8b1.json');
         $client->addScope(Google_Service_Sheets::SPREADSHEETS_READONLY);
 
         $service = new Google_Service_Sheets($client);
@@ -175,6 +177,8 @@ class EmployeeController extends Controller
         $user->email = $email;
         $user->save();
 
+        $this->sendRetainershipAgreement($name, $email);
+
         return redirect()->back()->with('success', 'Users added successfully');
     }
 
@@ -185,5 +189,21 @@ class EmployeeController extends Controller
         Mail::queue(new BasicDetailsOfJoinee($joinneeMail, $joinneeName));
 
         return redirect()->back()->with('success', 'Mail send successfully');
+    }
+
+    public function sendRetainershipAgreement($name, $email)
+    {
+        $pdf = Pdf::loadView('hr.application.new-joinee-offer-letter', $name);
+        $dashedApplicantName = str_replace(' ', '-', $name);
+        $timestamp = now()->format('Ymd');
+        $fileName = "$dashedApplicantName-$timestamp.pdf";
+        $directory = 'app/public/' . config('constants.hr.offer-letters-dir');
+        if (! is_dir(storage_path($directory)) && ! file_exists(storage_path($directory))) {
+            mkdir(storage_path($directory), 0, true);
+        }
+        $fullPath = storage_path($directory . '/' . $fileName);
+        $pdf->save($fullPath);
+
+        Mail::send(new RetainershipAgreement($name, $email, $fileName));
     }
 }
