@@ -204,6 +204,7 @@ return [
         'primary' => env('HR_FOLLOWUP_EMAIL_PRIMARY', 'deepak.sharma@coloredcow.in'),
         'secondary' => env('HR_FOLLOWUP_EMAIL_SECONDARY', 'pk@coloredcow.in'),
     ],
+    'hr-infra-mail' => env('INFRA_SUPPORT_EMAIL', 'infrasupport@coloredcow.in'),
     'applicant_form-details' => [
         'preferred_name' => 'Preferred Name',
         'date_of_birth' => 'Date Of Birth',
@@ -230,4 +231,5 @@ return [
         'acc_number' => 'Account Number',
         'ifsc_code' => 'IFSC Code',
     ],
+
 ];
