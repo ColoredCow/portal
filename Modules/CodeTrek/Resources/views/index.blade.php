@@ -48,6 +48,7 @@
                         @endcan
                         <input type="hidden" name="status" value="{{ $request['status'] ?? '' }}">
                         <input type="hidden" name="name" value="{{ request()->get('name') }}">
+                        <input type="hidden" name="roundSlug" value="{{ request()->input('roundSlug') }}">
                     </div>
                 </form>
             </div>
@@ -57,6 +58,7 @@
                         placeholder="Enter the Applicant name" value= "{{ request()->get('name') }}">
                     <input type="hidden" name="status" value="{{ $request['status'] ?? '' }}">
                     <input type="hidden" name="centre" value="{{ request()->get('centre') }}">
+                    <input type="hidden" name="roundSlug" value="{{ request()->input('roundSlug') }}">
                     <button class="btn btn-info h-40 ml-2 text-white">Search</button>
                 </div>
             </form>
@@ -67,29 +69,53 @@
             $centre = request()->get('centre');
         @endphp
         <ul class="nav nav-pills d-flex justify-content-between">
+            @if (request()->tab != 'reports')
             <div class='d-flex justify-content-between'>
                 <li class="nav-item mr-3">
-                    <a href="{{ route('codetrek.index', ['name' => $name ,'centre' => $centre , 'status' => 'active']) }}"
-                        class="nav-link btn-nav {{ request()->input('status') !== 'inactive' && request()->input('status') !== 'completed' ? 'active' : '' }}"
-                        onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
+                    @php
+                        $activeParams = array_merge(request()->except(['status']), ['status' => 'active']);
+                        if (request()->has('roundSlug')) {
+                            $activeParams['roundSlug'] = request()->input('roundSlug');
+                        }
+                        $activeUrl = route('codetrek.index', $activeParams);
+                    @endphp
+                    <a href="{{ $activeUrl }}" class="nav-link btn-nav {{ request()->input('status') !== 'inactive' && request()->input('status') !== 'completed' ? 'active' : '' }}" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
                         <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/clipboard-check.svg')) !!}</span>
-                        Active({{$statusCounts['active']}})</a>
-                </li>
+                        Active({{ $statusCounts['active'] }})
+                    </a>
+                </li>                
                 <li class="nav-item mr-3">
-                    <a href="{{ route('codetrek.index', ['name' => $name , 'centre' => $centre , 'status' => 'inactive']) }}"
-                        class="nav-link btn-nav {{ request()->input('status') == 'inactive' ? 'active' : '' }}"
-                        onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
+                    @php
+                        $inactiveParams = array_merge(request()->except(['status']), ['status' => 'inactive']);
+                        if (request()->has('roundSlug')) {
+                            $inactiveParams['roundSlug'] = request()->input('roundSlug');
+                        }
+                        $inactiveUrl = route('codetrek.index', $inactiveParams);
+                    @endphp
+                    <a href="{{ $inactiveUrl }}" class="nav-link btn-nav {{ request()->input('status') == 'inactive' ? 'active' : '' }}" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
                         <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/x-circle.svg')) !!}</span>
-                        Inactive({{$statusCounts['inactive']}})</a>
-                </li>
+                        Inactive({{ $statusCounts['inactive'] }})
+                    </a>
+                </li>                
                 <li class="nav-item mr-3">
-                    <a href="{{ route('codetrek.index', ['name' => $name , 'centre' => $centre , 'status' => 'completed']) }}"
-                        class="nav-link btn-nav {{ request()->input('status') == 'completed' ? 'active' : '' }}"
-                        onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
-                        <span class="d-inline-block h-18 w-20"> {!! file_get_contents(public_path('icons/person-check.svg')) !!} </span>
-                        Completed({{$statusCounts['completed']}})</a>
-                </li>
+                    @php
+                        $completedParams = ['name' => $name, 'centre' => $centre, 'status' => 'completed'];
+                        if (request()->has('roundSlug')) {
+                            $completedParams['roundSlug'] = request()->input('roundSlug');
+                        }
+                        $completedUrl = route('codetrek.index', $completedParams);
+                    @endphp
+                    <a href="{{ $completedUrl }}" class="nav-link btn-nav {{ request()->input('status') == 'completed' ? 'active' : '' }}" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='none'">
+                        <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/person-check.svg')) !!}</span>
+                        Completed({{ $statusCounts['completed'] }})
+                    </a>
+                </li>    
             </div>
+            @elseif (request()->tab == 'reports')
+            <li class="nav-item mr-3">
+                <a class="nav-link active">Total Applications</a>
+            </li>
+            @endif
             <form action="{{ route('codetrek.index') }}" id="sortingForm">
                 <div class="form-group w-120">
                     <select class="form-control bg-light" name="order" id="order" onchange="document.getElementById('sortingForm').submit();">
@@ -106,6 +132,7 @@
                     <input type="hidden" name="status" value="{{ $request['status'] ?? '' }}">
                     <input type="hidden" name="centre" value="{{ $request['centre'] ?? '' }}">
                     <input type="hidden" name="name" value="{{ request()->get('name') }}">
+                    <input type="hidden" name="roundSlug" value="{{ request()->input('roundSlug') }}">
                 </div>
             </form>
         </ul>
@@ -117,7 +144,21 @@
                         <tr class="text-center sticky-top">
                             <th class="col-md-4">Name</th>
                             <th class="col-md-2">Days in CodeTrek</th>
-                            <th>Level</th>
+                            <th>
+                                <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="statusDropdown">Level</span>
+                                <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                                    <span class="dropdown-item-text fz-12">Filter by status</span>
+                                    @foreach (config('codetrek.rounds') as $round)
+                                        @php
+                                            $targetParams = ['roundSlug' => $round['slug'], 'status' => request()->input('status'), 'centre' => request()->input('centre'),'order' => request()->input('order'),'name' => request()->input('name')];
+                                            $target = route('codetrek.index', array_merge(request()->except(['roundSlug', 'status', 'centre', 'order', 'name']), $targetParams));
+                                        @endphp
+                                        <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
+                                            <span>{{ $round['label'] }}</span>
+                                        </a>
+                                    @endforeach
+                                </div>
+                              </th>
                             <th>Mentor Assigned</th>
                         </tr>
                     </thead>
@@ -193,11 +234,23 @@
                 </table>
             </div>
             {{$applicants->links()}}
-        @elseif (request()->status == 'reports')
-            <div>
-                <br><br>
-                <p align="center">Coming Soon</p>
+        @elseif (request()->tab == 'reports')
+        <div>
+            <br>
+            <div class="card-header mt-1" align="left">
+                <div class="my-2">
+                    <form align="right" action="{{ route('codetrek.index', ['tab' => 'reports']) }}" method="GET">
+                        <input type="date" name="application_start_date" id="start_date" value="{{ old('application_start_date', request()->get('application_start_date')) }}" required> to
+                        <input type="date" name="application_end_date" id="end_date" value="{{ old('application_end_date', request()->get('application_end_date')) }}" required>
+                        <input type="hidden" name="tab" value="reports">
+                        <input type="submit" class="btn btn-sm btn-primary text-white" value="View">
+                        <br>
+                    </form>
+                    <span class="chart-heading">Applications Received: {{$reportApplicationCounts}}</span>
+                </div>
+                <canvas class="w-full" id="CodeTrekApplicationReport"></canvas>
             </div>
+        </div>     
         @endif
     </div>
 @endsection
