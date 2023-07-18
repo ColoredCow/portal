@@ -45,7 +45,7 @@ class CodeTrekController extends Controller
             'applicants' => $applicants,
             'centres' => $centres,
             'mentors' => $mentors,
-            'counts' => $counts,
+            'reportApplicationCounts' => $reportApplicationCounts,
             'statusCounts' => $statusCounts
         ]);
     }
