@@ -387,8 +387,9 @@ class Client extends Model
     }
 
     public function getNextInvoiceData()
-    { 
+    {
         $invoiceService = new InvoiceService;
+        
         return $invoiceService->getNextInvoiceData(null, $this);
     }
 }

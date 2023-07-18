@@ -47,7 +47,7 @@
             </div>
         @endif
         <div>
-            @php    
+            @php
                 $month = now()->subMonth()->format('m');
                 $year = now()->subMonth()->format('Y');
                 $monthToSubtract = 1;
@@ -77,7 +77,7 @@
                         @elseif (request()->invoice_status == "ready")
                             <th>EffortSheet</th>
                             <th>Preview Invoice</th>
-                            <th>Action</th>   
+                            <th>Action</th>
                         @endif
                     </tr>
                 </thead>
@@ -125,7 +125,7 @@
                                     @elseif($invoice->shouldHighlighted())
                                         <div class="btn btn-sm btn-primary send-reminder" data-invoice-data="{{ json_encode($invoiceData) }}" data-toggle="modal" data-target="#invoiceReminder" >{{ __('Reminder') }}</div>
                                     @else
-                                        <div> - </div> 
+                                        <div> - </div>
                                     @endif
                                 </td>
                             </tr>
@@ -228,7 +228,7 @@
         </div>
         @foreach ($clientsReadyToSendInvoicesData as $client)
             @include(
-                'invoice::subviews.invoice-report.invoice-details-modal', 
+                'invoice::subviews.invoice-report.invoice-details-modal',
                 [
                     'modalId' => "InvoiceDetailsForClient" . $client->id,
                     'teamMembers' => $client->TeamMembersEffortData($monthToSubtract)
