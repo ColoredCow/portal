@@ -985,7 +985,7 @@ class InvoiceService implements InvoiceServiceContract
                 $billingStartMonth = today()->startOfQuarter()->addQuarter()->format('M');
                 $billingEndMonth = today()->endOfQuarter()->format('M');
             }
-            
+
             return [
                 'projectName' => $client->name . ' Projects',
                 'billingPersonName' => optional($client->billing_contact)->name,

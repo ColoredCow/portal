@@ -202,7 +202,7 @@ class Project extends Model implements Auditable
         $dates = [];
         $weekend = ['Saturday', 'Sunday'];
         foreach ($period as $date) {
-            if (!in_array($date->format('l'), $weekend)) {
+            if (! in_array($date->format('l'), $weekend)) {
                 $dates[] = $date->format('Y-m-d');
             }
         }
