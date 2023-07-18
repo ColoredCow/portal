@@ -34,6 +34,13 @@
         <img src="{{ public_path() . '/images/coloredcow.png' }}" alt="" height="50" width="200">
     </div>
 
+    <div class="text-center">
+        <h2>Name {{ $name }}</h2>
+        <h2>Email {{ $email }}</h2>
+        <h2>Start Date {{ $start_date }}</h2>
+        <h2>End Date {{ $end_date }}</h2>
+    </div>
+
 </body>
 
 </html>

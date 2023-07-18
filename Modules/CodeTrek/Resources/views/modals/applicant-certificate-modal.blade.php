@@ -1,7 +1,7 @@
 <div class="certificate-modal modal fade" id="candidateCertificate{{ $applicant->id }}" tabindex="-1" z-index="1"
     role="dialog" aria-labelledby="candidateCertificate{{ $applicant->id }}" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <form action="{{ route('codetrek.store-feedback') }}" method="POST" id='certificateForm'>
+        <form action="{{ route('codetrek.generate-pdf',$applicant) }}" method="POST" id='certificateForm'>
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
@@ -28,7 +28,7 @@
                         </div>
                         <div class="form-group col-md-6 text-break">
                             <h6 for="endDate">{{ __('End Date') }}</h6>
-                           <input type="date" class="form-control">
+                           <input type="date" name="end_date" class="form-control">
                         </div>
                     </div>
                 </div>

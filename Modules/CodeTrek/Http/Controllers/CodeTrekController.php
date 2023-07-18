@@ -2,13 +2,14 @@
 
 namespace Modules\CodeTrek\Http\Controllers;
 
-use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use Modules\CodeTrek\Entities\CodeTrekApplicant;
-use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
+use Modules\User\Entities\User;
+use Illuminate\Routing\Controller;
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
 use Modules\CodeTrek\Services\CodeTrekService;
 use Modules\Operations\Entities\OfficeLocation;
-use Modules\User\Entities\User;
+use Modules\CodeTrek\Entities\CodeTrekApplicant;
+use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 
 class CodeTrekController extends Controller
 {
@@ -67,6 +68,24 @@ class CodeTrekController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+    public function generatePDF(Request $request, CodeTrekApplicant $applicant)
+    {
+
+        $applicantEndDate = CodeTrekApplicant::findOrFail($applicant->id);
+        $applicantEndDate->end_date = $request['end_date'];
+        $applicantEndDate->save();
+
+        $data = [
+            'name' => $applicant['first_name'] . ' ' . $applicant['last_name'],
+            'email' => $applicant->email,
+            'start_date' => $applicant->start_date,
+            'end_date' => $request['end_date']
+        ];
+
+        $pdf = Pdf::loadView('codetrek::render.applicant-pdf-certificate-template', $data);
+        $pdf->download($data['name'] . '-certificate-' . date('Y-m-d') . '.pdf');
+    }
+
     public function edit(CodeTrekApplicant $applicant)
     {
         // $this->authorize('update', $applicant);   There are some issues in the production, which is why these lines are commented out.
