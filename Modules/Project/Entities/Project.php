@@ -421,7 +421,7 @@ class Project extends Model implements Auditable
     public function getNextInvoiceData()
     {
         $invoiceService = new InvoiceService;
-        
+
         return $invoiceService->getNextInvoiceData($this, null);
     }
 }
