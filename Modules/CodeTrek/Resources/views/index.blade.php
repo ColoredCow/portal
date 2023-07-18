@@ -207,7 +207,7 @@
                         <input type="submit" class="btn btn-sm btn-primary text-white" value="View">
                         <br>
                     </form>
-                    <span class="chart-heading">Applications Received: {{$counts}}</span>
+                    <span class="chart-heading">Applications Received: {{$reportApplicationCounts}}</span>
                 </div>
                 <canvas class="w-full" id="CodeTrekApplicationReport"></canvas>
             </div>
