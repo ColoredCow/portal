@@ -146,4 +146,11 @@ class CodeTrekService
         $feedback->posted_on = today();
         $feedback->save();
     }
+
+    public function getCodeTrekApplicantFeedbacks($applicantId)
+    {
+        $feedbacks = CodeTrekCandidateFeedback::where('candidate_id', $applicantId)->get();
+
+        return $feedbacks;
+    }
 }

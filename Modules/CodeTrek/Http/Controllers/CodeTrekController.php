@@ -122,4 +122,15 @@ class CodeTrekController extends Controller
     public function destroy($id)
     {
     }
+
+    public function getCodeTrekApplicantFeedback(Request $request)
+    {
+        $candidateFeedbacks = $this->service->getCodeTrekApplicantFeedbacks($request['applicant']);
+        $applicantDetails = CodeTrekApplicant::where('id', $request['applicant'])->first();
+
+        return view('codetrek::feedback')->with([
+        'candidateFeedbacks' => $candidateFeedbacks,
+        'applicantDetails' =>  $applicantDetails
+        ]);
+    }
 }
