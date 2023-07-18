@@ -125,11 +125,15 @@
                         @forelse ($applicants as $applicant)
                             <tr>
                                 <td>  
-                                    <div class="d-flex align-items-center">
+                                    <div class="d-flex align-items-center justify-content-between">
                                         <div class="d-flex align-items-center">
                                             <h4>{{ $applicant->first_name }} {{ $applicant->last_name }}</h4>
                                         </div>
+                                        <div>
+                                            <button class="border-1 rounded" data-bs-toggle="tooltip" data-bs-placement="down" title="Download Certificate" data-toggle="modal" data-target="#candidateCertificate{{ $applicant->id }}"><i class="fa fa-download"></i></button>
+                                        </div>
                                     </div>
+                                    @include('codetrek::modals.applicant-certificate-modal')
                                     <span class="mr-1 text-truncate"><i
                                             class="fa fa-envelope-o mr-1"></i>{{ $applicant->email }}</span>
                                     <br>
