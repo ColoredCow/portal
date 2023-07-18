@@ -25,7 +25,7 @@ use Modules\Project\Entities\Project;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
 use Modules\Invoice\Notifications\GoogleChat\SendPaymentReceivedNotification;
 use Modules\Invoice\Entities\LedgerAccount;
-use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Notification;
 
 class InvoiceService implements InvoiceServiceContract
 {
