@@ -3,7 +3,6 @@
 namespace Modules\CodeTrek\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Modules\User\Entities\User;
 use Illuminate\Routing\Controller;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
 use Modules\CodeTrek\Services\CodeTrekService;
