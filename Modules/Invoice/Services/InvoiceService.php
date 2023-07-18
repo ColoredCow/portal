@@ -969,7 +969,7 @@ class InvoiceService implements InvoiceServiceContract
                 'bccEmails' => $project->client->bcc_emails,
                 'ccEmails' => $project->client->cc_emails,
             ];
-        } else {
+        }
             //Client Level Billing Projects
             $currencySymbol = config('constants.currency.' . $client->currency . '.symbol');
             if ($client->hasCustomInvoiceTemplate()) {
@@ -1005,6 +1005,5 @@ class InvoiceService implements InvoiceServiceContract
                 'bccEmails' => $client->bcc_emails,
                 'ccEmails' => $client->cc_emails,
             ];
-        }
     }
 }
