@@ -14,11 +14,15 @@ class CodeTrekService
         $status = $data['status'] ?? 'active';
         $centre = $data['centre'] ?? null;
         $sort = $data['order'] ?? null;
+        $roundSlug = $data['roundSlug'] ?? null;
         $query = CodeTrekApplicant::where('status', $status);
         $applicants = null;
 
         if ($centre) {
             $applicants = $query->where('centre_id', $centre);
+        }
+        if ($roundSlug) {
+            $query->where('latest_round_name', $roundSlug);
         }
         if ($sort == 'date') {
             $applicants = $query->orderBy('start_date', 'desc');
@@ -35,6 +39,9 @@ class CodeTrekService
             ->with('mentor')
             ->when($search, function ($applicantCountData) use ($search) {
                 return $applicantCountData->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
+            })
+            ->when($roundSlug, function ($query) use ($roundSlug) {
+                return $query->where('latest_round_name', $roundSlug);
             })
             ->groupBy('status')
             ->selectRaw('count(status) as total, status');
