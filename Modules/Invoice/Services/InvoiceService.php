@@ -24,7 +24,8 @@ use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Project\Entities\Project;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
 use Modules\Invoice\Notifications\GoogleChat\SendPaymentReceivedNotification;
-
+use Modules\Invoice\Entities\LedgerAccount;
+use Illuminate\Notifications\Notification;
 class InvoiceService implements InvoiceServiceContract
 {
     public function index($filters = [], $invoiceStatus = 'sent')
