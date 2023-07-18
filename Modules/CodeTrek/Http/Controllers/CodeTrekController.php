@@ -70,7 +70,6 @@ class CodeTrekController extends Controller
      */
     public function generatePDF(Request $request, CodeTrekApplicant $applicant)
     {
-
         $applicantEndDate = CodeTrekApplicant::findOrFail($applicant->id);
         $applicantEndDate->end_date = $request['end_date'];
         $applicantEndDate->save();
