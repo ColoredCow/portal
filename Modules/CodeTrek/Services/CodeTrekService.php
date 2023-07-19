@@ -5,8 +5,6 @@ namespace Modules\CodeTrek\Services;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Entities\CodeTrekCandidateFeedback;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
-use Illuminate\Support\Facades\Mail;
-use  Modules\CodeTrek\Emails\CodetrekMailApplicant;
 
 class CodeTrekService
 {
@@ -16,11 +14,15 @@ class CodeTrekService
         $status = $data['status'] ?? 'active';
         $centre = $data['centre'] ?? null;
         $sort = $data['order'] ?? null;
+        $roundSlug = $data['roundSlug'] ?? null;
         $query = CodeTrekApplicant::where('status', $status);
         $applicants = null;
 
         if ($centre) {
             $applicants = $query->where('centre_id', $centre);
+        }
+        if ($roundSlug) {
+            $query->where('latest_round_name', $roundSlug);
         }
         if ($sort == 'date') {
             $applicants = $query->orderBy('start_date', 'desc');
@@ -33,26 +35,35 @@ class CodeTrekService
             ->paginate(config('constants.pagination_size'))
             ->appends(request()->except('page'));
 
-        $applicantsData = CodeTrekApplicant::whereIn('status', ['active', 'inactive', 'completed'])->with('mentor')
-        ->when($search, function ($query) use ($search) {
-            return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
-        })
-        ->groupBy('status')
-        ->selectRaw('count(status) as total, status')
-        ->get();
+        $applicantCountData = CodeTrekApplicant::whereIn('status', ['active', 'inactive', 'completed'])
+            ->with('mentor')
+            ->when($search, function ($applicantCountData) use ($search) {
+                return $applicantCountData->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
+            })
+            ->when($roundSlug, function ($query) use ($roundSlug) {
+                return $query->where('latest_round_name', $roundSlug);
+            })
+            ->groupBy('status')
+            ->selectRaw('count(status) as total, status');
+
+        if ($centre) {
+            $applicantCountData = $applicantCountData->where('centre_id', $centre)->get();
+        } else {
+            $applicantCountData = $applicantCountData->get();
+        }
 
         $statusCounts = [
             'active' => 0,
             'inactive' => 0,
             'completed' => 0
         ];
-        foreach ($applicantsData as $data) {
+
+        foreach ($applicantCountData as $data) {
             $statusCounts[$data->status] = $data->total;
         }
 
         return [
             'applicants' => $applicants,
-            'applicantsData' => $applicantsData,
             'statusCounts' => $statusCounts
         ];
     }
@@ -72,11 +83,11 @@ class CodeTrekService
         $applicant->centre_id = $data['centre'];
         $applicant->mentor_id = $data['mentorId'];
         $applicant->domain_name = $data['domain'];
-        $applicant->latest_round_name = config('codetrek.rounds.level-1.slug');
+        $applicant->latest_round_name = config('codetrek.rounds.introductory-call.slug');
         // Mail::queue(new CodetrekMailApplicant($data)); This line will be uncommented in the future when the use of the codeTrek module starts in the proper way.
         $applicant->save();
 
-        $this->moveApplicantToRoundOne($applicant, $data);
+        $this->moveApplicantToIntroductoryRound($applicant, $data);
 
         return $applicant;
     }
@@ -113,11 +124,11 @@ class CodeTrekService
         return $roundDetails;
     }
 
-    public function moveApplicantToRoundOne($applicant, $data)
+    public function moveApplicantToIntroductoryRound($applicant, $data)
     {
         $applicationRound = new CodeTrekApplicantRoundDetail();
         $applicationRound->applicant_id = $applicant->id;
-        $applicationRound->latest_round_name = 'level-1';
+        $applicationRound->latest_round_name = config('codetrek.rounds.introductory-call.slug');
         $applicationRound->feedback = null;
         $applicationRound->start_date = $data['start_date'];
         $applicationRound->save();
@@ -134,5 +145,12 @@ class CodeTrekService
         $feedback->posted_by = auth()->user()->id;
         $feedback->posted_on = today();
         $feedback->save();
+    }
+
+    public function getCodeTrekApplicantFeedbacks($applicantId)
+    {
+        $feedbacks = CodeTrekCandidateFeedback::where('candidate_id', $applicantId)->get();
+
+        return $feedbacks;
     }
 }

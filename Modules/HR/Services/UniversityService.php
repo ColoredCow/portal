@@ -4,7 +4,6 @@ namespace Modules\HR\Services;
 
 use Modules\HR\Entities\University;
 use Modules\HR\Contracts\UniversityServiceContract;
-use Illuminate\Support\Facades\DB;
 
 class UniversityService implements UniversityServiceContract
 {
@@ -13,7 +12,7 @@ class UniversityService implements UniversityServiceContract
         if (! $filteredString) {
             return University::select('hr_universities.*')
             ->leftJoin('hr_applicants', 'hr_universities.id', '=', 'hr_applicants.hr_university_id')
-            ->orderBy(DB::raw('count(hr_applicants.hr_university_id)'), 'desc')
+            ->orderByRaw('COUNT(hr_applicants.hr_university_id) DESC')
             ->groupBy('hr_universities.id')
             ->paginate(config('constants.pagination_size'));
         }

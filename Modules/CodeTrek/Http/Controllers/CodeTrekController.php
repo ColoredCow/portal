@@ -9,10 +9,12 @@ use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 use Modules\CodeTrek\Services\CodeTrekService;
 use Modules\Operations\Entities\OfficeLocation;
 use Modules\User\Entities\User;
+use Carbon\Carbon;
 
 class CodeTrekController extends Controller
 {
     protected $service;
+    protected $CodeTrekApplicant;
 
     public function __construct(CodeTrekService $service)
     {
@@ -31,14 +33,19 @@ class CodeTrekController extends Controller
         $mentors = User::all();
         $applicantData = $this->service->getCodeTrekApplicants($request->all());
         $applicants = $applicantData['applicants'];
-        $applicantsData = $applicantData['applicantsData'];
         $statusCounts = $applicantData['statusCounts'];
+        $start_date = Carbon::parse($request->application_start_date) ?? today()->subYear();
+        $end_date = Carbon::parse($request->application_end_date) ?? today();
+        $reportApplicationCounts = CodeTrekApplicant::select(\DB::Raw('DATE(start_date) as date, COUNT(*) as count'))
+            ->whereDate('start_date', '>=', $start_date)
+            ->whereDate('start_date', '<=', $end_date)
+            ->count();
 
         return view('codetrek::index', [
             'applicants' => $applicants,
             'centres' => $centres,
             'mentors' => $mentors,
-            'applicantsData' => $applicantsData,
+            'reportApplicationCounts' => $reportApplicationCounts,
             'statusCounts' => $statusCounts
         ]);
     }
@@ -114,5 +121,16 @@ class CodeTrekController extends Controller
      */
     public function destroy($id)
     {
+    }
+
+    public function getCodeTrekApplicantFeedback(Request $request)
+    {
+        $candidateFeedbacks = $this->service->getCodeTrekApplicantFeedbacks($request['applicant']);
+        $applicantDetails = CodeTrekApplicant::where('id', $request['applicant'])->first();
+
+        return view('codetrek::feedback')->with([
+        'candidateFeedbacks' => $candidateFeedbacks,
+        'applicantDetails' =>  $applicantDetails
+        ]);
     }
 }

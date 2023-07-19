@@ -61,13 +61,15 @@
                     </div>
                 </td>
                 <td>
-                    <form class="d-flex" action="{{ route('universities.destroy',$university) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <a href="{{ route('universities.edit',$university) }}" title="Edit" class="pr-1 btn btn-link"><i class="text-success fa ffa-lga-edit "></i></a>
-                        <button type="submit" class="pl-1 btn btn-link" title="Delete"><i class="text-danger fa fa-trash fa-lg"></i></button>
-                    </form>
-                </td>
+                    <a href="{{ route('universities.edit', $university) }}" title="Edit" class="pr-1 btn btn-link"><i class="text-success fa ffa-lga-edit "></i></a>
+                    <button type="submit" class="pl-1 btn btn-link" title="Delete" data-toggle="modal" data-target="#deleteUniversityModal{{ $university->id }}"><i class="text-danger fa fa-trash fa-lg"></i></button>
+                    @include('component.delete-modal', [
+                            'modalId' => 'deleteUniversityModal' . $university->id,
+                            'title' => 'Delete University',
+                            'body' => 'Are you sure you want to delete this university?',
+                            'action' => route('universities.destroy', $university)
+                    ])
+               </td>
             </tr>
         
             @endforeach
