@@ -2,7 +2,7 @@
  @section('content')
      @foreach ($roundDetails as $applicantDetail)
          <div class="container d-flex justify-content-around position-relative" id="update_details ">
-            @includeWhen(session('success'), 'toast', ['message' => session('success')])
+             @includeWhen(session('success'), 'toast', ['message' => session('success')])
              <div class="accordion col-9 mb-2" id="accordionExample">
                  <div class="card ">
                      <div class="card-header" id="headingOne">
@@ -12,7 +12,7 @@
                                      <button class="btn btn-link float-left" type="button" data-toggle="collapse"
                                          data-target="#collapse_{{ $loop->parent->iteration }}" aria-expanded="true"
                                          aria-controls="collapse">
-                                         {{ $round['slug'] }} <i class="fa fa-info-circle"></i> {{ $applicant->first_name }}
+                                         {{ $round['label'] }} <i class="fa fa-info-circle"></i> {{ $applicant->first_name }}
                                          {{ $applicant->last_name }}
                                      </button>
                                  @endif
@@ -51,7 +51,8 @@
                                      <div class="col-md-12">
                                          @foreach (config('codetrek.rounds') as $round)
                                              @if ($applicantDetail->latest_round_name == $round['slug'])
-                                                 <input type="hidden" name="latest_round_name" value="{{ $round['slug'] }}">
+                                                 <input type="hidden" name="latest_round_name"
+                                                     value="{{ $round['slug'] }}">
                                                  <textarea class="form-control" id="feedbackTextarea1" name="feedback" rows="6" placeholder="Enter comments">{{ $applicantDetail->feedback }}</textarea>
                                                  <br>
                                                  <button type="submit" class="btn btn-primary float-right">Update
@@ -62,32 +63,46 @@
                                  </div>
                              </form>
                          </div>
-                        @if ($loop->last)
-                        <div class="card-footer row {{($applicant->status == 'completed') ? 'd-none': '' }} pl-5">
-                            <form class = "{{($applicant->status == 'inactive') ? 'd-none': '' }}" action="{{ route('codetrek.action', $applicant->id) }}" method="POST">
-                                @csrf
-                                <div class="d-flex align-items-center">
-                                    <select name="round" id="rounds" class="w-22p ml-1">
-                                        @foreach (config('codetrek.rounds') as $round)
-                                            <option value="{{ $round['slug'] }}">Move to {{ $round['label'] }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <button type="submit" class="btn btn-success ml-2">Take Action</button>
-                                </div>
-                            </form>
-                            <form action="{{ route('codetrek.updateStatus', $applicant->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" name="action" value="completed" class="btn btn-dark ml-2  {{(($applicant->status == 'inactive') || ($applicant->latest_round_name != 'onboarded')) ? 'd-none': '' }}">Start
-                                    Internship </button>
-                                <button type="submit" name="action" value="{{ $applicant->status == 'active'? 'inactive' : 'active' }}" class="btn btn-{{ $applicant->status == 'active' ? 'danger' : 'info' }} ml-1">
-                                    Mark {{ ucfirst($applicant->status == "active" ? "inactive" : "active") }} </button>  
-                            </form>
-                        </div>      
-                        @endif
+                         @if ($loop->last)
+                             <div class="card-footer row {{ $applicant->status == 'completed' ? 'd-none' : '' }} pl-5">
+                                 <form class="{{ $applicant->status == 'inactive' ? 'd-none' : '' }}"
+                                     action="{{ route('codetrek.action', $applicant->id) }}" method="POST">
+                                     @csrf
+                                     <div class="d-flex align-items-center">
+                                         <select name="round" id="rounds" class="w-22p ml-1">
+                                             <option value="option1_value">Move to
+                                                 {{ $applicant->latest_round_name }}
+                                             </option>
+                                             @foreach (config('codetrek.rounds') as $round)
+                                                 @if ($round['slug'] != $applicant->latest_round_name)
+                                                     {
+                                                     <option value="{{ $round['slug'] }}">Move to
+                                                         {{ $round['label'] }}
+                                                     </option>
+                                                     }
+                                                 @endif
+                                             @endforeach
+                                         </select>
+                                         <button type="submit" id="submitButton" class="btn btn-success ml-2">Take
+                                             Action</button>
+                                     </div>
+                                 </form>
+                                 <form action="{{ route('codetrek.updateStatus', $applicant->id) }}" method="POST">
+                                     @csrf
+                                     <button type="submit" name="action" value="completed"
+                                         class="btn btn-dark ml-2  {{ $applicant->status == 'inactive' || $applicant->latest_round_name != 'onboarded' ? 'd-none' : '' }}">Start
+                                         Internship </button>
+                                     <button type="submit" name="action"
+                                         value="{{ $applicant->status == 'active' ? 'inactive' : 'active' }}"
+                                         class="btn btn-{{ $applicant->status == 'active' ? 'danger' : 'info' }} ml-1">
+                                         Mark {{ ucfirst($applicant->status == 'active' ? 'inactive' : 'active') }}
+                                     </button>
+                                 </form>
+                             </div>
+                         @endif
                      </div>
                  </div>
              </div>
-          </div>
+         </div>
      @endforeach
  @endsection
