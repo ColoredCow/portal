@@ -71,18 +71,17 @@ mix
     "Modules/Client/Resources/assets/sass/app.scss",
     "public/css/client.css"
   );
+  mix
+  .js("Modules/CodeTrek/Resources/assets/js/app.js", "public/js/codetrek.js")
+  .sass(
+    "Modules/CodeTrek/Resources/assets/sass/app.scss",
+    "public/css/codetrek.css"
+  );
 
 mix
   .js("Modules/Expense/Resources/assets/js/app.js", "public/js/expense.js")
   .sass(
     "Modules/Expense/Resources/assets/sass/app.scss",
     "public/css/expense.css"
-  );
-
-  mix
-  .js("Modules/CodeTrek/Resources/assets/js/app.js", "public/js/codetrek.js")
-  .sass(
-    "Modules/CodeTrek/Resources/assets/sass/app.scss",
-    "public/css/codetrek.css"
   );
 mix.version();

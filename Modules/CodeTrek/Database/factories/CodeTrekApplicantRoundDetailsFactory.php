@@ -28,7 +28,7 @@ class CodeTrekApplicantRoundDetailsFactory extends Factory
             'applicant_id' => function () {
                 return CodeTrekApplicant::factory()->create()->id;
             },
-            'latest_round_name' => 'level-1',
+            'latest_round_name' => config('codetrek.rounds.introductory-call.slug'),
             'feedback' => $this->faker->sentence
             ];
     }
