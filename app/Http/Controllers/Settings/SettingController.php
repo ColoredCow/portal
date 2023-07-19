@@ -39,4 +39,10 @@ class SettingController extends Controller
 
         return redirect()->back()->with('status', 'Settings saved!');
     }
+
+    public function showBankDetails()
+    {
+        $this->authorize('viewBankDetails', Setting::class);
+
+    }
 }
