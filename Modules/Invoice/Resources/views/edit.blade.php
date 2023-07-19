@@ -5,7 +5,7 @@ $filename=basename($invoice->file_path);
 @endphp
 <div class="container">
     <br>
-
+    
     <div class="d-flex justify-content-between mb-2">
     @if(auth()->user()->can('finance_invoices.update'))
             <h4>Invoice Information</h4>
