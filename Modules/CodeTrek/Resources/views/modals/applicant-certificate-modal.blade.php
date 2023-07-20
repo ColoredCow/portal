@@ -5,7 +5,7 @@
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"><strong>Certificate Details</strong></h5>
+                    <h5 class="modal-title"><strong>Codetrek Certificate</strong></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-center justify-content-around">
                         <div class="form-group col-md-6 text-break">
-                            <h6 class="fw-bold" for="firstName">{{ __('Name') }}</h6>
+                            <h6 class="fw-bold" for="name">{{ __('Name') }}</h6>
                             <h5>{{ $applicant->first_name }} {{ $applicant->last_name }}</h5>
                         </div>
                         <div class="form-group col-md-6 text-break">
@@ -28,12 +28,12 @@
                         </div>
                         <div class="form-group col-md-6 text-break">
                             <h6 for="endDate">{{ __('End Date') }}</h6>
-                           <input type="date" name="end_date" class="form-control">
+                            <h5>{{ date('Y-m-d') }}</h5>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit"  class="btn btn-primary">Download</button>
                 </div>
             </div>
         </form>

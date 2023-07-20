@@ -79,10 +79,6 @@ class CodeTrekController extends Controller
      */
     public function generatePDF(Request $request, CodeTrekApplicant $applicant)
     {
-        $applicantEndDate = CodeTrekApplicant::findOrFail($applicant->id);
-        $applicantEndDate->end_date = $request['end_date'];
-        $applicantEndDate->save();
-
         $data = [
             'name' => $applicant['first_name'] . ' ' . $applicant['last_name'],
             'email' => $applicant->email,
@@ -90,8 +86,8 @@ class CodeTrekController extends Controller
             'end_date' => $request['end_date']
         ];
 
-        $pdf = Pdf::loadView('codetrek::render.applicant-pdf-certificate-template', $data);
-        $pdf->download($data['name'] . '-certificate-' . date('Y-m-d') . '.pdf');
+        $pdf = Pdf::loadView('codetrek::render.codetrek-certificate-template', $data);
+        $pdf->download($data['name'] . ' codetrek certificate' . '.pdf');
     }
 
     public function edit(CodeTrekApplicant $applicant)

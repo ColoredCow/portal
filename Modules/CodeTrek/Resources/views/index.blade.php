@@ -171,7 +171,7 @@
                                             <h4>{{ $applicant->first_name }} {{ $applicant->last_name }}</h4>
                                         </div>
                                         <div>
-                                            <button class="border-1 rounded" data-bs-toggle="tooltip" data-bs-placement="down" title="Download Certificate" data-toggle="modal" data-target="#candidateCertificate{{ $applicant->id }}"><i class="fa fa-download"></i></button>
+                                            <button class="border-1 rounded" data-bs-toggle="tooltip" data-bs-placement="down" title="Download Certificate" data-toggle="modal" data-target="#candidateCertificate{{ $applicant->id }}" hidden><i class="fa fa-download"></i></button>
                                         </div>
                                     </div>
                                     @include('codetrek::modals.applicant-certificate-modal')
