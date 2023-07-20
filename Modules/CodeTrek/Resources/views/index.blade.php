@@ -203,15 +203,16 @@
                                         @endif
                                     </div>
                                     @can('codetrek_applicant.update')
-                                        <div class="mb-2 fz-xl-14 text-secondary d-flex flex-column">
-                                            <div class="d-flex text-white my-2">
-                                                <a href="{{ route('codetrek.edit', $applicant->id) }}"
-                                                    class="btn-sm btn-primary mr-1 text-decoration-none"
-                                                    target="_self">View</a>
-                                                <a href="{{ route('codetrek.evaluate', $applicant->id) }}"
-                                                    class="btn-sm btn-primary mr-1 text-decoration-none"
-                                                    target="_self">Evaluate</a>
-                                            </div>
+                                    <div class="mb-2 fz-xl-14 text-secondary d-flex flex-column">
+                                        <div class="d-flex text-white my-2">
+                                            <a href="{{ route('codetrek.edit', $applicant->id) }}"
+                                                class="btn-sm btn-primary mr-1 text-decoration-none" target="_self">View</a>
+                                            <a href="{{ route('codetrek.evaluate', $applicant->id) }}"
+                                                class="btn-sm btn-primary mr-1 text-decoration-none"
+                                                target="_self">Evaluate</a>
+                                            <a href="{{ route('codetrek.get-codetrek-applicant-feedback', $applicant->id) }}"
+                                                class="btn-sm btn-primary mr-1 text-decoration-none"
+                                                target="_self">Feedback</a>
                                         </div>
                                     @endcan
                                 </td>

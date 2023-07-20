@@ -12,7 +12,7 @@
                                      <button class="btn btn-link float-left" type="button" data-toggle="collapse"
                                          data-target="#collapse_{{ $loop->parent->iteration }}" aria-expanded="true"
                                          aria-controls="collapse">
-                                         {{ $round['slug'] }} <i class="fa fa-info-circle"></i> {{ $applicant->first_name }}
+                                         {{ $round['label'] }} <i class="fa fa-info-circle"></i> {{ $applicant->first_name }}
                                          {{ $applicant->last_name }}
                                      </button>
                                  @endif
