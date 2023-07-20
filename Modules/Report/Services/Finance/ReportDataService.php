@@ -43,13 +43,44 @@ class ReportDataService
         }
     }
 
+    public function getDataForMonthlyCodeTrekApplications()
+    {
+        $startDate = today()->subYear();
+        $endDate = today();
+        $applicantChartData = CodeTrekApplicant::select(
+            \DB::raw('CONCAT(YEAR(start_date), "-", LPAD(MONTH(start_date), 2, "0")) as label'),
+            \DB::raw('COUNT(*) as count')
+        )
+            ->whereDate('start_date', '>=', $startDate)
+            ->whereDate('start_date', '<=', $endDate)
+            ->groupBy('label')
+            ->orderBy('label', 'asc')
+            ->get();
+    
+        $chartDataMonthly = [
+            'labels' => [],
+            'data' => [],
+        ];
+    
+        foreach ($applicantChartData as $data) {
+            $label = $data->label;
+            $count = $data->count;
+    
+            $chartDataMonthly['labels'][] = $label;
+            $chartDataMonthly['data'][] = $count;
+        }
+    
+        return response()->json($chartDataMonthly);
+    }
+    
+
     public function getDataForClientRevenueReportPage(array $data)
     {
         $selectedClient = isset($data['client_id']) ? Client::find($data['client_id']) : Client::orderBy('name')->first();
 
         return [
             'selectedClient' => $selectedClient,
-            'clients' => Client::orderBy('name')->get()
+            'clients' => Client::orderBy('name')->get(),
         ];
     }
 
@@ -66,7 +97,7 @@ class ReportDataService
 
         return [
             'labels' => $reportData['months'],
-            'data' => $reportData
+            'data' => $reportData,
         ];
     }
 
@@ -81,7 +112,7 @@ class ReportDataService
             'current_period_start_date' => $defaultStartDate,
             'current_period_end_date' => $defaultEndDate,
             'previous_period_start_date' => $defaultPreviousStartDate,
-            'previous_period_end_date' => $defaultPreviousEndDate
+            'previous_period_end_date' => $defaultPreviousEndDate,
         ];
         $filters = array_merge($defaultFilters, request()->all());
 
