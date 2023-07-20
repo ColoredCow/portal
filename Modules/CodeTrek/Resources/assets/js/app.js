@@ -2,7 +2,7 @@ $(function() {
 	$("#CodeTrekApplicationReport").length;  {
 		const startDate = $("#start_date").val();
 		const endDate = $("#end_date").val();
-  
+	
 		getData(
 			{ type: "codetrek-application",
 				filters: { 
@@ -77,18 +77,18 @@ function getData(params, callback) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  const dropdown = document.getElementById("rounds");
-  const submitButton = document.getElementById("submitButton");
-  const option1 = document.getElementById("option1");
-  dropdown.addEventListener("change", function() {
-    const selectedOption = dropdown.value;
-    const option = option1.value;
-    
-    if (selectedOption == option) {
-      submitButton.disabled = true;
-    } else {
-      submitButton.disabled = false;
-    }
-  });
-  submitButton.disabled = true;
+	const dropdown = document.getElementById("rounds");
+	const submitButton = document.getElementById("submitButton");
+	const option1 = document.getElementById("option1");
+	dropdown.addEventListener("change", function() {
+		const selectedOption = dropdown.value;
+		const option = option1.value;
+		
+		if (selectedOption == option) {
+			submitButton.disabled = true;
+		} else {
+			submitButton.disabled = false;
+		}
+	});
+	submitButton.disabled = true;
 });
