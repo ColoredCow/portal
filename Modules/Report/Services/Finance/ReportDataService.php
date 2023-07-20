@@ -56,23 +56,22 @@ class ReportDataService
             ->groupBy('label')
             ->orderBy('label', 'asc')
             ->get();
-    
+
         $chartDataMonthly = [
             'labels' => [],
             'data' => [],
         ];
-    
+
         foreach ($applicantChartData as $data) {
             $label = $data->label;
             $count = $data->count;
-    
+
             $chartDataMonthly['labels'][] = $label;
             $chartDataMonthly['data'][] = $count;
         }
-    
+
         return response()->json($chartDataMonthly);
     }
-    
 
     public function getDataForClientRevenueReportPage(array $data)
     {
