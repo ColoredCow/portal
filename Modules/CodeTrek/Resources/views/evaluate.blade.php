@@ -12,7 +12,8 @@
                                      <button class="btn btn-link float-left" type="button" data-toggle="collapse"
                                          data-target="#collapse_{{ $loop->parent->iteration }}" aria-expanded="true"
                                          aria-controls="collapse">
-                                         {{ $round['label'] }} <i class="fa fa-info-circle"></i> {{ $applicant->first_name }}
+                                         {{ $round['label'] }} <i class="fa fa-info-circle"></i>
+                                         {{ $applicant->first_name }}
                                          {{ $applicant->last_name }}
                                      </button>
                                  @endif
@@ -70,7 +71,7 @@
                                      @csrf
                                      <div class="d-flex align-items-center">
                                          <select name="round" id="rounds" class="w-22p ml-1">
-                                             <option value="option1_value">Move to
+                                             <option value="{{ $applicant->latest_round_name }}" id="option1">Move to
                                                  {{ $applicant->latest_round_name }}
                                              </option>
                                              @foreach (config('codetrek.rounds') as $round)
@@ -82,6 +83,7 @@
                                                      }
                                                  @endif
                                              @endforeach
+                                             <script src="{{ asset('js/codetrek.js') }}"></script>
                                          </select>
                                          <button type="submit" id="submitButton" class="btn btn-success ml-2">Take
                                              Action</button>

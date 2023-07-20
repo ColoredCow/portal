@@ -2150,17 +2150,3 @@ $(document).ready(function() {
 		this.submit(); // Manually trigger the form submission
 	});
 });
-
-document.addEventListener("DOMContentLoaded", function () {
-	const dropdown = document.getElementById("rounds");
-	const submitButton = document.getElementById("submitButton");
-	dropdown.addEventListener("change", function () {
-		const selectedOption = dropdown.value;
-		if (selectedOption == "option1_value") {
-			submitButton.disabled = true;
-		} else {
-			submitButton.disabled = false;
-		}
-	});
-	submitButton.disabled = true;
-});

@@ -75,3 +75,20 @@ function getData(params, callback) {
 		.then((res) => callback(res.data))
 		.catch((error) => console.error("Error retrieving data:", error));
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+  const dropdown = document.getElementById("rounds");
+  const submitButton = document.getElementById("submitButton");
+  const option1 = document.getElementById("option1");
+  dropdown.addEventListener("change", function() {
+    const selectedOption = dropdown.value;
+    const option = option1.value;
+    
+    if (selectedOption == option) {
+      submitButton.disabled = true;
+    } else {
+      submitButton.disabled = false;
+    }
+  });
+  submitButton.disabled = true;
+});
