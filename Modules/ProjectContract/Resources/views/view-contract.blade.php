@@ -79,7 +79,7 @@
 <div class="container">
     <div class="form-group">
         @if ($user->status == "pending")
-            <a class="btn btn-success" href="{{route('projectcontract.internalresponse', $contracts['id'])}}"><i class="fa fa-check mr-1" ></i>Approve</a>
+            <a class="btn btn-success" href="{{route('projectcontract.internal-response', $contracts['id'])}}"><i class="fa fa-check mr-1" ></i>Approve</a>
         @else
             <a class="btn btn-success" disabled><i class="fa fa-check mr-1" ></i>approved</a>
         @endif
@@ -99,7 +99,7 @@
                         <div class="spinner-border text-primary d-none" id="reviewFormSpinner"></div>
                     </div>
                     <div class="review modal-body">
-                        <form action="{{ route('projectcontract.sendreview')}}" method="POST" id="recieverForm" >
+                        <form action="{{ route('projectcontract.send-review')}}" method="POST" id="recieverForm" >
                             @csrf
                             <input type="hidden" id="id" name="id" value={{$contracts['id']}}>
                             <div class="form-group">
@@ -135,7 +135,7 @@
                         <div class="spinner-border text-primary d-none" id="financeFormSpinner"></div>
                     </div>
                     <div class="finance modal-body">
-                        <form action="{{ route('projectcontract.sendfinancereview')}}" method="POST" id="financeForm" >
+                        <form action="{{ route('projectcontract.send-finance-review')}}" method="POST" id="financeForm" >
                             @csrf
                             <input type="hidden" id="id" name="id" value={{$contracts['id']}}>
                             <input type="hidden" id="role" name="role" value="finance">
@@ -164,7 +164,7 @@
         <div class="card">
             <div class="card-body text-center">
                 <div class="d-flex flex-row-reverse">
-                    <a href="{{ route('projectcontract.commenthistory',$comment['id'])}}" target="_blank"><i class="fa fa-history"></i> View History</a>
+                    <a href="{{ route('projectcontract.comment-history',$comment['id'])}}" target="_blank"><i class="fa fa-history"></i> View History</a>
                 </div>
                 <div class="d-flex flex-row mb-3">
                     <div>By: </div>

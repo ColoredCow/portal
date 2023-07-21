@@ -20,10 +20,10 @@ Route::prefix('projectcontract')->group(function () {
     Route::get('delete/{id}', 'ProjectContractController@delete')->name('projectcontract.delete');
     Route::get('viewContract/{id}', 'ProjectContractController@viewContract')->name('projectcontract.view-contract');
     Route::get('/review/{user}/{email}', 'ReviewController@index')->name('review')->middleware('signed');
-    Route::post('sendreview', 'ProjectContractController@sendReview')->name('projectcontract.sendreview');
-    Route::get('clientresponse/{id}', 'ProjectContractController@clientResponse')->name('projectcontract.clientresponse');
-    Route::post('clientupdate', 'ProjectContractController@clientUpdate')->name('projectcontract.clientupdate');
-    Route::post('sendfinancereview', 'ProjectContractController@sendFinanceReview')->name('projectcontract.sendfinancereview');
-    Route::get('internalresponse/{id}', 'ProjectContractController@internalResponse')->name('projectcontract.internalresponse');
-    Route::get('commenthistory/{id}', 'ProjectContractController@commentHistory')->name('projectcontract.commenthistory');
+    Route::post('send-review', 'ProjectContractController@sendReview')->name('projectcontract.send-review');
+    Route::get('client-response/{id}', 'ProjectContractController@clientResponse')->name('projectcontract.client-response');
+    Route::post('client-update', 'ProjectContractController@clientUpdate')->name('projectcontract.client-update');
+    Route::post('send-finance-review', 'ProjectContractController@sendFinanceReview')->name('projectcontract.send-finance-review');
+    Route::get('internal-response/{id}', 'ProjectContractController@internalResponse')->name('projectcontract.internal-response');
+    Route::get('comment-history/{id}', 'ProjectContractController@commentHistory')->name('projectcontract.comment-history');
 });

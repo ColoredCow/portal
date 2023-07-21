@@ -5,7 +5,7 @@
     <h1>Review Contract - {{$reviewer['name']}} - {{$reviewer['email']}}</h1>   
 </div>
 <br>
-<form action="{{ route('projectcontract.clientupdate')}}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('projectcontract.client-update')}}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="container">
         <div class="card">
@@ -225,7 +225,7 @@
         <div class="container">
             <div class="form-row">
                 <div class="form-group col-md-12">
-                    <a href="{{route('projectcontract.clientresponse', $contractsmeta[0]['contract_id'])}}" class="pl-1 btn btn-success" ><i class="text-primary fa fa-check fa-lg"></i>Finalise</a>
+                    <a href="{{route('projectcontract.client-response', $contractsmeta[0]['contract_id'])}}" class="pl-1 btn btn-success" ><i class="text-primary fa fa-check fa-lg"></i>Finalise</a>
                     <button type="submit" class="btn btn-primary round-submit">Update</button>
                 </div>
             </div>
@@ -238,7 +238,7 @@
         <div class="card">
             <div class="card-body text-center">
                 <div class="d-flex flex-row-reverse">
-                    <a href="{{ route('projectcontract.commenthistory',$comment['id'])}}" target="_blank"><i class="fa fa-history"></i> View History</a>
+                    <a href="{{ route('projectcontract.comment-history',$comment['id'])}}" target="_blank"><i class="fa fa-history"></i> View History</a>
                 </div>
                 <div class="d-flex flex-row mb-3">
                     <div>By: </div>
