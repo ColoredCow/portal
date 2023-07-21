@@ -16,7 +16,7 @@
                         <div class="form-group">
                             <label for="client_name" class="field-required">Client Name</label>
                             <input type="text" class="form-control" name="client_name" id="client_name"
-                            placeholder="Enter Client Name">
+                            placeholder="Enter Client Name" required>
                             <span class="text-danger">
                                 @error('client_name')
                                 {{$message}}
@@ -36,7 +36,7 @@
                         <div class="form-group">
                             <label for="contract_name" class="field-required">Contract Name</label>
                             <input type="text" class="form-control" name="contract_name" id="contract_name"
-                            placeholder="Enter Contract Name">
+                            placeholder="Enter Contract Name" required>
                             <span class="text-danger">
                                 @error('contract_name')
                                 {{$message}}
@@ -45,7 +45,7 @@
                         </div>
                         <div class="form-group">
                             <label for="contract_date_for_effective" class="field-required">Contract Date for Effective</label>
-                            <input type="date" class="form-control" name="contract_date_for_effective" id="contract_date_for_effective">
+                            <input type="date" class="form-control" name="contract_date_for_effective" id="contract_date_for_effective" required>
                             <span class="text-danger">
                                 @error('contract_date_for_effective')
                                 {{$message}}
@@ -56,7 +56,7 @@
                     <div class="col-md-5 offset-md-1">
                         <div class="form-group">
                             <label for="contract_date_for_signing" class="field-required">Contract Date for signing</label>
-                            <input type="date" class="form-control" name="contract_date_for_signing" id="contract_date_for_signing">
+                            <input type="date" class="form-control" name="contract_date_for_signing" id="contract_date_for_signing" required>
                             <span class="text-danger">
                                 @error('contract_date_for_signing')
                                 {{$message}}
@@ -65,7 +65,7 @@
                         </div>
                         <div class="form-group">
                             <label for="contract_expiry_date" class="field-required">Contract Expiry Date</label>
-                            <input type="date" class="form-control" name="contract_expiry_date" id="contract_expiry_date">
+                            <input type="date" class="form-control" name="contract_expiry_date" id="contract_expiry_date" required>
                             <span class="text-danger">
                                 @error('contract_expiry_date')
                                 {{$message}}
@@ -85,7 +85,7 @@
                         <div class="form-group">
                             <label for="authority_name" class="field-required">Authority Name</label>
                             <input type="text" class="form-control" name="authority_name" id="authority_name"
-                            placeholder="Enter Authority Name">
+                            placeholder="Enter Authority Name" required>
                             <span class="text-danger">
                                 @error('authority_name')
                                 {{$message}}
@@ -94,7 +94,7 @@
                         </div>
                         <div class="form-group">
                             <label for="designation" class="field-required">Authority Designation</label>
-                            <input type="text" class="form-control" name="designation" id="designation" placeholder="Enter Authority Designation">
+                            <input type="text" class="form-control" name="designation" id="designation" placeholder="Enter Authority Designation" required>
                             <span class="text-danger">
                                 @error('designation')
                                 {{$message}}
@@ -105,7 +105,7 @@
                     <div class="col-md-5 offset-md-1">
                         <div class="form-group">
                             <label for="phonenumber" class="field-required">Phone number</label>
-                            <input type="text" class="form-control" name="phonenumber" id="phonenumber" placeholder="Enter Authority phone number">
+                            <input type="tel" pattern="^\d{10}$" class="form-control" name="phonenumber" id="phonenumber" placeholder="Enter Authority phone number" required>
                             <span class="text-danger">
                                 @error('phonenumber')
                                 {{$message}}
@@ -114,7 +114,7 @@
                         </div>
                         <div class="form-group">
                             <label for="contract_expemailiry_date" class="field-required">Authority Email</label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter Authority Email">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter Authority Email" required>
                             <span class="text-danger">
                                 @error('email')
                                 {{$message}}
