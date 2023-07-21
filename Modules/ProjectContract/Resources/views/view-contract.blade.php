@@ -83,7 +83,12 @@
         @else
             <a class="btn btn-success" disabled><i class="fa fa-check mr-1" ></i>approved</a>
         @endif
+
+        @if (!$client)
         <button type="button" class="btn btn-primary round-submit" data-toggle="modal" data-target="#reviewformModal"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send for client review</button>
+        @else
+        <button type="button" class="btn btn-primary round-submit"><i class="fa fa-paper-plane" aria-hidden="true"></i> Already sent for client review</button>
+        @endif
 
         <!-- Client Review Modal -->
         <div class="modal fade" id="reviewformModal" tabindex="-1" role="dialog" aria-labelledby="reviewformModalLabel" aria-hidden="true">
@@ -119,8 +124,11 @@
             </div>
         </div>
 
-        <button type="button" class="btn btn-secondary round-submit" data-toggle="modal" data-target="#financeformModal"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send for team review</button>
-
+        @if (!$finance)
+        <button type="button" class="btn btn-secondary round-submit" data-toggle="modal" data-target="#financeformModal"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send for finance review</button>
+        @else
+        <button type="button" class="btn btn-secondary round-submit" disabled></i> Already sent for finance review</button>
+        @endif
         <!-- Finance Review Modal -->
         <div class="modal fade" id="financeformModal" tabindex="-1" role="dialog" aria-labelledby="financeformModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
