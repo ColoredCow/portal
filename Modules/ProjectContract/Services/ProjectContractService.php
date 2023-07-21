@@ -53,20 +53,20 @@ class ProjectContractService
             $gst = 'N/A';
         }
         $contractMeta = [
-            ['key' => 'Contract Name', 'value' => $request['contract_name'], 'group' => 'Contract Details'],
-            ['key' => 'Contract Date For Effective', 'value' => $request['contract_date_for_effective'], 'group' => 'Contract Details'],
-            ['key' => 'Contract Date For Signing', 'value' => $request['contract_date_for_signing'], 'group' => 'Contract Details'],
-            ['key' => 'Contract Date For Expiry', 'value' => $request['contract_expiry_date'], 'group' => 'Contract Details'],
-            ['key' => 'Authority Name', 'value' => $request['authority_name'], 'group' => 'Signing Authority'],
-            ['key' => 'Phone number', 'value' => $request['phonenumber'], 'group' => 'Signing Authority'],
-            ['key' => 'Authority Designation', 'value' => $request['designation'], 'group' => 'Signing Authority'],
-            ['key' => 'Authority Email', 'value' => $request['email'], 'group' => 'Signing Authority'],
-            ['key' => 'Project Summary', 'value' => $request['summary'], 'group' => 'Project Summary'],
-            ['key' => 'Project Cost', 'value' => $request['cost'], 'group' => 'Project Cost'],
-            ['key' => 'Payment Currency', 'value' => $request['currency'], 'group' => 'Payment Methodology'],
-            ['key' => 'Payment methodology', 'value' => $request['methodology'], 'group' => 'Payment Methodology'],
-            ['key' => 'Source of Payment', 'value' => $request['source'], 'group' => 'Payment Methodology'],
-            ['key' => 'GST Number', 'value' => $gst, 'group' => 'Payment Methodology'],
+            ['key' => 'contract-name', 'value' => $request['contract_name'], 'group' => 'contract-details'],
+            ['key' => 'contract-date-for-effective', 'value' => $request['contract_date_for_effective'], 'group' => 'contract-details'],
+            ['key' => 'contract-date-for-signing', 'value' => $request['contract_date_for_signing'], 'group' => 'contract-details'],
+            ['key' => 'contract-date-for-expiry', 'value' => $request['contract_expiry_date'], 'group' => 'contract-details'],
+            ['key' => 'authority-name', 'value' => $request['authority_name'], 'group' => 'signing-authority'],
+            ['key' => 'phone-number', 'value' => $request['phonenumber'], 'group' => 'signing-authority'],
+            ['key' => 'authority-designation', 'value' => $request['designation'], 'group' => 'signing-authority'],
+            ['key' => 'authority-email', 'value' => $request['email'], 'group' => 'signing-authority'],
+            ['key' => 'project-summary', 'value' => $request['summary'], 'group' => 'project-summary'],
+            ['key' => 'project-cost', 'value' => $request['cost'], 'group' => 'project-cost'],
+            ['key' => 'payment-currency', 'value' => $request['currency'], 'group' => 'payment-methodology'],
+            ['key' => 'payment-methodology', 'value' => $request['methodology'], 'group' => 'payment-methodology'],
+            ['key' => 'source-of-payment', 'value' => $request['source'], 'group' => 'payment-methodology'],
+            ['key' => 'gst-number', 'value' => $gst, 'group' => 'payment-methodology'],
         ];
 
         $contractId = null;
@@ -208,20 +208,20 @@ class ProjectContractService
             $gst = 'N/A';
         }
         $contractMeta = [
-            ['key' => 'Contract Name', 'value' => $request['contract_name']],
-            ['key' => 'Contract Date For Effective', 'value' => $request['contract_date_for_effective']],
-            ['key' => 'Contract Date For Signing', 'value' => $request['contract_date_for_signing']],
-            ['key' => 'Contract Date For Expiry', 'value' => $request['contract_expiry_date']],
-            ['key' => 'Authority Name', 'value' => $request['authority_name']],
-            ['key' => 'Phone number', 'value' => $request['phonenumber']],
-            ['key' => 'Authority Designation', 'value' => $request['designation']],
-            ['key' => 'Authority Email', 'value' => $request['email']],
-            ['key' => 'Project Summary', 'value' => $request['summary']],
-            ['key' => 'Project Cost', 'value' => $request['cost']],
-            ['key' => 'Payment Currency', 'value' => $request['currency']],
-            ['key' => 'Payment methodology', 'value' => $request['methodology']],
-            ['key' => 'Source of Payment', 'value' => $request['source']],
-            ['key' => 'GST Number', 'value' => $gst],
+            ['key' => 'contract-name', 'value' => $request['contract_name']],
+            ['key' => 'contract-date-for-effective', 'value' => $request['contract_date_for_effective']],
+            ['key' => 'contract-date-for-signing', 'value' => $request['contract_date_for_signing']],
+            ['key' => 'contract-date-for-expiry', 'value' => $request['contract_expiry_date']],
+            ['key' => 'authority-name', 'value' => $request['authority_name']],
+            ['key' => 'phone-number', 'value' => $request['phonenumber']],
+            ['key' => 'authority-designation', 'value' => $request['designation']],
+            ['key' => 'authority-email', 'value' => $request['email']],
+            ['key' => 'project-summary', 'value' => $request['summary']],
+            ['key' => 'project-cost', 'value' => $request['cost']],
+            ['key' => 'payment-currency', 'value' => $request['currency']],
+            ['key' => 'payment-methodology', 'value' => $request['methodology']],
+            ['key' => 'source-of-payment', 'value' => $request['source']],
+            ['key' => 'gst-number', 'value' => $gst],
         ];
 
         DB::transaction(function () use ($contractId, $contractData, $contractMeta, $contractReview) {
@@ -301,20 +301,20 @@ class ProjectContractService
             $gst = 'N/A';
         }
         $contractMeta = [
-            ['key' => 'Contract Name', 'value' => $request['contract_name']],
-            ['key' => 'Contract Date For Effective', 'value' => $request['contract_date_for_effective']],
-            ['key' => 'Contract Date For Signing', 'value' => $request['contract_date_for_signing']],
-            ['key' => 'Contract Date For Expiry', 'value' => $request['contract_expiry_date']],
-            ['key' => 'Authority Name', 'value' => $request['authority_name']],
-            ['key' => 'Phone number', 'value' => $request['phonenumber']],
-            ['key' => 'Authority Designation', 'value' => $request['designation']],
-            ['key' => 'Authority Email', 'value' => $request['email']],
-            ['key' => 'Project Summary', 'value' => $request['summary']],
-            ['key' => 'Project Cost', 'value' => $request['cost']],
-            ['key' => 'Payment Currency', 'value' => $request['currency']],
-            ['key' => 'Payment methodology', 'value' => $request['methodology']],
-            ['key' => 'Source of Payment', 'value' => $request['source']],
-            ['key' => 'GST Number', 'value' => $gst],
+            ['key' => 'contract-name', 'value' => $request['contract_name']],
+            ['key' => 'contract-date-for-effective', 'value' => $request['contract_date_for_effective']],
+            ['key' => 'contract-date-for-signing', 'value' => $request['contract_date_for_signing']],
+            ['key' => 'contract-date-for-expiry', 'value' => $request['contract_expiry_date']],
+            ['key' => 'authority-name', 'value' => $request['authority_name']],
+            ['key' => 'phone-number', 'value' => $request['phonenumber']],
+            ['key' => 'authority-designation', 'value' => $request['designation']],
+            ['key' => 'authority-email', 'value' => $request['email']],
+            ['key' => 'project-summary', 'value' => $request['summary']],
+            ['key' => 'project-cost', 'value' => $request['cost']],
+            ['key' => 'payment-currency', 'value' => $request['currency']],
+            ['key' => 'payment-methodology', 'value' => $request['methodology']],
+            ['key' => 'source-of-payment', 'value' => $request['source']],
+            ['key' => 'gst-number', 'value' => $gst],
         ];
 
         DB::transaction(function () use ($request, $contractData, $contractMeta, $contractReview) {
