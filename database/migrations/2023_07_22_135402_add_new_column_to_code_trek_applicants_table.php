@@ -16,7 +16,7 @@ class AddNewColumnToCodeTrekApplicantsTable extends Migration
         Schema::table('code_trek_applicants', function (Blueprint $table) {
             $table->unsignedBigInteger('centre_id')->nullable(false)->change();
             $table->integer('mentor_id')->unsigned()->nullable(false)->change();
-          $table->string('last_name')->nullable(false)->change();
+            $table->string('last_name')->nullable(false)->change();
         });
     }
 
@@ -28,7 +28,7 @@ class AddNewColumnToCodeTrekApplicantsTable extends Migration
     public function down()
     {
         Schema::table('code_trek_applicants', function (Blueprint $table) {
-            
+ 
         });
     }
 }
