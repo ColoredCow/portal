@@ -28,7 +28,6 @@ class AddNewColumnToCodeTrekApplicantsTable extends Migration
     public function down()
     {
         Schema::table('code_trek_applicants', function (Blueprint $table) {
- 
         });
     }
 }
