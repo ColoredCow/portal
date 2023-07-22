@@ -46,28 +46,34 @@
                     <a class="btn btn-success" href="{{route('projectcontract.edit', $contracts['id'])}}"><i class="fa fa-edit mr-1" ></i>Edit & Approve</a>
                 @endif
             </div>
-            <div>
-                <h4 class="row p-1">Contract Status</h4>
-                <div class="col-md-6">
+            <div class="container">
+                <h3 class="row p-1">Contract Status</h3>
+                <div>
                     <div class="d-flex flex-row">
-                        <div><p><strong>Status:</strong></p></div>
-                        <div><p>{{$contracts['status']}}</p></div>
+                        <p class='px-1'><strong>Status:</strong></p>
+                        <p>{{$contracts['status']}}</p>
                     </div>
                 </div>
             </div>
             <hr>
-            <div>
+            <div class="container">
                 @foreach($contractsmeta as $group => $metadata)
-                    <h4 class="row p-1">{{ $group }}</h4>
-                    <div> 
-                    @foreach($metadata as $item)
-                    <div class="d-flex flex-column">
-                        <div class="d-flex flex-row">
-                            <p><strong>{{ $item->key }}:</strong></p> 
-                            <p>{{ $item->value }}</p>
-                        </div>
-                    </div>
-                    @endforeach
+                    <h3 class="row p-1">{{ config('projectcontract.contract.group.' . $group) }}</h3>
+                    <div>
+                        @foreach($metadata as $item)
+                            <div class="d-flex flex-column">
+                                <div class="d-flex flex-row">
+                                    <p class='px-1'><strong>{{ config('projectcontract.contract.key.' . $item->key) }}:</strong></p>
+                                    @if ($group == 'project-summary') 
+                                    <div class="col-sm-9 overflow-auto">
+                                        <p>{{ $item->value }}</p>
+                                    </div>
+                                    @else
+                                        <p>{{ $item->value }}</p>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                     <hr>
                 @endforeach
