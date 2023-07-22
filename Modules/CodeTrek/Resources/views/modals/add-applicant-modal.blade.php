@@ -74,7 +74,7 @@
                             </div>
                             <div class="form-group offset-md-1 col-md-5">
                                 <label for="centre" class="field-required">Centre Name</label>
-                                <select name="centre" id="centreId" class="form-control" required>
+                                <select name="centre" id="centreId" class="form-control" required="required">
                                     <option value="">Select Centre Name</option>
                                     @foreach($centres as $centre)
                                         <option value="{{ $centre->id }}">{{ $centre->centre_name }}</option>
@@ -85,7 +85,7 @@
                         <div class="form-row">
                             <div class="form-group  col-md-5">
                                 <label for="mentor" class="field-required">Assign Mentor</label>
-                                <select name="mentorId" id="mentorId" class="form-control" required>
+                                <select name="mentorId" id="mentorId" class="form-control" required="required">
                                     <option value="">Select Mentor Name</option>
                                     @foreach($mentors as $mentor)
                                         @if ($mentor->name )
@@ -96,7 +96,7 @@
                             </div>
                             <div class="form-group offset-md-1 col-md-5">
                                 <label for="domain" class="field-required">Domain Name</label>
-                                <select name="domain" id="domain" class="form-control" required>
+                                <select name="domain" id="domain" class="form-control" required="required">
                                     <option value="">Select Domain Name</option>
                                     @foreach (config('codetrek.domain') as $key => $domain)
                                         <option value="{{ $domain["slug"] }}" >{{ $domain['label'] }}</option>
