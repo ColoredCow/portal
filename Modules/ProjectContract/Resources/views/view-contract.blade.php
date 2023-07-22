@@ -65,8 +65,8 @@
                                 <div class="d-flex flex-row">
                                     <p class='px-1'><strong>{{ config('projectcontract.contract.key.' . $item->key) }}:</strong></p>
                                     @if ($group == 'project-summary') 
-                                    <div class="col-sm-9 overflow-auto">
-                                        <p>{{ $item->value }}</p>
+                                    <div class="col-sm-9 overflow-auto" style="max-height: 300px;">
+                                        <p class="text-left" style="white-space: pre-wrap;">{{ $item->value }}</p>
                                     </div>
                                     @else
                                         <p>{{ $item->value }}</p>
