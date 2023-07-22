@@ -156,7 +156,7 @@ class ProjectContractService
             $reviewer = ContractInternalReview::where(['contract_id' => $id, 'user_type' => 'cc-team'])->first();
             $reviewer->status = 'approved';
             $reviewer->save();
-            $contract->status = 'finalise-by-User';
+            $contract->status = 'finalise-by-user';
         } else {
             $reviewer = ContractInternalReview::where(['contract_id' => $id, 'user_type' => 'finance-team'])->first();
             $reviewer->status = 'approved';
