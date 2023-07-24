@@ -54,9 +54,9 @@
                 </div>
 
                 <div class="col-md-3">
-                    <div class="card h-75 bg-theme-gray-lighter">
-                        <a class="card-body text-decoration-none" href="#">
-                            <h2 class="text-center">New Business</h2><br>
+                    <div class="card h-75">
+                        <a class="card-body no-transition" href="{{ route('reports.finance.monthly-sales-register.index') }}">
+                            <h2 class="text-center">Monthly Sales Register</h2><br>
                         </a>
                     </div>
                 </div>

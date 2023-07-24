@@ -17,6 +17,11 @@ return [
         ],
     ],
     'rounds' =>[
+        'introductory-call' => [
+            'label' => 'Introductory Call',
+            'slug'  => 'introductory-call',
+            'class' => 'badge badge-theme-pumpkin'
+        ],
         'preparatory' => [
             'label' => 'Preparatory',
             'slug'  => 'preparatory',
@@ -41,6 +46,16 @@ return [
             'label' =>'Onboarded',
             'slug'  =>'onboarded',
             'class' => 'badge badge-success'
+        ],
+    ],
+    'domain' => [
+        'engineering' => [
+            'label' => 'Engineering',
+            'slug' => 'engineering',
+        ],
+        'design' => [
+            'label' => 'Design',
+            'slug' => 'design',
         ],
     ]
 ];

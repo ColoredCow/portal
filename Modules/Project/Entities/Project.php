@@ -28,6 +28,8 @@ class Project extends Model implements Auditable
 
     protected $dates = ['start_date', 'end_date'];
 
+    protected $appends = ['velocity', 'current_hours_for_month', 'velocity_color_class'];
+
     protected static function newFactory()
     {
         return new ProjectFactory();
@@ -111,6 +113,11 @@ class Project extends Model implements Auditable
         return $this->hasMany(ProjectTeamMember::class)->whereNULL('ended_on');
     }
 
+    public function getKeyAccountManagerAttribute()
+    {
+        return $this->client->keyAccountManager;
+    }
+
     public function getTeamMembersGroupedByEngagement()
     {
         return $this->getTeamMembers()->select('billing_engagement', DB::raw('count(*) as resource_count'))->groupBy('billing_engagement')->get();
@@ -191,6 +198,7 @@ class Project extends Model implements Auditable
     public function getWorkingDaysList($startDate, $endDate)
     {
         $period = CarbonPeriod::create($startDate, $endDate);
+
         $dates = [];
         $weekend = ['Saturday', 'Sunday'];
         foreach ($period as $date) {
@@ -201,6 +209,7 @@ class Project extends Model implements Auditable
 
         return $dates;
     }
+
     public function getIsReadyToRenewAttribute()
     {
         $diff = optional($this->end_date)->diffInDays(today());
