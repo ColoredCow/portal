@@ -83,9 +83,9 @@ class CodeTrekController extends Controller
             'name' => $applicant['first_name'] . ' ' . $applicant['last_name'],
             'email' => $applicant->email,
             'start_date' => $applicant->start_date,
-            'end_date' => date('Y-m-d')
+            'end_date' => date('Y-m-d'),
         ];
-        
+
         $pdf = Pdf::loadView('codetrek::render.codetrek-certificate-template', $data);
 
         return $pdf->stream($data['name'] . ' codetrek certificate.pdf');
