@@ -12,12 +12,15 @@ class CodeTrekRequest extends FormRequest
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'email_id' => 'required|email',
-            'phone' => 'nullable|numeric',
+            'phone' => 'nullable|numeric|digits:10|min:10',
             'github_username' => 'required|string',
             'start_date' => 'required|date',
             'university_name' => 'nullable|string',
             'course' => 'nullable|string',
             'graduation_year' => 'nullable|numeric|digits:4',
+            'centre' => 'required|exists:office_locations,id',
+            'mentorId' => 'required|exists:users,id',
+            'domain' => 'required|in:' . implode(',', array_keys(config('codetrek.domain'))),
         ];
     }
 
@@ -39,15 +42,21 @@ class CodeTrekRequest extends FormRequest
             'email_id.required' => 'Please enter your email id.',
             'email_id.email' => 'Please enter a valid email address.',
             'phone.required' => 'Please enter your phone number.',
-            'phone.numeric' => 'Please enter a valid phone number.',
+            'phone.numeric' => 'Please enter a valid 10 digit phone number.',
+            'phone.digits' => 'Phone number should be 10 digits.Please recheck',
             'github_username.required' => 'Please enter your Github username.',
             'start_date.required' => 'Please enter the start date.',
             'start_date.date' => 'Please enter a valid date.',
-            'university_name.required' => 'Please enter your university name.',
-            'course.required' => 'Please enter your course name.',
-            'graduation_year.required' => 'Please enter your graduation year.',
+            'university_name.string' => 'University name should be a string.',
+            'course.string' => 'Course name should be a string.',
             'graduation_year.numeric' => 'Please enter a valid graduation year.',
-            'graduation_year.digits' => 'Graduation year should be in 4 digit format.'
+            'graduation_year.digits' => 'Graduation year should be in 4 digit format.',
+            'centre.required' => 'Please select Centre Name.',
+            'centre.exists' => 'Invalid Centre selected.',
+            'mentorId.required' => 'Please select Assign Mentor.',
+            'mentorId.exists' => 'Invalid Mentor selected.',
+            'domain.required' => 'Please select Domain Name.',
+            'domain.in' => 'Invalid Domain selected.',
         ];
     }
 }

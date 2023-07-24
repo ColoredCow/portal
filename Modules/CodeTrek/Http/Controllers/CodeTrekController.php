@@ -53,14 +53,15 @@ class CodeTrekController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CodeTrekRequest $request)
     {
         // $this->authorize('create', $applicant);    There are some issues in the production, which is why these lines are commented out.
 
-        $data = $request->all();
+        $data = $request->validated();
         $this->service->store($data);
+        return response()->json(['success' => true]);
+        return redirect()->route('codetrek.index')->with('success', 'Applicant created successfully.');
 
-        return redirect()->route('codetrek.index');
     }
 
     /**
@@ -102,9 +103,7 @@ class CodeTrekController extends Controller
     public function update(CodeTrekRequest $request, CodeTrekApplicant $applicant)
     {
         // $this->authorize('update', $applicant);   There are some issues in the production, which is why these lines are commented out.
-
-        $this->service->update($request->all(), $applicant);
-
+        $this->service->update($request->validated(), $applicant);
         return redirect()->route('codetrek.index');
     }
     public function delete(CodeTrekApplicant $applicant)
