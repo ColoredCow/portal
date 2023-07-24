@@ -4,41 +4,63 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <!-- Styles -->
     <style>
         html,
         body {
             font-weight: normal;
-            font-family: sans-serif;
-            line-height: 1.15;
-            -webkit-text-size-adjust: 100%;
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            font-family: 'Abril Fatface', cursive;
             margin: 0;
             padding: 0;
-            height: 100%;
-            background-size: 100% 100%;
-            font-size: 12px;
-            background: white !important;
         }
 
-        .w-100p {
-            width: 100%;
+        .background {
+            background-image: url('/images/codetrek-certificate-outline.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            position: absolute;
+            margin: 10px;
+            top: 0;
+            left: 0;
+            width: 98%;
+            height: 100%;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .logo {
+            text-align: center;
+            height: 36px;
+            width: 168.8px;
+            margin-top: 82.5px;
+        }
+
+        .logo1 {
+            text-align: center;
+        }
+
+        .heading {
+            text-align: center;
+        }
+
+        .heading1 {
+            font-size: 30px;
+            margin-top: 27.5px;
+            color: #B21F56;
         }
     </style>
 </head>
 
 <body>
+    <div class="background"></div>
 
-    <div class="w-100p">
-        <h2 style="text-align: center; font-weight: bold;">Certificate</h2>
-        <img src="{{ public_path() . '/images/coloredcow.png' }}" alt="" height="50" width="200">
+    <div class="logo1">
+        <img class="logo" src="{{ public_path() . '/images/coloredcow.png' }}" alt="">
     </div>
 
-    <div class="text-center">
-        <h2>Name {{ $name }}</h2>
-        <h2>Email {{ $email }}</h2>
-        <h2>Start Date {{ $start_date }}</h2>
-        <h2>End Date {{ $end_date }}</h2>
+    <div class="heading">
+        <p class="heading1">Internship Certificate <br> of Completion</p>
     </div>
 
 </body>

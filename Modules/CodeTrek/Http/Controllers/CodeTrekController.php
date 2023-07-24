@@ -77,19 +77,22 @@ class CodeTrekController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function generatePDF(Request $request, CodeTrekApplicant $applicant)
-    {
-        $data = [
-            'name' => $applicant['first_name'] . ' ' . $applicant['last_name'],
-            'email' => $applicant->email,
-            'start_date' => $applicant->start_date,
-            'end_date' => date('Y-m-d')
-        ];
 
-        $pdf = Pdf::loadView('codetrek::render.codetrek-certificate-template', $data);
-        $pdf->download($data['name'] . ' codetrek certificate' . '.pdf');
-    }
 
+
+     public function generatePDF(Request $request, CodeTrekApplicant $applicant)
+     {
+         $data = [
+             'name' => $applicant['first_name'] . ' ' . $applicant['last_name'],
+             'email' => $applicant->email,
+             'start_date' => $applicant->start_date,
+             'end_date' => date('Y-m-d')
+         ];
+     
+         $pdf = Pdf::loadView('codetrek::render.codetrek-certificate-template', $data);
+         return $pdf->stream($data['name'] . ' codetrek certificate.pdf');
+     }
+     
     public function edit(CodeTrekApplicant $applicant)
     {
         // $this->authorize('update', $applicant);   There are some issues in the production, which is why these lines are commented out.
