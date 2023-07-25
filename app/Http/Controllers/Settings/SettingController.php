@@ -45,7 +45,7 @@ class SettingController extends Controller
     public function showBankDetails()
     {
         $this->authorize('viewBankDetails', Setting::class);
-        
+
         return view('settings.bank-details');
     }
 }
