@@ -18,31 +18,6 @@ class ReportDataService
         return $filters;
     }
 
-    public function getDataForDailyCodeTrekApplications($type, $filters, $request)
-    {
-        if ($type == 'codetrek-application') {
-            $applicants = CodeTrekApplicant::find('start_date');
-            $defaultStartDate = $applicants->created_at ?? today()->subYear();
-            $defaultEndDate = today();
-            $filters['start_date'] = empty($filters['start_date']) ? $defaultStartDate : $filters['start_date'];
-            $filters['end_date'] = empty($filters['end_date']) ? $defaultEndDate : $filters['end_date'];
-            $applicantChartData = CodeTrekApplicant::select(\DB::Raw('DATE(start_date) as date, COUNT(*) as count'))
-                ->whereDate('start_date', '>=', $filters['start_date'])
-                ->whereDate('start_date', '<=', $filters['end_date'])
-                ->groupBy('date');
-
-            $dates = $applicantChartData->pluck('date')->toArray();
-            $counts = $applicantChartData->pluck('count')->toArray();
-            $chartData = [
-                'dates' => $dates,
-                'counts' => $counts,
-            ];
-            $reportApplicantData = json_encode($chartData);
-
-            return $reportApplicantData;
-        }
-    }
-
     public function getDataForClientRevenueReportPage(array $data)
     {
         $selectedClient = isset($data['client_id']) ? Client::find($data['client_id']) : Client::orderBy('name')->first();
@@ -61,8 +36,8 @@ class ReportDataService
 
         $filters['start_date'] = empty($filters['start_date']) ? $defaultStartDate : $filters['start_date'];
         $filters['end_date'] = empty($filters['end_date']) ? $defaultEndDate : $filters['end_date'];
-
-        $reportData = $this->service->getRevenueReportDataForClient($filters, $client);
+        $revenueReportService = new RevenueReportService;
+        $reportData = $revenueReportService->getRevenueReportDataForClient($filters, $client);
 
         return [
             'labels' => $reportData['months'],
@@ -84,8 +59,8 @@ class ReportDataService
             'previous_period_end_date' => $defaultPreviousEndDate
         ];
         $filters = array_merge($defaultFilters, request()->all());
-
-        $reportData = $this->service->getRevenueGroupedByClient($filters);
+        $revenueReportService = new RevenueReportService;
+        $reportData = $revenueReportService->getRevenueGroupedByClient($filters);
 
         return [
             'labels' => $reportData['clients_name'],
