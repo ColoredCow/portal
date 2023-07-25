@@ -118,7 +118,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/nda-template', 'NDAAgreementController@index')->name('setting.agreement.nda');
         Route::get('/invoice-template', 'SettingController@invoiceTemplates')->name('setting.invoice');
         Route::post('/invoice-template', 'SettingController@updateInvoiceTemplates')->name('setting.invoice.update');
-        Route::middleware(['role:super-admin|admin|finance-manager'])->group(function () {
+        Route::middleware(['can:viewBankDetails'])->group(function () {
             Route::prefix('bank-details')->group(function () {
                 Route::get('/', 'BankDetailController@index')->name('settings.bank-details');
                 Route::get('/create', 'BankDetailController@create')->name('bank-details.create');

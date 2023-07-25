@@ -6,14 +6,16 @@ use App\Helpers\ContentHelper;
 use App\Models\Setting;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Setting\SettingRequest;
+use App\Helpers\RoleHelper;
 
 class SettingController extends Controller
 {
     public function index()
     {
         $this->authorize('view', Setting::class);
+        $hasAnyRole = RoleHelper::hasAnyRole(auth()->user(), ['super-admin', 'admin', 'finance-manager']);
 
-        return view('settings.index');
+        return view('settings.index', compact('hasAnyRole'));
     }
 
     public function ndaTemplates()
@@ -43,5 +45,6 @@ class SettingController extends Controller
     public function showBankDetails()
     {
         $this->authorize('viewBankDetails', Setting::class);
+        return view('settings.bank-details');
     }
 }
