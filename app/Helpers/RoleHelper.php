@@ -11,6 +11,7 @@ class RoleHelper
                 return true;
             }
         }
+
         return false;
     }
 }
