@@ -257,8 +257,7 @@ abstract class ApplicationController extends Controller
                 'subject' => $subject,
                 'body' => $body,
             ]);
-        }
-        else
+        } else
         {
             dd(getMailContent($request->applicationRound,'rejected'));
             return response()->json(getMailContent($request->applicationRound,'reject'));
