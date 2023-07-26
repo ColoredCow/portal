@@ -258,8 +258,7 @@ abstract class ApplicationController extends Controller
             ]);
         } else {
             return response()->json(getMailContent($request->applicationRound, 'reject'));
-        }
-        
+        } 
     }
 
     public function saveOfferLetter(Application $application)
