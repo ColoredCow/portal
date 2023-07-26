@@ -58,7 +58,7 @@
                     <div class="form-group col-md-12 d-flex align-items-center">
                         <div class="py-0.67">
                             <div class="custom-control custom-switch">
-                                <input type="checkbox" name="send_mail_to_applicant[reject]" class="custom-control-input send-mail-to-applicant" id="rejectSendMailToApplicant" data-target="#previewMailToApplicant" checked>
+                                <input type="checkbox" name="send_mail_to_applicant[reject]" class="custom-control-input send-mail-to-applicant" id="rejectSendMailToApplicant" data-target="#previewMailToApplicant, #rejectOptionContainer" checked>
                                 <label class="custom-control-label" for="rejectSendMailToApplicant">Send email</label>
                             </div>
                         </div>
@@ -68,15 +68,54 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-row d-none" id="rejectMailToApplicantBlock">
-                    <div class="form-group col-md-12">
-                        <label for="rejectMailToApplicantSubject">Subject</label>
-                        <input type="text" name="mail_to_applicant[reject][subject]" id="rejectMailToApplicantSubject"
-                            class="form-control">
-                    </div>
-                    <div class="form-group col-md-12">
-                        <label for="rejectMailToApplicantBody">Body</label>
-                        <textarea name="mail_to_applicant[reject][body]" id="rejectMailToApplicantBody" class="form-control richeditor"></textarea>
+                <div class="container form-row" id="rejectOptionContainer">
+                    <div>
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item"><a data-toggle="tab" href="#rejectApplicant" class="nav-link opt" data-key-subject='general_communication_subject' data-key-body='general_communication_body' >General Communication</a></li>
+                            <li class="nav-item"><a data-toggle="tab" href="#codeTrekProposition" class="nav-link opt" data-key-subject='codetrek_proposition_subject' data-key-body='codetrek_proposition_body'>CodeTrek Proposition</a></li>
+                        </ul>
+                        <div class="tab-content" id="rejectMailToApplicantBlock">
+                            <div class="tab-pane" id="rejectApplicant">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Subject</label>
+                                                <input name="subject_option_1" type="text" class="form-control option-subject" id="rejectMailToApplicantSubject">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Mail body:</label>
+                                                <textarea name="body_option_1" id="rejectMailToApplicantBody" rows="10" class="richeditor form-control option-body"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="codeTrekProposition">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Subject</label>
+                                                <input name="subject_option_2" type="text" class="form-control option-subject" id="optionCodeTrekPropositionSubject" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Mail body:</label>
+                                                <textarea name="body_option_2" rows="10" class="richeditor form-control option-body" id="optionCodeTrekPropositionBody"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
                     </div>
                 </div>
                 <div class="form-row mt-2">

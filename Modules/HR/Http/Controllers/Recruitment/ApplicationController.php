@@ -28,6 +28,7 @@ use Modules\HR\Http\Requests\TeamInteractionRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
+use Modules\HR\Http\Controllers\Recruitment\ApplicationRoundController;
 
 abstract class ApplicationController extends Controller
 {
@@ -242,6 +243,27 @@ abstract class ApplicationController extends Controller
             'subject' => $subject->setting_value,
             'body' => $body->setting_value,
         ]);
+    }
+
+    public function generateRejectionEmail(Request $request)
+    {
+        if($request->setting_key_subject == 'codetrek_proposition_subject')
+        {
+            $subject = Setting::where('module', 'hr')->where('setting_key', $request->setting_key_subject)->first();
+            $body = Setting::where('module', 'hr')->where('setting_key', $request->setting_key_body)->first();
+            $body->setting_value = str_replace('|APPLICANT NAME|', $request->applicant_name, $body->setting_value);
+            $body->setting_value = str_replace('|JOB TILE|', $request->job_title, $body->setting_value);
+            return response()->json([
+                'subject' => $subject,
+                'body' => $body,
+            ]);
+        }
+        else
+        {
+            dd(getMailContent($request->applicationRound,'rejected'));
+            return response()->json(getMailContent($request->applicationRound,'reject'));
+        }
+        
     }
 
     public function saveOfferLetter(Application $application)
