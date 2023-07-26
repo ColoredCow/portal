@@ -28,7 +28,6 @@ use Modules\HR\Http\Requests\TeamInteractionRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
-use Modules\HR\Http\Controllers\Recruitment\ApplicationRoundController;
 
 abstract class ApplicationController extends Controller
 {
