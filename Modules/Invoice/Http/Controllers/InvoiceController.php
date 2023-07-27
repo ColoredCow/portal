@@ -94,7 +94,7 @@ class InvoiceController extends Controller
         $client = Client::find($clientId);
         $project = Project::find($projectId);
         $data = ($client ?? $project)->getNextInvoiceData();
-        
+
         $invoiceNumber = $data['invoiceNumber'];
         $pdf = $this->showInvoicePdf($data);
 

@@ -954,7 +954,6 @@ class InvoiceService implements InvoiceServiceContract
                 'keyAccountManager' => $project->client->keyAccountManager()->first(),
                 'invoiceNumber' => $invoiceNumber,
                 'invoiceData' => [
-                    
                     'sent_on' => $sent_on,
                     'due_on' => $due_on
                 ],
