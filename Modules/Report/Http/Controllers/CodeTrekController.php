@@ -4,7 +4,7 @@ namespace Modules\Report\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use Modules\Report\Services\Finance\ReportDataService;
+use Modules\Report\Services\CodeTrek\ReportDataService;
 
 class CodeTrekController extends Controller
 {
@@ -20,6 +20,6 @@ class CodeTrekController extends Controller
         $type = $request->type;
         $filters = $request->filters;
 
-        return $this->service->getDataForDailyCodeTrekApplications($type, json_decode($filters, true), $request);
+        return $this->service->getDataForDailyCodeTrekApplications($type, json_decode($filters, true));
     }
 }
