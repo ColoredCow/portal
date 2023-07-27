@@ -7,6 +7,13 @@ use Modules\CodeTrek\Entities\CodeTrekApplicant;
 
 class ReportDataService
 {
+    protected $revenueReportService;
+
+    public function __construct(RevenueReportService $revenueReportService)
+    {
+        $this->revenueReportService = $service;
+    }
+
     public function getData($type, $filters)
     {
         if ($type == 'revenue-trend') {
@@ -36,8 +43,7 @@ class ReportDataService
 
         $filters['start_date'] = empty($filters['start_date']) ? $defaultStartDate : $filters['start_date'];
         $filters['end_date'] = empty($filters['end_date']) ? $defaultEndDate : $filters['end_date'];
-        $revenueReportService = new RevenueReportService;
-        $reportData = $revenueReportService->getRevenueReportDataForClient($filters, $client);
+        $reportData = $this->revenueReportService->getRevenueReportDataForClient($filters, $client);
 
         return [
             'labels' => $reportData['months'],
