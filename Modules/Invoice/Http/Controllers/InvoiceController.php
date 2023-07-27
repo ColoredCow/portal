@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\App;
 use Modules\Invoice\Entities\Invoice;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
+use Modules\Client\Entities\Client;
+use Modules\Project\Entities\Project;
 class InvoiceController extends Controller
 {
     use AuthorizesRequests;
@@ -83,15 +84,17 @@ class InvoiceController extends Controller
 
     public function generateInvoice(Request $request)
     {
-        $data = $this->service->getInvoiceData([
+        $data = [
             'client_id' => $request->client_id,
             'project_id' => $request->project_id,
-            'term' => today(config('constants.timezone.indian'))->subMonth()->format('Y-m'),
-            'sent_on' => today(config('constants.timezone.indian')),
-            'due_on' => today(config('constants.timezone.indian'))->addDays(6),
-            'period_start_date' => $request->period_start_date,
-            'period_end_date' => $request->period_end_date
-        ]);
+        ];
+        
+        $projectId = $data['project_id'] ?? null;
+        $clientId = $data['client_id'] ?? null;
+        $client = Client::find($clientId);
+        $project = Project::find($projectId);
+        $data=($client ?? $project)->getNextInvoiceData();
+        
         $invoiceNumber = $data['invoiceNumber'];
         $pdf = $this->showInvoicePdf($data);
 
