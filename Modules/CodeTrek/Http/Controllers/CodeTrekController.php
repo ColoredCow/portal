@@ -59,7 +59,7 @@ class CodeTrekController extends Controller
 
         $data = $request->validated();
         $this->service->store($data);
-        return redirect()->route('codetrek.index')->with('success', 'Applicant created successfully.')
+        return redirect()->route('codetrek.index')->with('success', 'Applicant created successfully.');
     }
 
     /**
