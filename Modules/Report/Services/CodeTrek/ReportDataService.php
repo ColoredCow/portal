@@ -15,7 +15,7 @@ class ReportDataService
                 ->whereDate('start_date', '>=', $filterStartDate)
                 ->whereDate('start_date', '<=', $filterEndDate)
                 ->groupBy('date');
-                
+
             $dates = $applicantChartData->pluck('date')->toArray();
             $counts = $applicantChartData->pluck('count')->toArray();
             $chartData = [
