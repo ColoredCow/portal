@@ -495,7 +495,6 @@ class InvoiceService implements InvoiceServiceContract
         return $invoiceNumber;
     }
 
-
     public function sendInvoice(array $data)
     {
         $term = $data['term'] ?? null;
@@ -634,7 +633,7 @@ class InvoiceService implements InvoiceServiceContract
         $sentOn = today();
         $dueOn = today()->addDays(6);
         $monthsToSubtract = 1;
-        $data = $this->getInvoiceData([
+        $data = [
             'client_id' => optional($client)->id,
             'project_id' => optional($project)->id,
             'term' => $term,
@@ -643,8 +642,14 @@ class InvoiceService implements InvoiceServiceContract
             'due_on' => $dueOn,
             'period_start_date' => $periodStartDate,
             'period_end_date' => $periodEndDate
-        ]);
+        ];
+        $projectId = $data['project_id'] ?? null;
+        $clientId = $data['client_id'] ?? null;
+        $client = Client::find($clientId);
+        $project = Project::find($projectId);
+        $data = ($client ?? $project)->getNextInvoiceData();
         $invoiceNumber = $data['invoiceNumber'];
+
         $data['invoiceNumber'] = $data['invoiceNumber'];
         $pdf = App::make('snappy.pdf.wrapper');
         $template = config('invoice.templates.invoice.clients.' . optional($data['client'])->name) ?: 'invoice-template';
@@ -864,7 +869,7 @@ class InvoiceService implements InvoiceServiceContract
         LedgerAccount::destroy($ledgerAccountsIdToDelete);
     }
 
-    public function getNextInvoiceData($project,$client)
+    public function getNextInvoiceData($project, $client)
     {
         $monthToSubtract = 1;
         $quarter = now()->quarter;
@@ -897,7 +902,6 @@ class InvoiceService implements InvoiceServiceContract
         $period_end_date = $client ? $client->period_end_date : $project->period_end_date;
         $monthName = $client ? $client->getMonthEndDateAttribute($monthToSubtract)->format('F') : $project->client->getMonthEndDateAttribute($monthToSubtract)->format('F');
 
-
         if ($period_start_date ?? false) {
             $billingStartMonth = Carbon::parse($period_start_date)->format('M');
         }
@@ -914,7 +918,6 @@ class InvoiceService implements InvoiceServiceContract
 
         $invoiceData = [];
         if ($client === null) {
-
             //Project Level Billing  Projects
 
             $currencySymbol = config('constants.currency.' . $project->client->currency . '.symbol');
@@ -951,6 +954,7 @@ class InvoiceService implements InvoiceServiceContract
                 'keyAccountManager' => $project->client->keyAccountManager()->first(),
                 'invoiceNumber' => $invoiceNumber,
                 'invoiceData' => [
+                    
                     'sent_on' => $sent_on,
                     'due_on' => $due_on
                 ],

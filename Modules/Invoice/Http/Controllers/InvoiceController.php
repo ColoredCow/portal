@@ -10,6 +10,7 @@ use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
+
 class InvoiceController extends Controller
 {
     use AuthorizesRequests;
@@ -88,12 +89,11 @@ class InvoiceController extends Controller
             'client_id' => $request->client_id,
             'project_id' => $request->project_id,
         ];
-        
         $projectId = $data['project_id'] ?? null;
         $clientId = $data['client_id'] ?? null;
         $client = Client::find($clientId);
         $project = Project::find($projectId);
-        $data=($client ?? $project)->getNextInvoiceData();
+        $data = ($client ?? $project)->getNextInvoiceData();
         
         $invoiceNumber = $data['invoiceNumber'];
         $pdf = $this->showInvoicePdf($data);
