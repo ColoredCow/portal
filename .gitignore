@@ -47,3 +47,5 @@ cypress/videos
 cypress/screenshots
 
 google_service_credentials.json
+
+.phpunit.result.cache

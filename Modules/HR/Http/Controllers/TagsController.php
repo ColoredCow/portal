@@ -21,7 +21,7 @@ class TagsController extends Controller
 
     public function store(Request $request)
     {
-        $tag = Tag::create([
+        Tag::create([
             'name' => $request['name'],
             'slug' => str_slug($request['name'], '-'),
             'description' => $request['description'] ?? null,

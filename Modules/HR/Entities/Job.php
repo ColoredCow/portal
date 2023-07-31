@@ -2,13 +2,13 @@
 
 namespace Modules\HR\Entities;
 
+use App\Models\Resource;
+use Modules\User\Entities\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\HR\Events\Recruitment\JobUpdated;
-use Modules\User\Entities\User;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\HR\Database\Factories\HrJobsFactory;
-use App\Models\Resource;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Job extends Model
 {
