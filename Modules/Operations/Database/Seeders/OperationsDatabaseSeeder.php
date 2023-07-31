@@ -16,6 +16,7 @@ class OperationsDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call("OthersTableSeeder");
+        $this->call(OfficeLocationTableSeeder::class);
+        $this->call(OperationsPermissionTableSeeder::class);
     }
 }
