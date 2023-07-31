@@ -42,6 +42,7 @@ class Setup extends Command
             return false;
         }
 
+        Artisan::call('config:clear');
         $this->info('Resetting the database');
         Artisan::call('migrate:fresh');
         $this->info('Seeding common data');

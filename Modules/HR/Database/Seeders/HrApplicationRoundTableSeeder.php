@@ -2,11 +2,11 @@
 
 namespace Modules\HR\Database\Seeders;
 
-use Modules\User\Entities\User;
+use Modules\HR\Entities\Round;
 use Illuminate\Database\Seeder;
+use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationRound;
-use Modules\HR\Entities\Round;
 
 class HrApplicationRoundTableSeeder extends Seeder
 {
@@ -37,7 +37,7 @@ class HrApplicationRoundTableSeeder extends Seeder
                     ],
                     [
                         'hr_round_id' => Round::first()->id,
-                        'scheduled_person_id' => User::factory()->create()->id,
+                        'scheduled_person_id' => Employee::factory()->create()->user_id,
                         'is_latest' => true,
                     ]
                 );

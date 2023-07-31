@@ -2,10 +2,10 @@
 
 namespace Modules\HR\Database\Factories;
 
-use Modules\User\Entities\User;
 use Faker\Factory as Faker;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\FollowUp;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class HrFollowUpFactory extends Factory
 {
@@ -26,12 +26,10 @@ class HrFollowUpFactory extends Factory
         $faker = Faker::create();
 
         return [
-
             'hr_application_round_id'=> $this->getRandomId()[array_rand($this->getRandomId())],
             'checklist'=> $faker->text(),
             'assigned_to' => null,
-            'conducted_by' => User::factory()->create()->id,
-
+            'conducted_by' => Employee::factory()->create()->user_id,
         ];
     }
 
