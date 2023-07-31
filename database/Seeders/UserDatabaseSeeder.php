@@ -1,11 +1,12 @@
 <?php
 
-namespace Modules\User\Database\Seeders;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Modules\User\Entities\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use Modules\User\Database\Seeders\UserPermissionsTableSeeder;
 
 class UserDatabaseSeeder extends Seeder
 {

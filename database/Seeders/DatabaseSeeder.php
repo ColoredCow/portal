@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CountriesTableSeeder::class);
         $this->call(HrDomainTableSeeder::class);
         $this->call(HrDesignationTableSeeder::class);
+        $this->call(UserDatabaseSeeder::class);
 
         return true;
     }
