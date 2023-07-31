@@ -39,7 +39,7 @@ class Setup extends Command
     public function handle()
     {
         if (! app()->environment('local')) {
-            return false;
+            return 0;
         }
 
         Artisan::call('config:clear');
@@ -49,10 +49,7 @@ class Setup extends Command
         Artisan::call('db:seed');
         $this->info('Seeding module data');
         Artisan::call('module:seed');
-        // Artisan::call('test');
 
-        // php artisan migrate:fresh
-        // php artisan run seeders
-        // php artisan test
+        return 1;
     }
 }
