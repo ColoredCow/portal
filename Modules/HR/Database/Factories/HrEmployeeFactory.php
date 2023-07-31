@@ -26,13 +26,15 @@ class HrEmployeeFactory extends Factory
     public function definition()
     {
         $faker = Faker::create();
+        $user = User::factory()->create();
 
         return [
             'name' => $faker->name,
-            'user_id' => User::factory()->create()->id,
-            'staff_type' => 'Employee',
+            'user_id' => $user->id,
             'designation_id' => optional(HrJobDesignation::inRandomOrder()->first())->id,
             'domain_id' => optional(HrJobDomain::inRandomOrder()->first())->id,
+            'joined_on' => $faker->dateTimeThisYear(),
+            'staff_type' => 'Employee',
         ];
     }
 }
