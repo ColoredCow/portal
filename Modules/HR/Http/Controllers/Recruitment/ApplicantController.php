@@ -24,6 +24,7 @@ class ApplicantController extends Controller
     use AuthorizesRequests;
 
     protected $service;
+    protected $applicantService;
 
     public function __construct(ApplicationServiceContract $service, ApplicantService $applicantService)
     {
