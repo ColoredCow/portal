@@ -53,7 +53,7 @@ class CodeTrekController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CodeTrekRequest $request)
     {
         // $this->authorize('create', $applicant);    There are some issues in the production, which is why these lines are commented out.
 
