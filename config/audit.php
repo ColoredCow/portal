@@ -152,7 +152,7 @@ return [
     'drivers' => [
         'database' => [
             'table'      => 'audits',
-            'connection' => 'mysql',
+            'connection' => env('DB_CONNECTION', 'mysql'),
         ],
     ],
 

@@ -3,13 +3,17 @@
 namespace Modules\HR\Entities;
 
 use App\Models\Project;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-use Modules\Salary\Entities\EmployeeSalary;
 use Modules\User\Entities\User;
+use Illuminate\Database\Eloquent\Model;
+use Modules\Salary\Entities\EmployeeSalary;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\HR\Database\Factories\HrEmployeeFactory;
 
 class Employee extends Model
 {
+    use HasFactory;
+
     protected $guarded = [];
 
     protected $dates = ['joined_on'];
@@ -115,5 +119,10 @@ class Employee extends Model
         }
 
         return $overallStatus;
+    }
+
+    public static function newFactory()
+    {
+        return new HrEmployeeFactory();
     }
 }

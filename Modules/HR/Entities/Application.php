@@ -604,7 +604,7 @@ class Application extends Model
         return $this->status == config('hr.status.rejected.label');
     }
 
-    /** We need to change this approch, adding this because of current implementation of the application resume workflow */
+    /** We need to change this approach, adding this because of current implementation of the application resume workflow */
     public static function saveResumeFile($file)
     {
         $folder = '/resume/' . date('Y') . '/' . date('m');

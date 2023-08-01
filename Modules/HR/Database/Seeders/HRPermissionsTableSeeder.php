@@ -143,14 +143,18 @@ class HRPermissionsTableSeeder extends Seeder
 
         // set permissions for admin role
         $adminRole = Role::where(['name' => 'admin'])->first();
-        foreach ($allHrPermissions as $permission) {
-            $adminRole->givePermissionTo($permission);
+        if ($adminRole) {
+            foreach ($allHrPermissions as $permission) {
+                $adminRole->givePermissionTo($permission);
+            }
         }
 
         // set permissions for hr-manager role
         $hrManagerRole = Role::where(['name' => 'hr-manager'])->first();
-        foreach ($allHrPermissions as $permission) {
-            $hrManagerRole->givePermissionTo($permission);
+        if ($hrManagerRole) {
+            foreach ($allHrPermissions as $permission) {
+                $hrManagerRole->givePermissionTo($permission);
+            }
         }
     }
 }

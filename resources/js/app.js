@@ -211,7 +211,6 @@ $(document).ready(() => {
 		}
 		this.form.submit();
 	});
-
 });
 
 $(document).ready(function() {
@@ -247,13 +246,15 @@ $(document).ready(function() {
 	});
 });
 
-$(document).ready(function () {
-	$("#designationformModal").on("hidden.bs.modal", function () {
-		$(this).find("form").trigger("reset");
+$(document).ready(function() {
+	$("#designationformModal").on("hidden.bs.modal", function() {
+		$(this)
+			.find("form")
+			.trigger("reset");
 		$("#designationerror").addClass("d-none");
 	});
 
-	$("#designationForm").on("submit", function (e) {
+	$("#designationForm").on("submit", function(e) {
 		e.preventDefault();
 		$("#designationFormSpinner").removeClass("d-none");
 		let form = $("#designationForm");
@@ -261,22 +262,26 @@ $(document).ready(function () {
 			type: form.attr("method"),
 			url: form.attr("action"),
 			data: form.serialize(),
-			success: function (response) {
+			success: function(response) {
 				$("#designationFormSpinner").addClass("d-none");
 				$("#designationformModal").modal("hide");
 				$("#successMessage").toggleClass("d-none");
 				$("#successMessage").fadeToggle(3000);
 			},
-			error: function (response) {
+			error: function(response) {
 				$("#designationFormSpinner").addClass("d-none");
 				if (response.responseJSON.errors.name) {
 					let text = response.responseJSON.errors.name[0];
-					$("#designationerror").html(text).removeClass("d-none");
+					$("#designationerror")
+						.html(text)
+						.removeClass("d-none");
 					return false;
 				}
 				if (response.responseJSON.errors.domain) {
 					let text = response.responseJSON.errors.domain[0];
-					$("#domainerror").html(text).removeClass("d-none");
+					$("#domainerror")
+						.html(text)
+						.removeClass("d-none");
 					return false;
 				}
 			},
@@ -284,27 +289,31 @@ $(document).ready(function () {
 	});
 });
 
-$(document).on("click","#viewReject",function(){
-	
-	$("body").on("click",`label[for='${$("#appearRejectButton").data("target")}-no']`,function(){
-		$("#rejectButton").removeClass("d-none");
-		$("#nextButton").addClass("d-none");
+$(document).on("click", "#viewReject", function() {
+	$("body").on(
+		"click",
+		`label[for='${$("#appearRejectButton").data("target")}-no']`,
+		function() {
+			$("#rejectButton").removeClass("d-none");
+			$("#nextButton").addClass("d-none");
+		}
+	);
 
-	});
-
-	$("body").on("click",`label[for='${$("#appearRejectButton").data("target")}-yes']`,function(){
-		$("#nextButton").removeClass("d-none");
-		$("#rejectButton").addClass("d-none");
-
-	});
+	$("body").on(
+		"click",
+		`label[for='${$("#appearRejectButton").data("target")}-yes']`,
+		function() {
+			$("#nextButton").removeClass("d-none");
+			$("#rejectButton").addClass("d-none");
+		}
+	);
 });
 
-$(document).on("click",".reject-button",function(){
+$(document).on("click", ".reject-button", function() {
 	rejectApplication();
 });
 
-function rejectApplication()
-{
+function rejectApplication() {
 	$("#application_reject_modal").modal("show");
 	loadTemplateMail("reject", (res) => {
 		$("#rejectMailToApplicantSubject").val(res.subject);
@@ -586,10 +595,10 @@ function initRicheditor() {
 		selector: ".richeditor",
 		skin: "lightgray",
 		toolbar:
-			"undo redo formatselect | fontselect fontsizeselect bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+      "undo redo formatselect | fontselect fontsizeselect bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
 		plugins: ["advlist lists autolink link code image print"],
 		font_formats:
-			"Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;AkrutiKndPadmini=Akpdmi-n",
+      "Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;AkrutiKndPadmini=Akpdmi-n",
 		images_upload_url: "postAcceptor.php",
 		content_style: "body{font-size:14pt;}",
 		automatic_uploads: false,
@@ -601,13 +610,13 @@ function initRicheditor() {
 		force_br_newlines: true,
 		force_p_newlines: false,
 		height: "280",
-		convert_urls: 0
+		convert_urls: 0,
 	});
 }
 
 initRicheditor();
 
-$("body").on("click", "#takeAction", function () {
+$("body").on("click", "#takeAction", function() {
 	initRicheditor();
 });
 
@@ -917,7 +926,7 @@ if (document.getElementById("books_listing")) {
 
 			searchBooksByCategoryName: function() {
 				window.location.href = `${this.updateRoute}?category_name=${this.sortKeys}`;
-			},	
+			},
 
 			strLimit: function(str, length) {
 				if (!str) {
@@ -1167,7 +1176,14 @@ if (document.getElementById("show_book_info")) {
 }
 
 if (document.getElementById("home_page")) {
+	setupClickEventsForLibrary();
+}
+
+function setupClickEventsForLibrary() {
 	var el = document.getElementById("markBookAsRead");
+	if (!el) {
+		return;
+	}
 	el.addEventListener("click", markBookAsRead, false);
 	var wishlistBtn = document.getElementById("addBookToWishlist");
 	wishlistBtn.addEventListener("click", addBookToWishlist, false);
@@ -1820,7 +1836,7 @@ $(".status").on("change", function() {
 		$.ajax({
 			url: "completed/change-status/" + this.dataset.id,
 			method: "GET",
-			success: function (res) {
+			success: function(res) {
 				$("#mymodal").modal() + this.dataset.id;
 			},
 			error: function(err) {
@@ -1833,11 +1849,11 @@ $(".status").on("change", function() {
 	}
 });
 
-$(document).ready(function(){
+if ($("#choices-multiple").length) {
 	var multipleSelect = new Choices("#choices-multiple", {
 		removeItemButton: true,
 	});
-});
+}
 
 $(".pending").on("change", function() {
 	$("#completeSpinner").removeClass("d-none");
@@ -1895,14 +1911,14 @@ $("#job_end_date").on("change", function() {
 	$("#job_start_date").attr("max", endDate);
 });
 
-$(document).ready(function() {
+if ($("#choices-multiple-remove-button").length) {
 	var multipleCancelButton = new Choices("#choices-multiple-remove-button", {
 		removeItemButton: true,
 		maxItemCount: 9,
 		searchResultLimit: 9,
 		renderChoiceLimit: 9,
 	});
-});
+}
 
 /*
  * HR Module JS code end
@@ -1910,19 +1926,19 @@ $(document).ready(function() {
 
 // fix for tinymce and bootstrap modal
 
-$("body").on("click", "#offerLetter", function (e) {
+$("body").on("click", "#offerLetter", function(e) {
 	e.preventDefault();
 	var originUrl = window.location.origin;
 	let applicationid = $("#getApplicationId").val();
 	$.ajax({
 		url: originUrl + `/hr/recruitment/${applicationid}/save-offer-letter`,
 		type: "GET",
-		success: function (response) {
+		success: function(response) {
 			$("#seeOfferLetter").removeClass("d-none");
 		},
-		error: function () {
+		error: function() {
 			alert("error");
-		}
+		},
 	});
 });
 
@@ -2060,12 +2076,12 @@ $(document).on("click", ".finish_interview", function(e) {
 		dataType: "json",
 		success: function(response) {
 			$("#meet_time").hide();
-			$("#durations").append(response.html);	
+			$("#durations").append(response.html);
 		},
 	});
 });
 
-$("#responseModal").on("submit",function(e){
+$("#responseModal").on("submit", function(e) {
 	e.preventDefault();
 	let form = $("#responseForm");
 	let button = $("#responseBtn");
@@ -2081,8 +2097,8 @@ $("#responseModal").on("submit",function(e){
 	});
 });
 
-$(function () {
-	$("#applicant-toggle").click(function () {
+$(function() {
+	$("#applicant-toggle").click(function() {
 		var sidebar = $("#applicant-sidebar");
 		if (sidebar.css("right") === "0px") {
 			sidebar.css("right", "-250px");
@@ -2091,27 +2107,32 @@ $(function () {
 		}
 	});
 
-	$(".applicant-list li").click(function () {
+	$(".applicant-list li").click(function() {
 		var applicantId = $(this).data("id");
 	});
 
-	$(document).click(function (event) {
-		if (!$(event.target).closest("#applicant-toggle, #applicant-sidebar").length) {
+	$(document).click(function(event) {
+		if (
+			!$(event.target).closest("#applicant-toggle, #applicant-sidebar").length
+		) {
 			$("#applicant-sidebar").css("right", "-250px");
 		}
 	});
 });
 
 $(document).ready(function() {
-
 	$(".thumbs-radio-button").change(function() {
-	  $(".thumbs-up").css("color", "");
-	  $(".thumbs-down").css("color", "");
-	  if ($(this).val() === "positive") {
-			$(this).siblings(".thumbs-up").css("color", "green");
-	  } else if ($(this).val() === "negative") {
-			$(this).siblings(".thumbs-down").css("color", "red");
-	  }
+		$(".thumbs-up").css("color", "");
+		$(".thumbs-down").css("color", "");
+		if ($(this).val() === "positive") {
+			$(this)
+				.siblings(".thumbs-up")
+				.css("color", "green");
+		} else if ($(this).val() === "negative") {
+			$(this)
+				.siblings(".thumbs-down")
+				.css("color", "red");
+		}
 	});
 });
 
@@ -2141,7 +2162,11 @@ $(document).ready(function() {
 	});
 
 	function slugify(text) {
-		return text.toLowerCase().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").trim();
+		return text
+			.toLowerCase()
+			.replace(/[^\w\s-]/g, "")
+			.replace(/[\s_-]+/g, "-")
+			.trim();
 	}
 
 	$("#bank-details-form").submit(function(event) {
@@ -2150,4 +2175,3 @@ $(document).ready(function() {
 		this.submit(); // Manually trigger the form submission
 	});
 });
-

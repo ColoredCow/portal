@@ -27,7 +27,9 @@ class HrApplicationsFactory extends Factory
 
         if ($status == 'custom-mail') {
             $status = 'sent-for-approval';
-        } elseif ($status == 'confirmed') {
+        }
+
+        if ($status == 'confirmed') {
             $status = 'onboarded';
         }
 
