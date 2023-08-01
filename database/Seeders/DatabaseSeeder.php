@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
         $this->call(HrDomainTableSeeder::class);
         $this->call(HrDesignationTableSeeder::class);
         $this->call(UserDatabaseSeeder::class);
+        $this->call(BooksPermissionsSeeder::class);
+        $this->call(BookCategoriesTableSeeder::class);
 
         return true;
     }

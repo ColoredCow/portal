@@ -45,10 +45,10 @@ class Setup extends Command
         Artisan::call('config:clear');
         $this->info('Resetting the database');
         Artisan::call('migrate:fresh');
-        $this->info('Seeding common data');
+        $this->info('Seeding data');
         Artisan::call('db:seed');
-        $this->info('Seeding module data');
         Artisan::call('module:seed');
+        $this->info('Setup completed.');
 
         return 1;
     }
