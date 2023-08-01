@@ -2038,7 +2038,7 @@ $(".opt").on("click", function() {
 			tinymce.get("option2body").setContent(response.body, { format: "html" });
 		},
 		error: function(xhr, status, error) {
-			console.log('Error:', error);
+			console.log("Error:", error);
 		  },
 	});
 
@@ -2053,15 +2053,13 @@ $(".opt").on("click", function() {
 			tinymce.get("optionCodeTrekPropositionBody").setContent(response.body, { format: "html" });
 		},
 		error: function(xhr, status, error) {
-			console.log('Error:', error);
+			console.log("Error:", error);
 		  },
 	});
 
-	let status = 'rejected';
-
-	var originUrl = window.location.origin
+	var originUrl = window.location.origin;
 	$.ajax({
-		url: `/hr/recruitment/applicationround/${$("#current_applicationround_id").val()}/mail-content/${status}`,
+		url: `/hr/recruitment/applicationround/${$("#current_applicationround_id").val()}/mail-content/${"rejected"}`,
 		method: "post",
 		contentType: "application/json",
 		success: function(response) {
@@ -2069,7 +2067,7 @@ $(".opt").on("click", function() {
 			tinymce.get("rejectMailToApplicantBody").setContent(response.body, { format: "html" });
 		},
 		error: (err) => {
-			console.log(err);
+			console.log("Error:", error);
 		},
 	});
 });
