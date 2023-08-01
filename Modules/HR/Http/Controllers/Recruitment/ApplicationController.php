@@ -250,6 +250,7 @@ abstract class ApplicationController extends Controller
         $body->setting_value = str_replace('|APPLICANT NAME|', $request->applicant_name, $body->setting_value);
         $body->setting_value = str_replace('|JOB TILE|', $request->job_title, $body->setting_value);
         $subject = Setting::where('module', 'hr')->where('setting_key', $request->setting_key_subject)->first();
+
         return [
             'subject' => $subject->setting_value,
             'body' => $body->setting_value,
