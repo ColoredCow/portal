@@ -256,7 +256,6 @@ abstract class ApplicationController extends Controller
             'body' => $body->setting_value,
         ];
     }
-    
 
     public function saveOfferLetter(Application $application)
     {
