@@ -15,8 +15,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        if (app()->environment('production')) {
-            return false;
+        if (! app()->environment(['local', 'staging', 'UAT'])) {
+            return 0;
         }
 
         $this->call(RolesTableSeeder::class);

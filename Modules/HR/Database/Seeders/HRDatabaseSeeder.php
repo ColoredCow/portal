@@ -2,7 +2,6 @@
 
 namespace Modules\HR\Database\Seeders;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 
 class HRDatabaseSeeder extends Seeder
@@ -14,7 +13,9 @@ class HRDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
+        if (! app()->environment(['local', 'staging', 'UAT'])) {
+            return 0;
+        }
         $this->call(HRPermissionsTableSeeder::class);
         $this->call(HRRoundsTableSeeder::class);
         $this->call(TagTableSeeder::class);
