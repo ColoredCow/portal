@@ -38,7 +38,7 @@ class Setup extends Command
      */
     public function handle()
     {
-        if (! app()->environment('local')) {
+        if (! app()->environment(['local', 'staging', 'UAT'])) {
             return 0;
         }
 
