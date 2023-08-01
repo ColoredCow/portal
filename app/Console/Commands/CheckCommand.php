@@ -13,7 +13,10 @@ class CheckCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'check:ci {--with-tty : Disable output to TTY}';
+    protected $signature = 'check:ci 
+    {--with-tty : Disable output to TTY}
+    {--c|cypress : Include cypress test as well}
+    ';
 
     /**
      * The console command description.
