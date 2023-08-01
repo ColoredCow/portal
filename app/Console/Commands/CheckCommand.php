@@ -6,14 +6,14 @@ use Illuminate\Console\Command;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
-class check extends Command
+class CheckCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'check';
+    protected $signature = 'check:ci {--with-tty : Disable output to TTY}';
 
     /**
      * The console command description.
@@ -48,23 +48,32 @@ class check extends Command
 
     private function checkCommand($command, $name)
     {
-        $this->info("Running $name");
+        $this->line("Running $name");
 
         $process = new Process($command);
 
-        $process->run(function ($type, $line) {
-            $this->output->write($line);
-        });
-
-        if (! $process->isSuccessful()) {
-            $this->info("$name Failed.");
-            throw new ProcessFailedException($process);
+        try {
+            $process->mustRun(function ($type, $line) {
+                if ($this->option('with-tty')) {
+                    $this->output->write($line);
+                }
+            });
+            $this->info("$name Completed.");
+        } catch (ProcessFailedException $e) {
+            $this->error("$name Failed.");
+            $this->line($e->getMessage());
+            $this->commandSeparator();
+            exit(1);
         }
 
-        $this->info("$name Completed.");
-        $this->info('---------------------------------------------------------------------------------------');
+        $this->commandSeparator();
 
         return 1;
+    }
+
+    private function commandSeparator()
+    {
+        $this->info('---------------------------------------------------------------------------------------');
     }
 
     private function getCommands()
@@ -86,9 +95,9 @@ class check extends Command
 
         return [
             'Php CS Fixer' => $staticAnalysis,
-            'laraStan' => $laraStan,
-            'Eslint fix' => $esLintFix,
-            'Eslint check' => $esLintCheck
+            'LaraStan' => $laraStan,
+            'ESLint fix' => $esLintFix,
+            'ESLint check' => $esLintCheck
         ];
     }
 }
