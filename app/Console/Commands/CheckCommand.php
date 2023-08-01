@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Nwidart\Modules\Facades\Module;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
@@ -93,14 +94,27 @@ class CheckCommand extends Command
         ];
 
         $laraStan = ['./vendor/bin/phpstan', 'analyse'];
-        $esLintFix = ['./node_modules/.bin/eslint', 'resources/js/',  '--ext', '.js,.vue', '--fix'];
-        $esLintCheck = ['./node_modules/.bin/eslint', 'resources/js/', '--ext', '.js,.vue'];
 
-        return [
+        return array_merge([
             'Php CS Fixer' => $staticAnalysis,
             'LaraStan' => $laraStan,
-            'ESLint fix' => $esLintFix,
-            'ESLint check' => $esLintCheck
+        ], $this->getEsCommands());
+    }
+
+    private function getEsCommands()
+    {
+        // Modules/*/Resources/assets/js/  wild card does not work with Process so
+        // we had to expend the files based on modules
+        $moduleNames = collect(array_keys(Module::all()));
+        $moduleJsFiles = $moduleNames->map(function ($moduleName) {
+            return "Modules/{$moduleName}/Resources/assets/js/";
+        })->toArray();
+
+        $esCheckCommand = array_merge(['./node_modules/.bin/eslint', 'resources/js/'], $moduleJsFiles, ['--ext', '.js,.vue']);
+
+        return [
+            'ESLint fix' => array_merge($esCheckCommand, ['--fix']),
+            'ESLint check' => $esCheckCommand
         ];
     }
 }
