@@ -1359,7 +1359,6 @@
                                                             {{-- @if ($applicantOpenApplications->count() > 1) --}}
                                                             <button type="button" class="btn btn-outline-danger ml-2"
                                                                 id="rejectApplication"
-                                                                
                                                                 data-toggle="modal" data-target="#application_reject_modal">Reject</button>
                                                             @include('hr.application.rejection-modal', [
                                                                 'currentApplication' => $application,

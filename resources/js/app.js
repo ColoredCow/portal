@@ -2049,7 +2049,7 @@ $(".opt").on("click", function() {
 		data: formData,
 		contentType: "application/json",
 		success: function(response) {
-			$("#optionCodeTrekPropositionSubject").val(response.subject, {format: "html"});
+			$("#optionCodeTrekPropositionSubject").val(response.subject);
 			tinymce.get("optionCodeTrekPropositionBody").setContent(response.body, { format: "html" });
 		},
 		error: function(xhr, status, error) {
@@ -2057,48 +2057,21 @@ $(".opt").on("click", function() {
 		  },
 	});
 
-	// var originUrl = window.location.origin;
-	// $.ajax({
-	// 	url: originUrl + "/hr/recruitment/onHoldEmail",
-	// 	type: "GET",
-	// 	data: formData,
-	// 	contentType: "application/json",
-	// 	success: function(response) {
-	// 		$("#option2subject").val(response.subject);
-	// 		tinymce.get("option2body").setContent(response.body, { format: "html" });
-	// 	},
-	// });
-	// let status = 'rejected';
-	// let applicationRoundId = $("#current_applicationround_id").val();
-	// var originUrl = window.location.origin;
-	// $.ajax({
-	// 	url: `/hr/recruitment/applicationround/${applicationRoundId}/mail-content/${status}`,
-	// 	type: 'POST',
-	// 	dataType: 'json',
-	// 	success: function(mailContent) {
-	// 	  // Update the respective divisions with the mail content
-	// 	  console.log(mailContent.subject); // Output: Your Subject Valu
-	// 	  console.log(mailContent.body);
-	// 	  $("#rejectMailToApplicantSubject").val(mailContent.subject);
-	// 	  $("#rejectMailToApplicantBody").setContent(mailContent.body, { format: "html" });
-	// 	},
-	// 	error: function(xhr, status, error) {
-	// 	  console.log('Error:', error);
-	// 	},
-	// });
+	let status = 'rejected';
 
-	// var originUrl = window.location.origin;
-	// $.ajax({
-	// 	url: originUrl + "/hr/recruitment/onHoldEmail",
-	// 	type: "GET",
-	// 	data: formData,
-	// 	contentType: "application/json",
-	// 	success: function(response) {
-	// 		$("#optionCodeTrekPropositionSubject").val(response.subject);
-	// 		tinymce.get("optionCodeTrekPropositionBody").setContent(response.body, { format: "html" });
-	// 	},
-	// });
-
+	var originUrl = window.location.origin
+	$.ajax({
+		url: `/hr/recruitment/applicationround/${$("#current_applicationround_id").val()}/mail-content/${status}`,
+		method: "post",
+		contentType: "application/json",
+		success: function(response) {
+			$("#rejectMailToApplicantSubject").val(response.subject, {format: "html"});
+			tinymce.get("rejectMailToApplicantBody").setContent(response.body, { format: "html" });
+		},
+		error: (err) => {
+			console.log(err);
+		},
+	});
 });
 
 $(document).on("click", ".finish_interview", function(e) {

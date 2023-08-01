@@ -246,20 +246,16 @@ abstract class ApplicationController extends Controller
 
     public function generateRejectionEmail(Request $request)
     {
-        if ($request->setting_key_subject == 'codetrek_proposition_subject') {
-            $subject = Setting::where('module', 'hr')->where('setting_key', $request->setting_key_subject)->first();
-            $body = Setting::where('module', 'hr')->where('setting_key', $request->setting_key_body)->first();
-            $body->setting_value = str_replace('|APPLICANT NAME|', $request->applicant_name, $body->setting_value);
-            $body->setting_value = str_replace('|JOB TILE|', $request->job_title, $body->setting_value);
-
-            return response()->json([
-                'subject' => $subject,
-                'body' => $body,
-            ]);
-        } else {
-            return response()->json(getMailContent($request->applicationRound, 'reject'));
-        }
+        $body = Setting::where('module', 'hr')->where('setting_key', $request->setting_key_body)->first();
+        $body->setting_value = str_replace('|APPLICANT NAME|', $request->applicant_name, $body->setting_value);
+        $body->setting_value = str_replace('|JOB TILE|', $request->job_title, $body->setting_value);
+        $subject = Setting::where('module', 'hr')->where('setting_key', $request->setting_key_subject)->first();
+        return response()->json([
+            'subject' => $subject->setting_value,
+            'body' => $body->setting_value,
+        ]);
     }
+    
 
     public function saveOfferLetter(Application $application)
     {
