@@ -2,10 +2,10 @@
 
 @section('content')
 <div class=" ml-15">
-    <h1>Edit Contract</h1>
+    <h1>Review Contract - {{$reviewer['name']}} - {{$reviewer['email']}}</h1>   
 </div>
 <br>
-<form action="{{ route('projectcontract.update')}}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('projectcontract.client-update')}}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="container">
         <div class="card">
@@ -225,9 +225,43 @@
         <div class="container">
             <div class="form-row">
                 <div class="form-group col-md-12">
-                    <button type="submit" class="btn btn-success round-submit"><i class="fa fa-check mr-1" ></i>Update & Approve</button>
+                    <a href="{{route('projectcontract.client-response', $contractsmeta[0]['contract_id'])}}" class="pl-1 btn btn-success" ><i class="text-primary fa fa-check fa-lg"></i>Finalise</a>
+                    <button type="submit" class="btn btn-primary round-submit">Update</button>
                 </div>
             </div>
         </div>
 </form>
+@if ($comments)
+<div class="container">
+        <h3>Comments</h3>
+        @foreach ($comments as $comment)
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="d-flex flex-row-reverse">
+                    <a href="{{ route('projectcontract.comment-history',$comment['id'])}}" target="_blank"><i class="fa fa-history"></i> View History</a>
+                </div>
+                <div class="d-flex flex-row mb-3">
+                    <div>By: </div>
+                    <div>
+                        @if (str_contains($comment['comment_type'],'Reviewer'))
+                            <h4>Client Team</h4>
+                        @else
+                            <h4>Internal Team</h4>
+                        @endif
+                    </div>
+                </div>
+                <div class="d-flex flex-row mb-3">
+                    <div><h4>Date: </h4></div>
+                    <div><h4>{{$comment['created_at']}}</h4></div>
+                </div>
+                <div class="d-flex flex-row mb-3">
+                    <div><h4>Comment: </h4></div>
+                    <div><h4>{{$comment['comment']}}</h4></div>
+                </div>
+            </div>
+        </div>
+        <br>
+        @endforeach
+    </div>
+@endif
 @endsection
