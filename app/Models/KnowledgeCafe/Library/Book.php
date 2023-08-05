@@ -27,9 +27,9 @@ class Book extends Model
         return $query
             ->where(function ($query) use ($filteredString) {
                 if ($filteredString) {
-                    $query->where('title', 'LIKE', "%$filteredString%")
-                        ->orWhere('author', 'LIKE', "%$filteredString%")
-                        ->orWhere('isbn', 'LIKE', "%$filteredString%");
+                    $query->where('title', 'LIKE', "%{$filteredString}%")
+                        ->orWhere('author', 'LIKE', "%{$filteredString}%")
+                        ->orWhere('isbn', 'LIKE', "%{$filteredString}%");
                 }
             })
             ->withCount('readers')

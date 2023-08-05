@@ -220,7 +220,7 @@ class Application extends Model
     public function scopeFilterByName($query, $search)
     {
         return $query->whereHas('applicant', function ($query) use ($search) {
-            $search ? $query->where('name', 'LIKE', "%$search%") : '';
+            $search ? $query->where('name', 'LIKE', "%{$search}%") : '';
         });
     }
 
@@ -231,11 +231,11 @@ class Application extends Model
         }
 
         return $query->whereHas('applicant', function ($query) use ($search) {
-            $query->where('name', 'LIKE', "%$search%");
-            $query->orWhere('email', 'LIKE', "%$search%");
-            $query->orWhere('phone', 'LIKE', "%$search%");
+            $query->where('name', 'LIKE', "%{$search}%");
+            $query->orWhere('email', 'LIKE', "%{$search}%");
+            $query->orWhere('phone', 'LIKE', "%{$search}%");
             $query->orWhereHas('university', function ($universityQuery) use ($search) {
-                $universityQuery->where('name', 'LIKE', "%$search%");
+                $universityQuery->where('name', 'LIKE', "%{$search}%");
             });
         });
     }
