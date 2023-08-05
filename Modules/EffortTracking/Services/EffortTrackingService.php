@@ -211,12 +211,14 @@ class EffortTrackingService
 
             try {
                 while (true) {
-                    $range = 'C1:' . ++$lastColumn . '1';
+                    $lastColumn++;
+                    $range = "C1:{$lastColumn}1";
                     $sheet = $sheets->spreadsheet($sheetId)
                         ->range($range)
                         ->get();
 
-                    if (isset($sheet[0]) && count($sheet[0]) == ++$columnIndex) {
+                    $columnIndex++;
+                    if (isset($sheet[0]) && count($sheet[0]) == $columnIndex) {
                         $subProjectName = $sheet[0][count($sheet[0]) - 1];
                         $subProject = Project::where(['name' => $subProjectName, 'status' => 'active'])->first();
                         if ($subProject) {
