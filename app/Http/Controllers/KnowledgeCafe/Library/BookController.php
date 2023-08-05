@@ -208,7 +208,7 @@ class BookController extends Controller
         $bookID = $request->book_id;
         $read = $request->is_read;
         $book = Book::find($bookID);
-        $isMarked = ($book) ? $book->markBook($read) : false;
+        $isMarked = $book ? $book->markBook($read) : false;
 
         return response()->json([
             'isMarked' => $isMarked,
@@ -238,7 +238,7 @@ class BookController extends Controller
 
     public function getBooksCount()
     {
-        $books = (request()->has('cat')) ?
+        $books = request()->has('cat') ?
             Book::getByCategoryName(request()->input('cat'))->count() :
             Book::count();
 
@@ -252,7 +252,7 @@ class BookController extends Controller
         } catch (\Exception $e) {
             $pageNumber = 1;
         }
-        $books = (request()->has('cat')) ?
+        $books = request()->has('cat') ?
             Book::getByCategoryName(request()->input('cat')) :
             Book::with(['categories'])->orderBy('title')->skip(($pageNumber - 1) * 50)->take(50)->get();
 

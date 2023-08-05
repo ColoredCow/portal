@@ -130,7 +130,7 @@ class RevenueReportService
         return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
-    private function getParticularAmountForStripeInternational(array $particular, Object $startDate, Object $endDate): array
+    private function getParticularAmountForStripeInternational(array $particular, object $startDate, object $endDate): array
     {
         return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }

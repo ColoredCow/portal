@@ -28,12 +28,12 @@ class Applicant extends Model
             'email' => $attr['email'],
         ], [
             'name' => $attr['name'],
-            'phone' => isset($attr['phone']) ? $attr['phone'] : null,
+            'phone' => $attr['phone'] ?? null,
             'wa_optin_at' => isset($attr['wa_optin_at']),
-            'college' => isset($attr['college']) ? $attr['college'] : null,
-            'graduation_year' => isset($attr['graduation_year']) ? $attr['graduation_year'] : null,
-            'course' => isset($attr['course']) ? $attr['course'] : null,
-            'linkedin' => isset($attr['linkedin']) ? $attr['linkedin'] : null,
+            'college' => $attr['college'] ?? null,
+            'graduation_year' => $attr['graduation_year'] ?? null,
+            'course' => $attr['course'] ?? null,
+            'linkedin' => $attr['linkedin'] ?? null,
         ]);
 
         $jobId = $attr['hr_job_id'] ?? Job::where('opportunity_id', $attr['opportunity_id'])->first()->id;

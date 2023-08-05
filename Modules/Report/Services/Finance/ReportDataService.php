@@ -11,7 +11,9 @@ class ReportDataService
     {
         if ($type == 'revenue-trend') {
             return $this->revenueTrend($filters);
-        } elseif ($type == 'revenue-trend-client-wise') {
+        }
+
+        if ($type == 'revenue-trend-client-wise') {
             return $this->revenueTrendForClient($filters);
         }
 

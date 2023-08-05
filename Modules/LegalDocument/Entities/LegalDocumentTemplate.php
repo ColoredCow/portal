@@ -16,7 +16,6 @@ class LegalDocumentTemplate extends Model
             $index = str_replace('$', '', $index);
             if (isset($data[$index])) {
                 return $data[$index];
-            } else {
             }
         }, $this->body);
 

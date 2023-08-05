@@ -92,6 +92,16 @@ return [
         SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff::class,
         SlevomatCodingStandard\Sniffs\ControlStructures\DisallowShortTernaryOperatorSniff::class,
         SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff::class,
+        PhpCsFixer\Fixer\Operator\NewWithBracesFixer::class,
+        PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff::class,
+        PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer::class,
+
+        PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ObjectOperatorIndentSniff::class,
+        PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\SwitchDeclarationSniff::class,
+        PHP_CodeSniffer\Standards\PSR12\Sniffs\Classes\ClassInstantiationSniff::class,
+        PhpCsFixer\Fixer\Basic\BracesFixer::class,
+        PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer::class,
+        PhpCsFixer\Fixer\Whitespace\MethodChainingIndentationFixer::class
     ],
 
     'config' => [
