@@ -51,7 +51,7 @@ class ApplicationRound extends Model
                 $scheduledDate = $attr['scheduled_date'];
                 $scheduledTime = $attr['scheduled_time'];
                 $fillable = [
-                    'scheduled_date' => "$scheduledDate . $scheduledTime",
+                    'scheduled_date' => "{$scheduledDate} . {$scheduledTime}",
                     'scheduled_person_id' => $attr['scheduled_person_id'],
                 ];
                 $attr['reviews'] = [];
@@ -78,7 +78,7 @@ class ApplicationRound extends Model
                             'hr_round_id' => $nextRound->id,
                             'trial_round_id' => Round::where('name', 'Preparatory-1')->first()->id,
                             'scheduled_date' => $attr['next_scheduled_start'] ?? null,
-                            'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
+                            'scheduled_end' =>  $attr['next_scheduled_end'] ?? null,
                             'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
                         ]);
                     }
@@ -95,7 +95,7 @@ class ApplicationRound extends Model
                             'hr_round_id' => Round::where('name', 'Trial Program')->first()->id,
                             'trial_round_id' => $nextRound->id,
                             'scheduled_date' => $attr['next_scheduled_start'] ?? null,
-                            'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
+                            'scheduled_end' => $attr['next_scheduled_end'] ?? null,
                             'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
                         ]);
                     }
@@ -110,7 +110,7 @@ class ApplicationRound extends Model
                             'hr_application_id' => $application->id,
                             'hr_round_id' => $nextRound->id,
                             'scheduled_date' => $attr['next_scheduled_start'] ?? null,
-                            'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
+                            'scheduled_end' => $attr['next_scheduled_end'] ?? null,
                             'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
                         ]);
                     }

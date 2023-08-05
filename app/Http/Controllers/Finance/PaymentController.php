@@ -144,7 +144,7 @@ class PaymentController extends Controller
             case 'cheque':
                 $attr['status'] = $validated['cheque_status'];
                 $dateField = $validated['cheque_status'] . '_on';
-                $attr[$dateField] = DateHelper::formatDateToSave($validated["cheque_$dateField"]);
+                $attr[$dateField] = DateHelper::formatDateToSave($validated["cheque_{$dateField}"]);
                 break;
         }
 
@@ -164,10 +164,10 @@ class PaymentController extends Controller
             $payment->mode->update($attr);
 
             return $payment->mode;
-        } else {
-            $payment->mode->delete();
-
-            return $model::create($attr);
         }
+
+        $payment->mode->delete();
+
+        return $model::create($attr);
     }
 }

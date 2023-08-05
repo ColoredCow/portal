@@ -28,7 +28,7 @@ class PermissionController extends Controller
         }
         $attr['settings'] = Setting::where('module', $module)->get()->keyBy('setting_key');
 
-        return view("settings.permissions.$module")->with($attr);
+        return view("settings.permissions.{$module}")->with($attr);
     }
 
     public function updateUserRoles(UpdateUserRolesRequest $request)

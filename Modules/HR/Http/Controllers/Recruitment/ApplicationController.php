@@ -204,7 +204,7 @@ abstract class ApplicationController extends Controller
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],
-            'type' => config("constants.hr.opportunities.$job->type.type"),
+            'type' => config("constants.hr.opportunities.{$job->type}.type"),
             'universities' => University::orderBy('name')->get(),
         ];
 

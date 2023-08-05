@@ -216,9 +216,13 @@ class Project extends Model implements Auditable
 
         if ($diff === null) {
             return true;
-        } elseif ($this->end_date <= today()) {
+        }
+
+        if ($this->end_date <= today()) {
             return true;
-        } elseif ($diff <= 30) {
+        }
+
+        if ($diff <= 30) {
             return false;
         }
 
@@ -334,8 +338,6 @@ class Project extends Model implements Auditable
         $meta = $this->meta()->where('key', $metaKey)->first();
         if ($meta) {
             return $meta->value;
-        } else {
-            return;
         }
     }
 
