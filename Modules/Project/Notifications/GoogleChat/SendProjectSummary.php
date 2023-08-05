@@ -24,14 +24,14 @@ class SendProjectSummary extends Notification
         $this->data = $data;
     }
 
-    public function via($notifiable)
+    public function via()
     {
         return [
             GoogleChatChannel::class
         ];
     }
 
-    public function toGoogleChat($notifiable)
+    public function toGoogleChat()
     {
         $teamMemberTextParagraph = TextParagraph::create()
             ->bold('Individual velocities');

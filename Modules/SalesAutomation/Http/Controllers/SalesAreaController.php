@@ -43,15 +43,6 @@ class SalesAreaController extends Controller
     }
 
     /**
-     * Show the specified resource.
-     *
-     * @param SalesArea $salesArea
-     */
-    public function show(SalesArea $salesArea)
-    {
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param SalesArea $salesArea

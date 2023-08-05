@@ -63,7 +63,7 @@ class NDATemplateController extends Controller
         return redirect(route('legal-document.nda.template.index'));
     }
 
-    public function showPreview(Request $request)
+    public function showPreview()
     {
         $template = LegalDocumentTemplate::find(request('template_id'));
         $data = [

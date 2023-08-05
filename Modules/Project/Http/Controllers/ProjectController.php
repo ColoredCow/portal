@@ -153,7 +153,7 @@ class ProjectController extends Controller
         return $this->service->projectFTEExport($filters);
     }
 
-    public function projectResource(Request $request)
+    public function projectResource()
     {
         $resourceData = $this->service->getProjectsWithTeamMemberRequirementData(request()->all());
         $domainName = HrJobDomain::all();

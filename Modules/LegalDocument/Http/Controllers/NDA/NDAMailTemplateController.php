@@ -53,7 +53,7 @@ class NDAMailTemplateController extends Controller
         return redirect(route('legal-document.nda.index'));
     }
 
-    public function showPreview(Request $request)
+    public function showPreview()
     {
         $template = LegalDocumentMailTemplate::find(request('template_id'));
         $data = [

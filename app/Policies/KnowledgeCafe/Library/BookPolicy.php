@@ -18,7 +18,7 @@ class BookPolicy
      *
      * @return mixed
      */
-    public function view(User $user, Book $book)
+    public function view(User $user)
     {
         return $user->hasPermissionTo('library_books.view');
     }
@@ -43,7 +43,7 @@ class BookPolicy
      *
      * @return mixed
      */
-    public function update(User $user, Book $book)
+    public function update(User $user)
     {
         return $user->hasPermissionTo('library_books.update');
     }
@@ -56,7 +56,7 @@ class BookPolicy
      *
      * @return mixed
      */
-    public function delete(User $user, Book $book)
+    public function delete(User $user)
     {
         return $user->hasPermissionTo('library_books.delete');
     }

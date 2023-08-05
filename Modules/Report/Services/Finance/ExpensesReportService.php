@@ -4,12 +4,18 @@ namespace Modules\Report\Services\Finance;
 
 class ExpenseReportService
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
     public function getAllParticulars(string $year): array
     {
         // Todo:: fill the information here.
         return [];
     }
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
     public function getParticularReport(array $particular, string $year): array
     {
         $results = [];

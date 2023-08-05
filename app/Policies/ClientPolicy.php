@@ -18,7 +18,7 @@ class ClientPolicy
      *
      * @return mixed
      */
-    public function view(User $user, Client $client)
+    public function view(User $user)
     {
         return $user->hasPermissionTo('clients.view');
     }
@@ -43,7 +43,7 @@ class ClientPolicy
      *
      * @return mixed
      */
-    public function update(User $user, Client $client)
+    public function update(User $user)
     {
         return $user->hasPermissionTo('clients.update');
     }
@@ -56,7 +56,7 @@ class ClientPolicy
      *
      * @return mixed
      */
-    public function delete(User $user, Client $client)
+    public function delete(User $user)
     {
         return $user->hasPermissionTo('clients.delete');
     }

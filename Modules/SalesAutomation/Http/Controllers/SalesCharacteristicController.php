@@ -53,15 +53,6 @@ class SalesCharacteristicController extends Controller
     }
 
     /**
-     * Show the specified resource.
-     *
-     * @param SalesCharacteristic $salesCharacteristic
-     */
-    public function show(SalesCharacteristic $salesCharacteristic)
-    {
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param SalesCharacteristic $salesCharacteristic

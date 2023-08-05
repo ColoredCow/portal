@@ -144,7 +144,7 @@ class InvoiceController extends Controller
         return $this->service->delete($invoice);
     }
 
-    public function getInvoiceFile(Request $request, $invoiceID)
+    public function getInvoiceFile($invoiceID)
     {
         return $this->service->getInvoiceFile($invoiceID);
     }

@@ -15,7 +15,7 @@ class ProspectChecklistController extends Controller
         $this->service = $service;
     }
 
-    public function show(Request $request, $prospect, $checklistID)
+    public function show($prospect, $checklistID)
     {
         return view('prospect::checklist.prospect-nda.index', $this->service->show($prospect, $checklistID));
     }

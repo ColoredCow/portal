@@ -15,6 +15,10 @@ class EmailValidation implements Rule
      *
      * @return bool
      */
+
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
     public function passes($attribute, $values)
     {
         $validator = [];

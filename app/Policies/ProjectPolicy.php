@@ -18,7 +18,7 @@ class ProjectPolicy
      *
      * @return mixed
      */
-    public function view(User $user, Project $project)
+    public function view(User $user)
     {
         return $user->hasPermissionTo('projects.view');
     }
@@ -43,7 +43,7 @@ class ProjectPolicy
      *
      * @return mixed
      */
-    public function update(User $user, Project $project)
+    public function update(User $user)
     {
         return $user->hasPermissionTo('projects.update');
     }
@@ -56,7 +56,7 @@ class ProjectPolicy
      *
      * @return mixed
      */
-    public function delete(User $user, Project $project)
+    public function delete(User $user)
     {
         return $user->hasPermissionTo('projects.delete');
     }

@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Storage;
 use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Application;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
-use niklasravnsborg\LaravelPdf\Pdf as PdfFile;
 
 class FileHelper
 {
@@ -41,7 +40,7 @@ class FileHelper
         return $now->format('Y') . '/' . $now->format('m');
     }
 
-    public static function getOfferLetterFileName(PdfFile $file, Applicant $applicant)
+    public static function getOfferLetterFileName(Applicant $applicant)
     {
         $dashedApplicantName = str_replace(' ', '-', $applicant->name);
         $timestamp = now()->format('Ymd');
@@ -55,7 +54,7 @@ class FileHelper
         $job = $application->job;
         $applicant = $application->applicant;
         $pdf = Pdf::loadView('hr.application.draft-joining-letter', compact('applicant', 'job', 'offer_letter_body'));
-        $fileName = self::getOfferLetterFileName($pdf, $applicant);
+        $fileName = self::getOfferLetterFileName($applicant, $pdf);
         if ($offerLetterPreview) {
             return $pdf->stream($fileName);
         }

@@ -48,7 +48,7 @@ class CheckCommand extends Command
 
         try {
             $process->mustRun(function ($type, $line) {
-                if ($this->option('with-tty')) {
+                if ($type && $this->option('with-tty')) {
                     $this->output->write($line);
                 }
             });

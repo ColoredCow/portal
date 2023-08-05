@@ -48,7 +48,7 @@ class Prospect extends Model
         return $this->hasMany(ProspectChecklistStatus::class);
     }
 
-    public function getChecklistCurrentTask($checklistID, $checkListTaskID = null)
+    public function getChecklistCurrentTask($checklistID)
     {
         $checkListStatus = $this->checklistStatuses()
             ->where('status', 'pending')

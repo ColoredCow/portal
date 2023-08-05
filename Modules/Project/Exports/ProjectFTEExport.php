@@ -40,6 +40,9 @@ class ProjectFTEExport implements FromArray, WithHeadings, ShouldAutoSize, WithT
         return 'FTE';
     }
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
     public function styles(Worksheet $sheet)
     {
         return [
