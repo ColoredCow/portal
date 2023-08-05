@@ -336,7 +336,7 @@ class ProjectService implements ProjectServiceContract
     {
         $client = Client::find($clientID);
         $clientProjectsCount = $client->projects->count() ?: 0;
-        $clientProjectsCount = $clientProjectsCount + 1;
+        $clientProjectsCount += 1;
 
         return sprintf('%03s', $clientProjectsCount);
     }

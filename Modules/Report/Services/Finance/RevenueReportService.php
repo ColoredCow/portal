@@ -157,7 +157,7 @@ class RevenueReportService
                 $exchangeRate = $this->avgCurrencyRates[$dateKey][strtolower($revenue->currency)] ?? $this->defaultCurrencyRates;
             }
 
-            $amount = $amount * $exchangeRate;
+            $amount *= $exchangeRate;
             $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
             $totalAmount += $amount;
         }

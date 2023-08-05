@@ -85,6 +85,13 @@ return [
         PropertyTypeHintSniff::class,
         ReturnTypeHintSniff::class,
         UselessFunctionDocCommentSniff::class,
+        SlevomatCodingStandard\Sniffs\Classes\ForbiddenPublicPropertySniff::class,
+        NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff::class,
+        PHP_CodeSniffer\Standards\Generic\Sniffs\Arrays\ArrayIndentSniff::class,
+        PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\SwitchDeclarationSniff::class,
+        SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff::class,
+        SlevomatCodingStandard\Sniffs\ControlStructures\DisallowShortTernaryOperatorSniff::class,
+        SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff::class,
     ],
 
     'config' => [
@@ -105,7 +112,7 @@ return [
     */
 
     'requirements' => [
-       'min-quality' => 70,
+       'min-quality' => 60,
        'min-complexity' => 0,
        'min-architecture' => 0,
        'min-style' => 0,

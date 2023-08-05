@@ -13,10 +13,11 @@ trait Encryptable
         if (in_array($key, $this->encryptable)) {
             try {
                 $value = $this->decryptValue($value);
-            } catch (\Throwable $th) {
-            }
 
-            return $value;
+                return $value;
+            } catch (\Throwable $th) {
+                return $value;
+            }
         }
 
         return $value;

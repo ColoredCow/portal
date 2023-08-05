@@ -54,7 +54,7 @@ class BookServices
 
         foreach ($faces as $face) {
             $faceDescription = $face->getDescription();
-            if ('isbn' === strtolower($currentText) || 'sbn' === strtolower($currentText)) {
+            if (in_array(strtolower($currentText), ['isbn', 'sbn'])) {
                 $description = $faceDescription;
             }
             $currentText = $faceDescription;

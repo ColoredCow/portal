@@ -24,10 +24,11 @@ class Decrypted implements CastsAttributes
 
         try {
             $value = Crypt::decrypt($value);
-        } catch (\Throwable $th) {
-        }
 
-        return $value;
+            return $value;
+        } catch (\Throwable $th) {
+            return $value;
+        }
     }
 
     /**
