@@ -22,6 +22,7 @@ class InfrastructureService implements InfrastructureServiceContract
         $completeSynchronously = $s3Client->listBucketsAsync()->wait();
         $s3Data = $completeSynchronously->toArray();
         $s3buckets = $s3Data['Buckets'];
+
         return array_map(function ($bucket) {
             return [
                 'name' => $bucket['Name'],
@@ -35,6 +36,7 @@ class InfrastructureService implements InfrastructureServiceContract
     {
         $ec2Client = $this->sdk->createEc2();
         $instances = $ec2Client->DescribeInstances()->toArray()['Reservations'];
+
         return array_map(function ($instance) {
             $instanceDetails = $instance['Instances'][0];
 

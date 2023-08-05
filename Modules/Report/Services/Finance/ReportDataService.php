@@ -39,6 +39,7 @@ class ReportDataService
                 'dates' => $dates,
                 'counts' => $counts,
             ];
+
             return json_encode($chartData);
         }
     }

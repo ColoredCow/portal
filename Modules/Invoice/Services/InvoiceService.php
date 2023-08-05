@@ -397,6 +397,7 @@ class InvoiceService implements InvoiceServiceContract
         $clientType = $countryId == 1 ? 'IN' : 'EX';
         $lastInvoice = Invoice::where([['client_id', $client ? $client->id : $project->client->id], ['project_id', optional($project)->id]])->orderBy('sent_on', 'DESC')->first();
         $invoiceSequence = $lastInvoice ? (int) Str::substr($lastInvoice->invoice_number, -7, 3) + 1 : '001';
+
         return $clientType . sprintf('%03s', $client ? $client->client_id : $project->client->client_id) . ($billingLevel == 'client' ? '000' : $project->client_project_id) . sprintf('%03s', $invoiceSequence) . date('m', strtotime($sentDate)) . date('y', strtotime($sentDate));
     }
 

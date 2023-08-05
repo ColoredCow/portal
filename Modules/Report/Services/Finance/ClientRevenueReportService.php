@@ -17,6 +17,7 @@ class ClientRevenueReportService
         $endYear = $year;
         $startDate = Carbon::parse($startYear . '-04-01')->startOfDay();
         $endDate = Carbon::parse($endYear . '-03-31')->endOfDay();
+
         return $this->generateReportData($startDate, $endDate);
     }
 

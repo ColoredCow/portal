@@ -9,7 +9,6 @@ use Modules\Infrastructure\Contracts\InfrastructureServiceContract;
 
 class InfrastructureController extends Controller
 {
-
     use AuthorizesRequests;
     protected $sdk;
     protected $service;

@@ -120,6 +120,7 @@ class Client extends Model
     public function getBillableAmountForTerm(int $monthsToSubtract, $projects, $periodStartDate = null, $periodEndDate = null)
     {
         $monthsToSubtract = $monthsToSubtract ?? 1;
+
         return $projects->sum(function ($project) use ($monthsToSubtract, $periodStartDate, $periodEndDate) {
             return round($project->getBillableHoursForMonth($monthsToSubtract, $periodStartDate, $periodEndDate) * $this->billingDetails->service_rates, 2);
         });
