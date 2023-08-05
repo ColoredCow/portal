@@ -112,7 +112,7 @@ class ProjectController extends Controller
     public function update(ProjectRequest $request, Project $project)
     {
         $validated = $request->validated();
-        $updated = $project->update([
+        $project->update([
             'name' => $validated['name'],
             'client_id' => $validated['client_id'],
             'client_project_id' => $validated['client_project_id'],
