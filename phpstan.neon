@@ -3,6 +3,9 @@ includes:
 
 parameters:
 
+    # The level 8 is the highest level
+    level: 6
+
     paths:
         - app
         - Modules
@@ -13,13 +16,13 @@ parameters:
         - Modules/*/Database/Factories/*.php   # Ignore Error occurring due to Laravel factories
         - Modules/*/Database/Seeders/*.php   # Ignore Error occurring due to Laravel factories
 
-    # The level 8 is the highest level
-    level: 5
-
     ignoreErrors:
+        - '#has no return typehint specified.#'
+        - '#has parameter \$[a-zA-Z0-9\\_]+ with no typehint specified.#'
         - '#Access to an undefined property [a-zA-Z0-9\\_\|\<]+>|[a-zA-Z0-9\\_]+::\$[a-zA-Z0-9\\_]+#'
         - '#Call to an undefined method [a-zA-Z0-9\\_\<\>]+::[a-zA-Z]+\(\)#'
         - '#Static method [a-zA-Z0-9\\_]+::[a-zA-Z]+\(\) invoked with [0-9]+ [a-zA-Z]+, [0-9\-]+ required#'
         - '#Cannot access property \$[a-zA-Z0-9\\_]+ on string#'
+  
 
     checkMissingIterableValueType: false
