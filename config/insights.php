@@ -119,6 +119,11 @@ return [
 
         \SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff::class => [
             'maxLinesLength' => 28,
+        ],
+
+        \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class => [
+            'lineLimit' => 120,
+            'absoluteLineLimit' => 160
         ]
     ],
 
