@@ -3,6 +3,7 @@
 namespace Modules\Client\Services;
 
 use App\Models\Country;
+use Modules\User\Entities\User;
 use Modules\Client\Entities\Client;
 use Modules\Client\Entities\ClientAddress;
 use Modules\Client\Entities\ClientBillingDetail;

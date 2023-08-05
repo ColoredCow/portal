@@ -2,6 +2,7 @@
 
 namespace Modules\CodeTrek\Database\factories;
 
+use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
