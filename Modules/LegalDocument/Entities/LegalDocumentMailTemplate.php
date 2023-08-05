@@ -11,7 +11,7 @@ class LegalDocumentMailTemplate extends Model
     public function parse($data)
     {
         return preg_replace_callback('/{{(.*?)}}/', function ($matches) use ($data) {
-            [$shortCode, $index] = $matches;
+            $index = $matches[1];
             $index = trim($index);
             $index = str_replace('$', '', $index);
             if (isset($data[$index])) {

@@ -22,7 +22,7 @@ class SalesAreaService
     private function getSalesAreaFilterQuery(array $filters = [])
     {
         $salesAreaQuery = SalesArea::query();
-        foreach ($filters as $index => $filter) {
+        foreach ($filters as $filter) {
             switch ($filter['type']) {
                 case 'name':
                     $salesAreaQuery->filter($filter['type'], $filter['keyword']);

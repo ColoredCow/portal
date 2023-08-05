@@ -46,8 +46,6 @@ class ProspectChecklistService implements ProspectChecklistServiceContract
 
     private function handleNDAAgreement($data, $prospect, $moduleChecklist)
     {
-        $checklistTaskId = $data['checklist_task_id'];
-
         $action = $data['_action'];
 
         if ($action == 'initiate') {
@@ -61,16 +59,10 @@ class ProspectChecklistService implements ProspectChecklistServiceContract
         if ($action == 'received-nda-from-client') {
             return $this->handleNDAReceiveFromClientAction($data, $prospect, $moduleChecklist);
         }
-
-        // if ($checklistTaskId == 1) {
-        // }
     }
 
     private function handleNDAInitiateAction($data, $prospect, $moduleChecklist)
     {
-        $prospectID = $prospect->id;
-        $action = $data['_action'];
-
         // Save NDA Meta Data
         $checklistTaskId = $data['checklist_task_id'];
         $ndaMeta = $prospect->ndaMeta->first() ?: new NDAMeta();

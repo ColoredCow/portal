@@ -39,7 +39,7 @@ class ApplicantService
             if ($request->file($key)) {
                 $file = $request->file($key);
                 $fileName = $key . $request->get('hr_applicant_id') . '.' . $file->extension();
-                $filepath = $file->move(storage_path('app/public/Employee-Documents-Details'), $fileName);
+                $file->move(storage_path('app/public/Employee-Documents-Details'), $fileName);
                 ApplicantMeta::updateOrInsert(
                     [
                     'key' => $label,

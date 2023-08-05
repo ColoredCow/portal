@@ -3,7 +3,6 @@
 namespace Modules\HR\Database\Factories;
 
 use App\Models\Category;
-use Faker\Factory as Faker;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class HrResourcesCategoriesFactory extends Factory
@@ -22,8 +21,6 @@ class HrResourcesCategoriesFactory extends Factory
      */
     public function definition()
     {
-        $faker = Faker::create();
-
         return [
 
             'name' => $this->faker->name,

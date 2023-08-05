@@ -61,7 +61,7 @@ class SalarySettingController extends Controller
             } else {
                 $dataToUpdate['fixed_amount'] = $value;
             }
-            $salaryConfiguration = SalaryConfiguration::updateOrCreate($dataToFind, $dataToUpdate);
+            SalaryConfiguration::updateOrCreate($dataToFind, $dataToUpdate);
         }
 
         return redirect(route('salary.settings'))->with('success', 'Salary settings saved successfully!');

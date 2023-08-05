@@ -49,7 +49,7 @@ class PaymentSettingController extends Controller
             $dataToFind = ['slug' => $setting];
             $dataToUpdate['label'] = Str::title($setting);
             $dataToUpdate['value'] = $value;
-            $salaryConfiguration = PaymentConfiguration::updateOrCreate($dataToFind, $dataToUpdate);
+            PaymentConfiguration::updateOrCreate($dataToFind, $dataToUpdate);
         }
 
         return redirect(route('payment-setting.index'));

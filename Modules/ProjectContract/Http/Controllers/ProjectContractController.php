@@ -102,10 +102,10 @@ class ProjectContractController extends Controller
 
     public function clientResponse($id)
     {
-        $contract = $this->service->updateContract($id);
+        $this->service->updateContract($id);
         $this->mailservice->sendClientResponse($this->service->getUserEmail($id));
 
-        return 'Thank you for finalise';
+        return 'Thank you for finalize';
     }
     public function clientUpdate(Request $request)
     {
@@ -125,7 +125,7 @@ class ProjectContractController extends Controller
     }
     public function internalResponse($id)
     {
-        $contract = $this->service->updateInternalContract($id);
+        $this->service->updateInternalContract($id);
 
         return redirect(route('projectcontract.index'))->with('success');
     }

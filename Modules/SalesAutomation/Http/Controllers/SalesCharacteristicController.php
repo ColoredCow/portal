@@ -47,7 +47,7 @@ class SalesCharacteristicController extends Controller
      */
     public function store(Request $request)
     {
-        $salesCharacteristic = $this->service->store($request->all());
+        $this->service->store($request->all());
 
         return redirect()->route('sales-characteristic.index')->with('status', 'Sales Characteristic added successfully!');
     }

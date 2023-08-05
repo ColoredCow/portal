@@ -27,7 +27,7 @@ class HRController extends Controller
         $this->authorize('update', Setting::class);
         $validated = $request->validated();
         foreach ($validated['setting_key'] as $key => $value) {
-            $setting = Setting::updateOrCreate(
+            Setting::updateOrCreate(
                 ['module' => 'hr', 'setting_key' => $key],
                 ['setting_value' => $value ? ContentHelper::editorFormat($value) : null]
             );

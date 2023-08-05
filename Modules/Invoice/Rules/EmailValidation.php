@@ -3,7 +3,7 @@
 namespace Modules\Invoice\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class EmailValidation implements Rule
 {
@@ -29,7 +29,7 @@ class EmailValidation implements Rule
     {
         $validator = [];
         $validate = preg_split('/[,]/', $values);
-        foreach ($validate as $index=>$value) {
+        foreach ($validate as $value) {
             $validator = Validator::make(['email' => $value], [
                     'email'=> 'email:rfc,dns',
                 ]);

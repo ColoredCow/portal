@@ -33,7 +33,7 @@ class NDATemplateController extends Controller
      */
     public function store(Request $request)
     {
-        $legalDocumentTemplate = LegalDocumentTemplate::create($request->all());
+        LegalDocumentTemplate::create($request->all());
 
         return redirect(route('legal-document.nda.template.index'));
     }
@@ -67,7 +67,7 @@ class NDATemplateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $legalDocumentTemplate = LegalDocumentTemplate::find($id)->update($request->all());
+        LegalDocumentTemplate::find($id)->update($request->all());
 
         return redirect(route('legal-document.nda.template.index'));
     }

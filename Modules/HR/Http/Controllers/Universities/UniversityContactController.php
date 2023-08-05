@@ -35,7 +35,6 @@ class UniversityContactController extends Controller
 
     public function destroy(UniversityContact $contact)
     {
-        $university = $contact->university;
         $isDeleted = $contact->delete();
         $status = $isDeleted ? 'Contact Deleted successfully!' : 'Something went wrong! Please try again';
 

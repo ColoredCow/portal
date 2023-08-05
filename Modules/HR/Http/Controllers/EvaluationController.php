@@ -61,7 +61,7 @@ class EvaluationController extends Controller
     public function createSegment(ManageEvaluationRequest $request)
     {
         $segmentId = Round::select('*')->where('name', $request->rounds)->first()->id;
-        $segment = Segment::create([
+        Segment::create([
             'name' => $request->name,
             'round_id' => $segmentId,
         ]);
@@ -329,7 +329,6 @@ class EvaluationController extends Controller
 
     private function getSegmentApplicationEvaluations($segmentApplicationEvaluations)
     {
-        $applicationEvaluations = [];
         $comments = null;
         // this for loop will run just once as the maximum size of $segmentApplicationEvaluations will be one.
         foreach ($segmentApplicationEvaluations as $segmentApplicationEvaluation) {

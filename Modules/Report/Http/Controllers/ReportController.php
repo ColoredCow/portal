@@ -98,7 +98,6 @@ class ReportController extends Controller
     public function delete($id)
     {
         $report = Report::find($id);
-        $data = compact('report');
         $report->delete();
 
         return back();

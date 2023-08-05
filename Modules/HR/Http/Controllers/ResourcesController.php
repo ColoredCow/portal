@@ -30,7 +30,7 @@ class ResourcesController extends Controller
 
     public function store(Request $request)
     {
-        $category = Category::create([
+        Category::create([
             'name' => $request['name'],
             'slug' => str_slug($request['name'], '-'),
         ]);
@@ -40,7 +40,7 @@ class ResourcesController extends Controller
 
     public function create(Request $request)
     {
-        $resources = Resource::create([
+        Resource::create([
             'resource_link' => $request['resource_link'],
             'hr_resource_category_id' => $request['category-type'],
             'job_id' => $request['job_id'],
