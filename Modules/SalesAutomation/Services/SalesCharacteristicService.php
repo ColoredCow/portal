@@ -10,13 +10,12 @@ class SalesCharacteristicService
     {
         $salesCharacteristicQuery = $this->getsalesCharacteristicFilterQuery($filters);
         $salesCharacteristics = $salesCharacteristicQuery->paginate(config('salesautomation.sales-characteristic.paginate'));
-        $responseData = [
+
+        return [
             'salesCharacteristics' => $salesCharacteristics,
             'filters' => $filters,
             'filterDepth' => count($filters),
         ];
-
-        return $responseData;
     }
 
     private function getsalesCharacteristicFilterQuery(array $filters = [])
@@ -35,12 +34,10 @@ class SalesCharacteristicService
 
     public function store(array $data)
     {
-        $salesCharacteristic = SalesCharacteristic::create([
+        return SalesCharacteristic::create([
             'name' => $data['name'],
             'type' => $data['type'],
         ]);
-
-        return $salesCharacteristic;
     }
 
     public function update(array $data, SalesCharacteristic $salesCharacteristic)
