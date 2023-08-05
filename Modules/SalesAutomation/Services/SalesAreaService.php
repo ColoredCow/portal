@@ -10,13 +10,12 @@ class SalesAreaService
     {
         $salesAreaQuery = $this->getSalesAreaFilterQuery($filters);
         $salesAreas = $salesAreaQuery->paginate(config('salesautomation.sales-area.paginate'));
-        $responseData = [
+
+        return [
             'salesAreas' => $salesAreas,
             'filters' => $filters,
             'filterDepth' => count($filters),
         ];
-
-        return $responseData;
     }
 
     private function getSalesAreaFilterQuery(array $filters = [])
@@ -35,11 +34,9 @@ class SalesAreaService
 
     public function store(array $data)
     {
-        $salesArea = SalesArea::create([
+        return SalesArea::create([
             'name' => $data['name'],
         ]);
-
-        return $salesArea;
     }
 
     public function update(array $data, SalesArea $salesArea)
