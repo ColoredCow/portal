@@ -40,10 +40,10 @@ class TagsController extends Controller
     {
         $validated = $request->validated();
         $tag->update([
-            'name' => $request['name'],
-            'slug' => str_slug($request['name'], '-'),
-            'description' => $request['description'] ?? null,
-            'background_color' => $request['color'],
+            'name' => $validated['name'],
+            'slug' => str_slug($validated['name'], '-'),
+            'description' => $validated['description'] ?? null,
+            'background_color' => $validated['color'],
         ]);
 
         return redirect(route('hr.tags.index'))->with('status', 'Tag updated successfully!');

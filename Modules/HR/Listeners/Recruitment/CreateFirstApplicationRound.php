@@ -40,7 +40,7 @@ class CreateFirstApplicationRound
 
         $scheduledPerson = $scheduledPerson ?: User::find(config('hr.defaults.scheduled_person_id'));
 
-        $applicationRound = ApplicationRound::create([
+        ApplicationRound::create([
             'hr_application_id' => $application->id,
             'hr_round_id' => $job->rounds->first()->id,
             'scheduled_date' => now()->addDay(),

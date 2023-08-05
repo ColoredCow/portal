@@ -185,9 +185,9 @@ class JobController extends Controller
 
     public function unflagDesiredResume($id, $hrJobId)
     {
-        $application = Application::findorFail($id)
+        Application::findOrFail($id)
             ->update(['is_desired_resume' => false]);
-        $applicationmeta = ApplicationMeta::where('hr_application_id', '=', $id)
+        ApplicationMeta::where('hr_application_id', '=', $id)
             ->where('key', '=', 'reasons_for_desired_resume')
             ->delete();
 

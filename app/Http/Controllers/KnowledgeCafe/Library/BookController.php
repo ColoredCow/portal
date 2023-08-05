@@ -71,7 +71,7 @@ class BookController extends Controller
     {
         $validatedData = $request->validated();
         $ISBN = isset($validatedData['isbn']) ? $validatedData['isbn'] : null;
-        $stored = Book::firstOrCreate(['isbn' => $ISBN], $validatedData);
+        Book::firstOrCreate(['isbn' => $ISBN], $validatedData);
 
         return response()->json(['error' => false]);
     }

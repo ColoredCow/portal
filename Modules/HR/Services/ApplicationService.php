@@ -121,7 +121,7 @@ class ApplicationService implements ApplicationServiceContract
         // check $subscriptionLists is array or not
         $subscriptionLists = is_array($subscriptionLists) ? $subscriptionLists : [$subscriptionLists];
 
-        $response = Http::withHeaders([
+        Http::withHeaders([
             'Accept' => 'application/json',
             'Content-Type'=>'application/json',
         ])
@@ -132,8 +132,6 @@ class ApplicationService implements ApplicationServiceContract
             'phone' => $parameters['phone'],
             'subscription_lists' => $subscriptionLists,
         ]);
-
-        $jsonData = $response->json();
     }
 
     public function getToken()

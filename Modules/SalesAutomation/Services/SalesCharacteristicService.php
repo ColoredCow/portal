@@ -22,7 +22,7 @@ class SalesCharacteristicService
     private function getsalesCharacteristicFilterQuery(array $filters = [])
     {
         $salesCharacteristicQuery = SalesCharacteristic::query();
-        foreach ($filters as $index => $filter) {
+        foreach ($filters as $filter) {
             switch ($filter['type']) {
                 case 'name':
                     $salesCharacteristicQuery->filter($filter['type'], $filter['keyword']);

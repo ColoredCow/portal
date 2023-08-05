@@ -37,7 +37,7 @@ class SalesAreaController extends Controller
      */
     public function store(Request $request)
     {
-        $salesArea = $this->service->store($request->all());
+        $this->service->store($request->all());
 
         return redirect()->route('sales-area.index')->with('status', 'Sales Area added successfully!');
     }

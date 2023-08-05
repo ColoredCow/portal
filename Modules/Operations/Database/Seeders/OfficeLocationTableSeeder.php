@@ -15,7 +15,7 @@ class OfficeLocationTableSeeder extends Seeder
      */
     public function run()
     {
-        foreach (config('constants.office_locations') as $office => $location) {
+        foreach (config('constants.office_locations') as $location) {
             OfficeLocation::firstOrCreate(['centre_name' => $location], [
                 'centre_name' => $location,
                 'centre_head_id' => User::factory()->create()->id,
