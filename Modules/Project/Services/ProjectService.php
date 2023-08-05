@@ -30,7 +30,9 @@ class ProjectService implements ProjectServiceContract
             'is_amc' => $data['is_amc'] ?? 0,
         ];
 
-        if ($nameFilter = $data['name'] ?? false) {
+        $nameFilter = $data['name'] ?? false;
+
+        if ($nameFilter) {
             $filters['name'] = $nameFilter;
         }
         $hasAnyRole = false;

@@ -93,31 +93,39 @@ class Invoice extends Model implements Auditable
 
     public function scopeApplyFilters($query, $filters)
     {
-        if ($year = Arr::get($filters, 'year', '')) {
+        $year = Arr::get($filters, 'year', '');
+        $month = Arr::get($filters, 'month', '');
+        $status = Arr::get($filters, 'status', '');
+        $country = Arr::get($filters, 'country', '');
+        $region = Arr::get($filters, 'region', '');
+        $clientId = Arr::get($filters, 'client_id', '');
+        $invoiceYear = Arr::get($filters, 'invoiceYear', '');
+
+        if ($year) {
             $query = $query->year($year);
         }
 
-        if ($month = Arr::get($filters, 'month', '')) {
+        if ($month) {
             $query = $query->month($month);
         }
 
-        if ($status = Arr::get($filters, 'status', '')) {
+        if ($status) {
             $query = $query->status($status);
         }
 
-        if ($country = Arr::get($filters, 'country', '')) {
+        if ($country) {
             $query = $query->country($country);
         }
 
-        if ($country = Arr::get($filters, 'region', '')) {
-            $query = $query->region($country);
+        if ($region) {
+            $query = $query->region($region);
         }
 
-        if ($clientId = Arr::get($filters, 'client_id', '')) {
+        if ($clientId) {
             $query = $query->client($clientId);
         }
 
-        if ($invoiceYear = Arr::get($filters, 'invoiceYear', '')) {
+        if ($invoiceYear) {
             $query = $query->InvoiceInaYear($invoiceYear);
         }
 
