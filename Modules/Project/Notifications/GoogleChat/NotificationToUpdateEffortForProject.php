@@ -11,14 +11,14 @@ class NotificationToUpdateEffortForProject extends Notification
 {
     use Queueable;
 
-    public function via($notifiable)
+    public function via()
     {
         return [
             GoogleChatChannel::class
         ];
     }
 
-    public function toGoogleChat($notifiable)
+    public function toGoogleChat()
     {
         return GoogleChatMessage::create()
             ->mentionAll('', ' Please check and update the efforts sheet to avoid last minutes updates at the end of the billing cycle.');

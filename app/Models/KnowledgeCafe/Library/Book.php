@@ -112,7 +112,7 @@ class Book extends Model
         return true;
     }
 
-    public function getTotalBooksCountAttribute($value)
+    public function getTotalBooksCountAttribute()
     {
         return self::count();
     }

@@ -2,7 +2,6 @@
 
 namespace App\Policies\Finance;
 
-use App\Models\Finance\Invoice;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Modules\User\Entities\User;
 
@@ -14,11 +13,10 @@ class InvoicePolicy
      * Determine whether the user can view the invoice.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Finance\Invoice  $invoice
      *
      * @return mixed
      */
-    public function view(User $user, Invoice $invoice)
+    public function view(User $user)
     {
         return $user->hasPermissionTo('finance_invoices.view');
     }
@@ -39,11 +37,10 @@ class InvoicePolicy
      * Determine whether the user can update the invoice.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Finance\Invoice  $invoice
      *
      * @return mixed
      */
-    public function update(User $user, Invoice $invoice)
+    public function update(User $user)
     {
         return $user->hasPermissionTo('finance_invoices.update');
     }
@@ -52,11 +49,10 @@ class InvoicePolicy
      * Determine whether the user can delete the invoice.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Finance\Invoice  $invoice
      *
      * @return mixed
      */
-    public function delete(User $user, Invoice $invoice)
+    public function delete(User $user)
     {
         return $user->hasPermissionTo('finance_invoices.delete');
     }

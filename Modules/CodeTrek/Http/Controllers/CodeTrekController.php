@@ -116,14 +116,6 @@ class CodeTrekController extends Controller
 
         return redirect()->route('codetrek.index');
     }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     */
-    public function destroy($id)
-    {
-    }
 
     public function getCodeTrekApplicantFeedback(Request $request)
     {

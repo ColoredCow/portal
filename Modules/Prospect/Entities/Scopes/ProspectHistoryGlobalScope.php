@@ -16,6 +16,10 @@ class ProspectHistoryGlobalScope implements Scope
      *
      * @return void
      */
+
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
     public function apply(Builder $builder, Model $model)
     {
         $builder->with('documents')->orderBy('updated_at', 'desc');

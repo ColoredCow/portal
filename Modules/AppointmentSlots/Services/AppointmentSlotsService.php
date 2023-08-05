@@ -15,28 +15,28 @@ use Modules\User\Entities\UserMeta;
 
 class AppointmentSlotsService implements AppointmentSlotsServiceContract
 {
-    public function canSeeAppointments($data, $params)
-    {
-        $decryptedParams = json_decode(decrypt($params), true);
+    // public function canSeeAppointments($data, $params)
+    // {
+    //     $decryptedParams = json_decode(decrypt($params), true);
 
-        $applicationRound = null;
-        if (isset($decryptedParams['application_id'])) {
-            $applicationId = $decryptedParams['application_id'];
-            $application = Application::find($applicationId);
-            $applicationRound = $application->latestApplicationRound;
-        } else {
-            // old method. Kept for backward compatibility. Deprecated.
-            $applicationRound = ApplicationRound::find($decryptedParams['application_round_id']);
-        }
+    //     $applicationRound = null;
+    //     if (isset($decryptedParams['application_id'])) {
+    //         $applicationId = $decryptedParams['application_id'];
+    //         $application = Application::find($applicationId);
+    //         $applicationRound = $application->latestApplicationRound;
+    //     } else {
+    //         // old method. Kept for backward compatibility. Deprecated.
+    //         $applicationRound = ApplicationRound::find($decryptedParams['application_round_id']);
+    //     }
 
-        if ($applicationRound && is_null($applicationRound->scheduled_date) && is_null($applicationRound->round_status)) {
-            return true;
-        }
+    //     if ($applicationRound && is_null($applicationRound->scheduled_date) && is_null($applicationRound->round_status)) {
+    //         return true;
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 
-    public function showAppointments($data, $params)
+    public function showAppointments($params)
     {
         $decryptedParams = json_decode(decrypt($params), true);
 
@@ -230,9 +230,8 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
             return $date->format(config('constants.date_format', 'Y-m-d'));
         });
 
-        $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) use ($userId) {
+        $datesToRemove = $reservedSlotsCount->filter(function ($value) use ($userId) {
             $userMeta = UserMeta::where('user_id', $userId)->key('max_interviews_per_day')->first();
-
             $maxInterviewsPerDay = $userMeta ? $userMeta->meta_value : config('hr.daily-appointment-slots.max-reserved-allowed', 3);
 
             return $value >= $maxInterviewsPerDay;

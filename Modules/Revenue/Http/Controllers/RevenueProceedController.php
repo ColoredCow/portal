@@ -30,7 +30,7 @@ class RevenueProceedController extends Controller
         return redirect()->route('revenue.proceeds.index')->with('status', 'Revenue created successfully!!');
     }
 
-    public function show($id)
+    public function show()
     {
         return view('revenue::index');
     }

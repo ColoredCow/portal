@@ -24,6 +24,9 @@ class TeamMemberDesignationRule implements Rule
      *
      * @return bool
      */
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
     public function passes($attribute, $value)
     {
         foreach ($value as $memberData) {

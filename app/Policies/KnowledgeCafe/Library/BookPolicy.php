@@ -2,7 +2,6 @@
 
 namespace App\Policies\KnowledgeCafe\Library;
 
-use App\Models\KnowledgeCafe\Library\Book;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Modules\User\Entities\User;
 
@@ -14,11 +13,10 @@ class BookPolicy
      * Determine whether the user can view the book.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
      *
      * @return mixed
      */
-    public function view(User $user, Book $book)
+    public function view(User $user)
     {
         return $user->hasPermissionTo('library_books.view');
     }
@@ -39,11 +37,9 @@ class BookPolicy
      * Determine whether the user can update the book.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
-     *
      * @return mixed
      */
-    public function update(User $user, Book $book)
+    public function update(User $user)
     {
         return $user->hasPermissionTo('library_books.update');
     }
@@ -52,11 +48,9 @@ class BookPolicy
      * Determine whether the user can delete the book.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
-     *
      * @return mixed
      */
-    public function delete(User $user, Book $book)
+    public function delete(User $user)
     {
         return $user->hasPermissionTo('library_books.delete');
     }

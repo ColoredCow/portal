@@ -25,12 +25,12 @@ class EmployeePolicy
         return $user->hasPermissionTo('hr_employees.create');
     }
 
-    public function update(User $user, Employee $employee)
+    public function update(User $user)
     {
         return $user->hasPermissionTo('hr_employees.update');
     }
 
-    public function delete(User $user, Employee $employee)
+    public function delete(User $user)
     {
         return $user->hasPermissionTo('hr_employees.delete');
     }

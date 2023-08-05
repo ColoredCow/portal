@@ -51,7 +51,7 @@ class ProspectController extends Controller
      *
      * @param int $id
      */
-    public function show($id, $section = null)
+    public function show($id)
     {
         return redirect(route('prospect.edit', [$id, 'overview']));
 
@@ -86,7 +86,7 @@ class ProspectController extends Controller
         return $this->service->addNewProgressStage($request->all());
     }
 
-    public function openDocument(Request $request, $documentID)
+    public function openDocument($documentID)
     {
         $prospectDocument = ProspectDocument::find($documentID);
 

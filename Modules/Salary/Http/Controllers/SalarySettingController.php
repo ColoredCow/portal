@@ -19,31 +19,6 @@ class SalarySettingController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-    }
-
-    /**
-     * Show the specified resource.
-     *
-     * @param int $id
-     */
-    public function show($id)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     */
-    public function edit($id)
-    {
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param SalarySettingRequest $request

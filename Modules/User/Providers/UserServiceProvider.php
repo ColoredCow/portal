@@ -157,6 +157,9 @@ class UserServiceProvider extends ServiceProvider
     private function registerExtendableClass()
     {
         $this->app->singleton('USER_EXTENDED', function ($app, $data) {
+            if (! $app) {
+                return;
+            }
             $class = config('user.extended_class');
             if (! class_exists($class)) {
                 return;

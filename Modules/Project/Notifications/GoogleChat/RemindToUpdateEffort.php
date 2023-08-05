@@ -26,14 +26,14 @@ class RemindToUpdateEffort extends Notification
         $this->project = $project;
     }
 
-    public function via($notifiable)
+    public function via()
     {
         return [
             GoogleChatChannel::class
         ];
     }
 
-    public function toGoogleChat($notifiable)
+    public function toGoogleChat()
     {
         return GoogleChatMessage::create()
             ->mentionAll('', " it's time to update your efforts for today!\n")

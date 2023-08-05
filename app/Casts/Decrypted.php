@@ -17,6 +17,10 @@ class Decrypted implements CastsAttributes
      *
      * @return mixed
      */
+
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
     public function get($model, $key, $value, $attributes)
     {
         if ($value === null) {
@@ -39,6 +43,10 @@ class Decrypted implements CastsAttributes
      * @param  array  $attributes
      *
      * @return mixed
+     */
+
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
     public function set($model, $key, $value, $attributes)
     {

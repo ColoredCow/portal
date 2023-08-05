@@ -141,9 +141,8 @@ class Client extends Model
         return $this->getBillableAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) + $this->getTaxAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) + optional($this->billingDetails)->bank_charges;
     }
 
-    public function getAmountPaidForTerm(int $monthsToSubtract, $projects)
+    public function getAmountPaidForTerm()
     {
-        // This needs to be updated based on the requirements.
         return 0.00;
     }
 

@@ -112,15 +112,6 @@ class InvoiceController extends Controller
     }
 
     /**
-     * Show the specified resource.
-     *
-     * @param int $id
-     */
-    public function show($id)
-    {
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param Invoice $invoice
@@ -153,7 +144,7 @@ class InvoiceController extends Controller
         return $this->service->delete($invoice);
     }
 
-    public function getInvoiceFile(Request $request, $invoiceID)
+    public function getInvoiceFile($invoiceID)
     {
         return $this->service->getInvoiceFile($invoiceID);
     }

@@ -125,18 +125,6 @@ class ProjectController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Project  $project
-     *
-     * @return void
-     */
-    public function destroy(Project $project)
-    {
-        //
-    }
-
-    /**
      * Add Employees to this Project.
      *
      * @param  \App\Models\Project  $project

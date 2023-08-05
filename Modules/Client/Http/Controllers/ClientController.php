@@ -51,15 +51,6 @@ class ClientController extends ModuleBaseController
     }
 
     /**
-     * Show the specified resource.
-     *
-     * @param int $id
-     */
-    public function show($id)
-    {
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Client $client, $section = null)

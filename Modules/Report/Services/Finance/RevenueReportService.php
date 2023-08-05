@@ -150,6 +150,9 @@ class RevenueReportService
         return $results;
     }
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
     private function getParticularAmountForDomestic(array $particular, object $startDate, object $endDate): array
     {
         $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'indian');
@@ -166,7 +169,9 @@ class RevenueReportService
 
         return $results;
     }
-
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
     private function getParticularAmountForExport(array $particular, object $startDate, object $endDate): array
     {
         $totalAmount = 0;
@@ -184,37 +189,57 @@ class RevenueReportService
 
         return $results;
     }
-
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
     private function getParticularAmountForCommissionReceived(array $particular, object $startDate, object $endDate): array
     {
         return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
     private function getParticularAmountForCashBack(array $particular, object $startDate, object $endDate): array
     {
         return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
     private function getParticularAmountForDiscountReceived(array $particular, object $startDate, object $endDate): array
     {
         return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
     private function getParticularAmountForInterestOnFd(array $particular, object $startDate, object $endDate): array
     {
         return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
     private function getParticularAmountForForeignExchangeLoss(array $particular, object $startDate, object $endDate): array
     {
         return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
     private function getParticularAmountForStripeIndia(array $particular, object $startDate, object $endDate): array
     {
         return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
     }
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
     private function getParticularAmountForStripeInternational(array $particular, object $startDate, object $endDate): array
     {
         return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);

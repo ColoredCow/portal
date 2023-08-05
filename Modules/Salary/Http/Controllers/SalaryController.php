@@ -31,7 +31,7 @@ class SalaryController extends Controller
     {
     }
 
-    public function employee(Request $request, Employee $employee)
+    public function employee(Employee $employee)
     {
         $this->authorize('view', EmployeeSalary::class);
         $salaryConfigs = SalaryConfiguration::formatAll();
@@ -50,23 +50,5 @@ class SalaryController extends Controller
         );
 
         return redirect()->back()->with('success', 'Gross Salary saved successfully!');
-    }
-
-    /**
-     * Show the specified resource.
-     *
-     * @param int $id
-     */
-    public function show($id)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     */
-    public function edit($id)
-    {
     }
 }

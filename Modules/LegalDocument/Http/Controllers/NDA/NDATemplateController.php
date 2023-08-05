@@ -51,15 +51,6 @@ class NDATemplateController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     */
-    public function edit($id)
-    {
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param Request $request
@@ -72,7 +63,7 @@ class NDATemplateController extends Controller
         return redirect(route('legal-document.nda.template.index'));
     }
 
-    public function showPreview(Request $request)
+    public function showPreview()
     {
         $template = LegalDocumentTemplate::find(request('template_id'));
         $data = [

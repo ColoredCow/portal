@@ -79,9 +79,8 @@ class ApplicantController extends Controller
      * To update applicant university.
      *
      * @param Applicant $applicant
-     * @param Request $request
      */
-    public function updateUniversity(Applicant $applicant, Request $request)
+    public function updateUniversity(Applicant $applicant)
     {
         $status = $applicant->update([
             'hr_university_id' => request()->university_id,
