@@ -42,8 +42,8 @@ class RecurringExpenseService
         return $recurringExpense;
     }
 
-    public function createNewExpense()
+    public function createNewExpense($recurringExpense)
     {
-        return [];
+        return $recurringExpense;
     }
 }

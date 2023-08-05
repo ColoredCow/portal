@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Project;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Modules\User\Entities\User;
 
@@ -14,7 +13,6 @@ class ProjectPolicy
      * Determine whether the user can view the project.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Project  $project
      *
      * @return mixed
      */
@@ -39,7 +37,6 @@ class ProjectPolicy
      * Determine whether the user can update the project.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Project  $project
      *
      * @return mixed
      */
@@ -52,7 +49,6 @@ class ProjectPolicy
      * Determine whether the user can delete the project.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Project  $project
      *
      * @return mixed
      */

@@ -79,7 +79,6 @@ class ApplicantController extends Controller
      * To update applicant university.
      *
      * @param Applicant $applicant
-     * @param Request $request
      */
     public function updateUniversity(Applicant $applicant)
     {

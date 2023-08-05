@@ -13,7 +13,6 @@ class WeeklyDosePolicy
      * Determine whether the user can view the weekly dose.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\KnowledgeCafe\WeeklyDose  $weeklyDose
      *
      * @return mixed
      */

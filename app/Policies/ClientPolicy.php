@@ -14,7 +14,6 @@ class ClientPolicy
      * Determine whether the user can view the client.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Client  $client
      *
      * @return mixed
      */
@@ -39,7 +38,6 @@ class ClientPolicy
      * Determine whether the user can update the client.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Client  $client
      *
      * @return mixed
      */
@@ -52,7 +50,6 @@ class ClientPolicy
      * Determine whether the user can delete the client.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Client  $client
      *
      * @return mixed
      */

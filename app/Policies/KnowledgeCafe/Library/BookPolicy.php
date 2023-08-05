@@ -2,7 +2,6 @@
 
 namespace App\Policies\KnowledgeCafe\Library;
 
-use App\Models\KnowledgeCafe\Library\Book;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Modules\User\Entities\User;
 
@@ -14,7 +13,6 @@ class BookPolicy
      * Determine whether the user can view the book.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
      *
      * @return mixed
      */
@@ -39,8 +37,6 @@ class BookPolicy
      * Determine whether the user can update the book.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
-     *
      * @return mixed
      */
     public function update(User $user)
@@ -52,8 +48,6 @@ class BookPolicy
      * Determine whether the user can delete the book.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
-     *
      * @return mixed
      */
     public function delete(User $user)

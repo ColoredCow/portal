@@ -13,8 +13,6 @@ class BookCategoryPolicy
      * Determine whether the user can view the book.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\KnowledgeCafe\Library\BookCategory $bookCategory
-     *
      * @return mixed
      */
     public function view(User $user)
@@ -38,8 +36,6 @@ class BookCategoryPolicy
      * Determine whether the user can update the book.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\KnowledgeCafe\Library\BookCategory $bookCategory
-     *
      * @return mixed
      */
     public function update(User $user)
@@ -51,8 +47,6 @@ class BookCategoryPolicy
      * Determine whether the user can delete the book.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\KnowledgeCafe\Library\BookCategory $bookCategory
-     *
      * @return mixed
      */
     public function delete(User $user)

@@ -2,7 +2,6 @@
 
 namespace App\Policies\Finance;
 
-use App\Models\Finance\Invoice;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Modules\User\Entities\User;
 
@@ -14,7 +13,6 @@ class InvoicePolicy
      * Determine whether the user can view the invoice.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Finance\Invoice  $invoice
      *
      * @return mixed
      */
@@ -39,7 +37,6 @@ class InvoicePolicy
      * Determine whether the user can update the invoice.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Finance\Invoice  $invoice
      *
      * @return mixed
      */
@@ -52,7 +49,6 @@ class InvoicePolicy
      * Determine whether the user can delete the invoice.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Finance\Invoice  $invoice
      *
      * @return mixed
      */
