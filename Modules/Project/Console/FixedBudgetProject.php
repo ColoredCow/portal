@@ -24,16 +24,6 @@ class FixedBudgetProject extends Command
     protected $description = 'Send email to the project key account manager when the end date of a fixed budget project is nearing.';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed

@@ -24,16 +24,6 @@ class JobExpiredEmailToHr extends Command
     protected $description = 'Send list of expired jobs to HR';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed

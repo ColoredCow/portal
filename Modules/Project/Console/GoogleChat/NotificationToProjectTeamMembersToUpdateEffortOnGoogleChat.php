@@ -25,16 +25,6 @@ class NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat extends Command
     protected $description = 'Sends a simple notification on a Google Chat channel to update their effort before the end date.';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed

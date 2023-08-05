@@ -24,16 +24,6 @@ class ZeroExpectedHourInProject extends Command
     protected $description = 'Send projects to the project team member when the project expected efforts are zero.';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
