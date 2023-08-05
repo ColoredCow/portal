@@ -32,9 +32,4 @@ class EventServiceProvider extends ServiceProvider
     {
         return [];
     }
-
-    public function boot()
-    {
-        parent::boot();
-    }
 }

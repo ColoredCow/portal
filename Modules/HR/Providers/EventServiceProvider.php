@@ -50,16 +50,4 @@ class EventServiceProvider extends ServiceProvider
             UpdateJobRounds::class,
         ],
     ];
-
-    /**
-     * Register any events for your application.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        parent::boot();
-
-        //
-    }
 }

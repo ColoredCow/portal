@@ -25,16 +25,6 @@ class SendFollowUpThresholdMail extends Command
     protected $description = 'After 2 followup threshold attempts.';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed

@@ -24,16 +24,6 @@ class EndedProject extends Command
     protected $description = 'Send projects to the project key account manager when the project date ends.';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed

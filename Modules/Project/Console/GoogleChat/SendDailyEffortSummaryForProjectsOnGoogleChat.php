@@ -24,16 +24,6 @@ class SendDailyEffortSummaryForProjectsOnGoogleChat extends Command
     protected $description = 'Creates a daily effort summary for every project and send it to their respective Google Chat channels.';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
