@@ -13,6 +13,7 @@ class HRController extends Controller
     public function index()
     {
         $this->authorize('view', Setting::class);
+        $attr = [];
         $attr['settings'] = Setting::where('module', 'hr')->get()->keyBy('setting_key');
         $attr['rounds'] = Round::all();
         $attr['roundMailTypes'] = [

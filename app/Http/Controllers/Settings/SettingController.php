@@ -22,6 +22,7 @@ class SettingController extends Controller
 
     public function invoiceTemplates()
     {
+        $attr = [];
         $attr['settings'] = Setting::where('module', 'invoice')->get()->keyBy('setting_key');
 
         return view('settings.invoice.index', $attr);

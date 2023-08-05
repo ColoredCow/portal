@@ -62,6 +62,10 @@ class MonthlSalesRegisterService
     public function formatSalesReportForExportIndian($invoices)
     {
         return $invoices->map(function ($invoice) {
+            $clientAddress = [];
+            $igst = [];
+            $cgst = [];
+            $sgst = [];
             $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
             $igst[] = (int) $invoice->display_amount * (int) config('invoice.invoice-details.igst') / 100;
             $cgst[] = (int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst') / 100;
@@ -91,6 +95,7 @@ class MonthlSalesRegisterService
     public function formatSalesReportForExportInternational($invoices)
     {
         return $invoices->map(function ($invoice) {
+            $clientAddress = [];
             $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
             $address = $invoice->client->addresses;
 
