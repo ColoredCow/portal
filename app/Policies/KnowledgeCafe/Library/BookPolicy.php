@@ -37,6 +37,7 @@ class BookPolicy
      * Determine whether the user can update the book.
      *
      * @param  \Modules\User\Entities\User  $user
+     *
      * @return mixed
      */
     public function update(User $user)
@@ -48,6 +49,7 @@ class BookPolicy
      * Determine whether the user can delete the book.
      *
      * @param  \Modules\User\Entities\User  $user
+     *
      * @return mixed
      */
     public function delete(User $user)
