@@ -74,7 +74,13 @@ class Invoice extends Model implements Auditable
             return $query;
         }
 
-        return $query->whereBetween('sent_on', [($invoiceYear . '-' . config('invoice.financial-month-details.financial_year_start_month') . '-' . '01'), (($invoiceYear + 1) . '-' . config('invoice.financial-month-details.financial_year_end_month') . '-' . '31')]);
+        $FYStartMonth = config('invoice.financial-month-details.financial_year_start_month');
+        $FYEndMonth = config('invoice.financial-month-details.financial_year_end_month');
+
+        $startDate = "{$invoiceYear}- {$FYStartMonth}-01";
+        $endDate = ($invoiceYear + 1) . "-{$FYEndMonth}-31";
+
+        return $query->whereBetween('sent_on', [$startDate, $endDate]);
     }
 
     public function scopeSentBetween($query, $startDate, $endDate)
