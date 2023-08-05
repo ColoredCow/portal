@@ -72,8 +72,8 @@ class ApplicationRound extends Model
                         $this->update($fillable);
                         $application->markInProgress();
                         $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
-                        $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
-                        $applicationRound = self::create([
+                        $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
+                        self::create([
                             'hr_application_id' => $application->id,
                             'hr_round_id' => $nextRound->id,
                             'trial_round_id' => Round::where('name', 'Preparatory-1')->first()->id,
@@ -89,8 +89,8 @@ class ApplicationRound extends Model
                         $this->update($fillable);
                         $application->markInProgress();
                         $nextApplicationRound = $application->job->rounds->where('id', Round::where('name', 'Trial Program')->first()->id)->first();
-                        $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
-                        $applicationRound = self::create([
+                        $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
+                        self::create([
                             'hr_application_id' => $application->id,
                             'hr_round_id' => Round::where('name', 'Trial Program')->first()->id,
                             'trial_round_id' => $nextRound->id,
