@@ -65,7 +65,8 @@ return [
     */
 
     'exclude' => [
-        'Modules/Report/Services/Finance/RevenueReportService.php'
+        'Modules/Report/Services/Finance/RevenueReportService.php',
+        'Modules/*/Database/Migrations/*'
     ],
 
     'add' => [
@@ -102,7 +103,13 @@ return [
         PhpCsFixer\Fixer\Basic\BracesFixer::class,
         PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer::class,
         PhpCsFixer\Fixer\Whitespace\MethodChainingIndentationFixer::class,
-        SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff::class
+        SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff::class,
+
+        // complexity
+        NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh::class,
+
+        // architecture
+        PHP_CodeSniffer\Standards\PSR1\Sniffs\Classes\ClassDeclarationSniff::class
     ],
 
     'config' => [
@@ -124,8 +131,8 @@ return [
 
     'requirements' => [
        'min-quality' => 100,
-       'min-complexity' => 0,
-       'min-architecture' => 0,
+       'min-complexity' => 82,
+       'min-architecture' => 81,
        'min-style' => 0,
        'disable-security-check' => true,
     ],
