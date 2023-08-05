@@ -4,7 +4,7 @@ namespace Modules\HR\Console\Recruitment;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
-use Modules\HR\Emails\sendThreshholdFollowUp;
+use Modules\HR\Emails\SendThreshholdFollowUp;
 use Modules\HR\Entities\Application;
 use Modules\User\Entities\User;
 
@@ -44,7 +44,7 @@ class SendFollowUpThresholdMail extends Command
             if (! $user) {
                 continue;
             }
-            Mail::to(config('hr.hr-followup-email'))->queue(new sendThreshholdFollowUp($applications, $user));
+            Mail::to(config('hr.hr-followup-email'))->queue(new SendThreshholdFollowUp($applications, $user));
         }
     }
 }
