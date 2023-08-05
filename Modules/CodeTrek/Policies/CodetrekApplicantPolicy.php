@@ -3,7 +3,6 @@
 namespace Modules\CodeTrek\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\User\Entities\User;
 
 class CodeTrekApplicantPolicy
@@ -29,7 +28,7 @@ class CodeTrekApplicantPolicy
      *
      * @return mixed
      */
-    public function view(User $user, CodeTrekApplicant $applicant)
+    public function view(User $user)
     {
         return $user->hasPermissionTo('codetrek_applicant.view');
     }
@@ -41,7 +40,7 @@ class CodeTrekApplicantPolicy
      *
      * @return mixed
      */
-    public function create(User $user, CodeTrekApplicant $applicant)
+    public function create(User $user)
     {
         return $user->hasPermissionTo('codetrek_applicant.create');
     }
@@ -53,7 +52,7 @@ class CodeTrekApplicantPolicy
      *
      * @return mixed
      */
-    public function update(User $user, CodeTrekApplicant $applicant)
+    public function update(User $user)
     {
         return $user->hasPermissionTo('codetrek_applicant.update');
     }
@@ -65,7 +64,7 @@ class CodeTrekApplicantPolicy
      *
      * @return mixed
      */
-    public function delete(User $user, CodeTrekApplicant $applicant)
+    public function delete(User $user)
     {
         return $user->hasPermissionTo('codetrek_applicant.delete');
     }

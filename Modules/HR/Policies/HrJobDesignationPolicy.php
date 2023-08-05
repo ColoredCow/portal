@@ -3,7 +3,6 @@
 namespace Modules\HR\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Modules\HR\Entities\HrJobDesignation;
 use Modules\User\Entities\User;
 
 class HrJobDesignationPolicy
@@ -19,7 +18,7 @@ class HrJobDesignationPolicy
         //
     }
 
-    public function view(User $user, HrJobDesignation $HrJobDesignation)
+    public function view(User $user)
     {
         return $user->hasPermissionTo('hr_job_designation.view');
     }
@@ -29,12 +28,12 @@ class HrJobDesignationPolicy
         return $user->hasPermissionTo('hr_job_designation.create');
     }
 
-    public function update(User $user, HrJobDesignation $HrJobDesignation)
+    public function update(User $user)
     {
         return $user->hasPermissionTo('hr_job_designation.update');
     }
 
-    public function delete(User $user, HrJobDesignation $HrJobDesignation)
+    public function delete(User $user)
     {
         return $user->hasPermissionTo('hr_job_designation.delete');
     }

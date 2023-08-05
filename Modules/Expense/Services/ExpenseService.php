@@ -7,7 +7,7 @@ use Modules\Expense\Entities\ExpenseFile;
 
 class ExpenseService
 {
-    public function index(array $data = [])
+    public function index()
     {
         return Expense::query()
         ->paginate(config('constants.pagination_size'));
@@ -21,11 +21,11 @@ class ExpenseService
             $documentFile = $file['file'];
             $path = 'app/public/expenseDocument';
             $imageName = $documentFile->getClientOriginalName();
-            $fullpath = $documentFile->move(storage_path($path), $imageName);
+            $fullPath = $documentFile->move(storage_path($path), $imageName);
             ExpenseFile::create([
                 'expense_id' => $expense->id,
                 'user_id' => auth()->user()->id,
-                'file_path' => $fullpath,
+                'file_path' => $fullPath,
                 'file_type' => $file['type'],
             ]);
         }

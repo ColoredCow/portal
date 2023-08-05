@@ -2,7 +2,6 @@
 
 namespace Modules\Expense\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Client\Entities\Country;
 use Modules\Expense\Http\Requests\RecurringExpenseRequest;
@@ -43,9 +42,8 @@ class RecurringExpenseController extends Controller
         return view('expense::recurring.edit', ['recurringExpense' => $this->service->edit($id), 'countries' => Country::all()]);
     }
 
-    public function update($id, Request $request)
+    public function update($id)
     {
-        // ToDo:: we need to add validations here.
         $this->service->update($id, request()->all());
 
         return redirect()->route('expense.recurring.index');

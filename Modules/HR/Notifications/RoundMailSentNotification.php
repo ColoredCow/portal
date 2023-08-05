@@ -30,7 +30,7 @@ class RoundMailSentNotification extends Notification
      *
      * @return array
      */
-    public function via($notifiable)
+    public function via()
     {
         return ['mail'];
     }
@@ -42,7 +42,7 @@ class RoundMailSentNotification extends Notification
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail()
     {
         $applicant = $this->applicationRound->application->applicant;
         $conductedPerson = $this->applicationRound->getPreviousApplicationRound()->conductedPerson;
@@ -62,7 +62,7 @@ class RoundMailSentNotification extends Notification
      *
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray()
     {
         return [
             //

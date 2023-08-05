@@ -24,7 +24,7 @@ class MoveResumeToWebsite
      *
      * @return void
      */
-    public function handle(ApplicationCreated $event)
+    public function handle()
     {
         Artisan::call('hr:move-resume-to-website');
     }

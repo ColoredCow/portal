@@ -20,24 +20,6 @@ class PaymentSettingController extends Controller
     }
 
     /**
-     * Show the specified resource.
-     *
-     * @param int $id
-     */
-    public function show($id)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     */
-    public function edit($id)
-    {
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param Request $request

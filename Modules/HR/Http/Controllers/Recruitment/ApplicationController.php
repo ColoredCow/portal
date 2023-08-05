@@ -259,7 +259,7 @@ abstract class ApplicationController extends Controller
         $pdf->save($fullPath);
     }
 
-    public static function getOfferLetter(Application $application, Request $request)
+    public static function getOfferLetter(Application $application)
     {
         $pdf = FileHelper::generateOfferLetter($application, true);
 

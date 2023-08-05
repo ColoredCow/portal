@@ -33,7 +33,7 @@ class ApplicationRoundScheduled extends Notification
      *
      * @return array
      */
-    public function via($notifiable)
+    public function via()
     {
         return ['mail'];
     }
@@ -45,7 +45,7 @@ class ApplicationRoundScheduled extends Notification
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail()
     {
         $application = $this->applicationRound->application;
         $applicant = $application->applicant;
@@ -68,7 +68,7 @@ class ApplicationRoundScheduled extends Notification
      *
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray()
     {
         return [
             //
