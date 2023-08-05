@@ -506,7 +506,8 @@ class Application extends Model
         $approvedEvents = $this->applicationMeta()->approved()->get();
         foreach ($approvedEvents as $event) {
             $details = json_decode($event->value);
-            if (! $approver = User::find($details->approved_by)) {
+            $approver = User::find($details->approved_by);
+            if (! $approver) {
                 continue;
             }
             $details->approvedBy = $approver->name;

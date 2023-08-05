@@ -21,7 +21,9 @@ class RevenueProceed extends Model
 
     public function scopeApplyFilters($query, $filters)
     {
-        if ($year = Arr::get($filters, 'year', false)) {
+        $year = Arr::get($filters, 'year', false);
+
+        if ($year) {
             $query = $query->where(function ($q) use ($year) {
                 $q->where('year', $year)->where('month', '>', 3);
             })->orWhere(function ($q) use ($year) {
