@@ -2,10 +2,9 @@
 
 namespace Modules\User\Services;
 
-use Modules\User\Entities\User;
-use OfficeSuite\OfficeSuiteFacade;
-use Modules\User\Events\UserRemovedEvent;
 use Modules\User\Contracts\UserServiceContract;
+use Modules\User\Entities\User;
+use Modules\User\Events\UserRemovedEvent;
 
 class UserService implements UserServiceContract
 {

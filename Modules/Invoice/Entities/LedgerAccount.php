@@ -2,10 +2,10 @@
 
 namespace Modules\Invoice\Entities;
 
+use App\Casts\Decrypted;
 use App\Traits\Encryptable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
-use App\Casts\Decrypted;
 
 class LedgerAccount extends Model implements Arrayable
 {
@@ -14,7 +14,7 @@ class LedgerAccount extends Model implements Arrayable
     protected $fillable = ['client_id', 'project_id', 'particulars', 'date', 'credit', 'debit', 'balance'];
 
     protected $encryptable = [
-        'credit', 'debit', 'balance'
+        'credit', 'debit', 'balance',
     ];
 
     protected $casts = [

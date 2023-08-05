@@ -19,6 +19,7 @@ class SalesCharacteristicController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
      * @return Renderable
      */
     public function index()
@@ -31,6 +32,7 @@ class SalesCharacteristicController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      * @return Renderable
      */
     public function create()
@@ -40,6 +42,7 @@ class SalesCharacteristicController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
      * @param Request $request
      */
     public function store(Request $request)
@@ -51,6 +54,7 @@ class SalesCharacteristicController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @param SalesCharacteristic $salesCharacteristic
      */
     public function show(SalesCharacteristic $salesCharacteristic)
@@ -59,7 +63,9 @@ class SalesCharacteristicController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @param SalesCharacteristic $salesCharacteristic
+     *
      * @return Renderable
      */
     public function edit(SalesCharacteristic $salesCharacteristic)
@@ -69,6 +75,7 @@ class SalesCharacteristicController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
      * @param Request $request
      * @param SalesCharacteristic $salesCharacteristic
      */
@@ -81,6 +88,7 @@ class SalesCharacteristicController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
      * @param SalesCharacteristic $salesCharacteristic
      */
     public function destroy(SalesCharacteristic $salesCharacteristic)

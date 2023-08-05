@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Helpers\ContentHelper;
-use App\Models\Setting;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Setting\SettingRequest;
+use App\Models\Setting;
 
 class SettingController extends Controller
 {

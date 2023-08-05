@@ -4,10 +4,10 @@ namespace Modules\HR\Entities;
 
 use App\Services\GSuiteUserService;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Modules\HR\Database\Factories\HrApplicantsFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Modules\HR\Database\Factories\HrApplicantsFactory;
 
 class Applicant extends Model
 {
@@ -37,7 +37,7 @@ class Applicant extends Model
         ]);
 
         $jobId = $attr['hr_job_id'] ?? Job::where('opportunity_id', $attr['opportunity_id'])->first()->id;
-        $hr_channel_id = ($attr['hr_channel_id']) ?? HrChannel::select('id')->where('name', 'Website')->first()->id;
+        $hr_channel_id = $attr['hr_channel_id'] ?? HrChannel::select('id')->where('name', 'Website')->first()->id;
         $application = Application::_create([
             'hr_job_id' => $jobId,
             'hr_applicant_id' => $applicant->id,
@@ -124,7 +124,7 @@ class Applicant extends Model
     public function splitName()
     {
         $name = trim($this->name);
-        $lastName = (strpos($name, ' ') === false) ? '' : preg_replace('#.*\s([\w-]*)$#', '$1', $name);
+        $lastName = strpos($name, ' ') === false ? '' : preg_replace('#.*\s([\w-]*)$#', '$1', $name);
         $firstName = trim(preg_replace('#' . $lastName . '#', '', $name));
 
         return [

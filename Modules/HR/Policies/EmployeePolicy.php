@@ -2,9 +2,9 @@
 
 namespace Modules\HR\Policies;
 
-use Modules\User\Entities\User;
-use Modules\HR\Entities\Employee;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Modules\HR\Entities\Employee;
+use Modules\User\Entities\User;
 
 class EmployeePolicy
 {

@@ -2,9 +2,8 @@
 
 namespace App\Exceptions;
 
-use Exception;
-use Throwable;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -36,6 +35,7 @@ class Handler extends ExceptionHandler
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
      * @param  \Exception  $exception
+     *
      * @return mixed
      */
     public function report(Throwable $exception)

@@ -2,11 +2,11 @@
 
 namespace Modules\Prospect\Services;
 
+use Modules\Communication\Contracts\CalendarMeetingContract;
+use Modules\Prospect\Contracts\ProspectMeetingServiceContract;
 use Modules\Prospect\Entities\Prospect;
 use Modules\Prospect\Entities\ProspectContactPerson;
 use Modules\Prospect\Events\NewProspectHistoryEvent;
-use Modules\Communication\Contracts\CalendarMeetingContract;
-use Modules\Prospect\Contracts\ProspectMeetingServiceContract;
 
 class ProspectMeetingService implements ProspectMeetingServiceContract
 {

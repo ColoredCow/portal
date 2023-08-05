@@ -3,12 +3,12 @@
 namespace Modules\HR\Entities;
 
 use App\Models\Resource;
-use Modules\User\Entities\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Modules\HR\Events\Recruitment\JobUpdated;
 use Modules\HR\Database\Factories\HrJobsFactory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\HR\Events\Recruitment\JobUpdated;
+use Modules\User\Entities\User;
 
 class Job extends Model
 {
@@ -57,6 +57,7 @@ class Job extends Model
      * Custom update method that updates a job and fires specific events.
      *
      * @param  array $attr      fillables to be updated
+     *
      * @return bool|mixed    true if update is successful, error object if update fails
      */
     public function _update($attr)

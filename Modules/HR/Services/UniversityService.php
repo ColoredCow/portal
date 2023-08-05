@@ -2,7 +2,6 @@
 
 namespace Modules\HR\Services;
 
-use Modules\HR\Entities\University;
 use Modules\HR\Contracts\UniversityServiceContract;
 
 class UniversityService implements UniversityServiceContract

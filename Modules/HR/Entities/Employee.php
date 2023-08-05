@@ -3,12 +3,12 @@
 namespace Modules\HR\Entities;
 
 use App\Models\Project;
-use Illuminate\Support\Arr;
-use Modules\User\Entities\User;
-use Illuminate\Database\Eloquent\Model;
-use Modules\Salary\Entities\EmployeeSalary;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Modules\HR\Database\Factories\HrEmployeeFactory;
+use Modules\Salary\Entities\EmployeeSalary;
+use Modules\User\Entities\User;
 
 class Employee extends Model
 {
@@ -37,9 +37,9 @@ class Employee extends Model
     {
         if ($status == 'current') {
             return $query->wherehas('user');
-        } else {
-            return $query->whereDoesntHave('user');
         }
+            return $query->whereDoesntHave('user');
+
     }
 
     public function scopeActive($query)
@@ -51,11 +51,11 @@ class Employee extends Model
     {
         if (is_null($this->user_id)) {
             return;
-        } else {
+        }
             $now = now();
 
             return ($this->joined_on->diff($now)->days < 1) ? '0 days' : $this->joined_on->diffForHumans($now, 1);
-        }
+
     }
 
     /**

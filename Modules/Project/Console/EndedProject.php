@@ -4,8 +4,8 @@ namespace Modules\Project\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
-use Modules\Project\Services\ProjectService;
 use Modules\Project\Emails\EndedProjectMail;
+use Modules\Project\Services\ProjectService;
 
 class EndedProject extends Command
 {

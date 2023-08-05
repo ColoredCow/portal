@@ -28,6 +28,7 @@ class NDATemplateController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
      * @param Request $request
      */
     public function store(Request $request)
@@ -39,6 +40,7 @@ class NDATemplateController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @param int $id
      */
     public function show($id)
@@ -50,6 +52,7 @@ class NDATemplateController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @param int $id
      */
     public function edit($id)
@@ -58,6 +61,7 @@ class NDATemplateController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
      * @param Request $request
      * @param int $id
      */

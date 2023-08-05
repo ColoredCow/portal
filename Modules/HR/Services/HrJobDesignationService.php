@@ -2,11 +2,11 @@
 
 namespace Modules\HR\Services;
 
-use Modules\HR\Http\Requests\Recruitment\JobDesignationRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Modules\HR\Entities\HrJobDesignation;
-use Illuminate\Http\Request;
 use Modules\HR\Entities\HrJobDomain;
+use Modules\HR\Http\Requests\Recruitment\JobDesignationRequest;
 
 class HrJobDesignationService
 {

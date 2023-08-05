@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Modules\HR\Emails\Recruitment\Application\ApplicationHandover;
@@ -273,6 +272,7 @@ abstract class ApplicationController extends Controller
      *
      * @param ApplicationRequest $request
      * @param int $id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ApplicationRequest $request, int $id)

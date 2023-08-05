@@ -96,6 +96,7 @@ class LoginController extends Controller
     /**
      * If a user has registered before using social auth, return the user
      * else, create a new user object.
+     *
      * @return  User
      */
     public function findOrCreateUser($user, $provider)

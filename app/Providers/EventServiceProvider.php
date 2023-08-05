@@ -13,7 +13,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         'Modules\User\Events\UserRemovedEvent' => [
-            'App\Listeners\RemoveUserFromWebsite'
+            'App\Listeners\RemoveUserFromWebsite',
         ],
     ];
 }

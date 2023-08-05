@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('media', 'MediaController')
 ->parameters([
-    'media'=> 'media'
+    'media'=> 'media',
 ])
 ->names([
     'index' => 'media.index',

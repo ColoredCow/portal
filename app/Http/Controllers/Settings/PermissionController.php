@@ -12,7 +12,7 @@ use App\Http\Requests\Setting\UpdateRolePermissionsRequest;
 
 class PermissionController extends Controller
 {
-    public function index(String $module)
+    public function index(string $module)
     {
         $this->authorize('settings.view', Permission::class);
         $attr = [];

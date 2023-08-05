@@ -50,7 +50,7 @@ class MoveFilesToWordPress extends Command
                 mkdir($websitePath);
             }
 
-            $d = exec("cp $sourcePath $websitePath 2>&1");
+            $d = exec("cp {$sourcePath} {$websitePath} 2>&1");
 
             if ($d) {
                 continue;

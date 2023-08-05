@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateContractMetaHistoryTable extends Migration
 {
@@ -36,7 +36,7 @@ class CreateContractMetaHistoryTable extends Migration
         Schema::dropIfExists('contract_meta_history', function (Blueprint $table) {
             $table->dropForeign([
                 'contract_id',
-                'review_id'
+                'review_id',
             ]);
         });
     }

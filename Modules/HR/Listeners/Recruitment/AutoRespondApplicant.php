@@ -23,6 +23,7 @@ class AutoRespondApplicant
      * Handle the event.
      *
      * @param  ApplicantEmailVerified  $event
+     *
      * @return void
      */
     public function handle(ApplicantEmailVerified $event)

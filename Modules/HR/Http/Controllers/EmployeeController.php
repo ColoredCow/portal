@@ -45,7 +45,7 @@ class EmployeeController extends Controller
             ->orderby('project_count', 'desc')
             ->get();
         if ($search != '') {
-            $employeeData = Employee::where('name', 'LIKE', "%$search%")
+            $employeeData = Employee::where('name', 'LIKE', "%{$search}%")
                 ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
                 ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
                 ->get();

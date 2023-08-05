@@ -47,7 +47,7 @@ class AppointmentSlotMailSent
             'mail-subject' => $mailData['subject'],
             'mail-body' => $mailData['body'],
             'mail-sender' => $applicationRound->scheduledPerson->name,
-            'title' => "Email sent to schedule interview for {$applicationRound->round->name}"
+            'title' => "Email sent to schedule interview for {$applicationRound->round->name}",
         ]);
 
         $applicationMeta->save();

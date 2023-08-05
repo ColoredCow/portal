@@ -3,13 +3,13 @@
 namespace Modules\Invoice\Entities;
 
 use App\Traits\Encryptable;
-use Modules\Client\Entities\Client;
-use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
+use Modules\Client\Entities\Client;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
+use Modules\Project\Entities\Project;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class Invoice extends Model implements Auditable
 {
@@ -20,7 +20,7 @@ class Invoice extends Model implements Auditable
     protected $dates = ['sent_on', 'due_on', 'receivable_date', 'payment_at', 'term_start_date', 'term_end_date'];
 
     protected $encryptable = [
-        'amount', 'gst', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'tds'
+        'amount', 'gst', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'tds',
     ];
 
     public function scopeStatus($query, $status)
@@ -187,9 +187,9 @@ class Invoice extends Model implements Auditable
     {
         if (optional($this->currency) == config('constants.countries.india.currency')) {
             return $this->amount;
-        } else {
-            return $this->amount * $this->conversion_rate;
         }
+
+        return $this->amount * $this->conversion_rate;
     }
 
     public function getTotalAmountAttribute()
@@ -223,7 +223,7 @@ class Invoice extends Model implements Auditable
         }
         $monthDifference = $currentMonthNumber - $invoiceStartMonthNumber;
         if ($monthDifference < 0) {
-            $monthDifference = ($currentMonthNumber + 12) - $invoiceStartMonthNumber;
+            $monthDifference = $currentMonthNumber + 12 - $invoiceStartMonthNumber;
         }
         $termStartDate = $this->client->getMonthStartDateAttribute($monthDifference);
         $termEndDate = $this->client->getMonthEndDateAttribute($monthDifference);

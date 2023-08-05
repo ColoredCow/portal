@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\HR\Applications;
 
+use Illuminate\Support\Facades\Request;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\Job;
-use Illuminate\Support\Facades\Request;
 use Modules\HR\Http\Controllers\Recruitment\ApplicationController;
 
 class VolunteerApplicationController extends ApplicationController

@@ -5,7 +5,6 @@ namespace Modules\Project\Notifications\GoogleChat;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\GoogleChat\GoogleChatChannel;
-use NotificationChannels\GoogleChat\GoogleChatMessage;
 
 class NotificationToUpdateEffortForProject extends Notification
 {

@@ -21,6 +21,7 @@ class TeamMemberRule implements Rule
      *
      * @param  string  $attribute
      * @param  mixed  $value
+     *
      * @return bool
      */
     public function passes($attribute, $value)
@@ -28,7 +29,8 @@ class TeamMemberRule implements Rule
         foreach ($value as $memberData) {
             if (isset($memberData['team_member_id']) == false) {
                 return false;
-            } elseif ($memberData['team_member_id'] == null) {
+            }
+            if ($memberData['team_member_id'] == null) {
                 return false;
             }
         }

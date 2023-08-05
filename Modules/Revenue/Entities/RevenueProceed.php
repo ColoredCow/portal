@@ -2,8 +2,8 @@
 
 namespace Modules\Revenue\Entities;
 
-use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 class RevenueProceed extends Model
 {

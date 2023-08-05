@@ -3,7 +3,6 @@
 namespace Modules\Invoice\Services;
 
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Cache;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
 
 class CurrencyService implements CurrencyServiceContract
@@ -18,7 +17,7 @@ class CurrencyService implements CurrencyServiceContract
     public function setClient()
     {
         $this->client = new Client([
-            'base_uri' => 'http://apilayer.net/api'
+            'base_uri' => 'http://apilayer.net/api',
         ]);
     }
 
@@ -40,8 +39,8 @@ class CurrencyService implements CurrencyServiceContract
         $response = $this->client->get('live', [
             'query' => [
                 'access_key' => config('services.currencylayer.access_key'),
-                'currencies' => 'INR'
-            ]
+                'currencies' => 'INR',
+            ],
         ]);
 
         $data = json_decode($response->getBody()->getContents(), true);

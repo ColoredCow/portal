@@ -3,8 +3,8 @@
 namespace Modules\operations\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Modules\User\Entities\User;
 use Modules\Operations\Entities\OfficeLocation;
+use Modules\User\Entities\User;
 
 class OfficeLocationTableSeeder extends Seeder
 {

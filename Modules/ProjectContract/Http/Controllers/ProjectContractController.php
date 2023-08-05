@@ -2,12 +2,12 @@
 
 namespace Modules\ProjectContract\Http\Controllers;
 
-use Illuminate\Routing\Controller;
-use Modules\ProjectContract\Services\ProjectContractService;
-use Modules\ProjectContract\Services\ProjectContractMailService;
 use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Modules\Client\Entities\Country;
+use Modules\ProjectContract\Services\ProjectContractMailService;
+use Modules\ProjectContract\Services\ProjectContractService;
 
 class ProjectContractController extends Controller
 {
@@ -131,8 +131,6 @@ class ProjectContractController extends Controller
     }
     public function commentHistory($id)
     {
-        $data = $this->service->getCommentHistory($id);
-
-        return $data;
+        return $this->service->getCommentHistory($id);
     }
 }

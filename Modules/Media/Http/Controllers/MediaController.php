@@ -2,18 +2,19 @@
 
 namespace Modules\Media\Http\Controllers;
 
-use Modules\Media\Entities\Media;
-use Modules\Media\Http\Requests\MediaRequest;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
+use Modules\Media\Entities\Media;
+use Modules\Media\Http\Requests\MediaRequest;
 
 class MediaController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
      * @return Renderable
      */
     public function index()
@@ -25,9 +26,12 @@ class MediaController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      * @return RedirectResponse
      * Store a newly created resource in storage.
+     *
      * @param MediaRequest $request
+     *
      * @return RedirectResponse
      */
     public function store(MediaRequest $request)
@@ -45,7 +49,7 @@ class MediaController extends Controller
             'event_name' => $validated['event_name'],
             'description' => $validated['description'],
             'file_url' => $fileName,
-            'uploaded_by' => Auth()->user()->id
+            'uploaded_by' => Auth()->user()->id,
         ];
         Media::create($postData);
 
@@ -54,7 +58,9 @@ class MediaController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @param Media $media
+     *
      * @return Renderable
      */
     public function show(Media $media)
@@ -63,13 +69,15 @@ class MediaController extends Controller
 
         return view('media::media.show')->with([
             'media' => $media,
-            'time' => $time
+            'time' => $time,
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @param Media $media
+     *
      * @return Renderable
      */
     public function edit(Media $media)
@@ -79,8 +87,10 @@ class MediaController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
      * @param Request $request
      * @param Media $Media
+     *
      * @return RedirectResponse
      */
     public function update(Request $request, Media $Media)
@@ -103,7 +113,7 @@ class MediaController extends Controller
             'event_name' => $request->event_name,
             'description' => $request->description,
             'file_url' => $fileName,
-            'uploaded_by' => Auth()->user()->id
+            'uploaded_by' => Auth()->user()->id,
         ];
         $Media->update($postData);
 
@@ -111,7 +121,9 @@ class MediaController extends Controller
     }
     /**
      * Remove the specified resource from storage.
+     *
      * @param Media $media
+     *
      * @return RedirectResponse
      */
     public function destroy(Media $media)

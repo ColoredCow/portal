@@ -26,7 +26,7 @@ class ProjectTeamMembersEffortDatabaseSeeder extends Seeder
                     'project_team_member_id' => $projectTeamMember->id,
                     'actual_effort' => $actualEffort,
                     'total_effort_in_effortsheet' => $totalEffort,
-                    'added_on' => Carbon::today()->subDays(10 - $count)
+                    'added_on' => Carbon::today()->subDays(10 - $count),
                 ]);
             }
         }

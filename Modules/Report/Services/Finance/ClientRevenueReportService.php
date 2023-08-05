@@ -2,9 +2,9 @@
 
 namespace Modules\Report\Services\Finance;
 
+use Carbon\Carbon;
 use Modules\Client\Entities\Client;
 use Modules\Invoice\Entities\Invoice;
-use Carbon\Carbon;
 
 class ClientRevenueReportService
 {
@@ -17,9 +17,7 @@ class ClientRevenueReportService
         $endYear = $year;
         $startDate = Carbon::parse($startYear . '-04-01')->startOfDay();
         $endDate = Carbon::parse($endYear . '-03-31')->endOfDay();
-        $reportData = $this->generateReportData($startDate, $endDate);
-
-        return $reportData;
+        return $this->generateReportData($startDate, $endDate);
     }
 
     public function generateReportData($startDate, $endDate)
@@ -34,7 +32,7 @@ class ClientRevenueReportService
                 $clientData = [
                     'client' => $client->name,
                     'project' => $project->name,
-                    'amounts' => $results
+                    'amounts' => $results,
                 ];
                 $reportData[] = $clientData;
             }

@@ -2,8 +2,8 @@
 
 namespace Modules\Client\Policies;
 
-use Modules\User\Entities\User;
 use Modules\Client\Entities\Client;
+use Modules\User\Entities\User;
 
 class ClientPolicy
 {

@@ -2,10 +2,10 @@
 
 namespace Modules\EffortTracking\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\EffortTracking\Services\EffortTrackingService;
 use Modules\Project\Entities\Project;
-use Illuminate\Http\Request;
 
 class EffortTrackingController extends Controller
 {
@@ -18,6 +18,7 @@ class EffortTrackingController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @param Project $project
      */
     public function show(Request $request, Project $project)
@@ -29,6 +30,7 @@ class EffortTrackingController extends Controller
 
     /**
      * Refresh the efforts of the project team members.
+     *
      * @param Project $project
      */
     public function getEffortForProject(Project $project)

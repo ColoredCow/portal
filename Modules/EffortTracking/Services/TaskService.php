@@ -3,9 +3,7 @@
 namespace Modules\EffortTracking\Services;
 
 use Modules\EffortTracking\Contracts\TaskServiceContract;
-use Modules\EffortTracking\Entities\Task;
 use Modules\Project\Entities\Project;
-use Modules\User\Entities\User;
 
 class TaskService implements TaskServiceContract
 {

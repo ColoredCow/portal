@@ -2,9 +2,9 @@
 
 namespace Modules\HR\Database\Factories;
 
-use Modules\HR\Entities\ApplicationMeta;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\HR\Entities\Application;
+use Modules\HR\Entities\ApplicationMeta;
 
 class HrApplicationMetaFactory extends Factory
 {

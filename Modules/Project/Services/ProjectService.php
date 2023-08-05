@@ -16,8 +16,6 @@ use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectTeamMember;
-use Modules\User\Entities\User;
-use Maatwebsite\Excel\Facades\Excel;
 use Modules\Project\Exports\ProjectFTEExport;
 use Modules\Project\Entities\ProjectResourceRequirement;
 
@@ -465,7 +463,7 @@ class ProjectService implements ProjectServiceContract
                     $activeProjectTeamMember->project->name,
                     number_format($activeProjectTeamMember->getFte($startDate, $endDate), 2),
                     number_format($activeProjectTeamMember->getCommittedEfforts($startDate, $endDate), 2),
-                    number_format($activeProjectTeamMember->getActualEffortBetween($startDate, $endDate), 2)
+                    number_format($activeProjectTeamMember->getActualEffortBetween($startDate, $endDate), 2),
                 ];
                 $teamMembers[] = $teamMember;
             }

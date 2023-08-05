@@ -4,8 +4,6 @@ namespace Modules\CodeTrek\Services;
 
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
-use Illuminate\Support\Facades\Mail;
-use Modules\CodeTrek\Emails\CodeTrekApplicantRoundMail;
 
 class CodeTrekRoundDetailService
 {

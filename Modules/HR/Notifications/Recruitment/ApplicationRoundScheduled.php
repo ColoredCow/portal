@@ -30,6 +30,7 @@ class ApplicationRoundScheduled extends Notification
      * Get the notification's delivery channels.
      *
      * @param mixed $notifiable
+     *
      * @return array
      */
     public function via($notifiable)
@@ -41,6 +42,7 @@ class ApplicationRoundScheduled extends Notification
      * Get the mail representation of the notification.
      *
      * @param mixed $notifiable
+     *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
@@ -56,13 +58,14 @@ class ApplicationRoundScheduled extends Notification
             ->line("Round: {$this->applicationRound->round->name}")
             ->line("Timing: {$this->applicationRound->scheduled_date->format(config('constants.display_daydatetime_format'))}")
             ->line("Meeting Link: {$this->applicationRound->hangout_link}")
-            ->action('View this application', route("applications.$job->type.edit", $application->id));
+            ->action('View this application', route("applications.{$job->type}.edit", $application->id));
     }
 
     /**
      * Get the array representation of the notification.
      *
      * @param mixed $notifiable
+     *
      * @return array
      */
     public function toArray($notifiable)

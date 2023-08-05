@@ -3,8 +3,8 @@
 namespace Modules\CodeTrek\Services;
 
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
-use Modules\CodeTrek\Entities\CodeTrekCandidateFeedback;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
+use Modules\CodeTrek\Entities\CodeTrekCandidateFeedback;
 
 class CodeTrekService
 {
@@ -30,7 +30,7 @@ class CodeTrekService
             $applicants = $query->orderBy('first_name');
         }
         $applicants = $query->when($search, function ($query) use ($search) {
-            return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
+            return $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%{$search}%'");
         })
             ->paginate(config('constants.pagination_size'))
             ->appends(request()->except('page'));
@@ -38,7 +38,7 @@ class CodeTrekService
         $applicantCountData = CodeTrekApplicant::whereIn('status', ['active', 'inactive', 'completed'])
             ->with('mentor')
             ->when($search, function ($applicantCountData) use ($search) {
-                return $applicantCountData->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'");
+                return $applicantCountData->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%{$search}%'");
             })
             ->when($roundSlug, function ($query) use ($roundSlug) {
                 return $query->where('latest_round_name', $roundSlug);
@@ -55,7 +55,7 @@ class CodeTrekService
         $statusCounts = [
             'active' => 0,
             'inactive' => 0,
-            'completed' => 0
+            'completed' => 0,
         ];
 
         foreach ($applicantCountData as $data) {
@@ -93,9 +93,7 @@ class CodeTrekService
     }
     public function edit($codeTrekApplicant)
     {
-        $codeTrekApplicant = CodeTrekApplicant::find($codeTrekApplicant->id);
-
-        return $codeTrekApplicant;
+        return CodeTrekApplicant::find($codeTrekApplicant->id);
     }
     public function update($data, $codeTrekApplicant)
     {
@@ -119,9 +117,7 @@ class CodeTrekService
 
     public function evaluate(CodeTrekApplicant $codeTrekApplicant)
     {
-        $roundDetails = CodeTrekApplicantRoundDetail::where('applicant_id', $codeTrekApplicant->id)->get();
-
-        return $roundDetails;
+        return CodeTrekApplicantRoundDetail::where('applicant_id', $codeTrekApplicant->id)->get();
     }
 
     public function moveApplicantToIntroductoryRound($applicant, $data)
@@ -149,8 +145,6 @@ class CodeTrekService
 
     public function getCodeTrekApplicantFeedbacks($applicantId)
     {
-        $feedbacks = CodeTrekCandidateFeedback::where('candidate_id', $applicantId)->get();
-
-        return $feedbacks;
+        return CodeTrekCandidateFeedback::where('candidate_id', $applicantId)->get();
     }
 }

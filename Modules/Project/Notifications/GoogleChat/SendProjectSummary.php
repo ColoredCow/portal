@@ -3,11 +3,10 @@
 namespace Modules\Project\Notifications\GoogleChat;
 
 use Illuminate\Bus\Queueable;
-use NotificationChannels\GoogleChat\Card;
 use Illuminate\Notifications\Notification;
-use NotificationChannels\GoogleChat\Section;
+use NotificationChannels\GoogleChat\Card;
 use NotificationChannels\GoogleChat\GoogleChatChannel;
-use NotificationChannels\GoogleChat\GoogleChatMessage;
+use NotificationChannels\GoogleChat\Section;
 use NotificationChannels\GoogleChat\Widgets\TextParagraph;
 
 class SendProjectSummary extends Notification
@@ -53,7 +52,7 @@ class SendProjectSummary extends Notification
                         Section::create($teamMemberTextParagraph),
                         Section::create(
                             TextParagraph::create()->link($this->data['projectUrl'], 'View Project')
-                        )
+                        ),
                     ])
             );
     }

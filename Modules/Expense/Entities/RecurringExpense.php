@@ -2,9 +2,8 @@
 
 namespace Modules\Expense\Entities;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class RecurringExpense extends Model
 {
@@ -36,13 +35,13 @@ class RecurringExpense extends Model
         if ($frequency == 'monthly') {
             $month = date('m');
 
-            return Carbon::parse($initialDueDate->format("Y-$month-d"));
+            return Carbon::parse($initialDueDate->format("Y-{$month}-d"));
         }
 
         if ($frequency == 'yearly') {
             $year = date('Y');
 
-            return Carbon::parse($initialDueDate->format("$year-m-d"));
+            return Carbon::parse($initialDueDate->format("{$year}-m-d"));
         }
 
         return $initialDueDate;

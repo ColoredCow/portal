@@ -4,7 +4,6 @@ namespace Modules\Prospect\Events;
 
 use Illuminate\Queue\SerializesModels;
 use Modules\Prospect\Entities\Prospect;
-use Illuminate\Console\Scheduling\Event;
 
 class NewProspectHistoryEvent
 {

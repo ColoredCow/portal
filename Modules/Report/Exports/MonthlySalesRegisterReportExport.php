@@ -2,10 +2,10 @@
 
 namespace Modules\Report\Exports;
 
-use Maatwebsite\Excel\Concerns\WithTitle;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithTitle;
 
 class MonthlySalesRegisterReportExport implements FromCollection, WithHeadings, ShouldAutoSize, WithTitle
 {

@@ -2,13 +2,22 @@
 
 namespace Modules\HR\Policies;
 
-use Modules\HR\Entities\JobRequisition;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Modules\HR\Entities\JobRequisition;
 use Modules\User\Entities\User;
 
 class JobRequisitionPolicy
 {
     use HandlesAuthorization;
+    /**
+     * Create a new policy instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
 
     public function view(User $user, JobRequisition $JobRequisition)
     {
@@ -33,14 +42,5 @@ class JobRequisitionPolicy
     public function viewAny(User $user)
     {
         return $user->hasPermissionTo('hr_job_requisition.view');
-    }
-    /**
-     * Create a new policy instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
     }
 }

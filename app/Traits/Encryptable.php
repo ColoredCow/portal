@@ -2,8 +2,6 @@
 
 namespace App\Traits;
 
-use Crypt;
-
 trait Encryptable
 {
     public function getAttribute($key)
@@ -12,9 +10,7 @@ trait Encryptable
 
         if (in_array($key, $this->encryptable)) {
             try {
-                $value = $this->decryptValue($value);
-
-                return $value;
+                return $this->decryptValue($value);
             } catch (\Throwable $th) {
                 return $value;
             }

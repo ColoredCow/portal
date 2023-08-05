@@ -4,14 +4,14 @@ namespace Modules\ProjectContract\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\URL;
-use Modules\ProjectContract\Services\ProjectContractService;
 use Modules\Client\Entities\Country;
+use Modules\ProjectContract\Services\ProjectContractService;
 
 class ReviewController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
      * @return Renderable
      */
     protected $services;

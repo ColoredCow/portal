@@ -2,10 +2,10 @@
 
 namespace Modules\User\Http\Controllers;
 
+use Modules\HR\Http\Requests\ProfileEditRequest;
 use Modules\User\Contracts\ProfileServiceContract;
 use Modules\User\Entities\User;
 use Modules\User\Entities\UserProfile;
-use Modules\HR\Http\Requests\ProfileEditRequest;
 
 class ProfileController extends ModuleBaseController
 {

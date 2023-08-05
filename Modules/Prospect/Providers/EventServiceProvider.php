@@ -2,16 +2,16 @@
 
 namespace Modules\Prospect\Providers;
 
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Modules\Prospect\Events\NewProspectHistoryEvent;
 use Modules\Prospect\Listeners\CreateProspectHistoryListener;
-use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
 {
     protected $listen = [
         NewProspectHistoryEvent::class => [
-            CreateProspectHistoryListener::class
-        ]
+            CreateProspectHistoryListener::class,
+        ],
     ];
 
     /**

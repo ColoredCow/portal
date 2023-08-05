@@ -2,9 +2,9 @@
 
 namespace App\Models\KnowledgeCafe\Library;
 
-use Modules\User\Entities\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Modules\User\Entities\User;
 
 class BookAMonth extends Model
 {

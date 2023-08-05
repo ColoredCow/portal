@@ -3,8 +3,8 @@
 namespace Modules\Revenue\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Modules\Revenue\Services\RevenueProceedService;
 use Illuminate\Routing\Controller;
+use Modules\Revenue\Services\RevenueProceedService;
 
 class RevenueProceedController extends Controller
 {

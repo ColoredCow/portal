@@ -2,17 +2,16 @@
 
 namespace Modules\AppointmentSlots\Services;
 
-use Carbon\Carbon;
-use Modules\User\Entities\User;
-use Modules\User\Entities\UserMeta;
-use Modules\HR\Entities\Applicant;
-use Modules\HR\Entities\Application;
 use App\Services\CalendarEventService;
-use Modules\HR\Entities\ApplicationRound;
+use Carbon\Carbon;
+use Modules\AppointmentSlots\Contracts\AppointmentSlotsServiceContract;
 use Modules\AppointmentSlots\Entities\AppointmentSlot;
 use Modules\Communication\Contracts\CalendarMeetingContract;
+use Modules\HR\Entities\Applicant;
+use Modules\HR\Entities\Application;
+use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Jobs\Recruitment\SendApplicationRoundScheduled;
-use Modules\AppointmentSlots\Contracts\AppointmentSlotsServiceContract;
+use Modules\User\Entities\UserMeta;
 
 class AppointmentSlotsService implements AppointmentSlotsServiceContract
 {
@@ -159,27 +158,6 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         }
     }
 
-    private function createCalendarEvent(ApplicationRound $applicationRound)
-    {
-        $applicant = $applicationRound->application->applicant;
-        $summary = 'Appointment Scheduled';
-
-        $event = new CalendarEventService;
-        $event->create([
-            'summary' => $summary,
-            'start' => $applicationRound->scheduled_date->format(config('constants.datetime_format')),
-            'end' => $applicationRound->scheduled_end,
-            'attendees' => [
-                $applicationRound->scheduledPerson->email,
-                $applicant->email,
-            ],
-        ]);
-
-        $applicationRound->update([
-            'calendar_event' => $event->id,
-        ]);
-    }
-
     public function schedule(ApplicationRound $applicationRound, $data)
     {
         $applicant = $applicationRound->application->applicant;
@@ -202,6 +180,27 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         ]);
 
         return true;
+    }
+
+    private function createCalendarEvent(ApplicationRound $applicationRound)
+    {
+        $applicant = $applicationRound->application->applicant;
+        $summary = 'Appointment Scheduled';
+
+        $event = new CalendarEventService;
+        $event->create([
+            'summary' => $summary,
+            'start' => $applicationRound->scheduled_date->format(config('constants.datetime_format')),
+            'end' => $applicationRound->scheduled_end,
+            'attendees' => [
+                $applicationRound->scheduledPerson->email,
+                $applicant->email,
+            ],
+        ]);
+
+        $applicationRound->update([
+            'calendar_event' => $event->id,
+        ]);
     }
 
     private function formatForFullCalender($slots)
@@ -239,10 +238,8 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
             return $value >= $maxInterviewsPerDay;
         })->keys()->all();
 
-        $freeSlots = $slots->where('status', 'free')->reject(function ($slot) use ($datesToRemove) {
+        return $slots->where('status', 'free')->reject(function ($slot) use ($datesToRemove) {
             return in_array($slot->start_time->format(config('constants.date_format', 'Y-m-d')), $datesToRemove);
         });
-
-        return $freeSlots;
     }
 }

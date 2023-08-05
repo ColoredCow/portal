@@ -5,7 +5,6 @@ namespace Modules\Invoice\Notifications\GoogleChat;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\GoogleChat\GoogleChatChannel;
-use NotificationChannels\GoogleChat\GoogleChatMessage;
 
 class SendPaymentReceivedNotification extends Notification
 {

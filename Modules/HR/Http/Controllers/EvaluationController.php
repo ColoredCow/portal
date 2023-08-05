@@ -5,6 +5,7 @@ namespace Modules\HR\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\ApplicationRound;
+use Modules\HR\Entities\ApplicationRoundReview;
 use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\Evaluation\Parameter;
 use Modules\HR\Entities\Evaluation\ParameterOption;
@@ -12,7 +13,6 @@ use Modules\HR\Entities\Evaluation\Segment;
 use Modules\HR\Entities\Round;
 use Modules\HR\Http\Requests\EditEvaluationRequest;
 use Modules\HR\Http\Requests\ManageEvaluationRequest;
-use Modules\HR\Entities\ApplicationRoundReview;
 
 class EvaluationController extends Controller
 {

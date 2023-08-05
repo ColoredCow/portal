@@ -8,7 +8,6 @@ use App\Models\KnowledgeCafe\Library\Book;
 use App\Models\KnowledgeCafe\Library\BookAMonth;
 use App\Models\KnowledgeCafe\Library\BookCategory;
 use App\Services\BookServices;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -27,7 +26,7 @@ class BookController extends Controller
     {
         $this->authorize('list', Book::class);
         $searchCategory = $request->category_name ?? false;
-        $searchString = (request()->has('search')) ? request()->input('search') : false;
+        $searchString = request()->has('search') ? request()->input('search') : false;
         $categories = BookCategory::orderBy('name')->get();
 
         switch (request()) {
@@ -80,6 +79,7 @@ class BookController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     *
      * @return \Illuminate\View\View
      */
     public function show(Book $book)
@@ -99,6 +99,7 @@ class BookController extends Controller
      *
      * @param  \App\Http\Requests\KnowledgeCafe\Library\BookRequest  $request
      * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(BookRequest $request, Book $book)
@@ -134,6 +135,7 @@ class BookController extends Controller
      * Fetch the book info.
      *
      * @param  BookRequest  $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function fetchBookInfo(BookRequest $request)
@@ -185,6 +187,7 @@ class BookController extends Controller
 
     /**
      * @param  array  $book
+     *
      * @return array
      */
     public function formatBookData($book)
@@ -337,7 +340,7 @@ class BookController extends Controller
             'booksCollection' => $booksCollection,
             'books' => $books,
             'wishlistedBooksCount' => $wishlistedBooksCount,
-            'booksBorrowedCount' => $booksBorrowedCount
+            'booksBorrowedCount' => $booksBorrowedCount,
         ]);
     }
 }

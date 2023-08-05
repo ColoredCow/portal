@@ -9,9 +9,9 @@ class ApplicantService
 {
     public function storeApplicantOnboardingDetails(ApplicantMetaRequest $request)
     {
-        $keyConfigs = (config('hr.applicant_form-details'));
-        $uploadConfigs = (config('hr.applicant_upload_details'));
-        $encryptConfigs = (config('hr.encrypted-applicant-details'));
+        $keyConfigs = config('hr.applicant_form-details');
+        $uploadConfigs = config('hr.applicant_upload_details');
+        $encryptConfigs = config('hr.encrypted-applicant-details');
 
         foreach ($keyConfigs as $key=>$label) {
             ApplicantMeta::updateOrCreate([

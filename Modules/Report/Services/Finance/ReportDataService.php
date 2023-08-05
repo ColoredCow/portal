@@ -39,9 +39,7 @@ class ReportDataService
                 'dates' => $dates,
                 'counts' => $counts,
             ];
-            $reportApplicantData = json_encode($chartData);
-
-            return $reportApplicantData;
+            return json_encode($chartData);
         }
     }
 
@@ -83,7 +81,7 @@ class ReportDataService
             'current_period_start_date' => $defaultStartDate,
             'current_period_end_date' => $defaultEndDate,
             'previous_period_start_date' => $defaultPreviousStartDate,
-            'previous_period_end_date' => $defaultPreviousEndDate
+            'previous_period_end_date' => $defaultPreviousEndDate,
         ];
         $filters = array_merge($defaultFilters, request()->all());
 

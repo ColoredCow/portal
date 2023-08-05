@@ -4,13 +4,11 @@ namespace Modules\Prospect\Services;
 
 use App\Models\SkillSet;
 use Illuminate\Support\Str;
-use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Modules\Prospect\Entities\Prospect;
 use Modules\Prospect\Entities\ProspectStage;
 use Modules\Prospect\Entities\ProspectDocument;
-use Modules\Client\Entities\ClientContactPerson;
 use Modules\Prospect\Entities\ProspectRequirement;
 use Modules\Prospect\Entities\ProspectContactPerson;
 use Modules\ModuleChecklist\Entities\ModuleChecklist;
@@ -37,7 +35,7 @@ class ProspectService implements ProspectServiceContract
             'section' => $section ?? 'prospect-details',
             'contactPersons' => $prospect->contactPersons,
             'clientContactPersons' => $this->getAllClientContactPersons(),
-            'assigneeData' => $this->getAssignee()
+            'assigneeData' => $this->getAssignee(),
         ];
 
         if ($section == 'prospect-requirements') {
@@ -98,7 +96,7 @@ class ProspectService implements ProspectServiceContract
         }
 
         return [
-            'route' => ($data['submit_action'] == 'next') ? $nextStage : $defaultRoute
+            'route' => $data['submit_action'] == 'next' ? $nextStage : $defaultRoute
         ];
     }
 

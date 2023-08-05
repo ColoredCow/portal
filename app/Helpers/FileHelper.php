@@ -46,7 +46,7 @@ class FileHelper
         $dashedApplicantName = str_replace(' ', '-', $applicant->name);
         $timestamp = now()->format('Ymd');
 
-        return "$dashedApplicantName-$timestamp.pdf";
+        return "{$dashedApplicantName}-{$timestamp}.pdf";
     }
 
     public static function generateOfferLetter(Application $application, $offerLetterPreview = false)

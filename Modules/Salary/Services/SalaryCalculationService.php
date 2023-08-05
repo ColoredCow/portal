@@ -19,7 +19,7 @@ class SalaryCalculationService
         $basicSalaryConfig = $this->salaryConfig->get('basic_salary');
         $percentage = $basicSalaryConfig->percentage_rate;
 
-        return $this->grossSalary * ($percentage) / 100;
+        return $this->grossSalary * $percentage / 100;
     }
 
     public function hra()
@@ -27,6 +27,6 @@ class SalaryCalculationService
         $basicSalaryConfig = $this->salaryConfig->get('hra');
         $percentage = $basicSalaryConfig->percentage_rate;
 
-        return $this->basicSalary() * ($percentage) / 100;
+        return $this->basicSalary() * $percentage / 100;
     }
 }

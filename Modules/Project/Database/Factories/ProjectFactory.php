@@ -3,9 +3,8 @@
 namespace Modules\Project\Database\Factories;
 
 use Carbon\Carbon;
-use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Modules\Client\Entities\Client;
+use Modules\Project\Entities\Project;
 
 class ProjectFactory extends Factory
 {

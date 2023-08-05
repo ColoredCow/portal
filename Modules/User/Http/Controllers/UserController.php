@@ -2,8 +2,8 @@
 
 namespace Modules\User\Http\Controllers;
 
-use Modules\User\Entities\User;
 use Modules\User\Contracts\UserServiceContract;
+use Modules\User\Entities\User;
 use Modules\User\Http\Requests\UpdateUserRolesRequest;
 
 class UserController extends ModuleBaseController
@@ -35,6 +35,7 @@ class UserController extends ModuleBaseController
 
     /**
      * Show the specified resource.
+     *
      * @param int $id
      */
     public function show($id)
@@ -43,6 +44,7 @@ class UserController extends ModuleBaseController
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @param int $id
      */
     public function edit($id)
@@ -58,7 +60,9 @@ class UserController extends ModuleBaseController
 
     /**
      * Remove the specified resource from storage.
+     *
      * @param User $user
+     *
      * @return void
      */
     public function destroy(User $user)

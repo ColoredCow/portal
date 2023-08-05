@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\KnowledgeCafe\Library;
 
-use App\Models\Comment;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\KnowledgeCafe\Library\Book;
+use Illuminate\Http\Request;
 
 class BookCommentController extends Controller
 {
@@ -15,7 +15,7 @@ class BookCommentController extends Controller
             'user_id' => auth()->id(),
             'body' => $request->comment,
             'commentable_id' => $book->id,
-            'commentable_type' => Book::class
+            'commentable_type' => Book::class,
         ]);
         $book->comments()->save($comment);
 

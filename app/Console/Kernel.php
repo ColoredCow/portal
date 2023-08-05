@@ -5,7 +5,6 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\HR\Console\JobExpiredEmailToHr;
-use Modules\HR\Console\QuarterlyReviewSystemForEmployee;
 use Modules\Project\Console\EndedProject;
 use Modules\Project\Console\FixedBudgetProject;
 use Modules\Project\Console\GoogleChat\NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat;
@@ -38,6 +37,7 @@ class Kernel extends ConsoleKernel
      * Define the application's command schedule.
      *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     *
      * @return void
      */
     protected function schedule(Schedule $schedule)

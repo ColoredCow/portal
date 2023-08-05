@@ -2,9 +2,9 @@
 
 namespace Modules\Payment\Http\Controllers;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Str;
 use Modules\Payment\Entities\PaymentConfiguration;
 
 class PaymentSettingController extends Controller
@@ -21,6 +21,7 @@ class PaymentSettingController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @param int $id
      */
     public function show($id)
@@ -29,6 +30,7 @@ class PaymentSettingController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @param int $id
      */
     public function edit($id)
@@ -37,6 +39,7 @@ class PaymentSettingController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
      * @param Request $request
      */
     public function update(Request $request)

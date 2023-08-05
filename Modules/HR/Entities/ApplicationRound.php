@@ -37,8 +37,8 @@ class ApplicationRound extends Model
         // TODO: the fillable definition below need to be put somewhere else.
         // When just updating an application round (maybe updating comment), the below details are getting overriden.
         $fillable = [
-            'conducted_person_id' => ($application->status == 'on-hold') ? null : auth()->id(),
-            'conducted_date' => ($application->status == 'on-hold') ? null : now(),
+            'conducted_person_id' => $application->status == 'on-hold' ? null : auth()->id(),
+            'conducted_date' => $application->status == 'on-hold' ? null : now(),
         ];
 
         switch ($attr['action']) {

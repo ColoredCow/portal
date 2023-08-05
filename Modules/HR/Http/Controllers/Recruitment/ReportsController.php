@@ -2,15 +2,15 @@
 
 namespace Modules\HR\Http\Controllers\Recruitment;
 
-use Illuminate\Routing\Controller;
-use Illuminate\Http\Request;
-use Modules\HR\Entities\Applicant;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
+use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Application;
+use Modules\HR\Entities\HRRejectionReason;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\Round;
-use Modules\HR\Entities\HRRejectionReason;
 
 class ReportsController extends Controller
 {
@@ -55,15 +55,6 @@ class ReportsController extends Controller
         'chartData' => $data['chartData'],
         'todayCount' => $todayCount,
         'verifiedApplicationsCount' => $verifiedApplicationCount]);
-    }
-
-    private function getVerifiedApplicationsCount()
-    {
-        $from = config('hr.verified_application_date.start_date');
-        $currentDate = Carbon::today(config('constants.timezone.indian'));
-
-        return Application::whereBetween('created_at', [$from, $currentDate])
-            ->where('is_verified', 1)->count();
     }
 
     public function showReportCard()
@@ -121,7 +112,7 @@ class ReportsController extends Controller
 
         return view('hr.recruitment.job-Wise-Applications-Graph')->with([
             'totalCount' => $totalApplicationCount,
-            'chartData' => json_encode($chartData)
+            'chartData' => json_encode($chartData),
         ]);
     }
     public function rejectedReasonsData(Request $request)
@@ -146,9 +137,7 @@ class ReportsController extends Controller
             'reason' => $reasonsList,
             'Applicationcounts' => $applicationCountArray,
         ];
-        $rejectedReasonGraph = json_encode($chartBarData);
-
-        return $rejectedReasonGraph;
+        return json_encode($chartBarData);
     }
 
     public function roundWiseRejectionsData(Request $request)
@@ -178,9 +167,7 @@ class ReportsController extends Controller
             'count' => $count,
         ];
 
-        $roundWiseGraph = json_encode($chartData);
-
-        return $roundWiseGraph;
+        return json_encode($chartData);
     }
 
     public function rejectedApplications(Request $request)
@@ -195,5 +182,14 @@ class ReportsController extends Controller
         ];
 
         return view('hr.recruitment.rejected-applications', $rejectedApplicationData);
+    }
+
+    private function getVerifiedApplicationsCount()
+    {
+        $from = config('hr.verified_application_date.start_date');
+        $currentDate = Carbon::today(config('constants.timezone.indian'));
+
+        return Application::whereBetween('created_at', [$from, $currentDate])
+            ->where('is_verified', 1)->count();
     }
 }

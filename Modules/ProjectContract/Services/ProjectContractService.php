@@ -3,15 +3,14 @@
 namespace Modules\ProjectContract\Services;
 
 use Illuminate\Support\Facades\Auth;
-use Modules\ProjectContract\Entities\Contract;
-use Modules\ProjectContract\Entities\ProjectContractMeta;
-use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
-use Modules\ProjectContract\Entities\Reviewer;
-use Modules\ProjectContract\Entities\ContractReview;
-use Modules\ProjectContract\Entities\ContractInternalReview;
-use Modules\ProjectContract\Entities\ContractMetaHistory;
-use Modules\User\Entities\User;
 use Illuminate\Support\Facades\DB;
+use Modules\ProjectContract\Entities\Contract;
+use Modules\ProjectContract\Entities\ContractInternalReview;
+use Modules\ProjectContract\Entities\ContractReview;
+use Modules\ProjectContract\Entities\ProjectContractMeta;
+use Modules\ProjectContract\Entities\Reviewer;
+use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
+use Modules\User\Entities\User;
 
 class ProjectContractService
 {
@@ -31,9 +30,7 @@ class ProjectContractService
         }, 'contractReviewers'])
         ->get();
 
-        $contracts = $userContracts->merge($reviewerContracts);
-
-        return $contracts;
+        return $userContracts->merge($reviewerContracts);
     }
 
     public function internal_reviewer()
@@ -238,7 +235,7 @@ class ProjectContractService
                             'key' => $meta['key'],
                             'value' => $emeta['value'],
                             'review_id' => $contractReview->id,
-                            'has_changed' => true
+                            'has_changed' => true,
 
                         ]);
                     } elseif ($emeta->key == $meta['key'] and $emeta->value == $meta['value']) {
@@ -331,7 +328,7 @@ class ProjectContractService
                             'key' => $meta['key'],
                             'value' => $emeta['value'],
                             'review_id' => $contractReview->id,
-                            'has_changed' => true
+                            'has_changed' => true,
                         ]);
                     } elseif ($emeta->key == $meta['key'] and $emeta->value == $meta['value']) {
                         $contract->contractMetaHistory()->create([
