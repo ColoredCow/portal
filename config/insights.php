@@ -101,7 +101,8 @@ return [
         PHP_CodeSniffer\Standards\PSR12\Sniffs\Classes\ClassInstantiationSniff::class,
         PhpCsFixer\Fixer\Basic\BracesFixer::class,
         PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer::class,
-        PhpCsFixer\Fixer\Whitespace\MethodChainingIndentationFixer::class
+        PhpCsFixer\Fixer\Whitespace\MethodChainingIndentationFixer::class,
+        SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff::class
     ],
 
     'config' => [
