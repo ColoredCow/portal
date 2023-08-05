@@ -38,8 +38,8 @@ class Employee extends Model
         if ($status == 'current') {
             return $query->wherehas('user');
         }
-            return $query->whereDoesntHave('user');
 
+        return $query->whereDoesntHave('user');
     }
 
     public function scopeActive($query)
@@ -52,10 +52,9 @@ class Employee extends Model
         if (is_null($this->user_id)) {
             return;
         }
-            $now = now();
+        $now = now();
 
-            return ($this->joined_on->diff($now)->days < 1) ? '0 days' : $this->joined_on->diffForHumans($now, 1);
-
+        return ($this->joined_on->diff($now)->days < 1) ? '0 days' : $this->joined_on->diffForHumans($now, 1);
     }
 
     /**

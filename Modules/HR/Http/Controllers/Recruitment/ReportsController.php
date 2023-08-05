@@ -137,6 +137,7 @@ class ReportsController extends Controller
             'reason' => $reasonsList,
             'Applicationcounts' => $applicationCountArray,
         ];
+
         return json_encode($chartBarData);
     }
 

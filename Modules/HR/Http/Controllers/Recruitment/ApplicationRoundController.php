@@ -32,8 +32,8 @@ class ApplicationRoundController extends Controller
         if ($validatedData['action'] == 'update' || $validatedData['action'] == 'schedule-update') {
             return redirect()->back()->with('status', 'success');
         }
-            return redirect()->route($routeName)->with('status', 'Application updated successfully!');
 
+        return redirect()->route($routeName)->with('status', 'Application updated successfully!');
     }
 
     /**
