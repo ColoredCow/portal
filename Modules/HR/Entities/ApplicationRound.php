@@ -78,7 +78,7 @@ class ApplicationRound extends Model
                             'hr_round_id' => $nextRound->id,
                             'trial_round_id' => Round::where('name', 'Preparatory-1')->first()->id,
                             'scheduled_date' => $attr['next_scheduled_start'] ?? null,
-                            'scheduled_end' => 
+                            'scheduled_end' =>  $attr['next_scheduled_end'] ?? null,
                             'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
                         ]);
                     }
