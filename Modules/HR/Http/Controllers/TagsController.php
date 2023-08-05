@@ -14,6 +14,7 @@ class TagsController extends Controller
      */
     public function index()
     {
+        $attr = [];
         $attr['tags'] = Tag::orderBy('name')->get();
 
         return view('hr::tags.index')->with($attr);

@@ -57,6 +57,7 @@ class RevenueReportService
         $previousPeriodInvoiceDetails = Invoice::with('client')
             ->whereBetween('sent_on', [$filters['previous_period_start_date'], $filters['previous_period_end_date']])
             ->get();
+        $data = [];
         $data['current_period_total_amount'] = 0;
         $data['previous_period_total_amount'] = 0;
         $data['clients_name'] = Client::pluck('name')->toArray();

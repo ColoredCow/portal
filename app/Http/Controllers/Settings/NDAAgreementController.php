@@ -10,6 +10,7 @@ class NDAAgreementController extends Controller
 {
     public function index()
     {
+        $attr = [];
         $this->authorize('view', Setting::class);
         $attr['settings'] = Setting::where('module', 'agreement-nda')->get()->keyBy('setting_key');
         $attr['rounds'] = Round::all();
