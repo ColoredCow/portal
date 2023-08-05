@@ -16,7 +16,7 @@ class CalendarEventService
     protected $endDateTime;
     protected $hangoutLink;
     protected $service;
-    public $id;
+    protected $id;
 
     public function __construct()
     {

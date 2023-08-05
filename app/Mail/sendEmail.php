@@ -11,7 +11,7 @@ class sendEmail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $applications;
+    protected $applications;
 
     /**
      * Create a new message instance.
