@@ -4,11 +4,13 @@ namespace Modules\Prospect\Services;
 
 use App\Models\SkillSet;
 use Illuminate\Support\Str;
+use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Modules\Prospect\Entities\Prospect;
 use Modules\Prospect\Entities\ProspectStage;
 use Modules\Prospect\Entities\ProspectDocument;
+use Modules\Client\Entities\ClientContactPerson;
 use Modules\Prospect\Entities\ProspectRequirement;
 use Modules\Prospect\Entities\ProspectContactPerson;
 use Modules\ModuleChecklist\Entities\ModuleChecklist;

@@ -5,6 +5,7 @@ namespace Modules\HR\Console;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Modules\HR\Entities\Employee;
+use Modules\HR\Entities\Assessment;
 use Modules\HR\Entities\IndividualAssessment;
 
 class QuarterlyReviewSystemForEmployee extends Command

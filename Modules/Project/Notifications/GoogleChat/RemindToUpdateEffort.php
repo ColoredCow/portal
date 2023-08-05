@@ -3,13 +3,14 @@
 namespace Modules\Project\Notifications\GoogleChat;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use NotificationChannels\GoogleChat\Card;
-use NotificationChannels\GoogleChat\Components\Button\TextButton;
-use NotificationChannels\GoogleChat\Enums\Icon;
-use NotificationChannels\GoogleChat\GoogleChatChannel;
+use Illuminate\Notifications\Notification;
 use NotificationChannels\GoogleChat\Section;
+use NotificationChannels\GoogleChat\Enums\Icon;
 use NotificationChannels\GoogleChat\Widgets\KeyValue;
+use NotificationChannels\GoogleChat\GoogleChatChannel;
+use NotificationChannels\GoogleChat\GoogleChatMessage;
+use NotificationChannels\GoogleChat\Components\Button\TextButton;
 
 class RemindToUpdateEffort extends Notification
 {

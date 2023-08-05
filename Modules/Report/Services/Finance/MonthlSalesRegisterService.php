@@ -2,8 +2,9 @@
 
 namespace Modules\Report\Services\Finance;
 
-use Modules\Client\Entities\ClientAddress;
+use Maatwebsite\Excel\Facades\Excel;
 use Modules\Invoice\Entities\Invoice;
+use Modules\Client\Entities\ClientAddress;
 use Modules\Report\Exports\MonthlySalesRegisterReportExport;
 
 class MonthlSalesRegisterService

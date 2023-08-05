@@ -3,6 +3,7 @@
 namespace Modules\Invoice\Services;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Cache;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
 
 class CurrencyService implements CurrencyServiceContract

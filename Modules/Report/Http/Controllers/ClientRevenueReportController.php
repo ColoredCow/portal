@@ -2,9 +2,10 @@
 
 namespace Modules\Report\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use Modules\Report\Exports\ClientRevenueReportExport;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Report\Services\Finance\ClientRevenueReportService;
 
 class ClientRevenueReportController extends Controller

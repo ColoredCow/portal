@@ -2,15 +2,16 @@
 
 namespace Modules\ProjectContract\Services;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Modules\ProjectContract\Entities\Contract;
-use Modules\ProjectContract\Entities\ContractInternalReview;
-use Modules\ProjectContract\Entities\ContractReview;
-use Modules\ProjectContract\Entities\ProjectContractMeta;
-use Modules\ProjectContract\Entities\Reviewer;
-use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
 use Modules\User\Entities\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Modules\ProjectContract\Entities\Contract;
+use Modules\ProjectContract\Entities\Reviewer;
+use Modules\ProjectContract\Entities\ContractReview;
+use Modules\ProjectContract\Entities\ContractMetaHistory;
+use Modules\ProjectContract\Entities\ProjectContractMeta;
+use Modules\ProjectContract\Entities\ContractInternalReview;
+use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
 
 class ProjectContractService
 {
@@ -92,7 +93,7 @@ class ProjectContractService
             $file = $request->file('logo_img');
             $path = 'app/public/contractlogo';
             $imageName = $file->getClientOriginalName();
-            $fullpath = $file->move(storage_path($path), $imageName);
+            $file->move(storage_path($path), $imageName);
         }
         $validated = $request->validated();
         $ProjectContractMeta = ProjectContractMeta::find($id);

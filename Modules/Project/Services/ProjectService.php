@@ -5,18 +5,20 @@ namespace Modules\Project\Services;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Modules\Client\Entities\Client;
+use Modules\User\Entities\User;
 use Modules\HR\Entities\Employee;
-use Modules\Project\Contracts\ProjectServiceContract;
+use Modules\Client\Entities\Client;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Modules\Project\Entities\Project;
-use Modules\Project\Entities\ProjectBillingDetail;
-use Modules\Project\Entities\ProjectContract;
+use Illuminate\Support\Facades\Storage;
 use Modules\Project\Entities\ProjectMeta;
+use Modules\Project\Entities\ProjectContract;
+use Modules\Project\Exports\ProjectFTEExport;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectTeamMember;
-use Modules\Project\Exports\ProjectFTEExport;
+use Modules\Project\Entities\ProjectBillingDetail;
+use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\ProjectResourceRequirement;
 
 class ProjectService implements ProjectServiceContract
