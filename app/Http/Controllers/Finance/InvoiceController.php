@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Finance;
 
-use App\Models\Client;
 use App\Helpers\DateHelper;
 use App\Helpers\FileHelper;
-use App\Models\Finance\Invoice;
-use Illuminate\Http\UploadedFile;
-use App\Models\ProjectStageBilling;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Response;
 use App\Http\Requests\Finance\InvoiceRequest;
+use App\Models\Client;
+use App\Models\Finance\Invoice;
+use App\Models\ProjectStageBilling;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {

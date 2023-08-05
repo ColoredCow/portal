@@ -5,9 +5,9 @@ namespace Modules\Prospect\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
+use Modules\Prospect\Contracts\ProspectServiceContract;
 use Modules\Prospect\Entities\Prospect;
 use Modules\Prospect\Entities\ProspectDocument;
-use Modules\Prospect\Contracts\ProspectServiceContract;
 
 class ProspectController extends Controller
 {

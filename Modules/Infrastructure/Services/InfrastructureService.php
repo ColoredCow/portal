@@ -2,9 +2,9 @@
 
 namespace Modules\Infrastructure\Services;
 
+use Aws\Credentials\Credentials;
 use Aws\Sdk;
 use Carbon\Carbon;
-use Aws\Credentials\Credentials;
 use Illuminate\Support\Facades\Cache;
 use Modules\Infrastructure\Contracts\InfrastructureServiceContract;
 

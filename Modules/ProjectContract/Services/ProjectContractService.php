@@ -2,16 +2,16 @@
 
 namespace Modules\ProjectContract\Services;
 
-use Modules\User\Entities\User;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Modules\ProjectContract\Entities\Contract;
-use Modules\ProjectContract\Entities\Reviewer;
-use Modules\ProjectContract\Entities\ContractReview;
-use Modules\ProjectContract\Entities\ContractMetaHistory;
-use Modules\ProjectContract\Entities\ProjectContractMeta;
 use Modules\ProjectContract\Entities\ContractInternalReview;
+use Modules\ProjectContract\Entities\ContractMetaHistory;
+use Modules\ProjectContract\Entities\ContractReview;
+use Modules\ProjectContract\Entities\ProjectContractMeta;
+use Modules\ProjectContract\Entities\Reviewer;
 use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
+use Modules\User\Entities\User;
 
 class ProjectContractService
 {

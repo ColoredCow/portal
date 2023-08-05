@@ -2,8 +2,8 @@
 
 namespace Modules\CodeTrek\Entities;
 
-use Modules\User\Entities\User;
 use Illuminate\Database\Eloquent\Model;
+use Modules\User\Entities\User;
 
 class CodeTrekCandidateFeedback extends Model
 {
