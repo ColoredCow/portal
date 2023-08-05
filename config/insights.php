@@ -65,7 +65,8 @@ return [
     */
 
     'exclude' => [
-        'Modules/Report/Services/Finance/RevenueReportService.php'
+        'Modules/Report/Services/Finance/RevenueReportService.php',
+        'Modules/*/Database/Migrations/*'
     ],
 
     'add' => [
@@ -105,7 +106,10 @@ return [
         SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff::class,
 
         // complexity
-        NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh::class
+        NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh::class,
+
+        // architecture
+        PHP_CodeSniffer\Standards\PSR1\Sniffs\Classes\ClassDeclarationSniff::class
     ],
 
     'config' => [
