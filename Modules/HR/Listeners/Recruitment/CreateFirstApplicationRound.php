@@ -22,6 +22,7 @@ class CreateFirstApplicationRound
      * Handle the event.
      *
      * @param  ApplicationCreated  $event
+     *
      * @return void
      */
     public function handle(ApplicationCreated $event)

@@ -1,12 +1,10 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
-
 namespace Modules\CodeTrek\Database\factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
+use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
 class CodeTrekApplicantRoundDetailsFactory extends Factory
 {

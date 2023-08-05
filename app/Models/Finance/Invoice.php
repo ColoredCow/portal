@@ -48,6 +48,7 @@ class Invoice extends Model
      *
      * @param  string $start
      * @param  string $end
+     *
      * @return mixed
      */
     public static function filterBySentDate($start, $end, $paginated = false)
@@ -61,9 +62,11 @@ class Invoice extends Model
 
     /**
      * Get invoices that were sent or paid in the date range.
+     *
      * @param  string  $start
      * @param  string  $end
      * @param  bool $paginated
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public static function filterByDates($start, $end, $paginated = false)

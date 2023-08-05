@@ -3,27 +3,27 @@
 namespace Modules\Communication\Services;
 
 use Carbon\Carbon;
+use Exception;
 use Google_Client;
 use Google_Service_Calendar;
+use Google_Service_Calendar_ConferenceData;
 use Google_Service_Calendar_Event;
 use Illuminate\Support\Facades\Auth;
-use Google_Service_Calendar_ConferenceData;
-use Modules\Communication\Entities\CalendarMeeting;
 use Modules\Communication\Contracts\CalendarMeetingContract;
-use Exception;
+use Modules\Communication\Entities\CalendarMeeting;
 
 class CalendarMeetingService implements CalendarMeetingContract
 {
+    public $id;
+    public $calendarMeeting = null;
     protected $attendees = [];
     protected $summary;
     protected $startDateTime;
     protected $endDateTime;
     protected $hangoutLink;
     protected $service;
-    public $id;
     protected $isDetailsSet = false;
     protected $organizer = null;
-    public $calendarMeeting = null;
     protected $event;
 
     public function __construct($organizer = null, $details = [])
@@ -94,13 +94,13 @@ class CalendarMeetingService implements CalendarMeetingContract
                     'requestId' => md5(time()),  // @phpstan-ignore-line
                     'conferenceSolutionKey' => [
                         'type' => 'hangoutsMeet',
-                    ]
-                ]
+                    ],
+                ],
         ]));
 
         $options = [
             'sendNotifications' => true,
-            'conferenceDataVersion' => 1
+            'conferenceDataVersion' => 1,
         ];
 
         $event = $this->service->events->insert($calendarId, $event, $options);
@@ -165,13 +165,44 @@ class CalendarMeetingService implements CalendarMeetingContract
             }
 
             $this->attendees[] = [
-                'email' => $attendee
+                'email' => $attendee,
             ];
         }
     }
 
+    public function getStartDateTime($withTimeZone = false)
+    {
+        return self::getDateTime($this->startDateTime, $withTimeZone);
+    }
+
+    public function setStartDateTime($dateTime, $timeZone = null)
+    {
+        $this->startDateTime = self::getCalendarDateTime($dateTime, $timeZone);
+    }
+
+    public function getEndDateTime($timeZone = false)
+    {
+        return self::getDateTime($this->endDateTime, $timeZone);
+    }
+
+    public function setEndDateTime($dateTime, $timeZone = null)
+    {
+        $this->endDateTime = self::getCalendarDateTime($dateTime, $timeZone);
+    }
+
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+    public function getCalendarMeeting()
+    {
+        return  $this->calendarMeeting;
+    }
+
     /**
      * Returns an array that is expected by the Google Calendar API.
+     *
      * @param  string $dateTime
      * @param  string $timeZone
      *
@@ -205,39 +236,9 @@ class CalendarMeetingService implements CalendarMeetingContract
         return $dateTime;
     }
 
-    public function getStartDateTime($withTimeZone = false)
-    {
-        return self::getDateTime($this->startDateTime, $withTimeZone);
-    }
-
-    public function setStartDateTime($dateTime, $timeZone = null)
-    {
-        $this->startDateTime = self::getCalendarDateTime($dateTime, $timeZone);
-    }
-
-    public function getEndDateTime($timeZone = false)
-    {
-        return self::getDateTime($this->endDateTime, $timeZone);
-    }
-
-    public function setEndDateTime($dateTime, $timeZone = null)
-    {
-        $this->endDateTime = self::getCalendarDateTime($dateTime, $timeZone);
-    }
-
     private function setEvent($event)
     {
         $this->event = $event;
-    }
-
-    public function getEvent()
-    {
-        return $this->event;
-    }
-
-    public function getCalendarMeeting()
-    {
-        return  $this->calendarMeeting;
     }
 
     private function addNewMeetingToDB()

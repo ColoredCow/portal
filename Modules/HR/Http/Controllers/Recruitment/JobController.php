@@ -40,7 +40,7 @@ class JobController extends Controller
         $jobs = Job::with([
             'applications' => function ($query) {
                 $query->isOpen()->get();
-            }
+            },
         ])
             ->latest()
             ->appends(Request::except('page'));
@@ -86,13 +86,14 @@ class JobController extends Controller
         ]);
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities.edit', $opportunity->id) : route('recruitment.opportunities.edit', $opportunity->id);
 
-        return redirect($route)->with('status', "Successfully updated $opportunity->title!");
+        return redirect($route)->with('status', "Successfully updated {$opportunity->title}!");
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \Modules\HR\Entities\Job  $opportunity
+     *
      * @return \Illuminate\View\View
      */
     public function edit(Job $opportunity)
@@ -119,7 +120,7 @@ class JobController extends Controller
 
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities.edit', $opportunity->id) : route('recruitment.opportunities.edit', $opportunity->id);
 
-        return redirect($route)->with('status', "Successfully updated $opportunity->title!");
+        return redirect($route)->with('status', "Successfully updated {$opportunity->title}!");
     }
 
     /**
@@ -132,7 +133,7 @@ class JobController extends Controller
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities') : route('recruitment.opportunities');
         $opportunity->delete();
 
-        return redirect($route)->with('status', "Successfully deleted $opportunity->title!");
+        return redirect($route)->with('status', "Successfully deleted {$opportunity->title}!");
     }
 
     /**
@@ -159,7 +160,7 @@ class JobController extends Controller
             ['hr_application_id' => $application->id],
             [
                 'key' => 'reasons_for_desired_resume',
-                'value' => $request->get('body')
+                'value' => $request->get('body'),
             ]
         );
     }
@@ -215,7 +216,7 @@ class JobController extends Controller
 
         return view('hr.application.resume-table')->with([
             'applicationData' => $applicationData,
-            'title' => $jobData[0]->title
+            'title' => $jobData[0]->title,
         ]);
     }
 }

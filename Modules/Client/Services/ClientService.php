@@ -140,7 +140,7 @@ class ClientService implements ClientServiceContract
         }
 
         return [
-            'route' => ($data['submit_action'] == 'next') ? $nextStage : $defaultRoute,
+            'route' => $data['submit_action'] == 'next' ? $nextStage : $defaultRoute,
         ];
     }
 

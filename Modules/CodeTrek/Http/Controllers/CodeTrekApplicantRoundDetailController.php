@@ -2,11 +2,11 @@
 
 namespace Modules\CodeTrek\Http\Controllers;
 
-use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
-use Modules\CodeTrek\Services\CodeTrekRoundDetailService;
 use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
+use Modules\CodeTrek\Services\CodeTrekRoundDetailService;
 
 class CodeTrekApplicantRoundDetailController extends Controller
 {

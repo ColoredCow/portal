@@ -37,7 +37,7 @@ class ProspectService implements ProspectServiceContract
             'section' => $section ?? 'prospect-details',
             'contactPersons' => $prospect->contactPersons,
             'clientContactPersons' => $this->getAllClientContactPersons(),
-            'assigneeData' => $this->getAssignee()
+            'assigneeData' => $this->getAssignee(),
         ];
 
         if ($section == 'prospect-requirements') {
@@ -98,7 +98,7 @@ class ProspectService implements ProspectServiceContract
         }
 
         return [
-            'route' => ($data['submit_action'] == 'next') ? $nextStage : $defaultRoute
+            'route' => $data['submit_action'] == 'next' ? $nextStage : $defaultRoute
         ];
     }
 

@@ -2,11 +2,11 @@
 
 namespace Modules\HR\Database\Seeders;
 
-use Modules\HR\Entities\Round;
 use Illuminate\Database\Seeder;
-use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationRound;
+use Modules\HR\Entities\Employee;
+use Modules\HR\Entities\Round;
 
 class HrApplicationRoundTableSeeder extends Seeder
 {

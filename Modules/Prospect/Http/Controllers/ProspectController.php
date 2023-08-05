@@ -5,9 +5,9 @@ namespace Modules\Prospect\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
+use Modules\Prospect\Contracts\ProspectServiceContract;
 use Modules\Prospect\Entities\Prospect;
 use Modules\Prospect\Entities\ProspectDocument;
-use Modules\Prospect\Contracts\ProspectServiceContract;
 
 class ProspectController extends Controller
 {
@@ -36,6 +36,7 @@ class ProspectController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
      * @param Request $request
      */
     public function store(Request $request)
@@ -47,6 +48,7 @@ class ProspectController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @param int $id
      */
     public function show($id, $section = null)
@@ -58,6 +60,7 @@ class ProspectController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @param Prospect $prospect
      */
     public function edit(Prospect $prospect, $section = null)
@@ -67,6 +70,7 @@ class ProspectController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
      * @param Request $request
      * @param int $id
      */

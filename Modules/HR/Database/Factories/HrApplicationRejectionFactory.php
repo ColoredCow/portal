@@ -3,9 +3,9 @@
 namespace Modules\HR\Database\Factories;
 
 use Faker\Factory as Faker;
-use Modules\HR\Entities\HRRejectionReason;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\HR\Entities\ApplicationRound;
+use Modules\HR\Entities\HRRejectionReason;
 
 class HrApplicationRejectionFactory extends Factory
 {

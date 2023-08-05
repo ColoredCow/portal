@@ -36,7 +36,7 @@ class User extends Authenticatable
      * The attributes that should be hidden for arrays.
      *
      * @var array
-     **/
+     */
     protected $hidden = [
         'password', 'remember_token',
     ];
@@ -44,11 +44,6 @@ class User extends Authenticatable
     public static function findByEmail($email)
     {
         return self::where('email', $email)->first();
-    }
-
-    protected static function newFactory()
-    {
-        return new UserFactory();
     }
 
     /**
@@ -194,13 +189,16 @@ class User extends Authenticatable
 
     public function activeProjects()
     {
-        $projects = Project::linkedToTeamMember($this->id)->get();
-
-        return $projects;
+        return Project::linkedToTeamMember($this->id)->get();
     }
 
     public function getOfficeLocationAttribute()
     {
         return optional($this->meta()->where('meta_key', 'office_location')->first())->meta_value;
+    }
+
+    protected static function newFactory()
+    {
+        return new UserFactory();
     }
 }

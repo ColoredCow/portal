@@ -20,7 +20,7 @@ class RecurringExpenseController extends Controller
     public function index()
     {
         return view('expense::recurring.index', [
-            'recurringExpenses' => $this->service->index()
+            'recurringExpenses' => $this->service->index(),
         ]);
     }
 

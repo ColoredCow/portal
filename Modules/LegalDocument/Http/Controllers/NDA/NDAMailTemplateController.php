@@ -18,6 +18,7 @@ class NDAMailTemplateController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
      * @param Request $request
      */
     public function store(Request $request)
@@ -29,6 +30,7 @@ class NDAMailTemplateController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @param int $id
      */
     public function show($id)
@@ -40,6 +42,7 @@ class NDAMailTemplateController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @param int $id
      */
     public function edit($id)
@@ -48,6 +51,7 @@ class NDAMailTemplateController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
      * @param Request $request
      * @param int $id
      */

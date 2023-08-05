@@ -5,15 +5,15 @@ namespace Modules\Client\Entities;
 use App\Traits\Filters;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\User\Entities\User;
-use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Client\Database\Factories\ClientFactory;
-use Modules\Client\Entities\Traits\HasHierarchy;
 use Modules\Client\Entities\Scopes\ClientGlobalScope;
+use Modules\Client\Entities\Traits\HasHierarchy;
 use Modules\Invoice\Entities\Invoice;
 use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Services\InvoiceService;
+use Modules\Project\Entities\Project;
+use Modules\User\Entities\User;
 
 class Client extends Model
 {
@@ -22,16 +22,6 @@ class Client extends Model
     protected $fillable = ['name', 'key_account_manager_id', 'status', 'is_channel_partner', 'has_departments', 'channel_partner_id', 'parent_organisation_id', 'client_id'];
 
     protected $appends = ['type', 'currency'];
-
-    protected static function booted()
-    {
-        static::addGlobalScope(new ClientGlobalScope);
-    }
-
-    protected static function newFactory()
-    {
-        return new ClientFactory();
-    }
 
     public function scopeStatus($query, $status)
     {
@@ -55,7 +45,7 @@ class Client extends Model
                 $join->on('project_meta.project_id', '=', 'projects.id');
                 $join->where([
                     'project_meta.key' => config('project.meta_keys.billing_level.key'),
-                    'project_meta.value' => config('project.meta_keys.billing_level.value.project.key')
+                    'project_meta.value' => config('project.meta_keys.billing_level.value.project.key'),
                 ]);
             });
     }
@@ -67,7 +57,7 @@ class Client extends Model
                 $join->on('project_meta.project_id', '=', 'projects.id');
                 $join->where([
                     'project_meta.key' => config('project.meta_keys.billing_level.key'),
-                    'project_meta.value' => config('project.meta_keys.billing_level.value.client.key')
+                    'project_meta.value' => config('project.meta_keys.billing_level.value.client.key'),
                 ]);
             });
     }
@@ -130,11 +120,10 @@ class Client extends Model
     public function getBillableAmountForTerm(int $monthsToSubtract, $projects, $periodStartDate = null, $periodEndDate = null)
     {
         $monthsToSubtract = $monthsToSubtract ?? 1;
-        $amount = $projects->sum(function ($project) use ($monthsToSubtract, $periodStartDate, $periodEndDate) {
+
+        return $projects->sum(function ($project) use ($monthsToSubtract, $periodStartDate, $periodEndDate) {
             return round($project->getBillableHoursForMonth($monthsToSubtract, $periodStartDate, $periodEndDate) * $this->billingDetails->service_rates, 2);
         });
-
-        return $amount;
     }
 
     public function getTaxAmountForTerm(int $monthsToSubtract, $projects, $periodStartDate = null, $periodEndDate = null)
@@ -289,7 +278,7 @@ class Client extends Model
             })->whereHas('project.meta', function ($query) {
                 return $query->where([
                     'key' => config('project.meta_keys.billing_level.key'),
-                    'value' => config('project.meta_keys.billing_level.value.client.key')
+                    'value' => config('project.meta_keys.billing_level.value.client.key'),
                 ]);
             })->get();
 
@@ -306,7 +295,7 @@ class Client extends Model
             }
             $data[$user->name] = [
                 'nickname' => $user->nickname,
-                'billableHours' => $billableHours
+                'billableHours' => $billableHours,
             ];
         }
 
@@ -384,5 +373,15 @@ class Client extends Model
         }
 
         return false;
+    }
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new ClientGlobalScope);
+    }
+
+    protected static function newFactory()
+    {
+        return new ClientFactory();
     }
 }

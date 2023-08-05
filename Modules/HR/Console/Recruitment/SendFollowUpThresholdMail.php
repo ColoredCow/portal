@@ -3,9 +3,9 @@
 namespace Modules\HR\Console\Recruitment;
 
 use Illuminate\Console\Command;
-use Modules\HR\Entities\Application;
-use Modules\HR\Emails\sendThreshholdFollowUp;
 use Illuminate\Support\Facades\Mail;
+use Modules\HR\Emails\sendThreshholdFollowUp;
+use Modules\HR\Entities\Application;
 use Modules\User\Entities\User;
 
 class SendFollowUpThresholdMail extends Command

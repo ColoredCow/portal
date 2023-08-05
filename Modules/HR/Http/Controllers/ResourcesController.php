@@ -2,11 +2,11 @@
 
 namespace Modules\HR\Http\Controllers;
 
-use Illuminate\Routing\Controller;
-use Illuminate\Http\Request;
-use Modules\HR\Entities\Job;
 use App\Models\Category;
 use App\Models\Resource;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Modules\HR\Entities\Job;
 
 class ResourcesController extends Controller
 {
@@ -32,7 +32,7 @@ class ResourcesController extends Controller
     {
         $category = Category::create([
             'name' => $request['name'],
-            'slug' => str_slug($request['name'], '-')
+            'slug' => str_slug($request['name'], '-'),
         ]);
 
         return redirect()->back();
@@ -53,7 +53,7 @@ class ResourcesController extends Controller
     {
         $resource->update([
             'resource_link' => $request['name'],
-            'hr_resource_category_id' => $request['category-type']
+            'hr_resource_category_id' => $request['category-type'],
         ]);
 
         return redirect()->back()->with('status', 'Category updated successfully!');

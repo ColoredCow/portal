@@ -41,7 +41,7 @@ class ApplicationImport implements ToCollection, WithHeadingRow
             $data['linkedin'] = $row['linkedin'];
             $data['resume'] = $row['resume_url'] ?? 'abc';
             $data['form_data'] = [
-                'Why Should We Pick You?' => $row['reason_for_eligibility']
+                'Why Should We Pick You?' => $row['reason_for_eligibility'],
             ];
             $data['hr_channel_id'] = $row['hr_channel_id'];
             request()->merge(['college' => $data['college']]);

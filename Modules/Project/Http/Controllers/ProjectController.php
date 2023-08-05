@@ -2,17 +2,17 @@
 
 namespace Modules\Project\Http\Controllers;
 
-use Illuminate\Routing\Controller;
-use Modules\Client\Entities\Client;
-use Modules\Project\Entities\Project;
-use Modules\Project\Rules\ProjectNameExist;
-use Modules\Project\Entities\ProjectContract;
-use Modules\Project\Http\Requests\ProjectRequest;
-use Modules\Project\Contracts\ProjectServiceContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Modules\Client\Entities\Client;
 use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\Job;
+use Modules\Project\Contracts\ProjectServiceContract;
+use Modules\Project\Entities\Project;
+use Modules\Project\Entities\ProjectContract;
+use Modules\Project\Http\Requests\ProjectRequest;
+use Modules\Project\Rules\ProjectNameExist;
 
 class ProjectController extends Controller
 {
@@ -48,6 +48,7 @@ class ProjectController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
      * @param ProjectRequest $request
      */
     public function store(ProjectRequest $request)
@@ -60,6 +61,7 @@ class ProjectController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @param Project $project
      */
     public function show(Project $project)
@@ -85,7 +87,7 @@ class ProjectController extends Controller
     {
         $project->update(
             [
-                'reason_for_deletion' => $request['comment']
+                'reason_for_deletion' => $request['comment'],
             ]
         );
         $project->delete();
@@ -107,6 +109,7 @@ class ProjectController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @param Project $project
      */
     public function edit(Project $project)
@@ -128,6 +131,7 @@ class ProjectController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
      * @param ProjectRequest $request
      */
     public function update(ProjectRequest $request, Project $project)

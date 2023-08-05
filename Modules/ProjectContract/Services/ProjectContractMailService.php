@@ -3,8 +3,8 @@
 namespace Modules\ProjectContract\Services;
 
 use Illuminate\Support\Facades\Mail;
-use Modules\ProjectContract\Emails\ClientReview;
 use Modules\ProjectContract\Emails\ClientApproveReview;
+use Modules\ProjectContract\Emails\ClientReview;
 use Modules\ProjectContract\Emails\ClientUpdateReview;
 use Modules\ProjectContract\Emails\FinanceReview;
 

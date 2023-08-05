@@ -26,7 +26,7 @@ class ExpenseService
                 'expense_id' => $expense->id,
                 'user_id' => auth()->user()->id,
                 'file_path' => $fullpath,
-                'file_type' => $file['type']
+                'file_type' => $file['type'],
             ]);
         }
     }
@@ -52,7 +52,7 @@ class ExpenseService
                 $fullpath = $documentFile->move(storage_path($path), $imageName);
                 ExpenseFile::where('id', $key)->update([
                     'file_path' => $fullpath,
-                    'file_type' => $file['type']
+                    'file_type' => $file['type'],
                 ]);
             }
         } else {

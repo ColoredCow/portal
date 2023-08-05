@@ -44,6 +44,7 @@ class MarkApplicationForFollowUp extends Command
 
     /**
      * Handles the applications that are waiting for applicant to schedule interview.
+     *
      * @return void
      */
     public function handleAwaitingCalendarConfirmationApplications()

@@ -23,6 +23,7 @@ class LegalDocumentController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @param int $id
      */
     public function show($id)
@@ -31,6 +32,7 @@ class LegalDocumentController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @param int $id
      */
     public function edit($id)

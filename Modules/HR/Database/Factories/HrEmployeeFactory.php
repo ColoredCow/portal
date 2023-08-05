@@ -2,12 +2,12 @@
 
 namespace Modules\HR\Database\Factories;
 
-use Modules\User\Entities\User;
-use Modules\HR\Entities\Employee;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Faker\Factory as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\HrJobDomain;
+use Modules\User\Entities\User;
 
 class HrEmployeeFactory extends Factory
 {

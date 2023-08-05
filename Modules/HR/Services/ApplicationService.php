@@ -4,6 +4,8 @@ namespace Modules\HR\Services;
 
 use App\Models\Tag;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use Module;
 use Modules\HR\Contracts\ApplicationServiceContract;
 use Modules\HR\Entities\Applicant;
@@ -11,8 +13,6 @@ use Modules\HR\Entities\Application;
 use Modules\HR\Entities\Job;
 use Modules\HR\Events\CustomMailTriggeredForApplication;
 use Modules\User\Entities\User;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Cache;
 
 class ApplicationService implements ApplicationServiceContract
 {
@@ -123,7 +123,7 @@ class ApplicationService implements ApplicationServiceContract
 
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Content-Type'=>'application/json'
+            'Content-Type'=>'application/json',
         ])
         ->withToken($token)
         ->post($url, [

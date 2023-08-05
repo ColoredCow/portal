@@ -6,21 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CodeTrekRequest extends FormRequest
 {
-    private function codeTrekValidation()
-    {
-        return [
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'email_id' => 'required|email',
-            'phone' => 'nullable|numeric',
-            'github_username' => 'required|string',
-            'start_date' => 'required|date',
-            'university_name' => 'nullable|string',
-            'course' => 'nullable|string',
-            'graduation_year' => 'nullable|numeric|digits:4',
-        ];
-    }
-
     public function rules()
     {
         return $this->codeTrekValidation();
@@ -48,6 +33,20 @@ class CodeTrekRequest extends FormRequest
             'graduation_year.required' => 'Please enter your graduation year.',
             'graduation_year.numeric' => 'Please enter a valid graduation year.',
             'graduation_year.digits' => 'Graduation year should be in 4 digit format.'
+        ];
+    }
+    private function codeTrekValidation()
+    {
+        return [
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email_id' => 'required|email',
+            'phone' => 'nullable|numeric',
+            'github_username' => 'required|string',
+            'start_date' => 'required|date',
+            'university_name' => 'nullable|string',
+            'course' => 'nullable|string',
+            'graduation_year' => 'nullable|numeric|digits:4',
         ];
     }
 }

@@ -79,7 +79,7 @@ class Project extends Model implements Auditable
         $deployedCount = $this->getDeployedCountForDesignation($designation);
         $toBeDeployedCount = $resourceRequirementCount - $deployedCount;
 
-        return ($toBeDeployedCount > 0) ? $toBeDeployedCount : (($toBeDeployedCount < 0) ? $toBeDeployedCount : '0');
+        return ($toBeDeployedCount > 0) ? $toBeDeployedCount : ($toBeDeployedCount < 0 ? $toBeDeployedCount : '0');
     }
 
     public function getTotalToBeDeployedCount()
@@ -175,7 +175,7 @@ class Project extends Model implements Auditable
         $startDate = $startDate ?? $this->client->month_start_date;
         $endDate = $endDate ?? $this->client->month_end_date;
 
-        return $this->getExpectedHoursInMonthAttribute($startDate, $endDate) ? round($this->getHoursBookedForMonth($monthToSubtract, $startDate, $endDate) / ($this->getExpectedHoursInMonthAttribute($startDate, $endDate)), 2) : 0;
+        return $this->getExpectedHoursInMonthAttribute($startDate, $endDate) ? round($this->getHoursBookedForMonth($monthToSubtract, $startDate, $endDate) / $this->getExpectedHoursInMonthAttribute($startDate, $endDate), 2) : 0;
     }
 
     public function getCurrentHoursForMonthAttribute()
@@ -318,7 +318,7 @@ class Project extends Model implements Auditable
         }
 
         foreach ($this->getTeamMembersGroupedByEngagement() as $groupedResources) {
-            $totalAmount += ($groupedResources->billing_engagement / 100) * $groupedResources->resource_count * $service_rate * $numberOfMonths;
+            $totalAmount += $groupedResources->billing_engagement / 100 * $groupedResources->resource_count * $service_rate * $numberOfMonths;
         }
 
         return round($totalAmount, 2);
@@ -388,7 +388,7 @@ class Project extends Model implements Auditable
     public function getTotalLedgerAmount($quarter = null)
     {
         $amount = 0;
-        $amount += (optional($this->ledgerAccountsOnlyCredit()->quarter($quarter))->get()->sum('credit') - optional($this->ledgerAccountsOnlyDebit()->quarter($quarter))->get()->sum('debit'));
+        $amount += optional($this->ledgerAccountsOnlyCredit()->quarter($quarter))->get()->sum('credit') - optional($this->ledgerAccountsOnlyDebit()->quarter($quarter))->get()->sum('debit');
 
         return $amount;
     }

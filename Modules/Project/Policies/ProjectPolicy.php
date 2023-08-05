@@ -2,9 +2,9 @@
 
 namespace Modules\Project\Policies;
 
-use Modules\User\Entities\User;
-use Modules\Project\Entities\Project;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Modules\Project\Entities\Project;
+use Modules\User\Entities\User;
 
 class ProjectPolicy
 {

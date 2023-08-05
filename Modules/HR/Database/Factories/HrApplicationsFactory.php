@@ -2,9 +2,9 @@
 
 namespace Modules\HR\Database\Factories;
 
-use Modules\HR\Entities\Application;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\HR\Entities\Applicant;
+use Modules\HR\Entities\Application;
 use Modules\HR\Entities\Job;
 
 class HrApplicationsFactory extends Factory

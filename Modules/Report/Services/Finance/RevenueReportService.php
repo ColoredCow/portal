@@ -5,11 +5,11 @@ namespace Modules\Report\Services\Finance;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Modules\Client\Entities\Client;
+use Modules\Invoice\Entities\CurrencyAvgRate;
+use Modules\Invoice\Entities\Invoice;
 use Modules\Invoice\Services\CurrencyService;
 use Modules\Invoice\Services\InvoiceService;
 use Modules\Revenue\Entities\RevenueProceed;
-use Modules\Invoice\Entities\CurrencyAvgRate;
-use Modules\Invoice\Entities\Invoice;
 
 class RevenueReportService
 {
@@ -27,22 +27,6 @@ class RevenueReportService
         $this->defaultCurrencyRates = app(CurrencyService::class)->getCurrentRatesInINR();
     }
 
-    private function getAvgCurrencyRates($startDate, $endDate)
-    {
-        $results = [];
-
-        $currencyAvgRates = CurrencyAvgRate::whereDate('captured_for', '>=', $startDate)
-            ->whereDate('captured_for', '<=', $endDate)
-            ->get();
-        foreach ($currencyAvgRates as $currencyAvgRate) {
-            $key = $currencyAvgRate->captured_for->format($this->dataKeyFormat);
-            $currency = strtolower($currencyAvgRate->currency);
-            $results[$key][$currency] = $currencyAvgRate->avg_rate;
-        }
-
-        return $results;
-    }
-
     public function getAllParticulars(int $startYear, int $endYear): array
     {
         $particulars = config('report.finance.profit_and_loss.particulars.revenue');
@@ -58,113 +42,11 @@ class RevenueReportService
         return $results;
     }
 
-    public function getParticularReport(String $particularSlug, array $particular, Object $startDate, Object $endDate): array
+    public function getParticularReport(string $particularSlug, array $particular, object $startDate, object $endDate): array
     {
         $particular['amounts'] = $this->{'getParticularAmountFor' . Str::studly($particularSlug)}($particular, $startDate, $endDate);
 
         return $particular;
-    }
-
-    private function getParticularAmountForDomestic(array $particular, Object $startDate, Object $endDate): array
-    {
-        $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'indian');
-        $totalAmount = 0;
-        $results = [];
-
-        foreach ($invoices as $invoice) {
-            $dateKey = $invoice->sent_on->format($this->dataKeyFormat);
-            $totalAmount += (int) $invoice->amount;
-            $results[$dateKey] = ($results[$dateKey] ?? 0) + (int) $invoice->amount;
-        }
-
-        $results['total'] = $totalAmount;
-
-        return $results;
-    }
-
-    private function getParticularAmountForExport(array $particular, Object $startDate, Object $endDate): array
-    {
-        $totalAmount = 0;
-        $results = [];
-        $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'non-indian');
-
-        foreach ($invoices as $invoice) {
-            $dateKey = $invoice->sent_on->format($this->dataKeyFormat);
-            $exchangeRate = $this->avgCurrencyRates[$dateKey][strtolower($invoice->currency)] ?? $this->defaultCurrencyRates;
-            $amount = (float) ($invoice->amount) * (float) ($exchangeRate);
-            $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
-            $totalAmount += $amount;
-        }
-        $results['total'] = $totalAmount;
-
-        return $results;
-    }
-
-    private function getParticularAmountForCommissionReceived(array $particular, Object $startDate, Object $endDate): array
-    {
-        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
-    }
-
-    private function getParticularAmountForCashBack(array $particular, Object $startDate, Object $endDate): array
-    {
-        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
-    }
-
-    private function getParticularAmountForDiscountReceived(array $particular, Object $startDate, Object $endDate): array
-    {
-        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
-    }
-
-    private function getParticularAmountForInterestOnFd(array $particular, Object $startDate, Object $endDate): array
-    {
-        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
-    }
-
-    private function getParticularAmountForForeignExchangeLoss(array $particular, Object $startDate, Object $endDate): array
-    {
-        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
-    }
-
-    private function getParticularAmountForStripeIndia(array $particular, Object $startDate, Object $endDate): array
-    {
-        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
-    }
-
-    private function getParticularAmountForStripeInternational(array $particular, Object $startDate, Object $endDate): array
-    {
-        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
-    }
-
-    private function getAmountsForRevenueProceeds($category, $startDate, $endDate)
-    {
-        $revenues = RevenueProceed::where('category', $category)
-            ->where('received_at', '>=', $startDate)
-            ->where('received_at', '<=', $endDate)
-            ->get();
-
-        $totalAmount = 0;
-        $results = [];
-
-        $exchangeRate = 1; // For INR
-
-        foreach ($revenues as $revenue) {
-            $amount = $revenue->amount;
-            $year = substr($revenue->year, -2);
-            $month = sprintf('%02d', $revenue->month);
-            $dateKey = $month . '-' . $year;
-
-            if (strtolower($revenue->currency) != 'inr') {
-                $exchangeRate = $this->avgCurrencyRates[$dateKey][strtolower($revenue->currency)] ?? $this->defaultCurrencyRates;
-            }
-
-            $amount = $amount * $exchangeRate;
-            $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
-            $totalAmount += $amount;
-        }
-
-        $results['total'] = $totalAmount;
-
-        return $results;
     }
 
     public function getRevenueGroupedByClient($filters)
@@ -251,6 +133,124 @@ class RevenueReportService
         ];
     }
 
+    private function getAvgCurrencyRates($startDate, $endDate)
+    {
+        $results = [];
+
+        $currencyAvgRates = CurrencyAvgRate::whereDate('captured_for', '>=', $startDate)
+            ->whereDate('captured_for', '<=', $endDate)
+            ->get();
+        foreach ($currencyAvgRates as $currencyAvgRate) {
+            $key = $currencyAvgRate->captured_for->format($this->dataKeyFormat);
+            $currency = strtolower($currencyAvgRate->currency);
+            $results[$key][$currency] = $currencyAvgRate->avg_rate;
+        }
+
+        return $results;
+    }
+
+    private function getParticularAmountForDomestic(array $particular, object $startDate, object $endDate): array
+    {
+        $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'indian');
+        $totalAmount = 0;
+        $results = [];
+
+        foreach ($invoices as $invoice) {
+            $dateKey = $invoice->sent_on->format($this->dataKeyFormat);
+            $totalAmount += (int) $invoice->amount;
+            $results[$dateKey] = ($results[$dateKey] ?? 0) + (int) $invoice->amount;
+        }
+
+        $results['total'] = $totalAmount;
+
+        return $results;
+    }
+
+    private function getParticularAmountForExport(array $particular, object $startDate, object $endDate): array
+    {
+        $totalAmount = 0;
+        $results = [];
+        $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'non-indian');
+
+        foreach ($invoices as $invoice) {
+            $dateKey = $invoice->sent_on->format($this->dataKeyFormat);
+            $exchangeRate = $this->avgCurrencyRates[$dateKey][strtolower($invoice->currency)] ?? $this->defaultCurrencyRates;
+            $amount = (float) ($invoice->amount) * (float) ($exchangeRate);
+            $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
+            $totalAmount += $amount;
+        }
+        $results['total'] = $totalAmount;
+
+        return $results;
+    }
+
+    private function getParticularAmountForCommissionReceived(array $particular, object $startDate, object $endDate): array
+    {
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
+    }
+
+    private function getParticularAmountForCashBack(array $particular, object $startDate, object $endDate): array
+    {
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
+    }
+
+    private function getParticularAmountForDiscountReceived(array $particular, object $startDate, object $endDate): array
+    {
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
+    }
+
+    private function getParticularAmountForInterestOnFd(array $particular, object $startDate, object $endDate): array
+    {
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
+    }
+
+    private function getParticularAmountForForeignExchangeLoss(array $particular, object $startDate, object $endDate): array
+    {
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
+    }
+
+    private function getParticularAmountForStripeIndia(array $particular, object $startDate, object $endDate): array
+    {
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
+    }
+
+    private function getParticularAmountForStripeInternational(array $particular, object $startDate, object $endDate): array
+    {
+        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
+    }
+
+    private function getAmountsForRevenueProceeds($category, $startDate, $endDate)
+    {
+        $revenues = RevenueProceed::where('category', $category)
+            ->where('received_at', '>=', $startDate)
+            ->where('received_at', '<=', $endDate)
+            ->get();
+
+        $totalAmount = 0;
+        $results = [];
+
+        $exchangeRate = 1; // For INR
+
+        foreach ($revenues as $revenue) {
+            $amount = $revenue->amount;
+            $year = substr($revenue->year, -2);
+            $month = sprintf('%02d', $revenue->month);
+            $dateKey = $month . '-' . $year;
+
+            if (strtolower($revenue->currency) != 'inr') {
+                $exchangeRate = $this->avgCurrencyRates[$dateKey][strtolower($revenue->currency)] ?? $this->defaultCurrencyRates;
+            }
+
+            $amount *= $exchangeRate;
+            $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
+            $totalAmount += $amount;
+        }
+
+        $results['total'] = $totalAmount;
+
+        return $results;
+    }
+
     private function handleInvoiceDataForClient($invoice, $amountMonthWise)
     {
         $invoiceAmount = round($invoice->total_amount_in_inr, 2);
@@ -264,11 +264,9 @@ class RevenueReportService
 
     private function getInvoicesForClient($client, $filters)
     {
-        $invoices = Invoice::where('client_id', $client->id)
+        return Invoice::where('client_id', $client->id)
             ->whereBetween('sent_on', [$filters['start_date'], $filters['end_date']])
             ->orderby('sent_on')
             ->get();
-
-        return $invoices;
     }
 }

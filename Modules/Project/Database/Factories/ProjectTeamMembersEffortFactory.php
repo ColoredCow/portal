@@ -4,7 +4,6 @@ namespace Modules\Project\Database\Factories;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Entities\ProjectTeamMembersEffort;
 
 class ProjectTeamMembersEffortFactory extends Factory

@@ -11,7 +11,9 @@ class BookServices
 {
     /**
      * Fetch book details from $isbn.
+     *
      * @param string $isbn
+     *
      * @return mixed
      */
     public static function getBookDetails($isbn)
@@ -41,6 +43,7 @@ class BookServices
      * Fetch ISBN form book image.
      *
      * @param mixed $file
+     *
      * @return string
      */
     public static function getISBN($file)
@@ -54,14 +57,12 @@ class BookServices
 
         foreach ($faces as $face) {
             $faceDescription = $face->getDescription();
-            if ('isbn' === strtolower($currentText) || 'sbn' === strtolower($currentText)) {
+            if (in_array(strtolower($currentText), ['isbn', 'sbn'])) {
                 $description = $faceDescription;
             }
             $currentText = $faceDescription;
         }
 
-        $description = str_replace('-', '', trim($description));
-
-        return $description;
+        return str_replace('-', '', trim($description));
     }
 }

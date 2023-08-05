@@ -9,9 +9,10 @@ class ContentHelper
      * Primarily keeps the content formatted in the mails.
      *
      * @param  string $content
+     *
      * @return string
      */
-    public static function editorFormat(String $content)
+    public static function editorFormat(string $content)
     {
         return preg_replace('/\r\n/', '', $content);
     }

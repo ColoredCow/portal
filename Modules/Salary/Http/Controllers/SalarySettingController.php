@@ -27,6 +27,7 @@ class SalarySettingController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @param int $id
      */
     public function show($id)
@@ -35,6 +36,7 @@ class SalarySettingController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @param int $id
      */
     public function edit($id)
@@ -43,6 +45,7 @@ class SalarySettingController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
      * @param SalarySettingRequest $request
      */
     public function update(SalarySettingRequest $request)

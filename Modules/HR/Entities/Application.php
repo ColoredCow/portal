@@ -220,7 +220,7 @@ class Application extends Model
     public function scopeFilterByName($query, $search)
     {
         return $query->whereHas('applicant', function ($query) use ($search) {
-            ($search) ? $query->where('name', 'LIKE', "%$search%") : '';
+            $search ? $query->where('name', 'LIKE', "%$search%") : '';
         });
     }
 
@@ -405,6 +405,7 @@ class Application extends Model
      * Set the application status to sent-for-approval and also set the requested user as pending approval from.
      *
      * @param  int $userId
+     *
      * @return void
      */
     public function sendForApproval($userId)

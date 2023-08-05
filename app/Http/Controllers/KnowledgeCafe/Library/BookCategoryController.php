@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\KnowledgeCafe\Library;
 
-use App\Models\KnowledgeCafe\Library\BookCategory;
-use App\Models\KnowledgeCafe\Library\Book;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\KnowledgeCafe\Library\BookCategoryRequest;
+use App\Models\KnowledgeCafe\Library\Book;
+use App\Models\KnowledgeCafe\Library\BookCategory;
 
 class BookCategoryController extends Controller
 {
@@ -30,7 +30,7 @@ class BookCategoryController extends Controller
             'books' => $books,
             'categories' => $this->formatCategoryData($categories),
             'wishlistedBooksCount' => $wishlistedBooksCount,
-            'booksBorrowedCount' => $booksBorrowedCount
+            'booksBorrowedCount' => $booksBorrowedCount,
         ]);
     }
 
@@ -87,7 +87,7 @@ class BookCategoryController extends Controller
             $data[] = [
                 'id' => $category->id,
                 'name' =>  $category->name,
-                'assign_books_count' => $category->books_count
+                'assign_books_count' => $category->books_count,
             ];
         }
 

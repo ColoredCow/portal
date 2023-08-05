@@ -3,17 +3,17 @@
 namespace Modules\User\Providers;
 
 use Exception;
-use Illuminate\Support\Arr;
-use Modules\User\Entities\User;
-use Illuminate\Support\Facades\Gate;
-use Modules\User\Policies\UserPolicy;
-use Modules\User\Services\UserService;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
-use Modules\User\Services\ProfileService;
-use Modules\User\Services\ExtendUserModel;
-use Modules\User\Contracts\UserServiceContract;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\ServiceProvider;
 use Modules\User\Contracts\ProfileServiceContract;
+use Modules\User\Contracts\UserServiceContract;
+use Modules\User\Entities\User;
+use Modules\User\Policies\UserPolicy;
+use Modules\User\Services\ExtendUserModel;
+use Modules\User\Services\ProfileService;
+use Modules\User\Services\UserService;
 
 class UserServiceProvider extends ServiceProvider
 {
@@ -59,22 +59,6 @@ class UserServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register config.
-     *
-     * @return void
-     */
-    protected function registerConfig()
-    {
-        $this->publishes([
-            module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
-        ], 'config');
-        $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'),
-            $this->moduleNameLower
-        );
-    }
-
-    /**
      * Register views.
      *
      * @return void
@@ -86,7 +70,7 @@ class UserServiceProvider extends ServiceProvider
         $sourcePath = module_path($this->moduleName, 'Resources/views');
 
         $this->publishes([
-            $sourcePath => $viewPath
+            $sourcePath => $viewPath,
         ], ['views', $this->moduleNameLower . '-module-views']);
 
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
@@ -130,18 +114,6 @@ class UserServiceProvider extends ServiceProvider
         return [];
     }
 
-    private function getPublishableViewPaths(): array
-    {
-        $paths = [];
-        foreach (\Config::get('view.paths') as $path) {
-            if (is_dir($path . '/modules/' . $this->moduleNameLower)) {
-                $paths[] = $path . '/modules/' . $this->moduleNameLower;
-            }
-        }
-
-        return $paths;
-    }
-
     /**
      * Register the module's policies.
      *
@@ -152,6 +124,34 @@ class UserServiceProvider extends ServiceProvider
         foreach ($this->policies as $key => $value) {
             Gate::policy($key, $value);
         }
+    }
+
+    /**
+     * Register config.
+     *
+     * @return void
+     */
+    protected function registerConfig()
+    {
+        $this->publishes([
+            module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
+        ], 'config');
+        $this->mergeConfigFrom(
+            module_path($this->moduleName, 'Config/config.php'),
+            $this->moduleNameLower
+        );
+    }
+
+    private function getPublishableViewPaths(): array
+    {
+        $paths = [];
+        foreach (\Config::get('view.paths') as $path) {
+            if (is_dir($path . '/modules/' . $this->moduleNameLower)) {
+                $paths[] = $path . '/modules/' . $this->moduleNameLower;
+            }
+        }
+
+        return $paths;
     }
 
     private function registerExtendableClass()

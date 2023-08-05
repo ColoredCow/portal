@@ -22,6 +22,7 @@ class EmailValidation implements Rule
      *
      * @param  string  $attribute
      * @param  mixed  $values
+     *
      * @return bool
      */
     public function passes($attribute, $values)

@@ -4,8 +4,8 @@ namespace Modules\HR\Console\Recruitment;
 
 use App\Mail\sendEmail;
 use Illuminate\Console\Command;
-use Modules\HR\Entities\Application;
 use Illuminate\Support\Facades\Mail;
+use Modules\HR\Entities\Application;
 
 class DailyMessage extends Command
 {

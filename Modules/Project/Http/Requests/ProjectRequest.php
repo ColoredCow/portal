@@ -72,7 +72,7 @@ class ProjectRequest extends FormRequest
                         'project_team_member' => ['array',
                         new TeamMemberDesignationRule(),
                         new TeamMemberRule(),
-                        ]
+                        ],
                     ];
                 }
                 break;

@@ -3,8 +3,8 @@
 namespace App\Policies;
 
 use App\Models\Client;
-use Modules\User\Entities\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Modules\User\Entities\User;
 
 class ClientPolicy
 {
@@ -15,6 +15,7 @@ class ClientPolicy
      *
      * @param  \Modules\User\Entities\User  $user
      * @param  \App\Models\Client  $client
+     *
      * @return mixed
      */
     public function view(User $user, Client $client)
@@ -26,6 +27,7 @@ class ClientPolicy
      * Determine whether the user can create clients.
      *
      * @param  \Modules\User\Entities\User  $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -38,6 +40,7 @@ class ClientPolicy
      *
      * @param  \Modules\User\Entities\User  $user
      * @param  \App\Models\Client  $client
+     *
      * @return mixed
      */
     public function update(User $user, Client $client)
@@ -50,6 +53,7 @@ class ClientPolicy
      *
      * @param  \Modules\User\Entities\User  $user
      * @param  \App\Models\Client  $client
+     *
      * @return mixed
      */
     public function delete(User $user, Client $client)
@@ -61,6 +65,7 @@ class ClientPolicy
      * Determine whether the user can list clients.
      *
      * @param  \Modules\User\Entities\User  $user
+     *
      * @return mixed
      */
     public function list(User $user)

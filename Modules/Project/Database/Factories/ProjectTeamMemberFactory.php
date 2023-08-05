@@ -3,10 +3,10 @@
 namespace Modules\Project\Database\Factories;
 
 use Carbon\Carbon;
-use Modules\Project\Entities\Project;
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Modules\Project\Entities\ProjectTeamMember;
 use Modules\User\Entities\User;
+use Modules\Project\Entities\Project;
+use Modules\Project\Entities\ProjectTeamMember;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProjectTeamMemberFactory extends Factory
 {

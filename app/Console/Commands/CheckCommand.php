@@ -4,8 +4,8 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Nwidart\Modules\Facades\Module;
-use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
 class CheckCommand extends Command
 {
@@ -52,7 +52,7 @@ class CheckCommand extends Command
 
     private function checkCommand($command, $name)
     {
-        $this->line("Running $name");
+        $this->line("Running {$name}");
 
         $process = new Process($command);
 
@@ -62,9 +62,9 @@ class CheckCommand extends Command
                     $this->output->write($line);
                 }
             });
-            $this->info("$name Completed.");
+            $this->info("{$name} Completed.");
         } catch (ProcessFailedException $e) {
-            $this->error("$name Failed.");
+            $this->error("{$name} Failed.");
             $this->line($e->getMessage());
             $this->commandSeparator();
             exit(1);
@@ -94,11 +94,15 @@ class CheckCommand extends Command
         ];
 
         $laraStan = ['./vendor/bin/phpstan', 'analyse'];
+        $phpInsights = ['php', 'artisan', 'insights', '--no-interaction'];
 
-        return array_merge([
-            'Php CS Fixer' => $staticAnalysis,
-            'LaraStan' => $laraStan,
-        ], $this->getEsCommands());
+        $ciCommands = [];
+        $ciCommands['Php CS Fixer'] = $staticAnalysis;
+        $ciCommands['LaraStan'] = $laraStan;
+        $ciCommands = array_merge($ciCommands, $this->getEsCommands());
+        $ciCommands['Insights'] = $phpInsights;
+
+        return $ciCommands;
     }
 
     private function getEsCommands()
@@ -113,8 +117,8 @@ class CheckCommand extends Command
         $esCheckCommand = array_merge(['./node_modules/.bin/eslint', 'resources/js/'], $moduleJsFiles, ['--ext', '.js,.vue']);
 
         return [
-            'ESLint fix' => array_merge($esCheckCommand, ['--fix']),
-            'ESLint check' => $esCheckCommand
+        'ESLint fix' => array_merge($esCheckCommand, ['--fix']),
+        'ESLint check' => $esCheckCommand
         ];
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Policies\KnowledgeCafe\Library;
 
-use Modules\User\Entities\User;
 use App\Models\KnowledgeCafe\Library\Book;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Modules\User\Entities\User;
 
 class BookPolicy
 {
@@ -15,6 +15,7 @@ class BookPolicy
      *
      * @param  \Modules\User\Entities\User  $user
      * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     *
      * @return mixed
      */
     public function view(User $user, Book $book)
@@ -26,6 +27,7 @@ class BookPolicy
      * Determine whether the user can create books.
      *
      * @param  \Modules\User\Entities\User  $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -38,6 +40,7 @@ class BookPolicy
      *
      * @param  \Modules\User\Entities\User  $user
      * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     *
      * @return mixed
      */
     public function update(User $user, Book $book)
@@ -50,6 +53,7 @@ class BookPolicy
      *
      * @param  \Modules\User\Entities\User  $user
      * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     *
      * @return mixed
      */
     public function delete(User $user, Book $book)
@@ -61,6 +65,7 @@ class BookPolicy
      * Determine whether the user can list books.
      *
      * @param  \Modules\User\Entities\User  $user
+     *
      * @return mixed
      */
     public function list(User $user)

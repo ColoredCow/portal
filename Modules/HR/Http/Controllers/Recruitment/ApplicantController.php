@@ -10,14 +10,14 @@ use Illuminate\Routing\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\HR\Contracts\ApplicationServiceContract;
 use Modules\HR\Entities\Applicant;
+use Modules\HR\Entities\ApplicantMeta;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\Job;
 use Modules\HR\Events\Recruitment\ApplicantEmailVerified;
-use Modules\HR\Http\Requests\Recruitment\ApplicantRequest;
-use Modules\User\Entities\User;
 use Modules\HR\Http\Requests\ApplicantMetaRequest;
-use Modules\HR\Entities\ApplicantMeta;
+use Modules\HR\Http\Requests\Recruitment\ApplicantRequest;
 use Modules\HR\Services\ApplicantService;
+use Modules\User\Entities\User;
 
 class ApplicantController extends Controller
 {

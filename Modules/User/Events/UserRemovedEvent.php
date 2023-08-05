@@ -2,8 +2,8 @@
 
 namespace Modules\User\Events;
 
-use Modules\User\Entities\User;
 use Illuminate\Queue\SerializesModels;
+use Modules\User\Entities\User;
 
 class UserRemovedEvent
 {

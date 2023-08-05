@@ -2,9 +2,9 @@
 
 namespace Modules\CodeTrek\Providers;
 
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Policies\CodeTrekApplicantPolicy;
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider;
 
 class CodeTrekAuthServiceProvider extends AuthServiceProvider
 {

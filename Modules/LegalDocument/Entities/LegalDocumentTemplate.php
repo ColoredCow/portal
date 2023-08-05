@@ -10,16 +10,13 @@ class LegalDocumentTemplate extends Model
 
     public function parse($data)
     {
-        $parsed = preg_replace_callback('/{{(.*?)}}/', function ($matches) use ($data) {
-            list($shortCode, $index) = $matches;
+        return preg_replace_callback('/{{(.*?)}}/', function ($matches) use ($data) {
+            [$shortCode, $index] = $matches;
             $index = trim($index);
             $index = str_replace('$', '', $index);
             if (isset($data[$index])) {
                 return $data[$index];
-            } else {
             }
         }, $this->body);
-
-        return $parsed;
     }
 }

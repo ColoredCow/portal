@@ -14,6 +14,7 @@ class RoundController extends Controller
      *
      * @param  RoundRequest  $request
      * @param  \Modules\HR\Entities\Round  $round
+     *
      * @return string
      */
     public function update(RoundRequest $request, Round $round)

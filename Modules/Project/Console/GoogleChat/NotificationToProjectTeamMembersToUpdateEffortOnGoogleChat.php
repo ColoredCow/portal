@@ -4,8 +4,8 @@ namespace Modules\Project\Console\GoogleChat;
 
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Modules\Project\Entities\Project;
 use Illuminate\Support\Facades\Notification;
+use Modules\Project\Entities\Project;
 use Modules\Project\Notifications\GoogleChat\NotificationToUpdateEffortForProject;
 
 class NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat extends Command

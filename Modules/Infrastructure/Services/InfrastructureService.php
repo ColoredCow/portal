@@ -2,9 +2,9 @@
 
 namespace Modules\Infrastructure\Services;
 
+use Aws\Credentials\Credentials;
 use Aws\Sdk;
 use Carbon\Carbon;
-use Aws\Credentials\Credentials;
 use Illuminate\Support\Facades\Cache;
 use Modules\Infrastructure\Contracts\InfrastructureServiceContract;
 
@@ -23,22 +23,22 @@ class InfrastructureService implements InfrastructureServiceContract
         $completeSynchronously = $s3Client->listBucketsAsync()->wait();
         $s3Data = $completeSynchronously->toArray();
         $s3buckets = $s3Data['Buckets'];
-        $s3buckets = array_map(function ($bucket) {
+
+        return array_map(function ($bucket) {
             return [
                 'name' => $bucket['Name'],
                 'created_at' => Carbon::parse($bucket['CreationDate'])->setTimezone(config('app.timezone'))->format('d M Y, h:i a'),
                 'console_url' => config('infrastructure.console-urls.s3') . $bucket['Name'],
             ];
         }, $s3buckets);
-
-        return $s3buckets;
     }
 
     public function getServersInstances()
     {
         $ec2Client = $this->sdk->createEc2();
         $instances = $ec2Client->DescribeInstances()->toArray()['Reservations'];
-        $instances = array_map(function ($instance) {
+
+        return array_map(function ($instance) {
             $instanceDetails = $instance['Instances'][0];
 
             return [
@@ -49,8 +49,6 @@ class InfrastructureService implements InfrastructureServiceContract
                 'console_url' => config('infrastructure.console-urls.ec2') . '?region=' . $this->region . '#Instances:instanceId=' . $instanceDetails['InstanceId'],
             ];
         }, $instances);
-
-        return $instances;
     }
 
     public function getBillingDetails()
