@@ -30,7 +30,7 @@ class MonthlSalesRegisterService
             'clientAddress' => $clientAddress,
             'igst' => $igst,
             'cgst' => $cgst,
-            'sgst' => $sgst
+            'sgst' => $sgst,
         ];
     }
 
@@ -87,7 +87,7 @@ class MonthlSalesRegisterService
                 'IGST Value' => $clientAddress[0] ? (($clientAddress[0]->state != config('invoice.invoice-details.billing-state')) && ($clientAddress[0]->country_id == 1) ? $igst[0] : '0') : '',
                 'CGST Value' => $clientAddress[0] ? (($clientAddress[0]->state == config('invoice.invoice-details.billing-state')) && ($clientAddress[0]->country_id == 1) ? $cgst[0] : '0') : '',
                 'SGST Value' => $clientAddress[0] ? (($clientAddress[0]->state == config('invoice.invoice-details.billing-state')) && ($clientAddress[0]->country_id == 1) ? $sgst[0] : '0') : '',
-                'Net Total' => $invoice->totalAmount
+                'Net Total' => $invoice->totalAmount,
             ];
         });
     }
@@ -110,7 +110,7 @@ class MonthlSalesRegisterService
                 'Rate (FCY)' => optional($invoice->client->billingDetails)->service_rates,
                 'Exchange Rate' => $invoice->conversion_rate,
                 'Total Amont (INR)' => $invoice->invoiceAmountInInr,
-                'Net Total' => $invoice->totalAmountInInr
+                'Net Total' => $invoice->totalAmountInInr,
             ];
         });
     }

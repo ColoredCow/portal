@@ -11,12 +11,12 @@ return [
         'staff-welfare' => 'Staff Welfare',
         'subscription' =>  'Subscription',
         'telephone-internet-bill' => 'Telephone or internet bill',
-        'other' =>  'other'
+        'other' =>  'other',
     ],
 
     'type_of_documents' => [
         'bill' => 'Bill',
         'reciept' => 'Reciept',
-        'others' => 'Others'
-    ]
+        'others' => 'Others',
+    ],
 ];

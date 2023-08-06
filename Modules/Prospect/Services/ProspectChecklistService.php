@@ -2,18 +2,18 @@
 
 namespace Modules\Prospect\Services;
 
-use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Modules\Prospect\Entities\Prospect;
-use Modules\ModuleChecklist\Entities\NDAMeta;
 use Modules\LegalDocument\Emails\NDA\SendToApprover;
-use Modules\Prospect\Events\NewProspectHistoryEvent;
-use Modules\ModuleChecklist\Entities\ModuleChecklist;
-use Modules\Prospect\Entities\ProspectChecklistStatus;
-use Modules\LegalDocument\Entities\LegalDocumentTemplate;
 use Modules\LegalDocument\Entities\LegalDocumentMailTemplate;
+use Modules\LegalDocument\Entities\LegalDocumentTemplate;
+use Modules\ModuleChecklist\Entities\ModuleChecklist;
+use Modules\ModuleChecklist\Entities\NDAMeta;
 use Modules\Prospect\Contracts\ProspectChecklistServiceContract;
+use Modules\Prospect\Entities\Prospect;
+use Modules\Prospect\Entities\ProspectChecklistStatus;
+use Modules\Prospect\Events\NewProspectHistoryEvent;
+use Modules\User\Entities\User;
 
 class ProspectChecklistService implements ProspectChecklistServiceContract
 {
@@ -25,7 +25,7 @@ class ProspectChecklistService implements ProspectChecklistServiceContract
             'prospect' => $prospect,
             'checklistId' => $checklistID,
             'templates' => LegalDocumentTemplate::all(),
-            'metaData' => $this->getMetaData($prospect, $checklistID)
+            'metaData' => $this->getMetaData($prospect, $checklistID),
         ];
     }
 
@@ -40,7 +40,7 @@ class ProspectChecklistService implements ProspectChecklistServiceContract
         }
 
         return [
-            'prospect' => $prospect
+            'prospect' => $prospect,
         ];
     }
 

@@ -91,7 +91,7 @@ class InfrastructureService implements InfrastructureServiceContract
             'last_month_amount' => $lastMonthAmount,
             'forcast_amount' => $forCastAmount,
             'should_alert' => round($currentMonthForCastData['Amount'], 2) > round($lastMonthCostData['Amount'], 2),
-            'avg_by_last_year' => round($lastYearAvg, 2) . ' ' . $currentMonthForCastData['Unit']
+            'avg_by_last_year' => round($lastYearAvg, 2) . ' ' . $currentMonthForCastData['Unit'],
         ];
     }
 

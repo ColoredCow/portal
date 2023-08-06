@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Faker\Generator as Faker;
 use App\Models\HR\Job;
+use Faker\Generator as Faker;
 
 $factory->define(Job::class, function (Faker $faker) {
     $types = ['job', 'internship'];

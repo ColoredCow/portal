@@ -18,20 +18,6 @@ class SalesAreaService
         ];
     }
 
-    private function getSalesAreaFilterQuery(array $filters = [])
-    {
-        $salesAreaQuery = SalesArea::query();
-        foreach ($filters as $filter) {
-            switch ($filter['type']) {
-                case 'name':
-                    $salesAreaQuery->filter($filter['type'], $filter['keyword']);
-                    break;
-            }
-        }
-
-        return $salesAreaQuery;
-    }
-
     public function store(array $data)
     {
         return SalesArea::create([
@@ -51,5 +37,19 @@ class SalesAreaService
     public function destroy(SalesArea $salesArea)
     {
         $salesArea->delete();
+    }
+
+    private function getSalesAreaFilterQuery(array $filters = [])
+    {
+        $salesAreaQuery = SalesArea::query();
+        foreach ($filters as $filter) {
+            switch ($filter['type']) {
+                case 'name':
+                    $salesAreaQuery->filter($filter['type'], $filter['keyword']);
+                    break;
+            }
+        }
+
+        return $salesAreaQuery;
     }
 }

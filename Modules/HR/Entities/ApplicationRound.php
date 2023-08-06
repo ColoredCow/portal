@@ -20,11 +20,11 @@ class ApplicationRound extends Model
 {
     use HasTags, HasCalendarMeetings;
 
+    public $timestamps = false;
+
     protected $guarded = [];
 
     protected $table = 'hr_application_round';
-
-    public $timestamps = false;
 
     protected $dates = ['scheduled_date', 'conducted_date', 'actual_end_time'];
 
@@ -303,23 +303,6 @@ class ApplicationRound extends Model
         return true;
     }
 
-    protected function _updateOrCreateReviews($reviews = [])
-    {
-        foreach ($reviews[$this->id] ?? [] as $review_key => $review_value) {
-            $this->applicationRoundReviews()->updateOrCreate(
-                [
-                    'hr_application_round_id' => $this->id,
-                ],
-                [
-                    'review_key' => $review_key,
-                    'review_value' => $review_value,
-                ],
-            );
-        }
-
-        return true;
-    }
-
     public function application()
     {
         return $this->belongsTo(Application::class, 'hr_application_id');
@@ -485,5 +468,22 @@ class ApplicationRound extends Model
         $meetDuration = Carbon::createFromFormat('Y-m-d H:i:s', $this->actual_end_time);
 
         return $meetDuration->diffAsCarbonInterval($scheduleDate);
+    }
+
+    protected function _updateOrCreateReviews($reviews = [])
+    {
+        foreach ($reviews[$this->id] ?? [] as $review_key => $review_value) {
+            $this->applicationRoundReviews()->updateOrCreate(
+                [
+                    'hr_application_round_id' => $this->id,
+                ],
+                [
+                    'review_key' => $review_key,
+                    'review_value' => $review_value,
+                ],
+            );
+        }
+
+        return true;
     }
 }

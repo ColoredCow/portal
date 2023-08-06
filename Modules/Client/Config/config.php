@@ -4,24 +4,24 @@ return [
     'name' => 'Client',
     'status' => [
         'active' => 'Active',
-        'inactive' => 'Inactive'
+        'inactive' => 'Inactive',
     ],
 
     'client-form-stages' => [
         'client-details' => [
-            'display-name' => 'Client Details'
+            'display-name' => 'Client Details',
         ],
 
         'contact-persons' => [
-            'display-name' => 'Contact Persons'
+            'display-name' => 'Contact Persons',
         ],
 
         'address' => [
-            'display-name' => 'Address'
+            'display-name' => 'Address',
         ],
 
         'billing-details' => [
-            'display-name' => 'Billing details'
+            'display-name' => 'Billing details',
         ],
     ],
 
@@ -40,7 +40,7 @@ return [
             'id' => 1,
             'initials' => 'IN',
             'currency' => '₹',
-            'display_name' => 'India'
+            'display_name' => 'India',
         ],
 
         [
@@ -48,7 +48,7 @@ return [
             'initials' => 'US',
             'id' => 2,
             'currency' => '$',
-            'display_name' => 'United State'
+            'display_name' => 'United State',
         ],
     ],
 
@@ -78,15 +78,15 @@ return [
 
     'currency-symbols' => [
         [
-            'rupee' => '₹'
+            'rupee' => '₹',
         ],
 
         [
-            'dollar' => '$'
+            'dollar' => '$',
         ],
 
         [
-            'pound' => '€'
+            'pound' => '€',
         ],
     ],
 
@@ -94,32 +94,32 @@ return [
         'per_hour' => [
             'slug' => 'per_hour',
             'label' => 'Per Hour',
-            'short-label' => '/hour'
+            'short-label' => '/hour',
         ],
         'per_month' => [
             'slug' => 'per_month',
             'label' => 'Per Month',
-            'short-label' => '/month'
+            'short-label' => '/month',
         ],
         'per_quarter' => [
             'slug' => 'per_quarter',
             'label' => 'Per Quarter',
-            'short-label' => '/quarter'
+            'short-label' => '/quarter',
         ],
         'per_year' => [
             'slug' => 'per_year',
             'label' => 'Per Year',
-            'short-label' => '/year'
+            'short-label' => '/year',
         ],
         'per_resource' => [
             'slug' => 'per_resource',
             'label' => 'Per Resource',
-            'short-label' => '/resource'
+            'short-label' => '/resource',
         ],
         'overall' => [
             'slug' => 'overall',
             'label' => 'Overall',
-            'short-label' => 'overall'
+            'short-label' => 'overall',
         ],
-    ]
+    ],
 ];

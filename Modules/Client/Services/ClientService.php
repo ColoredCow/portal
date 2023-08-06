@@ -3,12 +3,12 @@
 namespace Modules\Client\Services;
 
 use App\Models\Country;
-use Modules\User\Entities\User;
+use Modules\Client\Contracts\ClientServiceContract;
 use Modules\Client\Entities\Client;
 use Modules\Client\Entities\ClientAddress;
 use Modules\Client\Entities\ClientBillingDetail;
 use Modules\Client\Entities\ClientContactPerson;
-use Modules\Client\Contracts\ClientServiceContract;
+use Modules\User\Entities\User;
 
 class ClientService implements ClientServiceContract
 {
@@ -68,7 +68,7 @@ class ClientService implements ClientServiceContract
                 'channelPartners' => $this->getChannelPartners(),
                 'parentOrganisations' => $this->getParentOrganisations(),
                 'client' => $client,
-                'section' => $section ?: config('client.default-client-form-stage')
+                'section' => $section ?: config('client.default-client-form-stage'),
             ];
         }
 
@@ -85,7 +85,7 @@ class ClientService implements ClientServiceContract
                 'client' => $client,
                 'section' => $section,
                 'countries' => Country::all(),
-                'addresses' => $client->addresses
+                'addresses' => $client->addresses,
             ];
         }
 
@@ -166,6 +166,31 @@ class ClientService implements ClientServiceContract
         $clientAddress->save();
 
         return $newClient;
+    }
+
+    public function getChannelPartners()
+    {
+        return Client::where('is_channel_partner', true)->get();
+    }
+
+    public function getParentOrganisations()
+    {
+        return Client::where('has_departments', true)->get();
+    }
+
+    public function getClientBillingAddress($client)
+    {
+        $addresses = $client->addresses()->with('country')->get();
+        if ($addresses->isEmpty()) {
+            return;
+        }
+
+        $billingAddress = $addresses->where('type', 'billing-address')->first();
+        if ($billingAddress && $billingAddress->id) {
+            return $billingAddress;
+        }
+
+        return $addresses->first();
     }
 
     private function updateClientDetails($data, $client)
@@ -249,30 +274,5 @@ class ClientService implements ClientServiceContract
         ClientBillingDetail::updateOrCreate(['client_id' => $client->id], $data);
 
         return true;
-    }
-
-    public function getChannelPartners()
-    {
-        return Client::where('is_channel_partner', true)->get();
-    }
-
-    public function getParentOrganisations()
-    {
-        return Client::where('has_departments', true)->get();
-    }
-
-    public function getClientBillingAddress($client)
-    {
-        $addresses = $client->addresses()->with('country')->get();
-        if ($addresses->isEmpty()) {
-            return;
-        }
-
-        $billingAddress = $addresses->where('type', 'billing-address')->first();
-        if ($billingAddress && $billingAddress->id) {
-            return $billingAddress;
-        }
-
-        return $addresses->first();
     }
 }

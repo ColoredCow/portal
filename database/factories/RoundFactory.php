@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Faker\Generator as Faker;
 use App\Models\HR\Round;
+use Faker\Generator as Faker;
 
 $factory->define(Round::class, function (Faker $faker) {
     return [

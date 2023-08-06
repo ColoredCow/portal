@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Google_Service_Calendar;
-use Modules\User\Entities\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Laravel\Socialite\Facades\Socialite;
+use Google_Service_Calendar;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Laravel\Socialite\Facades\Socialite;
+use Modules\User\Entities\User;
 
 class LoginController extends Controller
 {

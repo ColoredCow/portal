@@ -27,7 +27,7 @@ class SendProjectSummary extends Notification
     public function via()
     {
         return [
-            GoogleChatChannel::class
+            GoogleChatChannel::class,
         ];
     }
 

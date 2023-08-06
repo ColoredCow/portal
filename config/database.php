@@ -103,7 +103,7 @@ return [
             'prefix' => env('DB_WORDPRESS_PREFIX', 'wp_'),
             'strict' => false,
             'engine' => null,
-            'enabled' => env('WORDPRESS_ENABLED', false)
+            'enabled' => env('WORDPRESS_ENABLED', false),
         ],
     ],
 

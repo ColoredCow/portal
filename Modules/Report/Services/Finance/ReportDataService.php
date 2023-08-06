@@ -50,7 +50,7 @@ class ReportDataService
 
         return [
             'selectedClient' => $selectedClient,
-            'clients' => Client::orderBy('name')->get()
+            'clients' => Client::orderBy('name')->get(),
         ];
     }
 
@@ -67,7 +67,7 @@ class ReportDataService
 
         return [
             'labels' => $reportData['months'],
-            'data' => $reportData
+            'data' => $reportData,
         ];
     }
 

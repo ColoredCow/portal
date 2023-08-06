@@ -25,7 +25,7 @@ class HrApplicationMetaFactory extends Factory
         return [
             'hr_application_id' => Application::inRandomOrder()->first()->id,
             'value' => $this->faker->text(),
-            'key' => 'form-data'
+            'key' => 'form-data',
         ];
     }
 }
