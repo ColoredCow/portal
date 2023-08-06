@@ -37,7 +37,7 @@ class CheckCommand extends Command
             $this->checkCommand($command, $name);
         }
 
-        return 1;
+        return 0;
     }
 
     private function checkCommand($command, $name)
@@ -63,8 +63,6 @@ class CheckCommand extends Command
         }
 
         $this->commandSeparator();
-
-        return 1;
     }
 
     private function commandSeparator()
