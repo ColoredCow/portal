@@ -79,7 +79,7 @@ class Project extends Model implements Auditable
         $deployedCount = $this->getDeployedCountForDesignation($designation);
         $toBeDeployedCount = $resourceRequirementCount - $deployedCount;
 
-        return ($toBeDeployedCount > 0) ? $toBeDeployedCount : ($toBeDeployedCount < 0 ? $toBeDeployedCount : '0');
+        return $toBeDeployedCount > 0 ? $toBeDeployedCount : ($toBeDeployedCount < 0 ? $toBeDeployedCount : '0');
     }
 
     public function getTotalToBeDeployedCount()

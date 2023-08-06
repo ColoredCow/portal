@@ -25,6 +25,6 @@ class ProspectChecklistMeta extends Model
             'meta_key' => 'status',
         ])->first();
 
-        return ($row) ? $row->meta_value : $defaultStatus;
+        return $row ? $row->meta_value : $defaultStatus;
     }
 }

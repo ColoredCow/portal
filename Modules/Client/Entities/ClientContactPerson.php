@@ -19,6 +19,6 @@ class ClientContactPerson extends Model
     {
         $name = explode(' ', $this->name);
 
-        return  $name[0] ?? '';
+        return $name[0] ?? '';
     }
 }

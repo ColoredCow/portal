@@ -37,7 +37,7 @@ class CheckCommand extends Command
             $this->checkCommand($command, $name);
         }
 
-        return 1;
+        return 0;
     }
 
     private function checkCommand($command, $name)
@@ -47,7 +47,9 @@ class CheckCommand extends Command
         $process = new Process($command);
 
         try {
-            $process->mustRun(function ($type, $line) {
+            $process
+            ->setTimeout(60 * 7)
+            ->mustRun(function ($type, $line) {
                 if ($type && $this->option('with-tty')) {
                     $this->output->write($line);
                 }
@@ -61,8 +63,6 @@ class CheckCommand extends Command
         }
 
         $this->commandSeparator();
-
-        return 1;
     }
 
     private function commandSeparator()
@@ -84,7 +84,7 @@ class CheckCommand extends Command
         ];
 
         $laraStan = ['./vendor/bin/phpstan', 'analyse'];
-        $phpInsights = ['php', 'artisan', 'insights', '--no-interaction'];
+        $phpInsights = ['php', 'artisan', 'insights', '-v', '--no-interaction'];
 
         $ciCommands = [];
         $ciCommands['Php CS Fixer'] = $staticAnalysis;

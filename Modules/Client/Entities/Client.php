@@ -104,7 +104,7 @@ class Client extends Model
             return;
         }
 
-        return  $address->country_id == '1' ? 'indian' : 'international';
+        return $address->country_id == '1' ? 'indian' : 'international';
     }
 
     public function getCountryAttribute()

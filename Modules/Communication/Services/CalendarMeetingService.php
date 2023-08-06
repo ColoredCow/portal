@@ -197,7 +197,7 @@ class CalendarMeetingService implements CalendarMeetingContract
 
     public function getCalendarMeeting()
     {
-        return  $this->calendarMeeting;
+        return $this->calendarMeeting;
     }
 
     /**

@@ -35,7 +35,6 @@ class EndedProjectMail extends Mailable implements ShouldQueue
             $mail->to($project['email']);
         }
 
-        return
-        $mail->view('project::mail.ended-project');
+        return $mail->view('project::mail.ended-project');
     }
 }

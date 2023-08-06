@@ -49,15 +49,4 @@ class Handler extends ExceptionHandler
         // @phpstan-ignore-next-line
         return parent::report($exception);
     }
-
-    /**
-     * Render an exception into an HTTP response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
-     */
-    public function render($request, Throwable $exception)
-    {
-        return parent::render($request, $exception);
-    }
 }
