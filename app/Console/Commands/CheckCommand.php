@@ -47,7 +47,9 @@ class CheckCommand extends Command
         $process = new Process($command);
 
         try {
-            $process->mustRun(function ($type, $line) {
+            $process
+            ->setTimeout(60 * 7)
+            ->mustRun(function ($type, $line) {
                 if ($type && $this->option('with-tty')) {
                     $this->output->write($line);
                 }

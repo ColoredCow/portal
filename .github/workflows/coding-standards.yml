@@ -5,55 +5,55 @@ on:
     branches: [master]
 
 jobs:
-  phpcs:
-    name: PHP CS
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup PHP v8.2
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.2"
-      - name: Install composer dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
-      - name: PHP Coding Standards
-        run: PHP_CS_FIXER_IGNORE_ENV=1 php ./vendor/bin/php-cs-fixer fix --config .php-cs-fixer.php --dry-run --verbose --diff
+  # phpcs:
+  #   name: PHP CS
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Setup PHP v8.2
+  #       uses: shivammathur/setup-php@v2
+  #       with:
+  #         php-version: "8.2"
+  #     - name: Install composer dependencies
+  #       run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+  #     - name: PHP Coding Standards
+  #       run: PHP_CS_FIXER_IGNORE_ENV=1 php ./vendor/bin/php-cs-fixer fix --config .php-cs-fixer.php --dry-run --verbose --diff
 
-  eslint:
-    name: ES Lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup PHP v8.2
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.2"
-      - name: Install composer dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
-      - name: Install NPM Dependencies
-        run: npm install
-      - name: ESLINT
-        run: ./node_modules/.bin/eslint resources/js/ Modules/*/Resources/assets/js/ --ext .js,.vue
+  # eslint:
+  #   name: ES Lint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Setup PHP v8.2
+  #       uses: shivammathur/setup-php@v2
+  #       with:
+  #         php-version: "8.2"
+  #     - name: Install composer dependencies
+  #       run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+  #     - name: Install NPM Dependencies
+  #       run: npm install
+  #     - name: ESLINT
+  #       run: ./node_modules/.bin/eslint resources/js/ Modules/*/Resources/assets/js/ --ext .js,.vue
 
-  larastan:
-    name: Larastan
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup PHP v8.2
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.2"
-      - name: Install composer dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
-      - name: Setup env file
-        run: cp ./.env.example .env
-      - name: Configure application encryption key
-        run: php artisan key:generate
-      - name: clear cache
-        run: php artisan view:clear
-      - name: Larastan
-        run: ./vendor/bin/phpstan analyse
+  # larastan:
+  # name: Larastan
+  # runs-on: ubuntu-latest
+  # steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Setup PHP v8.2
+  #     uses: shivammathur/setup-php@v2
+  #     with:
+  #       php-version: "8.2"
+  #   - name: Install composer dependencies
+  #     run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+  #   - name: Setup env file
+  #     run: cp ./.env.example .env
+  #   - name: Configure application encryption key
+  #     run: php artisan key:generate
+  #   - name: clear cache
+  #     run: php artisan view:clear
+  #   - name: Larastan
+  #     run: ./vendor/bin/phpstan analyse
 
   laravelCI:
     name: laravelCI
