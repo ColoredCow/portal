@@ -13,7 +13,7 @@ jobs:
       - name: Setup PHP v8.2
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: "8.2"
       - name: Install composer dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
       - name: PHP Coding Standards
@@ -27,7 +27,7 @@ jobs:
       - name: Setup PHP v8.2
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: "8.2"
       - name: Install composer dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
       - name: Install NPM Dependencies
@@ -43,7 +43,7 @@ jobs:
       - name: Setup PHP v8.2
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: "8.2"
       - name: Install composer dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
       - name: Setup env file
@@ -54,3 +54,23 @@ jobs:
         run: php artisan view:clear
       - name: Larastan
         run: ./vendor/bin/phpstan analyse
+
+  laravelCI:
+    name: laravelCI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP v8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+      - name: Install composer dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+      - name: Setup env file
+        run: cp ./.env.example .env
+      - name: Configure application encryption key
+        run: php artisan key:generate
+      - name: clear cache
+        run: php artisan view:clear
+      - name: LaravelCI
+        run: php artisan check:ci
