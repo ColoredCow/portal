@@ -30,11 +30,6 @@ class Project extends Model implements Auditable
 
     protected $appends = ['velocity', 'current_hours_for_month', 'velocity_color_class'];
 
-    protected static function newFactory()
-    {
-        return new ProjectFactory();
-    }
-
     public function scopeIsAMC($query, $isAmc)
     {
         $query->where('is_amc', $isAmc);
@@ -418,5 +413,10 @@ class Project extends Model implements Auditable
         $todayDate = (int) $today->format('j');
 
         return $billingDate == $todayDate ? 'text-dark' : ($this->velocity >= 1 ? 'text-success' : 'text-danger');
+    }
+
+    protected static function newFactory()
+    {
+        return new ProjectFactory();
     }
 }

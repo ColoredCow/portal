@@ -18,20 +18,6 @@ class SalesCharacteristicService
         ];
     }
 
-    private function getsalesCharacteristicFilterQuery(array $filters = [])
-    {
-        $salesCharacteristicQuery = SalesCharacteristic::query();
-        foreach ($filters as $filter) {
-            switch ($filter['type']) {
-                case 'name':
-                    $salesCharacteristicQuery->filter($filter['type'], $filter['keyword']);
-                    break;
-            }
-        }
-
-        return $salesCharacteristicQuery;
-    }
-
     public function store(array $data)
     {
         return SalesCharacteristic::create([
@@ -53,5 +39,19 @@ class SalesCharacteristicService
     public function destroy(SalesCharacteristic $salesCharacteristic)
     {
         $salesCharacteristic->delete();
+    }
+
+    private function getsalesCharacteristicFilterQuery(array $filters = [])
+    {
+        $salesCharacteristicQuery = SalesCharacteristic::query();
+        foreach ($filters as $filter) {
+            switch ($filter['type']) {
+                case 'name':
+                    $salesCharacteristicQuery->filter($filter['type'], $filter['keyword']);
+                    break;
+            }
+        }
+
+        return $salesCharacteristicQuery;
     }
 }

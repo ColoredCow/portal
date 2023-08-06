@@ -102,6 +102,53 @@ class ProspectService implements ProspectServiceContract
         ];
     }
 
+    public function addNewProgressStage($data)
+    {
+        $stageName = $data['stageName'] ?? '';
+        $stageName = trim($stageName);
+
+        if (! $stageName) {
+            return false;
+        }
+
+        $prospectStage = ProspectStage::firstOrNew(['name' => $stageName]);
+        $prospectStage->created_by = Auth::id();
+        $prospectStage->slug = Str::slug($stageName);
+        $prospectStage->save();
+
+        return $prospectStage;
+    }
+
+    public function uploadDocuments($documents, $prospect, $prospectHistory)
+    {
+        foreach ($documents as $document) {
+            $fileName = $prospectHistory->id . '-' . $document->getClientOriginalName();
+            $file = Storage::putFileAs('/prospect', $document, $fileName, ['visibility' => 'public']);
+            $prospectDocument = new ProspectDocument;
+
+            $prospectDocument->prospect_id = $prospect->id;
+            $prospectDocument->prospect_history_id = optional($prospectHistory)->id;
+            $prospectDocument->name = $fileName;
+            $prospectDocument->file_path = $file;
+            $prospectDocument->save();
+        }
+    }
+
+    public function getProspectChecklist($prospect)
+    {
+        $moduleChecklist = ModuleChecklist::whereIn('slug', config('prospect.checklist'))
+            ->get();
+        $results = [];
+
+        foreach ($moduleChecklist as $checklist) {
+            $data = $checklist->toArray();
+            $data['status'] = $prospect->getCheckListStatus($checklist->id);
+            $results[] = $data;
+        }
+
+        return collect($results)->reverse();
+    }
+
     private function getAssignee()
     {
         return User::orderBy('name')->get();
@@ -168,52 +215,5 @@ class ProspectService implements ProspectServiceContract
     private function getAllClientContactPersons()
     {
         return ClientContactPerson::with('client')->orderBy('name')->get();
-    }
-
-    public function addNewProgressStage($data)
-    {
-        $stageName = $data['stageName'] ?? '';
-        $stageName = trim($stageName);
-
-        if (! $stageName) {
-            return false;
-        }
-
-        $prospectStage = ProspectStage::firstOrNew(['name' => $stageName]);
-        $prospectStage->created_by = Auth::id();
-        $prospectStage->slug = Str::slug($stageName);
-        $prospectStage->save();
-
-        return $prospectStage;
-    }
-
-    public function uploadDocuments($documents, $prospect, $prospectHistory)
-    {
-        foreach ($documents as $document) {
-            $fileName = $prospectHistory->id . '-' . $document->getClientOriginalName();
-            $file = Storage::putFileAs('/prospect', $document, $fileName, ['visibility' => 'public']);
-            $prospectDocument = new ProspectDocument;
-
-            $prospectDocument->prospect_id = $prospect->id;
-            $prospectDocument->prospect_history_id = optional($prospectHistory)->id;
-            $prospectDocument->name = $fileName;
-            $prospectDocument->file_path = $file;
-            $prospectDocument->save();
-        }
-    }
-
-    public function getProspectChecklist($prospect)
-    {
-        $moduleChecklist = ModuleChecklist::whereIn('slug', config('prospect.checklist'))
-            ->get();
-        $results = [];
-
-        foreach ($moduleChecklist as $checklist) {
-            $data = $checklist->toArray();
-            $data['status'] = $prospect->getCheckListStatus($checklist->id);
-            $results[] = $data;
-        }
-
-        return collect($results)->reverse();
     }
 }
