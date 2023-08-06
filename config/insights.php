@@ -92,34 +92,31 @@ return [
         PropertyTypeHintSniff::class,
         ReturnTypeHintSniff::class,
         UselessFunctionDocCommentSniff::class,
-        SlevomatCodingStandard\Sniffs\Classes\ForbiddenPublicPropertySniff::class,
+
         NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff::class,
-        PHP_CodeSniffer\Standards\Generic\Sniffs\Arrays\ArrayIndentSniff::class,
-        PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\SwitchDeclarationSniff::class,
+        NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh::class,
+
+        SlevomatCodingStandard\Sniffs\Classes\ForbiddenPublicPropertySniff::class,
         SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff::class,
         SlevomatCodingStandard\Sniffs\ControlStructures\DisallowShortTernaryOperatorSniff::class,
         SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff::class,
-        PhpCsFixer\Fixer\Operator\NewWithBracesFixer::class,
-        PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff::class,
-        PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer::class,
+        SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff::class,
+        SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff::class,
+        SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff::class,
 
-        PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ObjectOperatorIndentSniff::class,
-        PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\SwitchDeclarationSniff::class,
-        PHP_CodeSniffer\Standards\PSR12\Sniffs\Classes\ClassInstantiationSniff::class,
+        PhpCsFixer\Fixer\Operator\NewWithBracesFixer::class,
+        PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer::class,
         PhpCsFixer\Fixer\Basic\BracesFixer::class,
         PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer::class,
         PhpCsFixer\Fixer\Whitespace\MethodChainingIndentationFixer::class,
-        SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff::class,
-        SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff::class,
 
-        // complexity
-        NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh::class,
-
-        // architecture
+        PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff::class,
+        PHP_CodeSniffer\Standards\Generic\Sniffs\Arrays\ArrayIndentSniff::class,
+        PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\SwitchDeclarationSniff::class,
+        PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ObjectOperatorIndentSniff::class,
+        PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\SwitchDeclarationSniff::class,
+        PHP_CodeSniffer\Standards\PSR12\Sniffs\Classes\ClassInstantiationSniff::class,
         PHP_CodeSniffer\Standards\PSR1\Sniffs\Classes\ClassDeclarationSniff::class,
-        SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff::class,
-
-        // style
         PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class,
     ],
 
