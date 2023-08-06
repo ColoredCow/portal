@@ -4,13 +4,13 @@ namespace Modules\HR\Entities;
 
 use App\Helpers\ContentHelper;
 use App\Traits\HasTags;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Modules\HR\Database\Factories\HrApplicationsFactory;
 use Modules\HR\Entities\Evaluation\ApplicationEvaluation;
 use Modules\HR\Events\Recruitment\ApplicationCreated;
 use Modules\User\Entities\User;
-use Modules\HR\Database\Factories\HrApplicationsFactory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Application extends Model
 {

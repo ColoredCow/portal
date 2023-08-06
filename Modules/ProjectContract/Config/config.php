@@ -27,5 +27,5 @@ return [
             'project-cost' => 'Project Cost',
             'payment-methodology' => 'Payment Methodology',
         ],
-    ]
+    ],
 ];

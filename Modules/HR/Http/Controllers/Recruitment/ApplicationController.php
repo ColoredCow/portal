@@ -2,32 +2,32 @@
 
 namespace Modules\HR\Http\Controllers\Recruitment;
 
-use App\Models\Tag;
-use App\Models\Setting;
 use App\Helpers\FileHelper;
-use Illuminate\Support\Str;
+use App\Models\Setting;
+use App\Models\Tag;
 use Illuminate\Http\Request;
-use Modules\HR\Entities\Job;
-use Modules\HR\Entities\Round;
-use Modules\User\Entities\User;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
-use Modules\HR\Entities\University;
 use Illuminate\Support\Facades\Mail;
-use Modules\HR\Entities\Application;
-use Modules\HR\Entities\ApplicantMeta;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Modules\HR\Emails\Recruitment\Application\ApplicationHandover;
+use Modules\HR\Emails\Recruitment\Application\JobChanged;
+use Modules\HR\Emails\Recruitment\Application\RoundNotConducted;
+use Modules\HR\Entities\ApplicantMeta;
+use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationMeta;
 use Modules\HR\Entities\ApplicationRound;
-use Modules\HR\Services\ApplicationService;
-use niklasravnsborg\LaravelPdf\Facades\Pdf;
-use Modules\HR\Http\Requests\TeamInteractionRequest;
-use Modules\HR\Emails\Recruitment\Application\JobChanged;
+use Modules\HR\Entities\Job;
+use Modules\HR\Entities\Round;
+use Modules\HR\Entities\University;
 use Modules\HR\Http\Requests\Recruitment\ApplicationRequest;
-use Modules\HR\Emails\Recruitment\Application\RoundNotConducted;
-use Modules\HR\Emails\Recruitment\Application\ApplicationHandover;
 use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
+use Modules\HR\Http\Requests\TeamInteractionRequest;
+use Modules\HR\Services\ApplicationService;
+use Modules\User\Entities\User;
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 abstract class ApplicationController extends Controller
 {

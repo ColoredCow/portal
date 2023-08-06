@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Modules\User\Entities\User;
-use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Modules\User\Database\Seeders\UserPermissionsTableSeeder;
+use Modules\User\Entities\User;
+use Spatie\Permission\Models\Role;
 
 class UserDatabaseSeeder extends Seeder
 {

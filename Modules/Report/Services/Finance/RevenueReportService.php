@@ -130,7 +130,7 @@ class RevenueReportService
         return [
             'months' => array_keys($amountMonthWise),
             'amount' => array_values($amountMonthWise),
-            'total_amount' => round($totalAmount, 2)
+            'total_amount' => round($totalAmount, 2),
         ];
     }
 
@@ -284,7 +284,7 @@ class RevenueReportService
 
         return [
             'invoiceAmount' => $invoiceAmount,
-            'amountMonthWise' => $amountMonthWise
+            'amountMonthWise' => $amountMonthWise,
         ];
     }
 

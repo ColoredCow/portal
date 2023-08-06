@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Modules\HR\Database\Seeders\HrDomainTableSeeder;
 use Modules\HR\Database\Seeders\HrDesignationTableSeeder;
+use Modules\HR\Database\Seeders\HrDomainTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {

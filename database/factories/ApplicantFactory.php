@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Faker\Generator as Faker;
 use App\Models\HR\Applicant;
+use Faker\Generator as Faker;
 
 $factory->define(Applicant::class, function (Faker $faker) {
     return [

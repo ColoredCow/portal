@@ -67,17 +67,17 @@ return [
 
     'exclude' => [
         'Modules/Report/Services/Finance/RevenueReportService.php',
-        'Modules/*/Database/Migrations/*'
+        'Modules/*/Database/Migrations/*',
     ],
 
     'add' => [
         Classes::class => [
-            ForbiddenFinalClasses::class
+            ForbiddenFinalClasses::class,
         ],
 
         CodeClasses::class => [
-            PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff::class
-        ]
+            PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff::class,
+        ],
 
     ],
 
@@ -120,7 +120,7 @@ return [
         SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff::class,
 
         // style
-        PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class
+        PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class,
     ],
 
     'config' => [
@@ -134,8 +134,8 @@ return [
 
         \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class => [
             'lineLimit' => 140,
-            'absoluteLineLimit' => 160
-        ]
+            'absoluteLineLimit' => 160,
+        ],
     ],
 
     /*

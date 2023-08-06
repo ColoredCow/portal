@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\KnowledgeCafe\Library\BookCategory;
+use Illuminate\Database\Seeder;
 
 class BookCategoriesTableSeeder extends Seeder
 {

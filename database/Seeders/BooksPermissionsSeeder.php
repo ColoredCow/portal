@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class BooksPermissionsSeeder extends Seeder
 {
@@ -19,7 +19,7 @@ class BooksPermissionsSeeder extends Seeder
         Artisan::call('permission:cache-reset');
 
         $weeklyDosesPermissions = [
-            ['name' => 'weeklydoses.view']
+            ['name' => 'weeklydoses.view'],
         ];
 
         $libraryBooksPermissions = [
