@@ -152,7 +152,7 @@ return [
     'requirements' => [
        'min-quality' => 100,
        'min-complexity' => 82,
-       'min-architecture' => 81,
+       'min-architecture' => 100,
        'min-style' => 0,
        'disable-security-check' => true,
     ],

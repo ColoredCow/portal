@@ -233,7 +233,7 @@ class InvoiceService implements InvoiceServiceContract
 
         return [
             'subject' => $subject,
-            'body' => $body
+            'body' => $body,
         ];
     }
 
@@ -324,7 +324,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         return [
             'invoices' => $this->taxReportInvoices($filters),
-            'clients' => Client::orderBy('name', 'asc')->get()
+            'clients' => Client::orderBy('name', 'asc')->get(),
         ];
     }
 
@@ -365,7 +365,7 @@ class InvoiceService implements InvoiceServiceContract
             // 'currentRates' => $this->currencyService()->getCurrentRatesInINR(),
             'igst' => $igst,
             'cgst' => $cgst,
-            'sgst' => $sgst
+            'sgst' => $sgst,
         ];
     }
 
@@ -453,7 +453,7 @@ class InvoiceService implements InvoiceServiceContract
             'termText' => $termText,
             'termPeriod' => $termPeriod,
             'periodStartDate' => $data['period_start_date'] ?? null,
-            'periodEndDate' => $data['period_end_date'] ?? null
+            'periodEndDate' => $data['period_end_date'] ?? null,
         ];
     }
 
@@ -585,7 +585,7 @@ class InvoiceService implements InvoiceServiceContract
             'cc' => $ccEmails,
             'bcc' => $bccEmails,
             'body' => $data['email_body'] ?? null,
-            'subject' => $data['email_subject'] ?? null
+            'subject' => $data['email_subject'] ?? null,
         ];
     }
 
@@ -731,7 +731,7 @@ class InvoiceService implements InvoiceServiceContract
             'clients' => $clients,
             'client' => $client,
             'project' => $project,
-            'ledgerAccountData' => $project ? $project->ledgerAccounts->toArray() : ($client ? $client->ledgerAccounts->toArray() : [])
+            'ledgerAccountData' => $project ? $project->ledgerAccounts->toArray() : ($client ? $client->ledgerAccounts->toArray() : []),
         ];
     }
 
@@ -813,7 +813,7 @@ class InvoiceService implements InvoiceServiceContract
                 'TDS' => number_format((float) $invoice->tds, 2),
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
-                'Status' => Str::studly($invoice->status)
+                'Status' => Str::studly($invoice->status),
             ];
         });
     }
@@ -830,7 +830,7 @@ class InvoiceService implements InvoiceServiceContract
                 'Conversion Rate' => $invoice->conversion_rate,
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
-                'Status' => Str::studly($invoice->status)
+                'Status' => Str::studly($invoice->status),
             ];
         });
     }
@@ -850,7 +850,7 @@ class InvoiceService implements InvoiceServiceContract
                 'TDS' => number_format((float) $invoice->tds, 2),
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
-                'Status' => Str::studly($invoice->status)
+                'Status' => Str::studly($invoice->status),
             ];
         });
     }
@@ -872,7 +872,7 @@ class InvoiceService implements InvoiceServiceContract
                 'Amount Recieved in Dollars' => $invoice->amount_paid,
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
-                'Status' => $invoice->status
+                'Status' => $invoice->status,
             ];
         });
     }
@@ -890,7 +890,7 @@ class InvoiceService implements InvoiceServiceContract
                 'Amount Recieved' => $invoice->amount_paid,
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
-                'Status' => $invoice->status
+                'Status' => $invoice->status,
             ];
         });
     }
@@ -910,7 +910,7 @@ class InvoiceService implements InvoiceServiceContract
                 'Amount Recieved in Dollars' => $invoice->amount_paid,
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
-                'Status' => $invoice->status
+                'Status' => $invoice->status,
             ];
         });
     }

@@ -25,7 +25,7 @@ class ProspectChecklistService implements ProspectChecklistServiceContract
             'prospect' => $prospect,
             'checklistId' => $checklistID,
             'templates' => LegalDocumentTemplate::all(),
-            'metaData' => $this->getMetaData($prospect, $checklistID)
+            'metaData' => $this->getMetaData($prospect, $checklistID),
         ];
     }
 
@@ -40,7 +40,7 @@ class ProspectChecklistService implements ProspectChecklistServiceContract
         }
 
         return [
-            'prospect' => $prospect
+            'prospect' => $prospect,
         ];
     }
 

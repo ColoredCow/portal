@@ -37,7 +37,7 @@ class HrApplicationsFactory extends Factory
             'hr_applicant_id' => Applicant::inRandomOrder()->first()->id,
             'hr_job_id' => Job::inRandomOrder()->first()->id,
             'resume' => config('hr.Sample-Resume'),
-            'status' => $status
+            'status' => $status,
         ];
     }
 }

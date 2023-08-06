@@ -32,7 +32,7 @@ class CodeTrekRequest extends FormRequest
             'course.required' => 'Please enter your course name.',
             'graduation_year.required' => 'Please enter your graduation year.',
             'graduation_year.numeric' => 'Please enter a valid graduation year.',
-            'graduation_year.digits' => 'Graduation year should be in 4 digit format.'
+            'graduation_year.digits' => 'Graduation year should be in 4 digit format.',
         ];
     }
     private function codeTrekValidation()

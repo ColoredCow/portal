@@ -70,7 +70,7 @@ class ProspectService implements ProspectServiceContract
             'prospect' => $prospect,
             'section' => $section ?: config('prospect.default-prospect-show-tab'),
             'prospectStages' => ProspectStage::orderBy('name')->get(),
-            'prospectChecklist' => $this->getProspectChecklist($prospect)
+            'prospectChecklist' => $this->getProspectChecklist($prospect),
         ];
     }
 
@@ -98,7 +98,7 @@ class ProspectService implements ProspectServiceContract
         }
 
         return [
-            'route' => $data['submit_action'] == 'next' ? $nextStage : $defaultRoute
+            'route' => $data['submit_action'] == 'next' ? $nextStage : $defaultRoute,
         ];
     }
 

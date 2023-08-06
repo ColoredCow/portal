@@ -31,7 +31,7 @@ class ProjectFTEExport implements FromArray, WithHeadings, ShouldAutoSize, WithT
                 'Project Name',
                 'Team Member Project FTE',
                 'Committed Hours',
-                'Booked Hours'
+                'Booked Hours',
             ];
     }
 
@@ -50,7 +50,7 @@ class ProjectFTEExport implements FromArray, WithHeadings, ShouldAutoSize, WithT
                 'font' => [
                     'bold' => true,
                 ],
-            ]
+            ],
         ];
     }
 }

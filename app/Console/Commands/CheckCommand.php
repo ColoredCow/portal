@@ -108,7 +108,7 @@ class CheckCommand extends Command
 
         return [
         'ESLint fix' => array_merge($esCheckCommand, ['--fix']),
-        'ESLint check' => $esCheckCommand
+        'ESLint check' => $esCheckCommand,
         ];
     }
 }
