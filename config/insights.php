@@ -72,6 +72,7 @@ return [
     'add' => [
         Classes::class => [
             ForbiddenFinalClasses::class,
+            PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff::class
         ],
     ],
 

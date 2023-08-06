@@ -86,7 +86,7 @@ class CheckCommand extends Command
         ];
 
         $laraStan = ['./vendor/bin/phpstan', 'analyse'];
-        $phpInsights = ['php', 'artisan', 'insights', '--no-interaction', '-v'];
+        $phpInsights = ['php', 'artisan', 'insights', '--no-interaction', '--format=github-action'];
 
         $ciCommands = [];
         $ciCommands['Php CS Fixer'] = $staticAnalysis;
