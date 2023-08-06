@@ -70,7 +70,7 @@ class User extends Authenticatable
 
     public function getAvatarAttribute($value)
     {
-        return ($value) ?: url('/images/default_profile.png');
+        return $value ?: url('/images/default_profile.png');
     }
 
     public function books()

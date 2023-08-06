@@ -475,17 +475,15 @@ class ApplicationRound extends Model
     {
         $scheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $this->scheduled_date);
         $scheduleEnd = Carbon::createFromFormat('Y-m-d H:i:s', $this->scheduled_end);
-        $timeDiff = $scheduleEnd->diffAsCarbonInterval($scheduleDate);
 
-        return $timeDiff;
+        return $scheduleEnd->diffAsCarbonInterval($scheduleDate);
     }
 
     public function getActualMeetingDurationAttribute()
     {
         $scheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $this->scheduled_date);
         $meetDuration = Carbon::createFromFormat('Y-m-d H:i:s', $this->actual_end_time);
-        $timeDiffer = $meetDuration->diffAsCarbonInterval($scheduleDate);
 
-        return $timeDiffer;
+        return $meetDuration->diffAsCarbonInterval($scheduleDate);
     }
 }

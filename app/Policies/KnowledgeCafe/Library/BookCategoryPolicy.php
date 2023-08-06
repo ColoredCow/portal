@@ -42,7 +42,7 @@ class BookCategoryPolicy
      */
     public function update(User $user)
     {
-        return  $user->hasPermissionTo('library_book_category.update');
+        return $user->hasPermissionTo('library_book_category.update');
     }
 
     /**

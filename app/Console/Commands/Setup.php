@@ -40,6 +40,6 @@ class Setup extends Command
         Artisan::call('module:seed');
         $this->info('Setup completed.');
 
-        return 1;
+        return 0;
     }
 }

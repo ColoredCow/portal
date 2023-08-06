@@ -153,6 +153,6 @@ class ApplicationService implements ApplicationServiceContract
         // Store the token in the cache for 1 day.
         Cache::put('campaign_token', $accessToken, 60 * 24);
 
-        return  $accessToken;
+        return $accessToken;
     }
 }
