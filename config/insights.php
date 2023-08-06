@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'ide' => null,
+    'ide' => 'vscode',
 
     /*
     |--------------------------------------------------------------------------
@@ -154,7 +154,7 @@ return [
        'min-complexity' => 82,
        'min-architecture' => 81,
        'min-style' => 0,
-       'disable-security-check' => true,
+       'disable-security-check' => false,
     ],
 
     /*

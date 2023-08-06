@@ -15,15 +15,15 @@ class BillingsPolicy
      *
      * @return mixed
      */
-    public function BackupView(User $user)
+    public function backupView(User $user)
     {
         return $user->hasPermissionTo('infrastructure.backups.view');
     }
-    public function BillingView(User $user)
+    public function billingView(User $user)
     {
         return $user->hasPermissionTo('infrastructure.billings.view');
     }
-    public function Ec2InstancesView(User $user)
+    public function ec2InstancesView(User $user)
     {
         return $user->hasPermissionTo('infrastructure.ec2-instances.view');
     }

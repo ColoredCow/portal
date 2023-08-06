@@ -15,26 +15,26 @@ use Modules\User\Entities\UserMeta;
 
 class AppointmentSlotsService implements AppointmentSlotsServiceContract
 {
-    // public function canSeeAppointments($data, $params)
-    // {
-    //     $decryptedParams = json_decode(decrypt($params), true);
+    public function canSeeAppointments($params)
+    {
+        $decryptedParams = json_decode(decrypt($params), true);
 
-    //     $applicationRound = null;
-    //     if (isset($decryptedParams['application_id'])) {
-    //         $applicationId = $decryptedParams['application_id'];
-    //         $application = Application::find($applicationId);
-    //         $applicationRound = $application->latestApplicationRound;
-    //     } else {
-    //         // old method. Kept for backward compatibility. Deprecated.
-    //         $applicationRound = ApplicationRound::find($decryptedParams['application_round_id']);
-    //     }
+        $applicationRound = null;
+        if (isset($decryptedParams['application_id'])) {
+            $applicationId = $decryptedParams['application_id'];
+            $application = Application::find($applicationId);
+            $applicationRound = $application->latestApplicationRound;
+        } else {
+            // old method. Kept for backward compatibility. Deprecated.
+            $applicationRound = ApplicationRound::find($decryptedParams['application_round_id']);
+        }
 
-    //     if ($applicationRound && is_null($applicationRound->scheduled_date) && is_null($applicationRound->round_status)) {
-    //         return true;
-    //     }
+        if ($applicationRound && is_null($applicationRound->scheduled_date) && is_null($applicationRound->round_status)) {
+            return true;
+        }
 
-    //     return false;
-    // }
+        return false;
+    }
 
     public function showAppointments($params)
     {
@@ -133,6 +133,30 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         }
     }
 
+    public function schedule(ApplicationRound $applicationRound, $data)
+    {
+        $applicant = $applicationRound->application->applicant;
+        $summary = "{$applicant->name} – {$applicationRound->round->name} with ColoredCow";
+        $guests = [['email' => $data['applicant_email'], 'responseStatus' => 'accepted']];
+
+        $calendarMeetingService = app(CalendarMeetingContract::class);
+        $calendarMeetingService->setOrganizer($applicationRound->scheduledPerson);
+
+        $calendarMeetingService->createNewMeeting([
+            'summary' => $summary,
+            'start' => $applicationRound->scheduled_date->format(config('constants.datetime_format')),
+            'end' => $applicationRound->scheduled_end,
+            'attendees' => $guests,
+        ]);
+
+        $applicationRound->update([
+            'calendar_event' => $calendarMeetingService->getEvent()->id,
+            'calendar_meeting_id' => $calendarMeetingService->calendarMeeting->id,
+        ]);
+
+        return true;
+    }
+
     private function getSlotsForDays($userId, $startDate)
     {
         $slots = [];
@@ -161,30 +185,6 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         }
 
         return $slots;
-    }
-
-    public function schedule(ApplicationRound $applicationRound, $data)
-    {
-        $applicant = $applicationRound->application->applicant;
-        $summary = "{$applicant->name} – {$applicationRound->round->name} with ColoredCow";
-        $guests = [['email' => $data['applicant_email'], 'responseStatus' => 'accepted']];
-
-        $calendarMeetingService = app(CalendarMeetingContract::class);
-        $calendarMeetingService->setOrganizer($applicationRound->scheduledPerson);
-
-        $calendarMeetingService->createNewMeeting([
-            'summary' => $summary,
-            'start' => $applicationRound->scheduled_date->format(config('constants.datetime_format')),
-            'end' => $applicationRound->scheduled_end,
-            'attendees' => $guests,
-        ]);
-
-        $applicationRound->update([
-            'calendar_event' => $calendarMeetingService->getEvent()->id,
-            'calendar_meeting_id' => $calendarMeetingService->calendarMeeting->id,
-        ]);
-
-        return true;
     }
 
     private function createCalendarEvent(ApplicationRound $applicationRound)
@@ -222,11 +222,6 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         return $results;
     }
 
-    /**
-     * Get free slots for a user.
-     *
-     * @param  int  $userId
-     */
     private function getUserFreeSlots($userId)
     {
         $slots = AppointmentSlot::user($userId)->future()->get();
