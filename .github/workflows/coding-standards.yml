@@ -55,8 +55,8 @@ jobs:
   #   - name: Larastan
   #     run: ./vendor/bin/phpstan analyse
 
-  laravelCI:
-    name: laravelCI
+  ColoredCowLaravelCI:
+    name: ColoredCowLaravelCI
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -74,5 +74,5 @@ jobs:
         run: npm install
       - name: clear cache
         run: php artisan cache:clear
-      - name: LaravelCI
+      - name: ColoredCowLaravelCI
         run: "php artisan check:ci --with-tty"

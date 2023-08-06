@@ -72,24 +72,24 @@ class CheckCommand extends Command
 
     private function getCommands()
     {
-        // $staticAnalysis = [
-        //     'php',
-        //     './vendor/bin/php-cs-fixer',
-        //     'fix',
-        //     '--config',
-        //     '.php-cs-fixer.php',
-        //     '--dry-run',
-        //     '--verbose',
-        //     '--diff',
-        // ];
+        $staticAnalysis = [
+            'php',
+            './vendor/bin/php-cs-fixer',
+            'fix',
+            '--config',
+            '.php-cs-fixer.php',
+            '--dry-run',
+            '--verbose',
+            '--diff',
+        ];
 
-        // $laraStan = ['./vendor/bin/phpstan', 'analyse'];
+        $laraStan = ['./vendor/bin/phpstan', 'analyse'];
         $phpInsights = ['php', 'artisan', 'insights', '-v', '--no-interaction'];
 
         $ciCommands = [];
-        // $ciCommands['Php CS Fixer'] = $staticAnalysis;
-        // $ciCommands['LaraStan'] = $laraStan;
-        // $ciCommands = array_merge($ciCommands, $this->getEsCommands());
+        $ciCommands['Php CS Fixer'] = $staticAnalysis;
+        $ciCommands['LaraStan'] = $laraStan;
+        $ciCommands = array_merge($ciCommands, $this->getEsCommands());
         $ciCommands['Insights'] = $phpInsights;
 
         return $ciCommands;
