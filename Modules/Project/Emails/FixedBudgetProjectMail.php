@@ -35,7 +35,6 @@ class FixedBudgetProjectMail extends Mailable implements ShouldQueue
             $mail->to($project['email']);
         }
 
-        return
-        $mail->view('project::mail.fixed-budget-project');
+        return $mail->view('project::mail.fixed-budget-project');
     }
 }

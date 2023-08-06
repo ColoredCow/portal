@@ -8,6 +8,7 @@ use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenPrivateMethods;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
+use NunoMaduro\PhpInsights\Domain\Metrics\Code\Classes as CodeClasses;
 use SlevomatCodingStandard\Sniffs\Commenting\UselessFunctionDocCommentSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\AlphabeticallySortedUsesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff;
@@ -71,9 +72,13 @@ return [
 
     'add' => [
         Classes::class => [
-            ForbiddenFinalClasses::class,
-            PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff::class
+            ForbiddenFinalClasses::class
         ],
+
+        CodeClasses::class => [
+            PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff::class
+        ]
+
     ],
 
     'remove' => [
