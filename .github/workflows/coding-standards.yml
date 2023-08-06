@@ -73,6 +73,6 @@ jobs:
       - name: Install NPM Dependencies
         run: npm install
       - name: clear cache
-        run: php artisan view:clear
+        run: php artisan cache:clear
       - name: LaravelCI
-        run: "php artisan insights --no-interaction --format=github-action -s"
+        run: "php artisan check:ci"
