@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Settings;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Setting\UpdateRolePermissionsRequest;
+use App\Http\Requests\Setting\UpdateUserRolesRequest;
 use App\Models\Setting;
 use Modules\User\Entities\User;
-use Spatie\Permission\Models\Role;
-use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Permission;
-use App\Http\Requests\Setting\UpdateUserRolesRequest;
-use App\Http\Requests\Setting\UpdateRolePermissionsRequest;
+use Spatie\Permission\Models\Role;
 
 class PermissionController extends Controller
 {

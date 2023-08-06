@@ -114,6 +114,7 @@ $rules = [
     'unary_operator_spaces' => true,
     'trailing_comma_in_multiline' => true,
     'ordered_class_elements' => true,
+    'ordered_imports' => true,
     'visibility_required' => [
         'elements' => ['method', 'property'],
     ],

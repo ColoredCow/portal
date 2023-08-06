@@ -3,12 +3,12 @@
 namespace Modules\Client\Services;
 
 use App\Models\Country;
-use Modules\User\Entities\User;
+use Modules\Client\Contracts\ClientServiceContract;
 use Modules\Client\Entities\Client;
 use Modules\Client\Entities\ClientAddress;
 use Modules\Client\Entities\ClientBillingDetail;
 use Modules\Client\Entities\ClientContactPerson;
-use Modules\Client\Contracts\ClientServiceContract;
+use Modules\User\Entities\User;
 
 class ClientService implements ClientServiceContract
 {

@@ -2,10 +2,10 @@
 
 namespace App\Models\KnowledgeCafe\Library;
 
-use Modules\User\Entities\User;
 use App\Models\Comment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\User\Entities\User;
 
 class Book extends Model
 {
