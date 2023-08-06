@@ -80,7 +80,7 @@ class Book extends Model
 
     public function markBook($read)
     {
-        return ($read) ? $this->markAsRead() : $this->markAsUnRead();
+        return $read ? $this->markAsRead() : $this->markAsUnRead();
     }
 
     public static function getRandomUnreadBook()

@@ -54,7 +54,7 @@ class Employee extends Model
         }
         $now = now();
 
-        return ($this->joined_on->diff($now)->days < 1) ? '0 days' : $this->joined_on->diffForHumans($now, 1);
+        return $this->joined_on->diff($now)->days < 1 ? '0 days' : $this->joined_on->diffForHumans($now, 1);
     }
 
     /**
