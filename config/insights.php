@@ -104,6 +104,7 @@ return [
         PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer::class,
         PhpCsFixer\Fixer\Whitespace\MethodChainingIndentationFixer::class,
         SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff::class,
+        SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff::class,
 
         // complexity
         NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh::class,
