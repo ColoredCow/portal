@@ -116,7 +116,11 @@ return [
         NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh::class,
 
         // architecture
-        PHP_CodeSniffer\Standards\PSR1\Sniffs\Classes\ClassDeclarationSniff::class
+        PHP_CodeSniffer\Standards\PSR1\Sniffs\Classes\ClassDeclarationSniff::class,
+        SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff::class,
+
+        // style
+        PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class
     ],
 
     'config' => [
@@ -129,7 +133,7 @@ return [
         ],
 
         \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class => [
-            'lineLimit' => 120,
+            'lineLimit' => 140,
             'absoluteLineLimit' => 160
         ]
     ],

@@ -115,16 +115,32 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
 
     public function createAppointmentSlots($userId, $startDate = null)
     {
-        if (! $startDate) {
-            $startDate = Carbon::createFromTimeString('11:00:00');
+        $startDate = $startDate ?: Carbon::createFromTimeString('11:00:00');
+
+        $slots = $this->getSlotsForDays($userId, $startDate);
+
+        foreach ($slots as $slot) {
+            // skip for Saturday and Sunday
+            if ($slot['start_time']->dayOfWeek == 0 || $slot['start_time']->dayOfWeek == 6) {
+                continue;
+            }
+            // create appointment slot if doesn't exist for that time
+            if (! AppointmentSlot::where('user_id', $userId)
+                ->where('start_time', $slot['start_time'])
+                ->exists()) {
+                AppointmentSlot::insert($slot);
+            }
         }
+    }
+
+    private function getSlotsForDays($userId, $startDate)
+    {
         $slots = [];
         $maxSlotsDaily = config('hr.daily-appointment-slots.total', 6);
         $slotDuration = config('appointmentslots.slot-duration-minutes', 30);
-        $gapBetweenSlots = config('appointmentslots.gap-between-slots-minutes', 15);
         $createSlotsForDays = config('appointmentslots.auto-create-slots-for-days', 20);
+        $gapBetweenSlots = config('appointmentslots.gap-between-slots-minutes', 15);
 
-        // start from today till 20 days
         for ($day = 0; $day < $createSlotsForDays; $day++) {
             $nextDay = (clone $startDate)->addDays(1);
             // for every day, create the appointment slots
@@ -144,18 +160,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
             $startDate = $nextDay;
         }
 
-        foreach ($slots as $slot) {
-            // skip for Saturday and Sunday
-            if ($slot['start_time']->dayOfWeek == 0 || $slot['start_time']->dayOfWeek == 6) {
-                continue;
-            }
-            // create appointment slot if doesn't exist for that time
-            if (! AppointmentSlot::where('user_id', $userId)
-                ->where('start_time', $slot['start_time'])
-                ->exists()) {
-                AppointmentSlot::insert($slot);
-            }
-        }
+        return $slots;
     }
 
     public function schedule(ApplicationRound $applicationRound, $data)

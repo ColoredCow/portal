@@ -34,7 +34,7 @@ class ProjectContractService
         return $userContracts->merge($reviewerContracts);
     }
 
-    public function internal_reviewer()
+    public function internalReviewer()
     {
         return Contract::join('contract_internal_reviewer', 'contracts.id', '=', 'contract_internal_reviewer.contract_id')->where('contract_internal_reviewer.user_id', Auth::id())->get();
     }

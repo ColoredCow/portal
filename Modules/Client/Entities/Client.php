@@ -260,7 +260,7 @@ class Client extends Model
         return today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->addMonthsNoOverflow()->startOfMonth()->addDays($billingDate - 2);
     }
 
-    public function TeamMembersEffortData()
+    public function teamMembersEffortData()
     {
         $startDate = $this->getMonthStartDateAttribute(1);
         $endDate = $this->getMonthEndDateAttribute(1);

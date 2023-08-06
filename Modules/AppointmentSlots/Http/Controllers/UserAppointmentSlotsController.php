@@ -39,7 +39,8 @@ class UserAppointmentSlotsController extends Controller
             'user_id' => $validated['user_id'],
         ]);
 
-        return redirect(route('userappointmentslots.show', $validated['user_id']))->with('status', 'Slot created successfully');
+        return redirect(route('userappointmentslots.show', $validated['user_id']))
+        ->with('status', 'Slot created successfully');
     }
 
     public function update(UserAppointmentSlotRequest $request, AppointmentSlot $appointmentSlot)
@@ -51,7 +52,8 @@ class UserAppointmentSlotsController extends Controller
             'end_time' => $validated['edit_end_time'],
         ]);
 
-        return redirect(route('userappointmentslots.show', $appointmentSlot->user_id))->with('status', 'Slot updated successfully');
+        return redirect(route('userappointmentslots.show', $appointmentSlot->user_id))
+        ->with('status', 'Slot updated successfully');
     }
 
     public function destroy(AppointmentSlot $appointmentSlot)
@@ -59,6 +61,7 @@ class UserAppointmentSlotsController extends Controller
         $this->authorize('delete', $appointmentSlot);
         $appointmentSlot->delete();
 
-        return redirect(route('userappointmentslots.show', $appointmentSlot->user_id))->with('status', 'Slot deleted successfully');
+        return redirect(route('userappointmentslots.show', $appointmentSlot->user_id))
+        ->with('status', 'Slot deleted successfully');
     }
 }
