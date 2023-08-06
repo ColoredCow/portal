@@ -84,12 +84,12 @@ class CheckCommand extends Command
         ];
 
         $laraStan = ['./vendor/bin/phpstan', 'analyse'];
-        $phpInsights = ['php', 'artisan', 'insights', '-v', '--no-interaction'];
+        $phpInsights = ['php', 'artisan', 'insights', '--no-interaction'];
 
         $ciCommands = [];
-        // $ciCommands['Php CS Fixer'] = $staticAnalysis;
-        // $ciCommands['LaraStan'] = $laraStan;
-        // $ciCommands = array_merge($ciCommands, $this->getEsCommands());
+        $ciCommands['Php CS Fixer'] = $staticAnalysis;
+        $ciCommands['LaraStan'] = $laraStan;
+        $ciCommands = array_merge($ciCommands, $this->getEsCommands());
         $ciCommands['Insights'] = $phpInsights;
 
         return $ciCommands;
