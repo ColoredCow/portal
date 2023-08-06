@@ -70,7 +70,9 @@ jobs:
         run: cp ./.env.example .env
       - name: Configure application encryption key
         run: php artisan key:generate
+      - name: Install NPM Dependencies
+        run: npm install
       - name: clear cache
         run: php artisan view:clear
       - name: LaravelCI
-        run: php artisan check:ci
+        run: php artisan check:ci --with-tty
