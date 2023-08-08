@@ -6,8 +6,8 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 class CodeTrekRequest extends FormRequest
-{
 
+{
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json(
@@ -68,6 +68,4 @@ class CodeTrekRequest extends FormRequest
             'graduation_year.digits' => 'Graduation year should be in 4 digit format.',
         ];
     }
-   
-   
 }
