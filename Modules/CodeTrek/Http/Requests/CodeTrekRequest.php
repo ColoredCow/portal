@@ -49,8 +49,7 @@ class CodeTrekRequest extends FormRequest
             'graduation_year.digits' => 'Graduation year should be in 4 digit format.',
         ];
     }
-    
-    private function codeTrekValidation()
+     private function codeTrekValidation()
     {
         return [
             'first_name' => 'required|string',
