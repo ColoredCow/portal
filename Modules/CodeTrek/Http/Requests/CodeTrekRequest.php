@@ -5,8 +5,8 @@ namespace Modules\CodeTrek\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-class CodeTrekRequest extends FormRequest
 
+class CodeTrekRequest extends FormRequest
 {
     public function failedValidation(Validator $validator)
     {
@@ -19,10 +19,7 @@ class CodeTrekRequest extends FormRequest
             422
         ));
     }
-
-
-
-    private function codeTrekValidation()
+     private function codeTrekValidation()
     {
         return [
             'first_name' => 'required|string',
