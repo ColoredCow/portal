@@ -2,12 +2,26 @@
 
 namespace Modules\CodeTrek\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Contracts\Validation\Validator;
-
 class CodeTrekRequest extends FormRequest
 {
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json(
+            [
+                'success'=> false,
+                'message'=> 'Validation errors',
+                'data'=> $validator->errors(),
+            ],
+            422
+        ));
+    }
+
+
+
     private function codeTrekValidation()
     {
         return [
@@ -55,15 +69,5 @@ class CodeTrekRequest extends FormRequest
         ];
     }
    
-    public function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json(
-            [
-                'success'=> false,
-                'message'=> 'Validation errors',
-                'data'=> $validator->errors()
-            ],
-            422
-        ));
-    }
+   
 }
