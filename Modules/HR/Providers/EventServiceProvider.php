@@ -21,19 +21,19 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         'Modules\HR\Events\ApplicationMovedToNewRound' => [
-            'Modules\HR\Listeners\SendCustomApplicationMail'
+            'Modules\HR\Listeners\SendCustomApplicationMail',
         ],
 
         'Modules\HR\Events\CustomMailTriggeredForApplication' => [
-            'Modules\HR\Listeners\SendCustomApplicationMail'
+            'Modules\HR\Listeners\SendCustomApplicationMail',
         ],
 
         'Modules\HR\Events\InterviewCommunicationEmailSent' => [
-            'Modules\HR\Listeners\AppointmentSlotMailSent'
+            'Modules\HR\Listeners\AppointmentSlotMailSent',
         ],
 
         'Modules\HR\Events\FollowUpEvent' => [
-            'Modules\HR\Listeners\FollowUpListener'
+            'Modules\HR\Listeners\FollowUpListener',
         ],
 
         ApplicationCreated::class => [
@@ -50,16 +50,4 @@ class EventServiceProvider extends ServiceProvider
             UpdateJobRounds::class,
         ],
     ];
-
-    /**
-     * Register any events for your application.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        parent::boot();
-
-        //
-    }
 }

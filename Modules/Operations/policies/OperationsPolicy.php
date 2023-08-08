@@ -13,6 +13,7 @@ class OperationsPolicy
      * Determine whether the user can view any models.
      *
      * @param  \Modules\User\Entities\User  $user
+     *
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function viewAny(User $user)

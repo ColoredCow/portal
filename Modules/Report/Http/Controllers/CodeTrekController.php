@@ -2,8 +2,8 @@
 
 namespace Modules\Report\Http\Controllers;
 
-use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Modules\Report\Services\Finance\ReportDataService;
 
 class CodeTrekController extends Controller

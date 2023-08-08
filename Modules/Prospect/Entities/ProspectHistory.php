@@ -2,20 +2,15 @@
 
 namespace Modules\Prospect\Entities;
 
-use Modules\User\Entities\User;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Prospect\Entities\Scopes\ProspectHistoryGlobalScope;
+use Modules\User\Entities\User;
 
 class ProspectHistory extends Model
 {
     protected $fillable = ['created_by', 'prospect_stage_id', 'prospect_id', 'description'];
 
     protected $appends = ['performed_on', 'performed_by', 'performed_as'];
-
-    protected static function booted()
-    {
-        static::addGlobalScope(new ProspectHistoryGlobalScope);
-    }
 
     public function createdBy()
     {
@@ -45,5 +40,10 @@ class ProspectHistory extends Model
     public function documents()
     {
         return $this->hasMany(ProspectDocument::class);
+    }
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new ProspectHistoryGlobalScope);
     }
 }

@@ -3,7 +3,6 @@
 namespace Modules\CodeTrek\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 
 class CodeTrekApplicantsTableSeeder extends Seeder

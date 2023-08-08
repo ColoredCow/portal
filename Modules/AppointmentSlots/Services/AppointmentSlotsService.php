@@ -2,21 +2,20 @@
 
 namespace Modules\AppointmentSlots\Services;
 
-use Carbon\Carbon;
-use Modules\User\Entities\User;
-use Modules\User\Entities\UserMeta;
-use Modules\HR\Entities\Applicant;
-use Modules\HR\Entities\Application;
 use App\Services\CalendarEventService;
-use Modules\HR\Entities\ApplicationRound;
+use Carbon\Carbon;
+use Modules\AppointmentSlots\Contracts\AppointmentSlotsServiceContract;
 use Modules\AppointmentSlots\Entities\AppointmentSlot;
 use Modules\Communication\Contracts\CalendarMeetingContract;
+use Modules\HR\Entities\Applicant;
+use Modules\HR\Entities\Application;
+use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Jobs\Recruitment\SendApplicationRoundScheduled;
-use Modules\AppointmentSlots\Contracts\AppointmentSlotsServiceContract;
+use Modules\User\Entities\UserMeta;
 
 class AppointmentSlotsService implements AppointmentSlotsServiceContract
 {
-    public function canSeeAppointments($data, $params)
+    public function canSeeAppointments($params)
     {
         $decryptedParams = json_decode(decrypt($params), true);
 
@@ -37,7 +36,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         return false;
     }
 
-    public function showAppointments($data, $params)
+    public function showAppointments($params)
     {
         $decryptedParams = json_decode(decrypt($params), true);
 
@@ -116,34 +115,9 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
 
     public function createAppointmentSlots($userId, $startDate = null)
     {
-        if (! $startDate) {
-            $startDate = Carbon::createFromTimeString('11:00:00');
-        }
-        $slots = [];
-        $maxSlotsDaily = config('hr.daily-appointment-slots.total', 6);
-        $slotDuration = config('appointmentslots.slot-duration-minutes', 30);
-        $gapBetweenSlots = config('appointmentslots.gap-between-slots-minutes', 15);
-        $createSlotsForDays = config('appointmentslots.auto-create-slots-for-days', 20);
+        $startDate = $startDate ?: Carbon::createFromTimeString('11:00:00');
 
-        // start from today till 20 days
-        for ($day = 0; $day < $createSlotsForDays; $day++) {
-            $nextDay = (clone $startDate)->addDays(1);
-            // for every day, create the appointment slots
-            for ($slotCount = 0; $slotCount < $maxSlotsDaily; $slotCount++) {
-                $slots[] = [
-                    'user_id' => $userId,
-                    'start_time' => (clone $startDate),
-                    'end_time' => (clone $startDate)->addMinutes($slotDuration),
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ];
-                // there should be 15-min gap between every slot.
-                $startDate->addMinutes($slotDuration + $gapBetweenSlots);
-            }
-
-            // run the loop for next day now.
-            $startDate = $nextDay;
-        }
+        $slots = $this->getSlotsForDays($userId, $startDate);
 
         foreach ($slots as $slot) {
             // skip for Saturday and Sunday
@@ -157,27 +131,6 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
                 AppointmentSlot::insert($slot);
             }
         }
-    }
-
-    private function createCalendarEvent(ApplicationRound $applicationRound)
-    {
-        $applicant = $applicationRound->application->applicant;
-        $summary = 'Appointment Scheduled';
-
-        $event = new CalendarEventService;
-        $event->create([
-            'summary' => $summary,
-            'start' => $applicationRound->scheduled_date->format(config('constants.datetime_format')),
-            'end' => $applicationRound->scheduled_end,
-            'attendees' => [
-                $applicationRound->scheduledPerson->email,
-                $applicant->email,
-            ],
-        ]);
-
-        $applicationRound->update([
-            'calendar_event' => $event->id,
-        ]);
     }
 
     public function schedule(ApplicationRound $applicationRound, $data)
@@ -204,6 +157,57 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         return true;
     }
 
+    private function getSlotsForDays($userId, $startDate)
+    {
+        $slots = [];
+        $maxSlotsDaily = config('hr.daily-appointment-slots.total', 6);
+        $slotDuration = config('appointmentslots.slot-duration-minutes', 30);
+        $createSlotsForDays = config('appointmentslots.auto-create-slots-for-days', 20);
+        $gapBetweenSlots = config('appointmentslots.gap-between-slots-minutes', 15);
+
+        for ($day = 0; $day < $createSlotsForDays; $day++) {
+            $nextDay = (clone $startDate)->addDays(1);
+            // for every day, create the appointment slots
+            for ($slotCount = 0; $slotCount < $maxSlotsDaily; $slotCount++) {
+                $slots[] = [
+                    'user_id' => $userId,
+                    'start_time' => (clone $startDate),
+                    'end_time' => (clone $startDate)->addMinutes($slotDuration),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+                // there should be 15-min gap between every slot.
+                $startDate->addMinutes($slotDuration + $gapBetweenSlots);
+            }
+
+            // run the loop for next day now.
+            $startDate = $nextDay;
+        }
+
+        return $slots;
+    }
+
+    private function createCalendarEvent(ApplicationRound $applicationRound)
+    {
+        $applicant = $applicationRound->application->applicant;
+        $summary = 'Appointment Scheduled';
+
+        $event = new CalendarEventService;
+        $event->create([
+            'summary' => $summary,
+            'start' => $applicationRound->scheduled_date->format(config('constants.datetime_format')),
+            'end' => $applicationRound->scheduled_end,
+            'attendees' => [
+                $applicationRound->scheduledPerson->email,
+                $applicant->email,
+            ],
+        ]);
+
+        $applicationRound->update([
+            'calendar_event' => $event->id,
+        ]);
+    }
+
     private function formatForFullCalender($slots)
     {
         $results = [];
@@ -218,11 +222,6 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         return $results;
     }
 
-    /**
-     * Get free slots for a user.
-     *
-     * @param  int  $userId
-     */
     private function getUserFreeSlots($userId)
     {
         $slots = AppointmentSlot::user($userId)->future()->get();
@@ -231,18 +230,15 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
             return $date->format(config('constants.date_format', 'Y-m-d'));
         });
 
-        $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) use ($userId) {
+        $datesToRemove = $reservedSlotsCount->filter(function ($value) use ($userId) {
             $userMeta = UserMeta::where('user_id', $userId)->key('max_interviews_per_day')->first();
-
             $maxInterviewsPerDay = $userMeta ? $userMeta->meta_value : config('hr.daily-appointment-slots.max-reserved-allowed', 3);
 
             return $value >= $maxInterviewsPerDay;
         })->keys()->all();
 
-        $freeSlots = $slots->where('status', 'free')->reject(function ($slot) use ($datesToRemove) {
+        return $slots->where('status', 'free')->reject(function ($slot) use ($datesToRemove) {
             return in_array($slot->start_time->format(config('constants.date_format', 'Y-m-d')), $datesToRemove);
         });
-
-        return $freeSlots;
     }
 }

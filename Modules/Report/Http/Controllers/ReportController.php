@@ -29,6 +29,7 @@ class ReportController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
      * @param ReportRequest $request
      */
     public function store(ReportRequest $request)
@@ -46,6 +47,7 @@ class ReportController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @param int $id
      */
     public function show($id)
@@ -58,6 +60,7 @@ class ReportController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @param int $id
      */
     public function edit($id)
@@ -70,6 +73,7 @@ class ReportController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
      * @param ReportRequest $request
      * @param int $id
      */
@@ -88,12 +92,12 @@ class ReportController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
      * @param int $id
      */
     public function delete($id)
     {
         $report = Report::find($id);
-        $data = compact('report');
         $report->delete();
 
         return back();

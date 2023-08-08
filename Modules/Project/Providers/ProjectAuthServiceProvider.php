@@ -2,14 +2,14 @@
 
 namespace Modules\Project\Providers;
 
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider;
 use Modules\Project\Entities\Project;
 use Modules\Project\Policies\ProjectPolicy;
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider;
 
 class ProjectAuthServiceProvider extends AuthServiceProvider
 {
     protected $policies = [
-        Project::class => ProjectPolicy::class
+        Project::class => ProjectPolicy::class,
     ];
 
     public function boot()

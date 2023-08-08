@@ -23,6 +23,7 @@ class SendCustomApplicationMail
      * Handle the event.
      *
      * @param  object  $event
+     *
      * @return void
      */
     public function handle($event)
@@ -38,7 +39,7 @@ class SendCustomApplicationMail
             'mail-sender' => $event->data['mail_sender_name'],
         ];
 
-        $meta = ApplicationMeta::create([
+        ApplicationMeta::create([
             'hr_application_id' => $event->application->id,
             'key' => config('constants.hr.application-meta.keys.custom-mail'),
             'value' => json_encode($mailDetails),

@@ -26,7 +26,7 @@ class RecruitmentOpportunityController extends JobController
             ->latest();
 
         if ($search != '') {
-            $jobs = $jobs->where('title', 'LIKE', "%$search%")->orwhere('type', 'LIKE', "%$search%");
+            $jobs = $jobs->where('title', 'LIKE', "%{$search}%")->orwhere('type', 'LIKE', "%{$search}%");
         }
         $jobs = $jobs->paginate(config('constants.pagination_size'))
             ->appends(Request::except('page'));

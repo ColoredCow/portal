@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @yield('css_scripts')
-    
+
     <!-- Reports -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
 
@@ -33,13 +33,15 @@
                 <a class="navbar-brand min-w-md-150" href="{{ url('/') }}">
                     {{ config('app.name', 'ColoredCow Portal') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 @auth
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    @include('layouts.navbar')
-                </div>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        @include('layouts.navbar')
+                    </div>
                 @endauth
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
@@ -51,8 +53,11 @@
                     <ul class="navbar-nav ml-auto">
                         @auth
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <img src="{{ auth()->user()->avatar }}" class="user-avatar w-25 h-25 rounded-circle mr-1">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle d-flex align-items-center"
+                                    href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" v-pre>
+                                    <img src="{{ auth()->user()->avatar }}"
+                                        class="user-avatar w-25 h-25 rounded-circle mr-1">
                                     <span>
                                         <span class="caret"></span>
                                     </span>
@@ -61,24 +66,36 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     @if (Module::checkStatus('User'))
                                         @php
-                                            $employee = DB::table('employees')->where('user_id' , auth()->user()->id )->first();
+                                            $employee = DB::table('employees')
+                                                ->where('user_id', auth()->user()->id)
+                                                ->first();
                                         @endphp
-                                        <a class="dropdown-item" href="{{ route('employees.show', $employee->id) }}">My profile</a>
-                                    @endif
-                                    @if(auth()->user()->provider == 'google')
-                                        <a class="dropdown-item" href="{{ route('profile.gsuite-sync') }}">Sync my profile</a>
-                                    @endif
-                                    @if(auth()->user()->isSuperAdmin())
-                                        <a class="dropdown-item" href="{{ route('profile.gsuite-sync-all') }}">Sync all users</a>
+
+                                        @if ($employee)
+                                            <a class="dropdown-item" href="{{ route('employees.show', $employee->id) }}">My
+                                                profile</a>
                                         @endif
-                                    @if(auth()->user()->canAccessWebsite())
-                                        <a target="_blank" class="dropdown-item" href="{{ config('constants.website_url') . '/wp/wp-admin/' }}">Go to website</a>
+                                    @endif
+                                    @if (auth()->user()->provider == 'google')
+                                        <a class="dropdown-item" href="{{ route('profile.gsuite-sync') }}">Sync my
+                                            profile</a>
+                                    @endif
+                                    @if (auth()->user()->isSuperAdmin())
+                                        <a class="dropdown-item" href="{{ route('profile.gsuite-sync-all') }}">Sync all
+                                            users</a>
+                                    @endif
+                                    @if (auth()->user()->canAccessWebsite())
+                                        <a target="_blank" class="dropdown-item"
+                                            href="{{ config('constants.website_url') . '/wp/wp-admin/' }}">Go to
+                                            website</a>
                                     @endif
                                     <a class="dropdown-item" href="{{ route('user.settings') }}">User Settings</a>
-                                    <a class="dropdown-item" id="logout" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" id="logout" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        style="display: none;">
                                         @csrf
                                     </form>
                                 </div>
@@ -119,4 +136,5 @@
         });
     </script>
 </body>
+
 </html>

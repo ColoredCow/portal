@@ -3,9 +3,9 @@
 namespace Modules\Invoice\Emails;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Database\Eloquent\Collection;
 
 class SendUnpaidInvoiceListMail extends Mailable
 {

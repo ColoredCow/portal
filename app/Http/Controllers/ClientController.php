@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
 use App\Http\Requests\ClientRequest;
+use App\Models\Client;
 
 class ClientController extends Controller
 {
@@ -40,6 +40,7 @@ class ClientController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\ClientRequest  $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(ClientRequest $request)
@@ -51,24 +52,14 @@ class ClientController extends Controller
             'gst_num' => array_key_exists('gst_num', $validated) ? $validated['gst_num'] : null,
         ]);
 
-        return redirect("/clients/$client->id/edit")->with('status', 'Client created succesfully!');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Client  $client
-     * @return void
-     */
-    public function show(Client $client)
-    {
-        //
+        return redirect("/clients/{$client->id}/edit")->with('status', 'Client created succesfully!');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Client  $client
+     *
      * @return \Illuminate\View\View
      */
     public function edit(Client $client)
@@ -83,6 +74,7 @@ class ClientController extends Controller
      *
      * @param  \App\Http\Requests\ClientRequest  $request
      * @param  \App\Models\Client  $client
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ClientRequest $request, Client $client)
@@ -94,24 +86,14 @@ class ClientController extends Controller
             'gst_num' => array_key_exists('gst_num', $validated) ? $validated['gst_num'] : null,
         ]);
 
-        return redirect("/clients/$client->id/edit")->with('status', 'Client updated successfully!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Client  $client
-     * @return void
-     */
-    public function destroy(Client $client)
-    {
-        //
+        return redirect("/clients/{$client->id}/edit")->with('status', 'Client updated successfully!');
     }
 
     /**
      * Get all the projects for a client.
      *
      * @param  \App\Models\Client $client
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getProjects(Client $client)

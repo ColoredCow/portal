@@ -11,14 +11,16 @@ class ReportDataService
     {
         if ($type == 'revenue-trend') {
             return $this->revenueTrend($filters);
-        } elseif ($type == 'revenue-trend-client-wise') {
+        }
+
+        if ($type == 'revenue-trend-client-wise') {
             return $this->revenueTrendForClient($filters);
         }
 
         return $filters;
     }
 
-    public function getDataForDailyCodeTrekApplications($type, $filters, $request)
+    public function getDataForDailyCodeTrekApplications($type, $filters)
     {
         if ($type == 'codetrek-application') {
             $applicants = CodeTrekApplicant::find('start_date');
@@ -37,9 +39,8 @@ class ReportDataService
                 'dates' => $dates,
                 'counts' => $counts,
             ];
-            $reportApplicantData = json_encode($chartData);
 
-            return $reportApplicantData;
+            return json_encode($chartData);
         }
     }
 
@@ -49,7 +50,7 @@ class ReportDataService
 
         return [
             'selectedClient' => $selectedClient,
-            'clients' => Client::orderBy('name')->get()
+            'clients' => Client::orderBy('name')->get(),
         ];
     }
 
@@ -66,7 +67,7 @@ class ReportDataService
 
         return [
             'labels' => $reportData['months'],
-            'data' => $reportData
+            'data' => $reportData,
         ];
     }
 
@@ -81,7 +82,7 @@ class ReportDataService
             'current_period_start_date' => $defaultStartDate,
             'current_period_end_date' => $defaultEndDate,
             'previous_period_start_date' => $defaultPreviousStartDate,
-            'previous_period_end_date' => $defaultPreviousEndDate
+            'previous_period_end_date' => $defaultPreviousEndDate,
         ];
         $filters = array_merge($defaultFilters, request()->all());
 

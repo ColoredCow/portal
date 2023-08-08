@@ -24,16 +24,6 @@ class ApplicationNoShow extends Command
     protected $description = 'Set application status to no-show if an application round is not conducted 2 hours after scheduled time';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed

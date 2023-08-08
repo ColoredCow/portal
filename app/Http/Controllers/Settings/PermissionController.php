@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Settings;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Setting\UpdateRolePermissionsRequest;
+use App\Http\Requests\Setting\UpdateUserRolesRequest;
 use App\Models\Setting;
 use Modules\User\Entities\User;
-use Spatie\Permission\Models\Role;
-use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Permission;
-use App\Http\Requests\Setting\UpdateUserRolesRequest;
-use App\Http\Requests\Setting\UpdateRolePermissionsRequest;
+use Spatie\Permission\Models\Role;
 
 class PermissionController extends Controller
 {
-    public function index(String $module)
+    public function index(string $module)
     {
         $this->authorize('settings.view', Permission::class);
         $attr = [];
@@ -28,7 +28,7 @@ class PermissionController extends Controller
         }
         $attr['settings'] = Setting::where('module', $module)->get()->keyBy('setting_key');
 
-        return view("settings.permissions.$module")->with($attr);
+        return view("settings.permissions.{$module}")->with($attr);
     }
 
     public function updateUserRoles(UpdateUserRolesRequest $request)

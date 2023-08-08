@@ -12,12 +12,14 @@ class InterviewerScheduledRoundsReminder extends Mailable
 
     /**
      * Application rounds scheduled for the user.
+     *
      * @var array
      */
     public $applicationRounds;
 
     /**
      * Create a new message instance.
+     *
      * @param array $applicationRounds
      */
     public function __construct($applicationRounds)

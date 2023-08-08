@@ -2,12 +2,12 @@
 
 namespace Modules\HR\Emails\Recruitment;
 
+use App\Models\Setting;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Modules\User\Entities\User;
-use App\Models\Setting;
 use Modules\HR\Entities\Application;
+use Modules\User\Entities\User;
 
 class SendForApproval extends Mailable
 {
@@ -47,7 +47,7 @@ class SendForApproval extends Mailable
             ->from(config('hr.default.email'), config('hr.default.name'))
             ->subject($subject)
             ->view('mail.plain')->with([
-                'body' => $body
+                'body' => $body,
         ]);
     }
 }

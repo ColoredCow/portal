@@ -2,12 +2,8 @@
 
 namespace App\Exceptions;
 
-use Exception;
-use Throwable;
-use Carbon\Carbon;
-use App\Mail\ErrorReport;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -39,35 +35,18 @@ class Handler extends ExceptionHandler
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
      * @param  \Exception  $exception
+     *
      * @return mixed
      */
     public function report(Throwable $exception)
     {
-        $timeOfException = Carbon::now()->format(config('constants.display_datetime_format'));
         foreach ($this->dontReport as $dontReport) {
             if ($exception instanceof $dontReport) {
                 return;
             }
         }
 
-        try {
-            //Mail::send(new ErrorReport($exception, $timeOfException));
-        } catch (Exception $e) {
-            parent::report($e);
-        }
-
         // @phpstan-ignore-next-line
         return parent::report($exception);
-    }
-
-    /**
-     * Render an exception into an HTTP response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
-     */
-    public function render($request, Throwable $exception)
-    {
-        return parent::render($request, $exception);
     }
 }

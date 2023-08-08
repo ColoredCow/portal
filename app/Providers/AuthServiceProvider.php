@@ -22,7 +22,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\Setting' => 'App\Policies\SettingPolicy',
         'App\Http\Controllers\Finance\ReportsController' => 'App\Policies\Finance\ReportPolicy',
         'App\Http\Controllers\UserController' => 'App\Policies\UserPolicy',
-        'Modules\Infrastructure\Http\Controllers\InfrastructureController' =>'App\Policies\Infrastructure\BillingsPolicy'
+        'Modules\Infrastructure\Http\Controllers\InfrastructureController' =>'App\Policies\Infrastructure\BillingsPolicy',
     ];
 
     /**
@@ -33,7 +33,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        Gate::before(function ($user, $ability) {
+        Gate::before(function ($user) {
             return $user->hasRole('super-admin') ? true : null;
         });
     }

@@ -4,30 +4,30 @@ return [
     'name' => 'Prospect',
     'status' => [
         'active' => 'Active',
-        'inactive' => 'Inactive'
+        'inactive' => 'Inactive',
     ],
 
     'prospect-form-stages' => [
         'client-details' => [
-            'display-name' => 'Client Details'
+            'display-name' => 'Client Details',
         ],
 
         'contact-persons' => [
-            'display-name' => 'Contact Persons'
+            'display-name' => 'Contact Persons',
         ],
 
         'prospect-requirements' => [
-            'display-name' => 'Requirements'
-        ]
+            'display-name' => 'Requirements',
+        ],
     ],
 
     'prospect-show-tabs' => [
         'prospect-info' => [
-            'display-name' => 'Prospect info'
+            'display-name' => 'Prospect info',
         ],
 
         'prospect-progress' => [
-            'display-name' => 'Progress'
+            'display-name' => 'Progress',
         ],
     ],
 
@@ -38,6 +38,6 @@ return [
         'contract',
         'proposal',
         'nda',
-        'introduction'
-    ]
+        'introduction',
+    ],
 ];

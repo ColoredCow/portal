@@ -3,13 +3,17 @@
 namespace Modules\HR\Entities;
 
 use App\Models\Project;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Modules\HR\Database\Factories\HrEmployeeFactory;
 use Modules\Salary\Entities\EmployeeSalary;
 use Modules\User\Entities\User;
 
 class Employee extends Model
 {
+    use HasFactory;
+
     protected $guarded = [];
 
     protected $dates = ['joined_on'];
@@ -33,9 +37,9 @@ class Employee extends Model
     {
         if ($status == 'current') {
             return $query->wherehas('user');
-        } else {
-            return $query->whereDoesntHave('user');
         }
+
+        return $query->whereDoesntHave('user');
     }
 
     public function scopeActive($query)
@@ -47,11 +51,10 @@ class Employee extends Model
     {
         if (is_null($this->user_id)) {
             return;
-        } else {
-            $now = now();
-
-            return ($this->joined_on->diff($now)->days < 1) ? '0 days' : $this->joined_on->diffForHumans($now, 1);
         }
+        $now = now();
+
+        return $this->joined_on->diff($now)->days < 1 ? '0 days' : $this->joined_on->diffForHumans($now, 1);
     }
 
     /**
@@ -64,7 +67,9 @@ class Employee extends Model
 
     public function scopeApplyFilters($query, $filters)
     {
-        if ($status = Arr::get($filters, 'status', '')) {
+        $status = Arr::get($filters, 'status', '');
+
+        if ($status) {
             $query = $query->status($status);
         }
 
@@ -115,5 +120,10 @@ class Employee extends Model
         }
 
         return $overallStatus;
+    }
+
+    public static function newFactory()
+    {
+        return new HrEmployeeFactory();
     }
 }

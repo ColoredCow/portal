@@ -2,9 +2,9 @@
 
 namespace Modules\Salary\Entities;
 
+use App\Traits\Encryptable;
 use Illuminate\Database\Eloquent\Model;
 use Modules\HR\Entities\Employee;
-use App\Traits\Encryptable;
 
 class EmployeeSalary extends Model
 {

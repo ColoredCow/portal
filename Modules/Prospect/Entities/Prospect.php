@@ -2,13 +2,13 @@
 
 namespace Modules\Prospect\Entities;
 
-use Modules\User\Entities\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\ModuleChecklist\Entities\NDAMeta;
 use Modules\Communication\Entities\CalendarMeeting;
 use Modules\ModuleChecklist\Entities\ModuleChecklist;
+use Modules\ModuleChecklist\Entities\NDAMeta;
+use Modules\User\Entities\User;
 
 class Prospect extends Model
 {
@@ -17,13 +17,6 @@ class Prospect extends Model
     protected $table = 'prospects';
     protected $dates = ['deleted_at'];
     protected $fillable = ['created_by', 'status', 'assign_to', 'name', 'coming_from', 'coming_from_id', 'brief_info'];
-
-    protected static function booted()
-    {
-        static::created(function ($prospect) {
-            $prospect->syncDefaultChecklist();
-        });
-    }
 
     public function contactPersons()
     {
@@ -55,7 +48,7 @@ class Prospect extends Model
         return $this->hasMany(ProspectChecklistStatus::class);
     }
 
-    public function getChecklistCurrentTask($checklistID, $checkListTaskID = null)
+    public function getChecklistCurrentTask($checklistID)
     {
         $checkListStatus = $this->checklistStatuses()
             ->where('status', 'pending')
@@ -123,7 +116,7 @@ class Prospect extends Model
                     'prospect_id' => $this->id,
                     'module_checklist_id' => $checklist->id,
                     'module_checklist_task_id' => $task->id,
-                    'status' => 'pending'
+                    'status' => 'pending',
                 ]);
             }
         }
@@ -132,5 +125,12 @@ class Prospect extends Model
     public function calendarMeetings()
     {
         return $this->belongsToMany(CalendarMeeting::class, 'prospect_calendar_meeting', 'prospect_id', 'calendar_meeting_id')->withTimestamps();
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($prospect) {
+            $prospect->syncDefaultChecklist();
+        });
     }
 }

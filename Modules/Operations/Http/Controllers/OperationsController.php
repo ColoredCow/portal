@@ -2,11 +2,11 @@
 
 namespace Modules\Operations\Http\Controllers;
 
-use Illuminate\Routing\Controller;
-use Modules\User\Entities\User;
-use Modules\Operations\Services\OperationService;
-use Modules\Operations\Entities\OfficeLocation;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Modules\Operations\Entities\OfficeLocation;
+use Modules\Operations\Services\OperationService;
+use Modules\User\Entities\User;
 
 class OperationsController extends Controller
 {

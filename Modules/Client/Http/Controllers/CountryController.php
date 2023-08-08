@@ -10,7 +10,7 @@ class CountryController extends ModuleBaseController
     public function store(CountryRequest $request)
     {
         $validated = $request->validated();
-        $country = Country::create($request->all());
+        Country::create($validated);
 
         return redirect()->back()->with('status', 'Country saved successfully!');
     }

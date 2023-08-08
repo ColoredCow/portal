@@ -19,16 +19,16 @@ class ClientAddress extends Model
     {
         $address = $this->address;
         if ($this->city) {
-            $address = $address . ', ' . $this->city;
+            $address .= ', ' . $this->city;
         }
         if ($this->state) {
-            $address = $address . ', ' . $this->state;
+            $address .= ', ' . $this->state;
         }
         if ($this->country) {
-            $address = $address . ', ' . $this->country->name;
+            $address .= ', ' . $this->country->name;
         }
         if ($this->area_code) {
-            $address = $address . ', (' . $this->area_code . ')';
+            $address .= ', (' . $this->area_code . ')';
         }
 
         return $address;

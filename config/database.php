@@ -56,12 +56,13 @@ return [
 
         'testing' => [
             'driver' => 'mysql',
-            'host' => env('DB_TEST_HOST', 'localhost'),
+            'host' => env('DB_TEST_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
             'database' => env('DB_TEST_DATABASE', 'portal_test'),
             'username' => env('DB_TEST_USERNAME', 'root'),
-            'password' => env('DB_TEST_PASSWORD', ''),
-            'charset' => 'utf8',
-            'collation' => 'utf8_unicode_ci',
+            'password' => env('DB_TEST_PASSWORD', 'root'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
             'strict' => false,
         ],
@@ -102,7 +103,7 @@ return [
             'prefix' => env('DB_WORDPRESS_PREFIX', 'wp_'),
             'strict' => false,
             'engine' => null,
-            'enabled' => env('WORDPRESS_ENABLED', false)
+            'enabled' => env('WORDPRESS_ENABLED', false),
         ],
     ],
 

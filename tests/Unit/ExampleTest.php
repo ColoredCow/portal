@@ -4,14 +4,14 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 
-class WeeklyDoseControllerTest extends TestCase
+class ExampleTest extends TestCase
 {
     /**
-     * Test case for WeeklyDoseController@store.
+     * A basic test example.
      *
      * @return void
      */
-    public function testStore()
+    public function test_example()
     {
         $this->assertTrue(true);
     }

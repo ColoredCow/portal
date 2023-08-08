@@ -2,8 +2,8 @@
 
 namespace Modules\Salary\Policies;
 
-use Modules\User\Entities\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Modules\User\Entities\User;
 
 class EmployeeSalaryPolicy
 {
@@ -13,6 +13,7 @@ class EmployeeSalaryPolicy
      * Determine whether the user can view the salary.
      *
      * @param  \Modules\User\Entities\User  $user
+     *
      * @return mixed
      */
     public function view(User $user)
@@ -24,6 +25,7 @@ class EmployeeSalaryPolicy
      * Determine whether the user can create salaries.
      *
      * @param  \Modules\User\Entities\User  $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -35,6 +37,7 @@ class EmployeeSalaryPolicy
      * Determine whether the user can update the salary.
      *
      * @param  \Modules\User\Entities\User  $user
+     *
      * @return mixed
      */
     public function update(User $user)
@@ -46,6 +49,7 @@ class EmployeeSalaryPolicy
      * Determine whether the user can delete the salary.
      *
      * @param  \Modules\User\Entities\User  $user
+     *
      * @return mixed
      */
     public function delete(User $user)
@@ -57,6 +61,7 @@ class EmployeeSalaryPolicy
      * Determine whether the user can list salary.
      *
      * @param  \Modules\User\Entities\User  $user
+     *
      * @return mixed
      */
     public function list(User $user)

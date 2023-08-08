@@ -2,19 +2,24 @@
 
 namespace Tests\Unit\HR;
 
+use Modules\HR\Entities\Applicant;
 use Tests\TestCase;
-use App\Models\HR\Applicant;
 
 class ApplicantTest extends TestCase
 {
     /**
-     * Test case to check creation of an applicant.
+     * A basic test example.
      *
      * @return void
      */
-    public function testIsApplicantCreated()
+    public function test_example()
     {
-        $applicant = factory(Applicant::class)->create();
+        $this->assertTrue(true);
+    }
+
+    public function test_create_applicant()
+    {
+        $applicant = Applicant::factory()->create();
         $this->assertTrue(isset($applicant->id));
     }
 }

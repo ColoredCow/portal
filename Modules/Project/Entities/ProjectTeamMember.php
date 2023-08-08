@@ -20,11 +20,6 @@ class ProjectTeamMember extends Model
         'updated_at',
     ];
 
-    protected static function newFactory()
-    {
-        return new ProjectTeamMemberFactory();
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class, 'team_member_id', 'id')->withTrashed();
@@ -138,5 +133,10 @@ class ProjectTeamMember extends Model
         ->where('added_on', '>=', $startDate)
         ->where('added_on', '<=', $endDate)
         ->sum('actual_effort');
+    }
+
+    protected static function newFactory()
+    {
+        return new ProjectTeamMemberFactory();
     }
 }

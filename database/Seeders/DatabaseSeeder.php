@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\HR\Database\Seeders\HrDesignationTableSeeder;
+use Modules\HR\Database\Seeders\HrDomainTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,15 +15,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // roles
-        $this->call(RolesTableSeeder::class);
-        $this->call(CountriesTableSeeder::class);
-        if (! app()->environment('production')) {
-            $this->call(UsersTableSeeder::class);
+        if (! app()->environment(['local', 'staging', 'UAT'])) {
+            return 0;
         }
 
-        // books
+        $this->call(RolesTableSeeder::class);
+        $this->call(CountriesTableSeeder::class);
+        $this->call(HrDomainTableSeeder::class);
+        $this->call(HrDesignationTableSeeder::class);
+        $this->call(UserDatabaseSeeder::class);
         $this->call(BooksPermissionsSeeder::class);
         $this->call(BookCategoriesTableSeeder::class);
+
+        return true;
     }
 }

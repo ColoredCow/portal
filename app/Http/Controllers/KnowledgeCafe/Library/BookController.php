@@ -27,7 +27,7 @@ class BookController extends Controller
     {
         $this->authorize('list', Book::class);
         $searchCategory = $request->category_name ?? false;
-        $searchString = (request()->has('search')) ? request()->input('search') : false;
+        $searchString = request()->has('search') ? request()->input('search') : false;
         $categories = BookCategory::orderBy('name')->get();
 
         switch (request()) {
@@ -70,8 +70,8 @@ class BookController extends Controller
     public function store(BookRequest $request)
     {
         $validatedData = $request->validated();
-        $ISBN = isset($validatedData['isbn']) ? $validatedData['isbn'] : null;
-        $stored = Book::firstOrCreate(['isbn' => $ISBN], $validatedData);
+        $ISBN = $validatedData['isbn'] ?? null;
+        Book::firstOrCreate(['isbn' => $ISBN], $validatedData);
 
         return response()->json(['error' => false]);
     }
@@ -80,6 +80,7 @@ class BookController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     *
      * @return \Illuminate\View\View
      */
     public function show(Book $book)
@@ -99,6 +100,7 @@ class BookController extends Controller
      *
      * @param  \App\Http\Requests\KnowledgeCafe\Library\BookRequest  $request
      * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(BookRequest $request, Book $book)
@@ -134,6 +136,7 @@ class BookController extends Controller
      * Fetch the book info.
      *
      * @param  BookRequest  $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function fetchBookInfo(BookRequest $request)
@@ -185,6 +188,7 @@ class BookController extends Controller
 
     /**
      * @param  array  $book
+     *
      * @return array
      */
     public function formatBookData($book)
@@ -208,7 +212,7 @@ class BookController extends Controller
         $bookID = $request->book_id;
         $read = $request->is_read;
         $book = Book::find($bookID);
-        $isMarked = ($book) ? $book->markBook($read) : false;
+        $isMarked = $book ? $book->markBook($read) : false;
 
         return response()->json([
             'isMarked' => $isMarked,
@@ -238,11 +242,9 @@ class BookController extends Controller
 
     public function getBooksCount()
     {
-        $books = (request()->has('cat')) ?
+        return request()->has('cat') ?
             Book::getByCategoryName(request()->input('cat'))->count() :
             Book::count();
-
-        return $books;
     }
 
     public function getBookList()
@@ -252,7 +254,7 @@ class BookController extends Controller
         } catch (\Exception $e) {
             $pageNumber = 1;
         }
-        $books = (request()->has('cat')) ?
+        $books = request()->has('cat') ?
             Book::getByCategoryName(request()->input('cat')) :
             Book::with(['categories'])->orderBy('title')->skip(($pageNumber - 1) * 50)->take(50)->get();
 
@@ -337,7 +339,7 @@ class BookController extends Controller
             'booksCollection' => $booksCollection,
             'books' => $books,
             'wishlistedBooksCount' => $wishlistedBooksCount,
-            'booksBorrowedCount' => $booksBorrowedCount
+            'booksBorrowedCount' => $booksBorrowedCount,
         ]);
     }
 }

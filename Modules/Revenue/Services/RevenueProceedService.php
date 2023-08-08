@@ -2,9 +2,9 @@
 
 namespace Modules\Revenue\Services;
 
-use Modules\Revenue\Entities\RevenueProceed;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Modules\Revenue\Entities\RevenueProceed;
 
 class RevenueProceedService
 {

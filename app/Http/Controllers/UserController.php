@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use Modules\User\Entities\User;
-use Illuminate\Support\Facades\Auth;
 use App\Services\GSuiteUserService;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Modules\User\Entities\User;
 
 class UserController extends Controller
 {
@@ -47,8 +47,6 @@ class UserController extends Controller
 
     public function projects()
     {
-        $userProjects = Auth::user()->activeProjects();
-
-        return $userProjects;
+        return Auth::user()->activeProjects();
     }
 }

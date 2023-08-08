@@ -4,13 +4,14 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Modules\User\Database\Seeders\UserPermissionsTableSeeder;
 use Modules\User\Entities\User;
 use Spatie\Permission\Models\Role;
 
-class UsersTableSeeder extends Seeder
+class UserDatabaseSeeder extends Seeder
 {
     /**
-     * Auto generated seed file.
+     * Run the database seeds.
      *
      * @return void
      */
@@ -21,6 +22,7 @@ class UsersTableSeeder extends Seeder
         $this->createAdmin();
         $this->createEmployee();
         $this->createUserWithoutRole();
+        $this->setupUsersBasedOnRoles();
     }
 
     private function createDefaultSuperAdmin()
@@ -77,12 +79,30 @@ class UsersTableSeeder extends Seeder
 
     private function createUserWithoutRole()
     {
-        $user = User::create([
+        User::create([
             'email' => 'default@coloredcow.com',
             'name' => 'Default User',
             'password' => Hash::make('12345678'),
             'provider' => 'default',
             'provider_id' => 'default',
         ]);
+    }
+
+    private function setupUsersBasedOnRoles()
+    {
+        $this->call(UserPermissionsTableSeeder::class);
+
+        if (! app()->environment('production')) {
+            $roles = Role::all();
+            foreach ($roles as $role) {
+                $users = User::factory()
+                    ->count(2)
+                    ->create();
+
+                foreach ($users as $user) {
+                    $user->assignRole($role);
+                }
+            }
+        }
     }
 }

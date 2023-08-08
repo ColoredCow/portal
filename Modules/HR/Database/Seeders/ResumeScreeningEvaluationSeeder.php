@@ -88,7 +88,11 @@ class ResumeScreeningEvaluationSeeder extends Seeder
                 ],
             ];
             $round = Round::where('name', 'Resume Screening')->first();
-            $round->evaluationParameters()->createMany($evaluationParametersList);
+
+            if (! Parameter::find(1)) {
+                $round->evaluationParameters()->createMany($evaluationParametersList);
+            }
+
             $evaluationParameters = Parameter::all();
             foreach ($evaluationParameters as $evaluationParameter) {
                 $evaluationParameter->options()->createMany($evaluationParametersOptions);

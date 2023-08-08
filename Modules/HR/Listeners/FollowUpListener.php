@@ -24,6 +24,7 @@ class FollowUpListener
      * Handle the event.
      *
      * @param  object  $event
+     *
      * @return void
      */
     public function handle($event)
@@ -47,7 +48,7 @@ class FollowUpListener
         FollowUp::create([
             'hr_application_round_id' => $application->latestApplicationRound->id,
             'comments' => 'sent follow up email',
-            'conducted_by' => User::select('id')->first()->id
+            'conducted_by' => User::select('id')->first()->id,
         ]);
     }
 }

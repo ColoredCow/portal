@@ -3,10 +3,10 @@
 namespace App\Services;
 
 use Carbon\Carbon;
+use Exception;
 use Google_Client;
 use Google_Service_Calendar;
 use Google_Service_Calendar_Event;
-use Exception;
 
 class CalendarEventService
 {
@@ -16,7 +16,7 @@ class CalendarEventService
     protected $endDateTime;
     protected $hangoutLink;
     protected $service;
-    public $id;
+    protected $id;
 
     public function __construct()
     {
@@ -45,7 +45,7 @@ class CalendarEventService
             'end' => $this->endDateTime,
         ]);
         $optprm = [
-            'sendNotifications' => true
+            'sendNotifications' => true,
         ];
         $event = $this->service->events->insert($calendarId, $event, $optprm);
         $this->id = $event->id;
@@ -107,8 +107,29 @@ class CalendarEventService
         }
     }
 
+    public function getStartDateTime($withTimeZone = false)
+    {
+        return self::getDateTime($this->startDateTime, $withTimeZone);
+    }
+
+    public function setStartDateTime($dateTime, $timeZone = null)
+    {
+        $this->startDateTime = self::getCalendarDateTime($dateTime, $timeZone);
+    }
+
+    public function getEndDateTime($timeZone = false)
+    {
+        return self::getDateTime($this->endDateTime, $timeZone);
+    }
+
+    public function setEndDateTime($dateTime, $timeZone = null)
+    {
+        $this->endDateTime = self::getCalendarDateTime($dateTime, $timeZone);
+    }
+
     /**
      * Returns an array that is expected by the Google Calendar API.
+     *
      * @param  string $dateTime
      * @param  string $timeZone
      *
@@ -134,31 +155,12 @@ class CalendarEventService
      */
     protected static function getDateTime($eventDateTime, $withTimeZone)
     {
-        $dateTime['dateTime'] = Carbon::parse($eventDateTime['dateTime'])->format(config('constants.datetime_format'));
+        $results = [];
+        $results['dateTime'] = Carbon::parse($eventDateTime['dateTime'])->format(config('constants.datetime_format'));
         if ($withTimeZone) {
-            $start['timeZone'] = $eventDateTime['timeZone'];
+            $results['timeZone'] = $eventDateTime['timeZone'];
         }
 
-        return $dateTime;
-    }
-
-    public function getStartDateTime($withTimeZone = false)
-    {
-        return self::getDateTime($this->startDateTime, $withTimeZone);
-    }
-
-    public function setStartDateTime($dateTime, $timeZone = null)
-    {
-        $this->startDateTime = self::getCalendarDateTime($dateTime, $timeZone);
-    }
-
-    public function getEndDateTime($timeZone = false)
-    {
-        return self::getDateTime($this->endDateTime, $timeZone);
-    }
-
-    public function setEndDateTime($dateTime, $timeZone = null)
-    {
-        $this->endDateTime = self::getCalendarDateTime($dateTime, $timeZone);
+        return $results;
     }
 }

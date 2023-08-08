@@ -21,14 +21,19 @@ class TeamMemberRule implements Rule
      *
      * @param  string  $attribute
      * @param  mixed  $value
+     *
      * @return bool
+     */
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
     public function passes($attribute, $value)
     {
         foreach ($value as $memberData) {
             if (isset($memberData['team_member_id']) == false) {
                 return false;
-            } elseif ($memberData['team_member_id'] == null) {
+            }
+            if ($memberData['team_member_id'] == null) {
                 return false;
             }
         }

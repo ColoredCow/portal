@@ -3,14 +3,14 @@
 namespace Modules\Project\Notifications\GoogleChat;
 
 use Illuminate\Bus\Queueable;
-use NotificationChannels\GoogleChat\Card;
 use Illuminate\Notifications\Notification;
-use NotificationChannels\GoogleChat\Section;
+use NotificationChannels\GoogleChat\Card;
+use NotificationChannels\GoogleChat\Components\Button\TextButton;
 use NotificationChannels\GoogleChat\Enums\Icon;
-use NotificationChannels\GoogleChat\Widgets\KeyValue;
 use NotificationChannels\GoogleChat\GoogleChatChannel;
 use NotificationChannels\GoogleChat\GoogleChatMessage;
-use NotificationChannels\GoogleChat\Components\Button\TextButton;
+use NotificationChannels\GoogleChat\Section;
+use NotificationChannels\GoogleChat\Widgets\KeyValue;
 
 class RemindToUpdateEffort extends Notification
 {
@@ -26,14 +26,14 @@ class RemindToUpdateEffort extends Notification
         $this->project = $project;
     }
 
-    public function via($notifiable)
+    public function via()
     {
         return [
-            GoogleChatChannel::class
+            GoogleChatChannel::class,
         ];
     }
 
-    public function toGoogleChat($notifiable)
+    public function toGoogleChat()
     {
         return GoogleChatMessage::create()
             ->mentionAll('', " it's time to update your efforts for today!\n")

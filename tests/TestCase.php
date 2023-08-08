@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use App\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Modules\User\Entities\User;
 
 abstract class TestCase extends BaseTestCase
 {
