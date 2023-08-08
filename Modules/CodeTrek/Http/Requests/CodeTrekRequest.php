@@ -19,7 +19,8 @@ class CodeTrekRequest extends FormRequest
             422
         ));
     }
-     private function codeTrekValidation()
+    
+    private function codeTrekValidation()
     {
         return [
             'first_name' => 'required|string',
