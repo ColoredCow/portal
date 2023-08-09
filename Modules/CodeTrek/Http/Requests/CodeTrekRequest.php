@@ -12,9 +12,9 @@ class CodeTrekRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json(
             [
-                'success'=> false,
-                'message'=> 'Validation errors',
-                'data'=> $validator->errors(),
+                'success' => false,
+                'message' => 'Validation errors',
+                'data' => $validator->errors(),
             ],
             422
         ));
@@ -49,7 +49,7 @@ class CodeTrekRequest extends FormRequest
             'graduation_year.digits' => 'Graduation year should be in 4 digit format.',
         ];
     }
-     private function codeTrekValidation()
+    private function codeTrekValidation()
     {
         return [
             'first_name' => 'required|string',
@@ -61,8 +61,8 @@ class CodeTrekRequest extends FormRequest
             'university_name' => 'nullable|string',
             'course' => 'nullable|string',
             'graduation_year' => 'nullable|numeric|digits:4',
-            'centre'=> 'required|string',
-            'mentorId'=> 'required|string',
+            'centre' => 'required|string',
+            'mentorId' => 'required|string',
         ];
     }
 }
