@@ -17,21 +17,19 @@ Portal uses PHP v8.2. You can install it using one of the following ways:
 1. XAMPP (Windows and Linux)
     - If you prefer using XAMPP, you can download the full stack with right PHP version from [this link](https://www.apachefriends.org/download.html). 
     - If you already have XAMPP installed for Windows, refer [this link](https://stackoverflow.com/questions/45790160/is-there-way-to-use-two-php-versions-in-xampp) for switching to the correct PHP version.
-    - If you already have XAMPP installed for Ubuntu, refer [this link](http://www.facweb.iitkgp.ac.in/dashboard/docs/use-different-php-version.html)for switching to the correct PHP version.
+    - If you already have XAMPP installed for Ubuntu, refer [this link](http://www.facweb.iitkgp.ac.in/dashboard/docs/use-different-php-version.html) for switching to the correct PHP version.
     - Run the downloaded installer and follow the on-screen instructions to install XAMPP.
     - During installation, make sure to select Apache, MySQL, PHP, and phpMyAdmin components.
     - To configure XAMPP, launch the XAMPP control panel. Start both the Apache and MySQL services.
-    - Open the httpd.conf file in the Apache configuration directory (usually located in the apache folder of your XAMPP installation).
-    - Make sure the Listen 80 and ServerName localhost lines are correctly configured.
-    - uncomment the `;extension=openSSL` by removing ";" before it in your PHP configuration (php.ini) file located in the php folder of your XAMPP installation.
-    - Save all the configuration changes you've made.
+    - A possible error may arise with openSSL extension in older versions. So to avoid it make sure the `;extension=openSSL` is uncommented by removing ";" before it in your PHP configuration (php.ini) file located in the php folder of your XAMPP installation.
+    - Save all the configuration changes you've made and restart all the services.
 
 2. WAMP (Windows)
     - If you prefer using WAMP Windows(64-bit and 32-bit), you can download from [this link](https://www.wampserver.com/en/download-wampserver-64bits).
    A possible error may arise with openSSL extension in older versions. It should be enabled from your 'php.ini' file. To enable it, use the following steps:
    - Edit the system environment variables by right-clicking your windows icon most likely on the bottom-left of your screen, click on system, on the right under related settings click on Advanced System Settings, under Advanced tab click on Environment Variables, under System variables click on new or edit, to add new click on new and in th variable name write your phpversion eg php8.0.26 or just php, click on browse directory go to this pc / local disk c:/wamp/bin/php and select a php version directory you want to use use any greater than 7, click ok and the path of your selected PHP version will be set.
    - 'php.ini' can be found in thispc/localdisk c/wamp/bin/phpversion you have selected
-   - In 'php.ini' (older versions), if ";extension=openSSL" is present, uncomment the ";extension=openSSL" by removing ";" before it.
+   - In 'php.ini' (older versions), if `;extension=openSSL` is present, uncomment the `;extension=openSSL` by removing ";" before it.
    - The WAMP users have to right click on the server icon in the toolbar, and choose ‘Restart all services’ after making changes to the 'php.ini' file.
    - Run this command in the root directory of your project if composer already installed on your system:
       ```sh
@@ -40,8 +38,8 @@ Portal uses PHP v8.2. You can install it using one of the following ways:
    - If the user is working in VSCode, possible errors may arise because of path, as may not be able to access the selected PHP version from its terminal.
    
 3. MAMP (macOS)
-    - If you prefer using MAMP, you can download with all the PHP version from [this link](https://www.mamp.info/en/downloads/)this link for Windows and MacOS.
-    -To use the MAMP php as main php, refer[this link](https://stackoverflow.com/questions/4262006/how-to-use-mamps-version-of-php-instead-of-the-default-on-osx) for switching into the MAMP php.
+    - If you prefer using MAMP, you can download with all the PHP version from [this link](https://www.mamp.info/en/downloads/) for Windows and MacOS.
+    - To use the MAMP php as main php, refer [this link](https://stackoverflow.com/questions/4262006/how-to-use-mamps-version-of-php-instead-of-the-default-on-osx) for switching into the MAMP php.
 4. After you've successfully installed, you can verify the installation using:
 
 ```sh
@@ -54,15 +52,21 @@ Before you start building PHP connection to MySQL database you need to know what
 
 1. Open your browser and go to localhost/phpmyadmin.
 
-2. Just click Login
+2. If you encounter 'this site can't be reached" or connection errors', Make sure the other software running on ports 80 or 443 are stopped.
 
-3. At the top click databases.
+3. If you are unable stop other applications from using ports 80 or 443, open the 'httpd.conf' file in your XAMPP's Apache configuration folder & look for lines like Listen 80 and Listen 443, and change the port numbers to available ones (e.g., Listen 8080 and Listen 4433). 
 
-4. In the new window, name your database as per your need, we are naming it “portal”. Now select Collation as utf8_general_ci. Now click on Create and your database will be created.
+4. After making these changes, restart the Apache service from the XAMPP control panel and go to localhost:8080/phpmyadmin in your browser.
 
-5. The newly created database will be empty now, as there are no tables in it.
+5. After click Login
 
-6. Create a Folder in htdocs -
+6. At the top click databases.
+
+7. In the new window, name your database as per your need, we are naming it “portal”. Now select Collation as utf8_general_ci. Now click on Create and your database will be created.
+
+8. The newly created database will be empty now, as there are no tables in it.
+
+9. Create a Folder in htdocs -
 Now, locate the folder where you installed XAMPP and open the htdocs folder (usually c:/xampp). Create a new folder inside c:/xampp/htdocs/ and name it “portal” we will place web files in this folder.
 
 - Why we have created a folder in htdocs?
