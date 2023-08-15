@@ -18,8 +18,13 @@ Portal uses PHP v8.2. You can install it using one of the following ways:
     - If you prefer using XAMPP, you can download the full stack with right PHP version from [this link](https://www.apachefriends.org/download.html). 
     - If you already have XAMPP installed for Windows, refer [this link](https://stackoverflow.com/questions/45790160/is-there-way-to-use-two-php-versions-in-xampp) for switching to the correct PHP version.
     - If you already have XAMPP installed for Ubuntu, refer [this link](http://www.facweb.iitkgp.ac.in/dashboard/docs/use-different-php-version.html)for switching to the correct PHP version.
-    - After downloading, run the installer executable. Follow the on-screen instructions to proceed with the installation.
-    - During installation, you'll be asked to select the components you want to install. At a minimum, you'll need Apache, MySQL, PHP, and phpMyAdmin.
+    - Run the downloaded installer and follow the on-screen instructions to install XAMPP.
+    - During installation, make sure to select Apache, MySQL, PHP, and phpMyAdmin components.
+    - To configure XAMPP, launch the XAMPP control panel. Start both the Apache and MySQL services.
+    - Open the httpd.conf file in the Apache configuration directory (usually located in the apache folder of your XAMPP installation).
+    - Make sure the Listen 80 and ServerName localhost lines are correctly configured.
+    - Uncomment the ;extension=openssl line in your PHP configuration (php.ini) file located in the php folder of your XAMPP installation.
+    - Save all the configuration changes you've made.
 
 2. WAMP (Windows)
     - If you prefer using WAMP Windows(64-bit and 32-bit), you can download from [this link](https://www.wampserver.com/en/download-wampserver-64bits).
@@ -33,6 +38,7 @@ Portal uses PHP v8.2. You can install it using one of the following ways:
       composer update
       ```
    - If the user is working in VSCode, possible errors may arise because of path, as may not be able to access the selected PHP version from its terminal.
+   
 3. MAMP (macOS)
     - If you prefer using MAMP, you can download with all the PHP version from [this link](https://www.mamp.info/en/downloads/)this link for Windows and MacOS.
     -To use the MAMP php as main php, refer[this link](https://stackoverflow.com/questions/4262006/how-to-use-mamps-version-of-php-instead-of-the-default-on-osx) for switching into the MAMP php.
