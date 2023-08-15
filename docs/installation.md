@@ -34,6 +34,10 @@ Before you start following the guidelines, make sure to go through the [prerequi
    composer install
    npm install
    ```
+   A possible error `Requirements could not be resolved to an installable set of packages` may arise. So to fix this error run this command:
+   ```sh
+   composer install --ignore-platform-reqs
+   ```
 
 4. npm build
    ```sh
