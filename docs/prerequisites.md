@@ -23,7 +23,7 @@ Portal uses PHP v8.2. You can install it using one of the following ways:
     - To configure XAMPP, launch the XAMPP control panel. Start both the Apache and MySQL services.
     - Open the httpd.conf file in the Apache configuration directory (usually located in the apache folder of your XAMPP installation).
     - Make sure the Listen 80 and ServerName localhost lines are correctly configured.
-    - uncomment the `;extension=openSSL`` by removing ";" before it in your PHP configuration (php.ini) file located in the php folder of your XAMPP installation.
+    - uncomment the `;extension=openSSL` by removing ";" before it in your PHP configuration (php.ini) file located in the php folder of your XAMPP installation.
     - Save all the configuration changes you've made.
 
 2. WAMP (Windows)
