@@ -37,7 +37,8 @@ class ReportDataService
 
         $filters['start_date'] = empty($filters['start_date']) ? $defaultStartDate : $filters['start_date'];
         $filters['end_date'] = empty($filters['end_date']) ? $defaultEndDate : $filters['end_date'];
-        $reportData = RevenueReportService::getRevenueReportDataForClient($filters, $client);
+        $reportDataService = new RevenueReportService;
+        $reportData = $reportDataService->getRevenueReportDataForClient($filters, $client);
 
         return [
             'labels' => $reportData['months'],
@@ -59,7 +60,8 @@ class ReportDataService
             'previous_period_end_date' => $defaultPreviousEndDate,
         ];
         $filters = array_merge($defaultFilters, request()->all());
-        $reportData = RevenueReportService::getRevenueGroupedByClient($filters);
+        $reportDataService = new RevenueReportService;
+        $reportData = $reportDataService->getRevenueGroupedByClient($filters);
 
         return [
             'labels' => $reportData['clients_name'],
