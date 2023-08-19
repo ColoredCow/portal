@@ -23,9 +23,7 @@ class ReportDataService
                 'counts' => $counts,
             ];
 
-            $reportApplicantData = json_encode($chartData);
-
-            return $reportApplicantData;
+            return json_encode($chartData);
         }
     }
 }
