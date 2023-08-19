@@ -2,13 +2,13 @@
 
 namespace Modules\Report\Http\Controllers;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\Report\Services\Finance\ReportDataService;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Modules\Report\Services\Finance\ProfitAndLossReportService;
-use Modules\Report\Exports\ProfitAndLossReportExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Modules\Report\Exports\ProfitAndLossReportExport;
+use Modules\Report\Services\Finance\ProfitAndLossReportService;
+use Modules\Report\Services\Finance\ReportDataService;
 
 class ProfitAndLossReportController extends Controller
 {
@@ -44,7 +44,7 @@ class ProfitAndLossReportController extends Controller
         return view('report::finance.profit-and-loss.detailed', [
             'reportData' => $reportData,
             'currentYear' => $currentYear,
-            'allAmounts' => $allAmounts
+            'allAmounts' => $allAmounts,
         ]);
     }
 
@@ -67,7 +67,7 @@ class ProfitAndLossReportController extends Controller
         $endYear = $request['year'];
         $startYear = $endYear - 1;
 
-        return Excel::download(new ProfitAndLossReportExport($reportData), "Profit And Loss Report $startYear-$endYear.xlsx");
+        return Excel::download(new ProfitAndLossReportExport($reportData), "Profit And Loss Report {$startYear}-{$endYear}.xlsx");
     }
 
     public function filters($currentYear)

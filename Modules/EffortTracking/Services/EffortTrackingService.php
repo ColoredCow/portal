@@ -53,17 +53,18 @@ class EffortTrackingService
     {
         $Month = intval(date('m', strtotime($currentMonth)));
         $thisMonth = intval(Carbon::now()->format('m'));
-        $monthsDifference = ($thisMonth - $Month);
-        $totalYears = (Carbon::now()->format('Y') - $currentYear);
-        $totalMonths = $monthsDifference + ($totalYears * 12);
+        $monthsDifference = $thisMonth - $Month;
+        $totalYears = Carbon::now()->format('Y') - $currentYear;
 
-        return $totalMonths;
+        return $monthsDifference + ($totalYears * 12);
     }
 
     /**
      * Calculate FTE.
+     *
      * @param  int $currentHours  Current Hours.
      * @param  int $expectedHours Expected Hours.
+     *
      * @return float              FTE
      */
     public function getFTE($currentHours, $expectedHours)
@@ -77,8 +78,10 @@ class EffortTrackingService
 
     /**
      * Get expected hours.
+     *
      * @param  int $numberOfDays Number of days.
      * @param float $expectedDailyHours Expected daily hours.
+     *
      * @return int|float         Expected hours.
      */
     public function getExpectedHours($expectedDailyHours, $numberOfDays)
@@ -88,8 +91,10 @@ class EffortTrackingService
 
     /**
      * Get working days.
+     *
      * @param  object $startDate Start Date.
      * @param  object $endDate   End Date.
+     *
      * @return array             Working Days dates.
      */
     public function getWorkingDays($startDate, $endDate)
@@ -108,7 +113,9 @@ class EffortTrackingService
 
     /**
      * Get Team members details.
+     *
      * @param  array $teamMembers Team Members.
+     *
      * @return array
      */
     public function getTeamMembersDetails($teamMembers)
@@ -204,12 +211,14 @@ class EffortTrackingService
 
             try {
                 while (true) {
-                    $range = 'C1:' . ++$lastColumn . '1';
+                    $lastColumn++;
+                    $range = "C1:{$lastColumn}1";
                     $sheet = $sheets->spreadsheet($sheetId)
                         ->range($range)
                         ->get();
 
-                    if (isset($sheet[0]) && count($sheet[0]) == ++$columnIndex) {
+                    $columnIndex++;
+                    if (isset($sheet[0]) && count($sheet[0]) == $columnIndex) {
                         $subProjectName = $sheet[0][count($sheet[0]) - 1];
                         $subProject = Project::where(['name' => $subProjectName, 'status' => 'active'])->first();
                         if ($subProject) {

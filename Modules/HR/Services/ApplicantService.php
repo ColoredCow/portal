@@ -9,9 +9,9 @@ class ApplicantService
 {
     public function storeApplicantOnboardingDetails(ApplicantMetaRequest $request)
     {
-        $keyConfigs = (config('hr.applicant_form-details'));
-        $uploadConfigs = (config('hr.applicant_upload_details'));
-        $encryptConfigs = (config('hr.encrypted-applicant-details'));
+        $keyConfigs = config('hr.applicant_form-details');
+        $uploadConfigs = config('hr.applicant_upload_details');
+        $encryptConfigs = config('hr.encrypted-applicant-details');
 
         foreach ($keyConfigs as $key=>$label) {
             ApplicantMeta::updateOrCreate([
@@ -39,7 +39,7 @@ class ApplicantService
             if ($request->file($key)) {
                 $file = $request->file($key);
                 $fileName = $key . $request->get('hr_applicant_id') . '.' . $file->extension();
-                $filepath = $file->move(storage_path('app/public/Employee-Documents-Details'), $fileName);
+                $file->move(storage_path('app/public/Employee-Documents-Details'), $fileName);
                 ApplicantMeta::updateOrInsert(
                     [
                     'key' => $label,

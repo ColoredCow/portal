@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class Dropapplicantcolumns extends Migration
 {
@@ -21,7 +21,7 @@ class Dropapplicantcolumns extends Migration
                 'autoresponder_body',
                 'status',
                 'resume',
-                'hr_job_id'
+                'hr_job_id',
             ]);
         });
 

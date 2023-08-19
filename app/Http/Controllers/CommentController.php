@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Comment;
+use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
@@ -12,6 +12,7 @@ class CommentController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Comment  $comment
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Comment $comment)
@@ -19,7 +20,7 @@ class CommentController extends Controller
         $comment->update(['body' => $request->comment]);
 
         return response([
-            'status' => 'Comment updated successfully'
+            'status' => 'Comment updated successfully',
         ]);
     }
 

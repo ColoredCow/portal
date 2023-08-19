@@ -39,6 +39,7 @@ class ClientController extends ModuleBaseController
 
     /**
      * Store a newly created resource in storage.
+     *
      * @param ClientRequest $request
      */
     public function store(ClientRequest $request)
@@ -47,14 +48,6 @@ class ClientController extends ModuleBaseController
         $client = $this->service->store($request->all());
 
         return redirect(route('client.edit', [$client, 'contact-persons']));
-    }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     */
-    public function show($id)
-    {
     }
 
     /**
@@ -69,6 +62,7 @@ class ClientController extends ModuleBaseController
 
     /**
      * Update the specified resource in storage.
+     *
      * @param ClientFormsRequest $request
      */
     public function update(ClientFormsRequest $request, Client $client)

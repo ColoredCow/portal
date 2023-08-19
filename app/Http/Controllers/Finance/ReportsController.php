@@ -23,6 +23,7 @@ class ReportsController extends Controller
 
     /**
      * Get a complete list attributes and their values to be displayed on the reports page.
+     *
      * @return array
      */
     public static function getReportAttributes()
@@ -80,8 +81,10 @@ class ReportsController extends Controller
 
     /**
      * Get financial calcucations based on sent and paid invoices to be shown in the reports.
+     *
      * @param  \Illuminate\Database\Eloquent\Collection $sentInvoices
      * @param  \Illuminate\Database\Eloquent\Collection $paidInvoices
+     *
      * @return array
      */
     public static function getCumulativeAmounts($sentInvoices, $paidInvoices)
@@ -144,9 +147,10 @@ class ReportsController extends Controller
      * @param  \Illuminate\Database\Eloquent\Collection $invoices
      * @param  Carbon $start    Start date
      * @param  Carbon $end      End date
+     *
      * @return array
      */
-    public static function arrangeInvoices($invoices, Carbon $start = null, Carbon $end = null)
+    public static function arrangeInvoices($invoices, ?Carbon $start = null, ?Carbon $end = null)
     {
         $arrangedInvoices = [
             'sent' => [],

@@ -28,17 +28,19 @@ class NDATemplateController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
      * @param Request $request
      */
     public function store(Request $request)
     {
-        $legalDocumentTemplate = LegalDocumentTemplate::create($request->all());
+        LegalDocumentTemplate::create($request->all());
 
         return redirect(route('legal-document.nda.template.index'));
     }
 
     /**
      * Show the specified resource.
+     *
      * @param int $id
      */
     public function show($id)
@@ -49,26 +51,19 @@ class NDATemplateController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     */
-    public function edit($id)
-    {
-    }
-
-    /**
      * Update the specified resource in storage.
+     *
      * @param Request $request
      * @param int $id
      */
     public function update(Request $request, $id)
     {
-        $legalDocumentTemplate = LegalDocumentTemplate::find($id)->update($request->all());
+        LegalDocumentTemplate::find($id)->update($request->all());
 
         return redirect(route('legal-document.nda.template.index'));
     }
 
-    public function showPreview(Request $request)
+    public function showPreview()
     {
         $template = LegalDocumentTemplate::find(request('template_id'));
         $data = [

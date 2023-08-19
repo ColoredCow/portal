@@ -4,13 +4,13 @@ namespace Modules\HR\Entities;
 
 use App\Helpers\ContentHelper;
 use App\Traits\HasTags;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Modules\HR\Database\Factories\HrApplicationsFactory;
 use Modules\HR\Entities\Evaluation\ApplicationEvaluation;
 use Modules\HR\Events\Recruitment\ApplicationCreated;
 use Modules\User\Entities\User;
-use Modules\HR\Database\Factories\HrApplicationsFactory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Application extends Model
 {
@@ -220,7 +220,7 @@ class Application extends Model
     public function scopeFilterByName($query, $search)
     {
         return $query->whereHas('applicant', function ($query) use ($search) {
-            ($search) ? $query->where('name', 'LIKE', "%$search%") : '';
+            $search ? $query->where('name', 'LIKE', "%{$search}%") : '';
         });
     }
 
@@ -231,11 +231,11 @@ class Application extends Model
         }
 
         return $query->whereHas('applicant', function ($query) use ($search) {
-            $query->where('name', 'LIKE', "%$search%");
-            $query->orWhere('email', 'LIKE', "%$search%");
-            $query->orWhere('phone', 'LIKE', "%$search%");
+            $query->where('name', 'LIKE', "%{$search}%");
+            $query->orWhere('email', 'LIKE', "%{$search}%");
+            $query->orWhere('phone', 'LIKE', "%{$search}%");
             $query->orWhereHas('university', function ($universityQuery) use ($search) {
-                $universityQuery->where('name', 'LIKE', "%$search%");
+                $universityQuery->where('name', 'LIKE', "%{$search}%");
             });
         });
     }
@@ -405,6 +405,7 @@ class Application extends Model
      * Set the application status to sent-for-approval and also set the requested user as pending approval from.
      *
      * @param  int $userId
+     *
      * @return void
      */
     public function sendForApproval($userId)
@@ -505,7 +506,8 @@ class Application extends Model
         $approvedEvents = $this->applicationMeta()->approved()->get();
         foreach ($approvedEvents as $event) {
             $details = json_decode($event->value);
-            if (! $approver = User::find($details->approved_by)) {
+            $approver = User::find($details->approved_by);
+            if (! $approver) {
                 continue;
             }
             $details->approvedBy = $approver->name;

@@ -2,9 +2,9 @@
 
 namespace Modules\Project\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\TeamMemberDesignationRule;
 use App\Rules\TeamMemberRule;
+use Illuminate\Foundation\Http\FormRequest;
 
 class ProjectRequest extends FormRequest
 {
@@ -72,7 +72,7 @@ class ProjectRequest extends FormRequest
                         'project_team_member' => ['array',
                         new TeamMemberDesignationRule(),
                         new TeamMemberRule(),
-                        ]
+                        ],
                     ];
                 }
                 break;

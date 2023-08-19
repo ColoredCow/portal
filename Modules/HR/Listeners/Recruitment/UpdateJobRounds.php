@@ -20,6 +20,7 @@ class UpdateJobRounds
      * Handle the event.
      *
      * @param  JobUpdated  $event
+     *
      * @return void
      */
     public function handle(JobUpdated $event)

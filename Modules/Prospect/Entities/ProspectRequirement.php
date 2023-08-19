@@ -9,6 +9,6 @@ class ProspectRequirement extends Model
     protected $fillable = ['prospect_id', 'project_brief', 'skills', 'resource_required_count', 'excepted_launch_date', 'notes'];
     protected $casts = [
         'skills' => 'array',
-        'excepted_launch_date' => 'date:Y-m-d'
+        'excepted_launch_date' => 'date:Y-m-d',
     ];
 }

@@ -2,12 +2,12 @@
 
 namespace Modules\Client\Policies;
 
-use Modules\User\Entities\User;
 use Modules\Client\Entities\Client;
+use Modules\User\Entities\User;
 
 class ClientPolicy
 {
-    public function before($user, $ability)
+    public function before($user)
     {
         if ($user->isSuperAdmin()) {
             return true;
@@ -29,7 +29,7 @@ class ClientPolicy
         return $user->can('clients.update') || $user->id === $client->key_account_manager_id;
     }
 
-    public function delete(User $user, Client $client)
+    public function delete(User $user)
     {
         return $user->can('clients.delete');
     }

@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class sendThreshholdFollowUp extends Mailable
+class SendThreshholdFollowUp extends Mailable
 {
     use Queueable, SerializesModels;
 

@@ -2,9 +2,9 @@
 
 namespace Modules\HR\Database\Factories;
 
-use Modules\HR\Entities\Application;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\HR\Entities\Applicant;
+use Modules\HR\Entities\Application;
 use Modules\HR\Entities\Job;
 
 class HrApplicationsFactory extends Factory
@@ -37,7 +37,7 @@ class HrApplicationsFactory extends Factory
             'hr_applicant_id' => Applicant::inRandomOrder()->first()->id,
             'hr_job_id' => Job::inRandomOrder()->first()->id,
             'resume' => config('hr.Sample-Resume'),
-            'status' => $status
+            'status' => $status,
         ];
     }
 }

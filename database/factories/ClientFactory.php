@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Faker\Generator as Faker;
 use App\Models\Client;
+use Faker\Generator as Faker;
 
 $factory->define(Client::class, function (Faker $faker) {
     return [

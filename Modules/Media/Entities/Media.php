@@ -13,6 +13,6 @@ class Media extends Model
         'event_name',
         'file_url',
         'uploaded_by',
-        'description'
+        'description',
     ];
 }

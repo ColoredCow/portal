@@ -2,9 +2,9 @@
 
 namespace Modules\Report\Services\User;
 
-use Modules\Project\Entities\ProjectTeamMemberEffort;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectTeamMember;
+use Modules\Project\Entities\ProjectTeamMemberEffort;
 
 class UserReportService
 {
@@ -21,9 +21,7 @@ class UserReportService
     {
         $projectsId = $user->projectTeamMembers()->distinct('project_id')->pluck('project_id');
 
-        $reportFteData = $this->getMonthsFteAttribute($projectsId, $user);
-
-        return  $reportFteData;
+        return $this->getMonthsFteAttribute($projectsId, $user);
     }
 
     public function getMonthsFteAttribute($projectIds, $user)
@@ -55,7 +53,7 @@ class UserReportService
             }
 
             if ($workingDaysInAMonth > 0) {
-                $monthlyFte = round(($totalEffortInMonth) / ($workingDaysInAMonth * config('efforttracking.minimum_expected_hours')), 2);
+                $monthlyFte = round($totalEffortInMonth / ($workingDaysInAMonth * config('efforttracking.minimum_expected_hours')), 2);
             } else {
                 $monthlyFte = 0;
             }

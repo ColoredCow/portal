@@ -3,8 +3,8 @@
 namespace Modules\Revenue\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Modules\Revenue\Services\RevenueProceedService;
 use Illuminate\Routing\Controller;
+use Modules\Revenue\Services\RevenueProceedService;
 
 class RevenueProceedController extends Controller
 {
@@ -30,7 +30,7 @@ class RevenueProceedController extends Controller
         return redirect()->route('revenue.proceeds.index')->with('status', 'Revenue created successfully!!');
     }
 
-    public function show($id)
+    public function show()
     {
         return view('revenue::index');
     }

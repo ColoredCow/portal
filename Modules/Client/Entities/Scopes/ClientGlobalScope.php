@@ -2,9 +2,9 @@
 
 namespace Modules\Client\Entities\Scopes;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
-use Illuminate\Database\Eloquent\Builder;
 
 class ClientGlobalScope implements Scope
 {
@@ -13,6 +13,7 @@ class ClientGlobalScope implements Scope
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $builder
      * @param  \Illuminate\Database\Eloquent\Model  $model
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function apply(Builder $builder, Model $model)
@@ -20,7 +21,7 @@ class ClientGlobalScope implements Scope
         $relationships = collect([
                 'keyAccountManager',
                 'channelPartner',
-                'parentOrganisation'
+                'parentOrganisation',
             ])
             ->filter(function ($item) use ($model) {
                 return method_exists($model, $item);

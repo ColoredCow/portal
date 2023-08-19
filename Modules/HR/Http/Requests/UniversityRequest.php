@@ -10,19 +10,17 @@ class UniversityRequest extends FormRequest
     {
         $rules = [];
         if ($this->method() === 'POST') {
-            $rules = [
+            return [
                 'name'=>'required|string|unique:hr_universities',
                 'address'=>'nullable|string',
-                'rating'=>'nullable|numeric'
+                'rating'=>'nullable|numeric',
             ];
-
-            return $rules;
         }
         if ($this->method() === 'PUT') {
             $rules = [
                 'name'=>"required|string|unique:hr_universities,name,{$this->university->id}",
                 'address'=>'nullable|string',
-                'rating'=>'nullable|numeric'
+                'rating'=>'nullable|numeric',
             ];
         }
 

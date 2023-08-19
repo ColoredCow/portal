@@ -4,8 +4,8 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Nwidart\Modules\Facades\Module;
-use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
 class CheckCommand extends Command
 {
@@ -27,16 +27,6 @@ class CheckCommand extends Command
     protected $description = 'Single command to check all CI checks';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return int
@@ -47,32 +37,32 @@ class CheckCommand extends Command
             $this->checkCommand($command, $name);
         }
 
-        return 1;
+        return 0;
     }
 
     private function checkCommand($command, $name)
     {
-        $this->line("Running $name");
+        $this->line("Running {$name}");
 
         $process = new Process($command);
 
         try {
-            $process->mustRun(function ($type, $line) {
-                if ($this->option('with-tty')) {
+            $process
+            ->setTimeout(60 * 7)
+            ->mustRun(function ($type, $line) {
+                if ($type && $this->option('with-tty')) {
                     $this->output->write($line);
                 }
             });
-            $this->info("$name Completed.");
+            $this->info("{$name} Completed.");
         } catch (ProcessFailedException $e) {
-            $this->error("$name Failed.");
+            $this->error("{$name} Failed.");
             $this->line($e->getMessage());
             $this->commandSeparator();
             exit(1);
         }
 
         $this->commandSeparator();
-
-        return 1;
     }
 
     private function commandSeparator()
@@ -94,11 +84,15 @@ class CheckCommand extends Command
         ];
 
         $laraStan = ['./vendor/bin/phpstan', 'analyse'];
+        $phpInsights = ['php', 'artisan', 'insights', '-v', '--no-interaction'];
 
-        return array_merge([
-            'Php CS Fixer' => $staticAnalysis,
-            'LaraStan' => $laraStan,
-        ], $this->getEsCommands());
+        $ciCommands = [];
+        $ciCommands['Php CS Fixer'] = $staticAnalysis;
+        $ciCommands['LaraStan'] = $laraStan;
+        $ciCommands = array_merge($ciCommands, $this->getEsCommands());
+        $ciCommands['Insights'] = $phpInsights;
+
+        return $ciCommands;
     }
 
     private function getEsCommands()
@@ -113,8 +107,8 @@ class CheckCommand extends Command
         $esCheckCommand = array_merge(['./node_modules/.bin/eslint', 'resources/js/'], $moduleJsFiles, ['--ext', '.js,.vue']);
 
         return [
-            'ESLint fix' => array_merge($esCheckCommand, ['--fix']),
-            'ESLint check' => $esCheckCommand
+        'ESLint fix' => array_merge($esCheckCommand, ['--fix']),
+        'ESLint check' => $esCheckCommand,
         ];
     }
 }

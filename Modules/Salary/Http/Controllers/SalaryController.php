@@ -2,21 +2,20 @@
 
 namespace Modules\Salary\Http\Controllers;
 
-use Modules\HR\Entities\Employee;
-use Illuminate\Routing\Controller;
-use Illuminate\Http\Request;
-use Modules\Salary\Entities\EmployeeSalary;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Modules\HR\Entities\Employee;
+use Modules\Salary\Entities\EmployeeSalary;
 use Modules\Salary\Entities\SalaryConfiguration;
 
 class SalaryController extends Controller
 {
+    use AuthorizesRequests;
     public function __construct()
     {
         $this->authorizeResource(EmployeeSalary::class);
     }
-
-    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -32,14 +31,14 @@ class SalaryController extends Controller
     {
     }
 
-    public function employee(Request $request, Employee $employee)
+    public function employee(Employee $employee)
     {
         $this->authorize('view', EmployeeSalary::class);
         $salaryConfigs = SalaryConfiguration::formatAll();
 
         return view('salary::employee.index')->with([
             'employee'=> $employee,
-            'salaryConfigs' => $salaryConfigs
+            'salaryConfigs' => $salaryConfigs,
         ]);
     }
 
@@ -47,25 +46,9 @@ class SalaryController extends Controller
     {
         EmployeeSalary::updateOrCreate(
             ['employee_id' => $employee->id],
-            ['monthly_gross_salary' => ($request->grossSalary)]
+            ['monthly_gross_salary' => $request->grossSalary]
         );
 
         return redirect()->back()->with('success', 'Gross Salary saved successfully!');
-    }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     */
-    public function show($id)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     */
-    public function edit($id)
-    {
     }
 }

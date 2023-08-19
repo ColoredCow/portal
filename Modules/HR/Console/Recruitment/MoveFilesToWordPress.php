@@ -23,16 +23,6 @@ class MoveFilesToWordPress extends Command
     protected $description = 'Command description';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
@@ -50,7 +40,7 @@ class MoveFilesToWordPress extends Command
                 mkdir($websitePath);
             }
 
-            $d = exec("cp $sourcePath $websitePath 2>&1");
+            $d = exec("cp {$sourcePath} {$websitePath} 2>&1");
 
             if ($d) {
                 continue;

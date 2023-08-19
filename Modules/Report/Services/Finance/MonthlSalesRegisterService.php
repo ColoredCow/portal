@@ -2,10 +2,10 @@
 
 namespace Modules\Report\Services\Finance;
 
-use Modules\Invoice\Entities\Invoice;
 use Maatwebsite\Excel\Facades\Excel;
-use Modules\Report\Exports\MonthlySalesRegisterReportExport;
 use Modules\Client\Entities\ClientAddress;
+use Modules\Invoice\Entities\Invoice;
+use Modules\Report\Exports\MonthlySalesRegisterReportExport;
 
 class MonthlSalesRegisterService
 {
@@ -20,9 +20,9 @@ class MonthlSalesRegisterService
         $clientAddress = [];
         foreach ($invoices->get() as $invoice) {
             $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
-            $igst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100;
-            $cgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100;
-            $sgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100;
+            $igst[] = (int) $invoice->display_amount * (int) config('invoice.invoice-details.igst') / 100;
+            $cgst[] = (int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst') / 100;
+            $sgst[] = (int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst') / 100;
         }
 
         return [
@@ -30,7 +30,7 @@ class MonthlSalesRegisterService
             'clientAddress' => $clientAddress,
             'igst' => $igst,
             'cgst' => $cgst,
-            'sgst' => $sgst
+            'sgst' => $sgst,
         ];
     }
 
@@ -56,16 +56,20 @@ class MonthlSalesRegisterService
             $invoices = $filters['region'] == config('invoice.region.indian') ? $this->formatSalesReportForExportIndian($invoices) : $this->formatSalesReportForExportInternational($invoices);
         }
 
-        return Excel::download(new MonthlySalesRegisterReportExport($invoices), "Monthly-Sales-Register-Report-$month-$year.xlsx");
+        return Excel::download(new MonthlySalesRegisterReportExport($invoices), "Monthly-Sales-Register-Report-{$month}-{$year}.xlsx");
     }
 
     public function formatSalesReportForExportIndian($invoices)
     {
         return $invoices->map(function ($invoice) {
+            $clientAddress = [];
+            $igst = [];
+            $cgst = [];
+            $sgst = [];
             $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
-            $igst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100;
-            $cgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100;
-            $sgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100;
+            $igst[] = (int) $invoice->display_amount * (int) config('invoice.invoice-details.igst') / 100;
+            $cgst[] = (int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst') / 100;
+            $sgst[] = (int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst') / 100;
             $address = $invoice->client->addresses;
 
             return [
@@ -83,7 +87,7 @@ class MonthlSalesRegisterService
                 'IGST Value' => $clientAddress[0] ? (($clientAddress[0]->state != config('invoice.invoice-details.billing-state')) && ($clientAddress[0]->country_id == 1) ? $igst[0] : '0') : '',
                 'CGST Value' => $clientAddress[0] ? (($clientAddress[0]->state == config('invoice.invoice-details.billing-state')) && ($clientAddress[0]->country_id == 1) ? $cgst[0] : '0') : '',
                 'SGST Value' => $clientAddress[0] ? (($clientAddress[0]->state == config('invoice.invoice-details.billing-state')) && ($clientAddress[0]->country_id == 1) ? $sgst[0] : '0') : '',
-                'Net Total' => $invoice->totalAmount
+                'Net Total' => $invoice->totalAmount,
             ];
         });
     }
@@ -91,6 +95,7 @@ class MonthlSalesRegisterService
     public function formatSalesReportForExportInternational($invoices)
     {
         return $invoices->map(function ($invoice) {
+            $clientAddress = [];
             $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
             $address = $invoice->client->addresses;
 
@@ -105,7 +110,7 @@ class MonthlSalesRegisterService
                 'Rate (FCY)' => optional($invoice->client->billingDetails)->service_rates,
                 'Exchange Rate' => $invoice->conversion_rate,
                 'Total Amont (INR)' => $invoice->invoiceAmountInInr,
-                'Net Total' => $invoice->totalAmountInInr
+                'Net Total' => $invoice->totalAmountInInr,
             ];
         });
     }

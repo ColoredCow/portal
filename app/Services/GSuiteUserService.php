@@ -12,7 +12,7 @@ use Google_Service_Exception;
 
 class GSuiteUserService
 {
-    const USERLIMIT = 20;
+    public const USERLIMIT = 20;
     protected $name;
     protected $joinedOn;
     protected $designation;

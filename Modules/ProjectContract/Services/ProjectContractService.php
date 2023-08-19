@@ -3,15 +3,15 @@
 namespace Modules\ProjectContract\Services;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Modules\ProjectContract\Entities\Contract;
-use Modules\ProjectContract\Entities\ProjectContractMeta;
-use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
-use Modules\ProjectContract\Entities\Reviewer;
-use Modules\ProjectContract\Entities\ContractReview;
 use Modules\ProjectContract\Entities\ContractInternalReview;
 use Modules\ProjectContract\Entities\ContractMetaHistory;
+use Modules\ProjectContract\Entities\ContractReview;
+use Modules\ProjectContract\Entities\ProjectContractMeta;
+use Modules\ProjectContract\Entities\Reviewer;
+use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
 use Modules\User\Entities\User;
-use Illuminate\Support\Facades\DB;
 
 class ProjectContractService
 {
@@ -31,12 +31,10 @@ class ProjectContractService
         }, 'contractReviewers'])
         ->get();
 
-        $contracts = $userContracts->merge($reviewerContracts);
-
-        return $contracts;
+        return $userContracts->merge($reviewerContracts);
     }
 
-    public function internal_reviewer()
+    public function internalReviewer()
     {
         return Contract::join('contract_internal_reviewer', 'contracts.id', '=', 'contract_internal_reviewer.contract_id')->where('contract_internal_reviewer.user_id', Auth::id())->get();
     }
@@ -95,7 +93,7 @@ class ProjectContractService
             $file = $request->file('logo_img');
             $path = 'app/public/contractlogo';
             $imageName = $file->getClientOriginalName();
-            $fullpath = $file->move(storage_path($path), $imageName);
+            $file->move(storage_path($path), $imageName);
         }
         $validated = $request->validated();
         $ProjectContractMeta = ProjectContractMeta::find($id);
@@ -238,7 +236,7 @@ class ProjectContractService
                             'key' => $meta['key'],
                             'value' => $emeta['value'],
                             'review_id' => $contractReview->id,
-                            'has_changed' => true
+                            'has_changed' => true,
 
                         ]);
                     } elseif ($emeta->key == $meta['key'] and $emeta->value == $meta['value']) {
@@ -331,7 +329,7 @@ class ProjectContractService
                             'key' => $meta['key'],
                             'value' => $emeta['value'],
                             'review_id' => $contractReview->id,
-                            'has_changed' => true
+                            'has_changed' => true,
                         ]);
                     } elseif ($emeta->key == $meta['key'] and $emeta->value == $meta['value']) {
                         $contract->contractMetaHistory()->create([

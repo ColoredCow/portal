@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KnowledgeCafe\Library\Book;
 use Google_Client;
 use Google_Service_Directory;
-use App\Models\KnowledgeCafe\Library\Book;
-use Modules\User\Entities\UserMeta;
-use Modules\Operations\Entities\OfficeLocation;
 use Illuminate\Http\Request;
+use Modules\Operations\Entities\OfficeLocation;
+use Modules\User\Entities\UserMeta;
 
 class HomeController extends Controller
 {
@@ -26,7 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $unreadBook = (session('disable_book_suggestion')) ? null : Book::getRandomUnreadBook();
+        $unreadBook = session('disable_book_suggestion') ? null : Book::getRandomUnreadBook();
         $centres = OfficeLocation::orderBy('centre_name', 'asc')->get();
 
         $selectedLocation = auth()->user()->office_location;
@@ -42,6 +42,7 @@ class HomeController extends Controller
      * Fetch a user's groups from GSuite API.
      *
      * @param  string $email Email of the user
+     *
      * @return array         List of groups
      */
     public function getUserGroups($email)
@@ -72,11 +73,11 @@ class HomeController extends Controller
 
     public function storeEmployeeLocation(Request $request)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'centre_name' => 'required|exists:office_locations,centre_name',
         ]);
 
-        $userMeta = UserMeta::updateOrCreate(
+        UserMeta::updateOrCreate(
             ['user_id' => auth()->user()->id, 'meta_key' => 'office_location'],
             ['meta_value' => $request->centre_name]
         );

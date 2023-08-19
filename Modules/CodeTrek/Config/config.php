@@ -5,47 +5,47 @@ return [
     'status' => [
         'active' =>[
             'label' => 'Active',
-            'slug'  => 'active'
+            'slug'  => 'active',
         ],
         'inactive' =>[
             'label' => 'Inactive',
-            'slug'  => 'inactive'
+            'slug'  => 'inactive',
         ],
         'completed' =>[
             'label' => 'Completed',
-            'slug'  => 'completed'
+            'slug'  => 'completed',
         ],
     ],
     'rounds' =>[
         'introductory-call' => [
             'label' => 'Introductory Call',
             'slug'  => 'introductory-call',
-            'class' => 'badge badge-theme-pumpkin'
+            'class' => 'badge badge-theme-pumpkin',
         ],
         'preparatory' => [
             'label' => 'Preparatory',
             'slug'  => 'preparatory',
-            'class' => 'badge badge-info'
+            'class' => 'badge badge-info',
         ],
         'level-1' =>[
             'label' =>'Level-1',
             'slug'  =>'level-1',
-            'class' => 'badge badge-primary'
+            'class' => 'badge badge-primary',
         ],
         'level-2' =>[
             'label' =>'Level-2',
             'slug'  =>'level-2',
-            'class' => 'badge badge-secondary'
+            'class' => 'badge badge-secondary',
         ],
         'level-3'   =>[
             'label' =>'Level-3',
             'slug'  =>'level-3',
-            'class' => 'badge badge-dark'
+            'class' => 'badge badge-dark',
         ],
         'onboarded'   =>[
             'label' =>'Onboarded',
             'slug'  =>'onboarded',
-            'class' => 'badge badge-success'
+            'class' => 'badge badge-success',
         ],
     ],
     'domain' => [
@@ -57,5 +57,5 @@ return [
             'label' => 'Design',
             'slug' => 'design',
         ],
-    ]
+    ],
 ];

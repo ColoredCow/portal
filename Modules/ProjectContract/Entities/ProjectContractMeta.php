@@ -21,7 +21,7 @@ class ProjectContractMeta extends Model
         'contract_date_for_signing',
         'contract_date_for_effective',
         'contract_expiry_date',
-        'attributes'
+        'attributes',
     ];
 
     protected $guarded = [];

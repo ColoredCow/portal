@@ -9,7 +9,7 @@ class OfficeLocation extends Model
 {
     protected $guarded = [];
 
-    public function centre_head()
+    public function centreHead()
     {
         return $this->belongsTo(User::class, 'centre_head_id');
     }

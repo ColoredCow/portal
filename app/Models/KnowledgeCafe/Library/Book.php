@@ -2,10 +2,10 @@
 
 namespace App\Models\KnowledgeCafe\Library;
 
-use Modules\User\Entities\User;
 use App\Models\Comment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\User\Entities\User;
 
 class Book extends Model
 {
@@ -27,9 +27,9 @@ class Book extends Model
         return $query
             ->where(function ($query) use ($filteredString) {
                 if ($filteredString) {
-                    $query->where('title', 'LIKE', "%$filteredString%")
-                        ->orWhere('author', 'LIKE', "%$filteredString%")
-                        ->orWhere('isbn', 'LIKE', "%$filteredString%");
+                    $query->where('title', 'LIKE', "%{$filteredString}%")
+                        ->orWhere('author', 'LIKE', "%{$filteredString}%")
+                        ->orWhere('isbn', 'LIKE', "%{$filteredString}%");
                 }
             })
             ->withCount('readers')
@@ -80,7 +80,7 @@ class Book extends Model
 
     public function markBook($read)
     {
-        return ($read) ? $this->markAsRead() : $this->markAsUnRead();
+        return $read ? $this->markAsRead() : $this->markAsUnRead();
     }
 
     public static function getRandomUnreadBook()
@@ -112,7 +112,7 @@ class Book extends Model
         return true;
     }
 
-    public function getTotalBooksCountAttribute($value)
+    public function getTotalBooksCountAttribute()
     {
         return self::count();
     }

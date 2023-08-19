@@ -30,11 +30,6 @@ class Project extends Model implements Auditable
 
     protected $appends = ['velocity', 'current_hours_for_month', 'velocity_color_class'];
 
-    protected static function newFactory()
-    {
-        return new ProjectFactory();
-    }
-
     public function scopeIsAMC($query, $isAmc)
     {
         $query->where('is_amc', $isAmc);
@@ -79,7 +74,7 @@ class Project extends Model implements Auditable
         $deployedCount = $this->getDeployedCountForDesignation($designation);
         $toBeDeployedCount = $resourceRequirementCount - $deployedCount;
 
-        return ($toBeDeployedCount > 0) ? $toBeDeployedCount : (($toBeDeployedCount < 0) ? $toBeDeployedCount : '0');
+        return $toBeDeployedCount > 0 ? $toBeDeployedCount : ($toBeDeployedCount < 0 ? $toBeDeployedCount : '0');
     }
 
     public function getTotalToBeDeployedCount()
@@ -175,7 +170,7 @@ class Project extends Model implements Auditable
         $startDate = $startDate ?? $this->client->month_start_date;
         $endDate = $endDate ?? $this->client->month_end_date;
 
-        return $this->getExpectedHoursInMonthAttribute($startDate, $endDate) ? round($this->getHoursBookedForMonth($monthToSubtract, $startDate, $endDate) / ($this->getExpectedHoursInMonthAttribute($startDate, $endDate)), 2) : 0;
+        return $this->getExpectedHoursInMonthAttribute($startDate, $endDate) ? round($this->getHoursBookedForMonth($monthToSubtract, $startDate, $endDate) / $this->getExpectedHoursInMonthAttribute($startDate, $endDate), 2) : 0;
     }
 
     public function getCurrentHoursForMonthAttribute()
@@ -216,9 +211,13 @@ class Project extends Model implements Auditable
 
         if ($diff === null) {
             return true;
-        } elseif ($this->end_date <= today()) {
+        }
+
+        if ($this->end_date <= today()) {
             return true;
-        } elseif ($diff <= 30) {
+        }
+
+        if ($diff <= 30) {
             return false;
         }
 
@@ -318,7 +317,7 @@ class Project extends Model implements Auditable
         }
 
         foreach ($this->getTeamMembersGroupedByEngagement() as $groupedResources) {
-            $totalAmount += ($groupedResources->billing_engagement / 100) * $groupedResources->resource_count * $service_rate * $numberOfMonths;
+            $totalAmount += $groupedResources->billing_engagement / 100 * $groupedResources->resource_count * $service_rate * $numberOfMonths;
         }
 
         return round($totalAmount, 2);
@@ -334,8 +333,6 @@ class Project extends Model implements Auditable
         $meta = $this->meta()->where('key', $metaKey)->first();
         if ($meta) {
             return $meta->value;
-        } else {
-            return;
         }
     }
 
@@ -388,7 +385,7 @@ class Project extends Model implements Auditable
     public function getTotalLedgerAmount($quarter = null)
     {
         $amount = 0;
-        $amount += (optional($this->ledgerAccountsOnlyCredit()->quarter($quarter))->get()->sum('credit') - optional($this->ledgerAccountsOnlyDebit()->quarter($quarter))->get()->sum('debit'));
+        $amount += optional($this->ledgerAccountsOnlyCredit()->quarter($quarter))->get()->sum('credit') - optional($this->ledgerAccountsOnlyDebit()->quarter($quarter))->get()->sum('debit');
 
         return $amount;
     }
@@ -416,5 +413,10 @@ class Project extends Model implements Auditable
         $todayDate = (int) $today->format('j');
 
         return $billingDate == $todayDate ? 'text-dark' : ($this->velocity >= 1 ? 'text-success' : 'text-danger');
+    }
+
+    protected static function newFactory()
+    {
+        return new ProjectFactory();
     }
 }

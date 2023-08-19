@@ -20,11 +20,11 @@ class ApplicationRound extends Model
 {
     use HasTags, HasCalendarMeetings;
 
+    public $timestamps = false;
+
     protected $guarded = [];
 
     protected $table = 'hr_application_round';
-
-    public $timestamps = false;
 
     protected $dates = ['scheduled_date', 'conducted_date', 'actual_end_time'];
 
@@ -37,8 +37,8 @@ class ApplicationRound extends Model
         // TODO: the fillable definition below need to be put somewhere else.
         // When just updating an application round (maybe updating comment), the below details are getting overriden.
         $fillable = [
-            'conducted_person_id' => ($application->status == 'on-hold') ? null : auth()->id(),
-            'conducted_date' => ($application->status == 'on-hold') ? null : now(),
+            'conducted_person_id' => $application->status == 'on-hold' ? null : auth()->id(),
+            'conducted_date' => $application->status == 'on-hold' ? null : now(),
         ];
 
         switch ($attr['action']) {
@@ -51,7 +51,7 @@ class ApplicationRound extends Model
                 $scheduledDate = $attr['scheduled_date'];
                 $scheduledTime = $attr['scheduled_time'];
                 $fillable = [
-                    'scheduled_date' => "$scheduledDate . $scheduledTime",
+                    'scheduled_date' => "{$scheduledDate} . {$scheduledTime}",
                     'scheduled_person_id' => $attr['scheduled_person_id'],
                 ];
                 $attr['reviews'] = [];
@@ -72,13 +72,13 @@ class ApplicationRound extends Model
                         $this->update($fillable);
                         $application->markInProgress();
                         $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
-                        $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
-                        $applicationRound = self::create([
+                        $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
+                        self::create([
                             'hr_application_id' => $application->id,
                             'hr_round_id' => $nextRound->id,
                             'trial_round_id' => Round::where('name', 'Preparatory-1')->first()->id,
                             'scheduled_date' => $attr['next_scheduled_start'] ?? null,
-                            'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
+                            'scheduled_end' =>  $attr['next_scheduled_end'] ?? null,
                             'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
                         ]);
                     }
@@ -89,13 +89,13 @@ class ApplicationRound extends Model
                         $this->update($fillable);
                         $application->markInProgress();
                         $nextApplicationRound = $application->job->rounds->where('id', Round::where('name', 'Trial Program')->first()->id)->first();
-                        $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
-                        $applicationRound = self::create([
+                        $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
+                        self::create([
                             'hr_application_id' => $application->id,
                             'hr_round_id' => Round::where('name', 'Trial Program')->first()->id,
                             'trial_round_id' => $nextRound->id,
                             'scheduled_date' => $attr['next_scheduled_start'] ?? null,
-                            'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
+                            'scheduled_end' => $attr['next_scheduled_end'] ?? null,
                             'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
                         ]);
                     }
@@ -105,12 +105,12 @@ class ApplicationRound extends Model
                         $this->update($fillable);
                         $application->markInProgress();
                         $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
-                        $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
-                        $applicationRound = self::create([
+                        $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
+                        self::create([
                             'hr_application_id' => $application->id,
                             'hr_round_id' => $nextRound->id,
                             'scheduled_date' => $attr['next_scheduled_start'] ?? null,
-                            'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
+                            'scheduled_end' => $attr['next_scheduled_end'] ?? null,
                             'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
                         ]);
                     }
@@ -266,7 +266,7 @@ class ApplicationRound extends Model
 
     public function updateOrCreateEvaluation($evaluations = [])
     {
-        foreach ($evaluations as $evaluation_id => $evaluation) {
+        foreach ($evaluations as  $evaluation) {
             if (array_key_exists('option_id', $evaluation)) {
                 $this->evaluations()->updateOrCreate(
                     [
@@ -287,7 +287,7 @@ class ApplicationRound extends Model
 
     public function updateOrCreateEvaluationSegment($segments = [])
     {
-        foreach ($segments as $segmentId => $segment) {
+        foreach ($segments as $segment) {
             $this->segments()->updateOrCreate(
                 [
                     'application_round_id' => $this->id,
@@ -296,23 +296,6 @@ class ApplicationRound extends Model
                 ],
                 [
                     'comments' => $segment['comments'],
-                ],
-            );
-        }
-
-        return true;
-    }
-
-    protected function _updateOrCreateReviews($reviews = [])
-    {
-        foreach ($reviews[$this->id] ?? [] as $review_key => $review_value) {
-            $application_reviews = $this->applicationRoundReviews()->updateOrCreate(
-                [
-                    'hr_application_round_id' => $this->id,
-                ],
-                [
-                    'review_key' => $review_key,
-                    'review_value' => $review_value,
                 ],
             );
         }
@@ -475,17 +458,32 @@ class ApplicationRound extends Model
     {
         $scheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $this->scheduled_date);
         $scheduleEnd = Carbon::createFromFormat('Y-m-d H:i:s', $this->scheduled_end);
-        $timeDiff = $scheduleEnd->diffAsCarbonInterval($scheduleDate);
 
-        return $timeDiff;
+        return $scheduleEnd->diffAsCarbonInterval($scheduleDate);
     }
 
     public function getActualMeetingDurationAttribute()
     {
         $scheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $this->scheduled_date);
         $meetDuration = Carbon::createFromFormat('Y-m-d H:i:s', $this->actual_end_time);
-        $timeDiffer = $meetDuration->diffAsCarbonInterval($scheduleDate);
 
-        return $timeDiffer;
+        return $meetDuration->diffAsCarbonInterval($scheduleDate);
+    }
+
+    protected function _updateOrCreateReviews($reviews = [])
+    {
+        foreach ($reviews[$this->id] ?? [] as $review_key => $review_value) {
+            $this->applicationRoundReviews()->updateOrCreate(
+                [
+                    'hr_application_round_id' => $this->id,
+                ],
+                [
+                    'review_key' => $review_key,
+                    'review_value' => $review_value,
+                ],
+            );
+        }
+
+        return true;
     }
 }

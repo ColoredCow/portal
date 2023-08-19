@@ -10,6 +10,7 @@ class DateHelper
      * Formats date string in 'd/m/Y' format to 'Y-m-d' format for storage.
      *
      * @param  string $date
+     *
      * @return string
      */
     public static function formatDateToSave($date)
@@ -22,6 +23,7 @@ class DateHelper
      * Get an array of month details. Returns month number, name and year for that month.
      *
      * @param  int $count    the number of previous months from today to retrieve
+     *
      * @return array
      */
     public static function getPreviousMonths($count)

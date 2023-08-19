@@ -4,7 +4,7 @@ return [
     'name' => 'Infrastructure',
     'console-urls' => [
         's3' => 'https://s3.console.aws.amazon.com/s3/buckets/',
-        'ec2' => 'https://console.aws.amazon.com/ec2/v2/home'
+        'ec2' => 'https://console.aws.amazon.com/ec2/v2/home',
     ],
     'services' => [
         'aws' => [

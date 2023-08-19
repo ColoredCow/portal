@@ -2,10 +2,10 @@
 
 namespace Modules\HR\Entities;
 
-use Illuminate\Database\Eloquent\Model;
-use Modules\User\Entities\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Modules\HR\Database\Factories\HrFollowUpFactory;
+use Modules\User\Entities\User;
 
 class FollowUp extends Model
 {

@@ -1,12 +1,10 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
-
 namespace Modules\CodeTrek\Database\factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
+use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
 
 class CodeTrekApplicantRoundDetailsFactory extends Factory
 {
@@ -29,7 +27,7 @@ class CodeTrekApplicantRoundDetailsFactory extends Factory
                 return CodeTrekApplicant::factory()->create()->id;
             },
             'latest_round_name' => config('codetrek.rounds.introductory-call.slug'),
-            'feedback' => $this->faker->sentence
+            'feedback' => $this->faker->sentence,
             ];
     }
 }

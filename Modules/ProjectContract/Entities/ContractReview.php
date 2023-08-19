@@ -19,7 +19,8 @@ class ContractReview extends Model
     {
         if ($this->comment_by === 'Internal') {
             return ContractInternalReview::class;
-        } elseif ($this->comment_by === 'Client') {
+        }
+        if ($this->comment_by === 'Client') {
             return Reviewer::class;
         }
 

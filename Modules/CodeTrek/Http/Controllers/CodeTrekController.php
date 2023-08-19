@@ -2,14 +2,14 @@
 
 namespace Modules\CodeTrek\Http\Controllers;
 
-use Illuminate\Routing\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
 use Modules\CodeTrek\Http\Requests\CodeTrekRequest;
 use Modules\CodeTrek\Services\CodeTrekService;
 use Modules\Operations\Entities\OfficeLocation;
 use Modules\User\Entities\User;
-use Carbon\Carbon;
 
 class CodeTrekController extends Controller
 {
@@ -44,7 +44,7 @@ class CodeTrekController extends Controller
             'centres' => $centres,
             'mentors' => $mentors,
             'reportApplicationCounts' => $reportApplicationCounts,
-            'statusCounts' => $statusCounts
+            'statusCounts' => $statusCounts,
         ]);
     }
 
@@ -95,6 +95,7 @@ class CodeTrekController extends Controller
     }
     /**
      * Update the specified resource in storage.
+     *
      * @param CodeTrekRequest $request
      */
     public function update(CodeTrekRequest $request, CodeTrekApplicant $applicant)
@@ -113,13 +114,6 @@ class CodeTrekController extends Controller
 
         return redirect()->route('codetrek.index');
     }
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     */
-    public function destroy($id)
-    {
-    }
 
     public function getCodeTrekApplicantFeedback(Request $request)
     {
@@ -128,7 +122,7 @@ class CodeTrekController extends Controller
 
         return view('codetrek::feedback')->with([
         'candidateFeedbacks' => $candidateFeedbacks,
-        'applicantDetails' =>  $applicantDetails
+        'applicantDetails' =>  $applicantDetails,
         ]);
     }
 }

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Google_Service_Calendar;
-use Modules\User\Entities\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Laravel\Socialite\Facades\Socialite;
+use Google_Service_Calendar;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Laravel\Socialite\Facades\Socialite;
+use Modules\User\Entities\User;
 
 class LoginController extends Controller
 {
@@ -96,6 +96,7 @@ class LoginController extends Controller
     /**
      * If a user has registered before using social auth, return the user
      * else, create a new user object.
+     *
      * @return  User
      */
     public function findOrCreateUser($user, $provider)

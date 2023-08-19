@@ -2,11 +2,11 @@
 
 namespace Modules\HR\Entities\Evaluation;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\HR\Database\Factories\HrApplicationEvaluationFactory;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationRound;
-use Modules\HR\Database\Factories\HrApplicationEvaluationFactory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ApplicationEvaluation extends Model
 {

@@ -2,12 +2,12 @@
 
 namespace Modules\Invoice\Http\Controllers;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
-use Modules\Invoice\Entities\Invoice;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Modules\Invoice\Entities\Invoice;
 
 class InvoiceController extends Controller
 {
@@ -72,6 +72,7 @@ class InvoiceController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
      * @param Request $request
      */
     public function store(Request $request)
@@ -90,7 +91,7 @@ class InvoiceController extends Controller
             'sent_on' => today(config('constants.timezone.indian')),
             'due_on' => today(config('constants.timezone.indian'))->addDays(6),
             'period_start_date' => $request->period_start_date,
-            'period_end_date' => $request->period_end_date
+            'period_end_date' => $request->period_end_date,
         ]);
         $invoiceNumber = $data['invoiceNumber'];
         $pdf = $this->showInvoicePdf($data);
@@ -104,22 +105,15 @@ class InvoiceController extends Controller
         $pdf = App::make('snappy.pdf.wrapper');
 
         $template = config('invoice.templates.invoice.clients.' . optional($data['client'])->name) ?: 'invoice-template';
-        $html = view(('invoice::render.' . $template), $data);
+        $html = view('invoice::render.' . $template, $data);
         $pdf->loadHTML($html);
 
         return $pdf;
     }
 
     /**
-     * Show the specified resource.
-     * @param int $id
-     */
-    public function show($id)
-    {
-    }
-
-    /**
      * Show the form for editing the specified resource.
+     *
      * @param Invoice $invoice
      */
     public function edit(Invoice $invoice)
@@ -129,6 +123,7 @@ class InvoiceController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
      * @param Request $request
      * @param Invoice $invoice
      */
@@ -141,6 +136,7 @@ class InvoiceController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
      * @param Invoice $invoice
      */
     public function destroy(Invoice $invoice)
@@ -148,7 +144,7 @@ class InvoiceController extends Controller
         return $this->service->delete($invoice);
     }
 
-    public function getInvoiceFile(Request $request, $invoiceID)
+    public function getInvoiceFile($invoiceID)
     {
         return $this->service->getInvoiceFile($invoiceID);
     }

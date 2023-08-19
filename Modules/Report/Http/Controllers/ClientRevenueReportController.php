@@ -2,11 +2,11 @@
 
 namespace Modules\Report\Http\Controllers;
 
-use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Modules\Report\Services\Finance\ClientRevenueReportService;
-use Modules\Report\Exports\ClientRevenueReportExport;
+use Illuminate\Routing\Controller;
 use Maatwebsite\Excel\Facades\Excel;
+use Modules\Report\Exports\ClientRevenueReportExport;
+use Modules\Report\Services\Finance\ClientRevenueReportService;
 
 class ClientRevenueReportController extends Controller
 {
@@ -33,7 +33,7 @@ class ClientRevenueReportController extends Controller
         return view('report::finance.client-wise-revenue.detailed', [
             'reportData' => $reportData,
             'currentYear' => $currentYear,
-            'allAmounts' => $allAmounts
+            'allAmounts' => $allAmounts,
         ]);
     }
 
@@ -57,6 +57,6 @@ class ClientRevenueReportController extends Controller
         $endYear = $request['year'];
         $startYear = $endYear - 1;
 
-        return Excel::download(new ClientRevenueReportExport($reportData), "Client Revenue Report $startYear-$endYear.xlsx");
+        return Excel::download(new ClientRevenueReportExport($reportData), "Client Revenue Report {$startYear}-{$endYear}.xlsx");
     }
 }

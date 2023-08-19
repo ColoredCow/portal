@@ -2,12 +2,12 @@
 
 namespace Modules\ProjectContract\Http\Controllers;
 
-use Illuminate\Routing\Controller;
-use Modules\ProjectContract\Services\ProjectContractService;
-use Modules\ProjectContract\Services\ProjectContractMailService;
 use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Modules\Client\Entities\Country;
+use Modules\ProjectContract\Services\ProjectContractMailService;
+use Modules\ProjectContract\Services\ProjectContractService;
 
 class ProjectContractController extends Controller
 {
@@ -102,10 +102,10 @@ class ProjectContractController extends Controller
 
     public function clientResponse($id)
     {
-        $contract = $this->service->updateContract($id);
+        $this->service->updateContract($id);
         $this->mailservice->sendClientResponse($this->service->getUserEmail($id));
 
-        return 'Thank you for finalise';
+        return 'Thank you for finalize';
     }
     public function clientUpdate(Request $request)
     {
@@ -125,14 +125,12 @@ class ProjectContractController extends Controller
     }
     public function internalResponse($id)
     {
-        $contract = $this->service->updateInternalContract($id);
+        $this->service->updateInternalContract($id);
 
         return redirect(route('projectcontract.index'))->with('success');
     }
     public function commentHistory($id)
     {
-        $data = $this->service->getCommentHistory($id);
-
-        return $data;
+        return $this->service->getCommentHistory($id);
     }
 }

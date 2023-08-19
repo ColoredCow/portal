@@ -34,7 +34,7 @@ return [
             'marketing' => 'Marketing',
             'data-researcher' => 'Data Researcher',
             'people-operations' => 'People Operations',
-            'project-management' => 'Project Management'
+            'project-management' => 'Project Management',
         ],
         'designation' => [
             'project-manager' => 'Project Manager',
@@ -45,7 +45,7 @@ return [
             'solution-architect' => 'Solution Architect',
             'finance-lead' => 'Finance Lead',
             'quality-analyst' => 'Quality Analyst',
-            'chief-executive-officer' => 'Chief Executive Officer'
+            'chief-executive-officer' => 'Chief Executive Officer',
         ],
 
     ],
@@ -78,7 +78,7 @@ return [
         'archived' => 'archived',
         'draft' => 'draft',
         'pending-review' => 'pending',
-        'closed' => 'closed'
+        'closed' => 'closed',
     ],
 
     'post-type' => [
@@ -96,7 +96,7 @@ return [
         'applicant-name' => '|*applicant_name*|',
         'interview-time' => '|*interview_time*|',
         'job-title' => '|*job_title*|',
-        'round-name' => '|*round_name*|'
+        'round-name' => '|*round_name*|',
     ],
 
     'default' => [
@@ -196,7 +196,7 @@ return [
         'other' => 'Other',
     ],
     'verified_application_date' =>[
-        'start_date' => '2022-07-06'
+        'start_date' => '2022-07-06',
     ],
     'non-verified-application-start-date' => '2022-07-06',
     'follow-up-attempts-threshold' => '2',

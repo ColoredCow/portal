@@ -3,9 +3,9 @@
 namespace Modules\Project\Emails;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class EndedProjectMail extends Mailable implements ShouldQueue
 {
@@ -35,7 +35,6 @@ class EndedProjectMail extends Mailable implements ShouldQueue
             $mail->to($project['email']);
         }
 
-        return
-        $mail->view('project::mail.ended-project');
+        return $mail->view('project::mail.ended-project');
     }
 }

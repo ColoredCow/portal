@@ -31,14 +31,13 @@ use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 abstract class ApplicationController extends Controller
 {
-    abstract public function getApplicationType();
-
     protected $service;
 
     public function __construct(ApplicationService $service)
     {
         $this->service = $service;
     }
+    abstract public function getApplicationType();
 
     public function markInterviewFinished(Request $request)
     {
@@ -204,7 +203,7 @@ abstract class ApplicationController extends Controller
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],
-            'type' => config("constants.hr.opportunities.$job->type.type"),
+            'type' => config("constants.hr.opportunities.{$job->type}.type"),
             'universities' => University::orderBy('name')->get(),
         ];
 
@@ -250,7 +249,7 @@ abstract class ApplicationController extends Controller
         $job = $application->job;
         $applicant = $application->applicant;
         $pdf = Pdf::loadView('hr.application.draft-joining-letter', compact('applicant', 'job', 'offer_letter_body'));
-        $fileName = FileHelper::getOfferLetterFileName($pdf, $applicant);
+        $fileName = FileHelper::getOfferLetterFileName($applicant, $pdf);
         $directory = 'app/public/' . config('constants.hr.offer-letters-dir');
         if (! is_dir(storage_path($directory)) && ! file_exists(storage_path($directory))) {
             mkdir(storage_path($directory), 0, true);
@@ -259,7 +258,7 @@ abstract class ApplicationController extends Controller
         $pdf->save($fullPath);
     }
 
-    public static function getOfferLetter(Application $application, Request $request)
+    public static function getOfferLetter(Application $application)
     {
         $pdf = FileHelper::generateOfferLetter($application, true);
 
@@ -273,6 +272,7 @@ abstract class ApplicationController extends Controller
      *
      * @param ApplicationRequest $request
      * @param int $id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ApplicationRequest $request, int $id)

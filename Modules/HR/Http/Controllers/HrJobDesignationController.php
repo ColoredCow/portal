@@ -2,12 +2,12 @@
 
 namespace Modules\HR\Http\Controllers;
 
-use Modules\HR\Http\Requests\Recruitment\JobDesignationRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Modules\HR\Services\HrJobDesignationService;
-use Modules\HR\Entities\HrJobDesignation;
-use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Modules\HR\Entities\HrJobDesignation;
+use Modules\HR\Http\Requests\Recruitment\JobDesignationRequest;
+use Modules\HR\Services\HrJobDesignationService;
 
 class HrJobDesignationController extends Controller
 {
