@@ -52,5 +52,7 @@ class InvoiceDatabaseSeeder extends Seeder
         foreach ($allfinanceInvoicePermissions as $permission) {
             $financeManagerRole->givePermissionTo($permission);
         }
+
+        $this->InvoiceTableSeeder();
     }
 }
