@@ -8,6 +8,7 @@ class ReportDataService
 {
     public function getDataForDailyCodeTrekApplications($type, $filters)
     {
+        $chartData = [];
         if ($type == 'codetrek-application') {
             $filterStartDate = empty($filters['start_date']) ? today()->subYear() : $filters['start_date'];
             $filterEndDate = empty($filters['end_date']) ? today() : $filters['end_date'];
@@ -22,8 +23,8 @@ class ReportDataService
                 'dates' => $dates,
                 'counts' => $counts,
             ];
-
-            return json_encode($chartData);
         }
+
+        return json_encode($chartData);
     }
 }
