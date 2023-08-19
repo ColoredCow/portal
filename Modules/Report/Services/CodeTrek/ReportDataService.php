@@ -20,7 +20,7 @@ class ReportDataService
             $counts = $applicantChartData->pluck('count')->toArray();
             $chartData = [
                 'dates' => $dates,
-                'counts' => $counts
+                'counts' => $counts,
             ];
 
             $reportApplicantData = json_encode($chartData);
