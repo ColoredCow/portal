@@ -4,9 +4,17 @@ namespace Modules\Report\Services\Finance;
 
 use Modules\Client\Entities\Client;
 use Modules\CodeTrek\Entities\CodeTrekApplicant;
+use Modules\Report\Services\Finance\RevenueReportService;
 
 class ReportDataService
 {
+    protected $service;
+
+    public function __construct()
+    {
+        $this->service = app(RevenueReportService::class);
+    }
+
     public function getData($type, $filters)
     {
         if ($type == 'revenue-trend') {
