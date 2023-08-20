@@ -7,6 +7,7 @@ use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
 use App\Models\Country;
 use Carbon\Carbon;
+use Modules\Invoice\Services\InvoiceService;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -43,14 +44,22 @@ class InvoiceFactory extends Factory
       $max = floor(300000 / 1000) * 1000;
 
       $amount = 0;
+      $gst = null;
+      $bankCharges = null;
+      $tds =null;
+      $tdsPercentage = null;
       if($currency === "INR"){
         $amount = rand(50000, 300000);
         $roundedAmount = encrypt(intval(ceil($amount / 1000) * 1000));
-        // $gst = encrypt(intval($roundedAmount*0.18));
+        $roundedAmountFloat = floatval($roundedAmount);
+        $gst = encrypt(intval(ceil($roundedAmountFloat * 0.18)));
+        $tds = encrypt(intval(ceil($roundedAmountFloat*0.10)));
+        $tdsPercentage = 10;
       }else{
         $amount = rand(1000,5000);
         $roundedAmount = encrypt(intval(ceil($amount / 100) * 100));
-        // $bankCharges = encrypt(intval($roundedAmount*0.05));
+        $roundedAmountFloat = floatval($roundedAmount);
+        $bankCharges = encrypt(intval(ceil($roundedAmountFloat*0.05)));
       }
 
       $sent_on = now()->format('Y-m-d');
@@ -61,6 +70,8 @@ class InvoiceFactory extends Factory
       $term_start_date = $one_month_ago->format('Y-m-d');
       $term_end_date = Carbon::yesterday()->format('Y-m-d');
 
+      $invoiceService = new InvoiceService();
+      $invoiceNumber = $invoiceService->getInvoiceNumber($active_client, $project_id, $sent_on, $billing_level);
 
       return [
           'client_id' => $active_client,
@@ -72,18 +83,18 @@ class InvoiceFactory extends Factory
           'sent_on' => $sent_on,
           'due_on' => $due_on,
           'receivable_date' => $due_on,
-          // 'gst' => $gst,
+          'gst' => $gst,
           'file_path' => 'invoice/2022/06/IN1260010000020522.pdf',
           'comments' => '',
           'amount_paid' => $roundedAmount,
-          // 'bank_charges' => $bankCharges,
+          'bank_charges' => $bankCharges,
           // 'conversion_rate_diff' => '',
           // 'conversion_rate' => '',
-          // 'tds' => '',
-          // 'tds_percentage' => '',
+          'tds' => $tds,
+          'tds_percentage' => $tdsPercentage,
           'currency_transaction_charge' => $currency,
-          // 'payment_at' => '',
-          // 'invoice_number' => '',
+          'payment_at' => $due_on,
+          'invoice_number' => $invoiceNumber,
           'reminder_mail_count' => 0,
           'payment_confirmation_mail_sent' => 0,
           'term_start_date' => $term_start_date,
