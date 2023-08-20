@@ -2,12 +2,10 @@
 
 namespace Modules\Invoice\Database\Seeders;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use Modules\Invoice\Database\Factories\InvoiceFactory;
 
-class InvoiceDatabaseSeeder extends Seeder
+class InvoiceTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,13 +14,13 @@ class InvoiceDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
-        $count = array_rand_int(5, 10);
-        for ($i=0; $i < $count; $i++) {
-          // create invoice
-          InvoiceFactory::make([
-            'status' => 'sent'
-          ]);
+        $count = rand(5, 10);
+
+        for ($i = 0; $i < $count; $i++) {
+            // Create invoice
+            InvoiceFactory::new([
+                'status' => 'sent'
+            ])->create();
         }
     }
 }

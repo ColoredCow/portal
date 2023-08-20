@@ -53,6 +53,6 @@ class InvoiceDatabaseSeeder extends Seeder
             $financeManagerRole->givePermissionTo($permission);
         }
 
-        $this->InvoiceTableSeeder();
+        $this->call(InvoiceTableSeeder::class);
     }
 }

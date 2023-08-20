@@ -1,11 +1,16 @@
 <?php
 
-namespace Modules\HR\Database\Factories;
+namespace Modules\Invoice\Database\Factories;
 
 use Modules\Invoice\Entities\Invoice;
+use Modules\Client\Entities\Client;
+use Modules\Project\Entities\Project;
+use App\Models\Country;
+use Carbon\Carbon;
+
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class HrApplicantsFactory extends Factory
+class InvoiceFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -21,52 +26,68 @@ class HrApplicantsFactory extends Factory
      */
     public function definition()
     {
+      $active_client = Client::where('status', 'active')->inRandomOrder()->pluck('id')->first();
+      $project_id = Project:: where('client_id', $active_client)->inRandomOrder()->pluck('id')->first();
 
-      $billingLevel = array_rand(['client', 'project']);
-      $client = null;
-      $project = null;
-      if ($billingLevel == 'client') {
-        $client = Client::random()->where('status', 'active');
-      } else {
-        $project = Project::random()->where('status', 'active');
-        $client = $project->client;
-      }
-      $currency = Currencies::random();
-      $amount = array_rand_range(1000, 5000)->round(2)
-      $gst = 0;
-      if ($currency == 'INR') {
-        $amount = array_rand_range(50000, 300000)->round(3);
-        $gst = $amount * int(config('constants.finance.gst')) / 100;
+      $invoice_status = array("sent", "paid");
+      $status_key = array_rand($invoice_status, 1);
+      $status = $invoice_status[$status_key];
+
+      $billing_level = array("client", "project");
+      $invoice_billing_key = array_rand($billing_level,1);
+      $billingLevel = $billing_level[$invoice_billing_key];
+
+      $currency = Country::inRandomOrder()->pluck('currency')->first();
+      $amount = 0;
+      $min = ceil(50000 / 1000) * 1000;
+      $max = floor(300000 / 1000) * 1000;
+
+      $amount = 0;
+      if($currency === "INR"){
+        $amount = rand(50000, 300000);
+        $roundedAmount = encrypt(intval(ceil($amount / 1000) * 1000));
+        // $gst = encrypt(intval($roundedAmount*0.18));
+      }else{
+        $amount = rand(1000,5000);
+        $roundedAmount = encrypt(intval(ceil($amount / 100) * 100));
+        // $bankCharges = encrypt(intval($roundedAmount*0.05));
       }
 
-      $sentOn = $faker->date;
+      $sent_on = now()->format('Y-m-d');
+      $due_on = date('Y-m-d', strtotime($sent_on. ' + 7 days'));
+      $one_day_ago = Carbon::parse($sent_on)->subDay();
+      $one_month_ago = $one_day_ago->subMonth();
+
+      $term_start_date = $one_month_ago->format('Y-m-d');
+      $term_end_date = Carbon::yesterday()->format('Y-m-d');
+
 
       return [
-          'client_id' => $client,
-          'project_id' => $project,
-          'status' => array_rand(['sent', 'paid']),
+          'client_id' => $active_client,
+          'project_id' => $project_id,
+          'status' => $status,
           'billing_level' => $billingLevel,
           'currency' => $currency,
-          'amount' => $amount,
-          'sent_on' => $sentOn,
-          'due_on' => $sentOn->addDays(7),
-          'receivable_date' => $sentOn->addDays(7),
-          'gst' => $gst,
-          'file_path' => '',
+          'amount' => $roundedAmount,
+          'sent_on' => $sent_on,
+          'due_on' => $due_on,
+          'receivable_date' => $due_on,
+          // 'gst' => $gst,
+          'file_path' => 'invoice/2022/06/IN1260010000020522.pdf',
           'comments' => '',
-          'amount_paid' => '',
-          'bank_charges' => '',
-          'conversion_rate_diff' => '',
-          'conversion_rate' => '',
-          'tds' => '',
-          'tds_percentage' => '',
-          'currency_transaction_charge' => '',
-          'payment_at' => '',
-          'invoice_number' => '',
-          'reminder_mail_count' => '',
-          'payment_confirmation_mail_sent' => '',
-          'term_start_date' => '',
-          'term_end_date' => '',
+          'amount_paid' => $roundedAmount,
+          // 'bank_charges' => $bankCharges,
+          // 'conversion_rate_diff' => '',
+          // 'conversion_rate' => '',
+          // 'tds' => '',
+          // 'tds_percentage' => '',
+          'currency_transaction_charge' => $currency,
+          // 'payment_at' => '',
+          // 'invoice_number' => '',
+          'reminder_mail_count' => 0,
+          'payment_confirmation_mail_sent' => 0,
+          'term_start_date' => $term_start_date,
+          'term_end_date' => $term_end_date,
       ];
     }
 }
