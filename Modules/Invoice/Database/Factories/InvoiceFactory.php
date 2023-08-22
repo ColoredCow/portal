@@ -41,7 +41,7 @@ class InvoiceFactory extends Factory
         $status = $invoice_status[$status_key];
 
         $billing_level = array("client", "project");
-        $invoice_billing_key = array_rand($billing_level,1);
+        $invoice_billing_key = array_rand($billing_level, 1);
         $billingLevel = $billing_level[$invoice_billing_key];
 
 
@@ -58,22 +58,22 @@ class InvoiceFactory extends Factory
         $max = floor(300000 / 1000) * 1000;
 
 
-        if($currency === "INR"){
+        if($currency === "INR") {
           $amount = rand(50000, 300000);
           $roundedAmount = (intval(ceil($amount / 1000) * 1000));
           $roundedAmountFloat = floatval($roundedAmount);
           $gst = intval(ceil($roundedAmountFloat * 0.18));
-          $tds = intval(ceil($roundedAmountFloat*0.10));
+          $tds = intval(ceil($roundedAmountFloat * 0.10));
           $tdsPercentage = 10;
-        }else{
-          $amount = rand(1000,5000);
+        } else {
+          $amount = rand(1000, 5000);
           $roundedAmount =(intval(ceil($amount / 100) * 100));
           $roundedAmountFloat = floatval($roundedAmount);
-          $bankCharges = intval(ceil($roundedAmountFloat*0.05));
+          $bankCharges = intval(ceil($roundedAmountFloat * 0.05));
         }
 
         $sent_on = now()->format('Y-m-d');
-        $due_on = date('Y-m-d', strtotime($sent_on. ' + 7 days'));
+        $due_on = date('Y-m-d', strtotime($sent_on . ' + 7 days'));
         $one_day_ago = Carbon::parse($sent_on)->subDay();
         $one_month_ago = $one_day_ago->subMonth();
 
