@@ -27,23 +27,22 @@ class InvoiceFactory extends Factory
     public function definition()
     {
         $project_id = null;
-        $billing_level =null;
+        $billing_level = null;
         $amount = 0;
         $gst = null;
         $bankCharges = null;
-        $tds =null;
+        $tds = null;
         $tdsPercentage = null;
 
         $active_client = Client::where('status', 'active')->inRandomOrder()->pluck('id')->first();
 
-        $invoice_status = array("sent", "paid");
+        $invoice_status = ['sent', 'paid'];
         $status_key = array_rand($invoice_status, 1);
         $status = $invoice_status[$status_key];
 
-        $billing_level = array("client", "project");
+        $billing_level = ['client', 'project'];
         $invoice_billing_key = array_rand($billing_level, 1);
         $billingLevel = $billing_level[$invoice_billing_key];
-
 
         if ($active_client) {
             $project = Project::where('client_id', $active_client)->first();
@@ -58,16 +57,16 @@ class InvoiceFactory extends Factory
         $max = floor(300000 / 1000) * 1000;
 
 
-        if($currency === "INR") {
+        if ($currency === "INR") {
             $amount = rand(50000, 300000);
-            $roundedAmount = (intval(ceil($amount / 1000) * 1000));
+            $roundedAmount = intval(ceil($amount / 1000) * 1000);
             $roundedAmountFloat = floatval($roundedAmount);
             $gst = intval(ceil($roundedAmountFloat * 0.18));
             $tds = intval(ceil($roundedAmountFloat * 0.10));
             $tdsPercentage = 10;
         } else {
             $amount = rand(1000, 5000);
-            $roundedAmount =(intval(ceil($amount / 100) * 100));
+            $roundedAmount = intval(ceil($amount / 100) * 100);
             $roundedAmountFloat = floatval($roundedAmount);
             $bankCharges = intval(ceil($roundedAmountFloat * 0.05));
         }
