@@ -8,7 +8,6 @@ use Modules\Project\Entities\Project;
 use App\Models\Country;
 use Carbon\Carbon;
 use Modules\Invoice\Services\InvoiceService;
-
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class InvoiceFactory extends Factory
@@ -27,6 +26,7 @@ class InvoiceFactory extends Factory
      */
     public function definition()
     {
+      $invoiceInstance = new Invoice();
       $active_client = Client::where('status', 'active')->inRandomOrder()->pluck('id')->first();
       $project_id = Project:: where('client_id', $active_client)->inRandomOrder()->pluck('id')->first();
 
@@ -50,16 +50,16 @@ class InvoiceFactory extends Factory
       $tdsPercentage = null;
       if($currency === "INR"){
         $amount = rand(50000, 300000);
-        $roundedAmount = encrypt(intval(ceil($amount / 1000) * 1000));
+        $roundedAmount = (intval(ceil($amount / 1000) * 1000));
         $roundedAmountFloat = floatval($roundedAmount);
-        $gst = encrypt(intval(ceil($roundedAmountFloat * 0.18)));
-        $tds = encrypt(intval(ceil($roundedAmountFloat*0.10)));
+        $gst = intval(ceil($roundedAmountFloat * 0.18));
+        $tds = intval(ceil($roundedAmountFloat*0.10));
         $tdsPercentage = 10;
       }else{
         $amount = rand(1000,5000);
-        $roundedAmount = encrypt(intval(ceil($amount / 100) * 100));
+        $roundedAmount =(intval(ceil($amount / 100) * 100));
         $roundedAmountFloat = floatval($roundedAmount);
-        $bankCharges = encrypt(intval(ceil($roundedAmountFloat*0.05)));
+        $bankCharges = intval(ceil($roundedAmountFloat*0.05));
       }
 
       $sent_on = now()->format('Y-m-d');
