@@ -59,17 +59,17 @@ class InvoiceFactory extends Factory
 
 
         if($currency === "INR") {
-          $amount = rand(50000, 300000);
-          $roundedAmount = (intval(ceil($amount / 1000) * 1000));
-          $roundedAmountFloat = floatval($roundedAmount);
-          $gst = intval(ceil($roundedAmountFloat * 0.18));
-          $tds = intval(ceil($roundedAmountFloat * 0.10));
-          $tdsPercentage = 10;
+            $amount = rand(50000, 300000);
+            $roundedAmount = (intval(ceil($amount / 1000) * 1000));
+            $roundedAmountFloat = floatval($roundedAmount);
+            $gst = intval(ceil($roundedAmountFloat * 0.18));
+            $tds = intval(ceil($roundedAmountFloat * 0.10));
+            $tdsPercentage = 10;
         } else {
-          $amount = rand(1000, 5000);
-          $roundedAmount =(intval(ceil($amount / 100) * 100));
-          $roundedAmountFloat = floatval($roundedAmount);
-          $bankCharges = intval(ceil($roundedAmountFloat * 0.05));
+            $amount = rand(1000, 5000);
+            $roundedAmount =(intval(ceil($amount / 100) * 100));
+            $roundedAmountFloat = floatval($roundedAmount);
+            $bankCharges = intval(ceil($roundedAmountFloat * 0.05));
         }
 
         $sent_on = now()->format('Y-m-d');
