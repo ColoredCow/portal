@@ -4,9 +4,9 @@ namespace Modules\Invoice\Database\Factories;
 
 use App\Models\Country;
 use Carbon\Carbon;
-use Modules\Invoice\Services\InvoiceService;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Services\InvoiceService;
 use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
 
@@ -43,7 +43,7 @@ class InvoiceFactory extends Factory
         $invoiceBillingKey = array_rand($billingLevels, 1);
         $billingLevel = $billingLevels[$invoiceBillingKey];
 
-        if ($billingLevel ==="client") {
+        if ($billingLevel === 'client') {
             $activeClient = Client::where('status', 'active')->inRandomOrder()->pluck('id')->first();
         } else {
             $project = Project::where('status', 'active')->inRandomOrder()->first();
@@ -56,7 +56,7 @@ class InvoiceFactory extends Factory
         $min = ceil(50000 / 1000) * 1000;
         $max = floor(300000 / 1000) * 1000;
 
-        if ($currency === "INR") {
+        if ($currency === 'INR') {
             $amount = rand(50000, 300000);
             $roundedAmount = intval(ceil($amount / 1000) * 1000);
             $roundedAmountFloat = floatval($roundedAmount);
