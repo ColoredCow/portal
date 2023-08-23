@@ -53,8 +53,6 @@ class InvoiceFactory extends Factory
 
         $currency = Country::inRandomOrder()->pluck('currency')->first();
         $amount = 0;
-        $min = ceil(50000 / 1000) * 1000;
-        $max = floor(300000 / 1000) * 1000;
 
         if ($currency === 'INR') {
             $amount = rand(50000, 300000);
