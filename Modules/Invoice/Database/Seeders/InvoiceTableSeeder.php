@@ -18,7 +18,7 @@ class InvoiceTableSeeder extends Seeder
 
         for ($i = 0; $i < $count; $i++) {
             InvoiceFactory::new([
-                'status' => 'sent'
+                'status' => 'sent',
             ])->create();
         }
     }
