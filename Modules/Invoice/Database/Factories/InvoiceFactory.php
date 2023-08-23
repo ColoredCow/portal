@@ -5,9 +5,9 @@ namespace Modules\Invoice\Database\Factories;
 use App\Models\Country;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Client\Entities\Client;
 use Modules\Invoice\Entities\Invoice;
 use Modules\Invoice\Services\InvoiceService;
-use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
 
 class InvoiceFactory extends Factory
