@@ -52,7 +52,7 @@ Before you start building PHP connection to MySQL database you need to know what
 
 3. At the top click databases.
 
-4. In the new window, name your database as per your need, we are naming it “portal”. Now select Collation as utf8_general_ci. Now click on Create and your database will be created.
+4. In the new window, name your database as per your need, we are naming it “portal”. Now select Collation as utf8_general_ci. Now click on Create and your database will be created. Check out [this link](https://www.youtube.com/watch?v=k9yJR_ZJbvI&ab_channel=1BestCsharpblog) and skip to 0:21.
 
 5. The newly created database will be empty now, as there are no tables in it.
 
