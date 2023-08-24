@@ -14,6 +14,8 @@ git --version
 ### 2. PHP, MySQL, Apache:running:
 Portal uses PHP v8.2. You can install it using one of the following ways:
 
+#### If you are a Window's user we would suggest you to use WAMP over XAMPP for portal as it is easier to control/change the version of PHP, MySQL, and Apache
+
 1. XAMPP (Windows and Linux)
     - If you prefer using XAMPP, you can download the full stack with right PHP version from [this link](https://www.apachefriends.org/download.html). 
     - If you already have XAMPP installed for Windows, refer [this link](https://stackoverflow.com/questions/45790160/is-there-way-to-use-two-php-versions-in-xampp) for switching to the correct PHP version.
