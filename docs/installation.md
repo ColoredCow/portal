@@ -76,6 +76,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
 
 7. Add the following settings in `.env` file:
+
     1. Laravel app configurations
     ```sh
     APP_NAME="ColoredCow Portal"
@@ -85,8 +86,8 @@ Before you start following the guidelines, make sure to go through the [prerequi
     ```
 
     2. Database configurations
-    - Create a database in your local server. Check out [this link](https://www.youtube.com/watch?v=k9yJR_ZJbvI&ab_channel=1BestCsharpblog) and skip to 0:21.
-    - Configure your Laravel app with the right DB settings. Check out [this link](https://www.youtube.com/watch?v=4geOENi3--M). Relevant parts are 2:00-2:42 and 4:20-5:40.
+    - Create a database in your local server. 
+    - Configure your Laravel app with the right DB settings as mentioned below.
     - Read [the story](https://docs.google.com/document/d/1sWj0F2uXkSE9oHBkChv-yC2L7P7qazsPY5sNPC1PIp4/edit) about how the team discussed which video should be in the docs
     ```sh
     DB_CONNECTION=mysql
