@@ -15,6 +15,11 @@ use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationRoundReview;
 use Modules\HR\Entities\HRRejectionReason;
 use Modules\HR\Entities\UniversityContact;
+use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Entities\LedgerAccount;
+use Modules\Project\Entities\Project;
+use Modules\Prospect\Entities\Prospect;
+use Modules\Prospect\Entities\ProspectContactPerson;
 use Modules\Salary\Entities\EmployeeSalary;
 
 class FakeProdDataCommand extends Command
@@ -56,7 +61,10 @@ class FakeProdDataCommand extends Command
         //$this->fakeClientTablesData();
         //$this->fakeCodetrekTablesData();
         //$this->fakeEmployeeTablesData();
-        $this->fakeHRTablesData();
+        // $this->fakeHRTablesData();
+        // $this->fakeFinanceTablesData();
+        // $this->fakeProjectTablesData();
+        // $this->fakeProspectTablesData();
 
         return 0;
     }
@@ -148,6 +156,80 @@ class FakeProdDataCommand extends Command
             $universityContact->email = $this->faker->email;
             $universityContact->phone = $this->faker->phoneNumber;
             $universityContact->update();
+        }
+    }
+
+    private function fakeFinanceTablesData()
+    {
+        $invoices = Invoice::whereNotNull('amount')->get();
+        foreach ($invoices ?? [] as $invoice) {
+            $invoice->amount = $this->faker->numberBetween(1000, 100000);
+            if ($invoice->gst) {
+                $invoice->gst = $invoice->amount * 0.18;
+            }
+
+            if ($invoice->comments) {
+                $invoice->comments = $this->faker->sentences(2, true);
+            }
+
+            $invoice->save();
+        }
+
+        foreach ($invoices ?? [] as $invoice) {
+            $invoice->amount = $this->faker->numberBetween(1000, 100000);
+            if ($invoice->gst) {
+                $invoice->gst = $invoice->amount * 0.18;
+            }
+
+            if ($invoice->comments) {
+                $invoice->comments = $this->faker->sentences(2, true);
+            }
+
+            $invoice->update();
+        }
+
+        foreach (LedgerAccount::all() as $ledgerAccount) {
+            if ($ledgerAccount->particulars) {
+                $ledgerAccount->particulars = $this->faker->sentences(2, true);
+            }
+
+            if ($ledgerAccount->credit) {
+                $ledgerAccount->credit = $this->faker->numberBetween(100, 100000);
+            }
+
+            if ($ledgerAccount->debit) {
+                $ledgerAccount->debit = $this->faker->numberBetween(100, 100000);
+            }
+
+            if ($ledgerAccount->balance) {
+                $ledgerAccount->balance = $ledgerAccount->credit - $ledgerAccount->debit;
+            }
+
+            $ledgerAccount->update();
+        }
+    }
+
+    private function fakeProjectTablesData()
+    {
+        foreach (Project::all() ?: [] as $project) {
+            $project->name = $this->faker->words(3, true);
+            $project->update();
+        }
+    }
+
+    private function fakeProspectTablesData()
+    {
+        foreach (ProspectContactPerson::all() ?: [] as $prospectContactPerson) {
+            $prospectContactPerson->name = $this->faker->name;
+            $prospectContactPerson->email = $this->faker->email;
+            $prospectContactPerson->phone = $this->faker->phoneNumber;
+            $prospectContactPerson->update();
+        }
+
+        foreach (Prospect::all() ?: [] as $prospect) {
+            $prospect->name = $this->faker->words(3, true);
+            $prospect->brief_info = $this->faker->sentences(4, true);
+            $prospect->update();
         }
     }
 }
