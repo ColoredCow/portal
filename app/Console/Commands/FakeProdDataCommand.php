@@ -56,12 +56,15 @@ class FakeProdDataCommand extends Command
         }
 
         foreach (ClientAddress::all() ?: [] as $clientAddress) {
-            if ($clientAddress->country->name == 'india') {
+            if ($clientAddress->country_id == 1) {
                 $clientAddress->state = \Faker\Provider\en_IN\Address::state();
-                $clientAddress->address = \Faker\Provider\en_IN\Address();
+                $clientAddress->city = (new \Faker\Provider\en_IN\Address($this->faker))->city();
             } else {
                 $clientAddress->state = \Faker\Provider\en_AU\Address::state();
+                $clientAddress->city = (new \Faker\Provider\en_AU\Address($this->faker))->city();
             }
+
+            $clientAddress->address = $this->faker->address;
 
             $clientAddress->update();
         }
