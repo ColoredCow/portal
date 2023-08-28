@@ -58,13 +58,13 @@ class FakeProdDataCommand extends Command
             return 0;
         }
 
-        //$this->fakeClientTablesData();
-        //$this->fakeCodetrekTablesData();
-        //$this->fakeEmployeeTablesData();
-        // $this->fakeHRTablesData();
-        // $this->fakeFinanceTablesData();
-        // $this->fakeProjectTablesData();
-        // $this->fakeProspectTablesData();
+        $this->fakeClientTablesData();
+        $this->fakeCodetrekTablesData();
+        $this->fakeEmployeeTablesData();
+        $this->fakeHRTablesData();
+        $this->fakeFinanceTablesData();
+        $this->fakeProjectTablesData();
+        $this->fakeProspectTablesData();
 
         return 0;
     }
