@@ -6,6 +6,7 @@ use Faker\Factory as Faker;
 use Illuminate\Console\Command;
 use Modules\Client\Entities\Client;
 use Modules\Client\Entities\ClientAddress;
+use Modules\Client\Entities\ClientContactPerson;
 
 class FakeProdDataCommand extends Command
 {
@@ -65,8 +66,14 @@ class FakeProdDataCommand extends Command
             }
 
             $clientAddress->address = $this->faker->address;
-
             $clientAddress->update();
+        }
+
+        foreach (ClientContactPerson::all() ?: [] as $clientContactPerson) {
+            $clientContactPerson->name = $this->faker->name;
+            $clientContactPerson->email = $this->faker->email;
+            $clientContactPerson->phone = $this->faker->phone;
+            $clientContactPerson->update();
         }
     }
 }
