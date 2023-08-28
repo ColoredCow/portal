@@ -7,6 +7,15 @@ use Illuminate\Console\Command;
 use Modules\Client\Entities\Client;
 use Modules\Client\Entities\ClientAddress;
 use Modules\Client\Entities\ClientContactPerson;
+use Modules\CodeTrek\Entities\CodeTrekApplicant;
+use Modules\CodeTrek\Entities\CodeTrekApplicantRoundDetail;
+use Modules\CodeTrek\Entities\CodeTrekCandidateFeedback;
+use Modules\HR\Entities\Applicant;
+use Modules\HR\Entities\Application;
+use Modules\HR\Entities\ApplicationRoundReview;
+use Modules\HR\Entities\HRRejectionReason;
+use Modules\HR\Entities\UniversityContact;
+use Modules\Salary\Entities\EmployeeSalary;
 
 class FakeProdDataCommand extends Command
 {
@@ -22,7 +31,7 @@ class FakeProdDataCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Fake data in the database';
 
     protected $faker;
 
@@ -44,7 +53,10 @@ class FakeProdDataCommand extends Command
             return 0;
         }
 
-        $this->fakeClientTablesData();
+        //$this->fakeClientTablesData();
+        //$this->fakeCodetrekTablesData();
+        //$this->fakeEmployeeTablesData();
+        $this->fakeHRTablesData();
 
         return 0;
     }
@@ -72,8 +84,70 @@ class FakeProdDataCommand extends Command
         foreach (ClientContactPerson::all() ?: [] as $clientContactPerson) {
             $clientContactPerson->name = $this->faker->name;
             $clientContactPerson->email = $this->faker->email;
-            $clientContactPerson->phone = $this->faker->phone;
+            $clientContactPerson->phone = $this->faker->phoneNumber;
             $clientContactPerson->update();
+        }
+    }
+
+    private function fakeCodetrekTablesData()
+    {
+        foreach (CodeTrekApplicant::all() ?: [] as $codeTrekApplicant) {
+            $codeTrekApplicant->first_name = $this->faker->firstName;
+            $codeTrekApplicant->last_name = $this->faker->lastName;
+            $codeTrekApplicant->email = $this->faker->email;
+            $codeTrekApplicant->github_user_name = $this->faker->username;
+            $codeTrekApplicant->update();
+        }
+
+        foreach (CodeTrekCandidateFeedback::all() ?: [] as $codeTrekCandidateFeedback) {
+            $codeTrekCandidateFeedback->feedback = $this->faker->sentences(4, true);
+            $codeTrekCandidateFeedback->update();
+        }
+
+        foreach (CodeTrekApplicantRoundDetail::all() ?: [] as $codeTrekApplicantRoundDetail) {
+            $codeTrekApplicantRoundDetail->feedback = $this->faker->sentences(4, true);
+            $codeTrekApplicantRoundDetail->update();
+        }
+    }
+
+    private function fakeEmployeeTablesData()
+    {
+        foreach (EmployeeSalary::all() ?: [] as $employeeSalary) {
+            $employeeSalary->monthly_gross_salary = $this->faker->numberBetween(300000, 2500000);
+            $employeeSalary->update();
+        }
+    }
+
+    private function fakeHRTablesData()
+    {
+        foreach (Applicant::all() ?: [] as $applicant) {
+            $applicant->name = $this->faker->name;
+            $applicant->email = $this->faker->email;
+            $applicant->phone = $this->faker->phoneNumber;
+            $applicant->linkedin = $this->faker->url;
+            $applicant->update();
+        }
+
+        foreach (HRRejectionReason::whereNotNull('reason_comment')->get() ?: [] as $rejectionReason) {
+            $rejectionReason->reason_comment = $this->faker->sentences(3, true);
+            $rejectionReason->update();
+        }
+
+        foreach (ApplicationRoundReview::whereNotNull('review_value')->get() ?: [] as $applicationRoundReview) {
+            $applicationRoundReview->review_value = $this->faker->sentences(3, true);
+            $applicationRoundReview->update();
+        }
+
+        foreach (Application::whereNotNull('resume')->get() ?: [] as $application) {
+            $application->resume = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
+            $application->update();
+        }
+
+        foreach (UniversityContact::all() ?: [] as $universityContact) {
+            $universityContact->name = $this->faker->name;
+            $universityContact->email = $this->faker->email;
+            $universityContact->phone = $this->faker->phoneNumber;
+            $universityContact->update();
         }
     }
 }
