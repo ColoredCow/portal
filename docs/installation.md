@@ -86,7 +86,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
     ```
 
     2. Database configurations
-    - Create a database in your local server. 
+    - Create a database in your local server. If you skipped it on the prerequisites guideline, you can check it out on point 3.4 of the prerequisites. [Go to prerequisites](https://github.com/ColoredCow/portal/blob/master/docs/prerequisites.md)
     - Configure your Laravel app with the right DB settings as mentioned below.
     - Read [the story](https://docs.google.com/document/d/1sWj0F2uXkSE9oHBkChv-yC2L7P7qazsPY5sNPC1PIp4/edit) about how the team discussed which video should be in the docs
     ```sh
