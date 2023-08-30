@@ -71,12 +71,12 @@ class FakeProdDataCommand extends Command
 
     private function fakeClientTablesData()
     {
-        foreach (Client::all() ?: [] as $client) {
+        foreach (Client::all() as $client) {
             $client->name = $this->faker->company;
             $client->update();
         }
 
-        foreach (ClientAddress::all() ?: [] as $clientAddress) {
+        foreach (ClientAddress::all() as $clientAddress) {
             if ($clientAddress->country_id == 1) {
                 $clientAddress->state = \Faker\Provider\en_IN\Address::state();
                 $clientAddress->city = (new \Faker\Provider\en_IN\Address($this->faker))->city();
@@ -89,7 +89,7 @@ class FakeProdDataCommand extends Command
             $clientAddress->update();
         }
 
-        foreach (ClientContactPerson::all() ?: [] as $clientContactPerson) {
+        foreach (ClientContactPerson::all()  as $clientContactPerson) {
             $clientContactPerson->name = $this->faker->name;
             $clientContactPerson->email = $this->faker->email;
             $clientContactPerson->phone = $this->faker->phoneNumber;
@@ -99,7 +99,7 @@ class FakeProdDataCommand extends Command
 
     private function fakeCodetrekTablesData()
     {
-        foreach (CodeTrekApplicant::all() ?: [] as $codeTrekApplicant) {
+        foreach (CodeTrekApplicant::all()  as $codeTrekApplicant) {
             $codeTrekApplicant->first_name = $this->faker->firstName;
             $codeTrekApplicant->last_name = $this->faker->lastName;
             $codeTrekApplicant->email = $this->faker->email;
@@ -107,12 +107,12 @@ class FakeProdDataCommand extends Command
             $codeTrekApplicant->update();
         }
 
-        foreach (CodeTrekCandidateFeedback::all() ?: [] as $codeTrekCandidateFeedback) {
+        foreach (CodeTrekCandidateFeedback::all() as $codeTrekCandidateFeedback) {
             $codeTrekCandidateFeedback->feedback = $this->faker->sentences(4, true);
             $codeTrekCandidateFeedback->update();
         }
 
-        foreach (CodeTrekApplicantRoundDetail::all() ?: [] as $codeTrekApplicantRoundDetail) {
+        foreach (CodeTrekApplicantRoundDetail::all() as $codeTrekApplicantRoundDetail) {
             $codeTrekApplicantRoundDetail->feedback = $this->faker->sentences(4, true);
             $codeTrekApplicantRoundDetail->update();
         }
@@ -120,7 +120,7 @@ class FakeProdDataCommand extends Command
 
     private function fakeEmployeeTablesData()
     {
-        foreach (EmployeeSalary::all() ?: [] as $employeeSalary) {
+        foreach (EmployeeSalary::all() as $employeeSalary) {
             $employeeSalary->monthly_gross_salary = $this->faker->numberBetween(300000, 2500000);
             $employeeSalary->update();
         }
@@ -128,7 +128,7 @@ class FakeProdDataCommand extends Command
 
     private function fakeHRTablesData()
     {
-        foreach (Applicant::all() ?: [] as $applicant) {
+        foreach (Applicant::all() as $applicant) {
             $applicant->name = $this->faker->name;
             $applicant->email = $this->faker->email;
             $applicant->phone = $this->faker->phoneNumber;
@@ -136,22 +136,22 @@ class FakeProdDataCommand extends Command
             $applicant->update();
         }
 
-        foreach (HRRejectionReason::whereNotNull('reason_comment')->get() ?: [] as $rejectionReason) {
+        foreach (HRRejectionReason::whereNotNull('reason_comment')->get() as $rejectionReason) {
             $rejectionReason->reason_comment = $this->faker->sentences(3, true);
             $rejectionReason->update();
         }
 
-        foreach (ApplicationRoundReview::whereNotNull('review_value')->get() ?: [] as $applicationRoundReview) {
+        foreach (ApplicationRoundReview::whereNotNull('review_value')->get() as $applicationRoundReview) {
             $applicationRoundReview->review_value = $this->faker->sentences(3, true);
             $applicationRoundReview->update();
         }
 
-        foreach (Application::whereNotNull('resume')->get() ?: [] as $application) {
+        foreach (Application::whereNotNull('resume')->get() as $application) {
             $application->resume = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
             $application->update();
         }
 
-        foreach (UniversityContact::all() ?: [] as $universityContact) {
+        foreach (UniversityContact::all()  as $universityContact) {
             $universityContact->name = $this->faker->name;
             $universityContact->email = $this->faker->email;
             $universityContact->phone = $this->faker->phoneNumber;
@@ -211,7 +211,7 @@ class FakeProdDataCommand extends Command
 
     private function fakeProjectTablesData()
     {
-        foreach (Project::all() ?: [] as $project) {
+        foreach (Project::all() as $project) {
             $project->name = $this->faker->words(3, true);
             $project->update();
         }
@@ -219,14 +219,14 @@ class FakeProdDataCommand extends Command
 
     private function fakeProspectTablesData()
     {
-        foreach (ProspectContactPerson::all() ?: [] as $prospectContactPerson) {
+        foreach (ProspectContactPerson::all() as $prospectContactPerson) {
             $prospectContactPerson->name = $this->faker->name;
             $prospectContactPerson->email = $this->faker->email;
             $prospectContactPerson->phone = $this->faker->phoneNumber;
             $prospectContactPerson->update();
         }
 
-        foreach (Prospect::all() ?: [] as $prospect) {
+        foreach (Prospect::all() as $prospect) {
             $prospect->name = $this->faker->words(3, true);
             $prospect->brief_info = $this->faker->sentences(4, true);
             $prospect->update();
