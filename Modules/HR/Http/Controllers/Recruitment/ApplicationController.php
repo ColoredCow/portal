@@ -28,6 +28,7 @@ use Modules\HR\Http\Requests\TeamInteractionRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
+use Illuminate\Support\Facades\Cache;
 
 abstract class ApplicationController extends Controller
 {
@@ -136,8 +137,15 @@ abstract class ApplicationController extends Controller
                 ->count();
         }
 
-        $attr['jobs'] = Job::all();
-        $attr['universities'] = University::all();
+        $attr['jobs'] = Cache::remember('jobs', now()->addMinutes(60), function () {
+            return Job::all();
+        });        
+        $attr['universities'] = Cache::remember('universities', now()->addMinutes(60), function () {
+            return University::all();
+        });
+        $attr['tags'] = Cache::remember('tags', now()->addMinutes(60), function () {
+            return Tag::orderBy('name')->get();
+        });        
         $attr['tags'] = Tag::orderBy('name')->get();
         $attr['rounds'] = $hrRoundsCounts;
         $attr['roundFilters'] = round::orderBy('name')->get();
@@ -145,19 +153,30 @@ abstract class ApplicationController extends Controller
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         })->orderby('name', 'asc')->get();
 
-        $attr['openApplicationsCountForJobs'] = [];
+        // $attr['openApplicationsCountForJobs'] = [];
+        // foreach ($applications->items() as $application) {
+        //     $openApplicationCountForJob = Application::where('hr_job_id', $application->hr_job_id)->isOpen()->count();
+        //     $attr['openApplicationsCountForJobs'][$application->job->title] = $openApplicationCountForJob;
+        // }
+
+        $openApplicationCountForJob =Application::whereIn('hr_job_id', $applications->pluck('hr_job_id'))
+        ->isOpen()
+        ->selectRaw('hr_job_id, COUNT(*) as count')
+        ->groupBy('hr_job_id')
+        ->get()
+        ->keyBy('hr_job_id')
+        ->toArray();
+        
         foreach ($applications->items() as $application) {
-            $openApplicationCountForJob = Application::where('hr_job_id', $application->hr_job_id)->isOpen()->count();
-            $attr['openApplicationsCountForJobs'][$application->job->title] = $openApplicationCountForJob;
+            $attr['openApplicationsCountForJobs'][$application->job->title] = $openApplicationCountForJob[$application->hr_job_id]['count'] ?? 0;
         }
 
         $attr['applicantId'] = [];
-        $applications = Application::get('hr_applicant_id');
-        foreach ($applications as $application) {
-            $applicantID = ApplicantMeta::where('hr_applicant_id', $application->hr_applicant_id)->first();
-            if ($applicantID) {
-                $attr['applicantId'] = $applicantID;
-            }
+        $applications = Application::pluck('hr_applicant_id');
+        $applicantData = ApplicantMeta::whereIn('hr_applicant_id', $applications)->get();
+
+        foreach ($applicantData as $data) {
+            $attr['applicantId'][$data->hr_applicant_id] = $data;
         }
 
         return view('hr.application.index')->with($attr);
