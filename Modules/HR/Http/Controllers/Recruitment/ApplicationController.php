@@ -7,6 +7,7 @@ use App\Models\Setting;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
@@ -28,7 +29,6 @@ use Modules\HR\Http\Requests\TeamInteractionRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
-use Illuminate\Support\Facades\Cache;
 
 abstract class ApplicationController extends Controller
 {
@@ -60,7 +60,7 @@ abstract class ApplicationController extends Controller
         // We need this so that we can redirect user to the older page number.
         // we can improve this logic in the future.
 
-        if (! session()->get('should_skip_page') && Str::endsWith($referer, 'edit')) {
+        if (!session()->get('should_skip_page') && Str::endsWith($referer, 'edit')) {
             session()->put(['should_skip_page' => true]);
 
             return redirect()->route(request()->route()->getName(), session()->get('previous_application_data'))->with('status', session()->get('status'));
@@ -139,34 +139,27 @@ abstract class ApplicationController extends Controller
 
         $attr['jobs'] = Cache::remember('jobs', now()->addMinutes(60), function () {
             return Job::all();
-        });        
+        });
         $attr['universities'] = Cache::remember('universities', now()->addMinutes(60), function () {
             return University::all();
         });
         $attr['tags'] = Cache::remember('tags', now()->addMinutes(60), function () {
             return Tag::orderBy('name')->get();
-        });        
-        $attr['tags'] = Tag::orderBy('name')->get();
+        });
         $attr['rounds'] = $hrRoundsCounts;
         $attr['roundFilters'] = round::orderBy('name')->get();
         $attr['assignees'] = User::whereHas('roles', function ($query) {
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         })->orderby('name', 'asc')->get();
 
-        // $attr['openApplicationsCountForJobs'] = [];
-        // foreach ($applications->items() as $application) {
-        //     $openApplicationCountForJob = Application::where('hr_job_id', $application->hr_job_id)->isOpen()->count();
-        //     $attr['openApplicationsCountForJobs'][$application->job->title] = $openApplicationCountForJob;
-        // }
+        $openApplicationCountForJob = Application::whereIn('hr_job_id', $applications->pluck('hr_job_id'))
+            ->isOpen()
+            ->selectRaw('hr_job_id, COUNT(*) as count')
+            ->groupBy('hr_job_id')
+            ->get()
+            ->keyBy('hr_job_id')
+            ->toArray();
 
-        $openApplicationCountForJob =Application::whereIn('hr_job_id', $applications->pluck('hr_job_id'))
-        ->isOpen()
-        ->selectRaw('hr_job_id, COUNT(*) as count')
-        ->groupBy('hr_job_id')
-        ->get()
-        ->keyBy('hr_job_id')
-        ->toArray();
-        
         foreach ($applications->items() as $application) {
             $attr['openApplicationsCountForJobs'][$application->job->title] = $openApplicationCountForJob[$application->hr_job_id]['count'] ?? 0;
         }
@@ -270,7 +263,7 @@ abstract class ApplicationController extends Controller
         $pdf = Pdf::loadView('hr.application.draft-joining-letter', compact('applicant', 'job', 'offer_letter_body'));
         $fileName = FileHelper::getOfferLetterFileName($applicant, $pdf);
         $directory = 'app/public/' . config('constants.hr.offer-letters-dir');
-        if (! is_dir(storage_path($directory)) && ! file_exists(storage_path($directory))) {
+        if (!is_dir(storage_path($directory)) && !file_exists(storage_path($directory))) {
             mkdir(storage_path($directory), 0, true);
         }
         $fullPath = storage_path($directory . '/' . $fileName);
