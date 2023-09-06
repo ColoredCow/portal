@@ -337,7 +337,7 @@ abstract class ApplicationController extends Controller
 
     public function viewOfferLetter(Application $application)
     {
-        if (! Storage::exists($application->offer_letter)) {
+        if (!Storage::exists($application->offer_letter)) {
             return false;
         }
 
