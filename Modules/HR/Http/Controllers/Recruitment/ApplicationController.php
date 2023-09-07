@@ -86,20 +86,20 @@ abstract class ApplicationController extends Controller
             'roundFilters' => request()->get('roundFilters'),
         ];
         $loggedInUserId = auth()->id();
-        $applications = Application::join('hr_application_round', function ($join) {
+        $applications = Application::select('hr_applications.*')
+        ->join('hr_application_round', function ($join) {
             $join->on('hr_application_round.hr_application_id', '=', 'hr_applications.id')
                 ->where('hr_application_round.is_latest', true);
-        })->with(['applicant', 'job', 'tags', 'latestApplicationRound']);
-
-        $applications = $applications->whereHas('latestApplicationRound')
-            ->applyFilter($filters)
-            ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
-            ->orderByRaw('ISNULL(hr_application_round.scheduled_date) ASC')
-            ->orderByRaw('hr_application_round.scheduled_date ASC')
-            ->select('hr_applications.*')
-            ->latest()
-            ->paginate(config('constants.pagination_size'))
-            ->appends(request()->except('page'));
+        })
+        ->with(['applicant', 'job', 'tags', 'latestApplicationRound'])
+        ->whereHas('latestApplicationRound')
+        ->applyFilter($filters)
+        ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
+        ->orderByRaw('ISNULL(hr_application_round.scheduled_date) ASC')
+        ->orderByRaw('hr_application_round.scheduled_date ASC')
+        ->latest()
+        ->paginate(config('constants.pagination_size'))
+        ->appends(request()->except('page'));
         $countFilters = array_except($filters, ['status', 'round']);
         $attr = [
             'applications' => $applications,
@@ -137,15 +137,9 @@ abstract class ApplicationController extends Controller
                 ->count();
         }
 
-        $attr['jobs'] = Cache::remember('jobs', now()->addMinutes(60), function () {
-            return Job::all();
-        });
-        $attr['universities'] = Cache::remember('universities', now()->addMinutes(60), function () {
-            return University::all();
-        });
-        $attr['tags'] = Cache::remember('tags', now()->addMinutes(60), function () {
-            return Tag::orderBy('name')->get();
-        });
+        $attr['jobs'] = Job::all();
+        $attr['universities'] = University::all();
+        $attr['tags'] = Tag::orderBy('name')->get();
         $attr['rounds'] = $hrRoundsCounts;
         $attr['roundFilters'] = round::orderBy('name')->get();
         $attr['assignees'] = User::whereHas('roles', function ($query) {
