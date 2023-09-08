@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\HR;
+namespace Modules\HR\Tests\Unit;
 
 use Modules\HR\Entities\Applicant;
 use Tests\TestCase;
