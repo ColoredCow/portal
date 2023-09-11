@@ -59,7 +59,7 @@ return [
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_TEST_DATABASE', 'portal_test'),
-            'username' => env('DB_TEST_USERNAME', 'root'),
+            'username' => env('DB_TEST_USERNAME', 'mysql_test_user'),
             'password' => env('DB_TEST_PASSWORD', 'root'),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',

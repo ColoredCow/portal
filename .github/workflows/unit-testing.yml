@@ -17,7 +17,7 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_USER: root
+          MYSQL_USER: mysql_test_user
           MYSQL_PASSWORD: root
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: portal_test
