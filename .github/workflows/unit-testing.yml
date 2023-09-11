@@ -17,10 +17,10 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_USER: homestead
-          MYSQL_PASSWORD: secret
+          MYSQL_USER: root
+          MYSQL_PASSWORD: root
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE: homestead
+          MYSQL_DATABASE: portal_test
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -28,13 +28,10 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # cypress setup
-      - name: Setup PHP v8.2
+      - name: Setup PHP v7.4
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.2"
-
-      - name: Setup cypress-testing
-        uses: actions/checkout@v2
+          php-version: "7.4"
 
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
@@ -57,17 +54,9 @@ jobs:
           php artisan db:seed
           php artisan module:seed
 
-      - name: Compile assets
+      - name: Run Test Suit
         run: |
-          export NODE_OPTIONS=--openssl-legacy-provider
-          npm install
-          npm run dev
+          vendor/bin/phpunit --coverage-clover coverage.xml
 
-      - name: Run local server
-        run: |
-          php artisan serve &
-
-      - name: Run cypress
-        run: |
-          cp cypress.json.example cypress.json
-          npm run cypress-record ${{ secrets.CYPRESS_DASHBOARD_KEY }}
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
