@@ -33,6 +33,9 @@ jobs:
         with:
           php-version: "7.4"
 
+      - name: Setup unit-testing
+        uses: actions/checkout@v2
+
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
