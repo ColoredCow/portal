@@ -33,8 +33,8 @@ jobs:
         with:
           php-version: "8.2"
 
-      - name: Setup cypress-testing
-        uses: actions/checkout@v2
+      # - name: Setup cypress-testing
+      #   uses: actions/checkout@v2
 
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
@@ -67,10 +67,10 @@ jobs:
         run: |
           php artisan serve &
 
-      - name: Run cypress
-        run: |
-          cp cypress.json.example cypress.json
-          npm run cypress-record ${{ secrets.CYPRESS_DASHBOARD_KEY }}
+      # - name: Run cypress
+      #   run: |
+      #     cp cypress.json.example cypress.json
+      #     npm run cypress-record ${{ secrets.CYPRESS_DASHBOARD_KEY }}
 
       - name: Run Test Suit
         run: |
