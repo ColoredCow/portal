@@ -57,6 +57,12 @@ jobs:
           php artisan db:seed --env=testing
           php artisan module:seed --env=testing
 
+      - name: Compile assets
+        run: |
+          export NODE_OPTIONS=--openssl-legacy-provider
+          npm install
+          npm run dev
+
       - name: Run Test Suit
         run: |
           vendor/bin/phpunit --coverage-clover coverage.xml
