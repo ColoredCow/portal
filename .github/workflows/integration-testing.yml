@@ -50,12 +50,12 @@ jobs:
 
       - name: Run migrations
         run: |
-          php artisan migrate --env=local
+          php artisan migrate
 
       - name: Run seeders
         run: |
-          php artisan db:seed --env=local
-          php artisan module:seed --env=local
+          php artisan db:seed
+          php artisan module:seed
 
       - name: Compile assets
         run: |
