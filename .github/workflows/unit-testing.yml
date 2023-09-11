@@ -1,4 +1,4 @@
-name: Integration testing
+name: Unit testing
 
 # Controls when the action will run.
 on:
