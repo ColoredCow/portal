@@ -63,25 +63,19 @@ jobs:
           npm install
           npm run dev
 
-      - name: Set Git User Identity
-        run: |
-          git config user.email "sachinbisht27@gmail.com"
-          git config user.name "Sachin Bisht"
-
-      - name: Create Git Tag
-        run: |
-          git tag -a v1.0 -m "Version 1.0"
-          git push origin v1.0
-
-      - name: Run Test Suit
+      - name: Run Test Suite
         run: |
           vendor/bin/phpunit --coverage-clover coverage.xml
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-
-      - name: Post Code Coverage Comment
+      - name: Create GitHub Release
+        id: create_release
         uses: softprops/action-gh-release@v1
         with:
           files: coverage.xml
-          token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get Release URL
+        run: |
+          release_url="${{ steps.create_release.outputs.upload_url }}"
+          echo "Release URL: $release_url"
