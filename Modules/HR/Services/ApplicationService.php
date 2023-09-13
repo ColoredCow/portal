@@ -19,10 +19,8 @@ use Modules\User\Entities\User;
 
 class ApplicationService implements ApplicationServiceContract
 {
-
     public function index($applicationType)
     {
-
         $referer = request()->headers->get('referer');
 
         if (!session()->get('should_skip_page') && Str::endsWith($referer, 'edit')) {
