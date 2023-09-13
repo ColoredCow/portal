@@ -63,25 +63,6 @@ jobs:
           npm install
           npm run dev
 
-      - name: Run Test Suit
+      - name: Run Test Suit and Generate Coverage Text Report
         run: |
-          vendor/bin/phpunit --coverage-clover coverage.xml
-
-      - name: Print Coverage report
-        run: cat coverage.xml
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-
-      - name: Post Code Coverage Comment
-        run: |
-          echo "Code Coverage Report" > coverage_comment.txt
-          echo "![Coverage](https://img.shields.io/badge/coverage-$(grep -oP 'covered="(\K[^"]+)' coverage.xml)%25-brightgreen)" >> coverage_comment.txt
-          echo "Coverage details are available [here](./coverage.xml)." >> coverage_comment.txt
-
-          # Post the comment using the GitHub API with PR number directly
-          curl -X POST \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d "{\"body\": \"$(cat coverage_comment.txt | sed ':a;N;$!ba;s/\n/\\n/g')\"}" \
-            "https://api.github.com/repos/$GITHUB_REPOSITORY/issues/${{ github.event.pull_request.number }}/comments"
+          vendor/bin/phpunit --coverage-text > coverage_report.txt
