@@ -70,11 +70,18 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
 
-      - name: Code coverage comment
+      - name: Post Code Coverage Comment
         run: |
           echo "Code Coverage Report" > coverage_comment.txt
           echo "![Coverage](https://img.shields.io/badge/coverage-$(grep -oP 'covered="(\K[^"]+)' coverage.xml)%25-brightgreen)" >> coverage_comment.txt
           echo "Coverage details are available [here](./coverage.xml)." >> coverage_comment.txt
 
-          echo "::set-env name=GH_TOKEN::${{ secrets.GITHUB_TOKEN }}"
-          gh pr comment "$(cat coverage_comment.txt)"
+          # Set up the comment payload in a JSON file
+          echo '{"body": "'$(cat coverage_comment.txt | sed ':a;N;$!ba;s/\n/\\n/g')'"}' > comment_payload.json
+
+          # Post the comment using the GitHub API
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d @comment_payload.json \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments"
