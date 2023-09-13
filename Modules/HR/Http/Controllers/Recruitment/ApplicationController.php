@@ -85,20 +85,20 @@ abstract class ApplicationController extends Controller
             'roundFilters' => request()->get('roundFilters'),
         ];
         $loggedInUserId = auth()->id();
-        $applications = Application::join('hr_application_round', function ($join) {
+        $applications = Application::select('hr_applications.*')
+        ->join('hr_application_round', function ($join) {
             $join->on('hr_application_round.hr_application_id', '=', 'hr_applications.id')
                 ->where('hr_application_round.is_latest', true);
-        })->with(['applicant', 'job', 'tags', 'latestApplicationRound']);
-
-        $applications = $applications->whereHas('latestApplicationRound')
-            ->applyFilter($filters)
-            ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
-            ->orderByRaw('ISNULL(hr_application_round.scheduled_date) ASC')
-            ->orderByRaw('hr_application_round.scheduled_date ASC')
-            ->select('hr_applications.*')
-            ->latest()
-            ->paginate(config('constants.pagination_size'))
-            ->appends(request()->except('page'));
+        })
+        ->with(['applicant', 'job', 'tags', 'latestApplicationRound'])
+        ->whereHas('latestApplicationRound')
+        ->applyFilter($filters)
+        ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
+        ->orderByRaw('ISNULL(hr_application_round.scheduled_date) ASC')
+        ->orderByRaw('hr_application_round.scheduled_date ASC')
+        ->latest()
+        ->paginate(config('constants.pagination_size'))
+        ->appends(request()->except('page'));
         $countFilters = array_except($filters, ['status', 'round']);
         $attr = [
             'applications' => $applications,
@@ -145,19 +145,24 @@ abstract class ApplicationController extends Controller
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         })->orderby('name', 'asc')->get();
 
-        $attr['openApplicationsCountForJobs'] = [];
+        $openApplicationCountForJob = Application::whereIn('hr_job_id', $applications->pluck('hr_job_id'))
+            ->isOpen()
+            ->selectRaw('hr_job_id, COUNT(*) as count')
+            ->groupBy('hr_job_id')
+            ->get()
+            ->keyBy('hr_job_id')
+            ->toArray();
+
         foreach ($applications->items() as $application) {
-            $openApplicationCountForJob = Application::where('hr_job_id', $application->hr_job_id)->isOpen()->count();
-            $attr['openApplicationsCountForJobs'][$application->job->title] = $openApplicationCountForJob;
+            $attr['openApplicationsCountForJobs'][$application->job->title] = $openApplicationCountForJob[$application->hr_job_id]['count'] ?? 0;
         }
 
         $attr['applicantId'] = [];
-        $applications = Application::get('hr_applicant_id');
-        foreach ($applications as $application) {
-            $applicantID = ApplicantMeta::where('hr_applicant_id', $application->hr_applicant_id)->first();
-            if ($applicantID) {
-                $attr['applicantId'] = $applicantID;
-            }
+        $applications = Application::pluck('hr_applicant_id');
+        $applicantData = ApplicantMeta::whereIn('hr_applicant_id', $applications)->get();
+
+        foreach ($applicantData as $data) {
+            $attr['applicantId'][$data->hr_applicant_id] = $data;
         }
 
         return view('hr.application.index')->with($attr);
