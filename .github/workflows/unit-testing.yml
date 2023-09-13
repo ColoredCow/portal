@@ -87,9 +87,13 @@ jobs:
 
           formatted_comment=$(cat coverage_comment.txt | jq -Rs '.')
 
-          echo "Coverage details are available below:" >> $formatted_comment
+          formatted_comment=$(echo "$formatted_comment" | sed 's/\x1B\[[0-9;]*[JKmsu]//g')
+
+          echo "Coverage details are available below:" >> coverage_comment.txt
+          echo "$formatted_comment" >> coverage_comment.txt
+
           curl -X POST \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/json" \
-            -d "{\"body\": $formatted_comment}" \
+            -d "{\"body\": \"$formatted_comment\"}" \
             "https://api.github.com/repos/$GITHUB_REPOSITORY/issues/${{ github.event.pull_request.number }}/comments"
