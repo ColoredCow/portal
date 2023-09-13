@@ -27,7 +27,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # cypress & unit testing setup
+      # cypress setup
       - name: Setup PHP v7.4
         uses: shivammathur/setup-php@v2
         with:
@@ -63,14 +63,19 @@ jobs:
           npm install
           npm run dev
 
-      - name: Run Test Suit
+      - name: Set Git User Identity
         run: |
-          vendor/bin/phpunit --coverage-clover coverage.xml
+          git config user.email "sachinbisht27@gmail.com"
+          git config user.name "Sachin Bisht"
 
       - name: Create Git Tag
         run: |
           git tag -a v1.0 -m "Version 1.0"
           git push origin v1.0
+
+      - name: Run Test Suit
+        run: |
+          vendor/bin/phpunit --coverage-clover coverage.xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
