@@ -67,6 +67,11 @@ jobs:
         run: |
           vendor/bin/phpunit --coverage-clover coverage.xml
 
+      - name: Create Git Tag
+        run: |
+          git tag -a v1.0 -m "Version 1.0"
+          git push origin v1.0
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
 
@@ -74,5 +79,4 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: coverage.xml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
