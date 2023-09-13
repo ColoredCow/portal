@@ -76,4 +76,5 @@ jobs:
           echo "![Coverage](https://img.shields.io/badge/coverage-$(grep -oP 'covered="(\K[^"]+)' coverage.xml)%25-brightgreen)" >> coverage_comment.txt
           echo "Coverage details are available [here](./coverage.xml)." >> coverage_comment.txt
 
+          echo "::set-env name=GH_TOKEN::${{ secrets.GITHUB_TOKEN }}"
           gh pr comment "$(cat coverage_comment.txt)"
