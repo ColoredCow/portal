@@ -14,6 +14,8 @@ git --version
 ### 2. PHP, MySQL, Apache:running:
 Portal uses PHP v8.2. You can install it using one of the following ways:
 
+#### If you are a Window's user we would suggest you to use WAMP over XAMPP for portal as it is easier to control/change the version of PHP, MySQL, and Apache
+
 1. XAMPP (Windows and Linux)
     - If you prefer using XAMPP, you can download the full stack with right PHP version from [this link](https://www.apachefriends.org/download.html). 
     - If you already have XAMPP installed for Windows, refer [this link](https://stackoverflow.com/questions/45790160/is-there-way-to-use-two-php-versions-in-xampp) for switching to the correct PHP version.
@@ -50,7 +52,7 @@ Before you start building PHP connection to MySQL database you need to know what
 
 3. At the top click databases.
 
-4. In the new window, name your database as per your need, we are naming it “portal”. Now select Collation as utf8_general_ci. Now click on Create and your database will be created.
+4. In the new window, name your database as per your need, we are naming it “portal”. Now select Collation as utf8_general_ci. Now click on Create and your database will be created. Check out [this link](https://www.youtube.com/watch?v=k9yJR_ZJbvI&ab_channel=1BestCsharpblog) and skip to 0:21.
 
 5. The newly created database will be empty now, as there are no tables in it.
 
