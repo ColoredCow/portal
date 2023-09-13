@@ -85,5 +85,5 @@ jobs:
           curl -X POST \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/json" \
-            -d "{\"body\": \"$(cat coverage_comment.txt | sed ':a;N;$!ba;s/\n/\\n/g')\"}" \
+            -d "{\"body\": \"$(cat coverage_comment.txt)\"}" \
             "https://api.github.com/repos/$GITHUB_REPOSITORY/issues/${{ github.event.pull_request.number }}/comments"
