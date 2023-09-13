@@ -86,8 +86,7 @@ jobs:
 
           cat coverage_report.txt >> coverage_comment.txt
 
-          formatted_comment=$(cat coverage_comment.txt | jq -Rs '.')
-          formatted_comment=$(echo "$formatted_comment" | sed 's/\x1B\[[0-9;]*[JKmsu]//g')
+          formatted_comment=$(cat coverage_comment.txt | jq -Rs '.' | sed -r 's/\x1B\[[0-9;]*[JKmsu]//g')
 
           curl -X POST \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
