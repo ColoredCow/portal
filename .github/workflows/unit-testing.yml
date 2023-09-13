@@ -69,3 +69,10 @@ jobs:
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
+
+      - name: Post Code Coverage Comment
+        uses: softprops/action-gh-release@v1
+        with:
+          files: coverage.xml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
