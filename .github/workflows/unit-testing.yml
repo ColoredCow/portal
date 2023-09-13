@@ -27,7 +27,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # cypress setup
+      # cypress & unit testing setup
       - name: Setup PHP v7.4
         uses: shivammathur/setup-php@v2
         with:
