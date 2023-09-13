@@ -145,7 +145,7 @@ abstract class ApplicationController extends Controller
         $pdf = Pdf::loadView('hr.application.draft-joining-letter', compact('applicant', 'job', 'offer_letter_body'));
         $fileName = FileHelper::getOfferLetterFileName($applicant, $pdf);
         $directory = 'app/public/' . config('constants.hr.offer-letters-dir');
-        if (!is_dir(storage_path($directory)) && !file_exists(storage_path($directory))) {
+        if (! is_dir(storage_path($directory)) && ! file_exists(storage_path($directory))) {
             mkdir(storage_path($directory), 0, true);
         }
         $fullPath = storage_path($directory . '/' . $fileName);
@@ -219,7 +219,7 @@ abstract class ApplicationController extends Controller
 
     public function viewOfferLetter(Application $application)
     {
-        if (!Storage::exists($application->offer_letter)) {
+        if (! Storage::exists($application->offer_letter)) {
             return false;
         }
 

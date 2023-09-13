@@ -6,21 +6,20 @@ use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 use Modules\HR\Contracts\ApplicationServiceContract;
 use Modules\HR\Entities\Applicant;
+use Modules\HR\Entities\ApplicantMeta;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\Job;
+use Modules\HR\Entities\Round;
+use Modules\HR\Entities\University;
 use Modules\HR\Events\CustomMailTriggeredForApplication;
 use Modules\User\Entities\User;
-use Illuminate\Support\Str;
-use Modules\HR\Entities\University;
-use Modules\HR\Entities\Round;
-use Modules\HR\Entities\ApplicantMeta;
 
 class ApplicationService implements ApplicationServiceContract
 {
 
-    
     public function index($applicationType)
     {
 
@@ -53,19 +52,19 @@ class ApplicationService implements ApplicationServiceContract
 
         $loggedInUserId = auth()->id();
         $applications = Application::select('hr_applications.*')
-        ->join('hr_application_round', function ($join) {
-            $join->on('hr_application_round.hr_application_id', '=', 'hr_applications.id')
-                ->where('hr_application_round.is_latest', true);
-        })
-        ->with(['applicant', 'job', 'tags', 'latestApplicationRound'])
-        ->whereHas('latestApplicationRound')
-        ->applyFilter($filters)
-        ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
-        ->orderByRaw('ISNULL(hr_application_round.scheduled_date) ASC')
-        ->orderByRaw('hr_application_round.scheduled_date ASC')
-        ->latest()
-        ->paginate(config('constants.pagination_size'))
-        ->appends(request()->except('page'));
+            ->join('hr_application_round', function ($join) {
+                $join->on('hr_application_round.hr_application_id', '=', 'hr_applications.id')
+                    ->where('hr_application_round.is_latest', true);
+            })
+            ->with(['applicant', 'job', 'tags', 'latestApplicationRound'])
+            ->whereHas('latestApplicationRound')
+            ->applyFilter($filters)
+            ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
+            ->orderByRaw('ISNULL(hr_application_round.scheduled_date) ASC')
+            ->orderByRaw('hr_application_round.scheduled_date ASC')
+            ->latest()
+            ->paginate(config('constants.pagination_size'))
+            ->appends(request()->except('page'));
         $countFilters = array_except($filters, ['status', 'round']);
         $attr = [
             'applications' => $applications,
@@ -177,15 +176,15 @@ class ApplicationService implements ApplicationServiceContract
 
         Http::withHeaders([
             'Accept' => 'application/json',
-            'Content-Type'=>'application/json',
+            'Content-Type' => 'application/json',
         ])
-        ->withToken($token)
-        ->post($url, [
-            'name' => $name,
-            'email' =>  $parameters['email'],
-            'phone' => $parameters['phone'],
-            'subscription_lists' => $subscriptionLists,
-        ]);
+            ->withToken($token)
+            ->post($url, [
+                'name' => $name,
+                'email' => $parameters['email'],
+                'phone' => $parameters['phone'],
+                'subscription_lists' => $subscriptionLists,
+            ]);
     }
 
     public function getToken()
