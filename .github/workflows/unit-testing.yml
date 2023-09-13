@@ -66,3 +66,6 @@ jobs:
       - name: Run Test Suit and Generate Coverage Text Report
         run: |
           vendor/bin/phpunit --coverage-text > coverage_report.txt
+
+      - name: Display Coverage Report
+        run: cat coverage_report.txt
