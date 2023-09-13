@@ -65,16 +65,20 @@ jobs:
 
       - name: Run Test Suit
         run: |
-          vendor/bin/phpunit --coverage-clover coverage.xml
+          vendor/bin/phpunit --coverage-clover coverage.xml --cov > coverage.txt
+
+      - name: Convert Coverage to HTML
+        run: |
+          php-coveralls/php-coveralls coverage:clover --output coverage-html
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
 
       - name: Post Code Coverage Comment
         run: |
-          echo "Code Coverage Report" > coverage_comment.txt
+          echo "Code Coverage Report"
           echo "![Coverage](https://img.shields.io/badge/coverage-$(grep -oP 'covered="(\K[^"]+)' coverage.xml)%25-brightgreen)" >> coverage_comment.txt
-          echo "Coverage details are available [here](./coverage.xml)." >> coverage_comment.txt
+          echo "Coverage details are available [here](./coverage.txt)." >> coverage_comment.txt
 
           # Post the comment using the GitHub API with PR number directly
           curl -X POST \
