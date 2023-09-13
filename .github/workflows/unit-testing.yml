@@ -73,16 +73,21 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
 
+      - name: Install jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install jq -y
+      
       - name: Post Code Coverage Comment
         run: |
           echo "Code Coverage Report" > coverage_comment.txt
           echo "![Coverage](https://img.shields.io/badge/coverage-$(grep -oP 'covered="(\K[^"]+)' coverage.xml)%25-brightgreen)" >> coverage_comment.txt
-          echo "Coverage details are available below:" >> coverage_comment.txt
 
           cat coverage_report.txt >> coverage_comment.txt
 
-          formatted_comment=$(cat coverage_comment.txt)
+          formatted_comment=$(cat coverage_comment.txt | jq -Rs '.')
 
+          echo "Coverage details are available below:" >> $formatted_comment
           curl -X POST \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/json" \
