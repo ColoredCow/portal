@@ -77,11 +77,13 @@ jobs:
         run: |
           echo "Code Coverage Report" > coverage_comment.txt
           echo "![Coverage](https://img.shields.io/badge/coverage-$(grep -oP 'covered="(\K[^"]+)' coverage.xml)%25-brightgreen)" >> coverage_comment.txt
-          echo "Coverage details are available [here](./coverage.xml)." >> coverage_report.txt
+          echo "Coverage details are available below:" >> coverage_comment.txt
+
+          cat coverage_report.txt >> coverage_comment.txt
 
           # Post the comment using the GitHub API with PR number directly
           curl -X POST \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/json" \
-            -d "{\"body\": \"$(cat coverage_report.txt | sed ':a;N;$!ba;s/\n/\\n/g')\"}" \
+            -d "{\"body\": \"$(cat coverage_comment.txt | sed ':a;N;$!ba;s/\n/\\n/g')\"}" \
             "https://api.github.com/repos/$GITHUB_REPOSITORY/issues/${{ github.event.pull_request.number }}/comments"
