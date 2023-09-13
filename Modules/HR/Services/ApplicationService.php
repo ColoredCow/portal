@@ -6,7 +6,6 @@ use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
-use Module;
 use Modules\HR\Contracts\ApplicationServiceContract;
 use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Application;

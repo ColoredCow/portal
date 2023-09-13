@@ -4,7 +4,6 @@ namespace Modules\HR\Http\Controllers\Recruitment;
 
 use App\Helpers\FileHelper;
 use App\Models\Setting;
-use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +17,6 @@ use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationMeta;
 use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Job;
-use Modules\HR\Entities\Round;
 use Modules\HR\Entities\University;
 use Modules\HR\Http\Requests\Recruitment\ApplicationRequest;
 use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
