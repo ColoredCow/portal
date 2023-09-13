@@ -23,7 +23,7 @@ class ApplicationService implements ApplicationServiceContract
     {
         $referer = request()->headers->get('referer');
 
-        if (!session()->get('should_skip_page') && Str::endsWith($referer, 'edit')) {
+        if (! session()->get('should_skip_page') && Str::endsWith($referer, 'edit')) {
             session()->put(['should_skip_page' => true]);
 
             return redirect()->route(request()->route()->getName(), session()->get('previous_application_data'))->with('status', session()->get('status'));
