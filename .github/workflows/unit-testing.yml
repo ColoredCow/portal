@@ -63,19 +63,17 @@ jobs:
           npm install
           npm run dev
 
-      - name: Run Test Suite
+      - name: Run Test Suit
         run: |
           vendor/bin/phpunit --coverage-clover coverage.xml
 
-      - name: Create GitHub Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: coverage.xml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
 
-      - name: Get Release URL
+      - name: Code coverage comment
         run: |
-          release_url="${{ steps.create_release.outputs.upload_url }}"
-          echo "Release URL: $release_url"
+          echo "Code Coverage Report" > coverage_comment.txt
+          echo "![Coverage](https://img.shields.io/badge/coverage-$(grep -oP 'covered="(\K[^"]+)' coverage.xml)%25-brightgreen)" >> coverage_comment.txt
+          echo "Coverage details are available [here](./coverage.xml)." >> coverage_comment.txt
+
+          gh pr comment "$(cat coverage_comment.txt)"
