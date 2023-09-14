@@ -63,9 +63,9 @@ jobs:
           npm install
           npm run dev
 
-      - name: Run Test Suit and Generate Coverage Text Report
+      - name: Run Test Suit
         run: |
-          phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.xml
+          vendor/bin/phpunit --coverage-clover coverage.xml
 
       - name: Display Coverage Report
         run: cat coverage_report.txt
