@@ -67,9 +67,6 @@ jobs:
         run: |
           vendor/bin/phpunit --coverage-clover coverage.xml
 
-      - name: Display Coverage Report
-        run: cat coverage_report.txt
-
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
 
