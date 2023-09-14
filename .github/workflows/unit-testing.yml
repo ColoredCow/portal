@@ -65,10 +65,15 @@ jobs:
 
       - name: Run Test Suit and Generate Coverage Text Report
         run: |
-          vendor/bin/phpunit --coverage-text > coverage_report.txt
+          phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.xml
 
       - name: Display Coverage Report
         run: cat coverage_report.txt
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
+
+      - name: Coverage Report as Comment (Clover)
+        uses: lucassabreu/comment-coverage-clover@main
+        with:
+          file: coverage.xml
