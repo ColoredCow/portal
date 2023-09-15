@@ -99,29 +99,29 @@ class RevenueReportService
         $clientDepartments = $client->linkedAsDepartment;
         $clientPartners = $client->linkedAsPartner;
 
-        $clientInvoiceDetails = RevenueReportService::getInvoicesForClient($client, $filters);
+        $clientInvoiceDetails = self::getInvoicesForClient($client, $filters);
 
         foreach ($clientInvoiceDetails as $invoice) {
-            $data = RevenueReportService::handleInvoiceDataForClient($invoice, $amountMonthWise);
+            $data = self::handleInvoiceDataForClient($invoice, $amountMonthWise);
             $totalAmount += $data['invoiceAmount'];
             $amountMonthWise = $data['amountMonthWise'];
         }
 
         foreach ($clientDepartments as $department) {
-            $departmentInvoiceDetails = RevenueReportService::getInvoicesForClient($department, $filters);
+            $departmentInvoiceDetails = self::getInvoicesForClient($department, $filters);
 
             foreach ($departmentInvoiceDetails as $invoice) {
-                $data = RevenueReportService::handleInvoiceDataForClient($invoice, $amountMonthWise);
+                $data = self::handleInvoiceDataForClient($invoice, $amountMonthWise);
                 $totalAmount += $data['invoiceAmount'];
                 $amountMonthWise = $data['amountMonthWise'];
             }
         }
 
         foreach ($clientPartners as $partner) {
-            $partnerInvoiceDetails = RevenueReportService::getInvoicesForClient($partner, $filters);
+            $partnerInvoiceDetails = self::getInvoicesForClient($partner, $filters);
 
             foreach ($partnerInvoiceDetails as $invoice) {
-                $data = RevenueReportService::handleInvoiceDataForClient($invoice, $amountMonthWise);
+                $data = self::handleInvoiceDataForClient($invoice, $amountMonthWise);
                 $totalAmount += $data['invoiceAmount'];
                 $amountMonthWise = $data['amountMonthWise'];
             }
