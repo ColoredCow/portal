@@ -71,7 +71,6 @@ jobs:
         uses: codecov/codecov-action@v3
 
       - name: Coverage Report as Comment (Clover)
-        uses: danhunsaker/clover-reporter-action@v0.2.17-clover
+        uses: lucassabreu/comment-coverage-clover@main
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          clover-file: coverage.xml
+          file: coverage.xml
