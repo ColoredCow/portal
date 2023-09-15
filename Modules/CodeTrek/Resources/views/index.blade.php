@@ -35,7 +35,7 @@
                 <form action="{{ route('codetrek.index') }}" id="centreFilterForm">
                     <div class="form-group ml-25 w-180">
                         @can('codetrek_applicant.create')     
-                            <select class="form-control bg-light" name="centre" id="centre" onchange="document.getElementById('centreFilterForm').submit();">
+                            <select class="form-control bg-light" name="centre" id="centre" onchange="document.getElementById('centreFilterForm').submit();"required>
                                 <option value="" {{ !request()->has('centre') || empty(request()->get('centre')) ? 'selected' : '' }}>
                                     {!! __('All Centres') !!}
                                 </option>
@@ -210,7 +210,7 @@
                                     </div>                                    
                                 </td>
                                 <td>
-                                    <div class="d-flex align-items-center"> 
+                                    <div class="d-flex align-items-center"required> 
                                         @if ($applicant->mentor)
                                             <div class="col">
                                                 <div class="d-flex align-items-center"> 
