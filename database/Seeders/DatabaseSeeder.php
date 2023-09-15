@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        if (! app()->environment(['local', 'staging', 'UAT'])) {
+        if (! app()->environment(['local', 'staging', 'UAT', 'testing'])) {
             return 0;
         }
 
