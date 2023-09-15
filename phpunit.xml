@@ -24,6 +24,7 @@
         <exclude>
             <directory suffix="blade.php">./Modules</directory>
             <directory suffix=".php">./Modules/**/Routes</directory>
+            <directory suffix=".php">./Modules/**/Database</directory>
             <directory suffix=".php">./Modules/**/Resources</directory>
             <directory suffix=".php">./Modules/**/Tests</directory>
             <directory suffix=".php">./Modules/**/Config</directory>
