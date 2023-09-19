@@ -12,5 +12,5 @@
 */
 
 Route::prefix('contractsettings')->group(function() {
-    Route::get('/', 'ContractSettingsController@index');
+    Route::get('/', 'ContractSettingsController@index')->name('contractsettings.index');
 });

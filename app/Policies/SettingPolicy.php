@@ -15,6 +15,7 @@ class SettingPolicy
             'hr_settings.view',
             'nda_settings.view',
             'finance_invoices_settings.view',
+            'contractsettings.view'
         ]);
     }
 

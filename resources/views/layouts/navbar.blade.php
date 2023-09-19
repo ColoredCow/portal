@@ -49,7 +49,8 @@
     @if ((Module::checkStatus('Client') &&
         auth()->user()->can('clients.view')) ||
         (Module::checkStatus('Project') &&
-            auth()->user()->can('projects.view')))
+            auth()->user()->can('projects.view')) || (Module::checkStatus('ContractSettings') && auth()->user()->can('contractsettings.view'))
+            )
         <li class="nav-item dropdown">
             <a id="navbarDropdown_pm" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>CRM<span class="caret"></span>
@@ -66,6 +67,9 @@
                 @endcan
                 @can('projects.view')
                 <a class="dropdown-item" href="{{ route('project.resource-requirement') }}">Project Resource</a>
+                @endcan
+                @can('contractsettings.view')
+                <a class="dropdown-item" href="{{ route('contractsettings.index') }}">Contract Settings</a>
                 @endcan
             </div>
         </li>
@@ -124,7 +128,7 @@
         </a>
         <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_operations">
             <a class="dropdown-item"  href="{{route('office-location.index')}}" >Office location</a>
-           
+
         </div>
     </li>
     @endcan
