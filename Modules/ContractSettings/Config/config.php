@@ -1,5 +1,10 @@
 <?php
 
 return [
-    'name' => 'ContractSettings'
+    'name' => 'ContractSettings',
+    'billing_level' => [
+        'Monthly',
+        'Yearly',
+        'AMC',
+    ],
 ];
