@@ -23,5 +23,6 @@
     "Revenue": true,
     "ProjectContract": true,
     "CodeTrek": true,
-    "Operations": true
+    "Operations": true,
+    "ContractSettings": true
 }

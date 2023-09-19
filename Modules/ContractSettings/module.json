@@ -1,0 +1,13 @@
+{
+    "name": "ContractSettings",
+    "alias": "contractsettings",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\ContractSettings\\Providers\\ContractSettingsServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
