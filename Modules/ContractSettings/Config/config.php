@@ -3,8 +3,8 @@
 return [
     'name' => 'ContractSettings',
     'billing_level' => [
-        'Monthly',
-        'Yearly',
+        'Fixed budget',
+        'Monthly billing',
         'AMC',
     ],
 ];
