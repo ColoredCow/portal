@@ -2,9 +2,11 @@
 
 namespace Modules\HR\Services;
 
+use App\Models\Setting;
 use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Modules\HR\Contracts\ApplicationServiceContract;
@@ -205,5 +207,49 @@ class ApplicationService implements ApplicationServiceContract
         Cache::put('campaign_token', $accessToken, 60 * 24);
 
         return $accessToken;
+    }
+
+    public function edit($application)
+    {
+        if ($application->latestApplicationRound->hr_round_id == 1) {
+            $application->latestApplicationRound->scheduled_date = today()->toDateString();
+            $application->latestApplicationRound->scheduled_end = today()->toDateString();
+            $application->latestApplicationRound->scheduled_person_id = auth()->id();
+            $application->latestApplicationRound->save();
+        }
+
+        $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta', 'applicationRounds.followUps', 'tags']);
+        $job = $application->job;
+        $approveMailTemplate = Setting::getApplicationApprovedEmail();
+        $approveMailTemplate = str_replace('|APPLICANT NAME|', $application->applicant->name, $approveMailTemplate);
+        $approveMailTemplate = str_replace('|JOB TITLE|', $application->job->title, $approveMailTemplate);
+        $approveMailTemplate = str_replace('|LINK|', config('app.url') . '/viewForm/' . $application->applicant->id . '/' . encrypt($application->applicant->email), $approveMailTemplate);
+
+        $offerLetterTemplate = Setting::getOfferLetterTemplate();
+        $desiredResume = DB::table('hr_applications')->select(['hr_applications.resume'])->where('hr_applications.hr_job_id', '=', $job->id)->where('is_desired_resume', '=', 1)->get();
+        $attr = [
+            'applicant' => $application->applicant,
+            'application' => $application,
+            'timeline' => $application->applicant->timeline(),
+            'interviewers' => User::interviewers()->orderBy('name')->get(),
+            'applicantOpenApplications' => $application->applicant->openApplications(),
+            'applicationFormDetails' => $application->applicationMeta()->formData()->first(),
+            'offer_letter' => $application->offer_letter,
+            'approveMailTemplate' => $approveMailTemplate,
+            'offerLetterTemplate' => $offerLetterTemplate,
+            'desiredResume' => $desiredResume,
+            'settings' => [
+                'noShow' => Setting::getNoShowEmail(),
+            ],
+            'type' => config("constants.hr.opportunities.{$job->type}.type"),
+            'universities' => University::orderBy('name')->get(),
+        ];
+
+        if ($job->type == 'job') {
+            $attr['hasGraduated'] = $application->applicant->hasGraduated();
+            $attr['internships'] = Job::isInternship()->latest()->get();
+        }
+
+        return $attr;
     }
 }
