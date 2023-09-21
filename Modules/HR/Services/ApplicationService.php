@@ -2,9 +2,11 @@
 
 namespace Modules\HR\Services;
 
+use App\Models\Setting;
 use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Modules\HR\Contracts\ApplicationServiceContract;
@@ -16,8 +18,6 @@ use Modules\HR\Entities\Round;
 use Modules\HR\Entities\University;
 use Modules\HR\Events\CustomMailTriggeredForApplication;
 use Modules\User\Entities\User;
-use App\Models\Setting;
-use Illuminate\Support\Facades\DB;
 
 class ApplicationService implements ApplicationServiceContract
 {
@@ -25,7 +25,7 @@ class ApplicationService implements ApplicationServiceContract
     {
         $referer = request()->headers->get('referer');
 
-        if (! session()->get('should_skip_page') && Str::endsWith($referer, 'edit')) {
+        if (!session()->get('should_skip_page') && Str::endsWith($referer, 'edit')) {
             session()->put(['should_skip_page' => true]);
 
             return redirect()->route(request()->route()->getName(), session()->get('previous_application_data'))->with('status', session()->get('status'));
@@ -209,7 +209,8 @@ class ApplicationService implements ApplicationServiceContract
         return $accessToken;
     }
 
-    public function edit($application) {
+    public function edit($application)
+    {
 
         if ($application->latestApplicationRound->hr_round_id == 1) {
             $application->latestApplicationRound->scheduled_date = today()->toDateString();
