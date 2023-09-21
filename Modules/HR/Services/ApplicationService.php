@@ -211,7 +211,6 @@ class ApplicationService implements ApplicationServiceContract
 
     public function edit($application)
     {
-
         if ($application->latestApplicationRound->hr_round_id == 1) {
             $application->latestApplicationRound->scheduled_date = today()->toDateString();
             $application->latestApplicationRound->scheduled_end = today()->toDateString();
