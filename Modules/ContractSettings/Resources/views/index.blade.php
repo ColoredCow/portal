@@ -63,7 +63,10 @@
             </td>
             <td class="d-flex justify-content-around">
                 <a type="button" class="pr-1 btn btn-link" data-toggle="modal" data-target="#contractEditformModal{{$contract->id}}"  ><i class="text-success fa fa-edit fa-lg"></i></a>
-                <button type="submit" class="pl-1 btn btn-link" onclick="return confirm('Are you sure you want to delete?')"><i class="text-danger fa fa-trash fa-lg"></i></button>
+                <form action="{{ route('contractsettings.delete', ['id' => $contract->id]) }}" method="post">
+                    @csrf
+                    <button type="submit" class="pl-1 btn btn-link" onclick="return confirm('Are you sure you want to delete?')"><i class="text-danger fa fa-trash fa-lg"></i></button>
+                </form>
             </td>
         </tr>
         @include('contractsettings::edit')

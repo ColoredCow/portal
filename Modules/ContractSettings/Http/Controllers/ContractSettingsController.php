@@ -88,8 +88,9 @@ class ContractSettingsController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function destroy($id)
+    public function destroy(ContractSettings $contract)
     {
-        //
+        $contract->delete();
+        return redirect()->back();
     }
 }

@@ -15,5 +15,6 @@ Route::prefix('contractsettings')->group(function() {
     Route::get('/', 'ContractSettingsController@index')->name('contractsettings.index');
     Route::post('/', 'ContractSettingsController@store')->name('contractsettings.store');
     Route::put('/', 'ContractSettingsController@update')->name('contractsettings.update');
+    Route::post('/delete/{id}', 'ContractSettingsController@destroy')->name('contractsettings.delete');
     // Route::get('/', 'ContractSettingsController@edit')->name('contractsettings.edit');
 });
