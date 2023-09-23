@@ -60,10 +60,10 @@ class ContractSettingsController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function edit($id)
-    {
-        return view('contractsettings::edit');
-    }
+    // public function edit(ContractSettings $contract)
+    // {
+    //     return view('contractsettings::edit',compact('contract'));
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -71,9 +71,16 @@ class ContractSettingsController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ContractSettings $contract)
     {
-        //
+        $request->validate([
+            'contract_type' => 'required',
+            'contract_template' => 'required',
+        ]);
+
+        $contract->fill($request->post())->save();
+
+        return redirect()->route('contractsettings::index')->with('success','Template Updated Successfully!');
     }
 
     /**

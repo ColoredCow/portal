@@ -62,7 +62,7 @@
                 {{ $contract->contract_template}}
             </td>
             <td class="d-flex justify-content-around">
-                <button type="button" class="pr-1 btn btn-link" data-toggle="modal" data-target="#contractEditformModal{{$contract->id}}" ><i class="text-success fa fa-edit fa-lg"></i></button>
+                <a type="button" class="pr-1 btn btn-link" data-toggle="modal" data-target="#contractEditformModal{{$contract->id}}"  ><i class="text-success fa fa-edit fa-lg"></i></a>
                 <button type="submit" class="pl-1 btn btn-link" onclick="return confirm('Are you sure you want to delete?')"><i class="text-danger fa fa-trash fa-lg"></i></button>
             </td>
         </tr>

@@ -11,14 +11,14 @@
                 <div class="spinner-border text-primary d-none" id="designationFormSpinner"></div>
             </div>
             <div class="designation modal-body">
-                {{-- <form action="{{ route('contractsettings.store')}}" method="POST" id="designationForm" enctype="multipart/form-data">
-                    @csrf --}}
+                <form action="{{ route('contractsettings.update', $contract->id)}}" method="POST" id="designationForm" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
                     <div class="form-group">
-                        <input type="hidden" id="contract_type" name="contract_type" value="">
                         <div class='form-group'>
                             <label class="field-required" for="designationfield">Contract Type</label><br>
-                            <select name="contractsettings" class="form-control" >
-                                <option value="">{{$contract->contract_type}}</option>
+                            <select name="contract_type" class="form-control" >
+                                <option value="">{{ $contract->contract_type }}</option>
                                 @foreach(config('contractsettings.billing_level') as $billingType)
                                     <option value="{{$billingType}}">{{$billingType}}</option>
                                 @endforeach
@@ -31,7 +31,7 @@
                     <div class="d-none text-danger" name="error" id="domainerror"></div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary" id="designation">Save changes</button>
-                {{-- </form> --}}
+                </form>
             </div>
         </div>
     </div>
