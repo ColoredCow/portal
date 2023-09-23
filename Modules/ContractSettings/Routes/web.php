@@ -13,4 +13,5 @@
 
 Route::prefix('contractsettings')->group(function() {
     Route::get('/', 'ContractSettingsController@index')->name('contractsettings.index');
+    Route::post('/', 'ContractSettingsController@store')->name('contractsettings.store');
 });

@@ -20,17 +20,18 @@
                     <div class="spinner-border text-primary d-none" id="designationFormSpinner"></div>
                 </div>
                 <div class="designation modal-body">
-                    <!-- <form action="{{ route('hr-job-designation.storeJobDesignation')}}" method="POST" id="designationForm" > -->
-                        <!-- @csrf -->
+                    <form action="{{ route('contractsettings.store')}}" method="POST" id="designationForm" enctype="multipart/form-data">
+                        @csrf
                         <div class="form-group">
                             <label for="designationfield">Add Link</label><strong class="text-danger">*</strong></label>
-                            <input type="text" name="name" class="form-control"  id="name" aria-describedby="Help" placeholder="Link" >
+                            <input type="hidden" id="contract_type" name="contract_type" value="Monthly Billing">
+                            <input type="text" name="contract_template" class="form-control"  id="contract_template" aria-describedby="Help" placeholder="Link" >
                             <div class="d-none text-danger" name="error" id="designationerror"></div>
                         </div>
                         <div class="d-none text-danger" name="error" id="domainerror"></div>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary" id="designation">Save changes</button>
-                    <!-- </form> -->
+                    </form>
                 </div>
             </div>
         </div>

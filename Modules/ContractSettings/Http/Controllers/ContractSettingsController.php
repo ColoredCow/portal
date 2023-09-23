@@ -5,6 +5,7 @@ namespace Modules\ContractSettings\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\ContractSettings\Entities\ContractSettings;
 
 class ContractSettingsController extends Controller
 {
@@ -33,7 +34,16 @@ class ContractSettingsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd("hello");
+        $request->validate([
+            'contract_type' => 'required',
+            'contract_template' => 'required',
+        ]);
+        // dd($request);
+
+        ContractSettings::create($request->post());
+
+        return redirect()->route('contractsettings.index')->with('success','Template Added Successfully!');
     }
 
     /**
