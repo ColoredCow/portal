@@ -4,7 +4,10 @@
 <div class="container"><br>
     <div class="d-flex justify-content-between">
         <div>
-            <h2 class="mb-3">Add Contract Links</h2>
+            <h2 class="mb-3">Contract Templates</h2>
+        </div>
+        <div>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#designationformModal"><i class="fa fa-plus mr-1"></i> Add Contract Links</button>
         </div>
     </div>
     <div class="modal fade" id="designationformModal" tabindex="-1" role="dialog" aria-labelledby="designationformModalLabel" aria-hidden="true">
@@ -23,8 +26,17 @@
                     <form action="{{ route('contractsettings.store')}}" method="POST" id="designationForm" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
+                            <input type="hidden" id="contract_type" name="contract_type" value="">
+                            <div class='form-group'>
+                                <label class="field-required" for="designationfield">Contract Type</label><br>
+                                <select name="contractsettings" class="form-control" >
+                                    <option value="">Select Contract Type</option>
+                                    @foreach(config('contractsettings.billing_level') as $billingType)
+                                        <option value="{{$billingType}}">{{$billingType}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <label for="designationfield">Add Link</label><strong class="text-danger">*</strong></label>
-                            <input type="hidden" id="contract_type" name="contract_type" value="Monthly Billing">
                             <input type="text" name="contract_template" class="form-control"  id="contract_template" aria-describedby="Help" placeholder="Link" >
                             <div class="d-none text-danger" name="error" id="designationerror"></div>
                         </div>
@@ -43,7 +55,7 @@
             <th>{{ __('Links') }}</th>
             <th>{{ __('Actions') }}</th>
         </tr>
-        @foreach(config('contractsettings.billing_level') as $billingType)
+        {{-- @foreach(config('contractsettings.billing_level') as $billingType)
         <tr>
             <td>{{ $billingType }}</td>
             <td>
@@ -53,8 +65,8 @@
                 <button type="button" class="pr-1 btn btn-link" data-toggle="modal" data-target="#designationformModal" ><i class="text-success fa fa-edit fa-lg"></i></button>
                 <button type="submit" class="pl-1 btn btn-link" onclick="return confirm('Are you sure you want to delete?')"><i class="text-danger fa fa-trash fa-lg"></i></button>
             </td>
-        </tr>
-        @endforeach
+        </tr> --}}
+        {{-- @endforeach --}}
     </table>
 </div>
 @endsection

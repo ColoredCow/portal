@@ -34,12 +34,10 @@ class ContractSettingsController extends Controller
      */
     public function store(Request $request)
     {
-        // dd("hello");
         $request->validate([
             'contract_type' => 'required',
             'contract_template' => 'required',
         ]);
-        // dd($request);
 
         ContractSettings::create($request->post());
 
