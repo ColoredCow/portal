@@ -20,6 +20,7 @@ use Modules\Project\Entities\ProjectResourceRequirement;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Exports\ProjectFTEExport;
 use Modules\User\Entities\User;
+use Modules\ContractSettings\Entities\ContractSettings;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -322,6 +323,12 @@ class ProjectService implements ProjectServiceContract
             'totalCount' => $totalAdditionalResourceRequired,
             'data' => $data,
         ];
+    }
+
+    public function getContractTemplate($project){
+        $projectBillingType = $project->type;
+        $contractTemplates = ContractSettings::where('contract_type',  $projectBillingType)->pluck('contract_template');
+        return $contractTemplates;
     }
 
     private function getListTabCounts($filters, $showAllProjects, $userId)

@@ -39,6 +39,10 @@
                     <a class="nav-link" data-toggle="pill" data-target="#projectResourceRequirement" type="button"
                         role="tab" aria-selected="false">Resource Requirement</a>
                 </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-toggle="pill" data-target="#projectContractTemplate" type="button"
+                    role="tab" aria-selected="false">Contract Template</a>
+                </li>
             </ul>
             @include('status', ['errors' => $errors->all()])
             <div class="tab-content">
@@ -65,6 +69,9 @@
                 <div class="tab-pane fade mb-5" id="projectResourceRequirement" role="tabpanel">
                     @include('project::subviews.edit-resource-requirement')
                 </div>
+                <div class="tab-pane fade mb-5" id="projectContractTemplate" role="tabpanel">
+                    @include('project::subviews.project-contract-template')
+                </div>
             </div>
         </div>
     </div>
@@ -84,17 +91,19 @@
                     workingDaysInMonth: @json($workingDaysInMonth),
                     users: @json($teamMembers->sortBy('name')->values()),
                     designations: @json($designations)
+                    contractTemplate: @json($contractTemplate)
                 }
             },
 
             created() {
                 this.projectTeamMembers.map((teamMember) => {
                     dailyEffort = teamMember['pivot']['daily_expected_effort'];
-                    teamMember['pivot']['weekly_expected_effort'] = dailyEffort * 5; 
+                    teamMember['pivot']['weekly_expected_effort'] = dailyEffort * 5;
                     teamMember['pivot']['monthly_expected_effort'] = dailyEffort * this.workingDaysInMonth;
                 })
+                console.log(this. contractTemplate, "contract Tempalte")
             },
-            
+
             computed: {
                 totalDailyEffort() {
                     var total = 0
@@ -107,6 +116,7 @@
             },
 
             methods: {
+
                 defaultProjectTeamMember() {
                     return {
                         id: new Date().getTime(),
@@ -158,7 +168,7 @@
                             $('.save-btn').attr('disabled', false);
                             if(errors){
                                 var errormessage =  errors[error].join().replace('id','');
-                                this.$toast.error(errormessage);                           
+                                this.$toast.error(errormessage);
                             }
                         })
                 },
@@ -183,7 +193,7 @@
                 },
 
 
-                
+
                 updatedDailyExpectedEffort($event, index, numberOfDays) {
                     value = $event.target.value;
                     maximumExpectedEfforts = 12
@@ -214,7 +224,7 @@
                         this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = value * 5;
                         this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = value * this.workingDaysInMonth;
                     }
-                   
+
                          this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
                          this.$forceUpdate()
                 }
@@ -231,5 +241,6 @@
 
             mounted() {},
         });
+
     </script>
 @endsection

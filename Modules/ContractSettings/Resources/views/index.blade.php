@@ -29,10 +29,10 @@
                             <input type="hidden" id="contract_type" name="contract_type" value="">
                             <div class='form-group'>
                                 <label class="field-required" for="designationfield">Contract Type</label><br>
-                                <select name="contractsettings" class="form-control" >
+                                <select name="contractsettings" class="form-control">
                                     <option value="">Select Contract Type</option>
-                                    @foreach(config('contractsettings.billing_level') as $billingType)
-                                        <option value="{{$billingType}}">{{$billingType}}</option>
+                                    @foreach(config('contractsettings.billing_level') as $key => $value)
+                                        <option value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
                             </div>
