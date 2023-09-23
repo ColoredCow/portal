@@ -55,18 +55,18 @@
             <th>{{ __('Links') }}</th>
             <th>{{ __('Actions') }}</th>
         </tr>
-        {{-- @foreach(config('contractsettings.billing_level') as $billingType)
+        @foreach($contracts as $contract)
         <tr>
-            <td>{{ $billingType }}</td>
+            <td>{{ $contract->contract_type }}</td>
             <td>
-
+                {{ $contract->contract_template}}
             </td>
             <td class="d-flex justify-content-around">
                 <button type="button" class="pr-1 btn btn-link" data-toggle="modal" data-target="#designationformModal" ><i class="text-success fa fa-edit fa-lg"></i></button>
                 <button type="submit" class="pl-1 btn btn-link" onclick="return confirm('Are you sure you want to delete?')"><i class="text-danger fa fa-trash fa-lg"></i></button>
             </td>
-        </tr> --}}
-        {{-- @endforeach --}}
+        </tr>
+        @endforeach
     </table>
 </div>
 @endsection

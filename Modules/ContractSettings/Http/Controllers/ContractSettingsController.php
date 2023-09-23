@@ -15,7 +15,8 @@ class ContractSettingsController extends Controller
      */
     public function index()
     {
-        return view('contractsettings::index');
+        $contracts = ContractSettings::all();
+        return view('contractsettings::index', compact('contracts'));
     }
 
     /**
