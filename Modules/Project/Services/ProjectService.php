@@ -325,11 +325,23 @@ class ProjectService implements ProjectServiceContract
         ];
     }
 
-    public function getContractTemplate($project){
+    public function getContractTemplate($project) {
         $projectBillingType = $project->type;
-        $contractTemplates = ContractSettings::where('contract_type',  $projectBillingType)->pluck('contract_template');
-        return $contractTemplates;
+        $projectId = $project->id;
+        $projectContractAvailable = ProjectContract::where('project_id', $projectId)->get();
+
+        $data = [];
+
+        if ($projectContractAvailable->isEmpty()) {
+            $contractTemplate = ContractSettings::where('contract_type', $projectBillingType)->pluck('contract_template');
+            $data['contractTemplate'] = $contractTemplate;
+        }
+
+        $data['projectContractAvailable'] = $projectContractAvailable;
+
+        return $data;
     }
+
 
     private function getListTabCounts($filters, $showAllProjects, $userId)
     {

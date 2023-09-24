@@ -127,8 +127,8 @@
                         @endif
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
-                            @if ($project->is_amc == 0)
-                                View Projet Template:
+                            @if ($projectContractAvailable->isEmpty())
+                                View Project Tempate : <a href ="{{$contractTemplate[0]}}" target="_blank">{{$contractTemplate[0]}}</a>
                             @endif
                         </div>
                     </div>
