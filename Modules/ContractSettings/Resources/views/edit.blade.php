@@ -17,10 +17,9 @@
                     <div class="form-group">
                         <div class='form-group'>
                             <label class="field-required" for="designationfield">Contract Type</label><br>
-                            <select name="contract_type" class="form-control" >
-                                <option value="">{{ $contract->contract_type }}</option>
-                                @foreach(config('contractsettings.billing_level') as $billingType)
-                                    <option value="{{$billingType}}">{{$billingType}}</option>
+                            <select name="contract_type" class="form-control">
+                                @foreach(config('contractsettings.billing_level') as $key => $value)
+                                    <option value="{{ $key }}" @if($key == $contract->contract_type) selected @endif>{{ $value }}</option>
                                 @endforeach
                             </select>
                         </div>

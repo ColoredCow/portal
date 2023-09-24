@@ -59,11 +59,10 @@ class ContractSettingsController extends Controller
      * @param int $id
      * @return Renderable
      */
-    // public function edit($id)
-    // {
-    //     $contract = ContractSettings::findOrFail($id);
-    //     return view('client::contract.edit', compact('contract'));
-    // }
+    public function edit($id)
+    {
+        //
+    }
 
     /**
      * Update the specified resource in storage.

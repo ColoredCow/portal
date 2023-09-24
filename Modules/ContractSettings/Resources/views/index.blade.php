@@ -56,7 +56,13 @@
         </tr>
         @foreach($contracts as $contract)
         <tr>
-            <td>{{ $contract->contract_type }}</td>
+            <td>
+                @foreach(config('contractsettings.billing_level') as $key => $value)
+                @if($key == $contract->contract_type)
+                    {{ $value }}
+                @endif
+                @endforeach
+            </td>
             <td>
                 {{ $contract->contract_template}}
             </td>
