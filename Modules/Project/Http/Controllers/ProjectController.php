@@ -115,7 +115,7 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $designations = $this->service->getDesignations();
-        $contractTemplate = $this->service->getContractTemplate($project);
+        // $contractTemplate = $this->service->getContractTemplate($project);
         $designationKeys = array_keys($designations);
 
         return view('project::edit', [
@@ -127,7 +127,7 @@ class ProjectController extends Controller
             'designations' => $designations,
             'workingDaysInMonth' => $this->service->getWorkingDays($project),
             'designationKeys' => $designationKeys,
-            'contractTemplate' => $contractTemplate
+            // 'contractTemplate' => $contractTemplate
         ]);
     }
 
