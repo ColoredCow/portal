@@ -41,7 +41,6 @@ class ContractSettingsController extends Controller
         ]);
 
         ContractSettings::create($request->post());
-
         return redirect()->route('contractsettings.index')->with('success','Template Added Successfully!');
     }
 
@@ -60,9 +59,10 @@ class ContractSettingsController extends Controller
      * @param int $id
      * @return Renderable
      */
-    // public function edit(ContractSettings $contract)
+    // public function edit($id)
     // {
-    //     return view('contractsettings::edit',compact('contract'));
+    //     $contract = ContractSettings::findOrFail($id);
+    //     return view('client::contract.edit', compact('contract'));
     // }
 
     /**
@@ -71,26 +71,35 @@ class ContractSettingsController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, ContractSettings $contract)
+    public function update(Request $request, $id)
     {
-        $request->validate([
+        // Validate the request data
+        $validatedData = $request->validate([
             'contract_type' => 'required',
             'contract_template' => 'required',
         ]);
 
-        $contract->fill($request->post())->save();
+        // Find the contract setting to update
+        $contract = ContractSettings::findOrFail($id);
 
-        return redirect()->route('contractsettings::index')->with('success','Template Updated Successfully!');
+        // Update the contract setting with the validated data
+        $contract->update($validatedData);
+
+        return redirect()->route('contractsettings.index')->with('success', 'Contract template updated successfully');
     }
+
 
     /**
      * Remove the specified resource from storage.
      * @param int $id
      * @return Renderable
      */
-    public function destroy(ContractSettings $contract)
+    public function destroy($id)
     {
+        $contract = ContractSettings::findOrFail($id);
         $contract->delete();
-        return redirect()->back();
+
+        return redirect()->route('contractsettings.index')->with('success', 'Contract template deleted successfully');
     }
+
 }

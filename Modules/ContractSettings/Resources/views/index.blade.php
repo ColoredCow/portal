@@ -26,10 +26,9 @@
                     <form action="{{ route('contractsettings.store')}}" method="POST" id="designationForm" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <input type="hidden" id="contract_type" name="contract_type" value="">
                             <div class='form-group'>
                                 <label class="field-required" for="designationfield">Contract Type</label><br>
-                                <select name="contractsettings" class="form-control">
+                                <select name = "contract_type"class="form-control">
                                     <option value="">Select Contract Type</option>
                                     @foreach(config('contractsettings.billing_level') as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
@@ -62,9 +61,12 @@
                 {{ $contract->contract_template}}
             </td>
             <td class="d-flex justify-content-around">
-                <a type="button" class="pr-1 btn btn-link" data-toggle="modal" data-target="#contractEditformModal{{$contract->id}}"  ><i class="text-success fa fa-edit fa-lg"></i></a>
-                <form action="{{ route('contractsettings.delete', ['id' => $contract->id]) }}" method="post">
+                <a type="button" class="pr-1 btn btn-link" data-toggle="modal" data-target="#contractEditformModal{{$contract->id}}">
+                    <i class="text-success fa fa-edit fa-lg"></i>
+                </a>
+                <form action="{{ route('contractsettings.delete', $contract->id) }}" method="post">
                     @csrf
+                    @method('DELETE')
                     <button type="submit" class="pl-1 btn btn-link" onclick="return confirm('Are you sure you want to delete?')"><i class="text-danger fa fa-trash fa-lg"></i></button>
                 </form>
             </td>
