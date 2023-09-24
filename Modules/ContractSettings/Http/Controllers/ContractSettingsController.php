@@ -89,7 +89,6 @@ class ContractSettingsController extends Controller
         return redirect()->route('contractsettings.index')->with('success', 'Contract template updated successfully');
     }
 
-
     /**
      * Remove the specified resource from storage.
      * @param int $id
