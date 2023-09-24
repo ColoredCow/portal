@@ -74,16 +74,14 @@ class ContractSettingsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Validate the request data
+
         $validatedData = $request->validate([
             'contract_type' => 'required',
             'contract_template' => 'required',
         ]);
 
-        // Find the contract setting to update
         $contract = ContractSettings::findOrFail($id);
 
-        // Update the contract setting with the validated data
         $contract->update($validatedData);
 
         return redirect()->route('contractsettings.index')->with('success', 'Contract template updated successfully');
