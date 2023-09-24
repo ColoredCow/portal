@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Client\Entities\Client;
+use Modules\ContractSettings\Entities\ContractSettings;
 use Modules\HR\Entities\Employee;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
@@ -20,7 +21,6 @@ use Modules\Project\Entities\ProjectResourceRequirement;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Exports\ProjectFTEExport;
 use Modules\User\Entities\User;
-use Modules\ContractSettings\Entities\ContractSettings;
 
 class ProjectService implements ProjectServiceContract
 {

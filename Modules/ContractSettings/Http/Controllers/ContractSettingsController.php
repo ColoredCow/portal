@@ -16,6 +16,7 @@ class ContractSettingsController extends Controller
     public function index()
     {
         $contracts = ContractSettings::all();
+
         return view('contractsettings::index', compact('contracts'));
     }
 
@@ -41,6 +42,7 @@ class ContractSettingsController extends Controller
         ]);
 
         ContractSettings::create($request->post());
+
         return redirect()->route('contractsettings.index')->with('success', 'Template Added Successfully!');
     }
 
