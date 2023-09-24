@@ -41,7 +41,7 @@ class ContractSettingsController extends Controller
         ]);
 
         ContractSettings::create($request->post());
-        return redirect()->route('contractsettings.index')->with('success','Template Added Successfully!');
+        return redirect()->route('contractsettings.index')->with('success', 'Template Added Successfully!');
     }
 
     /**
@@ -100,5 +100,4 @@ class ContractSettingsController extends Controller
 
         return redirect()->route('contractsettings.index')->with('success', 'Contract template deleted successfully');
     }
-
 }

@@ -9,7 +9,7 @@ use Spatie\Permission\Models\Role;
 
 class ContractSettingsPermissionTableSeeder extends Seeder
 {
-        /**
+    /**
      * Run the database seeds.
      *
      * @return void

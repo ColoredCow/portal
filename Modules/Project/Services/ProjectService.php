@@ -325,7 +325,8 @@ class ProjectService implements ProjectServiceContract
         ];
     }
 
-    public function getContractTemplate($project) {
+    public function getContractTemplate($project)
+    {
         $projectBillingType = $project->type;
         $projectId = $project->id;
         $projectContractAvailable = ProjectContract::where('project_id', $projectId)->get();
@@ -341,7 +342,6 @@ class ProjectService implements ProjectServiceContract
 
         return $data;
     }
-
 
     private function getListTabCounts($filters, $showAllProjects, $userId)
     {

@@ -118,7 +118,7 @@ class ProjectController extends Controller
         $result = $this->service->getContractTemplate($project);
         $projectContractAvailable = $result['projectContractAvailable'];
         $contractTemplate = null;
-        if($projectContractAvailable->isEmpty()){
+        if ($projectContractAvailable->isEmpty()) {
             $contractTemplate = $result['contractTemplate'];
         }
         $designationKeys = array_keys($designations);
