@@ -63,7 +63,7 @@ class ContractSettingsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('contractsettings::edit');
     }
 
     /**
