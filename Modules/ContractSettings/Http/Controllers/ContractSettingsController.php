@@ -74,7 +74,6 @@ class ContractSettingsController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $validatedData = $request->validate([
             'contract_type' => 'required',
             'contract_template' => 'required',
