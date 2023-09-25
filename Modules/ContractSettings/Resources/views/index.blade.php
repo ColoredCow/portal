@@ -7,14 +7,14 @@
             <h2 class="mb-3">Contract Templates</h2>
         </div>
         <div>
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#designationformModal"><i class="fa fa-plus mr-1"></i> Add Contract Links</button>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#contractformModal"><i class="fa fa-plus mr-1"></i> Add Contract Links</button>
         </div>
     </div>
-    <div class="modal fade" id="designationformModal" tabindex="-1" role="dialog" aria-labelledby="designationformModalLabel" aria-hidden="true">
+    <div class="modal fade" id="contractformModal" tabindex="-1" role="dialog" aria-labelledby="contractformModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="designationformModalLabel">Add Contract Template Link</h5>
+                    <h5 class="modal-title" id="contractformModalLabel">Add Contract Template Link</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -22,12 +22,12 @@
                 <div class="d-flex justify-content-center">
                     <div class="spinner-border text-primary d-none" id="designationFormSpinner"></div>
                 </div>
-                <div class="designation modal-body">
-                    <form action="{{ route('contractsettings.store')}}" method="POST" id="designationForm" enctype="multipart/form-data">
+                <div class="contract modal-body">
+                    <form action="{{ route('contractsettings.store')}}" method="POST" id="contractForm" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <div class='form-group'>
-                                <label class="field-required" for="designationfield">Contract Type</label><br>
+                                <label class="field-required" for="contractfield">Contract Type</label><br>
                                 <select name = "contract_type"class="form-control">
                                     <option value="">Select Contract Type</option>
                                     @foreach(config('contractsettings.billing_level') as $key => $value)
@@ -37,11 +37,11 @@
                             </div>
                             <label for="designationfield">Add Link</label><strong class="text-danger">*</strong></label>
                             <input type="text" name="contract_template" class="form-control"  id="contract_template" aria-describedby="Help" placeholder="Link" >
-                            <div class="d-none text-danger" name="error" id="designationerror"></div>
+                            <div class="d-none text-danger" name="error" id="contractTypeerror"></div>
                         </div>
-                        <div class="d-none text-danger" name="error" id="domainerror"></div>
+                        <div class="d-none text-danger" name="error" id="contractTemplateerror"></div>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="designation">Save changes</button>
+                        <button type="submit" class="btn btn-primary" id="contract">Save changes</button>
                     </form>
                 </div>
             </div>
