@@ -1,0 +1,22 @@
+{
+    "users": {
+      "superadmin": {
+        "email": "superadmin@coloredcow.com",
+        "password": "12345678"
+      },
+      "admin": {
+        "email": "admin@coloredcow.com",
+        "password": "12345678"
+      },
+      "employee": {
+        "email": "employee@coloredcow.com",
+        "password": "12345678"
+      },
+      "default": {
+        "email": "default@coloredcow.com",
+        "password": "12345678"
+      }
+    },
+    "projectId": "4dgmnb"
+  }
+  
