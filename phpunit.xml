@@ -19,7 +19,15 @@
     <coverage processUncoveredFiles="true">
         <include>
             <directory suffix=".php">./app</directory>
+            <directory suffix=".php">./Modules/HR</directory>
         </include>
+        <exclude>
+            <directory suffix="blade.php">./Modules</directory>
+            <directory suffix=".php">./Modules/**/Routes</directory>
+            <directory suffix=".php">./Modules/**/Resources</directory>
+            <directory suffix=".php">./Modules/**/Tests</directory>
+            <directory suffix=".php">./Modules/**/Config</directory>
+        </exclude>
     </coverage>
     <php>
         <server name="APP_ENV" value="testing"/>
