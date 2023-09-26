@@ -23,14 +23,24 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-Cypress.Commands.add('login', (user) => {
-    cy.visit("/login");
-    cy.get('input[name=email]').type(user.email)
-    cy.get('input[name=password]').type(user.password)
-    cy.get('[type="submit"]').first().click();
-  })
+// Cypress.Commands.add('login', (user) => {
+//     cy.visit("/login");
+//     cy.get('input[name=email]').type(user.email)
+//     cy.get('input[name=password]').type(user.password)
+//     cy.get('[type="submit"]').first().click();
+//   })
 
-Cypress.Commands.add('logout', () => {
-    cy.get('#navbarDropdown').click();
-    cy.get('#logout').click();
+Cypress.Commands.add("login", (userRole) => {
+	cy.fixture("users.json").then((userData) => {
+		const user = userData.users[userRole];
+		cy.visit("/login");
+		cy.get("input[name=email]").type(user.email);
+		cy.get("input[name=password]").type(user.password);
+		cy.get("[type=\"submit\"]").first().click();
+	});
+});
+
+Cypress.Commands.add("logout", () => {
+	cy.get("#navbarDropdown").click();
+	cy.get("#logout").click();
 });
