@@ -81,7 +81,7 @@ class Employee extends Model
         return $this->hasMany(EmployeeSalary::class);
     }
 
-    public function getFtes($startDate, $endDate)
+    public function getFtes()
     {
         $fte = 0;
         $fteAmc = 0;
