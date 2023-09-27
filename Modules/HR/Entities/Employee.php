@@ -87,10 +87,10 @@ class Employee extends Model
         $fteAmc = 0;
         foreach ($this->user->projectTeamMembers()->with('project')->get() as $projectTeamMember) {
             if (! $projectTeamMember->project->is_amc) {
-                $fte += $projectTeamMember->getFte($startDate, $endDate);
+                $fte += $projectTeamMember->fte;
             }
             if ($projectTeamMember->project->is_amc) {
-                $fteAmc += $projectTeamMember->getFte($startDate, $endDate);
+                $fteAmc += $projectTeamMember->fte;
             }
         }
 
