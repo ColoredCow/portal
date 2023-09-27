@@ -515,7 +515,7 @@ class ProjectService implements ProjectServiceContract
             foreach ($employee->user->activeProjectTeamMembers as $activeProjectTeamMember) {
                 $teamMember = [
                     $employee->name,
-                    number_format($employee->getFtes($startDate, $endDate)['main'], 2),
+                    number_format($employee->getFtes()['main'], 2),
                     $activeProjectTeamMember->project->name,
                     strval($activeProjectTeamMember->fte),
                     number_format($activeProjectTeamMember->getCommittedEfforts($startDate, $endDate), 2),
