@@ -22,6 +22,8 @@ jobs:
         run: php artisan key:generate
       - name: Install NPM Dependencies
         run: npm install
+      - name: Composer Dump
+        run: composer dump-autoload
       - name: clear cache
         run: php artisan cache:clear
       - name: ColoredCowLaravelCI
