@@ -24,4 +24,43 @@ abstract class TestCase extends BaseTestCase
 
         return $this;
     }
+
+    protected function userLogIn()
+    {
+        $password = 'admin';
+        $user = User::factory()->create([
+            'name' => 'admin',
+            'email' => 'admin@abc.com',
+            'password' => bcrypt($password)
+        ]);
+
+        $response = $this->post('/login', [
+            'email' => $user->email,
+            'password' => $password,
+        ]);
+
+        $response->assertRedirect('/home');
+        $this->assertAuthenticatedAs($user);
+    }
+
+    protected function userLogInFailedWithWrongPassword()
+    {
+        $password = 'admin';
+        $user = User::factory()->create([
+            'name' => 'admin',
+            'email' => 'admin@abc.com',
+            'password' => bcrypt($password)
+        ]);
+
+        $response = $this->from('/login')->post('/login', [
+            'email' => $user->email,
+            'password' => 'invalid-password',
+        ]);
+
+        $response->assertRedirect('/login');
+        $response->assertSessionHasErrors('email');
+        $this->assertTrue(session()->hasOldInput('email'));
+        $this->assertFalse(session()->hasOldInput('password'));
+        $this->assertGuest();
+    }
 }
