@@ -29,14 +29,14 @@ abstract class TestCase extends BaseTestCase
     {
         $password = 'admin';
         $user = User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@abc.com',
-            'password' => bcrypt($password)
+            'name' => 'User',
+            'email' => 'user@abc.com',
+            'password' => bcrypt($password),
         ]);
 
         $response = $this->post('/login', [
             'email' => $user->email,
-            'password' => $password
+            'password' => $password,
         ]);
 
         $response->assertRedirect('/home');
@@ -49,7 +49,7 @@ abstract class TestCase extends BaseTestCase
         $user = User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@abc.com',
-            'password' => bcrypt($password)
+            'password' => bcrypt($password),
         ]);
 
         $response = $this->from('/login')->post('/login', [
