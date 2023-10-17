@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Modules\User\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Modules\User\Entities\User;
+use Tests\TestCase;
 
 class UserLogInTest extends TestCase
 {
