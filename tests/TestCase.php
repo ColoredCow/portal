@@ -36,7 +36,7 @@ abstract class TestCase extends BaseTestCase
 
         $response = $this->post('/login', [
             'email' => $user->email,
-            'password' => $password,
+            'password' => $password
         ]);
 
         $response->assertRedirect('/home');
@@ -54,7 +54,7 @@ abstract class TestCase extends BaseTestCase
 
         $response = $this->from('/login')->post('/login', [
             'email' => $user->email,
-            'password' => 'invalid-password',
+            'password' => 'invalid-password'
         ]);
 
         $response->assertRedirect('/login');
