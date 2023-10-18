@@ -17,7 +17,6 @@ class UserLogInTest extends TestCase
      */
     public function test_user_login()
     {
-        $this->withoutDeprecationHandling();
         $password = 'admin';
         $user = User::factory()->create([
             'name' => 'User',
