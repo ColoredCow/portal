@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\User\Entities\User;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class UserLogInTest extends TestCase
@@ -21,7 +22,7 @@ class UserLogInTest extends TestCase
         $user = User::factory()->create([
             'name' => 'User',
             'email' => 'user@abc.com',
-            'password' => bcrypt($password),
+            'password' => Hash::make($password),
         ]);
 
         $response = $this->post('/login', [
@@ -38,7 +39,7 @@ class UserLogInTest extends TestCase
         $user = User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@abc.com',
-            'password' => bcrypt('Admin'),
+            'password' => Hash::make('Admin'),
         ]);
 
         $response = $this->from('/login')->post('/login', [
