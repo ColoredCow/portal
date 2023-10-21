@@ -19,8 +19,6 @@ class OpportunitiesTest extends TestCase
      *
      * @return void
      */
-
-
     public function test_job_listing()
     {
         $this->setUpRolesAndPermissions();
@@ -34,7 +32,7 @@ class OpportunitiesTest extends TestCase
         $this->signIn();
 
         $job = Job::factory()->raw([
-            'title' => 'This is a new job'
+            'title' => 'This is a new job',
         ]);
 
         $response = $this->post(route('recruitment.opportunities.store'), $job);
@@ -50,9 +48,9 @@ class OpportunitiesTest extends TestCase
     {
         $this->signIn();
         $job = Job::factory()->raw([
-            "title" => "This is a new job",
+            'title' => 'This is a new job',
             'description' => '',
-            'domain' => ''
+            'domain' => '',
         ]);
 
         $response = $this->from('recruitment.opportunities.create')->post(route('recruitment.opportunities.store'), $job);
@@ -72,7 +70,7 @@ class OpportunitiesTest extends TestCase
             'description' => $jobToUpdate->description,
             'domain' => $jobToUpdate->domain,
             'type' => 'internship',
-            'status' => 'closed'
+            'status' => 'closed',
         ];
 
         if ($updatedJob['type'] == 'volunteer') {
@@ -96,7 +94,7 @@ class OpportunitiesTest extends TestCase
             'description' => '',
             'domain' => '',
             'type' => '',
-            'status' => ''
+            'status' => '',
         ];
 
         if ($updatedJob['type'] == 'volunteer') {
