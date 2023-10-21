@@ -9,6 +9,7 @@ namespace Modules\HR\Tests\Unit;
 use Modules\HR\Entities\Job;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Spatie\Permission\Models\Role;
 
 class OpportunitiesTest extends TestCase
 {
@@ -18,6 +19,16 @@ class OpportunitiesTest extends TestCase
 	 *
 	 * @return void
 	 */
+
+
+	public function test_job_listing()
+	{
+		$this->setUpRolesAndPermissions();
+		$this->signIn('super-admin');
+		$response = $this->get(route('recruitment.opportunities'));
+		$response->assertStatus(200);
+	}
+
 	public function test_create_job()
 	{
 		$this->signIn();
@@ -96,4 +107,3 @@ class OpportunitiesTest extends TestCase
 		$response->assertRedirect('/hr/recruitment/opportunities/' . $jobId . '/edit');
 	}
 }
-
