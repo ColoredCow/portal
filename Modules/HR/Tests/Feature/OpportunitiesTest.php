@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 class OpportunitiesTest extends TestCase
 {
-	use RefreshDatabase;
+    use RefreshDatabase;
 
 	/**
 	 * A basic test example.
