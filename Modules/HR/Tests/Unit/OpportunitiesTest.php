@@ -96,3 +96,4 @@ class OpportunitiesTest extends TestCase
 		$response->assertRedirect('/hr/recruitment/opportunities/' . $jobId . '/edit');
 	}
 }
+

@@ -21,3 +21,4 @@ class OpportunitiesTest extends TestCase
 		$response->assertStatus(200);
 	}
 }
+
