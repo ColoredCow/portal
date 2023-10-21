@@ -7,18 +7,17 @@ use Tests\TestCase;
 
 class OpportunitiesTest extends TestCase
 {
-  use RefreshDatabase;
+	use RefreshDatabase;
 
-  /**
-   * A basic test example.
-   *
-   * @return void
-   */
-  public function test_create_a_job()
-  {
-    $this->signIn();
-    $response = $this->get('/home');
-    $response->assertStatus(200);
-  }
+	/**
+	 * A basic test example.
+	 *
+	 * @return void
+	 */
+	public function test_create_a_job()
+	{
+		$this->signIn();
+		$response = $this->get('/home');
+		$response->assertStatus(200);
+	}
 }
-
