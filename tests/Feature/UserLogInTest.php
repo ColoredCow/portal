@@ -3,8 +3,8 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Hash;
+use Modules\User\Entities\User;
 use Tests\TestCase;
 
 class UserLogInTest extends TestCase
