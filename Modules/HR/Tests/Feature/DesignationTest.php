@@ -32,7 +32,7 @@ class DesignationTest extends TestCase
         $this->signIn('super-admin');
 
         $domainId = HrJobDomain::factory()->create()->id;
-      
+
         $newDesignation = HrJobDesignation::factory()->raw([
             'designation' => 'New Designation',
             'domain' => $domainId,
@@ -45,7 +45,6 @@ class DesignationTest extends TestCase
 
     public function test_edit_designation()
     {
-        $this->withoutExceptionHandling();
         $this->setUpRolesAndPermissions();
         $this->signIn('super-admin');
 
