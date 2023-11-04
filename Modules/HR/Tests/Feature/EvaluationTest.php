@@ -36,8 +36,26 @@ class EvaluationTest extends TestCase
             'rounds' => $round->name,
         ]);
 
-        $response = $this->post(route('hr.evaluation.segment.store'), $segment);
+        $response = $this->from(route('hr.evaluation'))
+            ->post(route('hr.evaluation.segment.store'), $segment);
         $response->assertRedirect(route('hr.evaluation'));
+    }
+
+    public function test_fail_segment_creation_with_invalid_data()
+    {
+        $this->setUpRolesAndPermissions();
+        $this->signIn('super-admin');
+
+        $round = Round::factory()->create();
+
+        $segment = Segment::factory()->raw([
+            'name' => 'First Segment',
+            'rounds' => 'Round one',
+        ]);
+
+        $response = $this->from(route('hr.evaluation'))
+            ->post(route('hr.evaluation.segment.store'), $segment);
+        $response->assertStatus(500);
     }
 
     public function test_update_segment()
@@ -45,16 +63,32 @@ class EvaluationTest extends TestCase
         $this->setUpRolesAndPermissions();
         $this->signIn('super-admin');
 
-        $round = Round::factory()->create();
+        $roundId = (Round::factory()->create())->id;
         $segmentId = (Segment::factory()->create())->id;
 
         $updatedSegment = [
             'name' => 'First Segment',
-            'round_id' => $round->id,
+            'round_id' => $roundId,
         ];
 
         $response = $this->post(route('hr.evaluation.segment.update', $segmentId), $updatedSegment);
         $response->assertRedirect(route('hr.evaluation'));
+    }
+
+    public function test_fail_segment_update_with_invalid_data()
+    {
+        $this->setUpRolesAndPermissions();
+        $this->signIn('super-admin');
+
+        $segmentId = (Segment::factory()->create())->id;
+
+        $updatedSegment = [
+            'name' => 'First Segment',
+            'round_id' => 'Round one',
+        ];
+
+        $response = $this->post(route('hr.evaluation.segment.update', $segmentId), $updatedSegment);
+        $response->assertRedirect('/');
     }
 
     public function test_delete_segment()
