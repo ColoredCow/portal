@@ -26,7 +26,7 @@ class HrEvaluationSegmentFactory extends Factory
 
         return [
             'round_id' => Round::inRandomOrder()->first()->id,
-            'name' => $this->faker->name(),
+            'name' => $this->faker->sentence(),
         ];
     }
 }

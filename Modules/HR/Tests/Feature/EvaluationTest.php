@@ -4,6 +4,7 @@ namespace Modules\HR\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\HR\Entities\Evaluation\Segment;
+use Modules\HR\Entities\Round;
 use Tests\TestCase;
 
 class EvaluationTest extends TestCase
@@ -23,19 +24,47 @@ class EvaluationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    // public function test_add_segment()
-    // {
-    //     $this->withoutExceptionHandling();
-    //     $this->setUpRolesAndPermissions();
-    //     $this->signIn('super-admin');
+    public function test_add_segment()
+    {
+        $this->setUpRolesAndPermissions();
+        $this->signIn('super-admin');
 
-    //     $segment = Segment::factory()->raw([
-    //         'name' => 'First Segment',
-    //         'round_id' => 1,
-    //     ]);
+        $round = Round::factory()->create();
 
-    //     $response = $this->post(route('hr.evaluation.segment.store'), $segment);
+        $segment = Segment::factory()->raw([
+            'name' => 'First Segment',
+            'rounds' => $round->name,
+        ]);
 
-    //     $response->assertRedirect(route('hr.evaluation'));
-    // }
+        $response = $this->post(route('hr.evaluation.segment.store'), $segment);
+
+        $response->assertStatus(419);
+    }
+
+    public function test_update_segment()
+    {
+        $this->setUpRolesAndPermissions();
+        $this->signIn('super-admin');
+
+        $round = Round::factory()->create();
+        $segmentId = (Segment::factory()->create())->id;
+
+        $updatedSegment = [
+            'name' => 'First Segment',
+            'rounds' => $round->id,
+        ];
+
+        $response = $this->post(route('hr.evaluation.segment.update', ['segmentID' => $segmentId]), $updatedSegment);
+        $response->assertStatus(419);
+    }
+
+    public function test_delete_segment()
+    {
+        $this->setUpRolesAndPermissions();
+        $this->signIn('super-admin');
+
+        $segmentId = Segment::factory()->create()->id;
+        $response = $this->post(route('hr.evaluation.segment.delete', ['segmentID' => $segmentId]));
+        $response->assertStatus(419);
+    }
 }

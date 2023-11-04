@@ -22,7 +22,7 @@ class HrRoundFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->sentence(),
             'guidelines' => $this->faker->text(),
             'confirmed_mail_template' => $this->faker->text(),
             'rejected_mail_template' => $this->faker->text(),
