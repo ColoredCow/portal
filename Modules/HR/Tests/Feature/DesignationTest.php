@@ -38,7 +38,7 @@ class DesignationTest extends TestCase
             'designation' => 'First Designation',
             'slug' => 'first-designation',
         ];
-    
+
         $response = $this->get('hr/' . $designationId . '/edit', $designation);
         $response = $this->get('hr/designation');
         $response->assertStatus(200);
