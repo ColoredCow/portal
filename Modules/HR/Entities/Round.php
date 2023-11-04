@@ -4,9 +4,9 @@ namespace Modules\HR\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\HR\Database\Factories\HrRoundFactory;
 use Modules\HR\Entities\Evaluation\Parameter as EvaluationParameter;
 use Modules\HR\Entities\Evaluation\Segment as EvaluationSegment;
-use Modules\HR\Database\Factories\HrRoundFactory;
 
 class Round extends Model
 {

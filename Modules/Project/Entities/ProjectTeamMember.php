@@ -113,7 +113,7 @@ class ProjectTeamMember extends Model
 
         $workingDays = count($project->getWorkingDaysList($startDate, $endDate));
 
-        $requiredEffort = $workingDays * $this->daily_expected_effort;
+        $requiredEffort = $workingDays * config('efforttracking.minimum_expected_hours');
 
         $actualEffort = $this->getActualEffortBetween($startDate, $endDate);
 

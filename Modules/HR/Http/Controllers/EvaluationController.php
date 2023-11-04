@@ -119,7 +119,7 @@ class EvaluationController extends Controller
         $parameter->update([
             'name' => $request->name,
             'marks' => $request->marks,
-            'slug' => \Str::slug($request->slug)
+            'slug' => \Str::slug($request->slug),
         ]);
         $parameterNewOptions = collect([]);
 

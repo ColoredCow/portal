@@ -3,8 +3,8 @@
 namespace Modules\HR\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Modules\HR\Entities\Round;
 use Modules\HR\Entities\Evaluation\Segment;
+use Modules\HR\Entities\Round;
 
 class HrEvaluationSegmentFactory extends Factory
 {
@@ -23,6 +23,7 @@ class HrEvaluationSegmentFactory extends Factory
     public function definition()
     {
         Round::factory()->create();
+
         return [
             'round_id' => Round::inRandomOrder()->first()->id,
             'name' => $this->faker->name(),

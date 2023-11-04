@@ -5,9 +5,9 @@ namespace Modules\HR\Entities\Evaluation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\HR\Database\Factories\HrEvaluationSegmentFactory;
 use Modules\HR\Entities\ApplicationEvaluationSegment;
 use Modules\HR\Entities\Round;
-use Modules\HR\Database\Factories\HrEvaluationSegmentFactory;
 
 class Segment extends Model
 {
