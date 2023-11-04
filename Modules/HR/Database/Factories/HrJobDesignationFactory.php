@@ -2,11 +2,11 @@
 
 namespace Modules\HR\Database\Factories;
 
+use Faker\Factory as Faker;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\HrJobDomain;
-use Illuminate\Support\Str;
-use Faker\Factory as Faker;
 
 class HrJobDesignationFactory extends Factory
 {
@@ -30,7 +30,7 @@ class HrJobDesignationFactory extends Factory
         return [
             'domain_id' => HrJobDomain::inRandomOrder()->first()->id,
             'designation' => $designation,
-            'slug' => Str::slug($designation)
+            'slug' => Str::slug($designation),
         ];
     }
 }

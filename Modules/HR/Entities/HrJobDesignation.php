@@ -2,8 +2,8 @@
 
 namespace Modules\HR\Entities;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Modules\HR\Database\Factories\HrJobDesignationFactory;
 
 class HrJobDesignation extends Model

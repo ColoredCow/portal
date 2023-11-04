@@ -3,8 +3,8 @@
 namespace Modules\HR\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use Modules\HR\Entities\HrJobDesignation;
+use Tests\TestCase;
 
 class DesignationTest extends TestCase
 {
@@ -15,7 +15,6 @@ class DesignationTest extends TestCase
      *
      * @return void
      */
-
     public function test_designation_listing()
     {
         $this->withoutExceptionHandling();
@@ -37,10 +36,10 @@ class DesignationTest extends TestCase
 
         $designation = [
             'designation' => 'First Designation',
-            'slug' => 'first-designation'
+            'slug' => 'first-designation',
         ];
     
-        $response = $this->get('hr/'.$designationId.'/edit', $designation);
+        $response = $this->get('hr/' . $designationId . '/edit', $designation);
         $response = $this->get('hr/designation');
         $response->assertStatus(200);
     }
