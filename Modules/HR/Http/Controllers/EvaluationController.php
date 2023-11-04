@@ -116,7 +116,11 @@ class EvaluationController extends Controller
     public function updateSegmentParameter(Request $request, $segmentID, $parameterID)
     {
         $parameter = Parameter::find($parameterID);
-        $parameter->update(['name' => $request->name, 'marks' => $request->marks, 'slug' => \Str::slug($request->slug)]);
+        $parameter->update([
+            'name' => $request->name,
+            'marks' => $request->marks,
+            'slug' => \Str::slug($request->slug)
+        ]);
         $parameterNewOptions = collect([]);
 
         foreach ($request->parameter_options as $parameterOptionData) {
@@ -191,8 +195,8 @@ class EvaluationController extends Controller
                 'hr_application_round_id' => $applicationRoundId,
             ],
             [
-            'review_value' => $request['feedback_submit'],
-            'review_key' => 'feedback',
+                'review_value' => $request['feedback_submit'],
+                'review_key' => 'feedback',
             ]
         );
 
@@ -285,7 +289,7 @@ class EvaluationController extends Controller
 
     private function getParameterInfo($parameter)
     {
-        if (! $parameter) {
+        if (!$parameter) {
             return;
         }
 
