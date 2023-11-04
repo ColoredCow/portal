@@ -8,7 +8,6 @@ use Modules\HR\Database\Factories\HrJobDesignationFactory;
 
 class HrJobDesignation extends Model
 {
-
     use HasFactory;
 
     protected $table = 'hr_job_designation';
