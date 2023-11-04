@@ -38,7 +38,7 @@ class EvaluationTest extends TestCase
 
         $response = $this->post(route('hr.evaluation.segment.store'), $segment);
 
-        $response->assertStatus(419);
+        $response->assertStatus(302);
     }
 
     public function test_update_segment()
@@ -55,7 +55,7 @@ class EvaluationTest extends TestCase
         ];
 
         $response = $this->post(route('hr.evaluation.segment.update', ['segmentID' => $segmentId]), $updatedSegment);
-        $response->assertStatus(419);
+        $response->assertStatus(302);
     }
 
     public function test_delete_segment()
@@ -65,6 +65,6 @@ class EvaluationTest extends TestCase
 
         $segmentId = Segment::factory()->create()->id;
         $response = $this->post(route('hr.evaluation.segment.delete', ['segmentID' => $segmentId]));
-        $response->assertStatus(419);
+        $response->assertStatus(302);
     }
 }
