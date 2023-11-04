@@ -40,7 +40,7 @@ class OpportunitiesTest extends TestCase
         $job = json_decode($rawJob);
         $jobId = $job[0]->id;
 
-        $response->assertRedirect('/hr/recruitment/opportunities/' . $jobId . '/edit');
+        $response->assertRedirect(route('recruitment.opportunities.edit', $jobId));
     }
 
     public function test_fail_creation_without_required_fields()
@@ -77,7 +77,7 @@ class OpportunitiesTest extends TestCase
         }
 
         $response = $this->patch($updateRoute, $updatedJob);
-        $response->assertRedirect('/hr/recruitment/opportunities/' . $jobId . '/edit');
+        $response->assertRedirect(route('recruitment.opportunities.edit', $jobId));
     }
 
     public function test_fail_update_without_required_fields()
@@ -100,7 +100,7 @@ class OpportunitiesTest extends TestCase
             $updateRoute = route('volunteer.opportunities.update', $jobId);
         }
 
-        $response = $this->from('/hr/recruitment/opportunities/' . $jobId . '/edit')->patch($updateRoute, $updatedJob);
-        $response->assertRedirect('/hr/recruitment/opportunities/' . $jobId . '/edit');
+        $response = $this->from(route('recruitment.opportunities.edit', $jobId))->patch($updateRoute, $updatedJob);
+        $response->assertRedirect(route('recruitment.opportunities.edit', $jobId));
     }
 }
