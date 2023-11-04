@@ -30,18 +30,18 @@ class HrJobDesignationService
     public function storeDesignation(JobDesignationRequest $request)
     {
         $jobDesignation = new HrJobDesignation();
-        $jobDesignation->designation = $request['name'];
-        $jobDesignation->slug = Str::slug($request['name']);
+        $jobDesignation->designation = $request['designation'];
+        $jobDesignation->slug = Str::slug($request['designation']);
         $jobDesignation->domain_id = $request['domain'];
         $jobDesignation->save();
     }
 
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         $hrJobDesignation = HrJobDesignation::find($id);
-        $hrJobDesignation->designation = request('name');
-        $hrJobDesignation->slug = Str::slug(request('name'));
-        $hrJobDesignation->domain_id = request('domain');
+        $hrJobDesignation->designation = $request['designation'];
+        $hrJobDesignation->slug = Str::slug($request['designation']);
+        $hrJobDesignation->domain_id = $request['domain'];
         $hrJobDesignation->update();
     }
 

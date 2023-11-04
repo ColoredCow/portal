@@ -4,6 +4,7 @@ namespace Modules\HR\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\HR\Entities\HrJobDesignation;
+use Modules\HR\Entities\HrJobDomain;
 use Tests\TestCase;
 
 class DesignationTest extends TestCase
@@ -21,8 +22,25 @@ class DesignationTest extends TestCase
         $this->setUpRolesAndPermissions();
         $this->signIn('super-admin');
 
-        $response = $this->get('hr/designation');
+        $response = $this->get(route('designation'));
         $response->assertStatus(200);
+    }
+
+    public function test_add_designation()
+    {
+        $this->setUpRolesAndPermissions();
+        $this->signIn('super-admin');
+
+        $domainId = HrJobDomain::factory()->create()->id;
+      
+        $newDesignation = HrJobDesignation::factory()->raw([
+            'designation' => 'New Designation',
+            'domain' => $domainId,
+        ]);
+
+        $response = $this->from(route('designation'))
+            ->post(route('designation.store'), $newDesignation);
+        $response->assertRedirect(route('designation'));
     }
 
     public function test_edit_designation()
@@ -31,16 +49,15 @@ class DesignationTest extends TestCase
         $this->setUpRolesAndPermissions();
         $this->signIn('super-admin');
 
-        $designation = HrJobDesignation::first();
+        $domainId = HrJobDomain::factory()->create()->id;
+        $designation = HrJobDesignation::factory()->create();
         $designationId = $designation->id;
-
         $designation = [
             'designation' => 'First Designation',
-            'slug' => 'first-designation',
+            'domain' => $domainId,
         ];
 
-        $response = $this->get('hr/' . $designationId . '/edit', $designation);
-        $response = $this->get('hr/designation');
-        $response->assertStatus(200);
+        $response = $this->from(route('designation'))->post(route('designation.edit', $designationId), $designation);
+        $response->assertRedirect(route('designation'));
     }
 }

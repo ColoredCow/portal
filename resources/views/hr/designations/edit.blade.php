@@ -8,12 +8,12 @@
                 </button>
             </div>
             <div class="designation-edit modal-body">
-                <form action="{{ route('designation.edit', $designation->id) }}" method="get" id="designationEditForm" >
+                <form action="{{ route('designation.edit', $designation->id) }}" method="POST" id="designationEditForm" >
                     @csrf
                     <input value="{{ route('designation.edit', $designation->id) }}" type="hidden" class="hidden" aria-hidden="true" name="routePlaceHolder">
                     <div class="form-group">
                         <label class="field-required" for="designationfield">name</label>
-                        <input type="text" name="name" class="form-control" value="{{$designation->designation}}" required>
+                        <input type="text" name="designation" class="form-control" value="{{$designation->designation}}" required>
                     </div>
                     <div class='form-group'>
                         <label class="field-required" for="designationfield">domain</label>

@@ -38,7 +38,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="designationfield">name</label><strong class="text-danger">*</strong></label>
-                            <input type="text" name="name" class="form-control"  id="name" aria-describedby="Help" placeholder="name" > 
+                            <input type="text" name="designation" class="form-control"  id="name" aria-describedby="Help" placeholder="name" > 
                             <div class="d-none text-danger" name="error" id="designationerror"></div>
                         </div> 
                         <input type="hidden" name="domainName" id="domainName" value="">

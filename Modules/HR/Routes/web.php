@@ -147,7 +147,7 @@ Route::middleware('auth')->group(function () {
             'index' => 'designation',
         ]);
         Route::post('/delete/{id}', 'HrJobDesignationController@destroy')->name('designation.delete');
-        Route::get('/{id}/edit', 'HrJobDesignationController@edit')->name('designation.edit');
+        Route::post('/{id}/edit', 'HrJobDesignationController@edit')->name('designation.edit');
         Route::post('/store', 'HrJobDesignationController@storeDesignation')->name('designation.store');
     });
 });

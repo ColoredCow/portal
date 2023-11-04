@@ -159,10 +159,10 @@ Route::middleware('auth')->group(function () {
                 ->names(['index' => 'books.category.index']);
 
             Route::get('book-a-month', 'BookController@bookAMonthIndex')
-            ->name('book.book-a-month.index');
+                ->name('book.book-a-month.index');
         });
         Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])
-        ->names(['index' => 'weeklydoses']);
+            ->names(['index' => 'weeklydoses']);
     });
 
     Route::resource('comments', 'CommentController')->only(['update', 'destroy']);
