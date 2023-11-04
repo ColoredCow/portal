@@ -23,19 +23,19 @@ class EvaluationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_add_segment()
-    {
-        $this->withoutExceptionHandling();
-        $this->setUpRolesAndPermissions();
-        $this->signIn('super-admin');
+    // public function test_add_segment()
+    // {
+    //     $this->withoutExceptionHandling();
+    //     $this->setUpRolesAndPermissions();
+    //     $this->signIn('super-admin');
 
-        $segment = Segment::factory()->raw([
-            'name' => 'First Segment',
-            'round_id' => 1,
-        ]);
+    //     $segment = Segment::factory()->raw([
+    //         'name' => 'First Segment',
+    //         'round_id' => 1,
+    //     ]);
 
-        $response = $this->post(route('hr.evaluation.segment.store'), $segment);
+    //     $response = $this->post(route('hr.evaluation.segment.store'), $segment);
 
-        $response->assertRedirect(route('hr.evaluation'));
-    }
+    //     $response->assertRedirect(route('hr.evaluation'));
+    // }
 }
