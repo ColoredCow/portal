@@ -3,8 +3,8 @@
 namespace Modules\HR\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use Modules\HR\Entities\Evaluation\Segment;
+use Tests\TestCase;
 
 class EvaluationTest extends TestCase
 {
