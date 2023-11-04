@@ -25,6 +25,8 @@ class RevenueProceedService
 
     public function store(Request $request)
     {
+
+        dd($request);
         $revenueProceed = new RevenueProceed;
 
         $revenueProceed->name = $request['name'];

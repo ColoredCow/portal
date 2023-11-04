@@ -34,7 +34,7 @@
                     <div class="spinner-border text-primary d-none" id="designationFormSpinner"></div>
                 </div>
                 <div class="designation modal-body">
-                    <form action="{{ route('hr-job-designation.storeJobDesignation')}}" method="POST" id="designationForm" >
+                    <form action="{{ route('designation.store')}}" method="POST" id="designationForm" >
                         @csrf
                         <div class="form-group">
                             <label for="designationfield">name</label><strong class="text-danger">*</strong></label>

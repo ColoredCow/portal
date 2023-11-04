@@ -27,10 +27,8 @@ class HrJobDesignationService
         ];
     }
 
-    public function storeDesignation(Request $request)
+    public function storeDesignation(JobDesignationRequest $request)
     {
-        echo 'Reached Here ...!!';
-        dd($request);
         $jobDesignation = new HrJobDesignation();
         $jobDesignation->designation = $request['name'];
         $jobDesignation->slug = Str::slug($request['name']);
@@ -49,8 +47,6 @@ class HrJobDesignationService
 
     public function destroy(HrJobDesignation $request, $id)
     {
-
-        dd($request);
         $hrJobDesignation = $request->find($id);
         $hrJobDesignation->delete();
     }
