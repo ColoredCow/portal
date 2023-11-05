@@ -35,7 +35,7 @@ class HrJobDesignationController extends Controller
         return redirect()->back();
     }
 
-    public function edit($id, Request $request)
+    public function edit($id, JobDesignationRequest $request)
     {
         $this->service->edit($id, $request);
 

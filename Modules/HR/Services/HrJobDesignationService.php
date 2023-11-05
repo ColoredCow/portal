@@ -36,7 +36,7 @@ class HrJobDesignationService
         $jobDesignation->save();
     }
 
-    public function edit($id, Request $request)
+    public function edit($id, JobDesignationRequest $request)
     {
         $hrJobDesignation = HrJobDesignation::find($id);
         $hrJobDesignation->designation = $request['designation'];

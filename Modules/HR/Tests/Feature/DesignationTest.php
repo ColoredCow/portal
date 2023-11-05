@@ -43,6 +43,23 @@ class DesignationTest extends TestCase
         $response->assertRedirect(route('designation'));
     }
 
+    public function test_fail_to_add_designation()
+    {
+        $this->setUpRolesAndPermissions();
+        $this->signIn('super-admin');
+
+        $domainId = HrJobDomain::factory()->create()->id;
+
+        $newDesignation = HrJobDesignation::factory()->raw([
+            'designation' => null,
+            'domain' => $domainId,
+        ]);
+
+        $response = $this->from(route('designation'))
+            ->post(route('designation.store'), $newDesignation);
+        $response->assertRedirect(route('designation'));
+    }
+
     public function test_edit_designation()
     {
         $this->setUpRolesAndPermissions();
@@ -57,6 +74,34 @@ class DesignationTest extends TestCase
         ];
 
         $response = $this->from(route('designation'))->post(route('designation.edit', $designationId), $designation);
+        $response->assertRedirect(route('designation'));
+    }
+
+    public function test_fail_to_edit_designation()
+    {
+        $this->setUpRolesAndPermissions();
+        $this->signIn('super-admin');
+
+        $domainId = HrJobDomain::factory()->create()->id;
+        $designation = HrJobDesignation::factory()->create();
+        $designationId = $designation->id;
+        $designation = [
+            'designation' => null,
+            'domain' => $domainId,
+        ];
+
+        $response = $this->from(route('designation'))->post(route('designation.edit', $designationId), $designation);
+        $response->assertRedirect(route('designation'));
+    }
+
+    public function test_delete_designation()
+    {
+        $this->setUpRolesAndPermissions();
+        $this->signIn('super-admin');
+
+        $domainId = HrJobDomain::factory()->create()->id;
+        $designationIdToDelete = HrJobDesignation::first()->id;
+        $response = $this->from(route('designation'))->post(route('designation.delete', $designationIdToDelete));
         $response->assertRedirect(route('designation'));
     }
 }
