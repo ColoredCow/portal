@@ -81,7 +81,7 @@ class EvaluationTest extends TestCase
 
         $updatedSegment = [
             'name' => '',
-            'round_id' => null,
+            'round_id' => '',
         ];
 
         $response = $this->post(route('hr.evaluation.segment.update', $segmentId), $updatedSegment);
