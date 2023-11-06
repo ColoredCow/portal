@@ -40,11 +40,12 @@ class UniversitiesTest extends TestCase
 
     public function test_fail_to_add_a_university()
     {
-        $universityData = $this->universityData();
-        $universityData['name'] = null;
+        $universityData = [
+            'name' => '',
+        ];
         $response = $this->post(route('universities.store'), $universityData);
-        $response->assertStatus(302);
         $response->assertSessionHasErrors(['name']);
+        $response->assertStatus(302);
     }
 
     public function test_add_alias_to_university()
@@ -59,12 +60,15 @@ class UniversitiesTest extends TestCase
     public function test_fail_to_add_alias_to_university()
     {
         $university = University::factory()->create();
-        $alias = $this->aliasData($university);
-        $alias['name'] = null;
+        $alias = [
+            'name' => '',
+            'hr_university_id' => '',
+        ];
         $aliasData = UniversityAlias::factory()->raw($alias);
 
         $response = $this->post(route('universities.aliases.store'), $aliasData);
         $response->assertStatus(302);
+        $response->assertSessionHasErrors(['name', 'hr_university_id']);
     }
 
     public function test_add_contact_to_university()
@@ -79,11 +83,19 @@ class UniversitiesTest extends TestCase
     public function test_fail_to_add_contact_to_university()
     {
         $university = University::factory()->create();
-        $contact = $this->contactData($university);
-        $contact['name'] = null;
+        $contact = [
+            'name' => '',
+            'email' => '',
+            'designation' => '',
+            'phone' => '',
+            'hr_university_id' => '',
+        ];
         $contactData = UniversityContact::factory()->raw($contact);
 
         $response = $this->post(route('universities.contacts.store'), $contactData);
+        $response->assertSessionHasErrors([
+            'name',  'email', 'designation', 'phone', 'hr_university_id'
+        ]);
         $response->assertStatus(302);
     }
 
@@ -100,11 +112,12 @@ class UniversitiesTest extends TestCase
     public function test_fail_to_edit_a_university()
     {
         $universityData = $this->universityData();
-        $universityData['name'] = null;
+        $universityData['name'] = '';
         $universityId = University::factory()->create()->id;
 
         $response = $this->from(route('universities.edit', $universityId))
             ->put(route('universities.update', $universityId), $universityData);
+        $response->assertSessionHasErrors(['name']);
         $response->assertStatus(302);
     }
 
@@ -125,13 +138,20 @@ class UniversitiesTest extends TestCase
         $university = University::factory()->create();
         $contact = UniversityContact::factory()->create(['hr_university_id' => $university->id]);
 
-        $contactData = $this->contactData($university);
-        $contactData['name'] = null;
-        $response = $this->from(route('universities.edit', $university->id))
-            ->put(route('universities.contacts.update', $contact->id), $contactData);
+        $invalidContactData = [
+            'name' => '',
+            'email' => '',
+            'designation' => '',
+            'phone' => '',
+        ];
 
+        $response = $this->from(route('universities.edit', $university->id))
+            ->put(route('universities.contacts.update', $contact->id), $invalidContactData);
+
+        $response->assertSessionHasErrors(['name', 'email', 'designation', 'phone']);
         $response->assertStatus(302);
     }
+    
 
     public function test_edit_a_university_alias()
     {
@@ -151,10 +171,10 @@ class UniversitiesTest extends TestCase
         $alias = UniversityAlias::factory()->create(['hr_university_id' => $university->id]);
 
         $aliasData = $this->aliasData($university);
-        $aliasData['name'] = null;
+        $aliasData['name'] = '';
         $response = $this->from(route('universities.edit', $university->id))
             ->put(route('universities.aliases.update', $alias->id), $aliasData);
-
+        $response->assertSessionHasErrors([ 'name' ]);
         $response->assertStatus(302);
     }
 
