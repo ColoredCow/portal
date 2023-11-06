@@ -122,7 +122,7 @@ class UniversitiesTest extends TestCase
     {
         return [
             'name' => 'Imperial College London',
-            'address' => 'London, England'
+            'address' => 'London, England',
         ];
     }
 
@@ -141,7 +141,7 @@ class UniversitiesTest extends TestCase
     {
         return [
             'name' => 'Alias 1',
-            'hr_university_id' => $university->id
+            'hr_university_id' => $university->id,
         ];
     }
 }
