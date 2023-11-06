@@ -11,6 +11,18 @@ class DesignationTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->setUpRolesAndPermissions();
+        $this->signIn('super-admin');
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
+    }
+
     /**
      * A basic test example.
      *
@@ -18,19 +30,12 @@ class DesignationTest extends TestCase
      */
     public function test_designation_listing()
     {
-        $this->withoutExceptionHandling();
-        $this->setUpRolesAndPermissions();
-        $this->signIn('super-admin');
-
         $response = $this->get(route('designation'));
         $response->assertStatus(200);
     }
 
     public function test_add_designation()
     {
-        $this->setUpRolesAndPermissions();
-        $this->signIn('super-admin');
-
         $domainId = HrJobDomain::factory()->create()->id;
 
         $newDesignation = HrJobDesignation::factory()->raw([
@@ -45,14 +50,11 @@ class DesignationTest extends TestCase
 
     public function test_fail_to_add_designation()
     {
-        $this->setUpRolesAndPermissions();
-        $this->signIn('super-admin');
-
         $domainId = HrJobDomain::factory()->create()->id;
 
         $newDesignation = HrJobDesignation::factory()->raw([
-            'designation' => null,
-            'domain' => $domainId,
+            'designation' => '',
+            'domain' => '',
         ]);
 
         $response = $this->from(route('designation'))
@@ -62,9 +64,6 @@ class DesignationTest extends TestCase
 
     public function test_edit_designation()
     {
-        $this->setUpRolesAndPermissions();
-        $this->signIn('super-admin');
-
         $domainId = HrJobDomain::factory()->create()->id;
         $designation = HrJobDesignation::factory()->create();
         $designationId = $designation->id;
@@ -79,15 +78,12 @@ class DesignationTest extends TestCase
 
     public function test_fail_to_edit_designation()
     {
-        $this->setUpRolesAndPermissions();
-        $this->signIn('super-admin');
-
         $domainId = HrJobDomain::factory()->create()->id;
         $designation = HrJobDesignation::factory()->create();
         $designationId = $designation->id;
         $designation = [
-            'designation' => null,
-            'domain' => $domainId,
+            'designation' => '',
+            'domain' => '',
         ];
 
         $response = $this->from(route('designation'))->post(route('designation.edit', $designationId), $designation);
@@ -96,9 +92,6 @@ class DesignationTest extends TestCase
 
     public function test_delete_designation()
     {
-        $this->setUpRolesAndPermissions();
-        $this->signIn('super-admin');
-
         $domainId = HrJobDomain::factory()->create()->id;
         $designationIdToDelete = HrJobDesignation::first()->id;
         $response = $this->from(route('designation'))->post(route('designation.delete', $designationIdToDelete));
