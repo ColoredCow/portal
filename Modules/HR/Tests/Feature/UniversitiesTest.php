@@ -38,6 +38,15 @@ class UniversitiesTest extends TestCase
         $response->assertRedirect(route('universities.edit', $universityId));
     }
 
+    public function test_fail_to_add_a_university()
+    {
+        $universityData = $this->universityData();
+        $universityData['name'] = null;
+        $response = $this->post(route('universities.store'), $universityData);
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors(['name']);
+    }
+
     public function test_add_alias_to_university()
     {
         $university = University::factory()->create();
@@ -45,6 +54,17 @@ class UniversitiesTest extends TestCase
 
         $response = $this->post(route('universities.aliases.store'), $aliasData);
         $response->assertStatus(200);
+    }
+
+    public function test_fail_to_add_alias_to_university()
+    {
+        $university = University::factory()->create();
+        $alias = $this->aliasData($university);
+        $alias['name'] = null;
+        $aliasData = UniversityAlias::factory()->raw($alias);
+
+        $response = $this->post(route('universities.aliases.store'), $aliasData);
+        $response->assertStatus(302);
     }
 
     public function test_add_contact_to_university()
@@ -56,6 +76,17 @@ class UniversitiesTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function test_fail_to_add_contact_to_university()
+    {
+        $university = University::factory()->create();
+        $contact = $this->contactData($university);
+        $contact['name'] = null;
+        $contactData = UniversityContact::factory()->raw($contact);
+
+        $response = $this->post(route('universities.contacts.store'), $contactData);
+        $response->assertStatus(302);
+    }
+
     public function test_edit_a_university()
     {
         $universityData = $this->universityData();
@@ -64,6 +95,17 @@ class UniversitiesTest extends TestCase
         $response = $this->from(route('universities.edit', $universityId))
             ->put(route('universities.update', $universityId), $universityData);
         $response->assertRedirect(route('universities.edit', $universityId));
+    }
+
+    public function test_fail_to_edit_a_university()
+    {
+        $universityData = $this->universityData();
+        $universityData['name'] = null;
+        $universityId = University::factory()->create()->id;
+
+        $response = $this->from(route('universities.edit', $universityId))
+            ->put(route('universities.update', $universityId), $universityData);
+        $response->assertStatus(302);
     }
 
     public function test_edit_a_university_contact()
@@ -78,6 +120,19 @@ class UniversitiesTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function test_fail_to_edit_a_university_contact()
+    {
+        $university = University::factory()->create();
+        $contact = UniversityContact::factory()->create(['hr_university_id' => $university->id]);
+
+        $contactData = $this->contactData($university);
+        $contactData['name'] = null;
+        $response = $this->from(route('universities.edit', $university->id))
+            ->put(route('universities.contacts.update', $contact->id), $contactData);
+
+        $response->assertStatus(302);
+    }
+
     public function test_edit_a_university_alias()
     {
         $university = University::factory()->create();
@@ -88,6 +143,19 @@ class UniversitiesTest extends TestCase
             ->put(route('universities.aliases.update', $alias->id), $aliasData);
 
         $response->assertStatus(200);
+    }
+
+    public function test_fail_to_edit_a_university_alias()
+    {
+        $university = University::factory()->create();
+        $alias = UniversityAlias::factory()->create(['hr_university_id' => $university->id]);
+
+        $aliasData = $this->aliasData($university);
+        $aliasData['name'] = null;
+        $response = $this->from(route('universities.edit', $university->id))
+            ->put(route('universities.aliases.update', $alias->id), $aliasData);
+
+        $response->assertStatus(302);
     }
 
     public function test_delete_a_university()
