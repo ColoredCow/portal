@@ -13,6 +13,19 @@ use Tests\TestCase;
 class OpportunitiesTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->setUpRolesAndPermissions();
+        $this->signIn('super-admin');
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
+    }
+
     /**
      * A basic test example.
      *
@@ -20,16 +33,12 @@ class OpportunitiesTest extends TestCase
      */
     public function test_job_listing()
     {
-        $this->setUpRolesAndPermissions();
-        $this->signIn('super-admin');
         $response = $this->get(route('recruitment.opportunities'));
         $response->assertStatus(200);
     }
 
     public function test_create_job()
     {
-        $this->signIn();
-
         $job = Job::factory()->raw([
             'title' => 'This is a new job',
         ]);
@@ -45,9 +54,8 @@ class OpportunitiesTest extends TestCase
 
     public function test_fail_creation_without_required_fields()
     {
-        $this->signIn();
         $job = Job::factory()->raw([
-            'title' => 'This is a new job',
+            'title' => '',
             'description' => '',
             'domain' => '',
         ]);
@@ -58,7 +66,6 @@ class OpportunitiesTest extends TestCase
 
     public function test_update_job()
     {
-        $this->signIn();
         Job::factory()->count(3)->create();
         $jobToUpdate = Job::find(2);
         $jobId = $jobToUpdate->id;
@@ -82,7 +89,6 @@ class OpportunitiesTest extends TestCase
 
     public function test_fail_update_without_required_fields()
     {
-        $this->signIn();
         Job::factory()->count(10)->create();
 
         $jobToUpdate = Job::find(6);
