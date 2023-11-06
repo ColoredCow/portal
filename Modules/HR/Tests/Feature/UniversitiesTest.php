@@ -94,7 +94,7 @@ class UniversitiesTest extends TestCase
 
         $response = $this->post(route('universities.contacts.store'), $contactData);
         $response->assertSessionHasErrors([
-            'name',  'email', 'designation', 'phone', 'hr_university_id'
+            'name',  'email', 'designation', 'phone', 'hr_university_id',
         ]);
         $response->assertStatus(302);
     }
@@ -151,7 +151,6 @@ class UniversitiesTest extends TestCase
         $response->assertSessionHasErrors(['name', 'email', 'designation', 'phone']);
         $response->assertStatus(302);
     }
-    
 
     public function test_edit_a_university_alias()
     {
@@ -174,7 +173,7 @@ class UniversitiesTest extends TestCase
         $aliasData['name'] = '';
         $response = $this->from(route('universities.edit', $university->id))
             ->put(route('universities.aliases.update', $alias->id), $aliasData);
-        $response->assertSessionHasErrors([ 'name' ]);
+        $response->assertSessionHasErrors(['name']);
         $response->assertStatus(302);
     }
 
