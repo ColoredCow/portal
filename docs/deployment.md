@@ -1,7 +1,9 @@
 ## Deployment Guidelines :mag_right:
 Portal uses GitHub action to deploy the portal on staging server.
 
-### Staging Deployment
+## Environment setup for auto deployment
+
+### Staging Deployment setup
 Staging builds are configured using GitHub Actions. The file `.github/workflows/deploy-staging.yml` contains the commands to deploy the portal. Production builds happen when code is pushed to `master` branch.
 
 To set up the deployment workflow, follow the steps below.
@@ -48,9 +50,30 @@ To set up the deployment workflow, follow the steps below.
 
 For more information, check out [staging-deployment.yml](../.github/workflows/staging-deployment.yml).
 
-### Production Deployment
+### Production Deployment setup
 Production builds are configured using GitHub Actions. The file `.github/workflows/deploy-staging.yml` contains the commands to deploy the portal. Production builds happen when new releases are published. For example `v1.1.2`.
 
 To set up the production deployment workflow, follow the same steps as staging. Make sure to update the keys and environment variables accordingly.
 
 For more information, check out [production-deployment.yml](../.github/workflows/production-deployment.yml).
+
+
+## Deployment 
+
+### Staging Deployment
+**Pre-requisites:**
+You need to have permissions to deploy on staging Environment. Please reach out to Infra team for the access
+
+1. Raise the PR against `master` branch.
+2. Get the PR reviewed and merged on `master` branch.
+3. Go to [Staging Deployment GitHub action](https://github.com/ColoredCow/portal/actions/workflows/staging-deployment.yml)
+4. Approve the deployment.
+
+### Production Deployment
+**Pre-requisites:**
+You need to have permissions to deploy on production Environment. Please reach out to Infra team for the access
+
+1. Raise the PR against `release` branch.
+2. Get the PR reviewed and merged on `release` branch.
+3. Go to [Production Deployment GitHub action](https://github.com/ColoredCow/portal/actions/workflows/production-deployment.yml)
+4. Approve the deployment.
