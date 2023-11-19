@@ -2,9 +2,11 @@
 
 namespace Modules\HR\Services;
 
+use App\Models\Setting;
 use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Modules\HR\Contracts\ApplicationServiceContract;
@@ -16,8 +18,6 @@ use Modules\HR\Entities\Round;
 use Modules\HR\Entities\University;
 use Modules\HR\Events\CustomMailTriggeredForApplication;
 use Modules\User\Entities\User;
-use Illuminate\Support\Facades\DB;
-use App\Models\Setting;
 
 class ApplicationService implements ApplicationServiceContract
 {
