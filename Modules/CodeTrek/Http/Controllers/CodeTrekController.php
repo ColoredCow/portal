@@ -29,16 +29,14 @@ class CodeTrekController extends Controller
         // $this->authorize('view', $applicant);     There are some issues in the production, which is why these lines are commented out.
 
         $centres = OfficeLocation::all();
-
         $mentors = User::all();
         $applicantData = $this->service->getCodeTrekApplicants($request->all());
         $applicants = $applicantData['applicants'];
         $statusCounts = $applicantData['statusCounts'];
-        $start_date = Carbon::parse($request->application_start_date) ?? today()->subYear();
-        $end_date = Carbon::parse($request->application_end_date) ?? today();
-        $reportApplicationCounts = CodeTrekApplicant::select(\DB::Raw('DATE(start_date) as date, COUNT(*) as count'))
-            ->whereDate('start_date', '>=', $start_date)
-            ->whereDate('start_date', '<=', $end_date)
+        $startDate = Carbon::parse($request->input('application_start_date', today()->subYear()));
+        $endDate = Carbon::parse($request->input('application_end_date', today()));
+        $reportApplicationCounts = CodeTrekApplicant::whereDate('start_date', '>=', $startDate)
+            ->whereDate('start_date', '<=', $endDate)
             ->count();
 
         return view('codetrek::index', [

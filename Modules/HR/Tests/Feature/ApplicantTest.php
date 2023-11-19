@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature\HR;
+namespace Modules\HR\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ExampleTest extends TestCase
+class ApplicantTest extends TestCase
 {
     use RefreshDatabase;
 
