@@ -2049,18 +2049,41 @@ $(".opt").on("click", function() {
 		success: function(response) {
 			$("#option1subject").val(response.subject);
 			tinymce.get("option1body").setContent(response.body, { format: "html" });
+
+			$("#option2subject").val(response.subject);
+			tinymce.get("option2body").setContent(response.body, { format: "html" });
 		},
+		error: function(xhr, status, error) {
+			console.log("Error:", error);
+		  },
 	});
 
 	var originUrl = window.location.origin;
 	$.ajax({
-		url: originUrl + "/hr/recruitment/onHoldEmail",
+		url: originUrl + "/hr/recruitment/rejectEmail",
 		type: "GET",
 		data: formData,
 		contentType: "application/json",
 		success: function(response) {
-			$("#option2subject").val(response.subject);
-			tinymce.get("option2body").setContent(response.body, { format: "html" });
+			$("#optionCodeTrekPropositionSubject").val(response.subject);
+			tinymce.get("optionCodeTrekPropositionBody").setContent(response.body, { format: "html" });
+		},
+		error: function(xhr, status, error) {
+			console.log("Error:", error);
+		  },
+	});
+
+	var originUrl = window.location.origin;
+	$.ajax({
+		url: `/hr/recruitment/applicationround/${$("#current_applicationround_id").val()}/mail-content/${"rejected"}`,
+		method: "post",
+		contentType: "application/json",
+		success: function(response) {
+			$("#rejectMailToApplicantSubject").val(response.subject, {format: "html"});
+			tinymce.get("rejectMailToApplicantBody").setContent(response.body, { format: "html" });
+		},
+		error: (err) => {
+			console.log("Error:", error);
 		},
 	});
 });

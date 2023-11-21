@@ -126,5 +126,15 @@ class SettingsTableSeeder extends Seeder
             'setting_key' => 'approved_mail_body',
             'setting_value' => '<div>Dear |APPLICANT NAME|,</div><div><br> </div><div>We are pleased to inform you that you have been selected for the post of |JOB TITLE| with us and your joining with ColoredCow shall stand confirmed with effect after date of signing.</div><div><br> </div><div>The Draft copy of the Offer Letter is enclosed herewith with the details of your appointment with us. We would appreciate it if you go through it and share the acceptance with us within 3 days. Please fill out the form for the personal documents like Aadhar, PAN and bank details in order to raise an offer letter.</div><div><br></div><div>We look forward to a long term association and a rewarding career for you.</div><div><br></div><div>Please Fill your details using the following link</div><div><br></div><div><a href="|LINK|"> Fill Form</a></div><div><br></div><div>Thanks</div><div><br> </div><div>HR, Team.</div>',
         ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'codetrek_proposition_subject',
+            'setting_value' => 'Your Job application with ColoredCow',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'codetrek_proposition_body',
+            'setting_value' => '<div>Hello |APPLICANT NAME|,</div><div> </div><div>Thanks for considering ColoredCow as your next Career choice.</div><div>As we see you applied for |JOB TITLE| but somehow this job requires different skills than your current resume reflects.</div><div>Alternatively, if you want to build your Software Development skills as a Trainee, we are inviting candidates to our Tehri and Dwarahat offices. Drop us an email at arushi.dubey@coloredcow.in to know more about the program.</div><div>Thanks again for applying. </div><div>HR Team,</div><div>ColoredCow</div> ',
+        ]);
     }
 }
