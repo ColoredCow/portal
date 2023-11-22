@@ -94,7 +94,6 @@ Route::middleware('auth')->group(function () {
 
     Route::post('projects/{project}/add-employee', 'ProjectController@addEmployee');
     Route::post('projects/{project}/remove-employee', 'ProjectController@removeEmployee');
-    Route::get('my-projects/{employee}', 'hr\Employees\EmployeeController@showProjects')->name('projects.my-projects');
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
 
     Route::prefix('settings')->namespace('Settings')->group(function () {
@@ -160,10 +159,10 @@ Route::middleware('auth')->group(function () {
                 ->names(['index' => 'books.category.index']);
 
             Route::get('book-a-month', 'BookController@bookAMonthIndex')
-            ->name('book.book-a-month.index');
+                ->name('book.book-a-month.index');
         });
         Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])
-        ->names(['index' => 'weeklydoses']);
+            ->names(['index' => 'weeklydoses']);
     });
 
     Route::resource('comments', 'CommentController')->only(['update', 'destroy']);

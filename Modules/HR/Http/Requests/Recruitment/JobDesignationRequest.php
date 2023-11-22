@@ -24,15 +24,15 @@ class JobDesignationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:hr_job_designation,designation',
+            'designation' => 'required|unique:hr_job_designation,designation',
             'domain' => 'required',
         ];
     }
     public function messages()
     {
         return [
-            'name.required' => 'Designation name is required',
-            'name.unique'  => 'Designation field is already taken',
+            'designation.required' => 'Designation name is required',
+            'designation.unique'  => 'Designation field is already taken',
             'domain.required' => 'Select a domain',
         ];
     }
