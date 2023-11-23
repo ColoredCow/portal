@@ -2,12 +2,15 @@
 
 namespace Modules\HR\Entities;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\HR\Database\Factories\HrRoundFactory;
 use Modules\HR\Entities\Evaluation\Parameter as EvaluationParameter;
 use Modules\HR\Entities\Evaluation\Segment as EvaluationSegment;
 
 class Round extends Model
 {
+    use HasFactory;
     protected $fillable = ['name', 'guidelines', 'confirmed_mail_template', 'rejected_mail_template'];
 
     protected $table = 'hr_rounds';
@@ -45,5 +48,10 @@ class Round extends Model
     public function evaluationSegments()
     {
         return $this->hasMany(EvaluationSegment::class, 'round_id', 'id');
+    }
+
+    public static function newFactory()
+    {
+        return new HrRoundFactory();
     }
 }
