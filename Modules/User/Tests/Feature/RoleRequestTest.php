@@ -28,7 +28,7 @@ class RoleRequestTest extends TestCase
         $response = $this->get(route('user.role-all'));
         $response->assertStatus(200);
     }
-   
+
     public function create_user_role()
     {
         $roleTestData = [
@@ -36,46 +36,40 @@ class RoleRequestTest extends TestCase
             'guard_name' => 'web',
             'description' => 'Test Role Description',
         ];
-        $response = $this->from(route('user.role-all'))
-            ->post(route('roles.add-roles'), $roleTestData);
-        $response->assertSessionDoesntHaveErrors(['name', 'guard_name', 'description']);
-        $response->assertRedirect(route('user.role-all'));
+        $validation = Validator::make($roleTestData, (new RoleRequest())->rules());
+        $this->assertFalse($validation->fails());
     }
 
     public function test_fails_validation_when_name_is_not_provided()
     {
         $roleTestData = [
             'guard_name' => 'web',
-            'description' => 'Test Role Description',
+            'description' => 'Intern Role',
         ];
-
-        $validator = Validator::make($roleTestData, (new RoleRequest())->rules());
-
-        $this->assertTrue($validator->fails());
-        $this->assertArrayHasKey('name', $validator->errors()->getMessages());
+        $validation = Validator::make($roleTestData, (new RoleRequest())->rules());
+        $this->assertTrue($validation->fails());
+        $this->assertArrayHasKey('name', $validation->errors()->getMessages());
     }
-   
+
     public function test_fails_validation_when_guard_name_is_not_provided()
     {
         $roleTestData = [
-            'name' => 'Test Role',
-            'description' => 'Test Role Description',
+            'name' => 'Intern',
+            'description' => 'Intern Role',
         ];
-
-        $validator = Validator::make($roleTestData, (new RoleRequest())->rules());
-
-        $this->assertTrue($validator->fails());
-        $this->assertArrayHasKey('guard_name', $validator->errors()->getMessages());
+        $validation = Validator::make($roleTestData, (new RoleRequest())->rules());
+        $this->assertTrue($validation->fails());
+        $this->assertArrayHasKey('guard_name', $validation->errors()->getMessages());
     }
-   
+
     public function test_fails_validation_when_description_is_not_provided()
     {
         $roleTestData = [
-            'name' => 'Test Role',
+            'name' => 'Intern',
             'guard_name' => 'web',
         ];
-        $validator = Validator::make($roleTestData, (new RoleRequest())->rules());
-        $this->assertTrue($validator->fails());
-        $this->assertArrayHasKey('description', $validator->errors()->getMessages());
+        $validation = Validator::make($roleTestData, (new RoleRequest())->rules());
+        $this->assertTrue($validation->fails());
+        $this->assertArrayHasKey('description', $validation->errors()->getMessages());
     }
 }
