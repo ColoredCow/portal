@@ -22,9 +22,9 @@ class ProspectChecklistMeta extends Model
             'prospect_id' => $prospectID,
             'checklist_id' => $checkListID,
             'checklist_task_id' => $checkListTaskID,
-            'meta_key' => 'status'
+            'meta_key' => 'status',
         ])->first();
 
-        return ($row) ? $row->meta_value : $defaultStatus;
+        return $row ? $row->meta_value : $defaultStatus;
     }
 }

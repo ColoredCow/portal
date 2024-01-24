@@ -17,7 +17,7 @@ class ProfileEditRequest extends FormRequest
             'name' => 'required|regex:/^[a-zA-Z ]+$/',
             'nickName' => 'required|regex:/^[a-zA-Z ]+$/',
             'designationId' => 'exists:hr_job_designation,id',
-            'domainId' => 'exists:hr_job_domains,id'
+            'domainId' => 'exists:hr_job_domains,id',
         ];
     }
 
@@ -25,7 +25,7 @@ class ProfileEditRequest extends FormRequest
     {
         return [
             'name.regex' => 'Name should contain only alphabets !',
-            'nickName.regex' => 'Nick name should contain only alphabets !'
+            'nickName.regex' => 'Nick name should contain only alphabets !',
         ];
     }
     /**

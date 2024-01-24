@@ -1,0 +1,76 @@
+name: Unit testing
+
+# Controls when the action will run.
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  portal:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_USER: mysql_test_user
+          MYSQL_PASSWORD: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: portal_test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # cypress setup
+      - name: Setup PHP v7.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.4"
+
+      - name: Setup unit-testing
+        uses: actions/checkout@v2
+
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      - name: Install Dependencies
+        run: composer install
+
+      - name: Generate key
+        run: php artisan key:generate
+
+      - name: Directory Permissions
+        run: chmod -R 777 storage bootstrap/cache
+
+      - name: Run migrations
+        run: |
+          php artisan migrate --env=testing
+
+      - name: Run seeders
+        run: |
+          php artisan db:seed --env=testing
+          php artisan module:seed --env=testing
+
+      - name: Compile assets
+        run: |
+          export NODE_OPTIONS=--openssl-legacy-provider
+          npm install
+          npm run dev
+
+      - name: Run Test Suit
+        run: |
+          vendor/bin/phpunit --coverage-clover coverage.xml
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+
+      - name: Coverage Report as Comment (Clover)
+        uses: lucassabreu/comment-coverage-clover@main
+        with:
+          file: coverage.xml

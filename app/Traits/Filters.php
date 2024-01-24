@@ -11,7 +11,7 @@ trait Filters
 
     public function scopeFilterByName($query, $name)
     {
-        return $query->where('name', 'LIKE', "%$name%");
+        return $query->where('name', 'LIKE', "%{$name}%");
     }
 
     public function scopeApplyFilter($query, array $filters)

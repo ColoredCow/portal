@@ -2,8 +2,8 @@
 
 namespace Modules\HR\Database\Seeders;
 
-use Modules\HR\Entities\Round;
 use Illuminate\Database\Seeder;
+use Modules\HR\Entities\Round;
 
 class AddPreparatoryRoundsSeeder extends Seeder
 {
@@ -15,7 +15,7 @@ class AddPreparatoryRoundsSeeder extends Seeder
     public function run()
     {
         Round::updateOrCreate([
-            'name' => 'Preparatory-1'
+            'name' => 'Preparatory-1',
         ], [
             'guidelines' => null,
             'reminder_enabled' => 0,
@@ -24,7 +24,7 @@ class AddPreparatoryRoundsSeeder extends Seeder
             'in_trial_round' => 1,
         ]);
         Round::updateOrCreate([
-            'name' => 'Preparatory-2'
+            'name' => 'Preparatory-2',
         ], [
             'guidelines' => null,
             'reminder_enabled' => 0,
@@ -33,7 +33,7 @@ class AddPreparatoryRoundsSeeder extends Seeder
             'in_trial_round' => 1,
         ]);
         Round::updateOrCreate([
-            'name' => 'Preparatory-3'
+            'name' => 'Preparatory-3',
         ], [
             'guidelines' => null,
             'reminder_enabled' => 0,
@@ -42,7 +42,7 @@ class AddPreparatoryRoundsSeeder extends Seeder
             'in_trial_round' => 1,
         ]);
         Round::updateOrCreate([
-            'name' => 'Preparatory-4'
+            'name' => 'Preparatory-4',
         ], [
             'guidelines' => null,
             'reminder_enabled' => 0,
@@ -51,7 +51,7 @@ class AddPreparatoryRoundsSeeder extends Seeder
             'in_trial_round' => 1,
         ]);
         Round::updateOrCreate([
-            'name' => 'Warmup'
+            'name' => 'Warmup',
         ], [
             'guidelines' => null,
             'reminder_enabled' => 0,

@@ -3,13 +3,13 @@
 namespace Modules\Invoice\Entities;
 
 use App\Traits\Encryptable;
-use Modules\Client\Entities\Client;
-use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
+use Modules\Client\Entities\Client;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
+use Modules\Project\Entities\Project;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class Invoice extends Model implements Auditable
 {
@@ -20,7 +20,7 @@ class Invoice extends Model implements Auditable
     protected $dates = ['sent_on', 'due_on', 'receivable_date', 'payment_at', 'term_start_date', 'term_end_date'];
 
     protected $encryptable = [
-        'amount', 'gst', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'tds'
+        'amount', 'gst', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'tds',
     ];
 
     public function scopeStatus($query, $status)
@@ -74,7 +74,13 @@ class Invoice extends Model implements Auditable
             return $query;
         }
 
-        return $query->whereBetween('sent_on', [($invoiceYear . '-' . config('invoice.financial-month-details.financial_year_start_month') . '-' . '01'), (($invoiceYear + 1) . '-' . config('invoice.financial-month-details.financial_year_end_month') . '-' . '31')]);
+        $FYStartMonth = config('invoice.financial-month-details.financial_year_start_month');
+        $FYEndMonth = config('invoice.financial-month-details.financial_year_end_month');
+
+        $startDate = "{$invoiceYear}- {$FYStartMonth}-01";
+        $endDate = ($invoiceYear + 1) . "-{$FYEndMonth}-31";
+
+        return $query->whereBetween('sent_on', [$startDate, $endDate]);
     }
 
     public function scopeSentBetween($query, $startDate, $endDate)
@@ -87,31 +93,39 @@ class Invoice extends Model implements Auditable
 
     public function scopeApplyFilters($query, $filters)
     {
-        if ($year = Arr::get($filters, 'year', '')) {
+        $year = Arr::get($filters, 'year', '');
+        $month = Arr::get($filters, 'month', '');
+        $status = Arr::get($filters, 'status', '');
+        $country = Arr::get($filters, 'country', '');
+        $region = Arr::get($filters, 'region', '');
+        $clientId = Arr::get($filters, 'client_id', '');
+        $invoiceYear = Arr::get($filters, 'invoiceYear', '');
+
+        if ($year) {
             $query = $query->year($year);
         }
 
-        if ($month = Arr::get($filters, 'month', '')) {
+        if ($month) {
             $query = $query->month($month);
         }
 
-        if ($status = Arr::get($filters, 'status', '')) {
+        if ($status) {
             $query = $query->status($status);
         }
 
-        if ($country = Arr::get($filters, 'country', '')) {
+        if ($country) {
             $query = $query->country($country);
         }
 
-        if ($country = Arr::get($filters, 'region', '')) {
-            $query = $query->region($country);
+        if ($region) {
+            $query = $query->region($region);
         }
 
-        if ($clientId = Arr::get($filters, 'client_id', '')) {
+        if ($clientId) {
             $query = $query->client($clientId);
         }
 
-        if ($invoiceYear = Arr::get($filters, 'invoiceYear', '')) {
+        if ($invoiceYear) {
             $query = $query->InvoiceInaYear($invoiceYear);
         }
 
@@ -187,9 +201,9 @@ class Invoice extends Model implements Auditable
     {
         if (optional($this->currency) == config('constants.countries.india.currency')) {
             return $this->amount;
-        } else {
-            return $this->amount * $this->conversion_rate;
         }
+
+        return $this->amount * $this->conversion_rate;
     }
 
     public function getTotalAmountAttribute()
@@ -223,7 +237,7 @@ class Invoice extends Model implements Auditable
         }
         $monthDifference = $currentMonthNumber - $invoiceStartMonthNumber;
         if ($monthDifference < 0) {
-            $monthDifference = ($currentMonthNumber + 12) - $invoiceStartMonthNumber;
+            $monthDifference = $currentMonthNumber + 12 - $invoiceStartMonthNumber;
         }
         $termStartDate = $this->client->getMonthStartDateAttribute($monthDifference);
         $termEndDate = $this->client->getMonthEndDateAttribute($monthDifference);

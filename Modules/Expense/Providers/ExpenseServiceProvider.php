@@ -2,9 +2,9 @@
 
 namespace Modules\Expense\Providers;
 
+use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
 
 class ExpenseServiceProvider extends ServiceProvider
 {
@@ -37,22 +37,6 @@ class ExpenseServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register config.
-     *
-     * @return void
-     */
-    protected function registerConfig()
-    {
-        $this->publishes([
-            module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
-        ], 'config');
-        $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'),
-            $this->moduleNameLower
-        );
-    }
-
-    /**
      * Register views.
      *
      * @return void
@@ -62,7 +46,7 @@ class ExpenseServiceProvider extends ServiceProvider
         $viewPath = resource_path('views/modules/' . $this->moduleNameLower);
         $sourcePath = module_path($this->moduleName, 'Resources/views');
         $this->publishes([
-            $sourcePath => $viewPath
+            $sourcePath => $viewPath,
         ], ['views', $this->moduleNameLower . '-module-views']);
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
     }
@@ -102,6 +86,22 @@ class ExpenseServiceProvider extends ServiceProvider
     public function provides()
     {
         return [];
+    }
+
+    /**
+     * Register config.
+     *
+     * @return void
+     */
+    protected function registerConfig()
+    {
+        $this->publishes([
+            module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
+        ], 'config');
+        $this->mergeConfigFrom(
+            module_path($this->moduleName, 'Config/config.php'),
+            $this->moduleNameLower
+        );
     }
 
     private function getPublishableViewPaths(): array

@@ -13,12 +13,14 @@ class NoShow extends Mailable
 
     /**
      * Instance of the ApplicationMeta.
+     *
      * @var ApplicationMeta
      */
     public $applicationMeta;
 
     /**
      * Create a new message instance.
+     *
      * @param ApplicationMeta $applicationMeta [description]
      */
     public function __construct(ApplicationMeta $applicationMeta)
@@ -43,7 +45,7 @@ class NoShow extends Mailable
             ->from(config('hr.default.email'), config('hr.default.name'))
             ->subject($subject)
             ->view('mail.plain')->with([
-                'body' => $body
+                'body' => $body,
             ]);
     }
 }

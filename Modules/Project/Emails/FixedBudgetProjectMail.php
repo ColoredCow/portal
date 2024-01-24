@@ -3,9 +3,9 @@
 namespace Modules\Project\Emails;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class FixedBudgetProjectMail extends Mailable implements ShouldQueue
 {
@@ -35,7 +35,6 @@ class FixedBudgetProjectMail extends Mailable implements ShouldQueue
             $mail->to($project['email']);
         }
 
-        return
-        $mail->view('project::mail.fixed-budget-project');
+        return $mail->view('project::mail.fixed-budget-project');
     }
 }

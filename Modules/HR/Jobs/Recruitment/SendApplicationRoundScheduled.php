@@ -14,14 +14,14 @@ class SendApplicationRoundScheduled implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $applicationRound;
-
     /**
      * The number of seconds the job can run before timing out.
      *
      * @var int
      */
     public $timeout = 120;
+
+    protected $applicationRound;
 
     /**
      * Create a new job instance.

@@ -2,8 +2,8 @@
 
 namespace Modules\User\Http\Controllers;
 
-use Modules\User\Entities\User;
 use Modules\User\Contracts\UserServiceContract;
+use Modules\User\Entities\User;
 use Modules\User\Http\Requests\UpdateUserRolesRequest;
 
 class UserController extends ModuleBaseController
@@ -26,29 +26,6 @@ class UserController extends ModuleBaseController
         return view('user::index', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-    }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     */
-    public function show($id)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     */
-    public function edit($id)
-    {
-    }
-
     public function updateUserRoles(UpdateUserRolesRequest $request)
     {
         $validatedData = $request->validated();
@@ -58,7 +35,9 @@ class UserController extends ModuleBaseController
 
     /**
      * Remove the specified resource from storage.
+     *
      * @param User $user
+     *
      * @return void
      */
     public function destroy(User $user)

@@ -2,10 +2,10 @@
 
 namespace Modules\HR\Entities;
 
-use Illuminate\Database\Eloquent\Model;
-use Modules\HR\Traits\HasFilters;
-use Modules\HR\Database\Factories\HrUniversitiesContactsFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Modules\HR\Database\Factories\HrUniversitiesContactsFactory;
+use Modules\HR\Traits\HasFilters;
 
 class UniversityContact extends Model
 {

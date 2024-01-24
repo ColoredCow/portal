@@ -27,7 +27,7 @@ class Client extends Model
 
     public function getCurrencyAttribute()
     {
-        return config("constants.countries.$this->country.currency");
+        return config("constants.countries.{$this->country}.currency");
     }
 
     /**

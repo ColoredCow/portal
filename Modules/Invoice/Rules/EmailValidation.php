@@ -3,32 +3,27 @@
 namespace Modules\Invoice\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class EmailValidation implements Rule
 {
-    /**
-     * Create a new rule instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
     /**
      * Determine if the validation rule passes.
      *
      * @param  string  $attribute
      * @param  mixed  $values
+     *
      * @return bool
+     */
+
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
     public function passes($attribute, $values)
     {
         $validator = [];
         $validate = preg_split('/[,]/', $values);
-        foreach ($validate as $index=>$value) {
+        foreach ($validate as $value) {
             $validator = Validator::make(['email' => $value], [
                     'email'=> 'email:rfc,dns',
                 ]);

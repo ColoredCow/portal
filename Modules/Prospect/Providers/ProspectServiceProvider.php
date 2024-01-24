@@ -2,17 +2,17 @@
 
 namespace Modules\Prospect\Providers;
 
+use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
-use Modules\Prospect\Services\ProspectService;
-use Modules\Prospect\Services\ProspectHistoryService;
-use Modules\Prospect\Services\ProspectMeetingService;
-use Modules\Prospect\Contracts\ProspectServiceContract;
-use Modules\Prospect\Services\ProspectChecklistService;
+use Modules\Prospect\Contracts\ProspectChecklistServiceContract;
 use Modules\Prospect\Contracts\ProspectHistoryServiceContract;
 use Modules\Prospect\Contracts\ProspectMeetingServiceContract;
-use Modules\Prospect\Contracts\ProspectChecklistServiceContract;
+use Modules\Prospect\Contracts\ProspectServiceContract;
+use Modules\Prospect\Services\ProspectChecklistService;
+use Modules\Prospect\Services\ProspectHistoryService;
+use Modules\Prospect\Services\ProspectMeetingService;
+use Modules\Prospect\Services\ProspectService;
 
 class ProspectServiceProvider extends ServiceProvider
 {
@@ -53,22 +53,6 @@ class ProspectServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register config.
-     *
-     * @return void
-     */
-    protected function registerConfig()
-    {
-        $this->publishes([
-            module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
-        ], 'config');
-        $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'),
-            $this->moduleNameLower
-        );
-    }
-
-    /**
      * Register views.
      *
      * @return void
@@ -80,7 +64,7 @@ class ProspectServiceProvider extends ServiceProvider
         $sourcePath = module_path($this->moduleName, 'Resources/views');
 
         $this->publishes([
-            $sourcePath => $viewPath
+            $sourcePath => $viewPath,
         ], ['views', $this->moduleNameLower . '-module-views']);
 
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
@@ -122,6 +106,22 @@ class ProspectServiceProvider extends ServiceProvider
     public function provides()
     {
         return [];
+    }
+
+    /**
+     * Register config.
+     *
+     * @return void
+     */
+    protected function registerConfig()
+    {
+        $this->publishes([
+            module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
+        ], 'config');
+        $this->mergeConfigFrom(
+            module_path($this->moduleName, 'Config/config.php'),
+            $this->moduleNameLower
+        );
     }
 
     private function getPublishableViewPaths(): array

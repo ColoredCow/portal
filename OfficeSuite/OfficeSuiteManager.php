@@ -18,6 +18,7 @@ class OfficeSuiteManager
      * Create a new OfficeSuite manager instance.
      *
      * @param  \Illuminate\Contracts\Foundation\Application  $app
+     *
      * @return void
      */
     public function __construct($app)

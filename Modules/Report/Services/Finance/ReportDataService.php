@@ -10,7 +10,9 @@ class ReportDataService
     {
         if ($type == 'revenue-trend') {
             return $this->revenueTrend($filters);
-        } elseif ($type == 'revenue-trend-client-wise') {
+        }
+
+        if ($type == 'revenue-trend-client-wise') {
             return $this->revenueTrendForClient($filters);
         }
 
@@ -23,7 +25,7 @@ class ReportDataService
 
         return [
             'selectedClient' => $selectedClient,
-            'clients' => Client::orderBy('name')->get()
+            'clients' => Client::orderBy('name')->get(),
         ];
     }
 
@@ -35,12 +37,11 @@ class ReportDataService
 
         $filters['start_date'] = empty($filters['start_date']) ? $defaultStartDate : $filters['start_date'];
         $filters['end_date'] = empty($filters['end_date']) ? $defaultEndDate : $filters['end_date'];
-        $revenueReportService = new RevenueReportService;
-        $reportData = $revenueReportService->getRevenueReportDataForClient($filters, $client);
+        $reportData = RevenueReportService::getRevenueReportDataForClient($filters, $client);
 
         return [
             'labels' => $reportData['months'],
-            'data' => $reportData
+            'data' => $reportData,
         ];
     }
 
@@ -55,11 +56,10 @@ class ReportDataService
             'current_period_start_date' => $defaultStartDate,
             'current_period_end_date' => $defaultEndDate,
             'previous_period_start_date' => $defaultPreviousStartDate,
-            'previous_period_end_date' => $defaultPreviousEndDate
+            'previous_period_end_date' => $defaultPreviousEndDate,
         ];
         $filters = array_merge($defaultFilters, request()->all());
-        $revenueReportService = new RevenueReportService;
-        $reportData = $revenueReportService->getRevenueGroupedByClient($filters);
+        $reportData = RevenueReportService::getRevenueGroupedByClient($filters);
 
         return [
             'labels' => $reportData['clients_name'],

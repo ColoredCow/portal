@@ -2,9 +2,9 @@
 
 namespace Modules\Prospect\Entities\Scopes;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
-use Illuminate\Database\Eloquent\Builder;
 
 class ProspectHistoryGlobalScope implements Scope
 {
@@ -13,7 +13,12 @@ class ProspectHistoryGlobalScope implements Scope
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $builder
      * @param  \Illuminate\Database\Eloquent\Model  $model
+     *
      * @return void
+     */
+
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
     public function apply(Builder $builder, Model $model)
     {

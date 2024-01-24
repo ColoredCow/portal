@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\HR\Applications;
 
+use Illuminate\Support\Facades\Request;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\Job;
-use Illuminate\Support\Facades\Request;
 use Modules\HR\Http\Controllers\Recruitment\ApplicationController;
 
 class VolunteerApplicationController extends ApplicationController
@@ -50,12 +50,10 @@ class VolunteerApplicationController extends ApplicationController
 
     public function getCount($currentStatus)
     {
-        $attr = Application::whereHas('Job', function ($query) {
+        return Application::whereHas('Job', function ($query) {
             return $query->where('type', 'volunteer');
         })
             ->whereIn('status', $currentStatus)
             ->count();
-
-        return $attr;
     }
 }

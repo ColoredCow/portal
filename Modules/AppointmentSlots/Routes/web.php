@@ -15,12 +15,15 @@ Route::prefix('appointmentslots')->group(function () {
     Route::get('/', 'AppointmentSlotsController@index');
 });
 
-Route::get('appointment-slots/select/{user_id}', 'AppointmentSlotsController@showAppointments')->name('select-appointments');
+Route::get('appointment-slots/select/{user_id}', 'AppointmentSlotsController@showAppointments')
+    ->name('select-appointments');
 Route::post('appointment-slots/selected', 'AppointmentSlotsController@appointmentSelected');
 
 Route::middleware('auth')->group(function () {
-    Route::get('userappointmentslots/{user}', 'UserAppointmentSlotsController@show')->name('userappointmentslots.show');
-    Route::post('userappointmentslots', 'UserAppointmentSlotsController@store')->name('userappointmentslots.store');
+    Route::get('userappointmentslots/{user}', 'UserAppointmentSlotsController@show')
+    ->name('userappointmentslots.show');
+    Route::post('userappointmentslots', 'UserAppointmentSlotsController@store')
+    ->name('userappointmentslots.store');
     Route::patch('userappointmentslots/{appointmentSlot}', 'UserAppointmentSlotsController@update');
     Route::delete('userappointmentslots/{appointmentSlot}', 'UserAppointmentSlotsController@destroy');
 });

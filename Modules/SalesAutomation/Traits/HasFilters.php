@@ -7,7 +7,7 @@ trait HasFilters
     public function scopeFilter($query, $columns, $value)
     {
         foreach ($columns as $column) {
-            $query->where($this->getTable() . ".$column", 'like', "%$value%");
+            $query->where($this->getTable() . ".{$column}", 'like', "%{$value}%");
         }
 
         return $query;
@@ -16,7 +16,7 @@ trait HasFilters
     public function scopeOrFilter($query, $columns, $value)
     {
         foreach ($columns as $column) {
-            $query->orWhere($this->getTable() . ".$column", 'like', "%$value%");
+            $query->orWhere($this->getTable() . ".{$column}", 'like', "%{$value}%");
         }
 
         return $query;

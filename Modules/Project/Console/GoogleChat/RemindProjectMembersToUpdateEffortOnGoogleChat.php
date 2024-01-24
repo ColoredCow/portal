@@ -3,8 +3,8 @@
 namespace Modules\Project\Console\GoogleChat;
 
 use Illuminate\Console\Command;
-use Modules\Project\Entities\Project;
 use Illuminate\Support\Facades\Notification;
+use Modules\Project\Entities\Project;
 use Modules\Project\Notifications\GoogleChat\RemindToUpdateEffort;
 
 class RemindProjectMembersToUpdateEffortOnGoogleChat extends Command
@@ -22,16 +22,6 @@ class RemindProjectMembersToUpdateEffortOnGoogleChat extends Command
      * @var string
      */
     protected $description = 'Sends a simple notification that reminds a Google Chat channel to update their effort.';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Execute the console command.

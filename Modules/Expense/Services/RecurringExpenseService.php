@@ -6,7 +6,7 @@ use Modules\Expense\Entities\RecurringExpense;
 
 class RecurringExpenseService
 {
-    public function index(array $data = [])
+    public function index()
     {
         return RecurringExpense::query()
         ->latest()
@@ -42,9 +42,8 @@ class RecurringExpenseService
         return $recurringExpense;
     }
 
-    public function createNewExpense(RecurringExpense $recurringExpense)
+    public function createNewExpense($recurringExpense)
     {
-        // ToDo:: We will create the next expense entry for this one.
-        return [];
+        return $recurringExpense;
     }
 }

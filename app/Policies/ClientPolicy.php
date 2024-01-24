@@ -3,8 +3,8 @@
 namespace App\Policies;
 
 use App\Models\Client;
-use Modules\User\Entities\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Modules\User\Entities\User;
 
 class ClientPolicy
 {
@@ -14,10 +14,10 @@ class ClientPolicy
      * Determine whether the user can view the client.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Client  $client
+     *
      * @return mixed
      */
-    public function view(User $user, Client $client)
+    public function view(User $user)
     {
         return $user->hasPermissionTo('clients.view');
     }
@@ -26,6 +26,7 @@ class ClientPolicy
      * Determine whether the user can create clients.
      *
      * @param  \Modules\User\Entities\User  $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -37,10 +38,10 @@ class ClientPolicy
      * Determine whether the user can update the client.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Client  $client
+     *
      * @return mixed
      */
-    public function update(User $user, Client $client)
+    public function update(User $user)
     {
         return $user->hasPermissionTo('clients.update');
     }
@@ -49,10 +50,10 @@ class ClientPolicy
      * Determine whether the user can delete the client.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Client  $client
+     *
      * @return mixed
      */
-    public function delete(User $user, Client $client)
+    public function delete(User $user)
     {
         return $user->hasPermissionTo('clients.delete');
     }
@@ -61,6 +62,7 @@ class ClientPolicy
      * Determine whether the user can list clients.
      *
      * @param  \Modules\User\Entities\User  $user
+     *
      * @return mixed
      */
     public function list(User $user)

@@ -2,10 +2,10 @@
 
 namespace Modules\HR\Emails\Recruitment\Application;
 
-use Modules\HR\Entities\Application;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Modules\HR\Entities\Application;
 
 class ApplicationHandover extends Mailable
 {

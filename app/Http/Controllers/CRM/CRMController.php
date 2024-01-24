@@ -7,6 +7,7 @@ use App\Services\CrmServices;
 
 class CrmController extends Controller
 {
+    protected $service;
     /**
      * Service for the controller.
      *
@@ -22,7 +23,6 @@ class CrmController extends Controller
     {
         $this->service = $service;
     }
-    protected $service;
 
     public function index()
     {

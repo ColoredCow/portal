@@ -2,10 +2,10 @@
 
 namespace Modules\HR\Listeners\Recruitment;
 
+use App\Models\Setting;
 use Illuminate\Support\Facades\Mail;
 use Modules\HR\Emails\Recruitment\Applicant\ApplicantCreateAutoResponder;
 use Modules\HR\Events\Recruitment\ApplicationCreated;
-use App\Models\Setting;
 
 class ApplicantEmailVerification
 {
@@ -23,14 +23,15 @@ class ApplicantEmailVerification
      * Handle the event.
      *
      * @param  ApplicationCreated  $event
+     *
      * @return void
      */
     public function handle(ApplicationCreated $event)
     {
         $application = $event->application;
         $applicant = $application->applicant;
+        $attr = [];
         $attr['email_template'] = $applicant->emailTemplate;
-
         if (request()->subject || request()->body) {
             $subject = request()->subject;
             $body = request()->body;

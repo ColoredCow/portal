@@ -30,6 +30,6 @@ return [
             'edli_charges_limit' => 'EDLI Charges Limit',
             'health_insurance' => 'Health Insurance',
             'employer_esi_limit' => 'Employer ESI Limit',
-        ]
-    ]
+        ],
+    ],
 ];

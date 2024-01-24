@@ -2,11 +2,11 @@
 
 namespace Modules\HR\Entities\Evaluation;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\HR\Entities\ApplicationEvaluationSegment;
 use Modules\HR\Entities\Round;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Segment extends Model
 {

@@ -2,9 +2,9 @@
 
 namespace Modules\User\Services;
 
-use Modules\User\Contracts\ProfileServiceContract;
-use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\HrJobDesignation;
+use Modules\HR\Entities\HrJobDomain;
+use Modules\User\Contracts\ProfileServiceContract;
 
 class ProfileService implements ProfileServiceContract
 {

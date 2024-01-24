@@ -24,7 +24,7 @@
                     @foreach ($centres as $centre)
                         <tr>
                             <td>{{ $centre->centre_name }}</td>
-                            <td>{{ $centre->centre_head->name }}</td>
+                            <td>{{ $centre->centreHead->name }}</td>
                             <td>{{ $centre->capacity }}</td>
                             <td>{{ $centre->current_people_count }}</td>
                             <td>

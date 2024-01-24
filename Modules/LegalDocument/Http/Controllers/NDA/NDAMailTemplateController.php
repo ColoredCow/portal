@@ -18,17 +18,19 @@ class NDAMailTemplateController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
      * @param Request $request
      */
     public function store(Request $request)
     {
-        $legalDocumentTemplate = LegalDocumentMailTemplate::create($request->all());
+        LegalDocumentMailTemplate::create($request->all());
 
         return redirect(route('legal-document.nda.index'));
     }
 
     /**
      * Show the specified resource.
+     *
      * @param int $id
      */
     public function show($id)
@@ -39,26 +41,19 @@ class NDAMailTemplateController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     */
-    public function edit($id)
-    {
-    }
-
-    /**
      * Update the specified resource in storage.
+     *
      * @param Request $request
      * @param int $id
      */
     public function update(Request $request, $id)
     {
-        $legalDocumentTemplate = LegalDocumentMailTemplate::find($id)->update($request->all());
+        LegalDocumentMailTemplate::find($id)->update($request->all());
 
         return redirect(route('legal-document.nda.index'));
     }
 
-    public function showPreview(Request $request)
+    public function showPreview()
     {
         $template = LegalDocumentMailTemplate::find(request('template_id'));
         $data = [

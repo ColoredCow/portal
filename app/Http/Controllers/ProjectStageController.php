@@ -57,7 +57,7 @@ class ProjectStageController extends Controller
     public function update(ProjectStageRequest $request, ProjectStage $stage)
     {
         $validated = $request->validated();
-        $updated = $stage->update([
+        $stage->update([
             'name' => $validated['name'],
             'type' => $validated['type'],
             'start_date' => $validated['start_date'] ? DateHelper::formatDateToSave($validated['start_date']) : null,

@@ -4,8 +4,8 @@ namespace Modules\Project\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
-use Modules\Project\Services\ProjectService;
 use Modules\Project\Emails\FixedBudgetProjectMail;
+use Modules\Project\Services\ProjectService;
 
 class FixedBudgetProject extends Command
 {
@@ -22,16 +22,6 @@ class FixedBudgetProject extends Command
      * @var string
      */
     protected $description = 'Send email to the project key account manager when the end date of a fixed budget project is nearing.';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Execute the console command.

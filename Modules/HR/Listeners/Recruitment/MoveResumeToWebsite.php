@@ -3,7 +3,6 @@
 namespace Modules\HR\Listeners\Recruitment;
 
 use Illuminate\Support\Facades\Artisan;
-use Modules\HR\Events\Recruitment\ApplicationCreated;
 
 class MoveResumeToWebsite
 {
@@ -20,10 +19,9 @@ class MoveResumeToWebsite
     /**
      * Handle the event.
      *
-     * @param  ApplicationCreated  $event
      * @return void
      */
-    public function handle(ApplicationCreated $event)
+    public function handle()
     {
         Artisan::call('hr:move-resume-to-website');
     }

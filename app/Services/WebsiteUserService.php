@@ -6,7 +6,7 @@ use Corcel\Laravel\Auth\AuthUserProvider;
 
 class WebsiteUserService
 {
-    public $user;
+    protected $user;
 
     public function __construct()
     {

@@ -8,14 +8,12 @@ class CountryRequest extends FormRequest
 {
     public function rules()
     {
-        $rules = [
+        return [
                 'name' => 'required|string',
                 'initials' => 'required|string',
                 'currency' => 'required|string',
                 'currency_symbol' => 'nullable|string',
             ];
-
-        return $rules;
     }
 
     /**

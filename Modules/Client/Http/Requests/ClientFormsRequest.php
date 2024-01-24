@@ -6,56 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ClientFormsRequest extends FormRequest
 {
-    private function clientDetailsValidation()
-    {
-        $rules = [
-            'name' => 'required|string',
-            'is_channel_partner' => 'nullable|string',
-            'channel_partner_id' => 'nullable|integer',
-            'parent_organisation_id' => 'nullable|integer',
-        ];
-
-        if (request()->has('status')) {
-            $rules['status'] = 'required|string|in:inactive';
-        }
-
-        return $rules;
-    }
-
-    private function contactPersonsValidation()
-    {
-        return [
-            'client_contact_persons.*.name' => 'nullable|max:120',
-            'client_contact_persons.*.email' => 'required|email',
-            'client_contact_persons.*.phone' => 'nullable|max:20',
-        ];
-    }
-
-    private function addressValidation()
-    {
-        return [
-            'address.*.country_id' => 'required|string',
-            'address.*.address' => 'required|string',
-            'address.*.state' => 'nullable|string',
-            'address.*.gst_number' => 'nullable|string',
-            'address.*.city' => 'nullable|string',
-            'address.*.area_code' => 'nullable|string',
-        ];
-    }
-
-    private function billingDetailsValidation()
-    {
-        return [
-            'key_account_manager_id' => 'required|string',
-            'service_rates' => 'nullable|string',
-            'service_rate_term' => 'nullable|string',
-            'discount_rate' => 'nullable|string',
-            'discount_rate_term' => 'nullable|string',
-            'billing_frequency' => 'nullable|string',
-            'bank_charges' => 'nullable|string',
-        ];
-    }
-
     public function getClientDetailsFormRules()
     {
         $section = $this->all()['section'];
@@ -106,6 +56,55 @@ class ClientFormsRequest extends FormRequest
         return [
             'client_contact_persons.*.phone.*' => 'Please enter a valid phone number.',
             'client_contact_persons.*.email.*' => 'Please enter a valid mailing-address.',
+        ];
+    }
+    private function clientDetailsValidation()
+    {
+        $rules = [
+            'name' => 'required|string',
+            'is_channel_partner' => 'nullable|string',
+            'channel_partner_id' => 'nullable|integer',
+            'parent_organisation_id' => 'nullable|integer',
+        ];
+
+        if (request()->has('status')) {
+            $rules['status'] = 'required|string|in:inactive';
+        }
+
+        return $rules;
+    }
+
+    private function contactPersonsValidation()
+    {
+        return [
+            'client_contact_persons.*.name' => 'nullable|max:120',
+            'client_contact_persons.*.email' => 'required|email',
+            'client_contact_persons.*.phone' => 'nullable|max:20',
+        ];
+    }
+
+    private function addressValidation()
+    {
+        return [
+            'address.*.country_id' => 'required|string',
+            'address.*.address' => 'required|string',
+            'address.*.state' => 'nullable|string',
+            'address.*.gst_number' => 'nullable|string',
+            'address.*.city' => 'nullable|string',
+            'address.*.area_code' => 'nullable|string',
+        ];
+    }
+
+    private function billingDetailsValidation()
+    {
+        return [
+            'key_account_manager_id' => 'required|string',
+            'service_rates' => 'nullable|string',
+            'service_rate_term' => 'nullable|string',
+            'discount_rate' => 'nullable|string',
+            'discount_rate_term' => 'nullable|string',
+            'billing_frequency' => 'nullable|string',
+            'bank_charges' => 'nullable|string',
         ];
     }
 }
