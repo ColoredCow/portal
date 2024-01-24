@@ -12,6 +12,8 @@ parameters:
         - Modules/*/vendor/composer/ClassLoader.php
         - Modules/*/Database/Factories/*.php   # Ignore Error occurring due to Laravel factories
         - Modules/*/Database/Seeders/*.php   # Ignore Error occurring due to Laravel factories
+        - Modules/*/Database/Seeders/*.php   # Ignore Error occurring due to Laravel factories
+        - Modules/*/Tests/*.php   # Ignore Error occurring due to Laravel factories
 
     # The level 8 is the highest level
     level: 5
