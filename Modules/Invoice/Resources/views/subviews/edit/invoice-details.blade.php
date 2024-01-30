@@ -95,8 +95,8 @@
                     <label for="amountPaid" class="field-required mr-3 pt-1">Received Amount</label>
                     <div class="input-group flex-1">
                         <input v-model="amountPaid" type="number" class="form-control" name="amount_paid"
-                            id="amountPaid" placeholder="Amount Received" required="required" step=".01"
-                            min="0" v-on:input="changePaidAmountListener">
+                            id="amountPaid" placeholder="Amount Received" step=".01" min="0" v-on:input="changePaidAmountListener"
+                            required="required">
                         <div class="input-group-prepend">
                             <select name="currency_transaction_charge" v-model="currencyTransactionCharge"
                                 id="currencyTransactionCharge" class="input-group-text" required="required">
@@ -127,7 +127,8 @@
                     <div class="d-flex">
                         <label for="tds_percentage" class="mr-4 pt-1 field-required">TDS %:</label>
                         <input type="text" class="form-control w-272 ml-auto" name="tds_percentage"
-                            v-model='tdsPercentage' required="required">
+                             v-model='tdsPercentage' required="required" id="tds_percentage"  
+                            step=".01" min="0" v-on:input="changeTdsListener">
                     </div>
                 </div>
 
@@ -234,6 +235,11 @@
                 updateTds() {
                     this.tds = this.amount - this.amountPaid + (this.amount * 0.18)
                     this.tdsPercentage = (this.tds / this.amount) * 100
+                },
+
+                changeTdsListener() {
+                    this.tds =  this.tdsPercentage * this.amount * 0.01;
+                    this.amountPaid = +this.amount + (this.amount * 0.18) - this.tds;
                 },
 
                 updateBankCharges() {
