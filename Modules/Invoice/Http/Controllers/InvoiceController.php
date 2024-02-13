@@ -42,7 +42,7 @@ class InvoiceController extends Controller
     /**
      * Display Client-Listing Page.
      */
-    public function clientIndex(Request $request) 
+    public function clientIndex(Request $request)
     {
         return view('invoice::clientIndex', $this->service->clients());
     }
@@ -61,9 +61,9 @@ class InvoiceController extends Controller
             $invoiceStatus = 'ready';
             $filters = $request->all();
         }
+        
         return view('invoice::invoice-settle', $this->service->index($filters, $invoiceStatus));
     }
-
 
     /**
      * Show the form for creating a new resource.
