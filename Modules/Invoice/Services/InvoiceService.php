@@ -471,7 +471,7 @@ class InvoiceService implements InvoiceServiceContract
             $totals[$client['client_id']]['total'] += ($client['amount'] += $client['amount'] * 0.18);
             $totals[$client['client_id']]['total_invoices'] += 1;
         }
-        
+
         return ['clientData' => $totals];
     }
 

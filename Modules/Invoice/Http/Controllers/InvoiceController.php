@@ -61,7 +61,7 @@ class InvoiceController extends Controller
             $invoiceStatus = 'ready';
             $filters = $request->all();
         }
-        
+
         return view('invoice::invoice-settle', $this->service->index($filters, $invoiceStatus));
     }
 
