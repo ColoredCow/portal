@@ -28,7 +28,6 @@ class InvoiceController extends Controller
     {
         $invoiceStatus = $request->invoice_status ?? 'sent';
         $filters = $request->all();
-
         if ($invoiceStatus == 'sent') {
             unset($filters['invoice_status']);
             $filters = $filters ?: $this->service->defaultFilters();
@@ -39,6 +38,31 @@ class InvoiceController extends Controller
 
         return view('invoice::index', $this->service->index($filters, $invoiceStatus));
     }
+
+    /**
+     * Display Client-Listing Page.
+     */
+    public function clientIndex(Request $request) {
+        return view('invoice::clientIndex', $this->service->clients());
+    }
+
+    /**
+     * Display Invoice-Settlement Page.
+     */
+    public function invoiceSettle(Request $request)
+    {
+        $invoiceStatus = $request->invoice_status ?? 'sent';
+        $filters = $request->all();
+        if ($invoiceStatus == 'sent') {
+            unset($filters['invoice_status']);
+            $filters = $filters ?: $this->service->defaultFilters();
+        } else {
+            $invoiceStatus = 'ready';
+            $filters = $request->all();
+        }
+        return view('invoice::invoice-settle', $this->service->index($filters, $invoiceStatus));
+    }
+
 
     /**
      * Show the form for creating a new resource.

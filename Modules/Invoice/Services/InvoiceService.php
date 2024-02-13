@@ -457,6 +457,23 @@ class InvoiceService implements InvoiceServiceContract
         ];
     }
 
+    public function clients() {
+        $clientData = Invoice::select('amount','invoices.client_id', 'invoices.invoice_number', 'clients.name')
+                        ->join('clients', 'clients.id', '=', 'invoices.client_id')
+                        ->where('invoices.status', 'sent')
+                        ->get();
+        $totals = [];
+        foreach ($clientData as $client) {
+            if (!isset($totals[$client['client_id']])) {
+                $totals[$client['client_id']] = ['name' => $client['name'], 'total' => 0, 'total_invoices' => 0, 'client_id' => $client['client_id']];
+            }
+            $totals[$client['client_id']]['total'] += ($client['amount'] += $client['amount'] * 0.18) ;
+            $totals[$client['client_id']]['total_invoices'] += 1;
+        }
+                         
+        return ['clientData' => $totals];
+    }
+
     public function sendInvoice(array $data)
     {
         $term = $data['term'] ?? null;
