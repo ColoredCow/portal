@@ -457,7 +457,8 @@ class InvoiceService implements InvoiceServiceContract
         ];
     }
 
-    public function clients() {
+    public function clients() 
+    {
         $clientData = Invoice::select('amount','invoices.client_id', 'invoices.invoice_number', 'clients.name')
                         ->join('clients', 'clients.id', '=', 'invoices.client_id')
                         ->where('invoices.status', 'sent')

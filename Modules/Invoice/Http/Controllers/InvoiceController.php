@@ -42,7 +42,8 @@ class InvoiceController extends Controller
     /**
      * Display Client-Listing Page.
      */
-    public function clientIndex(Request $request) {
+    public function clientIndex(Request $request) 
+    {
         return view('invoice::clientIndex', $this->service->clients());
     }
 
