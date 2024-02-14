@@ -1,6 +1,7 @@
-<div id="edit_invoice_details_form">
-    <div class="card-body">
-
+@foreach ($invoices as $invoice)
+<div class="modal fade" id="edit_invoice_details_form_{{$invoice->invoice_number}}" role="dialog" aria-hidden="true">
+    <div class="card-body modal-dialog modal-lg bg-white" role="document">
+{{-- @php dd($invoice)@endphp --}}
         <div class="form-row mb-4">
             <div class="col-md-5">
                 <div class="form-group d-flex">
@@ -91,7 +92,7 @@
                     <br>
                 </div>
 
-                <div class="form-group d-flex">
+                {{-- <div class="form-group d-flex">
                     <label for="amountPaid" class="field-required mr-3 pt-1">Received Amount</label>
                     <div class="input-group flex-1">
                         <input v-model="amountPaid" type="number" class="form-control" name="amount_paid"
@@ -106,7 +107,7 @@
                             </select>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="form-group-inline d-flex mb-2">
                     <label for="payment_at" class="field-required mr-8 pt-1">Payment date</label>
@@ -155,11 +156,11 @@
                     </div>
                 </div>
 
-                <div class="form-group ">
+                {{-- <div class="form-group ">
                     <label for="comments">Comments</label>
                     <textarea name="comments" id="paidInvoiceComment" rows="5" class="form-control" @keyup="parseComment($event)"
                         v-model="comments"></textarea>
-                </div>
+                </div> --}}
 
             </div>
             <div class="col-md-5 offset-md-1 mt-auto" v-if="status=='disputed'">
@@ -185,9 +186,6 @@
                 @endif
             </div>
         </div>
-        <div>
-            @include('invoice::modals.payment-received')
-        </div>
     </div>
     <div class="card-footer">
         <button type="submit" class="btn btn-primary mr-4">Save</button>
@@ -197,7 +195,8 @@
             @include('errors.403')
         @endif
     </div>
-</div>
+</div> 
+@endforeach
 
 
 @section('js_scripts')
