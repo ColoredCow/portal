@@ -1,7 +1,9 @@
-@foreach ($invoices as $invoice)
-<div class="modal fade" id="edit_invoice_details_form_{{$invoice->invoice_number}}" role="dialog" aria-hidden="true">
-    <div class="card-body modal-dialog modal-lg bg-white" role="document">
-{{-- @php dd($invoice)@endphp --}}
+<div id="edit_invoice_details_form">
+@foreach ($invoices as $key=>$invoice)
+<div class="modal fade" id="edit_invoice_details_form_{{$key}}" role="dialog" aria-hidden="true">
+    <div class="card-body modal-dialog modal-xl bg-white">
+        <div class="modal-content">
+        {{-- @php dd($invoice)@endphp --}}
         <div class="form-row mb-4">
             <div class="col-md-5">
                 <div class="form-group d-flex">
@@ -92,7 +94,7 @@
                     <br>
                 </div>
 
-                {{-- <div class="form-group d-flex">
+                <div class="form-group d-flex">
                     <label for="amountPaid" class="field-required mr-3 pt-1">Received Amount</label>
                     <div class="input-group flex-1">
                         <input v-model="amountPaid" type="number" class="form-control" name="amount_paid"
@@ -101,14 +103,11 @@
                         <div class="input-group-prepend">
                             <select name="currency_transaction_charge" v-model="currencyTransactionCharge"
                                 id="currencyTransactionCharge" class="input-group-text" required="required">
-                                @foreach ($countries as $country)
-                                    <option value="{{ $country->currency }}">{{ $country->currency }}</option>
-                                @endforeach
+                                    <option value="{{ $invoice->currency }}">{{ $invoice->currency }}</option>
                             </select>
                         </div>
                     </div>
-                </div> --}}
-
+                </div> 
                 <div class="form-group-inline d-flex mb-2">
                     <label for="payment_at" class="field-required mr-8 pt-1">Payment date</label>
                     <input type="date" class="form-control flex-1" name="payment_at" id="payment_at"
@@ -186,17 +185,19 @@
                 @endif
             </div>
         </div>
-    </div>
-    <div class="card-footer">
-        <button type="submit" class="btn btn-primary mr-4">Save</button>
-        @if (auth()->user()->can('finance_invoices.delete'))
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary mr-4">Save</button>
+            @if (auth()->user()->can('finance_invoices.delete'))
             <span class="btn btn-danger" @click="deleteInvoice()">Delete</span>
-        @else
+            @else
             @include('errors.403')
-        @endif
-    </div>
-</div> 
+            @endif
+        </div>
+    </div> 
+</div>
+</div>
 @endforeach
+</div>
 
 
 @section('js_scripts')

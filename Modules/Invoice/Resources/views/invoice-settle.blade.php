@@ -67,10 +67,10 @@
                         @if (request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
                             <th>Sent on</th>
                             <th>Due on</th>
-                            {{-- <th>Paid on</th> --}}
+                            <th>Paid on</th>
                             <th>Status</th>
                             <th>Email</th>
-                            <th>Received Amount</th>
+                            {{-- <th>Received Amount</th> --}}
                         @elseif (request()->invoice_status == 'ready')
                             <th>EffortSheet</th>
                             <th>Preview Invoice</th>
@@ -109,7 +109,7 @@
                                 <td>{{ optional($invoice->project)->name ?: $invoice->client->name . ' Projects' }}</td>
                                 <td>
                                     {{-- <a href="{{ route('invoice.edit', $invoice) }}">{{ $invoice->invoice_number }}</a> --}}
-                                    <div class="text-primary c-pointer" data-toggle="modal" data-target="#edit_invoice_details_form_{{$invoice->invoice_number}}">{{ $invoice->invoice_number }}</div>
+                                    <div class="text-primary c-pointer" data-toggle="modal" data-target="#edit_invoice_details_form_{{$key}}">{{ $invoice->invoice_number }}</div>
                                 </td>
                                 <td>{{ $invoice->invoiceAmount() }}</td>
                                 @php $total_amount += intval(ltrim($invoice->invoiceAmount(), "₹")) @endphp
@@ -119,10 +119,10 @@
                                     class='{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger ' : '' }} text-center'>
                                     {{ $invoice->receivable_date->format(config('invoice.default-date-format')) }}
                                 </td>
-                                <!-- <td
+                                <td
                                     class="{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }} text-center">
                                     {{ $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '' }}
-                                </td> -->
+                                </td> 
                                 <td
                                     class="{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger' : '' }}{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }} text-center">
                                     {{ $invoice->shouldHighlighted() ? __('Overdue') : $invoice->status }}
@@ -337,7 +337,7 @@
             @include('invoice::subviews.invoice-report.invoice-details-modal', [
                 'modalId' => 'InvoiceDetailsForClient' . $client->id,
                 'teamMembers' => $client->teamMembersEffortData($monthToSubtract),
-            ])
+                ])
         @endforeach
     </div>
     @include('invoice::modals.invoice-reminder')
@@ -400,5 +400,5 @@
         });
     })
     </script>
-@endsection
+
 
