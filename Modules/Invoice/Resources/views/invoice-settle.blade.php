@@ -53,9 +53,9 @@
                 <thead class="thead-dark">
                     <tr class="text-center sticky-top">
                         <th></th>
-                        @if (request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
+                        {{-- @if (request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
                             <th>Client</th>
-                        @endif
+                        @endif --}}
                         <th class="w-150">Project</th>
                         @if (request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
                             <th>Invoice Number</th>
@@ -67,9 +67,10 @@
                         @if (request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
                             <th>Sent on</th>
                             <th>Due on</th>
-                            <!-- <th>Paid on</th> -->
+                            {{-- <th>Paid on</th> --}}
                             <th>Status</th>
                             <th>Email</th>
+                            <th>Received Amount</th>
                         @elseif (request()->invoice_status == 'ready')
                             <th>EffortSheet</th>
                             <th>Preview Invoice</th>
@@ -104,9 +105,11 @@
                             @endphp
                             <tr id="row_<?php echo $key;?>">
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $invoice->client->name }}</td>
+                                {{-- <td>{{ $invoice->client->name }}</td> --}}
                                 <td>{{ optional($invoice->project)->name ?: $invoice->client->name . ' Projects' }}</td>
-                                <td><a href="{{ route('invoice.edit', $invoice) }}">{{ $invoice->invoice_number }}</a>
+                                <td>
+                                    {{-- <a href="{{ route('invoice.edit', $invoice) }}">{{ $invoice->invoice_number }}</a> --}}
+                                    <div class="text-primary c-pointer" data-toggle="modal" data-target="#edit_invoice_details_form_{{$invoice->invoice_number}}">{{ $invoice->invoice_number }}</div>
                                 </td>
                                 <td>{{ $invoice->invoiceAmount() }}</td>
                                 @php $total_amount += intval(ltrim($invoice->invoiceAmount(), "₹")) @endphp
@@ -338,6 +341,7 @@
         @endforeach
     </div>
     @include('invoice::modals.invoice-reminder')
+    @include('invoice::subviews.edit.invoice-details')
     
 @endsection
 @section('js_scripts')
