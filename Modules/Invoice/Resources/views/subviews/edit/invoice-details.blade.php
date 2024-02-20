@@ -138,12 +138,12 @@
                             v-model='bankCharges' required="required">
                     </div>
                 </div>
-
+                
                 <div class="form-group" v-if="this.client.type !== 'indian'">
                     <div class="d-flex">
-                        <label for="client_id" class="mr-4 pt-1 field-required">Conversion Rate Diff:</label>
-                        <input type="number" class="form-control w-272 ml-auto" step="0.01"
-                            name="conversion_rate_diff" v-model='conversionRateDiff' required="required">
+                        <label for="conversion_rate" class="mr-4 pt-1">Current Conversion Rate:</label>
+                        <input type="number" id="currentConversionRate" class="form-control w-272 ml-auto" step="0.01"
+                            name="current_conversion_rate" value="{{$currencyService->getCurrentRatesInINR()}}" disabled>
                     </div>
                 </div>
 
@@ -155,11 +155,21 @@
                     </div>
                 </div>
 
+                <div class="form-group" v-if="this.client.type !== 'indian'">
+                    <div class="d-flex">
+                        <label for="client_id" class="mr-4 pt-1 field-required">Conversion Rate Diff:</label>
+                        <input type="number" class="form-control w-272 ml-auto" step="0.01"
+                            name="conversion_rate_diff" v-model='conversionRateDiff' required="required">
+                    </div>
+                </div>
+
                 <div class="form-group ">
                     <label for="comments">Comments</label>
                     <textarea name="comments" id="paidInvoiceComment" rows="5" class="form-control" @keyup="parseComment($event)"
                         v-model="comments"></textarea>
                 </div>
+
+                <P id="bank-not-found" class="text-danger"></P>
 
             </div>
             <div class="col-md-5 offset-md-1 mt-auto" v-if="status=='disputed'">
@@ -201,7 +211,8 @@
 
 
 @section('js_scripts')
-    <script>
+        @php $bank_statement_patterns = (config('invoice.bank_statement_patterns')); @endphp
+        <script>
         new Vue({
             el: '#edit_invoice_details_form',
 
@@ -247,26 +258,116 @@
                         this.show_on_select = false
                     }
                 },
+            
+                // Comment parsing logic for different banks.
+                citiBankParser(comment) {
+                    extractedNumberList = comment.split(" ").map(function(word) {
+                                var number = word.trim().replaceAll(",", "")
+                                if (number == 0 || isNaN(number)) {
+                                    return null;
+                                }
+                                return Number(number);
+                            });
+                    
+                            var filteredNumberList = extractedNumberList.filter(function(number) {
+                                return number != null
+                            });
+
+                            this.updatePaymentAmountDetails(filteredNumberList, bank = "Citi bank");
+                },
+
+                axisBankParser(comment) {
+                    extractedNumberList = comment.split(/[\/\s]/g).map(function(word) {
+                            var number = word.trim().replace(/,\s/, "")
+                                if (number == 0 || isNaN(number)) {
+                                    return null;
+                                }
+                                return Number(number);
+                            });
+                
+                            var filteredNumberList = extractedNumberList.filter(function(number) {
+                                return number != null
+                            });
+
+                            this.updatePaymentAmountDetails(filteredNumberList, bank = "Axis bank");
+
+                },
+
+                defaultParser(comment) {
+                    extractedNumberList = comment.split(/[\/\s]/g).map(function(word) {
+                            var number = word.trim().replace(/,\s/, "")
+                                if (number == 0 || isNaN(number)) {
+                                    return null;
+                                }
+                                return Number(number);
+                            });
+                    
+                            var filteredNumberList = extractedNumberList.filter(function(number) {
+                                return number != null
+                            });
+
+                            this.updatePaymentAmountDetails(filteredNumberList, bank = null);
+                            // document.getElementById("bank-not-found").innerHTML = 'The bank statement does not match existing patterns. Trying to give the best possible result.' ;
+                },
 
                 parseComment($event) {
                     let comment = event.target.value
-
-                    extractedNumberList = comment.split(" ").map(function(word) {
-                        var number = Number(word.trim().replaceAll(",", ""))
-                        if (isNaN(number)) {
-                            return null;
+                    let bank_statement_patterns = @json($bank_statement_patterns);
+                    formattedComment = comment.replace(/\s/g, ""); // Variable for storing the formatted comment string so that we can match it with the stored bank patterns
+                    
+                    // Extracting the paid amount according to the bank transaction pattern string.
+                    var bank = null; 
+                    for(let bankName in bank_statement_patterns) {
+                        if (formattedComment.includes(bank_statement_patterns[bankName])) {
+                            bank = bankName;
+                        } 
+                    }
+                    // Showing message if bank statement does not match any exising bank pattern
+                    if (bank) {
+                        document.getElementById("bank-not-found").innerHTML = null ;
+                    } else {
+                            document.getElementById("bank-not-found").innerHTML = 'The bank statement does not match existing patterns. Trying to give the best possible result.' ;
                         }
-                        return number;
-                    });
 
-                    var filteredNumberList = extractedNumberList.filter(function(number) {
-                        return number != null;
-                    });
+                    switch (bank) {
+                        case "CITI":
+                                this.citiBankParser(comment);
+                            break;
+                        
+                        case "Axis":
+                                this.axisBankParser(comment);
+                            break;
 
-                    this.updatePaymentAmountDetails(filteredNumberList)
+                        default:
+                            this.defaultParser(comment);
+                            break;
+                    }
+                
                 },
 
-                updatePaymentAmountDetails(filtered_number_list) {
+                // Conversion rate logic for different banks.
+                bankConversionRate(filtered_number_list, index, bank) {
+                    conversionRate = filtered_number_list[index]
+                    switch (bank) {
+                        case "Axis bank":
+                                this.conversionRate = conversionRate / this.amountPaid;
+                                this.conversionRateDiff = Math.abs(this.currentExchangeRate - this.conversionRate).toFixed(2)
+                            break;
+        
+                        default:
+                                this.conversionRate = conversionRate;
+                                this.conversionRateDiff = Math.abs(this.currentExchangeRate - this.conversionRate).toFixed(2)
+                            break;
+                    }
+                },
+
+                defaultConversionRate(filtered_number_list, index) {
+                    conversionRate = filtered_number_list[index]
+                    
+                },
+
+                updatePaymentAmountDetails(filtered_number_list, bank) {
+                    console.log(filtered_number_list);
                     let totalNumbersInList = filtered_number_list.length
                     var emailBody = $("#emailBody").text();
 
@@ -286,10 +387,9 @@
                             $('#amountPaid').val(this.amountPaid)
                             emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
                             this.calculateTaxes()
-                        } else if (index == 1) {
-                            conversionRate = filtered_number_list[index]
-                            this.conversionRate = conversionRate
-                            this.conversionRateDiff = Math.abs(this.currentExchangeRate - conversionRate).toFixed(2)
+                        } else if (index == totalNumbersInList-1) {
+                            console.log(bank);
+                            this.bankConversionRate(filtered_number_list, index, bank);
                         }
                     }
 

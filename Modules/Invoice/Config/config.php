@@ -169,4 +169,8 @@ return [
             'projects' => [],
         ],
     ],
+        'bank_statement_patterns' => [
+            'CITI' => env('CITI_BANK_STATEMENT'),
+            'Axis' => env('AXIS_BANK_STATEMENT'),
+        ],
 ];
