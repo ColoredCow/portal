@@ -60,6 +60,11 @@
                             <input type="text"  v-model="clientAddress.area_code" class="form-control" :name="`address[${index}][area_code]`"  placeholder="Enter Area code"/> 
                         </div>
 
+                        <div class="form-group" v-if="clientAddress.country_id == 1">
+                            <label for="pan_number" >PAN Number</label>
+                            <input type="text"  v-model="clientAddress.pan_number" class="form-control" :name="`address[${index}][pan_number]`"  placeholder="Enter Pan Number"/> 
+                        </div>
+
                     </div>
                 </div>
         
