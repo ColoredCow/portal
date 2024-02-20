@@ -168,7 +168,7 @@
                     <textarea name="comments" id="paidInvoiceComment" rows="5" class="form-control" @keyup="parseComment($event)"
                         v-model="comments"></textarea>
                 </div>
-
+                {{-- Show message when the bank statement does not match any existing pattern --}}
                 <P id="bank-not-found" class="text-danger"></P>
 
             </div>
