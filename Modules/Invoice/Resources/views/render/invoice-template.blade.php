@@ -360,7 +360,7 @@
                             </p>
                             <p>{{ $client->country->initials == 'IN' && optional($client->addresses->first())->gst_number ? __('GSTIN: ') . optional($client->addresses->first())->gst_number : '' }}
                             </p>
-                            <p>{{ $client->billing_contact->phone }}</p>
+                            <p>{{ optional($client->billing_contact)->phone }}</p>
                             <p>{{ optional($client->addresses->first())->pan_number }}</p>
                         </td>
                         <td>
