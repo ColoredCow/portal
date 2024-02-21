@@ -68,6 +68,7 @@ return [
         'gstin' => env('GSTIN', ''),
         'cin-no' => env('CIN_NO', ''),
         'hsn-code' => env('HSN_CODE', ''),
+        'msme' => env('MSME', ''),
         'indian' => [
             'bank-address' => env('INDIAN_INVOICE_BANK_ADDRESS', ''),
             'swift-code' => env('INDIAN_INVOICE_SWIFT_CODE', ''),
