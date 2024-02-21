@@ -346,7 +346,7 @@
                             <p>GSTIN : {{ config('invoice.finance-details.gstin') }}</p>
                             <p>SAC / HSN code : {{ config('invoice.finance-details.hsn-code') }}</p>
                             <p>CIN No. {{ config('invoice.finance-details.cin-no') }}</p>
-                            <p>MSME {{ config('invoice.finance-details.msme') }}</p>
+                            <p>MSME : {{ config('invoice.finance-details.msme') }}</p>
                             <p><br><br><br></p>
                         </td>
                     </tr>
