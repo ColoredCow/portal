@@ -77,7 +77,7 @@ class Invoice extends Model implements Auditable
         $FYStartMonth = config('invoice.financial-month-details.financial_year_start_month');
         $FYEndMonth = config('invoice.financial-month-details.financial_year_end_month');
 
-        $startDate = "{$invoiceYear}- {$FYStartMonth}-01";
+        $startDate = "{$invoiceYear}-{$FYStartMonth}-01";
         $endDate = ($invoiceYear + 1) . "-{$FYEndMonth}-31";
 
         return $query->whereBetween('sent_on', [$startDate, $endDate]);
