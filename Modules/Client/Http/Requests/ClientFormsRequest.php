@@ -92,7 +92,7 @@ class ClientFormsRequest extends FormRequest
             'address.*.gst_number' => 'nullable|string',
             'address.*.city' => 'nullable|string',
             'address.*.area_code' => 'nullable|string',
-            'address.*.pan_number' => 'required|alpha_num|min:10|max:10',
+            'address.*.pan_number' => 'nullable|alpha_num|min:10|max:10',
         ];
     }
 

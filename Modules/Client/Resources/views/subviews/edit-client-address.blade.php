@@ -61,8 +61,8 @@
                         </div>
 
                         <div class="form-group" v-if="clientAddress.country_id == 1">
-                            <label for="pan_number" >PAN Number</label>
-                            <input type="text"  v-model="clientAddress.pan_number" class="form-control" :name="`address[${index}][pan_number]`"  placeholder="Enter Pan Number"/> 
+                            <label for="pan_number" class="field-required">PAN Number</label>
+                            <input type="text"  v-model="clientAddress.pan_number" class="form-control" :name="`address[${index}][pan_number]`"  placeholder="Enter Pan Number" required/> 
                         </div>
 
                     </div>
