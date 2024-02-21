@@ -168,7 +168,6 @@
                     <textarea name="comments" id="paidInvoiceComment" rows="5" class="form-control" @keyup="parseComment($event)"
                         v-model="comments"></textarea>
                 </div>
-                {{-- Show message when the bank statement does not match any existing pattern --}}
                 <P id="bank-not-found" class="text-danger"></P>
 
             </div>
@@ -211,7 +210,7 @@
 
 
 @section('js_scripts')
-        @php $bank_statement_patterns = (config('invoice.bank_statement_patterns')); @endphp
+        @php $bank_message_patterns = (config('invoice.bank_message_patterns')); @endphp
         <script>
         new Vue({
             el: '#edit_invoice_details_form',
@@ -293,32 +292,50 @@
 
                 },
 
-                defaultParser(comment) {
-                    extractedNumberList = comment.split(/[\/\s]/g).map(function(word) {
-                            var number = word.trim().replace(/,\s/, "")
-                                if (number == 0 || isNaN(number)) {
-                                    return null;
-                                }
-                                return Number(number);
-                            });
-                    
-                            var filteredNumberList = extractedNumberList.filter(function(number) {
-                                return number != null
-                            });
+                //Calculate percentage of matching string
+                showMatchingPercentage(comment, bankPattern){
+                    var tmpValue = 0;
+                    var maxLength = comment.length;
+                    var minLength = bankPattern.length;
+                    if(comment.length > bankPattern.length){
+                        var minLength = bankPattern.length;
+                    }
+                    for(var i = 0; i < minLength; i++) {
+                        if(comment[i] == bankPattern[i]) {
+                            tmpValue++;
+                        }
+                    }
+                    var percent = (tmpValue / maxLength) * 100;
+                    return (percent);
+                },
 
-                            this.updatePaymentAmountDetails(filteredNumberList, bank = null);
-                            // document.getElementById("bank-not-found").innerHTML = 'The bank statement does not match existing patterns. Trying to give the best possible result.' ;
+                defaultParser(comment, bank_message_patterns) {
+                    let percentOfMatching = {}
+                    for(let bankName in bank_message_patterns) {
+                        let result = this.showMatchingPercentage(comment, bank_message_patterns[bankName])
+                        percentOfMatching[bankName] = result;
+                    }
+                    percentOfMatching = Object.keys(percentOfMatching).reduce((a, b) => percentOfMatching[a] > percentOfMatching[b] ? a : b);
+
+                    switch (percentOfMatching) {
+                        case "CITI":
+                            this.citiBankParser(comment);
+                            break;
+                        case "Axis":
+                            this.axisBankParser(comment);
+                            break;
+                    }
                 },
 
                 parseComment($event) {
                     let comment = event.target.value
-                    let bank_statement_patterns = @json($bank_statement_patterns);
+                    let bank_message_patterns = @json($bank_message_patterns);
                     formattedComment = comment.replace(/\s/g, ""); // Variable for storing the formatted comment string so that we can match it with the stored bank patterns
                     
                     // Extracting the paid amount according to the bank transaction pattern string.
                     var bank = null; 
-                    for(let bankName in bank_statement_patterns) {
-                        if (formattedComment.includes(bank_statement_patterns[bankName])) {
+                    for(let bankName in bank_message_patterns) {
+                        if (formattedComment.includes(bank_message_patterns[bankName])) {
                             bank = bankName;
                         } 
                     }
@@ -339,14 +356,13 @@
                             break;
 
                         default:
-                            this.defaultParser(comment);
+                            this.defaultParser(comment, bank_message_patterns);
                             break;
                     }
                 
                 },
 
-                // Conversion rate logic for different banks.
-                bankConversionRate(filtered_number_list, index, bank) {
+                setBankConversionRate(filtered_number_list, index, bank) {
                     conversionRate = filtered_number_list[index]
                     switch (bank) {
                         case "Axis bank":
@@ -361,13 +377,7 @@
                     }
                 },
 
-                defaultConversionRate(filtered_number_list, index) {
-                    conversionRate = filtered_number_list[index]
-                    
-                },
-
                 updatePaymentAmountDetails(filtered_number_list, bank) {
-                    console.log(filtered_number_list);
                     let totalNumbersInList = filtered_number_list.length
                     var emailBody = $("#emailBody").text();
 
@@ -388,8 +398,7 @@
                             emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
                             this.calculateTaxes()
                         } else if (index == totalNumbersInList-1) {
-                            console.log(bank);
-                            this.bankConversionRate(filtered_number_list, index, bank);
+                            this.setBankConversionRate(filtered_number_list, index, bank);
                         }
                     }
 
