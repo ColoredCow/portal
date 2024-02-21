@@ -65,276 +65,310 @@
                 <thead class="thead-dark">
                     <tr class="text-center sticky-top">
                         <th></th>
-                        @if (request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
-                            <th>Client</th>
-                        @endif
-                        <th class="w-150">Project</th>
-                        @if (request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
-                            <th>Invoice Number</th>
-                        @else
-                            <th>Rates</th>
-                            <th>Billable Hours</th>
-                        @endif
-                        <th>Amount ( + taxes)</th>
-                        @if (request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
-                            <th>Sent on</th>
-                            <th>Due on</th>
-                            <th>Paid on</th>
-                            <th>Status</th>
-                            <th>Email</th>
-                        @elseif (request()->invoice_status == 'ready')
-                            <th>EffortSheet</th>
-                            <th>Preview Invoice</th>
-                            <th>Action</th>
-                        @endif
+                        <th>Client Name</th>
+                        <th>Total Amount(Incliding GST)</th>
+                        <th>Pending Invoices</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if ((request()->invoice_status == 'sent' || $invoiceStatus == 'sent') && $invoices->isNotEmpty())
-                        @foreach ($invoices as $invoice)
-                            @php
-                                $invoiceYear = $invoice->client->billingDetails->billing_date == 1 ? $invoice->sent_on->subMonth()->year : $invoice->sent_on->year;
-                                $invoiceData = [
-                                    'projectName' => optional($invoice->project)->name ?: $invoice->client->name . 'Projects',
-                                    'billingPersonName' => optional($invoice->client->billing_contact)->name,
-                                    'billingPersonFirstName' => optional($invoice->client->billing_contact)->first_name,
-                                    'billingPersonEmail' => optional($invoice->client->billing_contact)->email,
-                                    'senderEmail' => config('invoice.mail.send-invoice.email'),
-                                    'term' => $invoice->term,
-                                    'year' => $invoiceYear,
-                                    'emailSubject' => $invoiceReminderEmailSubject,
-                                    'emailBody' => $invoiceReminderEmailBody,
-                                    'invoiceId' => $invoice->id,
-                                    'invoiceNumber' => $invoice->invoice_number,
-                                    'invoiceAmount' => $invoice->invoiceAmount(),
-                                    'bccEmails' => $invoice->client->bcc_emails,
-                                    'ccEmails' => $invoice->client->cc_emails,
-                                ];
-                            @endphp
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $invoice->client->name }}</td>
-                                <td>{{ optional($invoice->project)->name ?: $invoice->client->name . ' Projects' }}</td>
-                                <td><a href="{{ route('invoice.edit', $invoice) }}">{{ $invoice->invoice_number }}</a>
-                                </td>
-                                <td>{{ $invoice->invoiceAmount() }}</td>
-                                <td class="text-center">
-                                    {{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
-                                <td
-                                    class='{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger ' : '' }} text-center'>
-                                    {{ $invoice->receivable_date->format(config('invoice.default-date-format')) }}
-                                </td>
-                                <td
-                                    class="{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }} text-center">
-                                    {{ $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '' }}
-                                </td>
-                                <td
-                                    class="{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger' : '' }}{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }} text-center">
-                                    {{ $invoice->shouldHighlighted() ? __('Overdue') : $invoice->status }}
-                                </td>
-                                <td class="text-center">
-                                    @if ($invoice->reminder_mail_count)
-                                        <div class="text-success">{{ __('Reminder Sent') }}</div>
-                                    @elseif($invoice->shouldHighlighted())
-                                        <div class="btn btn-sm btn-primary send-reminder"
-                                            data-invoice-data="{{ json_encode($invoiceData) }}" data-toggle="modal"
-                                            data-target="#invoiceReminder">{{ __('Reminder') }}</div>
-                                    @else
-                                        <div> - </div>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    @elseif(
-                        (request()->invoice_status == 'ready' || $invoiceStatus == 'ready') &&
-                            $clientsReadyToSendInvoicesData->isNotEmpty())
-                        <tr class="font-weight-bold bg-theme-warning-lighter">
-                            <td colspan="8">{{ __('Client Level Billing Projects') }}</td>
-                        </tr>
-                        @php
-                            $index = 0;
-                        @endphp
-                        @foreach ($clientsReadyToSendInvoicesData as $client)
-                            @if ($client->getClientLevelProjectsBillableHoursForInvoice() == 0)
-                                @continue
-                            @endif
-                            @php
-                                $index++;
-                                $currencySymbol = config('constants.currency.' . $client->currency . '.symbol');
-                                if ($client->hasCustomInvoiceTemplate()) {
-                                    $amount = $currencySymbol . ($client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount($quarter));
-                                } else {
-                                    $amount = $currencySymbol . $client->getTotalPayableAmountForTerm($monthToSubtract, $client->clientLevelBillingProjects);
-                                }
-                                $billingStartMonth = $client->getMonthStartDateAttribute($monthToSubtract)->format('M');
-                                $billingEndMonth = $client->getMonthEndDateAttribute($monthToSubtract)->format('M');
-                                $billingEndMonthYear = $client->getMonthEndDateAttribute($monthToSubtract)->format('Y');
-                                $monthName = $client->getMonthEndDateAttribute($monthToSubtract)->format('F');
-                                $termText = $billingStartMonth;
-                                if (optional($client->billingDetails)->billing_frequency == config('client.billing-frequency.quarterly.id')) {
-                                    $termText = today()
-                                        ->startOfQuarter()
-                                        ->format('M');
-                                    $billingStartMonth = today()
-                                        ->startOfQuarter()
-                                        ->addQuarter()
-                                        ->format('M');
-                                    $billingEndMonth = today()
-                                        ->endOfQuarter()
-                                        ->format('M');
-                                }
-                                $invoiceData = [
-                                    'projectName' => $client->name . ' Projects',
-                                    'billingPersonName' => optional($client->billing_contact)->name,
-                                    'billingPersonFirstName' => optional($client->billing_contact)->first_name,
-                                    'billingPersonEmail' => optional($client->billing_contact)->email,
-                                    'senderEmail' => config('invoice.mail.send-invoice.email'),
-                                    'invoiceNumber' => $client->next_invoice_number,
-                                    'totalAmount' => $amount,
-                                    'year' => $billingEndMonthYear,
-                                    'term' => $billingStartMonth != $billingEndMonth ? $termText . ' - ' . $billingEndMonth : $monthName,
-                                    'emailSubject' => $sendInvoiceEmailSubject,
-                                    'emailBody' => $sendInvoiceEmailBody,
-                                    'clientId' => $client->id,
-                                    'projectId' => null,
-                                    'bccEmails' => $client->bcc_emails,
-                                    'ccEmails' => $client->cc_emails,
-                                ];
-                            @endphp
-                            <tr>
-                                <td>{{ $index }}</td>
-                                <td>
-                                    {{ $client->name . ' Projects' }}
-                                </td>
-                                <td>{{ config('constants.currency.' . $client->currency . '.symbol') . '' . $client->billingDetails->service_rates . config('client.service-rate-terms.' . optional($client->billingDetails)->service_rate_term . '.short-label') }}
-                                </td>
-                                <td>
-                                    @if (optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
-                                        {{ __('-') }}
-                                    @else
-                                        {{ $client->getClientLevelProjectsBillableHoursForInvoice() }}
-                                        {{-- <i class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal" data-target="#InvoiceDetailsForClient{{ $client->id }}"></i> --}}
-                                    @endif
-                                </td>
-                                <td>{{ $amount }}</td>
-                                <td align="center"> <a class="btn btn-sm btn-info text-light"
-                                        href="{{ $client->effort_sheet_url }}" target="_blank">{{ __('Link') }}</a>
-                                </td>
-                                <td class="text-center">
-                                    <form action="{{ route('invoice.generate-invoice') }}" target="_blank" method="POST">
-                                        @csrf
-                                        <input type="hidden" name='client_id' value="{{ $client->id }}">
-                                        <input type='submit' class="btn btn-sm btn-info text-light" value="Preview">
-                                    </form>
-                                </td>
-                                <td class="text-center">
-                                    <div class="btn btn-sm btn-success text-light show-preview"
-                                        data-invoice-data="{{ json_encode($invoiceData) }}">{{ __('View Mail') }}</div>
-                                </td>
-                            </tr>
-                        @endforeach
-                        @if ($index == 0)
-                            <tr>
-                                <td colspan=9 class="text-center fz-24 text-theme-gray">No invoices available</td>
-                            </tr>
-                        @endif
-                        <tr class="font-weight-bold bg-theme-warning-lighter">
-                            <td colspan="8">{{ __('Project Level Billing Projects') }}</td>
-                        </tr>
-                        @php
-                            $index = 0;
-                        @endphp
-                        @foreach ($projectsReadyToSendInvoicesData as $project)
-                            @if ($project->getBillableHoursForMonth($monthToSubtract) == 0)
-                                @continue
-                            @endif
-                            @php
-                                $index++;
-                                
-                                $currencySymbol = config('constants.currency.' . $project->client->currency . '.symbol');
-                                if ($project->hasCustomInvoiceTemplate()) {
-                                    $amount = $currencySymbol . $project->getTotalLedgerAmount($quarter);
-                                } elseif (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
-                                    $amount = $currencySymbol . $project->getResourceBillableAmount();
-                                } else {
-                                    $amount = $currencySymbol . $project->getTotalPayableAmountForTerm($monthToSubtract);
-                                }
-                                $billingStartMonth = $project->client->getMonthStartDateAttribute($monthToSubtract)->format('M');
-                                $billingEndMonth = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('M');
-                                $billingEndMonthYear = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('Y');
-                                $monthName = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('F');
-                                $termText = $billingStartMonth;
-                                if (optional($project->client->billingDetails)->billing_frequency == config('client.billing-frequency.quarterly.id')) {
-                                    $termText = today()
-                                        ->startOfQuarter()
-                                        ->format('M');
-                                    $billingStartMonth = $termText = today()
-                                        ->startOfQuarter()
-                                        ->format('M');
-                                    $billingEndMonth = $termText = today()
-                                        ->endOfQuarter()
-                                        ->format('M');
-                                }
-                                $invoiceData = [
-                                    'projectName' => $project->name,
-                                    'billingPersonName' => optional($project->client->billing_contact)->name,
-                                    'billingPersonFirstName' => optional($project->client->billing_contact)->first_name,
-                                    'billingPersonEmail' => optional($project->client->billing_contact)->email,
-                                    'senderEmail' => config('invoice.mail.send-invoice.email'),
-                                    'invoiceNumber' => str_replace('-', '', $project->next_invoice_number),
-                                    'totalAmount' => $amount,
-                                    'year' => $billingEndMonthYear,
-                                    'term' => $billingStartMonth != $billingEndMonth ? $termText . ' - ' . $billingEndMonth : $monthName,
-                                    'emailSubject' => $sendInvoiceEmailSubject,
-                                    'emailBody' => $sendInvoiceEmailBody,
-                                    'projectId' => $project->id,
-                                    'clientId' => null,
-                                    'bccEmails' => $project->client->bcc_emails,
-                                    'ccEmails' => $project->client->cc_emails,
-                                ];
-                            @endphp
-                            <tr>
-                                <td>{{ $index }}</td>
-                                <td>
-                                    {{ $project->name }}
-                                </td>
-                                <td>{{ config('constants.currency.' . $project->client->currency . '.symbol') . '' . $project->client->billingDetails->service_rates . config('client.service-rate-terms.' . optional($project->client->billingDetails)->service_rate_term . '.short-label') }}
-                                </td>
-                                <td>
-                                    @if (optional($project->client->billingDetails)->service_rate_term ==
-                                            config('client.service-rate-terms.per_resource.slug'))
-                                        {{ __('-') }}
-                                    @else
-                                        {{ $project->getBillableHoursForMonth($monthToSubtract) }}
-                                    @endif
-                                </td>
-                                <td>{{ $amount }}</td>
-                                <td align="center"> <a class="btn btn-sm btn-info text-light"
-                                        href="{{ $project->effort_sheet_url }}" target="_blank">{{ __('Link') }}</a>
-                                </td>
-                                <td class="text-center">
-                                    <form action="{{ route('invoice.generate-invoice') }}" target="_blank" method="POST">
-                                        @csrf
-                                        <input type="hidden" name='project_id' value="{{ $project->id }}">
-                                        <input type='submit' class="btn btn-sm btn-info text-light" value="Preview">
-                                    </form>
-                                </td>
-                                <td class="text-center">
-                                    <div class="btn btn-sm btn-success text-light show-preview"
-                                        data-invoice-data="{{ json_encode($invoiceData) }}">{{ __('View Mail') }}</div>
-                                </td>
-                            </tr>
-                        @endforeach
-                        @if ($index == 0)
-                            <tr>
-                                <td colspan=9 class="text-center fz-24 text-theme-gray">No invoices available</td>
-                            </tr>
-                        @endif
-                    @else
-                        <tr>
-                            <td colspan=9 class="text-center fz-24 text-theme-gray py-6">No invoices available</td>
-                        </tr>
-                    @endif
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            @foreach ($clientData as $client)
+                                <div class="accordion-header" id="heading_{{ $client['client_id'] }}">
+                                    <tr>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{ $client['client_id'] }}" aria-expanded="true" aria-controls="collapse_{{ $client['client_id'] }}">{{ $client['name'] }}</td>
+                                        <td>₹{{$client['total']}}</td>
+                                        <td>{{$client['total_invoices']}}</td>
+                                    </tr>
+                                </div>
+                            @endforeach
+                            @foreach ($clientData as $client)
+                                <table class="table table-bordered table-striped accordion-collapse collapse" id="collapse_{{ $client['client_id'] }}" aria-labelledby="heading_{{ $client['client_id'] }}" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <thead class="thead-dark">
+                                            <tr class="text-center sticky-top"> 
+                                                <th></th>
+                                                @if (request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
+                                                    <th>Client</th>
+                                                @endif
+                                                <th class="w-150">Project</th>
+                                                @if (request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
+                                                    <th>Invoice Number</th>
+                                                @else
+                                                    <th>Rates</th>
+                                                    <th>Billable Hours</th>
+                                                @endif
+                                                <th>Amount ( + taxes)</th>
+                                                @if (request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
+                                                    <th>Sent on</th>
+                                                    <th>Due on</th>
+                                                    <th>Paid on</th>
+                                                    <th>Status</th>
+                                                    <th>Email</th>
+                                                @elseif (request()->invoice_status == 'ready')
+                                                    <th>EffortSheet</th>
+                                                    <th>Preview Invoice</th>
+                                                    <th>Action</th>
+                                                @endif
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php $invoiceClient=$client['client_id']; $clientCount = 0; @endphp
+                                            @if ((request()->invoice_status == 'sent' || $invoiceStatus == 'sent') && $invoices->isNotEmpty())
+                                                @foreach ($invoices as $invoice)
+                                                    @php
+                                                        $invoiceYear = $invoice->client->billingDetails->billing_date == 1 ? $invoice->sent_on->subMonth()->year : $invoice->sent_on->year;
+                                                        $invoiceData = [
+                                                            'projectName' => optional($invoice->project)->name ?: $invoice->client->name . 'Projects',
+                                                            'billingPersonName' => optional($invoice->client->billing_contact)->name,
+                                                            'billingPersonFirstName' => optional($invoice->client->billing_contact)->first_name,
+                                                            'billingPersonEmail' => optional($invoice->client->billing_contact)->email,
+                                                            'senderEmail' => config('invoice.mail.send-invoice.email'),
+                                                            'term' => $invoice->term,
+                                                            'year' => $invoiceYear,
+                                                            'emailSubject' => $invoiceReminderEmailSubject,
+                                                            'emailBody' => $invoiceReminderEmailBody,
+                                                            'invoiceId' => $invoice->id,
+                                                            'invoiceNumber' => $invoice->invoice_number,
+                                                            'invoiceAmount' => $invoice->invoiceAmount(),
+                                                            'bccEmails' => $invoice->client->bcc_emails,
+                                                            'ccEmails' => $invoice->client->cc_emails,
+                                                        ];
+                                                    @endphp
+                                                    @if ($invoiceClient === $invoice->client_id)
+                                                        @php $clientCount++; @endphp
+                                                        <tr>
+                                                            <td>{{ $clientCount }}</td>
+                                                            <td>{{ $invoice->client->name }}</td>
+                                                            <td>{{ optional($invoice->project)->name ?: $invoice->client->name . ' Projects' }}</td>
+                                                            <td><a href="{{ route('invoice.edit', $invoice) }}">{{ $invoice->invoice_number }}</a>
+                                                            </td>
+                                                            <td>{{ $invoice->invoiceAmount() }}</td>
+                                                            <td class="text-center">
+                                                                {{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
+                                                            <td
+                                                                class='{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger ' : '' }} text-center'>
+                                                                {{ $invoice->receivable_date->format(config('invoice.default-date-format')) }}
+                                                            </td>
+                                                            <td
+                                                                class="{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }} text-center">
+                                                                {{ $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '' }}
+                                                            </td>
+                                                            <td
+                                                                class="{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger' : '' }}{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }} text-center">
+                                                                {{ $invoice->shouldHighlighted() ? __('Overdue') : $invoice->status }}
+                                                            </td>
+                                                            <td class="text-center">
+                                                                @if ($invoice->reminder_mail_count)
+                                                                    <div class="text-success">{{ __('Reminder Sent') }}</div>
+                                                                @elseif($invoice->shouldHighlighted())
+                                                                    <div class="btn btn-sm btn-primary send-reminder"
+                                                                        data-invoice-data="{{ json_encode($invoiceData) }}" data-toggle="modal"
+                                                                        data-target="#invoiceReminder">{{ __('Reminder') }}</div>
+                                                                @else
+                                                                    <div> - </div>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            @elseif(
+                                                (request()->invoice_status == 'ready' || $invoiceStatus == 'ready') &&
+                                                    $clientsReadyToSendInvoicesData->isNotEmpty())
+                                                <tr class="font-weight-bold bg-theme-warning-lighter">
+                                                    <td colspan="8">{{ __('Client Level Billing Projects') }}</td>
+                                                </tr>
+                                                @php
+                                                    $index = 0;
+                                                @endphp
+                                                @foreach ($clientsReadyToSendInvoicesData as $client)
+                                                    @if ($client->getClientLevelProjectsBillableHoursForInvoice() == 0)
+                                                        @continue
+                                                    @endif
+                                                    @php
+                                                        $index++;
+                                                        $currencySymbol = config('constants.currency.' . $client->currency . '.symbol');
+                                                        if ($client->hasCustomInvoiceTemplate()) {
+                                                            $amount = $currencySymbol . ($client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount($quarter));
+                                                        } else {
+                                                            $amount = $currencySymbol . $client->getTotalPayableAmountForTerm($monthToSubtract, $client->clientLevelBillingProjects);
+                                                        }
+                                                        $billingStartMonth = $client->getMonthStartDateAttribute($monthToSubtract)->format('M');
+                                                        $billingEndMonth = $client->getMonthEndDateAttribute($monthToSubtract)->format('M');
+                                                        $billingEndMonthYear = $client->getMonthEndDateAttribute($monthToSubtract)->format('Y');
+                                                        $monthName = $client->getMonthEndDateAttribute($monthToSubtract)->format('F');
+                                                        $termText = $billingStartMonth;
+                                                        if (optional($client->billingDetails)->billing_frequency == config('client.billing-frequency.quarterly.id')) {
+                                                            $termText = today()
+                                                                ->startOfQuarter()
+                                                                ->format('M');
+                                                            $billingStartMonth = today()
+                                                                ->startOfQuarter()
+                                                                ->addQuarter()
+                                                                ->format('M');
+                                                            $billingEndMonth = today()
+                                                                ->endOfQuarter()
+                                                                ->format('M');
+                                                        }
+                                                        $invoiceData = [
+                                                            'projectName' => $client->name . ' Projects',
+                                                            'billingPersonName' => optional($client->billing_contact)->name,
+                                                            'billingPersonFirstName' => optional($client->billing_contact)->first_name,
+                                                            'billingPersonEmail' => optional($client->billing_contact)->email,
+                                                            'senderEmail' => config('invoice.mail.send-invoice.email'),
+                                                            'invoiceNumber' => $client->next_invoice_number,
+                                                            'totalAmount' => $amount,
+                                                            'year' => $billingEndMonthYear,
+                                                            'term' => $billingStartMonth != $billingEndMonth ? $termText . ' - ' . $billingEndMonth : $monthName,
+                                                            'emailSubject' => $sendInvoiceEmailSubject,
+                                                            'emailBody' => $sendInvoiceEmailBody,
+                                                            'clientId' => $client->id,
+                                                            'projectId' => null,
+                                                            'bccEmails' => $client->bcc_emails,
+                                                            'ccEmails' => $client->cc_emails,
+                                                        ];
+                                                    @endphp
+                                                    <tr>
+                                                        <td>{{ $index }}</td>
+                                                        <td>
+                                                            {{ $client->name . ' Projects' }}
+                                                        </td>
+                                                        <td>{{ config('constants.currency.' . $client->currency . '.symbol') . '' . $client->billingDetails->service_rates . config('client.service-rate-terms.' . optional($client->billingDetails)->service_rate_term . '.short-label') }}
+                                                        </td>
+                                                        <td>
+                                                            @if (optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
+                                                                {{ __('-') }}
+                                                            @else
+                                                                {{ $client->getClientLevelProjectsBillableHoursForInvoice() }}
+                                                                {{-- <i class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal" data-target="#InvoiceDetailsForClient{{ $client->id }}"></i> --}}
+                                                            @endif
+                                                        </td>
+                                                        <td>{{ $amount }}</td>
+                                                        <td align="center"> <a class="btn btn-sm btn-info text-light"
+                                                                href="{{ $client->effort_sheet_url }}" target="_blank">{{ __('Link') }}</a>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <form action="{{ route('invoice.generate-invoice') }}" target="_blank" method="POST">
+                                                                @csrf
+                                                                <input type="hidden" name='client_id' value="{{ $client->id }}">
+                                                                <input type='submit' class="btn btn-sm btn-info text-light" value="Preview">
+                                                            </form>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <div class="btn btn-sm btn-success text-light show-preview"
+                                                                data-invoice-data="{{ json_encode($invoiceData) }}">{{ __('View Mail') }}</div>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                @if ($index == 0)
+                                                    <tr>
+                                                        <td colspan=9 class="text-center fz-24 text-theme-gray">No invoices available</td>
+                                                    </tr>
+                                                @endif
+                                                <tr class="font-weight-bold bg-theme-warning-lighter">
+                                                    <td colspan="8">{{ __('Project Level Billing Projects') }}</td>
+                                                </tr>
+                                                @php
+                                                    $index = 0;
+                                                @endphp
+                                                @foreach ($projectsReadyToSendInvoicesData as $project)
+                                                    @if ($project->getBillableHoursForMonth($monthToSubtract) == 0)
+                                                        @continue
+                                                    @endif
+                                                    @php
+                                                        $index++;
+                                                        
+                                                        $currencySymbol = config('constants.currency.' . $project->client->currency . '.symbol');
+                                                        if ($project->hasCustomInvoiceTemplate()) {
+                                                            $amount = $currencySymbol . $project->getTotalLedgerAmount($quarter);
+                                                        } elseif (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
+                                                            $amount = $currencySymbol . $project->getResourceBillableAmount();
+                                                        } else {
+                                                            $amount = $currencySymbol . $project->getTotalPayableAmountForTerm($monthToSubtract);
+                                                        }
+                                                        $billingStartMonth = $project->client->getMonthStartDateAttribute($monthToSubtract)->format('M');
+                                                        $billingEndMonth = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('M');
+                                                        $billingEndMonthYear = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('Y');
+                                                        $monthName = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('F');
+                                                        $termText = $billingStartMonth;
+                                                        if (optional($project->client->billingDetails)->billing_frequency == config('client.billing-frequency.quarterly.id')) {
+                                                            $termText = today()
+                                                                ->startOfQuarter()
+                                                                ->format('M');
+                                                            $billingStartMonth = $termText = today()
+                                                                ->startOfQuarter()
+                                                                ->format('M');
+                                                            $billingEndMonth = $termText = today()
+                                                                ->endOfQuarter()
+                                                                ->format('M');
+                                                        }
+                                                        $invoiceData = [
+                                                            'projectName' => $project->name,
+                                                            'billingPersonName' => optional($project->client->billing_contact)->name,
+                                                            'billingPersonFirstName' => optional($project->client->billing_contact)->first_name,
+                                                            'billingPersonEmail' => optional($project->client->billing_contact)->email,
+                                                            'senderEmail' => config('invoice.mail.send-invoice.email'),
+                                                            'invoiceNumber' => str_replace('-', '', $project->next_invoice_number),
+                                                            'totalAmount' => $amount,
+                                                            'year' => $billingEndMonthYear,
+                                                            'term' => $billingStartMonth != $billingEndMonth ? $termText . ' - ' . $billingEndMonth : $monthName,
+                                                            'emailSubject' => $sendInvoiceEmailSubject,
+                                                            'emailBody' => $sendInvoiceEmailBody,
+                                                            'projectId' => $project->id,
+                                                            'clientId' => null,
+                                                            'bccEmails' => $project->client->bcc_emails,
+                                                            'ccEmails' => $project->client->cc_emails,
+                                                        ];
+                                                    @endphp
+                                                    <tr>
+                                                        <td>{{ $index }}</td>
+                                                        <td>
+                                                            {{ $project->name }}
+                                                        </td>
+                                                        <td>{{ config('constants.currency.' . $project->client->currency . '.symbol') . '' . $project->client->billingDetails->service_rates . config('client.service-rate-terms.' . optional($project->client->billingDetails)->service_rate_term . '.short-label') }}
+                                                        </td>
+                                                        <td>
+                                                            @if (optional($project->client->billingDetails)->service_rate_term ==
+                                                                    config('client.service-rate-terms.per_resource.slug'))
+                                                                {{ __('-') }}
+                                                            @else
+                                                                {{ $project->getBillableHoursForMonth($monthToSubtract) }}
+                                                            @endif
+                                                        </td>
+                                                        <td>{{ $amount }}</td>
+                                                        <td align="center"> <a class="btn btn-sm btn-info text-light"
+                                                                href="{{ $project->effort_sheet_url }}" target="_blank">{{ __('Link') }}</a>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <form action="{{ route('invoice.generate-invoice') }}" target="_blank" method="POST">
+                                                                @csrf
+                                                                <input type="hidden" name='project_id' value="{{ $project->id }}">
+                                                                <input type='submit' class="btn btn-sm btn-info text-light" value="Preview">
+                                                            </form>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <div class="btn btn-sm btn-success text-light show-preview"
+                                                                data-invoice-data="{{ json_encode($invoiceData) }}">{{ __('View Mail') }}</div>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                @if ($index == 0)
+                                                    <tr>
+                                                        <td colspan=9 class="text-center fz-24 text-theme-gray">No invoices available</td>
+                                                    </tr>
+                                                @endif
+                                            @else
+                                                <tr>
+                                                    <td colspan=9 class="text-center fz-24 text-theme-gray py-6">No invoices available</td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </div>
+                                </table>
+                            @endforeach
+                        </div>
+                    </div>
                 </tbody>
             </table>
         </div>

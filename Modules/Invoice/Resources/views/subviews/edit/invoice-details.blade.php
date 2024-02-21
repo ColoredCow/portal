@@ -187,6 +187,7 @@
         </div>
         <div>
             @include('invoice::modals.payment-received')
+            @php $bank_statement_patterns = (config('invoice.bank_statement_patterns')); @endphp
         </div>
     </div>
     <div class="card-footer">
@@ -248,25 +249,145 @@
                     }
                 },
 
-                parseComment($event) {
-                    let comment = event.target.value
+                // parseComment($event) {
+                //     let comment = event.target.value
 
+                //     extractedNumberList = comment.split(" ").map(function(word) {
+                //         var number = Number(word.trim().replaceAll(",", ""))
+                //         if (isNaN(number)) {
+                //             return null;
+                //         }
+                //         return number;
+                //     });
+
+                //     var filteredNumberList = extractedNumberList.filter(function(number) {
+                //         return number != null;
+                //     });
+
+                //     this.updatePaymentAmountDetails(filteredNumberList)
+                // },
+
+                // updatePaymentAmountDetails(filtered_number_list) {
+                //     let totalNumbersInList = filtered_number_list.length
+                //     var emailBody = $("#emailBody").text();
+
+                //     for (var index = 0; index < totalNumbersInList; index++) {
+                //         if (this.client.type == 'indian') {
+                //             if (index == totalNumbersInList - 1) {
+                //                 this.amountPaid = filtered_number_list[index]
+                //                 $('#amountPaid').val(this.amountPaid)
+                //                 emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
+                //                 this.calculateTaxes()
+                //             }
+                //             continue;
+                //         }
+
+                //         if (index == 0) {
+                //             this.amountPaid = filtered_number_list[index]
+                //             $('#amountPaid').val(this.amountPaid)
+                //             emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
+                //             this.calculateTaxes()
+                //         } else if (index == 1) {
+                //             conversionRate = filtered_number_list[index]
+                //             this.conversionRate = conversionRate
+                //             this.conversionRateDiff = Math.abs(this.currentExchangeRate - conversionRate).toFixed(2)
+                //         }
+                //     }
+
+                //     tinymce.get("emailBody").setContent(emailBody, {
+                //         format: "html"
+                //     });
+                // }
+
+                citiBankParser(comment) {
                     extractedNumberList = comment.split(" ").map(function(word) {
-                        var number = Number(word.trim().replaceAll(",", ""))
-                        if (isNaN(number)) {
-                            return null;
-                        }
-                        return number;
-                    });
+                                var number = word.trim().replaceAll(",", "")
+                                if (number == 0 || isNaN(number)) {
+                                    return null;
+                                }
+                                return Number(number);
+                            });
+                    
+                            var filteredNumberList = extractedNumberList.filter(function(number) {
+                                return number != null
+                            });
 
-                    var filteredNumberList = extractedNumberList.filter(function(number) {
-                        return number != null;
-                    });
-
-                    this.updatePaymentAmountDetails(filteredNumberList)
+                            this.updatePaymentAmountDetails(filteredNumberList, bank = "Citi bank");
                 },
 
-                updatePaymentAmountDetails(filtered_number_list) {
+                axisBankParser(comment) {
+                    extractedNumberList = comment.split(/[\/\s]/g).map(function(word) {
+                            var number = word.trim().replace(/,\s/, "")
+                                if (number == 0 || isNaN(number)) {
+                                    return null;
+                                }
+                                return Number(number);
+                            });
+                
+                            var filteredNumberList = extractedNumberList.filter(function(number) {
+                                return number != null
+                            });
+
+                            this.updatePaymentAmountDetails(filteredNumberList, bank="Axis bank");
+                },
+
+                defaultParser(comment) {
+                    extractedNumberList = comment.split(/[\/\s]/g).map(function(word) {
+                            var number = word.trim().replace(/,\s/, "")
+                                if (number == 0 || isNaN(number)) {
+                                    return null;
+                                }
+                                return Number(number);
+                            });
+                    
+                            var filteredNumberList = extractedNumberList.filter(function(number) {
+                                return number != null
+                            });
+
+                            this.updatePaymentAmountDetails(filteredNumberList, bank= "other");
+                },
+
+                parseComment($event) {
+                    let comment = event.target.value
+                    let bank_statement_patterns = @json($bank_statement_patterns);
+                    formattedComment = comment.replace(/\s/g, ""); // Variable for storing the formatted comment string so that we can match it with the stored bank patterns
+                    
+                    var bank = null; 
+                    // Extracting the paid amount according to the bank transaction pattern string.
+                    for(let bankName in bank_statement_patterns) {
+                        if (formattedComment.includes(bank_statement_patterns[bankName])) {
+                            bank = bankName;
+                        }
+                    }
+                    switch (bank) {
+                        case "CITI":
+                                this.citiBankParser(comment);
+                            break;
+                        
+                        case "Axis":
+                                this.axisBankParser(comment);
+                            break;
+                        default:
+                            this.defaultParser(comment);
+                            alert("The bank statement does not match existing patterns. Giving the best possible result.")
+                            break;
+                    }
+                
+                },
+
+                axisBankConversionRate(filtered_number_list, index) {
+                    conversionRate = filtered_number_list[index]
+                    this.conversionRate = conversionRate / this.amountPaid;
+                    this.conversionRateDiff = Math.abs(this.currentExchangeRate - this.conversionRate).toFixed(2)
+                },
+
+                defaultConversionRate(filtered_number_list, index) {
+                    conversionRate = filtered_number_list[index]
+                    this.conversionRate = conversionRate;
+                    this.conversionRateDiff = Math.abs(this.currentExchangeRate - conversionRate).toFixed(2)
+                },
+
+                updatePaymentAmountDetails(filtered_number_list, bank) {
                     let totalNumbersInList = filtered_number_list.length
                     var emailBody = $("#emailBody").text();
 
@@ -286,10 +407,15 @@
                             $('#amountPaid').val(this.amountPaid)
                             emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
                             this.calculateTaxes()
-                        } else if (index == 1) {
-                            conversionRate = filtered_number_list[index]
-                            this.conversionRate = conversionRate
-                            this.conversionRateDiff = Math.abs(this.currentExchangeRate - conversionRate).toFixed(2)
+                        } else if (index == totalNumbersInList-1) {
+                            switch (bank) {
+                                case "Axis bank":
+                                    this.axisBankConversionRate(filtered_number_list, index);
+                                break;
+
+                                default:
+                                    this.defaultConversionRate(filtered_number_list, index);
+                            }
                         }
                     }
 

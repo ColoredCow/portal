@@ -37,7 +37,7 @@ class InvoiceController extends Controller
             $filters = $request->all();
         }
 
-        return view('invoice::index', $this->service->index($filters, $invoiceStatus));
+        return view('invoice::index', $this->service->index($filters, $invoiceStatus), $this->service->clients());
     }
 
     /**

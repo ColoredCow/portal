@@ -163,6 +163,26 @@ class InvoiceService implements InvoiceServiceContract
         return $invoice;
     }
 
+    public function clients() 
+    {
+        $clientData = Invoice::select('amount','invoices.client_id', 'invoices.invoice_number', 'clients.name')
+                        ->join('clients', 'clients.id', '=', 'invoices.client_id')
+                        ->where('invoices.status', 'sent')
+                        ->get();
+        $totals = [];
+        foreach ($clientData as $client) 
+        {
+            if (!isset($totals[$client['client_id']])) 
+            {
+                $totals[$client['client_id']] = ['name'=>$client['name'], 'total'=>0, 'total_invoices'=>0, 'client_id'=>$client['client_id']];
+            }
+            $totals[$client['client_id']]['total'] += ($client['amount'] += $client['amount'] * 0.18) ;
+            $totals[$client['client_id']]['total_invoices'] += 1;
+        }
+                         
+        return ['clientData' => $totals];
+    }
+
     public function update($data, $invoice)
     {
         $invoice->update($data);
@@ -223,11 +243,11 @@ class InvoiceService implements InvoiceServiceContract
         $body = str_replace($templateVariablesForBody['billing-person-name'], optional($invoice->client->billing_contact)->first_name, $body);
         $body = str_replace($templateVariablesForBody['invoice-number'], $invoice->invoice_number, $body);
 
-        if ($invoice->client->country->initials == 'IN') {
-            $body = str_replace($templateVariablesForBody['amount'], $templateVariablesForBody['amount_paid'], $body);
-        } else {
-            $body = str_replace($templateVariablesForBody['amount'], (string) $invoice->amount, $body);
-        }
+        // if ($invoice->client->country->initials == 'IN') {
+        //     $body = str_replace($templateVariablesForBody['amount'], $templateVariablesForBody['amount_paid'], $body);
+        // } else {
+        //     $body = str_replace($templateVariablesForBody['amount'], (string) $invoice->amount, $body);
+        // }
 
         $body = str_replace($templateVariablesForBody['currency'], optional($invoice->client->country)->currency_symbol, $body);
 
