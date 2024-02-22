@@ -346,6 +346,7 @@
                             <p>GSTIN : {{ config('invoice.finance-details.gstin') }}</p>
                             <p>SAC / HSN code : {{ config('invoice.finance-details.hsn-code') }}</p>
                             <p>CIN No. {{ config('invoice.finance-details.cin-no') }}</p>
+                            <p>MSME : {{ config('invoice.finance-details.msme') }}</p>
                             <p><br><br><br></p>
                         </td>
                     </tr>
@@ -361,6 +362,7 @@
                             <p>{{ $client->country->initials == 'IN' && optional($client->addresses->first())->gst_number ? __('GSTIN: ') . optional($client->addresses->first())->gst_number : '' }}
                             </p>
                             <p>{{ optional($client->billing_contact)->phone }}</p>
+                            <p>PAN : {{ optional($client->addresses->first())->pan_number }}</p>
                         </td>
                         <td>
                             <p class="fw-bold ml-1em">Details</p>
