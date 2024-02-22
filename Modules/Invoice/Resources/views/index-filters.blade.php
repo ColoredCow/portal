@@ -1,4 +1,4 @@
-<form action="{{ route('invoice.index')  }}" id="invoiceFilterForm">
+<form action="{{ route('invoice.invoice-settle')  }}" id="invoiceFilterForm">
     <input type="hidden" name="invoice_status" value="{{ request()->input('invoice_status', 'sent') }}">
     <div class="d-flex">
         <div class="form-row row-cols-1 row-cols-sm-2 row-cols-md-4 no-gutters">
@@ -48,12 +48,14 @@
 
             <div class="col-6 p-0">
                 <div class='form-group mr-2 mr-md-4 px-3 px-md-0 w-168'>
-                    <select class="form-control bg-light" name="client_id"  onchange="document.getElementById('invoiceFilterForm').submit();">
-                        <option {{ $filters['client_id'] == '' ? "selected=selected" : '' }} value="">All clients</option>
-                        @foreach ($clients as $client)
-                            <option {{ $filters['client_id'] == $client->id ? "selected=selected" : '' }} value="{{$client->id}}">{{$client->name}}</option>
-                        @endforeach
-                    </select>
+                    @if(! request()->client_id)
+                        <select class="form-control bg-light" name="client_id"  onchange="document.getElementById('invoiceFilterForm').submit();">
+                            <option {{ $filters['client_id'] == '' ? "selected=selected" : '' }} value="">All clients</option>
+                            @foreach ($clients as $client)
+                                <option {{ $filters['client_id'] == $client->id ? "selected=selected" : '' }} value="{{$client->id}}">{{$client->name}}</option>
+                            @endforeach
+                        </select>
+                    @endif
                 </div>
             </div>
         </div>

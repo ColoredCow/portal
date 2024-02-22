@@ -13,6 +13,8 @@
 
 Route::prefix('invoice')->middleware('auth')->group(function () {
     Route::get('/', 'InvoiceController@index')->name('invoice.index');
+    Route::get('/invoice-settle', 'InvoiceController@invoiceSettle')->name('invoice.invoice-settle');
+    Route::get('/clients', 'InvoiceController@clientIndex')->name('invoice.clients');
     Route::get('/tax-report', 'InvoiceController@taxReport')->name('invoice.tax-report');
     Route::get('/tax-report-export', 'InvoiceController@taxReportExport')->name('invoice.tax-report-export');
     Route::get('/create', 'InvoiceController@create')->name('invoice.create');

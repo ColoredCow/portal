@@ -1,6 +1,9 @@
 <div id="edit_invoice_details_form">
-    <div class="card-body">
-
+@foreach ($invoices as $key=>$invoice)
+<div class="modal fade" id="edit_invoice_details_form_{{$key}}" role="dialog" aria-hidden="true">
+    <div class="card-body modal-dialog modal-xl bg-white">
+        <div class="modal-content">
+        {{-- @php dd($invoice)@endphp --}}
         <div class="form-row mb-4">
             <div class="col-md-5">
                 <div class="form-group d-flex">
@@ -100,14 +103,11 @@
                         <div class="input-group-prepend">
                             <select name="currency_transaction_charge" v-model="currencyTransactionCharge"
                                 id="currencyTransactionCharge" class="input-group-text" required="required">
-                                @foreach ($countries as $country)
-                                    <option value="{{ $country->currency }}">{{ $country->currency }}</option>
-                                @endforeach
+                                    <option value="{{ $invoice->currency }}">{{ $invoice->currency }}</option>
                             </select>
                         </div>
                     </div>
-                </div>
-
+                </div> 
                 <div class="form-group-inline d-flex mb-2">
                     <label for="payment_at" class="field-required mr-8 pt-1">Payment date</label>
                     <input type="date" class="form-control flex-1" name="payment_at" id="payment_at"
@@ -155,11 +155,11 @@
                     </div>
                 </div>
 
-                <div class="form-group ">
+                {{-- <div class="form-group ">
                     <label for="comments">Comments</label>
                     <textarea name="comments" id="paidInvoiceComment" rows="5" class="form-control" @keyup="parseComment($event)"
                         v-model="comments"></textarea>
-                </div>
+                </div> --}}
 
             </div>
             <div class="col-md-5 offset-md-1 mt-auto" v-if="status=='disputed'">
@@ -185,18 +185,18 @@
                 @endif
             </div>
         </div>
-        <div>
-            @include('invoice::modals.payment-received')
-        </div>
-    </div>
-    <div class="card-footer">
-        <button type="submit" class="btn btn-primary mr-4">Save</button>
-        @if (auth()->user()->can('finance_invoices.delete'))
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary mr-4">Save</button>
+            @if (auth()->user()->can('finance_invoices.delete'))
             <span class="btn btn-danger" @click="deleteInvoice()">Delete</span>
-        @else
+            @else
             @include('errors.403')
-        @endif
-    </div>
+            @endif
+        </div>
+    </div> 
+</div>
+</div>
+@endforeach
 </div>
 
 
