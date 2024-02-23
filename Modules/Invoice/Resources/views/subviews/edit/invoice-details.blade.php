@@ -273,7 +273,7 @@
                                 return number != null
                             });
 
-                            this.updatePaymentAmountDetails(filteredNumberList, bank = bank_message_patterns['CITI'].key);
+                            this.updatePaymentAmountDetails(filteredNumberList, bank = bank_message_patterns.citi.key);
                 },
 
                 axisBankParser(comment) {
@@ -289,7 +289,7 @@
                                 return number != null
                             });
 
-                            this.updatePaymentAmountDetails(filteredNumberList, bank = bank_message_patterns['AXIS'].key);
+                            this.updatePaymentAmountDetails(filteredNumberList, bank = bank_message_patterns.axis.key);
 
                 },
 
@@ -319,10 +319,10 @@
                     bankWithMaxSimilarityPercentages = Object.keys(bankWithMaxSimilarityPercentages).reduce((a, b) => bankWithMaxSimilarityPercentages[a] > bankWithMaxSimilarityPercentages[b] ? a : b);
 
                     switch (bankWithMaxSimilarityPercentages) {
-                        case bank_message_patterns['CITI'].key:
+                        case bank_message_patterns.citi.key:
                             this.citiBankParser(comment);
                             break;
-                        case bank_message_patterns['AXIS'].key:
+                        case bank_message_patterns.axis.key:
                             this.axisBankParser(comment);
                             break;
                     }
@@ -347,11 +347,11 @@
                         }
 
                     switch (bank) {
-                        case bank_message_patterns['CITI'].key:
+                        case bank_message_patterns.citi.key:
                                 this.citiBankParser(comment);
                             break;
                         
-                        case bank_message_patterns['AXIS'].key:
+                        case bank_message_patterns.axis.key:
                                 this.axisBankParser(comment);
                             break;
 
@@ -365,7 +365,7 @@
                 setBankConversionRate(filtered_number_list, index, bank) {
                     conversionRate = filtered_number_list[index]
                     switch (bank) {
-                        case bank_message_patterns['AXIS'].key:
+                        case bank_message_patterns.axis.key:
                                 this.conversionRate = conversionRate / this.amountPaid;
                                 this.conversionRateDiff = Math.abs(this.currentExchangeRate - this.conversionRate).toFixed(2)
                             break;

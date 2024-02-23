@@ -171,11 +171,11 @@ return [
     ],
 
     'bank_message_patterns' => [
-        'CITI' => [
+        'citi' => [
             'key' => 'citi',
             'value' => env('CITI_BANK_MESSAGE_PATTERN'),
         ],
-        'AXIS' => [
+        'axis' => [
             'key' => 'axis',
             'value' => env('AXIS_BANK_MESSAGE_PATTERN'),
         ],
