@@ -169,7 +169,7 @@ return [
             'projects' => [],
         ],
     ],
-    
+
     'bank_message_patterns' => [
         'CITI' => [
             'key' => 'citi',
