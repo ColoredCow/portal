@@ -167,8 +167,8 @@
                     <label for="comments">Comments</label>
                     <textarea name="comments" id="paidInvoiceComment" rows="5" class="form-control" @keyup="parseComment($event)"
                         v-model="comments"></textarea>
+                        <div id="bank-not-found" class="text-theme-orange fz-14 leading-20 font-weight-bold"></div>
                 </div>
-                <P id="bank-not-found" class="text-danger"></P>
 
             </div>
             <div class="col-md-5 offset-md-1 mt-auto" v-if="status=='disputed'">
@@ -212,6 +212,7 @@
 @section('js_scripts')
         @php $bank_message_patterns = (config('invoice.bank_message_patterns')); @endphp
         <script>
+        let bank_message_patterns = @json($bank_message_patterns);
         new Vue({
             el: '#edit_invoice_details_form',
 
@@ -272,7 +273,7 @@
                                 return number != null
                             });
 
-                            this.updatePaymentAmountDetails(filteredNumberList, bank = "Citi bank");
+                            this.updatePaymentAmountDetails(filteredNumberList, bank = bank_message_patterns['CITI'].key);
                 },
 
                 axisBankParser(comment) {
@@ -288,7 +289,7 @@
                                 return number != null
                             });
 
-                            this.updatePaymentAmountDetails(filteredNumberList, bank = "Axis bank");
+                            this.updatePaymentAmountDetails(filteredNumberList, bank = bank_message_patterns['AXIS'].key);
 
                 },
 
@@ -310,18 +311,18 @@
                 },
 
                 defaultParser(comment, bank_message_patterns) {
-                    let percentOfMatching = {}
+                    let bankWithMaxSimilarityPercentages = {}
                     for(let bankName in bank_message_patterns) {
-                        let result = this.showMatchingPercentage(comment, bank_message_patterns[bankName])
-                        percentOfMatching[bankName] = result;
+                        let result = this.showMatchingPercentage(comment, bank_message_patterns[bankName].value)
+                        bankWithMaxSimilarityPercentages[bank_message_patterns[bankName].key] = result;
                     }
-                    percentOfMatching = Object.keys(percentOfMatching).reduce((a, b) => percentOfMatching[a] > percentOfMatching[b] ? a : b);
+                    bankWithMaxSimilarityPercentages = Object.keys(bankWithMaxSimilarityPercentages).reduce((a, b) => bankWithMaxSimilarityPercentages[a] > bankWithMaxSimilarityPercentages[b] ? a : b);
 
-                    switch (percentOfMatching) {
-                        case "CITI":
+                    switch (bankWithMaxSimilarityPercentages) {
+                        case bank_message_patterns['CITI'].key:
                             this.citiBankParser(comment);
                             break;
-                        case "Axis":
+                        case bank_message_patterns['AXIS'].key:
                             this.axisBankParser(comment);
                             break;
                     }
@@ -329,29 +330,28 @@
 
                 parseComment($event) {
                     let comment = event.target.value
-                    let bank_message_patterns = @json($bank_message_patterns);
                     formattedComment = comment.replace(/\s/g, ""); // Variable for storing the formatted comment string so that we can match it with the stored bank patterns
                     
                     // Extracting the paid amount according to the bank transaction pattern string.
                     var bank = null; 
                     for(let bankName in bank_message_patterns) {
-                        if (formattedComment.includes(bank_message_patterns[bankName])) {
-                            bank = bankName;
+                        if (formattedComment.includes(bank_message_patterns[bankName].value)) {
+                            bank = bank_message_patterns[bankName].key;
                         } 
                     }
                     // Showing message if bank statement does not match any exising bank pattern
-                    if (bank) {
+                    if (bank || !comment) {
                         document.getElementById("bank-not-found").innerHTML = null ;
                     } else {
                             document.getElementById("bank-not-found").innerHTML = 'The bank statement does not match existing patterns. Trying to give the best possible result.' ;
                         }
 
                     switch (bank) {
-                        case "CITI":
+                        case bank_message_patterns['CITI'].key:
                                 this.citiBankParser(comment);
                             break;
                         
-                        case "Axis":
+                        case bank_message_patterns['AXIS'].key:
                                 this.axisBankParser(comment);
                             break;
 
@@ -365,7 +365,7 @@
                 setBankConversionRate(filtered_number_list, index, bank) {
                     conversionRate = filtered_number_list[index]
                     switch (bank) {
-                        case "Axis bank":
+                        case bank_message_patterns['AXIS'].key:
                                 this.conversionRate = conversionRate / this.amountPaid;
                                 this.conversionRateDiff = Math.abs(this.currentExchangeRate - this.conversionRate).toFixed(2)
                             break;
