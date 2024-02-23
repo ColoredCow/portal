@@ -173,7 +173,7 @@ return [
     'bank_message_patterns' => [
         'CITI' => [
             'key' => 'citi',
-            'value' => env('CITI_BANK_MESSAGE_PATTERN')
+            'value' => env('CITI_BANK_MESSAGE_PATTERN'),
         ],
         'AXIS' => [
             'key' => 'axis',
