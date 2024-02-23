@@ -178,6 +178,6 @@ return [
         'AXIS' => [
             'key' => 'axis',
             'value' => env('AXIS_BANK_MESSAGE_PATTERN'),
-        ]
+        ],
     ],
 ];
