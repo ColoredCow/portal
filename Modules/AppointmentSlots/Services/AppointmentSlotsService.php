@@ -14,7 +14,6 @@ use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Jobs\Recruitment\SendApplicationRoundScheduled;
 use Modules\User\Entities\UserMeta;
 
-
 class AppointmentSlotsService implements AppointmentSlotsServiceContract
 {
     public function canSeeAppointments($params)
