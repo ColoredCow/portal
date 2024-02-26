@@ -10,6 +10,7 @@ return [
         'end_date' => 'end date',
         'actual_effort' => 'actual effort',
         'billable_effort' => 'billable effort',
+        'approved_pipeline' => 'Approved Pipeline',
     ],
     'default_last_column_in_effort_sheet' => 'G',
     'default_start_column_in_effort_sheet' => 'C',
