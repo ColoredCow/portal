@@ -25,6 +25,7 @@ class CalendarMeetingService implements CalendarMeetingContract
     protected $isDetailsSet = false;
     protected $organizer = null;
     protected $event;
+    protected $description;
 
     public function __construct($organizer = null, $details = [])
     {
