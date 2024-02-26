@@ -86,6 +86,7 @@ class CalendarMeetingService implements CalendarMeetingContract
             'attendees' => $this->attendees,
             'start' => $this->startDateTime,
             'end' => $this->endDateTime,
+            'description' => $this->description,
             'conferenceDataVersion' => 1,
         ]);
 
