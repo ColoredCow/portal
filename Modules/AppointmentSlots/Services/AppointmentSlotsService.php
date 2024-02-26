@@ -4,6 +4,7 @@ namespace Modules\AppointmentSlots\Services;
 
 use App\Services\CalendarEventService;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\URL;
 use Modules\AppointmentSlots\Contracts\AppointmentSlotsServiceContract;
 use Modules\AppointmentSlots\Entities\AppointmentSlot;
 use Modules\Communication\Contracts\CalendarMeetingContract;
@@ -12,7 +13,7 @@ use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Jobs\Recruitment\SendApplicationRoundScheduled;
 use Modules\User\Entities\UserMeta;
-use Illuminate\Support\Facades\URL;
+
 
 class AppointmentSlotsService implements AppointmentSlotsServiceContract
 {
