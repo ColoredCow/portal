@@ -139,7 +139,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         $summary = "{$applicant->name} – {$applicationRound->round->name} with ColoredCow";
         $guests = [['email' => $data['applicant_email'], 'responseStatus' => 'accepted']];
         $route = 'applications.' . $applicationRound->application->job->type . '.edit';
-        $applicationLink = URL::route($route, $applicationRound->application->id) ;
+        $applicationLink = URL::route($route, $applicationRound->application->id);
         $description = "Application Link: {$applicationLink}";
         $calendarMeetingService = app(CalendarMeetingContract::class);
         $calendarMeetingService->setOrganizer($applicationRound->scheduledPerson);
