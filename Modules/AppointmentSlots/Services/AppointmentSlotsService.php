@@ -12,6 +12,7 @@ use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Jobs\Recruitment\SendApplicationRoundScheduled;
 use Modules\User\Entities\UserMeta;
+use Illuminate\Support\Facades\URL;
 
 class AppointmentSlotsService implements AppointmentSlotsServiceContract
 {
