@@ -77,7 +77,7 @@
                     </div>
                 </div>
 
-                <div class="form-group d-flex">
+                <div class="form-group">
                     <label for="receivable_date" class="field-required mr-3 pt-2">Receivable date</label>
                     <input type="date" class="form-control flex-1" name="receivable_date" id="receivable_date"
                         required="required" value="{{ $invoice->receivable_date->format('Y-m-d') }}">
