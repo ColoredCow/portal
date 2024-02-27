@@ -141,9 +141,9 @@
                 
                 <div class="form-group" v-if="this.client.type !== 'indian'">
                     <div class="d-flex">
-                        <label for="conversion_rate" class="w-145 mr-4 pt-1"><a target="_blank" href="https://www.google.co.in/search?q=conversion+rate+usd+to+inr&sca_esv=249742a58e0580e2&ei=rpndZe2yOK2K4-EPtoyNyAE&oq=conversion+rate+&gs_lp=Egxnd3Mtd2l6LXNlcnAiEGNvbnZlcnNpb24gcmF0ZSAqAggAMgUQABiABDIQEAAYgAQYigUYQxixAxiDATIFEAAYgAQyBRAAGIAEMgoQABiABBiKBRhDMhAQABiABBiKBRhDGLEDGIMBMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABEjdDFAAWABwAHgBkAEAmAGNAaABjwKqAQMwLjK4AQPIAQD4AQGYAgKgApkCmAMAkgcDMC4y&sclient=gws-wiz-serp">Today's Google Conversion Rate:</a></label>
+                        <label for="conversion_rate" class="w-145 mr-4"><a target="_blank" href="https://www.google.co.in/search?q=conversion+rate+usd+to+inr">Today's Google Conversion Rate:</a></label>
                         <input type="number" id="currentConversionRate" class="form-control ml-auto w-200 w-xl-272 bg-white" step="0.01"
-                            name="current_conversion_rate" value="{{$currencyService->getCurrentRatesInINR()}}" disabled>
+                            value="{{$currencyService->getCurrentRatesInINR()}}" disabled>
                     </div>
                 </div>
 
