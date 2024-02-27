@@ -25,7 +25,7 @@
 
                 <div class="form-group">
                     <div class="d-flex">
-                        <label for="client_id font-weight-bold" class="mr-3 w-70">Client:</label>
+                        <label for="client_id font-weight-bold" class="mr-3 w-90">Client:</label>
                         <span>
                             <p>{{ $invoice->client->name }}</p>
                         </span>
@@ -34,7 +34,7 @@
 
                 <div class="form-group">
                     <div class="d-flex">
-                        <label for="client_id" class="mr-3 w-72">Project:</label>
+                        <label for="client_id" class="mr-3 w-90">Project:</label>
                         <span>
                             <p>{{ optional($invoice->project)->name ?: $invoice->client->name . ' Projects' }}</p>
                         </span>
@@ -43,7 +43,7 @@
 
                 <div class="form-group">
                     <div class="d-flex">
-                        <label for="client_id" class="mr-3 w-72">Amount:</label>
+                        <label for="client_id" class="mr-3 w-90">Amount:</label>
                         <span>
                             <p>{{ $invoice->display_amount }}</p>
                         </span>
@@ -52,7 +52,7 @@
 
                 <div class="form-group" v-if="this.client.type == 'indian'">
                     <div class="d-flex">
-                        <label for="client_id" class="mr-3 w-72">GST:</label>
+                        <label for="client_id" class="mr-3 w-90">GST:</label>
                         <span>
                             <p>{{ $invoice->gst . ' ₹' }}</p>
                         </span>
@@ -61,7 +61,7 @@
 
                 <div class="form-group">
                     <div class="d-flex">
-                        <label for="client_id" class="mr-3 w-72">Sent on:</label>
+                        <label for="client_id" class="mr-3 w-90">Sent on:</label>
                         <span>
                             <p>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</p>
                         </span>
@@ -70,15 +70,15 @@
 
                 <div class="form-group">
                     <div class="d-flex">
-                        <label for="client_id" class="mr-3 w-72">Due on:</label>
+                        <label for="client_id" class="mr-3 w-90">Due on:</label>
                         <span>
                             <p>{{ $invoice->due_on->format(config('invoice.default-date-format')) }}</p>
                         </span>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="receivable_date" class="field-required mr-3 pt-2">Receivable date</label>
+                <div class="form-group d-flex">
+                    <label for="receivable_date" class="field-required mr-3 w-md-90 w-xl-auto pt-2">Receivable <br> date</label>
                     <input type="date" class="form-control flex-1" name="receivable_date" id="receivable_date"
                         required="required" value="{{ $invoice->receivable_date->format('Y-m-d') }}">
                 </div>
