@@ -208,6 +208,11 @@ class EffortTrackingService
                 $projectMembersCount++;
             }
 
+            $approvedPipelineRange = config("efforttracking.default_monthly_approved_pipeline_column_in_effort_sheet");
+            $approvedPipelineSheet = $sheets->spreadsheet($sheetId)
+                ->range($approvedPipelineRange)
+                ->get();
+
             try {
                 while (true) {
                     $lastColumn++;
@@ -215,12 +220,7 @@ class EffortTrackingService
                     $sheet = $sheets->spreadsheet($sheetId)
                         ->range($range)
                         ->get();
-                    $approvedPipelineRange = "A6";
-                    $approvedPipelineSheet = $sheets->spreadsheet($sheetId)
-                        ->range($approvedPipelineRange)
-                        ->get();
 
-                    $mergedData = array_merge($sheet[0], $approvedPipelineSheet[0]);
                     $columnIndex++;
                     if (isset($sheet[0]) && count($sheet[0]) == $columnIndex) {
                         $subProjectName = $sheet[0][count($sheet[0]) - 1];
@@ -244,11 +244,10 @@ class EffortTrackingService
             }
 
             $range = config('efforttracking.default_start_column_in_effort_sheet') . '2:' . $lastColumn . ($projectMembersCount + 1); // this will depend on the number of people on the project
-            $sheetIndexForTeamMemberName = $this->getColumnIndex($sheetColumnsName['team_member_name'], $mergedData[0]);
-            $sheetIndexForTotalBillableEffort = $this->getColumnIndex($sheetColumnsName['billable_effort'], $mergedData[0]);
-            $sheetIndexForStartDate = $this->getColumnIndex($sheetColumnsName['start_date'], $mergedData[0]);
-            $sheetIndexForEndDate = $this->getColumnIndex($sheetColumnsName['end_date'], $mergedData[0]);
-            $sheetIndexForApprovedPipelineHrs = $this->getColumnIndex($sheetColumnsName['approved_pipeline'], $mergedData[0]);
+            $sheetIndexForTeamMemberName = $this->getColumnIndex($sheetColumnsName['team_member_name'], $sheet[0]);
+            $sheetIndexForTotalBillableEffort = $this->getColumnIndex($sheetColumnsName['billable_effort'], $sheet[0]);
+            $sheetIndexForStartDate = $this->getColumnIndex($sheetColumnsName['start_date'], $sheet[0]);
+            $sheetIndexForEndDate = $this->getColumnIndex($sheetColumnsName['end_date'], $sheet[0]);
 
             if ($sheetIndexForTeamMemberName === false || $sheetIndexForTotalBillableEffort === false || $sheetIndexForStartDate === false || $sheetIndexForEndDate === false) {
                 return false;
@@ -301,6 +300,8 @@ class EffortTrackingService
                         try {
                             $effortData['sheet_project'] = $sheetProject;
                             $this->updateEffort($effortData);
+                            $approvedPipelineSheetEffort = !empty($approvedPipelineSheet[0][0]) ? $approvedPipelineSheet[0][0] : 0;
+                            $this->updateApprovedPipelineEffort($approvedPipelineSheetEffort,$effortData);
                             ProjectMeta::updateOrCreate(
                                 [
                                     'key' => config('project.meta_keys.last_updated_at.key'),
@@ -334,6 +335,19 @@ class EffortTrackingService
         }
 
         return false;
+    }
+
+    public function updateApprovedPipelineEffort($approvedPipelineSheet, $effortData) {
+        Project::updateOrCreate(
+            [
+                'id' => $effortData['sheet_project']['id'],
+            ],
+            [
+                'monthly_approved_pipeline' => $approvedPipelineSheet,
+            ]
+        );
+
+        return "success";
     }
 
     public function updateEffort(array $effortData)
