@@ -300,7 +300,7 @@ class EffortTrackingService
                         try {
                             $effortData['sheet_project'] = $sheetProject;
                             $this->updateEffort($effortData);
-                            $approvedPipelineSheetEffort = !empty($approvedPipelineSheet[0][0]) ? $approvedPipelineSheet[0][0] : 0;
+                            $approvedPipelineSheetEffort = ! empty($approvedPipelineSheet[0][0]) ? $approvedPipelineSheet[0][0] : 0;
                             $this->updateApprovedPipelineEffort($approvedPipelineSheetEffort, $effortData);
                             ProjectMeta::updateOrCreate(
                                 [
