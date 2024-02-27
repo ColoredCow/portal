@@ -25,7 +25,7 @@
 
                 <div class="form-group">
                     <div class="d-flex">
-                        <label for="client_id font-weight-bold" class="mr-5">Client:</label>
+                        <label for="client_id font-weight-bold" class="mr-3 w-70">Client:</label>
                         <span>
                             <p>{{ $invoice->client->name }}</p>
                         </span>
@@ -34,7 +34,7 @@
 
                 <div class="form-group">
                     <div class="d-flex">
-                        <label for="client_id" class="mr-5">Project:</label>
+                        <label for="client_id" class="mr-3 w-72">Project:</label>
                         <span>
                             <p>{{ optional($invoice->project)->name ?: $invoice->client->name . ' Projects' }}</p>
                         </span>
@@ -43,7 +43,7 @@
 
                 <div class="form-group">
                     <div class="d-flex">
-                        <label for="client_id" class="mr-5">Amount:</label>
+                        <label for="client_id" class="mr-3 w-72">Amount:</label>
                         <span>
                             <p>{{ $invoice->display_amount }}</p>
                         </span>
@@ -52,7 +52,7 @@
 
                 <div class="form-group" v-if="this.client.type == 'indian'">
                     <div class="d-flex">
-                        <label for="client_id" class="mr-5">GST:</label>
+                        <label for="client_id" class="mr-3 w-72">GST:</label>
                         <span>
                             <p>{{ $invoice->gst . ' ₹' }}</p>
                         </span>
@@ -61,7 +61,7 @@
 
                 <div class="form-group">
                     <div class="d-flex">
-                        <label for="client_id" class="mr-5">Sent on:</label>
+                        <label for="client_id" class="mr-3 w-72">Sent on:</label>
                         <span>
                             <p>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</p>
                         </span>
@@ -70,7 +70,7 @@
 
                 <div class="form-group">
                     <div class="d-flex">
-                        <label for="client_id" class="mr-5">Due on:</label>
+                        <label for="client_id" class="mr-3 w-72">Due on:</label>
                         <span>
                             <p>{{ $invoice->due_on->format(config('invoice.default-date-format')) }}</p>
                         </span>
@@ -92,14 +92,14 @@
                 </div>
 
                 <div class="form-group d-flex">
-                    <label for="amountPaid" class="field-required mr-3 pt-1">Received Amount</label>
+                    <label for="amountPaid" class="field-required w-145 mr-4 pt-1">Received Amount</label>
                     <div class="input-group flex-1">
-                        <input v-model="amountPaid" type="number" class="form-control" name="amount_paid"
+                        <input v-model="amountPaid" type="number" class="form-control ml-auto" name="amount_paid"
                             id="amountPaid" placeholder="Amount Received" required="required" step=".01"
                             min="0" v-on:input="changePaidAmountListener">
                         <div class="input-group-prepend">
                             <select name="currency_transaction_charge" v-model="currencyTransactionCharge"
-                                id="currencyTransactionCharge" class="input-group-text" required="required">
+                                id="currencyTransactionCharge" class="input-group-text h-xl-44" required="required">
                                 @foreach ($countries as $country)
                                     <option value="{{ $country->currency }}">{{ $country->currency }}</option>
                                 @endforeach
@@ -109,56 +109,56 @@
                 </div>
 
                 <div class="form-group-inline d-flex mb-2">
-                    <label for="payment_at" class="field-required mr-8 pt-1">Payment date</label>
-                    <input type="date" class="form-control flex-1" name="payment_at" id="payment_at"
+                    <label for="payment_at" class="field-required w-145 mr-4 pt-1">Payment date</label>
+                    <input type="date" class="form-control w-200 w-xl-272 ml-auto flex-1" name="payment_at" id="payment_at"
                         required="required"
                         value="{{ $invoice->payment_at ? $invoice->payment_at->format('Y-m-d') : date('Y-m-d') }}">
                 </div>
 
                 <div class="form-group" v-if="this.client.type == 'indian'">
                     <div class="d-flex">
-                        <label for="tds" class="mr-4 pt-1 field-required">TDS:</label>
-                        <input type="text" name="tds" class="form-control w-272 ml-auto" v-model='tds'
+                        <label for="tds" class="field-required w-145 mr-4 pt-1">TDS:</label>
+                        <input type="text" name="tds" class="form-control w-200 w-xl-272 ml-auto" v-model='tds'
                             required="required">
                     </div>
                 </div>
 
                 <div class="form-group" v-if="this.client.type == 'indian'">
                     <div class="d-flex">
-                        <label for="tds_percentage" class="mr-4 pt-1 field-required">TDS %:</label>
-                        <input type="text" class="form-control w-272 ml-auto" name="tds_percentage"
+                        <label for="tds_percentage" class="field-required w-145 mr-4 pt-1">TDS %:</label>
+                        <input type="text" class="form-control w-200 w-xl-272 ml-auto" name="tds_percentage"
                             v-model='tdsPercentage' required="required">
                     </div>
                 </div>
 
                 <div class="form-group" v-if="this.client.type != 'indian'">
                     <div class="d-flex">
-                        <label for="bank_charges" class="mr-4 pt-1 field-required">Bank Charges:</label>
-                        <input type="number" class="form-control w-272 ml-auto" step="0.01" name="bank_charges"
+                        <label for="bank_charges" class="field-required w-145 mr-4 pt-1">Bank Charges:</label>
+                        <input type="number" class="form-control w-200 w-xl-272 ml-auto" step="0.01" name="bank_charges"
                             v-model='bankCharges' required="required">
                     </div>
                 </div>
                 
                 <div class="form-group" v-if="this.client.type !== 'indian'">
                     <div class="d-flex">
-                        <label for="conversion_rate" class="mr-4 pt-1">Current Conversion Rate:</label>
-                        <input type="number" id="currentConversionRate" class="form-control w-272 ml-auto" step="0.01"
+                        <label for="conversion_rate" class="w-145 mr-4 pt-1"><a target="_blank" href="https://www.google.co.in/search?q=conversion+rate+usd+to+inr&sca_esv=249742a58e0580e2&ei=rpndZe2yOK2K4-EPtoyNyAE&oq=conversion+rate+&gs_lp=Egxnd3Mtd2l6LXNlcnAiEGNvbnZlcnNpb24gcmF0ZSAqAggAMgUQABiABDIQEAAYgAQYigUYQxixAxiDATIFEAAYgAQyBRAAGIAEMgoQABiABBiKBRhDMhAQABiABBiKBRhDGLEDGIMBMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABEjdDFAAWABwAHgBkAEAmAGNAaABjwKqAQMwLjK4AQPIAQD4AQGYAgKgApkCmAMAkgcDMC4y&sclient=gws-wiz-serp">Today's Google Conversion Rate:</a></label>
+                        <input type="number" id="currentConversionRate" class="form-control ml-auto w-200 w-xl-272 bg-white" step="0.01"
                             name="current_conversion_rate" value="{{$currencyService->getCurrentRatesInINR()}}" disabled>
                     </div>
                 </div>
 
                 <div class="form-group" v-if="this.client.type !== 'indian'">
                     <div class="d-flex">
-                        <label for="conversion_rate" class="mr-4 pt-1 field-required">Conversion Rate:</label>
-                        <input type="number" id="conversionRate" class="form-control w-272 ml-auto" step="0.01"
+                        <label for="conversion_rate" class="field-required w-145 mr-4 pt-1">Client Conversion Rate:</label>
+                        <input type="number" id="conversionRate" class="form-control w-200 w-xl-272 ml-auto" step="0.01"
                             name="conversion_rate" v-model='conversionRate' required="required">
                     </div>
                 </div>
 
                 <div class="form-group" v-if="this.client.type !== 'indian'">
                     <div class="d-flex">
-                        <label for="client_id" class="mr-4 pt-1 field-required">Conversion Rate Diff:</label>
-                        <input type="number" class="form-control w-272 ml-auto" step="0.01"
+                        <label for="client_id" class="field-required w-145 mr-4 pt-1">Conversion Rate Diff:</label>
+                        <input type="number" class="form-control w-200 w-xl-272 ml-auto" step="0.01"
                             name="conversion_rate_diff" v-model='conversionRateDiff' required="required">
                     </div>
                 </div>
