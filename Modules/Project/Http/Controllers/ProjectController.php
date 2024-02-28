@@ -13,6 +13,7 @@ use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Rules\ProjectNameExist;
+use Modules\EffortTracking\Services\EffortTrackingService;
 
 class ProjectController extends Controller
 {
@@ -75,11 +76,15 @@ class ProjectController extends Controller
         }
         $daysTillToday = count($project->getWorkingDaysList($project->client->month_start_date, $currentDate));
 
+        $effortTracking = new EffortTrackingService;
+        $isApprovedWorkPipelineExist = $effortTracking->getIsApprovedWorkPipelineExist($project->effort_sheet_url);
+
         return view('project::show', [
             'project' => $project,
             'contract' => $contract,
             'contractFilePath' => $contractFilePath,
             'daysTillToday' => $daysTillToday,
+            'isApprovedWorkPipelineExist' => $isApprovedWorkPipelineExist,
         ]);
     }
 
