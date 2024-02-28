@@ -188,6 +188,7 @@ class Invoice extends Model implements Auditable
         $amountDifference = $currentMonthAmount - $lastMonthAmount;
         if ($lastMonthAmount != 0) {
             $percentage = number_format(($amountDifference / $lastMonthAmount) * 100, 2);
+
             return "$amountDifference ($percentage%)";
         } else {
             return $amountDifference;
