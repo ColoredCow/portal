@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Client\Entities\Client;
+use Modules\EffortTracking\Services\EffortTrackingService;
 use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\Job;
 use Modules\Project\Contracts\ProjectServiceContract;
@@ -13,7 +14,6 @@ use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Rules\ProjectNameExist;
-use Modules\EffortTracking\Services\EffortTrackingService;
 
 class ProjectController extends Controller
 {

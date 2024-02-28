@@ -388,9 +388,9 @@ class EffortTrackingService
 
         try {
             $correctedEffortsheetUrl = [];
-    
+
             $isSyntaxMatching = preg_match('/.*[^-\w]([-\w]{25,})[^-\w]?.*/', $effortSheetUrl, $correctedEffortsheetUrl);
-    
+
             if (! $isSyntaxMatching) {
                 return false;
             }

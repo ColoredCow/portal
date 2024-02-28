@@ -95,8 +95,8 @@
                         @if ($isApprovedWorkPipelineExist)
                             <span class="text-capitalize ml-2 fz-lg-22">{{ $project->monthly_approved_pipeline }}</span>
                         @else
-                            <span class="text-capitalize ml-2 text-danger fz-18 tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Formatting issue with effortsheet">
-                                Format issue
+                            <span class="text-capitalize ml-2 text-danger fz-18">
+                                ERROR <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Formatting issue with effortsheet"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                             </span>
                         @endif
                     </div>
