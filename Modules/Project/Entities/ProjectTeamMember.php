@@ -158,19 +158,24 @@ class ProjectTeamMember extends Model
             ->get();
     
         $individualmemberdata = [];
+        $totalactualeffort = 0;
+        $totalexpectedeffort = 0;
     
         foreach ($team_member_projects as $team_member_project) {
-            // $project = $team_member_project->project;
+            $project = $team_member_project->project;
     
             // if ($project) {
                 $individualmemberdata[] = [
                     'current_actual_effort' => $team_member_project->current_actual_effort,
                     'current_expected_effort' => $team_member_project->current_expected_effort,
+                    'project' => $project
                 ];
+                $totalactualeffort += $team_member_project->current_actual_effort;
+                $totalexpectedeffort += $team_member_project->current_expected_effort;
             
         }
     
-        return $individualmemberdata;
+        return ["individualmemberdata"=>$individualmemberdata,"totalactualeffort"=>$totalactualeffort,"totalexpectedeffort"=>$totalexpectedeffort];
     }
 
     protected static function newFactory()
