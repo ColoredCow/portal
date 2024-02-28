@@ -184,10 +184,10 @@ class Invoice extends Model implements Auditable
             ->where('client_id', $this->client_id)->where('project_id', $this->project_id)
             ->orderBy('sent_on', 'DESC')
             ->first();
-        $lastMonthAmount = $lastMonthAmountDetail ? ((float) $lastMonthAmountDetail->amount + (float) $lastMonthAmountDetail->gst) : 0;
+        $lastMonthAmount = $lastMonthAmountDetail ? (float) $lastMonthAmountDetail->amount + (float) $lastMonthAmountDetail->gst : 0;
         $amountDifference = $currentMonthAmount - $lastMonthAmount;
         if ($lastMonthAmount != 0) {
-            $percentage = number_format(($amountDifference / $lastMonthAmount) * 100, 2);
+            $percentage = number_format($amountDifference / $lastMonthAmount * 100, 2);
 
             return "{$amountDifference} ({$percentage}%)";
         }
