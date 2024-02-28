@@ -130,6 +130,9 @@
                                                         ({{$daysTillToday}} Days)
                                                     </div>
                                                 </th>
+                                                <th> Test
+                                                
+                                                </th>
                                                 <th>Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
                                             </tr>
                                         </thead>
@@ -148,7 +151,27 @@
                                                             {{$teamMember->user->name}}
                                                         </th>
                                                         <td class="{{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'text-success' : 'text-danger' }}">{{$teamMember->current_actual_effort}}</td>
-                                                        <td>{{$teamMember->current_expected_effort }}</td>
+                                                        <td>{{$teamMember->current_expected_effort }} <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."></td>
+                                                        <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">
+                                                            <div class="d-flex">
+                                                                @foreach($teamMember->total_expected_effort as $p)
+                                                                <div
+                                                                    class="d-flex border border-dark position-relative tooltip-wrapper"
+                                                                    data-html="true" data-toggle="tooltip" title="Velocity is the {{$p['current_expected_effort']}}"
+                                                                >
+                                                                    <span
+                                                                        class="bg-success position-absolute px-2"
+                                                                        style="width: calc($p['current_expected_effort']}} / {{ $p['current_actual_effort'] }}px)"
+                                                                    >
+                                                                    <!-- <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Velocity is the" > -->
+                                                                        {{$p['current_actual_effort']}}
+                                                                        </span>
+                                                                    </span>
+                                                                    <span class="bg-danger px-2" style="width: $p['current_expected_effort']}}px;">{{$p['current_expected_effort']}}</span>
+                                                                </div>
+                                                                @endforeach
+                                                            </div>
+                                                        </td>
                                                         <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}</td>
                                                     </tr>
                                                 @endforeach

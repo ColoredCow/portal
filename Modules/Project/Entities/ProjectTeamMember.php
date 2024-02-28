@@ -134,6 +134,44 @@ class ProjectTeamMember extends Model
         ->where('added_on', '<=', $endDate)
         ->sum('actual_effort');
     }
+    // public function show(Project $project)
+    // {
+    //     $contract = ProjectContract::where('project_id', $project->id)->first();
+    //     $contractFilePath = $contract ? storage_path('app/' . $contract->contract_file_path) : null;
+    //     $currentDate = today(config('constants.timezone.indian'));
+
+    //     if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
+    //         $currentDate = $currentDate->subDay();
+    //     }
+    //     $daysTillToday = count($project->getWorkingDaysList($project->client->month_start_date, $currentDate));
+
+    //     return view('project::show', [
+    //         'project' => $project,
+    //         'contract' => $contract,
+    //         'contractFilePath' => $contractFilePath,
+    //         'daysTillToday' => $daysTillToday,
+    //     ]);
+    // }
+    public function getTotalExpectedEffortAttribute() {
+        $team_member_projects = ProjectTeamMember::where('team_member_id', $this->team_member_id)
+            ->whereNull('ended_on')
+            ->get();
+    
+        $individualmemberdata = [];
+    
+        foreach ($team_member_projects as $team_member_project) {
+            // $project = $team_member_project->project;
+    
+            // if ($project) {
+                $individualmemberdata[] = [
+                    'current_actual_effort' => $team_member_project->current_actual_effort,
+                    'current_expected_effort' => $team_member_project->current_expected_effort,
+                ];
+            
+        }
+    
+        return $individualmemberdata;
+    }
 
     protected static function newFactory()
     {
