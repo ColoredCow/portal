@@ -382,7 +382,8 @@ class EffortTrackingService
         );
     }
 
-    public function getIsApprovedWorkPipelineExist($effortSheetUrl) {
+    public function getIsApprovedWorkPipelineExist($effortSheetUrl)
+    {
         $isApprovedWorkPipelineExist = false;
 
         try {
