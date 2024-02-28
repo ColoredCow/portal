@@ -186,7 +186,7 @@ class Invoice extends Model implements Auditable
             ->first();
         $lastMonthAmount = $lastMonthAmountDetail ? (float) $lastMonthAmountDetail->amount : 0;
         if ($this->client->type == 'indian') {
-        $lastMonthAmount = $lastMonthAmountDetail ? (float) $lastMonthAmountDetail->amount + (float) $lastMonthAmountDetail->gst : 0;
+            $lastMonthAmount = $lastMonthAmountDetail ? (float) $lastMonthAmountDetail->amount + (float) $lastMonthAmountDetail->gst : 0;
         }
         $amountDifference = $currentMonthAmount - $lastMonthAmount;
         if ($lastMonthAmount != 0) {
