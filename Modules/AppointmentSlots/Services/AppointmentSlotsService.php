@@ -4,6 +4,7 @@ namespace Modules\AppointmentSlots\Services;
 
 use App\Services\CalendarEventService;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\URL;
 use Modules\AppointmentSlots\Contracts\AppointmentSlotsServiceContract;
 use Modules\AppointmentSlots\Entities\AppointmentSlot;
 use Modules\Communication\Contracts\CalendarMeetingContract;
@@ -138,7 +139,9 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         $applicant = $applicationRound->application->applicant;
         $summary = "{$applicant->name} – {$applicationRound->round->name} with ColoredCow";
         $guests = [['email' => $data['applicant_email'], 'responseStatus' => 'accepted']];
-
+        $route = 'applications.' . $applicationRound->application->job->type . '.edit';
+        $applicationLink = URL::route($route, $applicationRound->application->id);
+        $description = "Application Link: {$applicationLink}";
         $calendarMeetingService = app(CalendarMeetingContract::class);
         $calendarMeetingService->setOrganizer($applicationRound->scheduledPerson);
 
@@ -147,6 +150,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
             'start' => $applicationRound->scheduled_date->format(config('constants.datetime_format')),
             'end' => $applicationRound->scheduled_end,
             'attendees' => $guests,
+            'description' => $description,
         ]);
 
         $applicationRound->update([
