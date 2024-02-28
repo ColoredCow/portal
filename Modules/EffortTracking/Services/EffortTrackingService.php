@@ -406,7 +406,8 @@ class EffortTrackingService
         return $isApprovedWorkPipelineExist;
     }
 
-    public function getIsApprovedWorkPipelineExistBySheet($sheet) {
+    public function getIsApprovedWorkPipelineExistBySheet($sheet)
+    {
         $approvedPipelineTextRange = 'A6';
         $approvedPipelineTextSheet = $sheet->range($approvedPipelineTextRange)->get();
 
