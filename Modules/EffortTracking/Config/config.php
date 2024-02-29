@@ -13,4 +13,5 @@ return [
     ],
     'default_last_column_in_effort_sheet' => 'G',
     'default_start_column_in_effort_sheet' => 'C',
+    'default_monthly_approved_pipeline_column_in_effort_sheet' => 'B6',
 ];
