@@ -126,11 +126,13 @@ class RevenueReportService
                 $amountMonthWise = $data['amountMonthWise'];
             }
         }
+        $averageAmount = $totalAmount / count($amountMonthWise);
 
         return [
             'months' => array_keys($amountMonthWise),
             'amount' => array_values($amountMonthWise),
             'total_amount' => round($totalAmount, 2),
+            'average_amount' => round($averageAmount, 2),
         ];
     }
 

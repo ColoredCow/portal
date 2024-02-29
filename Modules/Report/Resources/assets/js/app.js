@@ -106,6 +106,7 @@ function clientWiseRevenueTrendsReport(reportsData) {
 	const canvasElementId = "clientWiseReportRevenueTrends";
 	const labels = reportsData.labels;
 	const currentPeriodTotalRevenue = reportsData.data.total_amount;
+	const averageRevenue = reportsData.data.average_amount;
 	const chartData = {
 		labels: labels,
 		datasets: [
@@ -129,7 +130,7 @@ function clientWiseRevenueTrendsReport(reportsData) {
 			responsive: true,
 			title: {
 				display: true,
-				text: "Total revenue: Rs. " + currentPeriodTotalRevenue
+				text: "Total Revenue: Rs. " + currentPeriodTotalRevenue + " | Average Revenue: Rs. " + averageRevenue,
 			},
 			scales: {
 				yAxes: [
