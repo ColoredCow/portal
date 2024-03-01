@@ -362,7 +362,9 @@
                             <p>{{ $client->country->initials == 'IN' && optional($client->addresses->first())->gst_number ? __('GSTIN: ') . optional($client->addresses->first())->gst_number : '' }}
                             </p>
                             <p>{{ optional($client->billing_contact)->phone }}</p>
+                            @if ($client->country->initials == 'IN' && optional($client->addresses->first())->pan_number)
                             <p>PAN : {{ optional($client->addresses->first())->pan_number }}</p>
+                            @endif
                         </td>
                         <td>
                             <p class="fw-bold ml-1em">Details</p>
