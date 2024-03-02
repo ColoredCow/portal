@@ -60,6 +60,9 @@
     "sort-packages": true,
     "platform": {
       "php": "7.5"
+    },
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
   "extra": {
