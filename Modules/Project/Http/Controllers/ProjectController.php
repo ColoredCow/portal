@@ -74,7 +74,7 @@ class ProjectController extends Controller
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = $currentDate->subDay();
         }
-        $daysTillToday = count($project->getWorkingDaysList($project->client->month_start_date, $currentDate));
+        $daysTillToday = count($project->getWorkingDaysList(now()->subDay(10), $currentDate));
 
         $effortTracking = new EffortTrackingService;
         $isApprovedWorkPipelineExist = $effortTracking->getIsApprovedWorkPipelineExist($project->effort_sheet_url);

@@ -60,7 +60,7 @@ class ProjectTeamMember extends Model
             $currentDate = $currentDate->subDay();
         }
 
-        $daysTillToday = count($project->getWorkingDaysList($startDate, $currentDate));
+        $daysTillToday = count($project->getWorkingDaysList(now()->subDay(10), $currentDate));
 
         return $this->daily_expected_effort * $daysTillToday;
     }
@@ -130,52 +130,36 @@ class ProjectTeamMember extends Model
     public function getActualEffortBetween($startDate, $endDate)
     {
         return $this->projectTeamMemberEffort()
-        ->where('added_on', '>=', $startDate)
-        ->where('added_on', '<=', $endDate)
-        ->sum('actual_effort');
+            ->where('added_on', '>=', $startDate)
+            ->where('added_on', '<=', $endDate)
+            ->sum('actual_effort');
     }
-    // public function show(Project $project)
-    // {
-    //     $contract = ProjectContract::where('project_id', $project->id)->first();
-    //     $contractFilePath = $contract ? storage_path('app/' . $contract->contract_file_path) : null;
-    //     $currentDate = today(config('constants.timezone.indian'));
 
-    //     if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
-    //         $currentDate = $currentDate->subDay();
-    //     }
-    //     $daysTillToday = count($project->getWorkingDaysList($project->client->month_start_date, $currentDate));
-
-    //     return view('project::show', [
-    //         'project' => $project,
-    //         'contract' => $contract,
-    //         'contractFilePath' => $contractFilePath,
-    //         'daysTillToday' => $daysTillToday,
-    //     ]);
-    // }
-    public function getTotalExpectedEffortAttribute() {
+    public function getTotalExpectedEffortAttribute()
+    {
         $team_member_projects = ProjectTeamMember::where('team_member_id', $this->team_member_id)
             ->whereNull('ended_on')
             ->get();
-    
+
         $individualmemberdata = [];
         $totalactualeffort = 0;
         $totalexpectedeffort = 0;
-    
+
         foreach ($team_member_projects as $team_member_project) {
             $project = $team_member_project->project;
-    
+
             // if ($project) {
-                $individualmemberdata[] = [
-                    'current_actual_effort' => $team_member_project->current_actual_effort,
-                    'current_expected_effort' => $team_member_project->current_expected_effort,
-                    'project' => $project
-                ];
-                $totalactualeffort += $team_member_project->current_actual_effort;
-                $totalexpectedeffort += $team_member_project->current_expected_effort;
-            
+            $individualmemberdata[] = [
+                'current_actual_effort' => $team_member_project->current_actual_effort,
+                'current_expected_effort' => $team_member_project->current_expected_effort,
+                'project' => $project,
+            ];
+            $totalactualeffort += $team_member_project->current_actual_effort;
+            $totalexpectedeffort += $team_member_project->current_expected_effort;
+
         }
-    
-        return ["individualmemberdata"=>$individualmemberdata,"totalactualeffort"=>$totalactualeffort,"totalexpectedeffort"=>$totalexpectedeffort];
+
+        return ["individualmemberdata" => $individualmemberdata, "totalactualeffort" => $totalactualeffort, "totalexpectedeffort" => $totalexpectedeffort];
     }
 
     protected static function newFactory()

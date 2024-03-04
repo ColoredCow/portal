@@ -30,7 +30,7 @@
                         <span class="{{ $project->velocity >= 1 ? 'text-success' : 'text-danger'}} fz-lg-22">{{ $project->velocity }}</span>
                         <a target="_self" href="{{route('project.effort-tracking', $project )}}" class="btn-sm text-decoration-none btn-primary text-white ml-1 text-light rounded">{{ _('Check FTE') }}</a>
                     </div>
-
+                    
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6 pl-4">
@@ -128,26 +128,24 @@
                             <label for="name" class="font-weight-bold">Team Members({{count($project->getTeamMembers)}})</label>
                         </h4>
                        <div class="fz-14 float-right mr-3 mt-1">
-                            <strong>Timeline:</strong>{{ (Carbon\Carbon::parse($project->client->month_start_date)->format('dS M')) }}
-                            -{{ (Carbon\Carbon::parse($project->client->month_end_date)->format('dS M')) }}
+                            <strong>Timeline:</strong>{{ (Carbon\Carbon::parse($project->client->month_start_date)->format('dS M')) }}                       
+                            -{{ (Carbon\Carbon::parse($project->client->month_end_date)->format('dS M')) }}                      
                              &nbsp;&nbsp;&nbsp; <strong>Last refreshed at:</strong>{{ (Carbon\Carbon::parse($project->last_updated_at)->setTimezone('Asia/Kolkata')->format('Y-M-d , D h:i:s A')) }}
-                        </div>
+                        </div> 
                             <div class="flex-column flex-md-row d-flex flex-wrap col-md-18 px-0 ml-1 mr-4">
                                 <div class="table">
                                     <table class="table">
                                         <thead>
                                             <tr class="bg-theme-gray text-light">
                                                 <th class="pb-md-3 pb-xl-4 px-9">Name</th>
-                                                <th>Hours Booked</th>
+                                                <th>Hours Booked</th>   
                                                 <th>Expected Hours
                                                     <div class="ml-lg-3 ml-xl-5 fz-md-10 fz-xl-14">
                                                         ({{$daysTillToday}} Days)
                                                     </div>
                                                 </th>
-                                                <th> Test
-                                                
-                                                </th>
                                                 <th>Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
+                                                <th>Total Velocity</th>
                                             </tr>
                                         </thead>
                                         @if($project->teamMembers->first() == null)
@@ -165,116 +163,102 @@
                                                             {{$teamMember->user->name}}
                                                         </th>
                                                         <td class="{{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'text-success' : 'text-danger' }}">{{$teamMember->current_actual_effort}}</td>
-                                                        <td>{{$teamMember->current_expected_effort }} <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."></td>
-                                                        <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">
-
-                                                            <div
-                                                                    class="d-flex border border-dark position-relative tooltip-wrapper"
-                                                                    data-toggle="modal" data-target="#effortbarchart_{{$project->id}}"
-                                                                >
-                                                                    <span
-                                                                        class="bg-success position-absolute px-2"
-                                                                        style="width: calc($teamMember->total_expected_effort['totalexpectedeffort']}} / {{ $teamMember->total_expected_effort['totalactualeffort'] }}px)"
-                                                                    >
-                                                                    <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Velocity is the" >
-                                                                        {{$teamMember->total_expected_effort['totalactualeffort']}}
-                                                                        </span>
-                                                                    </span>
-                                                                    <span class="bg-danger px-2" style="width: $teamMember->total_expected_effort['totalexpectedeffort']}}px;">{{$teamMember->total_expected_effort['totalexpectedeffort']}}</span>
-                                                                </div>
-
-
-                                                                <div class="modal fade" id="effortbarchart_{{$project->id}}" tabindex="-1" role="dialog" aria-labelledby="effortbarchartlable_{{$project->id}}" aria-hidden="true">
-                                                                    <div class="modal-dialog" role="document">
-                                                                        <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title" id="effortbarchartlable_{{$project->id}}">Modal title</h5>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                        <table>
-                                                                        
-                                                                        <table class="table table-hover">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                <th scope="col">S.no</th>
-                                                                                <th scope="col">Project Name</th>
-                                                                                <th scope="col"></th>
-                                                                                <th scope="col">Handle</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <
-                                                                            @php
-                                                                                    $testJson = json_encode([
-                                                                                        ["label"=> "Sachin Tendulkar", "y"=> 49],
-                                                                                        ["label"=> "Ricky Ponting", "y"=> 30],
-                                                                                        ["label"=> "Kumar Sangakkara", "y"=> 25],
-                                                                                        ["label"=> "Jacques Kallis", "y"=> 17],
-                                                                                        ["label"=> "Mahela Jayawardene", "y"=> 19],
-                                                                                        ["label"=> "Hashim Amla", "y"=> 26],
-                                                                                        ["label"=> "Brian Lara", "y"=> 19],
-                                                                                        ["label"=> "Virat Kohli", "y"=> 32],
-                                                                                        ["label"=> "Rahul Dravid", "y"=> 12],
-                                                                                        ["label"=> "AB de Villiers", "y"=> 25]
-                                                                                    ], JSON_NUMERIC_CHECK);
-
-                                                                                    $odiJson = json_encode([
-                                                                                        ["label"=> "Sachin Tendulkar", "y"=> 49],
-                                                                                        ["label"=> "Ricky Ponting", "y"=> 30],
-                                                                                        ["label"=> "Kumar Sangakkara", "y"=> 25],
-                                                                                        ["label"=> "Jacques Kallis", "y"=> 17],
-                                                                                        ["label"=> "Mahela Jayawardene", "y"=> 19],
-                                                                                        ["label"=> "Hashim Amla", "y"=> 26],
-                                                                                        ["label"=> "Brian Lara", "y"=> 19],
-                                                                                        ["label"=> "Virat Kohli", "y"=> 32],
-                                                                                        ["label"=> "Rahul Dravid", "y"=> 12],
-                                                                                        ["label"=> "AB de Villiers", "y"=> 25]
-                                                                                    ], JSON_NUMERIC_CHECK);
-
-                                                                                    $t20Json = json_encode([
-                                                                                        ["label"=> "Sachin Tendulkar", "y"=> 0],
-                                                                                        ["label"=> "Ricky Ponting", "y"=> 0],
-                                                                                        ["label"=> "Kumar Sangakkara", "y"=> 0],
-                                                                                        ["label"=> "Jacques Kallis", "y"=> 0],
-                                                                                        ["label"=> "Mahela Jayawardene", "y"=> 1],
-                                                                                        ["label"=> "Hashim Amla", "y"=> 0],
-                                                                                        ["label"=> "Brian Lara", "y"=> 0],
-                                                                                        ["label"=> "Virat Kohli", "y"=> 0],
-                                                                                        ["label"=> "Rahul Dravid", "y"=> 0],
-                                                                                        ["label"=> "AB de Villiers", "y"=> 0]
-                                                                                    ], JSON_NUMERIC_CHECK);
-                                                                                @endphp
-
-                                                                            <div id="chartContainer"
-                                                                                data-test="{{ htmlspecialchars($testJson, ENT_QUOTES, 'UTF-8') }}"
-                                                                                data-odi="{{ htmlspecialchars($odiJson, ENT_QUOTES, 'UTF-8') }}"
-                                                                                data-t20="{{ htmlspecialchars($t20Json, ENT_QUOTES, 'UTF-8') }}">
-                                                                            </div>
-                                                                                <tr>
-                                                                                <th scope="row">1</th>
-                                                                                <td>Mark</td>
-                                                                                <td>Otto</td>
-                                                                                <td>@mdo</td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                            </table>
-
-                                                                        </table>
-                                                                        </div>
-                                                                        
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                        </td>
+                                                        <td>{{$teamMember->current_expected_effort }}</td>
                                                         <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}</td>
+                                                        <!-- <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">
+                                                            <div
+                                                                class="d-flex border border-dark position-relative tooltip-wrapper"
+                                                                data-toggle="modal" data-target="#effortbarchart_{{$teamMember->id}}"
+                                                            >
+                                                                <span
+                                                                    class="bg-success position-absolute px-2"
+                                                                    style="width: calc($teamMember->total_expected_effort['totalexpectedeffort']}} / {{ $teamMember->total_expected_effort['totalactualeffort'] }}px)"
+                                                                >
+                                                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Velocity is the" >
+                                                                    {{$teamMember->total_expected_effort['totalactualeffort']}}
+                                                                    </span>
+                                                                </span>
+                                                                <span class="bg-danger px-2" style="width: $teamMember->total_expected_effort['totalexpectedeffort']}}px;">{{$teamMember->total_expected_effort['totalexpectedeffort']}}</span>
+                                                            </div>
+                                                        </td> -->
+
+                                                        <td class="d-flex align-items-center font-weight-bold">
+                                                        <div class="progress rounded h-20 position-relative flex-1" style="background-color: #deedf4;" data-toggle="modal" data-target="#effortbarchart_{{$teamMember->id}}">
+                                                            <div class="progress-bar w-full bg-transparent tooltip-wrapper" role="progressbar" data-html="true" data-toggle="tooltip" title="Total Expected Effort Hours are {{ $teamMember->total_expected_effort['totalexpectedeffort'] }}">
+                                                            </div>
+
+                                                            <div class="h-full progress-bar bg-success position-absolute"
+                                                                role="progressbar"
+                                                                style="width: {{ $teamMember->total_expected_effort['totalactualeffort'] }}%; left: 0;"
+                                                            >
+                                                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Total Actual Effort Hours are {{ $teamMember->total_expected_effort['totalactualeffort'] }}">
+                                                                    {{ $teamMember->total_expected_effort['totalactualeffort'] }}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <span class="fz-12 ml-1">{{ $teamMember->total_expected_effort['totalexpectedeffort'] }}</span>
+                                                        </td>
                                                     </tr>
-                                                <!-- @endforeach -->
+                                                @endforeach
                                             </tbody>
-                                            </table>
-                                        @endif
+                                        </table>
+
+
+                                        @foreach ($project->getTeamMembers ?:[] as $teamMember)
+                                            <div class="modal fade" id="effortbarchart_{{$teamMember->id}}" tabindex="-1" role="dialog" aria-labelledby="effortbarchartlable_{{$teamMember->id}}" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title font-weight-bold" id="effortbarchartlable_{{$teamMember->id}}">{{ $teamMember->user->name }}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <table class="table table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">S.no</th>
+                                                                        <th scope="col">Project Name</th>
+                                                                        <th scope="col">Actual Efforts</th>
+                                                                        <th scope="col">Expected Efforts</th>
+                                                                        <th scope="col">Total Velocity</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($teamMember->total_expected_effort['individualmemberdata'] as $data)
+                                                                    <tr>
+                                                                        <th scope="row">{{ $loop->iteration }}</th>
+                                                                        <td><a href="{{ route('project.show', ["project" => $data['project']->id ]) }}">{{ $data['project']->name }}</a></td>
+                                                                        <td>{{ $data['current_actual_effort'] }}</td>
+                                                                        <td>{{ $data['current_expected_effort'] }}</td>
+                                                                        <td class="d-flex align-items-center font-weight-bold">
+                                                                            <div class="progress rounded h-20 position-relative flex-1" style="background-color: #deedf4;" data-toggle="modal" data-target="#effortbarchart_{{$teamMember->id}}">
+                                                                                <div class="progress-bar w-full bg-transparent" role="progressbar">
+                                                                                    <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Total Expected Effort Hours are {{ $data['current_expected_effort'] }}"></span>
+                                                                                </div>
+
+                                                                                <div class="h-full progress-bar bg-success position-absolute"
+                                                                                    role="progressbar"
+                                                                                    style="width: {{ $data['current_actual_effort'] }}%; left: 0;"
+                                                                                >
+                                                                                    <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Total Actual Effort Hours are {{ $data['current_actual_effort'] }}">
+                                                                                        {{ $data['current_actual_effort'] }}
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <span class="fz-12 ml-1">{{ $data['current_expected_effort'] }}</span>
+                                                                            </td>
+                                                                    </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @endif
                                 </div>
                             </div>
                         </div>
