@@ -173,6 +173,11 @@ class ClientService implements ClientServiceContract
         return Client::where('is_channel_partner', true)->get();
     }
 
+    public function getActiveBillableClients($status = 'active')
+    {
+        return Client::billable()->status($status)->with('projects')->orderBy('name')->get();
+    }
+
     public function getParentOrganisations()
     {
         return Client::where('has_departments', true)->get();
