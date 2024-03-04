@@ -278,7 +278,7 @@ class InvoiceService implements InvoiceServiceContract
 
     public function getClientsForInvoice()
     {
-        return app(ClientServiceContract::class)->getActiveBillableClients();
+        return app(ClientServiceContract::class)->getBillableClients();
     }
 
     public function currencyService()
