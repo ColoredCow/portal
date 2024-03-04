@@ -28,6 +28,11 @@ class Client extends Model
         return $query->where('status', $status);
     }
 
+    public function scopeBillable($query)
+    {
+        return $query->where('is_billable', true);
+    }
+
     public function keyAccountManager()
     {
         return $this->belongsTo(User::class);
