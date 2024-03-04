@@ -158,6 +158,7 @@ class ClientService implements ClientServiceContract
     {
         $data['status'] = 'active';
         $data['client_id'] = Client::max('client_id') + 1;
+        $data['is_billable'] = $data['is_billable'] ?? false;
 
         $newClient = Client::create($data);
         $clientAddress = new clientAddress();
@@ -202,6 +203,7 @@ class ClientService implements ClientServiceContract
     {
         $data['is_channel_partner'] = $data['is_channel_partner'] ?? false;
         $data['has_departments'] = $data['has_departments'] ?? false;
+        $data['is_billable'] = $data['is_billable'] ?? false;
         $isDataUpdated = $client->update($data);
 
         if ($data['status'] ?? 'active' == 'inactive') {
