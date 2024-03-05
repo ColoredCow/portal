@@ -20,6 +20,7 @@ return [
         'monthly-billing' => 'Monthly Billing',
         'fixed-budget' => 'Fixed Budget',
     ],
+    'project_colors' => ['#4cd5db','#ffc0cb','#ff91b2','#E59197','#fffdea'],
     'meta_keys' => [
         'billing_level' => [
             'key' => 'billing_level',

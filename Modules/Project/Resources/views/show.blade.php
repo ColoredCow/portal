@@ -137,15 +137,15 @@
                                     <table class="table">
                                         <thead>
                                             <tr class="bg-theme-gray text-light">
-                                                <th class="pb-md-3 pb-xl-4 px-9">Name</th>
+                                                <th class="pb-md-3 pb-xl-4 px-9 w-40p">Name</th>
                                                 <th>Hours Booked</th>   
-                                                <th>Expected Hours
+                                                <th class="w-20p">Expected Hours
                                                     <div class="ml-lg-3 ml-xl-5 fz-md-10 fz-xl-14">
                                                         ({{$daysTillToday}} Days)
                                                     </div>
                                                 </th>
                                                 <th>Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
-                                                <th>Total Velocity</th>
+                                                <th class = "text-center">Overall Productivity<span class = "ml-1" data-toggle="tooltip" data-placement="top" title="Overall productivity represents how efforts are distributed across projects of an individual. The number below the bar indicates total expected efforts, while the number inside the graph shows current efforts on a project of an individual."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
                                             </tr>
                                         </thead>
                                         @if($project->teamMembers->first() == null)
@@ -157,107 +157,44 @@
                                                     <tr>
                                                         <th class="fz-lg-20 my-2 px-5 font-weight-normal">
                                                             <span>
+                                                            <a href={{ route('employees.show', $teamMember->user->employee) }}>
                                                                 <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation] }}">
                                                                 <img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">
                                                             </span>
+                                                            </a>
                                                             {{$teamMember->user->name}}
                                                         </th>
                                                         <td class="{{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'text-success' : 'text-danger' }}">{{$teamMember->current_actual_effort}}</td>
                                                         <td>{{$teamMember->current_expected_effort }}</td>
                                                         <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}</td>
-                                                        <!-- <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">
-                                                            <div
-                                                                class="d-flex border border-dark position-relative tooltip-wrapper"
-                                                                data-toggle="modal" data-target="#effortbarchart_{{$teamMember->id}}"
-                                                            >
-                                                                <span
-                                                                    class="bg-success position-absolute px-2"
-                                                                    style="width: calc($teamMember->total_expected_effort['totalexpectedeffort']}} / {{ $teamMember->total_expected_effort['totalactualeffort'] }}px)"
-                                                                >
-                                                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Velocity is the" >
-                                                                    {{$teamMember->total_expected_effort['totalactualeffort']}}
-                                                                    </span>
-                                                                </span>
-                                                                <span class="bg-danger px-2" style="width: $teamMember->total_expected_effort['totalexpectedeffort']}}px;">{{$teamMember->total_expected_effort['totalexpectedeffort']}}</span>
-                                                            </div>
-                                                        </td> -->
+                                                        <td class="container-fluid">
+                                                            <div class="row">
+                                                                @foreach ($teamMember->total_expected_effort['individualmemberdata'] as $index => $data)
+                                                                <a class="font-weight-bold col p-0 text-decoration-none tooltip-wrapper" href="{{ route('project.show', ["project" => $data['project']->id ]) }}" data-html="true" data-toggle="tooltip" title="{{ $data['project']->name }}">
+                                                                    <div class="progress rounded-0 border border-dark h-20 position-relative flex-1 {{ $data['project']->id === $project->id ? 'bg-info' : 'bg-iceberg' }}">
+                                                                        <div class="progress-bar w-full bg-transparent tooltip-wrapper" role="progressbar">
+                                                                        </div>
+                                                                        @php
+                                                                            $projectColors = config('project.project_colors');
+                                                                            $randomBgColor = $projectColors[$index % count($projectColors)];
+                                                                        @endphp
 
-                                                        <td class="d-flex align-items-center font-weight-bold">
-                                                        <div class="progress rounded h-20 position-relative flex-1" style="background-color: #deedf4;" data-toggle="modal" data-target="#effortbarchart_{{$teamMember->id}}">
-                                                            <div class="progress-bar w-full bg-transparent tooltip-wrapper" role="progressbar" data-html="true" data-toggle="tooltip" title="Total Expected Effort Hours are {{ $teamMember->total_expected_effort['totalexpectedeffort'] }}">
+                                                                        <div class="h-full progress-bar position-absolute start-0"
+                                                                            role="progressbar"
+                                                                            style="width: {{ $data['current_actual_effort'] }}%; background-color: {{ $randomBgColor }}"
+                                                                        >
+                                                                        {{ $data['current_actual_effort'] }}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="fz-12 text-right">{{ $data['current_expected_effort'] }}</div>
+                                                                </a>
+                                                                @endforeach
                                                             </div>
-
-                                                            <div class="h-full progress-bar bg-success position-absolute"
-                                                                role="progressbar"
-                                                                style="width: {{ $teamMember->total_expected_effort['totalactualeffort'] }}%; left: 0;"
-                                                            >
-                                                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Total Actual Effort Hours are {{ $teamMember->total_expected_effort['totalactualeffort'] }}">
-                                                                    {{ $teamMember->total_expected_effort['totalactualeffort'] }}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <span class="fz-12 ml-1">{{ $teamMember->total_expected_effort['totalexpectedeffort'] }}</span>
                                                         </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
-
-
-                                        @foreach ($project->getTeamMembers ?:[] as $teamMember)
-                                            <div class="modal fade" id="effortbarchart_{{$teamMember->id}}" tabindex="-1" role="dialog" aria-labelledby="effortbarchartlable_{{$teamMember->id}}" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title font-weight-bold" id="effortbarchartlable_{{$teamMember->id}}">{{ $teamMember->user->name }}</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <table class="table table-hover">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th scope="col">S.no</th>
-                                                                        <th scope="col">Project Name</th>
-                                                                        <th scope="col">Actual Efforts</th>
-                                                                        <th scope="col">Expected Efforts</th>
-                                                                        <th scope="col">Total Velocity</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    @foreach ($teamMember->total_expected_effort['individualmemberdata'] as $data)
-                                                                    <tr>
-                                                                        <th scope="row">{{ $loop->iteration }}</th>
-                                                                        <td><a href="{{ route('project.show', ["project" => $data['project']->id ]) }}">{{ $data['project']->name }}</a></td>
-                                                                        <td>{{ $data['current_actual_effort'] }}</td>
-                                                                        <td>{{ $data['current_expected_effort'] }}</td>
-                                                                        <td class="d-flex align-items-center font-weight-bold">
-                                                                            <div class="progress rounded h-20 position-relative flex-1" style="background-color: #deedf4;" data-toggle="modal" data-target="#effortbarchart_{{$teamMember->id}}">
-                                                                                <div class="progress-bar w-full bg-transparent" role="progressbar">
-                                                                                    <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Total Expected Effort Hours are {{ $data['current_expected_effort'] }}"></span>
-                                                                                </div>
-
-                                                                                <div class="h-full progress-bar bg-success position-absolute"
-                                                                                    role="progressbar"
-                                                                                    style="width: {{ $data['current_actual_effort'] }}%; left: 0;"
-                                                                                >
-                                                                                    <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Total Actual Effort Hours are {{ $data['current_actual_effort'] }}">
-                                                                                        {{ $data['current_actual_effort'] }}
-                                                                                    </span>
-                                                                                </div>
-                                                                            </div>
-                                                                            <span class="fz-12 ml-1">{{ $data['current_expected_effort'] }}</span>
-                                                                            </td>
-                                                                    </tr>
-                                                                    @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
                                     @endif
                                 </div>
                             </div>

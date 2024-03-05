@@ -136,6 +136,7 @@
                                             <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip"
                                                 title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation] }} <br>    Efforts: {{ $teamMember->current_actual_effort }} Hours">
                                                 @if ($teamMember->user->employee)
+                                                
                                                     <a href={{ route('employees.show', $teamMember->user->employee) }}><img
                                                             src="{{ $teamMember->user->avatar }}"
                                                             class="w-35 h-30 rounded-circle mb-1 mr-0.5 {{ $teamMember->border_color_class }} border-2"></a>
