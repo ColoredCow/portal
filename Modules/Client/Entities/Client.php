@@ -19,13 +19,18 @@ class Client extends Model
 {
     use HasHierarchy, HasFactory, Filters;
 
-    protected $fillable = ['name', 'key_account_manager_id', 'status', 'is_channel_partner', 'has_departments', 'channel_partner_id', 'parent_organisation_id', 'client_id'];
+    protected $fillable = ['name', 'key_account_manager_id', 'status', 'is_channel_partner', 'has_departments', 'channel_partner_id', 'parent_organisation_id', 'client_id', 'is_billable'];
 
     protected $appends = ['type', 'currency'];
 
     public function scopeStatus($query, $status)
     {
         return $query->where('status', $status);
+    }
+
+    public function scopeBillable($query)
+    {
+        return $query->where('is_billable', true);
     }
 
     public function keyAccountManager()
