@@ -77,12 +77,20 @@ class Employee extends Model
 
     public function scopeApplyFilters($query, $filters)
     {
-        $status = Arr::get($filters, 'status', '');
-
-        if ($status) {
-            $query = $query->status($status);
+        foreach ($filters as $key => $value) {
+            switch ($key) {
+                case 'status':
+                    $query->status($value);
+                    break;
+                case 'employee_name':
+                    $query->filterByName($value);
+                    break;
+                case 'staff_type':
+                    $query->staffType($value);
+                    break;
+            }
         }
-
+    
         return $query;
     }
 
