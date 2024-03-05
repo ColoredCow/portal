@@ -5,7 +5,6 @@ namespace Modules\HR\Entities;
 use App\Models\Project;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 use Modules\HR\Database\Factories\HrEmployeeFactory;
 use Modules\Salary\Entities\EmployeeSalary;
 use Modules\User\Entities\User;
