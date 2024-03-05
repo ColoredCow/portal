@@ -90,7 +90,7 @@
                     </div>
                     <div class="form-group offset-md-1 pl-4 col-md-5">
                         <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold">Monthly Approved Pipeline:</label>
+                            <label for="name" class="font-weight-bold">Approved Work Pipeline:</label>
                         </h4>
                         @if ($isApprovedWorkPipelineExist)
                             <span class="text-capitalize ml-2 fz-lg-22">{{ $project->monthly_approved_pipeline }}</span>
