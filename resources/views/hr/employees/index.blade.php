@@ -6,7 +6,7 @@
         @include('hr.employees.menu')
         <br><br>
         <div class="d-flex">
-            <h1>{{ request()->get('name') }} ({{ count($employees) }})</h1>
+            <h1>{{ request()->get('staff_type') }} ({{ count($employees) }})</h1>
             <form id="employeeFilterForm" class="d-md-flex justify-content-between ml-md-3">
                 <input type="hidden" name="status" value="{{ request()->input('status', 'current') }}">
                 <div class='form-group w-200' class="">
@@ -19,49 +19,45 @@
                     </select>
                 </div>
                 <div class="d-flex align-items-center ml-35">
-                    <input type="text" name="employeename" class="form-control" id="name"
-                        placeholder="Enter the Employee" value="{{ request()->get('employeename') }}">
+                    <input type="text" name="employee_name" class="form-control" id="name"
+                        placeholder="Enter the Employee" value="{{ request()->get('employee_name') }}">
                     <button class="btn btn-info ml-2 text-white">Search</button>
                 </div>
-                <input type="hidden" name="name" value="{{ request()->input('name', 'Employee') }}">
+                <input type="hidden" name="staff_type" value="{{ request()->input('staff_type', 'Employee') }}">
             </form>
         </div>
         <table class="table table-striped table-bordered">
             <thead class="thead-dark">
                 <tr class="sticky-top">
                     <th>Name</th>
-                    <th>Designation</th>
                     <th>Joined on</th>
-                    <th>Projects Count</th>
+                    <th>Active Projects Count</th>
                     <th>Current FTE</th>
                     <th>AMC FTE</th>
                 </tr>
                 @foreach ($employees as $employee)
                     <tr>
                         <td>
-                            <a href="{{ route('employees.show', $employee->id) }}">
-                                @if ($employee->overall_status === 'pending' && $filters['status'] == 'current')
-                                    {{ $employee->name }} <span
-                                        class="{{ config('constants.review-tags.pending.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.pending.title') }}</span>
-                                @elseif ($employee->overall_status === 'in-progress' && $filters['status'] == 'current')
-                                    {{ $employee->name }} <span
-                                        class="{{ config('constants.review-tags.in-progress.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.in-progress.title') }}</span>
-                                @elseif ($employee->overall_status === 'completed' && $filters['status'] == 'current')
-                                    {{ $employee->name }} <span
-                                        class="{{ config('constants.review-tags.completed.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.completed.title') }}</span>
-                                @else
-                                    {{ $employee->name }}
-                                @endif
-                            </a>
-                        </td>
-
-                        <td>
-                            @if ($employee->designation_id)
-                                {{ $employee->hrJobDesignation->designation }}
+                            @if ($employee->user)
+                                <a href="{{ route('employees.show', $employee->id) }}">
+                                    @if ($employee->overall_status === 'pending' && $filters['status'] == 'current')
+                                        {{ $employee->name }} <span
+                                            class="{{ config('constants.review-tags.pending.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.pending.title') }}</span>
+                                    @elseif ($employee->overall_status === 'in-progress' && $filters['status'] == 'current')
+                                        {{ $employee->name }} <span
+                                            class="{{ config('constants.review-tags.in-progress.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.in-progress.title') }}</span>
+                                    @elseif ($employee->overall_status === 'completed' && $filters['status'] == 'current')
+                                        {{ $employee->name }} <span
+                                            class="{{ config('constants.review-tags.completed.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.completed.title') }}</span>
+                                    @else
+                                        {{ $employee->name }}
+                                    @endif
+                                </a>
                             @else
-                                -
+                                {{ $employee->name }}
                             @endif
                         </td>
+
                         <td>
                             @if ($employee->joined_on)
                                 <span>{{ $employee->joined_on->format('d M, Y') }}</span>
@@ -75,7 +71,7 @@
                             @if ($employee->user == null)
                                 0
                             @else
-                                {{ $employee->project_count }}
+                                {{ $employee->active_project_count }}
                             @endif
                         </td>
                         <td>
