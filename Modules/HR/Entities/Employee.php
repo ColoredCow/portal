@@ -90,7 +90,7 @@ class Employee extends Model
                     break;
             }
         }
-    
+
         return $query;
     }
 
