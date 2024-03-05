@@ -17,18 +17,21 @@ class ClientService implements ClientServiceContract
         $filters = [
             'status' => $data['status'] ?? 'active',
             'name' => $data['name'] ?? null,
+            'sort' => $data['sort'] ?? 'name',
+            'direction' => $data['direction'] ?? 'asc',
         ];
+
         $clients = Client::applyFilter($filters)
-            ->with([
-                'linkedAsPartner' => function ($subQuery) use ($filters) {
-                    return $subQuery->applyFilter($filters)->orderBy('name');
-                },
-                'linkedAsDepartment' => function ($subQuery) use ($filters) {
-                    return $subQuery->applyFilter($filters)->orderBy('name');
-                },
-            ])
-            ->orderBy('name')
-            ->get();
+        ->with([
+            'linkedAsPartner' => function ($subQuery) use ($filters) {
+                return $subQuery->applyFilter($filters)->orderBy($filters['sort'], $filters['direction']);
+            },
+            'linkedAsDepartment' => function ($subQuery) use ($filters) {
+                return $subQuery->applyFilter($filters)->orderBy($filters['sort'], $filters['direction']);
+            },
+        ])
+        ->orderBy($filters['sort'], $filters['direction'])
+        ->get();
         $count = $clients->count();
 
         $topLevel = $clients->filter(function ($value) {
@@ -46,7 +49,7 @@ class ClientService implements ClientServiceContract
         $activeClientsCount = Client::where('status', 'active')->count();
         $inactiveClientsCount = Client::where('status', 'inactive')->count();
 
-        return ['clients' => $clients, 'count' => $count, 'activeClientsCount' => $activeClientsCount, 'inactiveClientsCount'=> $inactiveClientsCount];
+        return ['clients' => $clients, 'count' => $count, 'activeClientsCount' => $activeClientsCount, 'inactiveClientsCount' => $inactiveClientsCount];
     }
 
     public function create()
