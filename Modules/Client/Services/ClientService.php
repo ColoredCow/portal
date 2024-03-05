@@ -17,8 +17,8 @@ class ClientService implements ClientServiceContract
         $filters = [
             'status' => $data['status'] ?? 'active',
             'name' => $data['name'] ?? null,
-            'sort' => $data['sort'] ?? 'name', 
-            'direction' => $data['direction'] ?? 'asc', 
+            'sort' => $data['sort'] ?? 'name',
+            'direction' => $data['direction'] ?? 'asc',
         ];
     
         $clients = Client::applyFilter($filters)
