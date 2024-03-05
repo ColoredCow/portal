@@ -40,14 +40,15 @@ class InvoiceService implements InvoiceServiceContract
         if ($invoiceStatus == 'sent') {
             $invoices = Invoice::query()->applyFilters($filters)->leftjoin('clients', 'invoices.client_id', '=', 'clients.id')
                 ->select('invoices.*', 'clients.name')
+                ->where('clients.is_billable', true)
                 ->orderBy('name', 'asc')->orderBy('sent_on', 'desc')
                 ->get();
             $clientsReadyToSendInvoicesData = [];
             $projectsReadyToSendInvoicesData = [];
         } else {
             $invoices = [];
-            $clientsReadyToSendInvoicesData = Client::status('active')->invoiceReadyToSend()->orderBy('name')->get();
-            $projectsReadyToSendInvoicesData = Project::whereHas('meta', function ($query) {
+            $clientsReadyToSendInvoicesData = Client::status('active')->billable()->invoiceReadyToSend()->orderBy('name')->get();
+            $projectsReadyToSendInvoicesData = Project::billable()->whereHas('meta', function ($query) {
                 return $query->where([
                     'key' => 'billing_level',
                     'value' => config('project.meta_keys.billing_level.value.project.key'),
