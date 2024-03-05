@@ -28,6 +28,8 @@ class EmployeeService
     {
         return [
             'status' => 'current',
+            'employee_name' => '',
+            'staff_type' => ''
         ];
     }
 }
