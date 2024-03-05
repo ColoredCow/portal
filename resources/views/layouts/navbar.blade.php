@@ -11,7 +11,7 @@
                 @endcan
                 @can('hr_employees.view')
                 @php
-                    $params = array_merge(['name' => 'Employee'], ['status' => 'current']);
+                    $params = array_merge(['staff_type' => 'Employee'], ['status' => 'current']);
                 @endphp
                     <a class="dropdown-item" href="{{ route('employees',$params) }}">Working Staff</a>
                 @endcan
