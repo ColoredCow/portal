@@ -20,7 +20,7 @@ class ClientService implements ClientServiceContract
             'sort' => $data['sort'] ?? 'name',
             'direction' => $data['direction'] ?? 'asc',
         ];
-    
+
         $clients = Client::applyFilter($filters)
         ->with([
             'linkedAsPartner' => function ($subQuery) use ($filters) {
@@ -48,6 +48,7 @@ class ClientService implements ClientServiceContract
 
         $activeClientsCount = Client::where('status', 'active')->count();
         $inactiveClientsCount = Client::where('status', 'inactive')->count();
+
         return ['clients' => $clients, 'count' => $count, 'activeClientsCount' => $activeClientsCount, 'inactiveClientsCount' => $inactiveClientsCount];
     }
 
