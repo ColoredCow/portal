@@ -42,6 +42,16 @@ class Employee extends Model
         return $query->whereDoesntHave('user');
     }
 
+    public function scopeStaffType($query, $staffName)
+    {
+        return $query->where('staff_type', $staffName);
+    }
+
+    public function scopeFilterByName($query, $name)
+    {
+        return $query->where('employees.name', 'LIKE', "%{$name}%");
+    }
+
     public function scopeActive($query)
     {
         return $query->whereNotNull('user_id');
