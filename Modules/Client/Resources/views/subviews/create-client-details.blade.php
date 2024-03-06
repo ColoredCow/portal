@@ -68,8 +68,8 @@
                 </select>
             </div>
             <div class="mt-5">
-                <label for="select_country">Select Country</label>
-                <select name="country_id" id="countryId" class="form-control">
+                <label class="field-required" for="select_country">Select Country</label>
+                <select name="country_id" id="countryId" class="form-control" required="required">
                     <option value="">Select Country</option>
                     @foreach ($countries as $country)
                         <option value="{{$country->id}}">{{$country->name}}</option>
