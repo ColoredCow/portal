@@ -145,7 +145,10 @@
                                                     </div>
                                                 </th>
                                                 <th>Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
-                                                <th class = "text-center">Overall Productivity<span class = "ml-1" data-toggle="tooltip" data-placement="top" title="Overall productivity represents how efforts are distributed across projects of an individual. The number below the bar indicates total expected efforts, while the number inside the graph shows current efforts on a project of an individual."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
+                                                <th class = "text-center">Overall Productivity<span class = "ml-1" data-toggle="tooltip" data-placement="top" title="Overall productivity represents how efforts are distributed across projects of an individual. The number below the bar indicates total expected efforts, while the number inside the graph shows current efforts on a project of an individual."><i class="fa fa-question-circle"></i>&nbsp;</span><div class="ml-lg-3 ml-xl-5 fz-md-10 fz-xl-14">
+                                                        ({{$daysTillToday}} Days)
+                                                    </div></th>
+                                                
                                             </tr>
                                         </thead>
                                         @if($project->teamMembers->first() == null)
