@@ -19,8 +19,8 @@
                     @includeWhen( $section == 'address' ,'client::subviews.edit-client-address')
                     @includeWhen( $section == 'billing-details' ,'client::subviews.edit-client-billing-details')
                     @includeWhen( $section == 'client-type' ,'client::subviews.edit-client-type-info')
+                    @includeWhen( $section == 'projects' ,'client::subviews.edit-client-projects')
                 </form>
-                @includeWhen( $section == 'projects' ,'client::subviews.edit-client-projects')
                 @include('client::subviews.client-address-modal')
             </div>
     </div>

@@ -22,6 +22,9 @@ class ClientFormsRequest extends FormRequest
             case 'billing-details':
                 return $this->billingDetailsValidation();
 
+            case 'projects':
+                return $this->projectReviewDetailsValidation();
+
             case 'default':
                 return [];
         }
@@ -106,6 +109,14 @@ class ClientFormsRequest extends FormRequest
             'discount_rate_term' => 'nullable|string',
             'billing_frequency' => 'nullable|string',
             'bank_charges' => 'nullable|string',
+        ];
+    }
+
+    private function projectReviewDetailsValidation()
+    {
+        return [
+            'project_reviewer_id' => 'required|string',
+            'datetime' => 'required|string',
         ];
     }
 }

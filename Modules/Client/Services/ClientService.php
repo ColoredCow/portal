@@ -8,6 +8,7 @@ use Modules\Client\Entities\Client;
 use Modules\Client\Entities\ClientAddress;
 use Modules\Client\Entities\ClientBillingDetail;
 use Modules\Client\Entities\ClientContactPerson;
+use Modules\Client\Entities\ProjectReview;
 use Modules\User\Entities\User;
 
 class ClientService implements ClientServiceContract
@@ -107,8 +108,20 @@ class ClientService implements ClientServiceContract
                 'client' => $client,
                 'section' => $section,
                 'projects' => $client->projects,
+                'users' => User::all(),
             ];
         }
+    }
+
+    public function updateProjectReviewDetails($data, $client)
+    {
+            ProjectReview::updateOrcreate([
+                'client_id' => $client["id"],
+            ],
+            [
+                'project_reviewer_id' => $data['project_reviewer_id'],
+                'meeting_datetime' => $data['datetime'],
+            ]);
     }
 
     public function update($data, $client)
@@ -135,6 +148,10 @@ class ClientService implements ClientServiceContract
 
             case 'billing-details':
                 $this->updateBillingDetails($data, $client);
+                break;
+
+            case 'projects':
+                $this->updateProjectReviewDetails($data, $client);
                 break;
 
             case 'default':
