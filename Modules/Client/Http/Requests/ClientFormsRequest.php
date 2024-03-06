@@ -116,7 +116,8 @@ class ClientFormsRequest extends FormRequest
     {
         return [
             'project_reviewer_id' => 'required|string',
-            'datetime' => 'required|string',
+            'meeting_day' => 'required|string',
+            'meeting_time' => 'required|string',
         ];
     }
 }

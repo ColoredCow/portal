@@ -19,7 +19,8 @@ class CreateProjectReviewsTable extends Migration
             $table->foreign('client_id')->references('id')->on('clients');
             $table->unsignedInteger('project_reviewer_id');
             $table->foreign('project_reviewer_id')->references('id')->on('users');
-            $table->dateTime('meeting_datetime');
+            $table->string('meeting_day');
+            $table->time('meeting_time');
             $table->timestamps();
         });
     }

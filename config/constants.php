@@ -7,6 +7,7 @@ return [
         'ranchi' => 'Ranchi',
         'dwarahat' => 'Dwarahat',
     ],
+    'working_week_days' => ['Monday','Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
     'gsuite' => [
         'service-account-impersonate' => env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'),
         'client-hd' => env('GOOGLE_CLIENT_HD', ''),

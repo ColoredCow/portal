@@ -55,9 +55,9 @@ class Client extends Model
             });
     }
 
-    public function getLatestProjectReviewAttribute()
+    public function getProjectReviewAttribute()
     {
-        return ProjectReview::where('client_id', $this->id)->whereDate('meeting_datetime', '>=', now())->first();
+        return ProjectReview::where('client_id', $this->id)->first();
     }
 
     public function clientLevelBillingProjects()

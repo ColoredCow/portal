@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="container" >
-
+<br> <h3 class="font-weight-bold">{{$client->name}}</h3>
     <br> <h4 class="mb-5 font-weight-bold">Edit client information</h4>
 
     @include('client::subviews.edit-client-form-header')

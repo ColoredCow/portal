@@ -115,13 +115,14 @@ class ClientService implements ClientServiceContract
 
     public function updateProjectReviewDetails($data, $client)
     {
-            ProjectReview::updateOrcreate([
-                'client_id' => $client["id"],
-            ],
-            [
-                'project_reviewer_id' => $data['project_reviewer_id'],
-                'meeting_datetime' => $data['datetime'],
-            ]);
+        ProjectReview::updateOrcreate([
+            'client_id' => $client["id"],
+        ],
+        [
+            'project_reviewer_id' => $data['project_reviewer_id'],
+            'meeting_day' => $data['meeting_day'],
+            'meeting_time' => $data['meeting_time'],
+        ]);
     }
 
     public function update($data, $client)
