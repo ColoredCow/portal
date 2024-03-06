@@ -17,9 +17,10 @@ class UserReportController extends Controller
         $this->userReportService = $userReportService;
     }
 
-    public function getFteData(Request $request, User $user)
+    public function getFteData(Request $request, $userId)
     {
         $type = $request->type;
+        $user = User::withTrashed()->find($userId);
 
         return $this->userReportService->getFteData($type, $user);
     }
