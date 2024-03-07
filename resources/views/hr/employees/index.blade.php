@@ -38,24 +38,20 @@
                 @foreach ($employees as $employee)
                     <tr>
                         <td>
-                            @if ($employee->user)
-                                <a href="{{ route('employees.show', $employee->id) }}">
-                                    @if ($employee->overall_status === 'pending' && $filters['status'] == 'current')
-                                        {{ $employee->name }} <span
-                                            class="{{ config('constants.review-tags.pending.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.pending.title') }}</span>
-                                    @elseif ($employee->overall_status === 'in-progress' && $filters['status'] == 'current')
-                                        {{ $employee->name }} <span
-                                            class="{{ config('constants.review-tags.in-progress.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.in-progress.title') }}</span>
-                                    @elseif ($employee->overall_status === 'completed' && $filters['status'] == 'current')
-                                        {{ $employee->name }} <span
-                                            class="{{ config('constants.review-tags.completed.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.completed.title') }}</span>
-                                    @else
-                                        {{ $employee->name }}
-                                    @endif
-                                </a>
-                            @else
-                                {{ $employee->name }}
-                            @endif
+                            <a href="{{ route('employees.show', $employee->id) }}">
+                                @if ($employee->overall_status === 'pending' && $filters['status'] == 'current')
+                                    {{ $employee->name }} <span
+                                        class="{{ config('constants.review-tags.pending.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.pending.title') }}</span>
+                                @elseif ($employee->overall_status === 'in-progress' && $filters['status'] == 'current')
+                                    {{ $employee->name }} <span
+                                        class="{{ config('constants.review-tags.in-progress.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.in-progress.title') }}</span>
+                                @elseif ($employee->overall_status === 'completed' && $filters['status'] == 'current')
+                                    {{ $employee->name }} <span
+                                        class="{{ config('constants.review-tags.completed.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.completed.title') }}</span>
+                                @else
+                                    {{ $employee->name }}
+                                @endif
+                            </a>
                         </td>
 
                         <td>
@@ -76,14 +72,16 @@
                         </td>
                         <td>
                             @if ($employee->user == null)
-                                <span
-                                    class="text-danger font-weight-bold">{{ $employee->user ? $employee->user->ftes['main'] : 'NA' }}</span>
+                                <span class="text-danger font-weight-bold">
+                                    {{ $employee->user ? $employee->user->ftes['main'] : 'NA' }}
+                                </span>
                             @elseif ($employee->user->ftes['main'] > 1 && $employee->domain_id != null)
                                 <a class="text-success font-weight-bold"
                                     href={{ route('employees.alert', ['domain_id' => $employee->domain_id]) }}
-                                    style="text-decoration: none;">
-                                    {{ $employee->user->ftes['main'] }} &nbsp;&nbsp;&nbsp;<span class="text-danger"><i
-                                            class="fa fa-warning fa-lg"></i></span>
+                                    style="text-decoration: none;"
+                                >
+                                    {{ $employee->user->ftes['main'] }} &nbsp;&nbsp;&nbsp;
+                                    <span class="text-danger"><i class="fa fa-warning fa-lg"></i></span>
                                 </a>
                             @elseif ($employee->user->ftes['main'] >= 1)
                                 <span class="text-success font-weight-bold">{{ $employee->user->ftes['main'] }}</span>
