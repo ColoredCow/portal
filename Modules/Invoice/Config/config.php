@@ -170,4 +170,16 @@ return [
             'projects' => [],
         ],
     ],
+
+    
+    'bank_message_patterns' => [
+        'citi' => [
+            'key' => 'citi',
+            'value' => env('CITI_BANK_MESSAGE_PATTERN'),
+        ],
+        'axis' => [
+            'key' => 'axis',
+            'value' => env('AXIS_BANK_MESSAGE_PATTERN'),
+        ],
+    ],
 ];
