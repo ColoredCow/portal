@@ -95,7 +95,11 @@
                                         <div>
                                             {{ $client->name }}
                                             {{ sprintf('(%03s)', $client->client_id) }}
-                                             | {{ $client->today_review_meeting_counts }}
+                                            @if ($client->today_review_meeting_counts )
+                                                <span data-toggle="tooltip" data-placement="top" title="Project review.">
+                                                    <i class="fa fa-video-camera">‌</i>
+                                                </span>
+                                             @endif
                                         </div>
                                         <div class="">
                                             {{ __('Total Hours Booked: ') . $client->current_hours_in_projects }}</div>

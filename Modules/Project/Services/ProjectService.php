@@ -56,9 +56,9 @@ class ProjectService implements ProjectServiceContract
 
         $projectsData = Client::query()
             ->withCount([
-                'projectReviews as today_review_meeting_counts' => function ($subQuery) {
+                'projectReviews as today_review_meeting_counts' => function ($subQuery) use ($memberId) {
                     $subQuery
-                    ->whereColumn('project_reviewer_id', 'clients.id')
+                    ->where('project_reviewer_id', $memberId)
                     ->where('meeting_day', now()->dayOfWeek - 1)
                     ->whereTime('meeting_time', '>', now()->format('H:i:s'));
                 },
