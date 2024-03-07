@@ -171,7 +171,6 @@ return [
         ],
     ],
 
-    
     'bank_message_patterns' => [
         'citi' => [
             'key' => 'citi',
