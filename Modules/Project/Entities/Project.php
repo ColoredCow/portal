@@ -367,6 +367,11 @@ class Project extends Model implements Auditable
         });
     }
 
+    public function scopeBillable($query)
+    {
+        return $query->where('type', '<>', 'non-billable');
+    }
+
     public function ledgerAccounts()
     {
         return $this->hasMany(LedgerAccount::class);

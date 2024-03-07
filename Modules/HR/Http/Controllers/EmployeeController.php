@@ -32,33 +32,16 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         $this->authorize('list', Employee::class);
-        $search = request()->query('employeename') ?: '';
-        $employeeData = Employee::with('employees');
-        $filters = $request->all();
-        $filters = $filters ?: $this->service->defaultFilters();
-        $name = request('name');
-        $employeeData = Employee::where('staff_type', $name)
-            ->applyFilters($filters)
-            ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
-            ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
-            ->groupBy('employees.user_id')
-            ->orderby('project_count', 'desc')
-            ->get();
-        if ($search != '') {
-            $employeeData = Employee::where('name', 'LIKE', "%{$search}%")
-                ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
-                ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
-                ->get();
-        }
+        $filters = $request->all() ?: $this->service->defaultFilters();
 
-        return view('hr.employees.index', $this->service->index($filters))->with([
-            'employees' => $employeeData,
-        ]);
+        return view('hr.employees.index', $this->service->index($filters));
     }
 
     public function show(Employee $employee)
     {
-        return view('hr.employees.show', ['employee' => $employee]);
+        $user = $employee->user()->withTrashed()->first();
+
+        return view('hr.employees.show', compact('employee', 'user'));
     }
 
     public function reports()

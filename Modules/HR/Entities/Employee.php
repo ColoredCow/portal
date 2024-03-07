@@ -5,7 +5,6 @@ namespace Modules\HR\Entities;
 use App\Models\Project;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 use Modules\HR\Database\Factories\HrEmployeeFactory;
 use Modules\Salary\Entities\EmployeeSalary;
 use Modules\User\Entities\User;
@@ -42,6 +41,16 @@ class Employee extends Model
         return $query->whereDoesntHave('user');
     }
 
+    public function scopeStaffType($query, $staffName)
+    {
+        return $query->where('staff_type', $staffName);
+    }
+
+    public function scopeFilterByName($query, $name)
+    {
+        return $query->where('employees.name', 'LIKE', "%{$name}%");
+    }
+
     public function scopeActive($query)
     {
         return $query->whereNotNull('user_id');
@@ -67,10 +76,18 @@ class Employee extends Model
 
     public function scopeApplyFilters($query, $filters)
     {
-        $status = Arr::get($filters, 'status', '');
-
-        if ($status) {
-            $query = $query->status($status);
+        foreach ($filters as $key => $value) {
+            switch ($key) {
+                case 'status':
+                    $query->status($value);
+                    break;
+                case 'employee_name':
+                    $query->filterByName($value);
+                    break;
+                case 'staff_type':
+                    $query->staffType($value);
+                    break;
+            }
         }
 
         return $query;

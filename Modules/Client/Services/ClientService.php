@@ -17,18 +17,21 @@ class ClientService implements ClientServiceContract
         $filters = [
             'status' => $data['status'] ?? 'active',
             'name' => $data['name'] ?? null,
+            'sort' => $data['sort'] ?? 'name',
+            'direction' => $data['direction'] ?? 'asc',
         ];
+
         $clients = Client::applyFilter($filters)
-            ->with([
-                'linkedAsPartner' => function ($subQuery) use ($filters) {
-                    return $subQuery->applyFilter($filters)->orderBy('name');
-                },
-                'linkedAsDepartment' => function ($subQuery) use ($filters) {
-                    return $subQuery->applyFilter($filters)->orderBy('name');
-                },
-            ])
-            ->orderBy('name')
-            ->get();
+        ->with([
+            'linkedAsPartner' => function ($subQuery) use ($filters) {
+                return $subQuery->applyFilter($filters)->orderBy($filters['sort'], $filters['direction']);
+            },
+            'linkedAsDepartment' => function ($subQuery) use ($filters) {
+                return $subQuery->applyFilter($filters)->orderBy($filters['sort'], $filters['direction']);
+            },
+        ])
+        ->orderBy($filters['sort'], $filters['direction'])
+        ->get();
         $count = $clients->count();
 
         $topLevel = $clients->filter(function ($value) {
@@ -46,7 +49,7 @@ class ClientService implements ClientServiceContract
         $activeClientsCount = Client::where('status', 'active')->count();
         $inactiveClientsCount = Client::where('status', 'inactive')->count();
 
-        return ['clients' => $clients, 'count' => $count, 'activeClientsCount' => $activeClientsCount, 'inactiveClientsCount'=> $inactiveClientsCount];
+        return ['clients' => $clients, 'count' => $count, 'activeClientsCount' => $activeClientsCount, 'inactiveClientsCount' => $inactiveClientsCount];
     }
 
     public function create()
@@ -158,6 +161,7 @@ class ClientService implements ClientServiceContract
     {
         $data['status'] = 'active';
         $data['client_id'] = Client::max('client_id') + 1;
+        $data['is_billable'] = $data['is_billable'] ?? false;
 
         $newClient = Client::create($data);
         $clientAddress = new clientAddress();
@@ -171,6 +175,11 @@ class ClientService implements ClientServiceContract
     public function getChannelPartners()
     {
         return Client::where('is_channel_partner', true)->get();
+    }
+
+    public function getBillableClients($status = 'active')
+    {
+        return Client::billable()->status($status)->with('projects')->orderBy('name')->get();
     }
 
     public function getParentOrganisations()
@@ -197,6 +206,7 @@ class ClientService implements ClientServiceContract
     {
         $data['is_channel_partner'] = $data['is_channel_partner'] ?? false;
         $data['has_departments'] = $data['has_departments'] ?? false;
+        $data['is_billable'] = $data['is_billable'] ?? false;
         $isDataUpdated = $client->update($data);
 
         if ($data['status'] ?? 'active' == 'inactive') {
