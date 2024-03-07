@@ -95,6 +95,7 @@
                                         <div>
                                             {{ $client->name }}
                                             {{ sprintf('(%03s)', $client->client_id) }}
+                                             | {{ $client->today_review_meeting_counts }}
                                         </div>
                                         <div class="">
                                             {{ __('Total Hours Booked: ') . $client->current_hours_in_projects }}</div>

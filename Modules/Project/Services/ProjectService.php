@@ -55,9 +55,18 @@ class ProjectService implements ProjectServiceContract
         };
 
         $projectsData = Client::query()
+            ->withCount([
+                'projectReviews as today_review_meeting_counts' => function ($subQuery) {
+                    $subQuery
+                    ->whereColumn('project_reviewer_id', 'clients.id')
+                    ->where('meeting_day', now()->dayOfWeek - 1)
+                    ->whereTime('meeting_time', '>', now()->format('H:i:s'));
+                },
+            ])
             ->with('projects', $projectClauseClosure)
             ->whereHas('projects', $projectClauseClosure)
-            ->orderBy('name')
+            ->orderBy('today_review_meeting_counts', 'desc')
+            ->orderBy('name', 'asc')
             ->paginate(config('constants.pagination_size'));
 
         $tabCounts = $this->getListTabCounts($filters, $showAllProjects, $memberId);

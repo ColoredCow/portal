@@ -6,6 +6,7 @@ use App\Services\GSuiteUserService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Modules\User\Entities\User;
+use Modules\Client\Entities\ProjectReview;
 
 class UserController extends Controller
 {
@@ -49,4 +50,21 @@ class UserController extends Controller
     {
         return Auth::user()->activeProjects();
     }
+
+    public function reviews()
+    {
+        $userId = Auth::user()->id;
+
+        $reviews = ProjectReview::with('client')
+            ->where('project_reviewer_id', $userId)
+            ->todayMeetings()
+            ->get();
+
+        $reviews->each(function ($review) {
+            $review->next_review_date = $review->next_review_date;
+        });
+        
+        return $reviews;
+    }
+
 }

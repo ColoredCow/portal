@@ -26,6 +26,12 @@ class ProjectReview extends Model
         return $this->belongsTo(User::class, 'project_reviewer_id', 'id')->withTrashed();
     }
 
+    public function scopeTodayMeetings($query)
+    {
+        return $query->where('meeting_day', now()->dayOfWeek - 1)
+            ->whereTime('meeting_time', '>', now()->format('H:i:s'));
+    }
+
     public function getNextReviewDateAttribute()
     {
         $meetingDay = config('constants.working_week_days')[$this->meeting_day];

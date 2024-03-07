@@ -57,6 +57,12 @@
         </div>
         @endif
 
+
+        <div class="pr-5 mb-4 min-w-389">
+            <user-dashboard-project-review />
+        </div>
+
+
         @if(Module::checkStatus('Infrastructure') && auth()->user()->can('infrastructure.billings.view'))
         <div class=" mb-4 pr-5 min-w-389">
             <user-dashboard-infrastructure />

@@ -92,6 +92,10 @@ Vue.component(
 	require("./components/Dashboard/UserDashboardInvoice.vue").default
 );
 Vue.component(
+	"user-dashboard-project-review",
+	require("./components/Dashboard/UserDashboardProjectReviews.vue").default
+);
+Vue.component(
 	"job-application-component",
 	require("./components/HR/JobApplicationComponent.vue").default
 );

@@ -55,6 +55,11 @@ class Client extends Model
             });
     }
 
+    public function projectReviews()
+    {
+        return $this->hasMany(ProjectReview::class, 'client_id');
+    }
+
     public function getProjectReviewAttribute()
     {
         return ProjectReview::where('client_id', $this->id)->first();
