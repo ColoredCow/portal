@@ -76,6 +76,16 @@
                             <th>Billable Hours</th>
                         @endif
                         <th>Amount ( + taxes)</th>
+                        <th>Deviation
+                            <span
+                                data-toggle="tooltip"
+                                data-placement="right"
+                                title="The deviation represents the difference in amount from the last invoice for each client's project."
+                                class="ml-2"
+                            >
+                                <i class="fa fa-question-circle"></i>&nbsp;
+                            </span>
+                        </th>
                         @if (request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
                             <th>Sent on</th>
                             <th>Due on</th>
@@ -113,15 +123,22 @@
                             @endphp
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td><a href="{{ route('reports.finance.dashboard.client', ['client_id' => $invoice->client->id]) }}">{{ $invoice->client->name }}</td>
+                                <td><a href="{{ route('client.edit', [$invoice->client, 'billing-details']) }}">{{ $invoice->client->name }}</td>
                                 <td>{{ optional($invoice->project)->name ?: $invoice->client->name . ' Projects' }}</td>
                                 <td><a href="{{ route('invoice.edit', $invoice) }}">{{ $invoice->invoice_number }}</a>
                                 </td>
                                 <td>
                                     {{ $invoice->invoiceAmount() }} </br>
-                                    <span class="{{ $invoice->invoiceAmountDifference() >= 0 ? 'text-success' : 'text-danger' }} small">
-                                        {{ $invoice->invoiceAmountDifference() }} 
-                                    </span>
+                                </td>
+                                <td>
+                                    <a href="{{ route('reports.finance.dashboard.client', ['client_id' => $invoice->client->id]) }}" class="{{ $invoice->invoiceAmountDifference() >= 0 ? 'text-success' : 'text-danger' }} ">
+                                        @if ($invoice->invoiceAmountDifference() > 0)
+                                            <i class="fa fa-arrow-up"></i>{{ $invoice->invoiceAmountDifference() }}
+                                        @elseif ($invoice->invoiceAmountDifference() < 0)
+                                            <i class="fa fa-arrow-down"></i>
+                                            {{ $invoice->invoiceAmountDifference() }}
+                                        @endif
+                                    </a>
                                 </td>
                                 
                                 <td class="text-center">
