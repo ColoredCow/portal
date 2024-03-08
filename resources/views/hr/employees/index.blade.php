@@ -102,7 +102,7 @@
                         </td>
                         <td>
                             @if ($employee->user)
-                                {{ $employee->user->billable_fte }} | {{ $employee->user->non_billable_fte }}
+                                {{ $employee->user->total_fte['billable'] }} | {{ $employee->user->total_fte['non-billable'] }}
                             @else
                                 NA
                             @endif
