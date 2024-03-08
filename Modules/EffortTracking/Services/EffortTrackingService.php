@@ -210,12 +210,6 @@ class EffortTrackingService
             $approvedPipelineRange = config('efforttracking.default_monthly_approved_pipeline_column_in_effort_sheet');
             $approvedPipelineSheet = $currentSheet->range($approvedPipelineRange)->get();
 
-            $isApprovedWorkPipelineExist = $this->getIsApprovedWorkPipelineExistBySheet($currentSheet);
-
-            if (! $isApprovedWorkPipelineExist) {
-                return false;
-            }
-
             try {
                 while (true) {
                     $lastColumn++;
