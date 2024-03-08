@@ -98,6 +98,14 @@ class ProjectTeamMember extends Model
         return round($this->getCurrentActualEffortAttribute($firstDayOfMonth) / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
     }
 
+    public function getTotalFteAttribute()
+    {
+        $startDate = $this->started_on;
+        $endDate = $this->ended_on ?? today(config('constants.timezone.indian'));
+
+        return $this->getFte($startDate, $endDate);
+    }
+
     public function getBorderColorClassAttribute()
     {
         if ($this->current_expected_effort == 0 && $this->current_actual_effort == 0) {
