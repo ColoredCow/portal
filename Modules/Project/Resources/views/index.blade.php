@@ -88,7 +88,23 @@
                 </thead>
                 <tbody>
                     @can('projects.view')
-                        @forelse($clients as $client)
+                    @if (request()->get('projects') == 'my-projects')
+                        @foreach($meetings as $meeting)
+                            <tr class="bg-theme-warning-lighter">
+                                <td colspan=4 class="font-weight-bold">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            {{ $meeting->client->name }}
+                                            <span data-toggle="tooltip" data-placement="top" title="Project review.">
+                                                <i class="fa fa-file-text">‌</i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
+                    @forelse($clients as $client)
                             <tr class="bg-theme-warning-lighter">
                                 <td colspan=4 class="font-weight-bold">
                                     <div class="d-flex justify-content-between">
@@ -97,7 +113,7 @@
                                             {{ sprintf('(%03s)', $client->client_id) }}
                                             @if ($client->today_review_meeting_counts )
                                                 <span data-toggle="tooltip" data-placement="top" title="Project review.">
-                                                    <i class="fa fa-video-camera">‌</i>
+                                                    <i class="fa fa-file-text">‌</i>
                                                 </span>
                                              @endif
                                         </div>

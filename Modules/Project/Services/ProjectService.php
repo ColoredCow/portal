@@ -20,6 +20,7 @@ use Modules\Project\Entities\ProjectResourceRequirement;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Exports\ProjectFTEExport;
 use Modules\User\Entities\User;
+use Modules\Client\Entities\ProjectReview;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -69,9 +70,10 @@ class ProjectService implements ProjectServiceContract
             ->orderBy('name', 'asc')
             ->paginate(config('constants.pagination_size'));
 
+        $meetings = ProjectReview::where('project_reviewer_id', $memberId)->whereNotIn('client_id', $projectsData->pluck('id'))->todayMeetings()->get();
         $tabCounts = $this->getListTabCounts($filters, $showAllProjects, $memberId);
 
-        return array_merge(['clients' => $projectsData], $tabCounts);
+        return array_merge(['clients' => $projectsData, 'meetings' => $meetings], $tabCounts);
     }
 
     public function create()
