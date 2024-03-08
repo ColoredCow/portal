@@ -101,11 +101,10 @@
                                 class="{{ $employee->user ? ($employee->user->ftes['amc'] > 1 ? 'text-success' : 'text-danger') : 'text-secondary' }} font-weight-bold">{{ $employee->user ? $employee->user->ftes['amc'] : 'NA' }}</span>
                         </td>
                         <td>
-                            @if ($employee->user)
-                                {{ $employee->user->total_fte['billable'] }} | {{ $employee->user->total_fte['non-billable'] }}
-                            @else
-                                NA
-                            @endif
+                            @php
+                                $fte = $employee->user()->withTrashed()->first()->total_fte;
+                            @endphp
+                            {{ $fte['billable'] }} | {{ $fte['non-billable'] }}
                         </td>
                     </tr>
                 @endforeach
