@@ -124,7 +124,7 @@ class ProjectTeamMember extends Model
         $actualEffort = $this->getActualEffortBetween($startDate, $endDate);
 
         if ($requiredEffort == 0) {
-            return $actualEffort;
+            return 0;
         }
 
         return round($actualEffort / $requiredEffort, 2);
