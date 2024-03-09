@@ -147,6 +147,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(ProjectTeamMember::class, 'team_member_id');
     }
+
     public function activeProjectTeamMembers()
     {
         return $this->hasMany(ProjectTeamMember::class, 'team_member_id')->where('ended_on', null);
@@ -185,6 +186,28 @@ class User extends Authenticatable
         }
 
         return ['main' => $fte, 'amc' => $fteAmc];
+    }
+
+    public function getTotalFteAttribute()
+    {
+        return [
+            'billable' => $this->calculateTotalBillableFte(true),
+            'non-billable' => $this->calculateTotalBillableFte(false),
+        ];
+    }
+
+    public function calculateTotalBillableFte($isBillable)
+    {
+        $fte = 0;
+        $projectTeamMembers = $this->projectTeamMembers()->whereHas('project', function ($query) use ($isBillable) {
+            $query->billable($isBillable);
+        })->get();
+
+        foreach ($projectTeamMembers as $projectTeamMember) {
+            $fte += $projectTeamMember->total_fte;
+        }
+
+        return $fte;
     }
 
     public function activeProjects()

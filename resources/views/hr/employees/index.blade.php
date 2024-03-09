@@ -34,6 +34,12 @@
                     <th>Active Projects Count</th>
                     <th>Current FTE</th>
                     <th>AMC FTE</th>
+                    <th>
+                        Overall FTE
+                        <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Billable FTE | Non Billable FTE">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        </span>
+                    </th>
                 </tr>
                 @foreach ($employees as $employee)
                     <tr>
@@ -93,6 +99,12 @@
                         <td>
                             <span
                                 class="{{ $employee->user ? ($employee->user->ftes['amc'] > 1 ? 'text-success' : 'text-danger') : 'text-secondary' }} font-weight-bold">{{ $employee->user ? $employee->user->ftes['amc'] : 'NA' }}</span>
+                        </td>
+                        <td>
+                            @php
+                                $fte = $employee->user()->withTrashed()->first()->total_fte;
+                            @endphp
+                            {{ $fte['billable'] }} | {{ $fte['non-billable'] }}
                         </td>
                     </tr>
                 @endforeach
