@@ -106,6 +106,14 @@ class ProjectTeamMember extends Model
         return $this->getFte($startDate, $endDate);
     }
 
+    public function getTotalHoursAttribute()
+    {
+        $startDate = $this->started_on;
+        $endDate = $this->ended_on ?? today(config('constants.timezone.indian'));
+
+        return $this->projectTeamMemberEffort->where('added_on', '>=', $startDate)->where('added_on', '<=', $endDate)->sum('actual_effort');
+    }
+
     public function getBorderColorClassAttribute()
     {
         if ($this->current_expected_effort == 0 && $this->current_actual_effort == 0) {
@@ -140,9 +148,9 @@ class ProjectTeamMember extends Model
     public function getActualEffortBetween($startDate, $endDate)
     {
         return $this->projectTeamMemberEffort()
-        ->where('added_on', '>=', $startDate)
-        ->where('added_on', '<=', $endDate)
-        ->sum('actual_effort');
+            ->where('added_on', '>=', $startDate)
+            ->where('added_on', '<=', $endDate)
+            ->sum('actual_effort');
     }
 
     protected static function newFactory()
