@@ -200,7 +200,7 @@ class User extends Authenticatable
     {
         return $this->projectTeamMembers()->whereHas('project', function ($query) use ($isBillable) {
             $query->billable($isBillable);
-        })->get()->sum->total_hours;
+        })->get()->sum->getCurrentActualEffort();
     }
 
     public function activeProjects()
