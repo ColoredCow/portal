@@ -32,7 +32,7 @@ class JobObserver
         $corcel->post_status = config('hr.opportunities-status-wp-mapping')[$job_status];
         $corcel->save();
         $corcel->saveMeta('hr_id', $job->id);
-        $corcel->saveMeta('job_form_slug', 'cc_career_apply_form');
+        $corcel->saveMeta(config('hr.slugs.job-form.key'), config('hr.slugs.job-form.value'));
         $post = $corcel->hasMeta('hr_id', $job->id)->first();
         $term = Term::select('term_id')->where(['name' => $job->domain])->first();
         if ($term) {
@@ -42,7 +42,7 @@ class JobObserver
             $relation->save();
         }
         $job->opportunity_id = $post->ID;
-        $job->link = Option::get('siteurl').$post->post_type. '/'. $post->post_name . '/';
+        $job->link = Option::get('siteurl') . $post->post_type . '/' . $post->post_name . '/';
         $job->save();
     }
 

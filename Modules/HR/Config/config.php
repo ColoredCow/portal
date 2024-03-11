@@ -67,6 +67,7 @@ return [
     'opportunities-status' => [
         'Draft' => 'draft',
         'Published' => 'published',
+        // 'archived' => 'Archived',
         'Closed' => 'draft',
         'Pending Review' => 'pending-review',
     ],
@@ -75,7 +76,15 @@ return [
         // 'laravel-key' => 'wordpress-key'
         'published' => 'publish',
         'draft' => 'draft',
+        // 'archived' => 'archived',
         'pending-review' => 'pending',
+    ],
+
+    'slugs' => [
+        'job-form' => [
+            'key' => 'job_form_slug',
+            'value' => 'cc_career_apply_form',
+        ]
     ],
 
     'post-type' => [
