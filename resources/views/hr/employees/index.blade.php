@@ -30,11 +30,10 @@
             <thead class="thead-dark">
                 <tr class="sticky-top">
                     <th>Name</th>
-                    <th>Joined on</th>
                     <th>Active Projects Count</th>
                     <th>
                         Overall FTE
-                        <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Total FTE from joining">
+                        <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Total FTE for the current month">
                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                         </span>
                     </th>
@@ -49,6 +48,7 @@
                     <tr>
                         @php
                             $user = $employee->user()->withTrashed()->first();
+                            $totalFTE = $user->ftes['main'] + $user->ftes['amc']
                         @endphp
                         <td>
                             <a href="{{ route('employees.show', $employee->id) }}">
@@ -66,16 +66,6 @@
                                 @endif
                             </a>
                         </td>
-
-                        <td>
-                            @if ($employee->joined_on)
-                                <span>{{ $employee->joined_on->format('d M, Y') }}</span>
-                                <span style="font-size: 10px;">&nbsp;&#9679;&nbsp;</span>
-                                <span>{{ $employee->employmentDuration }}</span>
-                            @else
-                                -
-                            @endif
-                        </td>
                         <td>
                             @if ($employee->user == null)
                                 0
@@ -83,8 +73,8 @@
                                 {{ $employee->active_project_count }}
                             @endif
                         </td>
-                        <td class={{ $user->total_fte > 1 ? 'text-success' : 'text-danger' }}>
-                            {{ $user->total_fte }}
+                        <td class={{ $totalFTE > 1 ? 'text-success' : 'text-danger' }}>
+                            {{ $totalFTE }}
                         </td>
                         <td>
                             <span class="text-success">
