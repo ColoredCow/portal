@@ -2,12 +2,12 @@
 
 namespace Modules\HR\Observers\Recruitment;
 
+use Corcel\Model\Option as Option;
 use Corcel\Model\Post as Corcel;
 use Corcel\Model\Term as Term;
 use Corcel\Model\TermRelationship as TermRelationship;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\Round;
-use Corcel\Model\Option as Option;
 
 class JobObserver
 {
