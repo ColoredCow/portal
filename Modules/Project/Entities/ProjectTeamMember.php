@@ -137,25 +137,31 @@ class ProjectTeamMember extends Model
 
     public function getTotalExpectedEffortAttribute()
     {
+        $projectService = new ProjectService;
         $team_member_projects = ProjectTeamMember::where('team_member_id', $this->team_member_id)
             ->whereNull('ended_on')
             ->get();
 
         $individualmemberdata = [];
+        $total_actual_effort = 0;
+        $total_expected_effort = 0;
+        $total_allotted_effort = 0;
+
 
         foreach ($team_member_projects as $team_member_project) {
             $project = $team_member_project->project;
 
-            // if ($project) {
             $individualmemberdata[] = [
                 'current_actual_effort' => $team_member_project->current_actual_effort,
                 'current_expected_effort' => $team_member_project->current_expected_effort,
                 'project' => $project,
             ];
-
+            $total_actual_effort += $team_member_project->current_actual_effort;
+            $total_expected_effort += $team_member_project->current_expected_effort;
+            $total_allotted_effort += $project->expected_monthly_hours;
         }
 
-        return ["individualmemberdata" => $individualmemberdata];
+        return ["individualmemberdata" => $individualmemberdata, "total_actual_effort" => $total_actual_effort, "total_expected_effort" => $total_expected_effort, "total_allotted_effort" => $total_allotted_effort];
     }
 
     protected static function newFactory()
