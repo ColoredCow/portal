@@ -188,11 +188,6 @@ class User extends Authenticatable
         return ['main' => $fte, 'amc' => $fteAmc];
     }
 
-    public function getTotalFteAttribute()
-    {
-        return $this->projectTeamMembers()->with('project')->get()->sum->total_fte;
-    }
-
     public function getTotalHoursAttribute()
     {
         return [
@@ -205,7 +200,7 @@ class User extends Authenticatable
     {
         return $this->projectTeamMembers()->whereHas('project', function ($query) use ($isBillable) {
             $query->billable($isBillable);
-        })->get()->sum->total_hours;
+        })->get()->sum->getCurrentActualEffort();
     }
 
     public function activeProjects()
