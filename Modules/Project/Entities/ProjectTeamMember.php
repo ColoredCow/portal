@@ -111,7 +111,7 @@ class ProjectTeamMember extends Model
         $startDate = $this->started_on;
         $endDate = $this->ended_on ?? today(config('constants.timezone.indian'));
 
-        return $this->projectTeamMemberEffort->where('added_on', '>=', $startDate)->where('added_on', '<=', $endDate)->sum('actual_effort');
+        return $this->getActualEffortBetween($startDate, $endDate);
     }
 
     public function getBorderColorClassAttribute()
@@ -148,9 +148,9 @@ class ProjectTeamMember extends Model
     public function getActualEffortBetween($startDate, $endDate)
     {
         return $this->projectTeamMemberEffort()
-            ->where('added_on', '>=', $startDate)
-            ->where('added_on', '<=', $endDate)
-            ->sum('actual_effort');
+        ->where('added_on', '>=', $startDate)
+        ->where('added_on', '<=', $endDate)
+        ->sum('actual_effort');
     }
 
     protected static function newFactory()
