@@ -7,6 +7,7 @@ use Corcel\Model\Term as Term;
 use Corcel\Model\TermRelationship as TermRelationship;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\Round;
+use Corcel\Model\Option as Option;
 
 class JobObserver
 {
@@ -31,6 +32,7 @@ class JobObserver
         $corcel->post_status = config('hr.opportunities-status-wp-mapping')[$job_status];
         $corcel->save();
         $corcel->saveMeta('hr_id', $job->id);
+        $corcel->saveMeta('job_form_slug', 'cc_career_apply_form');
         $post = $corcel->hasMeta('hr_id', $job->id)->first();
         $term = Term::select('term_id')->where(['name' => $job->domain])->first();
         if ($term) {
@@ -40,6 +42,7 @@ class JobObserver
             $relation->save();
         }
         $job->opportunity_id = $post->ID;
+        $job->link = Option::get('siteurl').$post->post_type. '/'. $post->post_name . '/';
         $job->save();
     }
 

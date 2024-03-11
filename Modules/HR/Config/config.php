@@ -65,20 +65,17 @@ return [
     ],
 
     'opportunities-status' => [
-        'draft' => 'Draft',
-        'published' => 'Published',
-        'closed' => 'Closed',
-        'archived' => 'Archived',
-        'pending-review' => 'Pending Review',
+        'Draft' => 'draft',
+        'Published' => 'published',
+        'Closed' => 'draft',
+        'Pending Review' => 'pending-review',
     ],
 
     'opportunities-status-wp-mapping' => [
         // 'laravel-key' => 'wordpress-key'
         'published' => 'publish',
-        'archived' => 'archived',
         'draft' => 'draft',
         'pending-review' => 'pending',
-        'closed' => 'closed',
     ],
 
     'post-type' => [
