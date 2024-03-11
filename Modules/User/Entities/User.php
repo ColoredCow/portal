@@ -193,7 +193,7 @@ class User extends Authenticatable
         return $this->projectTeamMembers()->with('project')->get()->sum->total_fte;
     }
 
-    public function getTotalHoursAttribute() 
+    public function getTotalHoursAttribute()
     {
         return [
             'billable' => $this->getTotalBillableHours(),
