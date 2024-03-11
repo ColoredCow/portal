@@ -190,24 +190,22 @@ class User extends Authenticatable
 
     public function getTotalFteAttribute()
     {
+        return $this->projectTeamMembers()->with('project')->get()->sum->total_fte;
+    }
+
+    public function getTotalHoursAttribute()
+    {
         return [
-            'billable' => $this->calculateTotalBillableFte(true),
-            'non-billable' => $this->calculateTotalBillableFte(false),
+            'billable' => $this->getTotalBillableHours(),
+            'non_billable' => $this->getTotalBillableHours(false),
         ];
     }
 
-    public function calculateTotalBillableFte($isBillable)
+    public function getTotalBillableHours($isBillable = true)
     {
-        $fte = 0;
-        $projectTeamMembers = $this->projectTeamMembers()->whereHas('project', function ($query) use ($isBillable) {
+        return $this->projectTeamMembers()->whereHas('project', function ($query) use ($isBillable) {
             $query->billable($isBillable);
-        })->get();
-
-        foreach ($projectTeamMembers as $projectTeamMember) {
-            $fte += $projectTeamMember->total_fte;
-        }
-
-        return $fte;
+        })->get()->sum->total_hours;
     }
 
     public function activeProjects()

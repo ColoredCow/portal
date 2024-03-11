@@ -106,6 +106,14 @@ class ProjectTeamMember extends Model
         return $this->getFte($startDate, $endDate);
     }
 
+    public function getTotalHoursAttribute()
+    {
+        $startDate = $this->started_on;
+        $endDate = $this->ended_on ?? today(config('constants.timezone.indian'));
+
+        return $this->getActualEffortBetween($startDate, $endDate);
+    }
+
     public function getBorderColorClassAttribute()
     {
         if ($this->current_expected_effort == 0 && $this->current_actual_effort == 0) {
