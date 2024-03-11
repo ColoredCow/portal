@@ -84,7 +84,7 @@ return [
         'job-form' => [
             'key' => 'job_form_slug',
             'value' => 'cc_career_apply_form',
-        ]
+        ],
     ],
 
     'post-type' => [
