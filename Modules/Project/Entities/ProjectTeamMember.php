@@ -98,6 +98,13 @@ class ProjectTeamMember extends Model
         return round($this->getCurrentActualEffortAttribute($firstDayOfMonth) / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
     }
 
+    public function getCurrentActualEffort()
+    {
+        $firstDayOfMonth = date('Y-m-01');
+
+        return $this->getCurrentActualEffortAttribute($firstDayOfMonth);
+    }
+
     public function getBorderColorClassAttribute()
     {
         if ($this->current_expected_effort == 0 && $this->current_actual_effort == 0) {
@@ -112,10 +119,12 @@ class ProjectTeamMember extends Model
         $project = new Project;
 
         $workingDays = count($project->getWorkingDaysList($startDate, $endDate));
-
         $requiredEffort = $workingDays * config('efforttracking.minimum_expected_hours');
-
         $actualEffort = $this->getActualEffortBetween($startDate, $endDate);
+
+        if ($requiredEffort == 0) {
+            return 0;
+        }
 
         return round($actualEffort / $requiredEffort, 2);
     }

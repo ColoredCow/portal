@@ -147,6 +147,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(ProjectTeamMember::class, 'team_member_id');
     }
+
     public function activeProjectTeamMembers()
     {
         return $this->hasMany(ProjectTeamMember::class, 'team_member_id')->where('ended_on', null);
@@ -185,6 +186,21 @@ class User extends Authenticatable
         }
 
         return ['main' => $fte, 'amc' => $fteAmc];
+    }
+
+    public function getTotalHoursAttribute()
+    {
+        return [
+            'billable' => $this->getTotalBillableHours(),
+            'non_billable' => $this->getTotalBillableHours(false),
+        ];
+    }
+
+    public function getTotalBillableHours($isBillable = true)
+    {
+        return $this->projectTeamMembers()->whereHas('project', function ($query) use ($isBillable) {
+            $query->billable($isBillable);
+        })->get()->sum->getCurrentActualEffort();
     }
 
     public function activeProjects()
