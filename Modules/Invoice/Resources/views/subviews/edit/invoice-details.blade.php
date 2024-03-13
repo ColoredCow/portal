@@ -278,7 +278,7 @@
 
                 axisBankParser(comment) {
                     extractedNumberList = comment.split(/[\/\s]/g).map(function(word) {
-                            var number = word.trim().replace(/,\s/, "")
+                        var number = word.trim().replaceAll(",", "")
                                 if (number == 0 || isNaN(number)) {
                                     return null;
                                 }
