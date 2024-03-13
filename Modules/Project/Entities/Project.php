@@ -17,10 +17,11 @@ use Modules\Invoice\Services\InvoiceService;
 use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
 use OwenIt\Auditing\Contracts\Auditable;
+use App\Traits\PageVisitable;
 
 class Project extends Model implements Auditable
 {
-    use HasFactory, HasTags, Filters, SoftDeletes, \OwenIt\Auditing\Auditable;
+    use HasFactory, HasTags, Filters, SoftDeletes, \OwenIt\Auditing\Auditable, PageVisitable;
 
     protected $table = 'projects';
 
