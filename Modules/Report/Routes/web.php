@@ -18,7 +18,7 @@ Route::prefix('report')->group(function () {
     Route::get('/show/{id}', 'ReportController@show')->name('report.show');
     Route::get('/delete/{id}', 'ReportController@delete')->name('report.delete');
     Route::post('/update/{id}', 'ReportController@update')->name('report.update');
-    Route::get('/get-fte-report/{user}', 'UserReportController@getFteData')->name('reports.fte.get-report-data');
+    Route::get('/get-fte-report/{userId}', 'UserReportController@getFteData')->name('reports.fte.get-report-data');
     Route::get('get-codetrek-report', 'CodeTrekController@getApplicantData')->name('reports.codetrek.get-report-data');
 
     Route::prefix('finance')->group(function () {

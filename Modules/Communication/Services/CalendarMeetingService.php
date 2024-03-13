@@ -25,6 +25,7 @@ class CalendarMeetingService implements CalendarMeetingContract
     protected $isDetailsSet = false;
     protected $organizer = null;
     protected $event;
+    protected $description;
 
     public function __construct($organizer = null, $details = [])
     {
@@ -86,6 +87,7 @@ class CalendarMeetingService implements CalendarMeetingContract
             'attendees' => $this->attendees,
             'start' => $this->startDateTime,
             'end' => $this->endDateTime,
+            'description' => $this->description,
             'conferenceDataVersion' => 1,
         ]);
 

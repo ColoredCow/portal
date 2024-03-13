@@ -68,6 +68,7 @@ class Invoice extends Model implements Auditable
     {
         return $query->where($this->getTable() . '.client_id', $clientId);
     }
+
     public function scopeInvoiceInaYear($query, $invoiceYear)
     {
         if (! is_numeric($invoiceYear)) {
@@ -169,6 +170,33 @@ class Invoice extends Model implements Auditable
         }
 
         return trim(optional($country)->currency_symbol . $amount);
+    }
+
+    public function invoiceAmountDifference()
+    {
+        $amountDifference = 0;
+        $lastInvoiceEndDate = $this->sent_on->subMonth()->endOfMonth();
+        $amount = (float) $this->amount;
+        if ($this->client->type == 'indian') {
+            $amount += (float) $this->gst;
+        }
+        $currentMonthAmount = $amount;
+        $lastMonthAmountDetail = self::where('sent_on', '<', $lastInvoiceEndDate)
+            ->where('client_id', $this->client_id)->where('project_id', $this->project_id)
+            ->orderBy('sent_on', 'DESC')
+            ->first();
+        $lastMonthAmount = $lastMonthAmountDetail ? (float) $lastMonthAmountDetail->amount : 0;
+        if ($this->client->type == 'indian') {
+            $lastMonthAmount = $lastMonthAmountDetail ? (float) $lastMonthAmountDetail->amount + (float) $lastMonthAmountDetail->gst : 0;
+        }
+        $amountDifference = $currentMonthAmount - $lastMonthAmount;
+        if ($lastMonthAmount != 0) {
+            $percentage = number_format($amountDifference / $lastMonthAmount * 100, 2);
+
+            return "{$amountDifference} ({$percentage}%)";
+        }
+
+        return $amountDifference;
     }
 
     public function invoiceAmounts()

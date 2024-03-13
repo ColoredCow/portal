@@ -19,6 +19,7 @@ return [
     'type' => [
         'monthly-billing' => 'Monthly Billing',
         'fixed-budget' => 'Fixed Budget',
+        'non-billable' => 'Non Billable',
     ],
     'meta_keys' => [
         'billing_level' => [

@@ -198,10 +198,8 @@ class EffortTrackingService
             $projectsInSheet = [];
 
             $range = config('efforttracking.default_start_column_in_effort_sheet') . '2:' . config('efforttracking.default_start_column_in_effort_sheet');
-            $sheet = $sheets->spreadsheet($sheetId)
-                ->range($range)
-                ->get();
-
+            $currentSheet = $sheets->spreadsheet($sheetId);
+            $sheet = $currentSheet->range($range)->get();
             foreach ($sheet as $rows) {
                 if (count($rows) == 0) {
                     break;
@@ -209,13 +207,14 @@ class EffortTrackingService
                 $projectMembersCount++;
             }
 
+            $approvedPipelineRange = config('efforttracking.default_monthly_approved_pipeline_column_in_effort_sheet');
+            $approvedPipelineSheet = $currentSheet->range($approvedPipelineRange)->get();
+
             try {
                 while (true) {
                     $lastColumn++;
                     $range = "C1:{$lastColumn}1";
-                    $sheet = $sheets->spreadsheet($sheetId)
-                        ->range($range)
-                        ->get();
+                    $sheet = $currentSheet->range($range)->get();
 
                     $columnIndex++;
                     if (isset($sheet[0]) && count($sheet[0]) == $columnIndex) {
@@ -296,6 +295,8 @@ class EffortTrackingService
                         try {
                             $effortData['sheet_project'] = $sheetProject;
                             $this->updateEffort($effortData);
+                            $approvedPipelineSheetEffort = ! empty($approvedPipelineSheet[0][0]) ? $approvedPipelineSheet[0][0] : 0;
+                            $this->updateApprovedPipelineEffort($approvedPipelineSheetEffort, $effortData);
                             ProjectMeta::updateOrCreate(
                                 [
                                     'key' => config('project.meta_keys.last_updated_at.key'),
@@ -331,6 +332,18 @@ class EffortTrackingService
         return false;
     }
 
+    public function updateApprovedPipelineEffort($approvedPipelineSheet, $effortData)
+    {
+        Project::updateOrCreate(
+            [
+                'id' => $effortData['sheet_project']['id'],
+            ],
+            [
+                'monthly_approved_pipeline' => $approvedPipelineSheet,
+            ]
+        );
+    }
+
     public function updateEffort(array $effortData)
     {
         $currentDate = now(config('constants.timezone.indian'))->today();
@@ -361,5 +374,37 @@ class EffortTrackingService
                 'total_effort_in_effortsheet' => $effortData['sheet_user'][$effortData['sheet_project']['sheetIndex']],
             ]
         );
+    }
+
+    public function getIsApprovedWorkPipelineExist($effortSheetUrl)
+    {
+        $isApprovedWorkPipelineExist = false;
+
+        try {
+            $correctedEffortsheetUrl = [];
+
+            $isSyntaxMatching = preg_match('/.*[^-\w]([-\w]{25,})[^-\w]?.*/', $effortSheetUrl, $correctedEffortsheetUrl);
+
+            if (! $isSyntaxMatching) {
+                return false;
+            }
+
+            $sheets = new Sheets();
+            $sheetId = $correctedEffortsheetUrl[1];
+            $currentSheet = $sheets->spreadsheet($sheetId);
+            $isApprovedWorkPipelineExist = $this->getIsApprovedWorkPipelineExistBySheet($currentSheet);
+        } catch (Exception $e) {
+            $isApprovedWorkPipelineExist = false;
+        }
+
+        return $isApprovedWorkPipelineExist;
+    }
+
+    public function getIsApprovedWorkPipelineExistBySheet($sheet)
+    {
+        $approvedPipelineTextRange = 'A6';
+        $approvedPipelineTextSheet = $sheet->range($approvedPipelineTextRange)->get();
+
+        return empty($approvedPipelineTextSheet[0][0]) ? false : $approvedPipelineTextSheet[0][0] == 'Approved Pipeline';
     }
 }

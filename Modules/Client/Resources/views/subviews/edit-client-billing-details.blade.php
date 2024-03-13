@@ -90,6 +90,16 @@
                 <p>Please fill the billing address details first</p>
             @endif
         </div>
+        <div class="col-md-5">
+            @can('finance.view')
+            <div class="form-group">
+                <a class="color-black text-decoration" href="{{ route('reports.finance.dashboard.client', ['client_id' => $client->billingDetails->client_id]) }}" style="color: black; text-decoration: underline;">
+                    Revenue by Client
+                    <i class="fa fa-bar-chart"></i>
+                </a>
+            </div> 
+            @endcan
+        </div>
         <div class="card-footer">
             @include('client::subviews.edit-client-form-submit-buttons', ['isNext' => false])
         </div>
