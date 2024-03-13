@@ -90,11 +90,12 @@
             created() {
                 this.projectTeamMembers.map((teamMember) => {
                     dailyEffort = teamMember['pivot']['daily_expected_effort'];
-                    teamMember['pivot']['weekly_expected_effort'] = dailyEffort * 5; 
+                    teamMember['pivot']['weekly_expected_effort'] = dailyEffort * 5;
                     teamMember['pivot']['monthly_expected_effort'] = dailyEffort * this.workingDaysInMonth;
                 })
+                console.log(this. contractTemplate, "contract Tempalte")
             },
-            
+
             computed: {
                 totalDailyEffort() {
                     var total = 0
@@ -107,6 +108,7 @@
             },
 
             methods: {
+
                 defaultProjectTeamMember() {
                     return {
                         id: new Date().getTime(),
@@ -158,7 +160,7 @@
                             $('.save-btn').attr('disabled', false);
                             if(errors){
                                 var errormessage =  errors[error].join().replace('id','');
-                                this.$toast.error(errormessage);                           
+                                this.$toast.error(errormessage);
                             }
                         })
                 },
@@ -183,7 +185,7 @@
                 },
 
 
-                
+
                 updatedDailyExpectedEffort($event, index, numberOfDays) {
                     value = $event.target.value;
                     maximumExpectedEfforts = 12
@@ -214,7 +216,7 @@
                         this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = value * 5;
                         this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = value * this.workingDaysInMonth;
                     }
-                   
+
                          this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
                          this.$forceUpdate()
                 }
@@ -231,5 +233,6 @@
 
             mounted() {},
         });
+
     </script>
 @endsection

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Client\Entities\Client;
+use Modules\ContractSettings\Entities\ContractSettings;
 use Modules\HR\Entities\Employee;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
@@ -322,6 +323,24 @@ class ProjectService implements ProjectServiceContract
             'totalCount' => $totalAdditionalResourceRequired,
             'data' => $data,
         ];
+    }
+
+    public function getContractTemplate($project)
+    {
+        $projectBillingType = $project->type;
+        $projectId = $project->id;
+        $projectContractAvailable = ProjectContract::where('project_id', $projectId)->get();
+
+        $data = [];
+
+        if ($projectContractAvailable->isEmpty()) {
+            $contractTemplate = ContractSettings::where('contract_type', $projectBillingType)->pluck('contract_template');
+            $data['contractTemplate'] = $contractTemplate;
+        }
+
+        $data['projectContractAvailable'] = $projectContractAvailable;
+
+        return $data;
     }
 
     private function getListTabCounts($filters, $showAllProjects, $userId)
