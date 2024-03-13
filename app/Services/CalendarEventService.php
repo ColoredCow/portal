@@ -17,6 +17,7 @@ class CalendarEventService
     protected $hangoutLink;
     protected $service;
     protected $id;
+    protected $description;
 
     public function __construct()
     {
@@ -43,6 +44,7 @@ class CalendarEventService
             'attendees' => $this->attendees,
             'start' => $this->startDateTime,
             'end' => $this->endDateTime,
+            'description' => $this->description,
         ]);
         $optprm = [
             'sendNotifications' => true,
