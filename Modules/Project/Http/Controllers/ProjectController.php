@@ -12,6 +12,7 @@ use Modules\HR\Entities\Job;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectContract;
+use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Rules\ProjectNameExist;
 
@@ -79,12 +80,20 @@ class ProjectController extends Controller
         $effortTracking = new EffortTrackingService;
         $isApprovedWorkPipelineExist = $effortTracking->getIsApprovedWorkPipelineExist($project->effort_sheet_url);
 
+        $totalDailyExpectedEffort = ProjectTeamMember:: where('project_id', $project->id)->get()->sum('daily_expected_effort');
+        $workingDaysInMonth = $this->service->getWorkingDays($project);
+        $totalExpectedHourInMonth = $totalDailyExpectedEffort * $workingDaysInMonth;
+        $monthlyApprovedHour =  $project->monthly_approved_pipeline;
+
+        $expectedApprovedHourDifference = $totalExpectedHourInMonth - $monthlyApprovedHour;
+
         return view('project::show', [
             'project' => $project,
             'contract' => $contract,
             'contractFilePath' => $contractFilePath,
             'daysTillToday' => $daysTillToday,
             'isApprovedWorkPipelineExist' => $isApprovedWorkPipelineExist,
+            'expectedApprovedHourDifference' => $expectedApprovedHourDifference
         ]);
     }
 
