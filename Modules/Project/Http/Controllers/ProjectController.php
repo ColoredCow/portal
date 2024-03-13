@@ -80,12 +80,11 @@ class ProjectController extends Controller
         $effortTracking = new EffortTrackingService;
         $isApprovedWorkPipelineExist = $effortTracking->getIsApprovedWorkPipelineExist($project->effort_sheet_url);
 
-        $totalDailyExpectedEffort = ProjectTeamMember::where('project_id', $project->id)->get()->sum('daily_expected_effort');
-        $workingDaysInMonth = $this->service->getWorkingDays($project);
-        $totalExpectedHourInMonth = $totalDailyExpectedEffort * $workingDaysInMonth;
-        $monthlyApprovedHour = $project->monthly_approved_pipeline;
+        $getProjectHourDeatils = $this->service->getProjectApprovedPipelineHour($project);
 
-        $expectedApprovedHourDifference = $totalExpectedHourInMonth - $monthlyApprovedHour;
+        $remainingActualHours = $getProjectHourDeatils['remainingActualHour'];
+        $totalExpectedHourInMonth  = $getProjectHourDeatils['totalExpectedHourInMonth'];
+        $totalWeeklyEffort = $getProjectHourDeatils['totalWeeklyEffort'];
 
         return view('project::show', [
             'project' => $project,
@@ -93,7 +92,9 @@ class ProjectController extends Controller
             'contractFilePath' => $contractFilePath,
             'daysTillToday' => $daysTillToday,
             'isApprovedWorkPipelineExist' => $isApprovedWorkPipelineExist,
-            'expectedApprovedHourDifference' => $expectedApprovedHourDifference,
+            'totalExpectedHourInMonth' => $totalExpectedHourInMonth,
+            'remainingActualHours' => $remainingActualHours,
+            'totalWeeklyEffort' => $totalWeeklyEffort
         ]);
     }
 

@@ -18,6 +18,7 @@ use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectResourceRequirement;
 use Modules\Project\Entities\ProjectTeamMember;
+use Modules\Project\Entities\ProjectTeamMembersEffort;
 use Modules\Project\Exports\ProjectFTEExport;
 use Modules\User\Entities\User;
 
@@ -323,6 +324,32 @@ class ProjectService implements ProjectServiceContract
             'data' => $data,
         ];
     }
+
+    public function getProjectApprovedPipelineHour($project){
+        $totalDailyExpectedEffort = ProjectTeamMember::where('project_id', $project->id)->get()->sum('daily_expected_effort');
+        $workingDaysInMonth = $this->getWorkingDays($project);
+        $totalExpectedHourInMonth = $totalDailyExpectedEffort * $workingDaysInMonth;
+        $monthlyApprovedHour = $project->monthly_approved_pipeline;
+        $currentActualEffort = ProjectTeamMembersEffort::whereIn('project_team_member_id', function($query) use ($project) {
+            $query->select('id')
+                  ->from('project_team_members')
+                  ->where('project_id', $project->id);
+        })
+        ->whereDate('created_at', now()->toDateString())
+        ->sum('total_effort_in_effortsheet');
+        $remainingHoursToWork =  $totalExpectedHourInMonth - $currentActualEffort;
+        $remainingHoursForAWeek = $remainingHoursToWork / 4;
+        $remainingHoursFromApprovedHours = $monthlyApprovedHour - $currentActualEffort;
+        $remainingActualHour = $remainingHoursFromApprovedHours - $remainingHoursForAWeek;
+
+        $totalWeeklyExpectedEffort =  $totalDailyExpectedEffort * 5;
+        return [
+            'remainingActualHour' => $remainingActualHour,
+            'totalExpectedHourInMonth' => $totalExpectedHourInMonth,
+            'totalWeeklyEffort' => $totalWeeklyExpectedEffort
+        ];
+    }
+
 
     private function getListTabCounts($filters, $showAllProjects, $userId)
     {

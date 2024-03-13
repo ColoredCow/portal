@@ -76,9 +76,9 @@
                     </div>
                     <div class="form-group offset-md-1 pl-4 col-md-5">
                         <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold">Total Estimated Hour:</label>
+                            <label for="name" class="font-weight-bold">Total Expected Hour:</label>
                         </h4>
-                        <span class="text-capitalize ml-2 fz-lg-22">{{ $project->total_estimated_hours }}
+                        <span class="text-capitalize ml-2 fz-lg-22">{{ $totalExpectedHourInMonth }} Hrs
                     </div>
                 </div>
                 <div class="form-row">
@@ -110,10 +110,11 @@
                     </div>
                     <div class="form-group offset-md-1 pl-4 col-md-5">
                         <h4 class="d-inline-block mt-2">
-                            <label for="name" class="font-weight-bold">Difference in Expected and Approved Hour:
-                                <span class="text-capitalize ml-2 fz-lg-22 font-weight-normal" style="color: {{ $expectedApprovedHourDifference > 40 ? 'red' : 'inherit' }}">{{ $expectedApprovedHourDifference }} hrs</span>
+                            <label for="name" class="font-weight-bold">Remaining Approved Hours:
+                                <span class="text-capitalize ml-2 fz-lg-22 font-weight-normal" style="color: {{ $remainingActualHours> 40 ? 'red' : 'inherit' }}">
+                                    {{ $remainingActualHours}} hrs
+                                </span>
                             </label>
-
                         </h4>
                     </div>
                 </div>
