@@ -195,6 +195,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
     {
         $applicant = $applicationRound->application->applicant;
         $summary = 'Appointment Scheduled';
+        $route = 'applications.' . $applicationRound->application->job->type . '.edit';
         $applicationLink = URL::route($route, $applicationRound->application->id);
         $description = "Application Link: {$applicationLink}";
 
