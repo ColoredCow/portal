@@ -18,7 +18,6 @@ use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectResourceRequirement;
 use Modules\Project\Entities\ProjectTeamMember;
-use Modules\Project\Entities\ProjectTeamMembersEffort;
 use Modules\Project\Exports\ProjectFTEExport;
 use Modules\User\Entities\User;
 
