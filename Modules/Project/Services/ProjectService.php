@@ -325,19 +325,20 @@ class ProjectService implements ProjectServiceContract
         ];
     }
 
-    public function getProjectApprovedPipelineHour($project){
+    public function getProjectApprovedPipelineHour($project)
+    {
         $totalDailyExpectedEffort = ProjectTeamMember::where('project_id', $project->id)->get()->sum('daily_expected_effort');
         $workingDaysInMonth = $this->getWorkingDays($project);
         $totalExpectedHourInMonth = $totalDailyExpectedEffort * $workingDaysInMonth;
         $monthlyApprovedHour = $project->monthly_approved_pipeline;
-        $currentActualEffort = ProjectTeamMembersEffort::whereIn('project_team_member_id', function($query) use ($project) {
+        $currentActualEffort = ProjectTeamMembersEffort::whereIn('project_team_member_id', function ($query) use ($project) {
             $query->select('id')
                   ->from('project_team_members')
                   ->where('project_id', $project->id);
         })
         ->whereDate('created_at', now()->toDateString())
         ->sum('total_effort_in_effortsheet');
-        $remainingHoursToWork =  $totalExpectedHourInMonth - $currentActualEffort;
+        $remainingHoursToWork = $totalExpectedHourInMonth - $currentActualEffort;
         $remainingHoursForAWeek = $remainingHoursToWork / 4;
         $remainingHoursFromApprovedHours = $monthlyApprovedHour - $currentActualEffort;
         $remainingActualHour = $remainingHoursFromApprovedHours - $remainingHoursForAWeek;
@@ -346,7 +347,7 @@ class ProjectService implements ProjectServiceContract
         return [
             'remainingActualHour' => $remainingActualHour,
             'totalExpectedHourInMonth' => $totalExpectedHourInMonth,
-            'totalWeeklyEffort' => $totalWeeklyExpectedEffort
+            'totalWeeklyEffort' => $totalWeeklyExpectedEffort,
         ];
     }
 
