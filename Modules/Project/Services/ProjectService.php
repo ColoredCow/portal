@@ -324,6 +324,26 @@ class ProjectService implements ProjectServiceContract
         ];
     }
 
+    public function getProjectApprovedPipelineHour($project)
+    {
+        $totalDailyExpectedEffort = ProjectTeamMember::where('project_id', $project->id)
+        ->whereNull('ended_on')
+        ->get()
+        ->sum('daily_expected_effort');
+        $workingDaysInMonth = $this->getWorkingDays($project);
+        $totalExpectedHourInMonth = $totalDailyExpectedEffort * $workingDaysInMonth;
+        $monthlyApprovedHour = $project->monthly_approved_pipeline;
+        $totalWeeklyExpectedEffort = $totalDailyExpectedEffort * 5;
+        $remainingApprovedPipeline = $monthlyApprovedHour - $totalWeeklyExpectedEffort;
+
+        return [
+            'monthlyApprovedHour' => $monthlyApprovedHour,
+            'totalExpectedHourInMonth' => $totalExpectedHourInMonth,
+            'totalWeeklyEffort' => $totalWeeklyExpectedEffort,
+            'remainingApprovedPipeline' => $remainingApprovedPipeline,
+        ];
+    }
+
     private function getListTabCounts($filters, $showAllProjects, $userId)
     {
         $counts = [
