@@ -21,7 +21,7 @@
                             continue;
                         }
                         $tooltipHtml .= "$field<br />";
-                        $tooltipHtml .= "$value\n\n";
+                        $tooltipHtml .= preg_replace('/[^A-Za-z0-9\s,.]/' , "" , "$value\n\n");
                         break;
                     }
                 @endphp
