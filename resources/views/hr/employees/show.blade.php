@@ -16,9 +16,9 @@
                     @if ($employee->designation_id && $employee->domain_id != null)
                         <div class="row ml-1">
                             <span class="font-weight-bold">Designation:</span>&nbsp;<p>{{$employee->hrJobDesignation->designation}}</p>
-                        </div> 
+                        </div>
                         <div class="row ml-1">
-                            <span class="font-weight-bold">Domain:</span>&nbsp;<p>{{$employee->hrJobDomain->domain}}</p>            
+                            <span class="font-weight-bold">Domain:</span>&nbsp;<p>{{$employee->hrJobDomain->domain}}</p>
                         </div>
                     @endif
                 </div>
@@ -27,10 +27,10 @@
                 @endif
             </div>
             <hr class='bg-dark mx-4 pb-0.5'>
-            <div class="d-flex"><div class="font-weight-bold fz-24 pl-5 mt-5 mb-3 d-flex justify-content-inline">{{__('Current FTE: ')}}<div class=" ml-1 {{ $user ? ($user->ftes['main'] > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $user ? $user->ftes['main']  :'NA' }}</div></div>
-            <div class="font-weight-bold fz-24 pl-5 mt-5 mb-3 d-flex justify-content-inline">{{__('FTE(AMC): ')}}<div class=" ml-1 {{ $user ? ($user->ftes['amc'] > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $user ? $user->ftes['amc']  :'NA' }}</div></div></div>
-            <canvas class="w-full" id="userDashboardGraph"></canvas>
-            <input type="hidden" id="get_report_data_url" value={{ route('reports.fte.get-report-data', ['userId' => $user->id]) }}>
+            <div class=""><div class="font-weight-bold fz-24 pl-5 mt-5 mb-3 d-flex">{{__('Current FTE: ')}}<div class=" ml-1 {{ $user ? (($user->ftes['main'] + $user->ftes['amc']) > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $user ? ($user->ftes['main'] + $user->ftes['amc'])  :'NA' }}</div></div>
+            <div>
+                <canvas class="w-full" id="userDashboardGraph"></canvas>
+                <input type="hidden" id="get_report_data_url" value={{ route('reports.fte.get-report-data', ['userId' => $user->id]) }}>
 
             @if ($employee->user)
                 <div class="font-weight-bold fz-24 pl-5 mt-5 mb-3">Active Project Details</div>
@@ -77,33 +77,33 @@
                                                     - {{ (Carbon\Carbon::parse($activeProjectTeamMember->project->client->month_end_date)->format('dS M')) }} / {{ count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->client->month_start_date, $activeProjectTeamMember->project->client->month_end_date)) }} days
                                                 </div>
                                             </td>
-                        
+
                                             <td>
                                                 <div>
                                                     {{ $activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->client->month_start_date, $activeProjectTeamMember->project->client->month_end_date)) }} hrs
                                                     / {{ count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->client->month_start_date, $activeProjectTeamMember->project->client->month_end_date)) }} days
                                                 </div>
                                             </td>
-                        
+
                                             <td>
                                                 <div>
                                                     {{ $activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->client->month_start_date, today()->subDay())) }} hrs
                                                     / {{ count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->client->month_start_date, today()->subDay())) }} days
                                                 </div>
                                             </td>
-                        
+
                                             <td>
                                                 <div class="{{ $activeProjectTeamMember->current_actual_effort >= ($activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->client->month_start_date, today()->subDay()))) ? 'text-success' : 'text-danger' }}"> {{ $activeProjectTeamMember->current_actual_effort }}
                                                 </div>
                                             </td>
-                        
+
                                             <td>
                                                 <div>
                                                     <div class="{{$activeProjectTeamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">
                                                         {{$activeProjectTeamMember->velocity}}
                                                     </div>
                                                 </td>
-                        
+
                                             <td>
                                                 <div>{{$activeProjectTeamMember->fte}}</div>
                                             </td>
@@ -111,11 +111,12 @@
                                     @endif
                                 @endforeach
                             @endif
-                        </thead>              
-                    </table>    
+                        </thead>
+                    </table>
                 </div>
             @endif
+            </div>
         </div>
     </div>
-</div>    
+</div>
 @endsection
