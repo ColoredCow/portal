@@ -78,7 +78,7 @@
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold">Total Expected Hour:</label>
                         </h4>
-                        <span class="text-capitalize ml-2 fz-lg-22">{{ $totalExpectedHourInMonth }} Hrs
+                        <span class="text-capitalize ml-2 fz-lg-22">{{ $totalExpectedHourInMonth }} Hrs</span>
                     </div>
                 </div>
                 <div class="form-row">
@@ -108,14 +108,22 @@
                     </h4>
                         <span class="text-capitalize ml-2 fz-lg-22">{{ optional($project->end_date)->format('d M Y')}}</span>
                     </div>
-                    <div class="form-group offset-md-1 pl-4 col-md-5">
+                    <div class="form-group offset-md-1 pl-4 col-md-5 pr-2">
                         <h4 class="d-inline-block mt-2">
                             <label for="name" class="font-weight-bold">Remaining Approved Hours:
                                 <span class="text-capitalize ml-2 fz-lg-22 font-weight-normal" style="color: {{ $remainingActualHours> 40 ? 'red' : 'inherit' }}">
                                     {{ $remainingActualHours}} hrs
+                                    @if($totalWeeklyEffort > $remainingActualHours)
+                                    <span>{!! file_get_contents(public_path('icons/downward-arrow.svg')) !!}</span>
+                                    @else
+                                    <span>{!! file_get_contents(public_path('icons/upward-arrow.svg')) !!}</span>
+                                    @endif
                                 </span>
                             </label>
+
                         </h4>
+                        (Note:The idea is to have atleast approval pipeline for 1 week. Red indicates weekly approved effort is less than required and green indicates approved effort is equal to or more than weekly approved effort.)
+
                     </div>
                 </div>
                 <div id= "project_detail_form" class="collapse show">
