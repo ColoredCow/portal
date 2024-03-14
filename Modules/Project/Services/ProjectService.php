@@ -339,15 +339,14 @@ class ProjectService implements ProjectServiceContract
         ->whereDate('created_at', now()->toDateString())
         ->sum('total_effort_in_effortsheet');
         $remainingHoursToWork = $totalExpectedHourInMonth - $currentActualEffort;
-        $remainingHoursForAWeek = $remainingHoursToWork / 4;
-        $remainingHoursFromApprovedHours = $monthlyApprovedHour - $currentActualEffort;
-        $remainingActualHour = $remainingHoursFromApprovedHours - $remainingHoursForAWeek;
 
         $totalWeeklyExpectedEffort =  $totalDailyExpectedEffort * 5;
+        $remainingApprovedPipeline = $monthlyApprovedHour - $totalWeeklyExpectedEffort;
         return [
-            'remainingActualHour' => $remainingActualHour,
+            'monthlyApprovedHour' => $monthlyApprovedHour,
             'totalExpectedHourInMonth' => $totalExpectedHourInMonth,
             'totalWeeklyEffort' => $totalWeeklyExpectedEffort,
+            'remainingApprovedPipeline' => $remainingApprovedPipeline,
         ];
     }
 

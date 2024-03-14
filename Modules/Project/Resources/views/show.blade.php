@@ -76,9 +76,10 @@
                     </div>
                     <div class="form-group offset-md-1 pl-4 col-md-5">
                         <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold">Total Expected Hour:</label>
+                            <label for="name" class="font-weight-bold">Monthly Expected Hours:</label>
+                            <span class="text-capitalize ml-2 fz-lg-22 font-weight-normal">{{ $totalExpectedHourInMonth }} Hrs</span>
                         </h4>
-                        <span class="text-capitalize ml-2 fz-lg-22">{{ $totalExpectedHourInMonth }} Hrs</span>
+
                     </div>
                 </div>
                 <div class="form-row">
@@ -90,15 +91,17 @@
                     </div>
                     <div class="form-group offset-md-1 pl-4 col-md-5">
                         <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold">Approved Work Pipeline:</label>
+                            <label for="name" class="font-weight-bold">Approved Hours In a Month:
+                                @if ($isApprovedWorkPipelineExist)
+                                    <span class="text-capitalize ml-2 fz-lg-22 font-weight-normal">{{ $project->monthly_approved_pipeline }} hrs</span>
+                                @else
+                                    <span class="text-capitalize ml-2 text-danger fz-18 font-weight-normal">
+                                        ERROR <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Formatting issue with effortsheet"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                                    </span>
+                                @endif
+                            </label>
                         </h4>
-                        @if ($isApprovedWorkPipelineExist)
-                            <span class="text-capitalize ml-2 fz-lg-22">{{ $project->monthly_approved_pipeline }} hrs</span>
-                        @else
-                            <span class="text-capitalize ml-2 text-danger fz-18">
-                                ERROR <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Formatting issue with effortsheet"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
-                            </span>
-                        @endif
+
                     </div>
                 </div>
                 <div class="form-row">
@@ -110,20 +113,20 @@
                     </div>
                     <div class="form-group offset-md-1 pl-4 col-md-5 pr-2">
                         <h4 class="d-inline-block mt-2">
-                            <label for="name" class="font-weight-bold">Remaining Approved Hours:
-                                <span class="text-capitalize ml-2 fz-lg-22 font-weight-normal" style="color: {{ $remainingActualHours> 40 ? 'red' : 'inherit' }}">
-                                    {{ $remainingActualHours}} hrs
-                                    @if($totalWeeklyEffort > $remainingActualHours)
+                            <label for="name" class="font-weight-bold">Weekly Approved Hours Left:
+                                <span class="text-capitalize ml-2 fz-lg-22 font-weight-normal">
+                                    {{ $remainingApprovedPipeline}} hrs
+                                    @if($totalWeeklyEffort > $remainingApprovedPipeline)
                                     <span>{!! file_get_contents(public_path('icons/downward-arrow.svg')) !!}</span>
                                     @else
                                     <span>{!! file_get_contents(public_path('icons/upward-arrow.svg')) !!}</span>
                                     @endif
                                 </span>
                             </label>
-
                         </h4>
-                        (Note:The idea is to have atleast approval pipeline for 1 week. Red indicates weekly approved effort is less than required and green indicates approved effort is equal to or more than weekly approved effort.)
-
+                        <span class="fz-14">
+                            (<b>Note:</b> Expected weekly hour for this project is {{ $totalWeeklyEffort}}. Here, red downward arrow indicates project approved hours for a week is less than expected. Green upward aroow indicates approved hours is greater than or equal to expected.)
+                        </span>
                     </div>
                 </div>
                 <div id= "project_detail_form" class="collapse show">

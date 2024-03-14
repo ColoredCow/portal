@@ -82,9 +82,10 @@ class ProjectController extends Controller
 
         $getProjectHourDeatils = $this->service->getProjectApprovedPipelineHour($project);
 
-        $remainingActualHours = $getProjectHourDeatils['remainingActualHour'];
+        $monthlyApprovedHour = $getProjectHourDeatils['monthlyApprovedHour'];
         $totalExpectedHourInMonth  = $getProjectHourDeatils['totalExpectedHourInMonth'];
         $totalWeeklyEffort = $getProjectHourDeatils['totalWeeklyEffort'];
+        $remainingApprovedPipeline = $getProjectHourDeatils['remainingApprovedPipeline'];
 
         return view('project::show', [
             'project' => $project,
@@ -93,8 +94,9 @@ class ProjectController extends Controller
             'daysTillToday' => $daysTillToday,
             'isApprovedWorkPipelineExist' => $isApprovedWorkPipelineExist,
             'totalExpectedHourInMonth' => $totalExpectedHourInMonth,
-            'remainingActualHours' => $remainingActualHours,
-            'totalWeeklyEffort' => $totalWeeklyEffort
+            'monthlyApprovedHour' => $monthlyApprovedHour,
+            'totalWeeklyEffort' => $totalWeeklyEffort,
+            'remainingApprovedPipeline' => $remainingApprovedPipeline
         ]);
     }
 
