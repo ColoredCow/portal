@@ -351,7 +351,6 @@ class ProjectService implements ProjectServiceContract
         ];
     }
 
-
     private function getListTabCounts($filters, $showAllProjects, $userId)
     {
         $counts = [
