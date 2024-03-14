@@ -12,7 +12,6 @@ use Modules\HR\Entities\Job;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectContract;
-use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Rules\ProjectNameExist;
 
@@ -83,7 +82,7 @@ class ProjectController extends Controller
         $getProjectHourDeatils = $this->service->getProjectApprovedPipelineHour($project);
 
         $monthlyApprovedHour = $getProjectHourDeatils['monthlyApprovedHour'];
-        $totalExpectedHourInMonth  = $getProjectHourDeatils['totalExpectedHourInMonth'];
+        $totalExpectedHourInMonth = $getProjectHourDeatils['totalExpectedHourInMonth'];
         $totalWeeklyEffort = $getProjectHourDeatils['totalWeeklyEffort'];
         $remainingApprovedPipeline = $getProjectHourDeatils['remainingApprovedPipeline'];
 
@@ -96,7 +95,7 @@ class ProjectController extends Controller
             'totalExpectedHourInMonth' => $totalExpectedHourInMonth,
             'monthlyApprovedHour' => $monthlyApprovedHour,
             'totalWeeklyEffort' => $totalWeeklyEffort,
-            'remainingApprovedPipeline' => $remainingApprovedPipeline
+            'remainingApprovedPipeline' => $remainingApprovedPipeline,
         ]);
     }
 
