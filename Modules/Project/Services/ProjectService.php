@@ -331,14 +331,6 @@ class ProjectService implements ProjectServiceContract
         $workingDaysInMonth = $this->getWorkingDays($project);
         $totalExpectedHourInMonth = $totalDailyExpectedEffort * $workingDaysInMonth;
         $monthlyApprovedHour = $project->monthly_approved_pipeline;
-        $currentActualEffort = ProjectTeamMembersEffort::whereIn('project_team_member_id', function ($query) use ($project) {
-            $query->select('id')
-                  ->from('project_team_members')
-                  ->where('project_id', $project->id);
-        })
-        ->whereDate('created_at', now()->toDateString())
-        ->sum('total_effort_in_effortsheet');
-
         $totalWeeklyExpectedEffort = $totalDailyExpectedEffort * 5;
         $remainingApprovedPipeline = $monthlyApprovedHour - $totalWeeklyExpectedEffort;
 
