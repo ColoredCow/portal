@@ -113,7 +113,7 @@
                     </div>
                     <div class="form-group offset-md-1 pl-4 col-md-5 pr-2">
                         <h4 class="d-inline-block mt-2">
-                            <label for="name" class="font-weight-bold">Weekly Approved Hours Left:
+                            <label for="name" class="font-weight-bold">Approved Hours Left:
                                 <span class="text-capitalize ml-2 fz-lg-22 font-weight-normal">
                                     {{ $remainingApprovedPipeline}} hrs
                                     @if($totalWeeklyEffort > $remainingApprovedPipeline)
@@ -124,8 +124,9 @@
                                 </span>
                             </label>
                         </h4>
+                        <br>
                         <span class="fz-14">
-                            (<b>Note:</b> Expected weekly hour for this project is {{ $totalWeeklyEffort}}. Here, red downward arrow indicates project approved hours for a week is less than expected. Green upward aroow indicates approved hours is greater than or equal to expected.)
+                            (<b>Note:</b> Expected weekly hour for this project is {{ $totalWeeklyEffort}}. Here, red <span>{!! file_get_contents(public_path('icons/downward-arrow.svg')) !!}</span>  indicates project approved hours for a week is less than expected. Green <span>{!! file_get_contents(public_path('icons/upward-arrow.svg')) !!}</span> indicates approved hours is greater than or equal to expected.)
                         </span>
                     </div>
                 </div>
