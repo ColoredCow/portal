@@ -93,7 +93,7 @@
                     <div class="col-md-5 pl-4 d-flex justify-content-between">
                         <div>
                             <h4 class="d-inline-block">
-                                <label for="name" class="font-weight-bold mb-6 ml-1">Expected Hour:</label>
+                                <label for="name" class="font-weight-bold mb-6 ml-1">Expected Hours:</label>
                             </h4>
                         </div>
                         <div class="d-flex">
@@ -111,7 +111,8 @@
                             </div>
                         </div>
                     </div>
-
+                </div>
+                <div class="form-row">
                     <div class="col-md-5 pl-4 d-flex justify-content-between">
                         <div>
                             <h4 class="d-inline-block">
@@ -140,11 +141,9 @@
                             <label for="name" class="font-weight-bold mb-6 ml-1">Approved Pipeline:</label>
                             <span>{{$monthlyApprovedHour}} hrs
                                 @if($monthlyApprovedHour > $weeklyHoursToCover)
-                                {!! file_get_contents(public_path('icons/upward-arrow.svg')) !!}
-                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Approved pipeline is sufficient for this week"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Approved pipeline is sufficient for this week"><i class="fa fa-info-circle" style="color: green;" aria-hidden="true"></i></span>
                                 @else
-                                {!! file_get_contents(public_path('icons/downward-arrow.svg')) !!}
-                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Approved pipeline is not sufficient for this week"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Approved pipeline is not sufficient for this week"><i class="fa fa-info-circle" style='color: red' aria-hidden="true"></i></span>
                                 @endif
                             </span>
 
@@ -164,7 +163,7 @@
                                     </div>
                                  </div>
                             </div>
-                @endif
+                        @endif
                 <br>
                 <div class="form-row ">
                     <div class="form-group col-lg-12 pl-4">
