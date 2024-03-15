@@ -18,6 +18,7 @@ use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectResourceRequirement;
 use Modules\Project\Entities\ProjectTeamMember;
+use Modules\Project\Entities\ProjectTeamMembersEffort;
 use Modules\Project\Exports\ProjectFTEExport;
 use Modules\User\Entities\User;
 
@@ -335,12 +336,23 @@ class ProjectService implements ProjectServiceContract
         $monthlyApprovedHour = $project->monthly_approved_pipeline;
         $totalWeeklyExpectedEffort = $totalDailyExpectedEffort * 5;
         $remainingApprovedPipeline = $monthlyApprovedHour - $totalWeeklyExpectedEffort;
+        $currentActualEffort = ProjectTeamMembersEffort::whereIn('project_team_member_id', function ($query) use ($project) {
+            $query->select('id')
+                  ->from('project_team_members')
+                  ->where('project_id', $project->id)
+                  ->whereNull('ended_on');
+        })
+        ->whereDate('created_at', now()->toDateString())
+        ->sum('total_effort_in_effortsheet');
+
+        $remainingExpectedEffort =  $totalExpectedHourInMonth - $currentActualEffort;
 
         return [
             'monthlyApprovedHour' => $monthlyApprovedHour,
             'totalExpectedHourInMonth' => $totalExpectedHourInMonth,
             'totalWeeklyEffort' => $totalWeeklyExpectedEffort,
             'remainingApprovedPipeline' => $remainingApprovedPipeline,
+            'remainingExpectedEffort' => $remainingExpectedEffort,
         ];
     }
 
