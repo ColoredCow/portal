@@ -359,7 +359,7 @@ class ProjectService implements ProjectServiceContract
         ->whereDate('created_at', now()->toDateString())
         ->sum('total_effort_in_effortsheet');
 
-        $remainingExpectedEffort =  $totalExpectedHourInMonth - $currentActualEffort;
+        $remainingExpectedEffort = $totalExpectedHourInMonth - $currentActualEffort;
 
         $currentDate = now(config('constants.timezone.indian'));
 
