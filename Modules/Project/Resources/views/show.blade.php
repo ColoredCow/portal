@@ -89,7 +89,7 @@
                         <span class="text-capitalize ml-2 fz-lg-22">{{ optional($project->end_date)->format('d M Y')}}</span>
                     </div>
                 </div>
-                <div class="form-row">
+                <div class="form-row d-flex justify-content-between">
                     <div class="col-md-5 pl-4 d-flex justify-content-between">
                         <div>
                             <h4 class="d-inline-block">
@@ -110,6 +110,36 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="col-md-5 pl-4 d-flex justify-content-between">
+                        <div>
+                            <h4 class="d-inline-block">
+                                <label for="name" class="font-weight-bold mb-6 ml-1">Hours To Cover:</label>
+                            </h4>
+                        </div>
+                        <div class="d-flex">
+                            <div class="pr-10 project-hour">
+                                <span class="fz-lg-22 text-capitalize">Monthly
+                                </span>
+                                <span>{{$remainingExpectedEffort}}</span>
+                            </div>
+                            <div class="d-flex">
+                                <div class="pr-10 project-hour">
+                                    <span class="fz-lg-22 text-capitalize">Weekly
+                                    </span>
+                                    <span>{{$weeklyHoursToCover}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-5 pl-4 d-flex justify-content-between">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold mb-6 ml-1">Approved Pipeline:</label>
+                            <span>{{$monthlyApprovedHour}} hrs</span>
+                        </h4>
                     </div>
                 </div>
                 <div id= "project_detail_form" class="collapse show">

@@ -325,6 +325,20 @@ class ProjectService implements ProjectServiceContract
         ];
     }
 
+    public function getProjectWorkingDays($startDate, $endDate)
+    {
+        $period = CarbonPeriod::create($startDate, $endDate);
+        $dates = [];
+        $weekend = ['Saturday', 'Sunday'];
+        foreach ($period as $date) {
+            if (! in_array($date->format('l'), $weekend)) {
+                $dates[] = $date->format('Y-m-d');
+            }
+        }
+
+        return $dates;
+    }
+
     public function getProjectApprovedPipelineHour($project)
     {
         $totalDailyExpectedEffort = ProjectTeamMember::where('project_id', $project->id)
@@ -347,12 +361,21 @@ class ProjectService implements ProjectServiceContract
 
         $remainingExpectedEffort =  $totalExpectedHourInMonth - $currentActualEffort;
 
+        $currentDate = now(config('constants.timezone.indian'));
+
+        $daysTillToday = count($this->getProjectWorkingDays($project->client->month_start_date, $currentDate));
+
+        $remainingDays = $workingDaysInMonth - $daysTillToday;
+        $daysInAWeek = 5;
+        $weeklyHoursToCover = ($remainingExpectedEffort / $remainingDays) * $daysInAWeek;
+
         return [
             'monthlyApprovedHour' => $monthlyApprovedHour,
             'totalExpectedHourInMonth' => $totalExpectedHourInMonth,
             'totalWeeklyEffort' => $totalWeeklyExpectedEffort,
             'remainingApprovedPipeline' => $remainingApprovedPipeline,
             'remainingExpectedEffort' => $remainingExpectedEffort,
+            'weeklyHoursToCover' => $weeklyHoursToCover,
         ];
     }
 

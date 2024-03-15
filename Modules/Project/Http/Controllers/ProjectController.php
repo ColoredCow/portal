@@ -86,6 +86,7 @@ class ProjectController extends Controller
         $totalWeeklyEffort = $getProjectHourDeatils['totalWeeklyEffort'];
         $remainingApprovedPipeline = $getProjectHourDeatils['remainingApprovedPipeline'];
         $remainingExpectedEffort = $getProjectHourDeatils['remainingExpectedEffort'];
+        $weeklyHoursToCover = $getProjectHourDeatils['weeklyHoursToCover'];
 
         return view('project::show', [
             'project' => $project,
@@ -98,6 +99,7 @@ class ProjectController extends Controller
             'totalWeeklyEffort' => $totalWeeklyEffort,
             'remainingApprovedPipeline' => $remainingApprovedPipeline,
             'remainingExpectedEffort' => $remainingExpectedEffort,
+            'weeklyHoursToCover' => $weeklyHoursToCover,
         ]);
     }
 
