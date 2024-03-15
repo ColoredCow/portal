@@ -350,7 +350,7 @@ class ProjectService implements ProjectServiceContract
         $monthlyApprovedHour = $project->monthly_approved_pipeline;
         $totalWeeklyExpectedEffort = $totalDailyExpectedEffort * 5;
         $remainingApprovedPipeline = 0;
-        if(is_int($monthlyApprovedHour) || is_float($monthlyApprovedHour)){
+        if(is_int($monthlyApprovedHour) || is_float($monthlyApprovedHour)) {
             $remainingApprovedPipeline = $monthlyApprovedHour - $totalWeeklyExpectedEffort;
         }
         $currentActualEffort = ProjectTeamMembersEffort::whereIn('project_team_member_id', function ($query) use ($project) {
