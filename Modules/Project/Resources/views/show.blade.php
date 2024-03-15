@@ -129,7 +129,7 @@
                                 <div class="pr-10 project-hour">
                                     <span class="fz-lg-22 text-capitalize">Weekly
                                     </span>
-                                    <span>{{$weeklyHoursToCover}}</span>
+                                    <span>{{round($weeklyHoursToCover,2)}}</span>
                                 </div>
                             </div>
                         </div>
@@ -139,6 +139,7 @@
                     <div class="col-md-5 pl-4 d-flex justify-content-between">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold mb-6 ml-1">Approved Pipeline:</label>
+                            @if ($isApprovedWorkPipelineExist)
                             <span>{{$monthlyApprovedHour}} hrs
                                 @if($monthlyApprovedHour > $weeklyHoursToCover)
                                 <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Approved pipeline is sufficient for this week"><i class="fa fa-info-circle" style="color: green;" aria-hidden="true"></i></span>
@@ -146,7 +147,11 @@
                                 <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Approved pipeline is not sufficient for this week"><i class="fa fa-info-circle" style='color: red' aria-hidden="true"></i></span>
                                 @endif
                             </span>
-
+                            @else
+                                <span class="text-capitalize ml-2 text-danger fz-18 font-weight-normal">
+                                    ERROR <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Formatting issue with effortsheet"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                                </span>
+                            @endif
                         </h4>
                     </div>
                 </div>
