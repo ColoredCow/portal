@@ -33,13 +33,13 @@
 
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-6 pl-4">
+                    <div class="col-md-6 pl-4">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold mb-6 ml-1">Client:</label>
                         </h4>
                         <a href="{{route('client.edit', $project->client->id)}}" class="text-capitalize ml-2 fz-lg-22">{{ $project->client->name }}</a>
                     </div>
-                    <div class="form-group offset-md-1 pl-4 col-md-5">
+                    <div class="offset-md-1 pl-4 col-md-5">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold mb-3">Status:</label>
                         </h4>
@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-6 pl-4">
+                    <div class="col-md-6 pl-4">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold mb-6 ml-1">Effortsheet:</label>
                         </h4>
@@ -58,7 +58,7 @@
                             <span class="ml-2 fz-lg-22">Not Available</span>
                         @endif
                     </div>
-                    <div class="form-group offset-md-1 pl-4 col-md-5">
+                    <div class="offset-md-1 pl-4 col-md-5">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold mt-0 mb-2">Project Type:</label>
                         </h4>
@@ -66,7 +66,7 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-6 pl-4">
+                    <div class="col-md-6 pl-4">
                         @if($project->billing_level)
                             <h4 class="d-inline-block">
                                 <label for="name" class="font-weight-bold mb-6 ml-1">Billing Level:</label>
@@ -74,60 +74,85 @@
                             <span class="text-capitalize ml-2 fz-lg-22">{{ config('project.meta_keys.billing_level.value.' . $project->billing_level . '.label') }}</span>
                         @endif
                     </div>
-                    <div class="form-group offset-md-1 pl-4 col-md-5">
-                        <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold">Monthly Expected Hours:</label>
-                            <span class="text-capitalize ml-2 fz-lg-22 font-weight-normal">{{ $totalExpectedHourInMonth }} Hrs</span>
-                        </h4>
-
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6 pl-4">
+                    <div class="offset-md-1 pl-4 col-md-5">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold">Start Date:</label>
                         </h4>
                         <span class="text-capitalize ml-2 fz-lg-22">{{ optional($project->start_date)->format('d M Y')}}</span>
                     </div>
-                    <div class="form-group offset-md-1 pl-4 col-md-5">
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6 pl-4">
                         <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold">Approved Hours In a Month:
-                                @if ($isApprovedWorkPipelineExist)
-                                    <span class="text-capitalize ml-2 fz-lg-22 font-weight-normal">{{ $project->monthly_approved_pipeline }} hrs</span>
-                                @else
-                                    <span class="text-capitalize ml-2 text-danger fz-18 font-weight-normal">
-                                        ERROR <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Formatting issue with effortsheet"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
-                                    </span>
-                                @endif
-                            </label>
+                            <label for="name" class="font-weight-bold mb-6 ml-1">End Date:</label>
                         </h4>
-
+                        <span class="text-capitalize ml-2 fz-lg-22">{{ optional($project->end_date)->format('d M Y')}}</span>
+                    </div>
+                </div>
+                <div class="form-row d-flex justify-content-between">
+                    <div class="col-md-5 pl-4 d-flex justify-content-between">
+                        <div>
+                            <h4 class="d-inline-block">
+                                <label for="name" class="font-weight-bold mb-6 ml-1">Expected Hours:</label>
+                            </h4>
+                        </div>
+                        <div class="d-flex">
+                            <div class="pr-10 project-hour">
+                                <span class="fz-lg-22 text-capitalize">Monthly
+                                </span>
+                                <span>{{$totalExpectedHourInMonth}}</span>
+                            </div>
+                            <div class="d-flex">
+                                <div class="pr-10 project-hour">
+                                    <span class="fz-lg-22 text-capitalize">Weekly
+                                    </span>
+                                    <span>{{$totalWeeklyEffort}}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-6 pl-4">
-                        <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold mb-6 mr-4 mt-2">End Date:</label>
-                    </h4>
-                        <span class="text-capitalize ml-2 fz-lg-22">{{ optional($project->end_date)->format('d M Y')}}</span>
-                    </div>
-                    <div class="form-group offset-md-1 pl-4 col-md-5 pr-2">
-                        <h4 class="d-inline-block mt-2">
-                            <label for="name" class="font-weight-bold">Approved Hours Left:
-                                <span class="text-capitalize ml-2 fz-lg-22 font-weight-normal">
-                                    {{ $remainingApprovedPipeline}} hrs
-                                    @if($totalWeeklyEffort > $remainingApprovedPipeline)
-                                    <span>{!! file_get_contents(public_path('icons/downward-arrow.svg')) !!}</span>
-                                    @else
-                                    <span>{!! file_get_contents(public_path('icons/upward-arrow.svg')) !!}</span>
-                                    @endif
+                    <div class="col-md-5 pl-4 d-flex justify-content-between">
+                        <div>
+                            <h4 class="d-inline-block">
+                                <label for="name" class="font-weight-bold mb-6 ml-1">Hours To Cover:</label>
+                            </h4>
+                        </div>
+                        <div class="d-flex">
+                            <div class="pr-10 project-hour">
+                                <span class="fz-lg-22 text-capitalize">Monthly
                                 </span>
-                            </label>
+                                <span>{{$remainingExpectedEffort}}</span>
+                            </div>
+                            <div class="d-flex">
+                                <div class="pr-10 project-hour">
+                                    <span class="fz-lg-22 text-capitalize">Weekly
+                                    </span>
+                                    <span>{{round($weeklyHoursToCover,2)}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-5 pl-4 d-flex justify-content-between">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold mb-6 ml-1">Approved Pipeline:</label>
+                            @if ($isApprovedWorkPipelineExist)
+                            <span>{{$monthlyApprovedHour}} hrs
+                                @if($monthlyApprovedHour > $weeklyHoursToCover)
+                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Approved pipeline is sufficient for this week"><i class="fa fa-info-circle" style="color: green;" aria-hidden="true"></i></span>
+                                @else
+                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Approved pipeline is not sufficient for this week"><i class="fa fa-info-circle" style='color: red' aria-hidden="true"></i></span>
+                                @endif
+                            </span>
+                            @else
+                                <span class="text-capitalize ml-2 text-danger fz-18 font-weight-normal">
+                                    ERROR <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Formatting issue with effortsheet"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                                </span>
+                            @endif
                         </h4>
-                        <br>
-                        <span class="fz-14">
-                            (<b>Note:</b> Expected weekly hour for this project is {{ $totalWeeklyEffort}}. Here, red <span>{!! file_get_contents(public_path('icons/downward-arrow.svg')) !!}</span>  indicates project approved hours for a week is less than expected. Green <span>{!! file_get_contents(public_path('icons/upward-arrow.svg')) !!}</span> indicates approved hours is greater than or equal to expected.)
-                        </span>
                     </div>
                 </div>
                 <div id= "project_detail_form" class="collapse show">
@@ -143,7 +168,7 @@
                                     </div>
                                  </div>
                             </div>
-                @endif
+                        @endif
                 <br>
                 <div class="form-row ">
                     <div class="form-group col-lg-12 pl-4">
