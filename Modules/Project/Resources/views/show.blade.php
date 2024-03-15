@@ -138,7 +138,16 @@
                     <div class="col-md-5 pl-4 d-flex justify-content-between">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold mb-6 ml-1">Approved Pipeline:</label>
-                            <span>{{$monthlyApprovedHour}} hrs</span>
+                            <span>{{$monthlyApprovedHour}} hrs
+                                @if($monthlyApprovedHour > $weeklyHoursToCover)
+                                {!! file_get_contents(public_path('icons/upward-arrow.svg')) !!}
+                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Approved pipeline is sufficient for this week"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                                @else
+                                {!! file_get_contents(public_path('icons/downward-arrow.svg')) !!}
+                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Approved pipeline is not sufficient for this week"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                                @endif
+                            </span>
+
                         </h4>
                     </div>
                 </div>
