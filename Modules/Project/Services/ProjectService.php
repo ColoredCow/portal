@@ -349,22 +349,21 @@ class ProjectService implements ProjectServiceContract
         $totalExpectedHourInMonth = $totalDailyExpectedEffort * $workingDaysInMonth;
         $monthlyApprovedHour = $project->monthly_approved_pipeline;
         $totalWeeklyExpectedEffort = $totalDailyExpectedEffort * 5;
-        $remainingApprovedPipeline = $monthlyApprovedHour - $totalWeeklyExpectedEffort;
+        $remainingApprovedPipeline = 0;
+        if (is_int($monthlyApprovedHour) || is_float($monthlyApprovedHour)) {
+            $remainingApprovedPipeline = $monthlyApprovedHour - $totalWeeklyExpectedEffort;
+        }
         $currentActualEffort = ProjectTeamMembersEffort::whereIn('project_team_member_id', function ($query) use ($project) {
             $query->select('id')
-                  ->from('project_team_members')
-                  ->where('project_id', $project->id)
-                  ->whereNull('ended_on');
+                ->from('project_team_members')
+                ->where('project_id', $project->id)
+                ->whereNull('ended_on');
         })
         ->whereDate('created_at', now()->toDateString())
         ->sum('total_effort_in_effortsheet');
-
         $remainingExpectedEffort = $totalExpectedHourInMonth - $currentActualEffort;
-
         $currentDate = now(config('constants.timezone.indian'));
-
         $daysTillToday = count($this->getProjectWorkingDays($project->client->month_start_date, $currentDate));
-
         $remainingDays = $workingDaysInMonth - $daysTillToday;
         $daysInAWeek = 5;
         $weeklyHoursToCover = $remainingExpectedEffort / $remainingDays * $daysInAWeek;
