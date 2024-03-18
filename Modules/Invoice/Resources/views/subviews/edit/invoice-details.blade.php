@@ -366,7 +366,7 @@
                     conversionRate = filtered_number_list[index]
                     switch (bank) {
                         case bank_message_patterns.axis.key:
-                                this.conversionRate = conversionRate / this.amountPaid;
+                                this.conversionRate = (conversionRate / this.amountPaid).toFixed(2);
                                 this.conversionRateDiff = Math.abs(this.currentExchangeRate - this.conversionRate).toFixed(2)
                             break;
         
