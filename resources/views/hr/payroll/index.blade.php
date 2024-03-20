@@ -41,8 +41,9 @@
                             $commencementDate = optional($employeeCurrentSalaryObject)->commencement_date;
                             $diff = now()->diff($commencementDate);
                             $difference = $diff->format('%m months and %d days');
+                            $diffInDays = now()->diffInDays($commencementDate)
                         @endphp
-                        {{ optional($commencementDate)->format('Y-m-d') }} {{ $diff->d == 0 ? '(0 days)' : '( ' . $difference . ' )' }}
+                        {{ optional($commencementDate)->format('Y-m-d') }} {{ $diffInDays == 0 ? '(0 days)' : '( ' . $difference . ' )' }}
                     </td>
                 </tr>
             @endforeach

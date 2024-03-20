@@ -114,7 +114,7 @@ class EmployeeSalary extends Model
         return $this->employee_esi + $this->employee_epf + $this->food_allowance;
     }
 
-    public function gteNetPayAttribute()
+    public function getNetPayAttribute()
     {
         return $this->total_salary - $this->total_deduction;
     }
