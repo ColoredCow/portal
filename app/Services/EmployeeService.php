@@ -25,8 +25,8 @@ class EmployeeService
     public function getEmployeeListWithLatestPayroll($filters = [])
     {
         $employees = Employee::whereHas('user', function ($query) {
-                $query->whereNull('deleted_at');
-            })->applyFilters($filters)->select('employees.*')
+            $query->whereNull('deleted_at');
+        })->applyFilters($filters)->select('employees.*')
             ->selectSub(function ($query) {
                 $query->select('commencement_date')
                     ->from('employee_salaries')
