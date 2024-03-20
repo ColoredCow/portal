@@ -45,6 +45,12 @@
             </div>
         @endcan
 
+        @if(Module::checkStatus('HR') && auth()->user()->can('hr_recruitment_jobs.view'))
+        <div class="mr-5 mr-md-3 pr-md-0 pr-4 mb-4 min-w-389">
+            <user-dashboard-hiring />
+        </div>
+        @endif
+
         @can('projects.view')
         <div class="pr-5 mb-4 min-w-389">
             <user-dashboard-projects />

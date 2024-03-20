@@ -84,6 +84,10 @@ Vue.component(
 	require("./components/Dashboard/UserDashboardLibrary.vue").default
 );
 Vue.component(
+	"user-dashboard-hiring",
+	require("./components/Dashboard/UserDashboardHiringActivity.vue").default
+);
+Vue.component(
 	"user-dashboard-infrastructure",
 	require("./components/Dashboard/UserDashboardInfrastructure.vue").default
 );
