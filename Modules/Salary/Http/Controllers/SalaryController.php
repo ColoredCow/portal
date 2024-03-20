@@ -42,13 +42,29 @@ class SalaryController extends Controller
         ]);
     }
 
-    public function storeSalary(Request $request, Employee $employee)
+    public function storeOrUpdateSalary(Request $request, Employee $employee)
     {
-        EmployeeSalary::updateOrCreate(
-            ['employee_id' => $employee->id],
-            ['monthly_gross_salary' => $request->grossSalary]
-        );
+        $currentSalaryObject = $employee->getCurrentSalary();
+
+        if (!$currentSalaryObject || $request->submitType == 'Save as Increment') {
+            EmployeeSalary::create([
+                'employee_id' => $employee->id,
+                'monthly_gross_salary' => $request->grossSalary,
+                'commencement_date' => $request->commencementDate
+            ]);
+
+            return redirect()->back()->with('success', 'Salary added successfully!');
+        }
+
+        if ($currentSalaryObject) {
+            $currentSalaryObject->monthly_gross_salary = $request->grossSalary;
+            $currentSalaryObject->commencement_date = $request->commencementDate;
+            $currentSalaryObject->save();
+        }
 
         return redirect()->back()->with('success', 'Gross Salary saved successfully!');
     }
+
+    
+    
 }

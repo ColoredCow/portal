@@ -27,11 +27,6 @@ class Employee extends Model
         return $this->belongsTo(HrJobDesignation::class, 'designation_id');
     }
 
-    public function hrJobDomain()
-    {
-        return $this->belongsTo(HrJobDomain::class, 'domain_id');
-    }
-
     public function scopeStatus($query, $status)
     {
         if ($status == 'current') {
@@ -97,6 +92,32 @@ class Employee extends Model
     {
         return $this->hasMany(EmployeeSalary::class);
     }
+    
+    public function getCurrentSalary()
+    {
+        return $this->employeeSalaries()->latest('commencement_date')->first();
+    }
+    
+    public function getPreviousSalary()
+    {
+        return $this->employeeSalaries()->latest('commencement_date')->skip(1)->first();
+    }
+
+    public function getLatestSalaryPercentageIncrementAttribute()
+    {
+        $currentCtc = optional($this->getCurrentSalary())->ctc_aggregated ?? 0;
+        $previousCtc = optional($this->getPreviousSalary())->ctc_aggregated ?? 0;
+
+        if ($currentCtc == 0 || $previousCtc == 0) {
+            return 0;
+        }
+
+        $percentageIncrementInFloat = (($currentCtc - $previousCtc) / $previousCtc) * 100;
+
+        return round($percentageIncrementInFloat, 2);
+    }
+
+    
 
     public function getFtes($startDate, $endDate)
     {
