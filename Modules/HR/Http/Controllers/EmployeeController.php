@@ -36,7 +36,7 @@ class EmployeeController extends Controller
 
         return view('hr.employees.index', $this->service->index($filters));
     }
-    
+
     public function listPayroll(Request $request)
     {
         $this->authorize('list', Employee::class);
@@ -133,6 +133,11 @@ class EmployeeController extends Controller
             'manager_id' => $request->manager_id,
         ]);
 
+        return redirect()->back();
+    }
+
+    public function downloadPayRoll (){
+        // dd('hello');
         return redirect()->back();
     }
 }
