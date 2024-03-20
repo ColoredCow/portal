@@ -21,18 +21,21 @@ class EmployeeService
             'filters' => $filters,
         ];
     }
-    
+
     public function getEmployeeListWithLatestPayroll($filters = [])
     {
-        $employees = Employee::applyFilters($filters)->select('employees.*')
+        $employees = Employee::whereHas('user', function ($query) {
+            $query->whereNull('deleted_at');
+        })->applyFilters($filters)->select('employees.*')
             ->selectSub(function ($query) {
                 $query->select('commencement_date')
                     ->from('employee_salaries')
                     ->whereColumn('employee_id', 'employees.id')
-                    ->orderByDesc('commencement_date')
+                    ->orderBy('commencement_date', 'desc')
                     ->limit(1);
             }, 'latest_commencement_date')
-            ->orderBy('latest_commencement_date', 'asc')
+            ->orderBy('latest_commencement_date')
+            ->orderBy('name')
             ->get();
 
         return [

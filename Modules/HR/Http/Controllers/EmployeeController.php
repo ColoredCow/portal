@@ -44,6 +44,7 @@ class EmployeeController extends Controller
         $this->authorize('list', Employee::class);
         $filters = $request->all() ?: $this->service->defaultFilters();
         $data = $this->service->getEmployeeListWithLatestPayroll($filters);
+
         return view('hr.payroll.index', $data);
     }
 
@@ -69,7 +70,7 @@ class EmployeeController extends Controller
         return view('hr.employees.basic-details', ['domainIndex' => $domainIndex, 'employee' => $employee, 'domains' => $domains, 'designations' => $designations]);
     }
 
-    public function showFTEdata(request $request)
+    public function showFTEdata(Request $request)
     {
         $domainId = $request->domain_id;
         $employees = Employee::where('domain_id', $domainId)->get();

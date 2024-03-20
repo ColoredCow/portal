@@ -37,7 +37,7 @@ class SalaryController extends Controller
         $salaryConfigs = SalaryConfiguration::formatAll();
 
         return view('salary::employee.index')->with([
-            'employee'=> $employee,
+            'employee' => $employee,
             'salaryConfigs' => $salaryConfigs,
         ]);
     }
@@ -46,25 +46,24 @@ class SalaryController extends Controller
     {
         $currentSalaryObject = $employee->getCurrentSalary();
 
-        if (!$currentSalaryObject || $request->submitType == 'Save as Increment') {
+        if (! $currentSalaryObject || $request->submitType == 'Save as Increment') {
             EmployeeSalary::create([
                 'employee_id' => $employee->id,
                 'monthly_gross_salary' => $request->grossSalary,
-                'commencement_date' => $request->commencementDate
+                'commencement_date' => $request->commencementDate,
             ]);
 
             return redirect()->back()->with('success', 'Salary added successfully!');
         }
 
-        if ($currentSalaryObject) {
-            $currentSalaryObject->monthly_gross_salary = $request->grossSalary;
-            $currentSalaryObject->commencement_date = $request->commencementDate;
-            $currentSalaryObject->save();
+        if ($currentSalaryObject == null) {
+            return redirect()->back();
         }
+
+        $currentSalaryObject->monthly_gross_salary = $request->grossSalary;
+        $currentSalaryObject->commencement_date = $request->commencementDate;
+        $currentSalaryObject->save();
 
         return redirect()->back()->with('success', 'Gross Salary saved successfully!');
     }
-
-    
-    
 }
