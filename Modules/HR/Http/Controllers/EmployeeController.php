@@ -139,15 +139,9 @@ class EmployeeController extends Controller
     }
 
     public function downloadPayRoll() {
-        // dd('hello'); // Debugging code, commented out
         $endDate = date('Y-m-d');
-        $filename = 'FTE_Report-' . $endDate . '.xlsx';
-
-        // Download the Excel file
+        $filename = 'PayRoll Report-' . $endDate . '.xlsx';
         return Excel::download(new EmployeePayrollExport(), $filename);
-
-        // If you want to redirect after downloading, you can do it here
-        // return redirect()->route('your_route_name');
     }
 
 }

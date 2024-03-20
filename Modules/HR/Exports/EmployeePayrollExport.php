@@ -8,6 +8,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Carbon\Carbon;
 
 class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, WithTitle, WithStyles
 {
@@ -26,13 +27,10 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
     public function headings(): array
     {
         return [
-                'Team Member',
-                'Overall FTE',
-                'Project Name',
-                'Team Member Project FTE',
-                'Committed Hours',
-                'Booked Hours',
-            ];
+            ['Coloredcow Consulting Private Limited'],
+            [Carbon::now()->format('F Y'), "Paid", Carbon::today()->toDateString()],
+            ["Employee Name", "Employee ID","Designation", "GROSS", "Basic Salary", "HRA", "Transport allowance", "Other Allowance","Food Allowance", "Total Salary", "Total No of Days", "Paid Days", "Employee ESI 0.75%", "Employee EPF 12 %", "TDS","Advance Recovery", "Food Deduction","Total Deduction", "Advance Salary", " Net Pay", " Employer ESI 3.25%", " EPF EMPLOYER SHARE 12%", " Administration charges FIXED 0.5%( BASIC SALARY)", " EDLI Charges FIXED 0.5%(MAXIMUM SALARY LIMIT 15000)", " CTC", " CTC Annual", "Health Insurance", "CTC Aggreed"]
+        ];
     }
 
     public function title(): string
