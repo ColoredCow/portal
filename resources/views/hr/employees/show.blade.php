@@ -13,12 +13,12 @@
                     <div class="mt-2"><h1>{{$employee->name}}</h1>
                       <span class="ml-1"><a href={{ route('employees.employeeWorkHistory', $employee->id) }}>Work History</a></span>
                     </div>
-                    @if ($employee->designation_id && $employee->domain_id != null)
+                    @if ($employee->designation_id)
                         <div class="row ml-1">
                             <span class="font-weight-bold">Designation:</span>&nbsp;<p>{{$employee->hrJobDesignation->designation}}</p>
                         </div>
                         <div class="row ml-1">
-                            <span class="font-weight-bold">Domain:</span>&nbsp;<p>{{$employee->hrJobDomain->domain}}</p>
+                            <span class="font-weight-bold">Domain:</span>&nbsp;<p>{{$employee->hrJobDesignation->hrJobDesignationDomain->domain}}</p>
                         </div>
                     @endif
                 </div>
