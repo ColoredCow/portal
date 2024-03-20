@@ -92,12 +92,12 @@ class Employee extends Model
     {
         return $this->hasMany(EmployeeSalary::class);
     }
-    
+
     public function getCurrentSalary()
     {
         return $this->employeeSalaries()->latest('commencement_date')->first();
     }
-    
+
     public function getPreviousSalary()
     {
         return $this->employeeSalaries()->latest('commencement_date')->skip(1)->first();
@@ -116,8 +116,6 @@ class Employee extends Model
 
         return round($percentageIncrementInFloat, 2);
     }
-
-    
 
     public function getFtes($startDate, $endDate)
     {
