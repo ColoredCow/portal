@@ -1,21 +1,26 @@
 <template>
-    <span>
-        <div v-for="(book, index) in this.books" :key="index">
-            <div class="row " >
-                <div class="col-2">
-                    <div style="width: 30px;">
-                        <img class="w-full" :src="book.thumbnail" alt="">
-                    </div>
-                </div>
-                <div class="col-9 text-left d-flex align-items-center">
-                    <div class="w-250">
-                        <a :href="'/knowledgecafe/library/books/'+ book.id ">{{ book.title }}</a>
-                    </div>
-                </div>
-            </div>
-            <hr class="mt-1">
+    <div class="px-2 pt-2">
+        <div class="row text-left d-flex justify-content-between" >
+            <div class="text-secondary"> Total received applications </div>
+            <h4>{{ this.hiringData.total_received_applications }}</h4>
         </div>
-    </span>
+        <hr class="mt-1">
+        <div class="row text-left d-flex justify-content-between mt-2" >
+            <div class="text-secondary"> Total rejected applications </div>
+            <h4>{{ this.hiringData.total_rejected_applications }}</h4>
+        </div>
+        <hr class="mt-1">
+        <div class="row text-left d-flex justify-content-between mt-2" >
+            <div class="text-secondary"> Total introductory call applications </div>
+            <h4>{{ this.hiringData.total_introductory_call_applications }}</h4>
+        </div>
+        <hr class="mt-1">
+        <div class="row text-left d-flex justify-content-between mt-2" >
+            <div class="text-secondary"> Total new applications </div>
+            <h4>{{ this.hiringData.total_new_applications }}</h4>
+        </div>
+        <hr class="mt-1">
+    </div>
 </template>
 
 <script>
@@ -23,25 +28,20 @@ export default {
 	props: [],
 	data() {
 		return {
-			books:[]
+			hiringData:[]
 		};
 	},
 
 	methods: {
-		async getReadBooks() {
-			let response = await axios.get("/user/read-books");
-			this.books =  response.data;
+		async getHiringData() {
+			let response = await axios.post("/dashboart/hiring-activity", {"filter" : "last-month"});
+			this.hiringData =  response.data;
 
 		}
 	},
 
 	mounted() {
-		this.getReadBooks();
+		this.getHiringData();
 	}
-
-
-
 };
-
-
 </script>
