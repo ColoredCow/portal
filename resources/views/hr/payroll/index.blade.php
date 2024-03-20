@@ -37,7 +37,12 @@
                         {{ $employee->latest_salary_percentage_increment }} %
                     </td>
                     <td>
-                        {{ optional(optional($employeeCurrentSalaryObject)->commencement_date)->format('Y-m-d') }}
+                        @php
+                            $commencementDate = optional($employeeCurrentSalaryObject)->commencement_date;
+                            $diff = now()->diff($commencementDate);
+                            $difference = $diff->format('%m months and %d days');
+                        @endphp
+                        {{ optional($commencementDate)->format('Y-m-d') }} {{ $diff->d == 0 ? '(0 days)' : '( ' . $difference . ' )' }}
                     </td>
                 </tr>
             @endforeach
