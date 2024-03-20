@@ -36,6 +36,14 @@ class EmployeeController extends Controller
 
         return view('hr.employees.index', $this->service->index($filters));
     }
+    
+    public function listPayroll(Request $request)
+    {
+        $this->authorize('list', Employee::class);
+        $filters = $request->all() ?: $this->service->defaultFilters();
+        $data = $this->service->index($filters);
+        return view('hr.payroll.index', $data);
+    }
 
     public function show(Employee $employee)
     {
