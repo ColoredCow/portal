@@ -13,6 +13,8 @@ use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\IndividualAssessment;
 use Modules\HR\Entities\Job;
 use Modules\Project\Entities\ProjectTeamMember;
+use Maatwebsite\Excel\Facades\Excel;
+use Modules\HR\Exports\EmployeePayrollExport;
 
 class EmployeeController extends Controller
 {
@@ -136,8 +138,16 @@ class EmployeeController extends Controller
         return redirect()->back();
     }
 
-    public function downloadPayRoll (){
-        // dd('hello');
-        return redirect()->back();
+    public function downloadPayRoll() {
+        // dd('hello'); // Debugging code, commented out
+        $endDate = date('Y-m-d');
+        $filename = 'FTE_Report-' . $endDate . '.xlsx';
+
+        // Download the Excel file
+        return Excel::download(new EmployeePayrollExport(), $filename);
+
+        // If you want to redirect after downloading, you can do it here
+        // return redirect()->route('your_route_name');
     }
+
 }
