@@ -21,7 +21,7 @@ class EmployeeService
             'filters' => $filters,
         ];
     }
-    
+
     public function getEmployeeListWithLatestPayroll($filters = [])
     {
         $employees = Employee::applyFilters($filters)->select('employees.*')
