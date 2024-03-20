@@ -21,6 +21,25 @@ class EmployeeService
             'filters' => $filters,
         ];
     }
+    
+    public function getEmployeeListWithLatestPayroll($filters = [])
+    {
+        $employees = Employee::applyFilters($filters)->select('employees.*')
+            ->selectSub(function ($query) {
+                $query->select('commencement_date')
+                    ->from('employee_salaries')
+                    ->whereColumn('employee_id', 'employees.id')
+                    ->orderByDesc('commencement_date')
+                    ->limit(1);
+            }, 'latest_commencement_date')
+            ->orderBy('latest_commencement_date', 'asc')
+            ->get();
+
+        return [
+            'employees' => $employees,
+            'filters' => $filters,
+        ];
+    }
 
     public function defaultFilters()
     {

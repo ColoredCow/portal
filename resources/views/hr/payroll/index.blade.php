@@ -23,7 +23,7 @@
                         $employeePreviousSalaryObject = $employee->getPreviousSalary();
                     @endphp
                     <td>
-                        <a href="{{ route('employees.show', $employee->id) }}">
+                        <a href="{{ route('salary.employee', $employee->id) }}">
                             {{ $employee->name }}
                         </a>
                     </td>

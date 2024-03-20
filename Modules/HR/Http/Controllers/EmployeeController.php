@@ -41,7 +41,7 @@ class EmployeeController extends Controller
     {
         $this->authorize('list', Employee::class);
         $filters = $request->all() ?: $this->service->defaultFilters();
-        $data = $this->service->index($filters);
+        $data = $this->service->getEmployeeListWithLatestPayroll($filters);
         return view('hr.payroll.index', $data);
     }
 

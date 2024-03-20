@@ -100,12 +100,12 @@ class Employee extends Model
     
     public function getCurrentSalary()
     {
-        return $this->employeeSalaries()->orderBy('id', 'desc')->first();
+        return $this->employeeSalaries()->latest('commencement_date')->first();
     }
     
     public function getPreviousSalary()
     {
-        return $this->employeeSalaries()->orderBy('id', 'desc')->skip(1)->first();
+        return $this->employeeSalaries()->latest('commencement_date')->skip(1)->first();
     }
 
     public function getLatestSalaryPercentageIncrementAttribute()
