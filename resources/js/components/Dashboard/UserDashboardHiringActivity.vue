@@ -1,14 +1,14 @@
 <template>
   <div class="card text-center card text-center w-xl-389 h-xl-416">
     <div class="card-header p-1">
-	    <h3><a href="/hr/recruitment/job">Job Applications</a></h3>
+	    <h3><a href="/hr/recruitment/job">Hiring Activity</a></h3>
     </div>
     <div class="card-header">
       <ul class="nav nav-tabs card-header-tabs flex-nowrap">
         <li class="nav-item">
           <a
             id="last-week"
-            class="nav-link active c-pointer"
+            class="nav-link c-pointer active"
             @click="setActiveTile('last-week')"
             >Last week</a
           >
@@ -34,13 +34,13 @@
     </div>
     <div class="card-body pt-3 h-318 w-md-389 w-389 overflow-y-scroll">
       <div v-show="this.activeTile == 'last-week'">
-        <user-dashboard-wishlist-books />
+        <user-hiring-last-week />
       </div>
       <span v-show="this.activeTile == 'last-month'">
-        <user-dashboard-read-books />
+        <user-hiring-last-month />
       </span>
       <span v-show="this.activeTile == 'last-quarter'">
-        COMING SOON
+        <user-hiring-last-quarter />
       </span>
     </div>
   </div>
@@ -51,24 +51,18 @@ export default {
 	props: [],
 	data() {
 		return {
-			activeTile: "wishlist",
+			activeTile: "last-week",
 		};
 	},
 
 	methods: {
-		async getReadBooks() {
-			let response = await axios.get("/user/read-books");
-			this.books = response.data;
-		},
 		setActiveTile(tile) {
 			this.activeTile = tile;
-			document.querySelector(".active").classList.remove("active");
+			document.querySelector("#last-week").classList.remove("active");
+			document.querySelector("#last-month").classList.remove("active");
+			document.querySelector("#last-quarter").classList.remove("active");
 			document.querySelector(`#${tile}`).classList.add("active");
 		},
-	},
-
-	mounted() {
-		this.getReadBooks();
 	},
 };
 </script>
