@@ -44,6 +44,19 @@ class EmployeeService
         ];
     }
 
+    public function getEmployeeListForExport()
+    {
+        $employees = Employee::with('user')->whereHas('user', function ($query) {
+            $query->whereNull('deleted_at');
+        })
+            ->orderBy('name')
+            ->get();
+
+        return [
+            'employees' => $employees,
+        ];
+    }
+
     public function defaultFilters()
     {
         return [
