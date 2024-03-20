@@ -138,10 +138,10 @@ class EmployeeController extends Controller
         return redirect()->back();
     }
 
-    public function downloadPayRoll() {
+    public function downloadPayRoll()
+    {
         $endDate = date('Y-m-d');
         $filename = 'PayRoll Report-' . $endDate . '.xlsx';
         return Excel::download(new EmployeePayrollExport(), $filename);
     }
-
 }
