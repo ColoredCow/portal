@@ -59,7 +59,7 @@ class SalaryController extends Controller
         if ($currentSalaryObject == null) {
             return redirect()->back();
         }
-        
+
         $currentSalaryObject->monthly_gross_salary = $request->grossSalary;
         $currentSalaryObject->commencement_date = $request->commencementDate;
         $currentSalaryObject->save();
