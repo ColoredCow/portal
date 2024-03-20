@@ -13,6 +13,7 @@
                 @php
                     $params = array_merge(['staff_type' => 'Employee'], ['status' => 'current']);
                 @endphp
+                    <a class="dropdown-item" href="{{ route('payroll', ['staff_type' => 'Employee']) }}">Payroll</a>
                     <a class="dropdown-item" href="{{ route('employees',$params) }}">Working Staff</a>
                 @endcan
                 @can('hr_job_requisition.view')

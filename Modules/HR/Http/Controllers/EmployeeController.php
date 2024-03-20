@@ -37,6 +37,15 @@ class EmployeeController extends Controller
         return view('hr.employees.index', $this->service->index($filters));
     }
 
+    public function listPayroll(Request $request)
+    {
+        $this->authorize('list', Employee::class);
+        $filters = $request->all() ?: $this->service->defaultFilters();
+        $data = $this->service->getEmployeeListWithLatestPayroll($filters);
+
+        return view('hr.payroll.index', $data);
+    }
+
     public function show(Employee $employee)
     {
         $user = $employee->user()->withTrashed()->first();
@@ -59,7 +68,7 @@ class EmployeeController extends Controller
         return view('hr.employees.basic-details', ['domainIndex' => $domainIndex, 'employee' => $employee, 'domains' => $domains, 'designations' => $designations]);
     }
 
-    public function showFTEdata(request $request)
+    public function showFTEdata(Request $request)
     {
         $domainId = $request->domain_id;
         $employees = Employee::where('domain_id', $domainId)->get();
