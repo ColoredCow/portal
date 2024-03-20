@@ -68,13 +68,13 @@
                 <label class="font-weight-bold" for="">Designation:</label>
                 <span>{{ $user->employee->designation }}</span>
                 @foreach ($designations as $designation )
-                    <span>{{ $user->employee->designation_id == $designation['id'] ? $designation['designation'] : "" }}</span>
+                    <span>{{ $user->employee->designation_id && $user->employee->designation_id == $designation['id'] ? $designation['designation'] : "" }}</span>
                 @endforeach
             </div>
             <div class="form-group">
                 <label class="font-weight-bold" for="">Domain:</label>
                 @foreach ($domains as $domain )
-                    <span>{{ $user->employee->hrJobDesignation->domain_id == $domain['id'] ? $domain['domain'] : "" }}</span>
+                    <span>{{ $user->employee->designation_id && $user->employee->hrJobDesignation->domain_id == $domain['id'] ? $domain['domain'] : "" }}</span>
                 @endforeach
             </div>
             <div class="form-group">
