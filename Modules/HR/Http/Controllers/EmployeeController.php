@@ -6,15 +6,15 @@ use App\Services\EmployeeService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use Modules\HR\Entities\Assessment;
 use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\IndividualAssessment;
 use Modules\HR\Entities\Job;
-use Modules\Project\Entities\ProjectTeamMember;
-use Maatwebsite\Excel\Facades\Excel;
 use Modules\HR\Exports\EmployeePayrollExport;
+use Modules\Project\Entities\ProjectTeamMember;
 
 class EmployeeController extends Controller
 {
@@ -141,8 +141,10 @@ class EmployeeController extends Controller
 
     public function downloadPayRoll()
     {
-        $endDate = date('Y-m-d');
-        $filename = 'PayRoll Report-' . $endDate . '.xlsx';
-        return Excel::download(new EmployeePayrollExport(), $filename);
+        $employees = $this->service->getEmployeeListForExport();
+        $today = date('Y-m-d');
+        $filename = 'PayRoll Report-' . $today . '.xlsx';
+
+        return Excel::download(new EmployeePayrollExport($employees['employees']), $filename);
     }
 }
