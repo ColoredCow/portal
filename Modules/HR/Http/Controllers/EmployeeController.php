@@ -13,6 +13,8 @@ use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\IndividualAssessment;
 use Modules\HR\Entities\Job;
 use Modules\Project\Entities\ProjectTeamMember;
+use Maatwebsite\Excel\Facades\Excel;
+use Modules\HR\Exports\EmployeePayrollExport;
 
 class EmployeeController extends Controller
 {
@@ -135,5 +137,12 @@ class EmployeeController extends Controller
         ]);
 
         return redirect()->back();
+    }
+
+    public function downloadPayRoll()
+    {
+        $endDate = date('Y-m-d');
+        $filename = 'PayRoll Report-' . $endDate . '.xlsx';
+        return Excel::download(new EmployeePayrollExport(), $filename);
     }
 }

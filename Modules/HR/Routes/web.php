@@ -123,6 +123,8 @@ Route::middleware('auth')->group(function () {
                 'show' => 'employees.show',
             ]);
         Route::get('payroll', 'EmployeeController@listPayroll')->name('payroll');
+        Route::post('payroll-download', 'EmployeeController@downloadPayroll')->name('payroll-download');
+
         Route::get('employee-review-details/{employee}', 'EmployeeController@reviewDetails')->name('employees.review-details');
         Route::post('employee-review-details', 'EmployeeController@createIndividualAssessment')->name('review.updateStatus');
         Route::get('/workhistory/{employee}/', 'EmployeeController@employeeWorkHistory')->name('employees.employeeWorkHistory');
