@@ -18,6 +18,7 @@ use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectResourceRequirement;
 use Modules\Project\Entities\ProjectTeamMember;
+use Modules\Project\Entities\ProjectTeamMembersEffort;
 use Modules\Project\Exports\ProjectFTEExport;
 use Modules\User\Entities\User;
 
@@ -321,6 +322,59 @@ class ProjectService implements ProjectServiceContract
         return [
             'totalCount' => $totalAdditionalResourceRequired,
             'data' => $data,
+        ];
+    }
+
+    public function getProjectWorkingDays($startDate, $endDate)
+    {
+        $period = CarbonPeriod::create($startDate, $endDate);
+        $dates = [];
+        $weekend = ['Saturday', 'Sunday'];
+        foreach ($period as $date) {
+            if (! in_array($date->format('l'), $weekend)) {
+                $dates[] = $date->format('Y-m-d');
+            }
+        }
+
+        return $dates;
+    }
+
+    public function getProjectApprovedPipelineHour($project)
+    {
+        $totalDailyExpectedEffort = ProjectTeamMember::where('project_id', $project->id)
+        ->whereNull('ended_on')
+        ->get()
+        ->sum('daily_expected_effort');
+        $workingDaysInMonth = $this->getWorkingDays($project);
+        $totalExpectedHourInMonth = $totalDailyExpectedEffort * $workingDaysInMonth;
+        $monthlyApprovedHour = $project->monthly_approved_pipeline;
+        $totalWeeklyExpectedEffort = $totalDailyExpectedEffort * 5;
+        $remainingApprovedPipeline = 0;
+        if (is_int($monthlyApprovedHour) || is_float($monthlyApprovedHour)) {
+            $remainingApprovedPipeline = $monthlyApprovedHour - $totalWeeklyExpectedEffort;
+        }
+        $currentActualEffort = ProjectTeamMembersEffort::whereIn('project_team_member_id', function ($query) use ($project) {
+            $query->select('id')
+                ->from('project_team_members')
+                ->where('project_id', $project->id)
+                ->whereNull('ended_on');
+        })
+        ->whereDate('created_at', now()->toDateString())
+        ->sum('total_effort_in_effortsheet');
+        $remainingExpectedEffort = $totalExpectedHourInMonth - $currentActualEffort;
+        $currentDate = now(config('constants.timezone.indian'));
+        $daysTillToday = count($this->getProjectWorkingDays($project->client->month_start_date, $currentDate));
+        $remainingDays = $workingDaysInMonth - $daysTillToday;
+        $daysInAWeek = 5;
+        $weeklyHoursToCover = $remainingExpectedEffort / $remainingDays * $daysInAWeek;
+
+        return [
+            'monthlyApprovedHour' => $monthlyApprovedHour,
+            'totalExpectedHourInMonth' => $totalExpectedHourInMonth,
+            'totalWeeklyEffort' => $totalWeeklyExpectedEffort,
+            'remainingApprovedPipeline' => $remainingApprovedPipeline,
+            'remainingExpectedEffort' => $remainingExpectedEffort,
+            'weeklyHoursToCover' => $weeklyHoursToCover,
         ];
     }
 

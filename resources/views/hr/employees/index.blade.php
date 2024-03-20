@@ -30,19 +30,26 @@
             <thead class="thead-dark">
                 <tr class="sticky-top">
                     <th>Name</th>
-                    <th>Joined on</th>
                     <th>Active Projects Count</th>
-                    <th>Current FTE</th>
-                    <th>AMC FTE</th>
                     <th>
                         Overall FTE
-                        <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Billable FTE | Non Billable FTE">
+                        <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Total FTE for the current month">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        </span>
+                    </th>
+                    <th>
+                        Billable | Non Billable
+                        <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="In Hours">
                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                         </span>
                     </th>
                 </tr>
                 @foreach ($employees as $employee)
                     <tr>
+                        @php
+                            $user = $employee->user()->withTrashed()->first();
+                            $totalFTE = $user->ftes['main'] + $user->ftes['amc']
+                        @endphp
                         <td>
                             <a href="{{ route('employees.show', $employee->id) }}">
                                 @if ($employee->overall_status === 'pending' && $filters['status'] == 'current')
@@ -59,16 +66,6 @@
                                 @endif
                             </a>
                         </td>
-
-                        <td>
-                            @if ($employee->joined_on)
-                                <span>{{ $employee->joined_on->format('d M, Y') }}</span>
-                                <span style="font-size: 10px;">&nbsp;&#9679;&nbsp;</span>
-                                <span>{{ $employee->employmentDuration }}</span>
-                            @else
-                                -
-                            @endif
-                        </td>
                         <td>
                             @if ($employee->user == null)
                                 0
@@ -76,35 +73,17 @@
                                 {{ $employee->active_project_count }}
                             @endif
                         </td>
-                        <td>
-                            @if ($employee->user == null)
-                                <span class="text-danger font-weight-bold">
-                                    {{ $employee->user ? $employee->user->ftes['main'] : 'NA' }}
-                                </span>
-                            @elseif ($employee->user->ftes['main'] > 1 && $employee->domain_id != null)
-                                <a class="text-success font-weight-bold"
-                                    href={{ route('employees.alert', ['domain_id' => $employee->domain_id]) }}
-                                    style="text-decoration: none;"
-                                >
-                                    {{ $employee->user->ftes['main'] }} &nbsp;&nbsp;&nbsp;
-                                    <span class="text-danger"><i class="fa fa-warning fa-lg"></i></span>
-                                </a>
-                            @elseif ($employee->user->ftes['main'] >= 1)
-                                <span class="text-success font-weight-bold">{{ $employee->user->ftes['main'] }}</span>
-                            @else
-                                <span
-                                    class="text-danger font-weight-bold">{{ $employee->user ? $employee->user->ftes['main'] : 'NA' }}</span>
-                            @endif
+                        <td class={{ $totalFTE > 1 ? 'text-success' : 'text-danger' }}>
+                            {{ $totalFTE }}
                         </td>
                         <td>
-                            <span
-                                class="{{ $employee->user ? ($employee->user->ftes['amc'] > 1 ? 'text-success' : 'text-danger') : 'text-secondary' }} font-weight-bold">{{ $employee->user ? $employee->user->ftes['amc'] : 'NA' }}</span>
-                        </td>
-                        <td>
-                            @php
-                                $fte = $employee->user()->withTrashed()->first()->total_fte;
-                            @endphp
-                            {{ $fte['billable'] }} | {{ $fte['non-billable'] }}
+                            <span class="text-success">
+                                {{ $user->total_hours['billable'] }}
+                            </span>
+                            |
+                            <span class="text-secondary">
+                                {{ $user->total_hours['non_billable'] }}
+                            </span>
                         </td>
                     </tr>
                 @endforeach

@@ -278,7 +278,7 @@
 
                 axisBankParser(comment) {
                     extractedNumberList = comment.split(/[\/\s]/g).map(function(word) {
-                            var number = word.trim().replace(/,\s/, "")
+                        var number = word.trim().replaceAll(",", "")
                                 if (number == 0 || isNaN(number)) {
                                     return null;
                                 }
@@ -366,7 +366,7 @@
                     conversionRate = filtered_number_list[index]
                     switch (bank) {
                         case bank_message_patterns.axis.key:
-                                this.conversionRate = conversionRate / this.amountPaid;
+                                this.conversionRate = (conversionRate / this.amountPaid).toFixed(2);
                                 this.conversionRateDiff = Math.abs(this.currentExchangeRate - this.conversionRate).toFixed(2)
                             break;
         
