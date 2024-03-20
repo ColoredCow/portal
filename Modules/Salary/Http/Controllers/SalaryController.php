@@ -56,7 +56,7 @@ class SalaryController extends Controller
             return redirect()->back()->with('success', 'Salary added successfully!');
         }
 
-        if ($currentSalaryObject) {
+        if ($currentSalaryObject != null) {
             $currentSalaryObject->monthly_gross_salary = $request->grossSalary;
             $currentSalaryObject->commencement_date = $request->commencementDate;
             $currentSalaryObject->save();
