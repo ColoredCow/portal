@@ -32,7 +32,6 @@ class HrEmployeeFactory extends Factory
             'name' => $faker->name,
             'user_id' => $user->id,
             'designation_id' => optional(HrJobDesignation::inRandomOrder()->first())->id,
-            'domain_id' => optional(HrJobDomain::inRandomOrder()->first())->id,
             'joined_on' => $faker->dateTimeThisYear(),
             'staff_type' => 'Employee',
         ];
