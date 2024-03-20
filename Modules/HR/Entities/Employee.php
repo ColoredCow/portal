@@ -97,6 +97,32 @@ class Employee extends Model
     {
         return $this->hasMany(EmployeeSalary::class);
     }
+    
+    public function getCurrentSalary()
+    {
+        return $this->employeeSalaries()->orderBy('id', 'desc')->first();
+    }
+    
+    public function getPreviousSalary()
+    {
+        return $this->employeeSalaries()->orderBy('id', 'desc')->skip(1)->first();
+    }
+
+    public function getLatestSalaryPercentageIncrementAttribute()
+    {
+        $currentCtc = optional($this->getCurrentSalary())->ctc_aggregated ?? 0;
+        $previousCtc = optional($this->getPreviousSalary())->ctc_aggregated ?? 0;
+
+        if ($currentCtc == 0 || $previousCtc == 0) {
+            return 0;
+        }
+
+        $percentageIncrementInFloat = (($currentCtc - $previousCtc) / $previousCtc) * 100;
+
+        return round($percentageIncrementInFloat, 2);
+    }
+
+    
 
     public function getFtes($startDate, $endDate)
     {
