@@ -32,7 +32,7 @@ class RecruitmentApplicationController extends Controller
                 break;
         }
 
-        $rejectedApplicationCount = Application::where('status', 'rejected')
+        $rejectedApplicationCount = Application::rejected()
             ->whereDate('updated_at', '>=', $startDate)
             ->whereDate('updated_at', '<=', $endDate)
             ->count();
@@ -40,14 +40,22 @@ class RecruitmentApplicationController extends Controller
         $receivedApplicationCount = Application::whereDate('created_at', '>=', $startDate)
             ->whereDate('created_at', '<=', $endDate)
             ->count();
-
+        
+        // $introductoryApplicationCount = Application::whereDate('updated_at', '>=', $startDate)
+        //     ->whereDate('updated_at', '<=', $endDate)
+        //     ->applicationRounds()->introductoryCall()
+        //     ->count();
+        
+        // $newApplicationCount = Application::whereDate('updated_at', '>=', $startDate)
+        //     ->whereDate('updated_at', '<=', $endDate)
+        //     ->applicationRounds()->resumeScreening()
+        //     ->count();
 
         return [
             "total_received_applications" => $receivedApplicationCount,
             "total_rejected_applications" => $rejectedApplicationCount,
             "total_introductory_call_applications" => 30,
-            "total_new_applications" => 50,
-            "filter" => request()->filter
+            "total_new_applications" => 40,
         ];
     }
 }
