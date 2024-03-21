@@ -202,7 +202,7 @@ export default {
 			return this.basicSalary + this.hra + this.transportAllowance + this.foodAllowance + this.otherAllowance;
 		},
 		employeeEsi() {
-			if(this.grossSalary < this.salaryConfigs.employee_esi_limit.fixed_amount) {
+			if(this.grossSalary <= parseInt(this.salaryConfigs.employee_esi_limit.fixed_amount)) {
 				let percentage = this.salaryConfigs.employee_esi.percentage_rate;
 				return Math.ceil(this.grossSalary * percentage / 100);
 			}
@@ -223,7 +223,7 @@ export default {
 			return this.totalSalary - this.totalDeduction;		
 		},
 		employerEsi() {
-			if(this.grossSalary < this.salaryConfigs.employer_esi_limit.fixed_amount) {
+			if(this.grossSalary < parseInt(this.salaryConfigs.employer_esi_limit.fixed_amount)) {
 				let percentage = this.salaryConfigs.employer_esi.percentage_rate;
 				return Math.ceil(this.grossSalary * percentage / 100);
 			}
@@ -251,7 +251,7 @@ export default {
 				multiplier = this.basicSalary;
 			}
 			let percentage = this.salaryConfigs.edli_charges.percentage_rate;
-			return Math.min(Math.ceil(multiplier * percentage / 100) , Math.ceil(this.salaryConfigs.edli_charges_limit.fixed_amount * percentage / 100));
+			return Math.min(Math.ceil(multiplier * percentage / 100) , Math.ceil(parseInt(this.salaryConfigs.edli_charges_limit.fixed_amount) * percentage / 100));
 		},
 		ctc() {
 			if (this.grossSalary === "") {
