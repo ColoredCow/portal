@@ -21,9 +21,6 @@
                         $user = $employee->user()->withTrashed()->first();
                         $employeeCurrentSalaryObject = $employee->getCurrentSalary();
                         $employeePreviousSalaryObject = $employee->getPreviousSalary();
-                        // if($user->id == 1) {
-                        //     dd($employeeCurrentSalaryObject->employee_esi, $employeeCurrentSalaryObject->employer_esi);
-                        // }
                     @endphp
                     <td>
                         <a href="{{ route('salary.employee', $employee->id) }}">
