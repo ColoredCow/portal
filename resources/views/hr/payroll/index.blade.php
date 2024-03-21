@@ -21,6 +21,9 @@
                         $user = $employee->user()->withTrashed()->first();
                         $employeeCurrentSalaryObject = $employee->getCurrentSalary();
                         $employeePreviousSalaryObject = $employee->getPreviousSalary();
+                        // if($user->id == 1) {
+                        //     dd($employeeCurrentSalaryObject->employee_esi, $employeeCurrentSalaryObject->employer_esi);
+                        // }
                     @endphp
                     <td>
                         <a href="{{ route('salary.employee', $employee->id) }}">
@@ -40,10 +43,12 @@
                         @php
                             $commencementDate = optional($employeeCurrentSalaryObject)->commencement_date;
                             $diff = now()->diff($commencementDate);
-                            $difference = $diff->format('%m months and %d days');
-                            $diffInDays = now()->diffInDays($commencementDate)
+                            $diffInDays =  now()->diffInDays($commencementDate);
+                            $totalMonths = $diff->y * 12 + $diff->m;
+                            $totalDays = $diff->d;
+                            $humanReadableTimeDifference = $totalMonths . " months and " . $totalDays . " days";
                         @endphp
-                        {{ optional($commencementDate)->format('Y-m-d') }} {{ $diffInDays == 0 ? '(0 days)' : '( ' . $difference . ' )' }}
+                        {{ optional($commencementDate)->format('Y-m-d') }} {{ $diffInDays == 0 ? '(0 days)' : '( ' . $humanReadableTimeDifference . ' )' }}
                     </td>
                 </tr>
             @endforeach
