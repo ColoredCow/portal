@@ -42,7 +42,7 @@ class EmployeeSalary extends Model
             $multiplier = $this->basic_salary;
         }
 
-        $percentageRate = (int) $hraConf->percentage_rate;
+        $percentageRate = (float) $hraConf->percentage_rate;
 
         return ceil($multiplier * $percentageRate / 100);
     }
@@ -83,10 +83,11 @@ class EmployeeSalary extends Model
     public function getEmployeeEsiAttribute()
     {
         $salaryConf = new SalaryConfiguration;
-        $employeeEsiConf = $salaryConf->formatAll()->get('employee_esi_limit');
+        $employeeEsiLimitConf = $salaryConf->formatAll()->get('employee_esi_limit');
+        $employeeEsiConf = $salaryConf->formatAll()->get('employee_esi');
 
-        if ($this->monthly_gross_salary < ($employeeEsiConf->fixed_amount ?? 0)) {
-            $percentageRate = (int) $employeeEsiConf->percentage_rate;
+        if ($this->monthly_gross_salary < ((int) ($employeeEsiLimitConf->fixed_amount ?? 0))) {
+            $percentageRate = (float) $employeeEsiConf->percentage_rate;
 
             return ceil($this->monthly_gross_salary * $percentageRate / 100);
         }
@@ -104,7 +105,7 @@ class EmployeeSalary extends Model
         if ($employeeEpfConf->percentage_applied_on == 'basic_salary') {
             $multiplier = $this->basic_salary;
         }
-        $percentageRate = (int) $employeeEpfConf->percentage_rate;
+        $percentageRate = (float) $employeeEpfConf->percentage_rate;
 
         return ceil($multiplier * $percentageRate / 100);
     }
@@ -122,10 +123,11 @@ class EmployeeSalary extends Model
     public function getEmployerEsiAttribute()
     {
         $salaryConf = new SalaryConfiguration;
-        $employeeEsiLimitConf = $salaryConf->formatAll()->get('employer_esi');
+        $employerEsiLimitConf = $salaryConf->formatAll()->get('employer_esi_limit');
+        $employerEsiConf = $salaryConf->formatAll()->get('employer_esi');
 
-        if ($this->monthly_gross_salary < ((int) $employeeEsiLimitConf->fixed_amount ?? 0)) {
-            $percentageRate = $employeeEsiLimitConf->percentage_rate;
+        if ($this->monthly_gross_salary <= ((int) $employerEsiLimitConf->fixed_amount ?? 0)) {
+            $percentageRate = (float) $employerEsiConf->percentage_rate;
 
             return ceil($this->monthly_gross_salary * $percentageRate / 100);
         }
@@ -143,7 +145,7 @@ class EmployeeSalary extends Model
             $multiplier = $this->basic_salary;
         }
 
-        $percentageRate = (int) $employerEpfConf->percentage_rate;
+        $percentageRate = (float) $employerEpfConf->percentage_rate;
 
         return ceil($multiplier * $percentageRate / 100);
     }
@@ -158,7 +160,7 @@ class EmployeeSalary extends Model
             $multiplier = $this->basic_salary;
         }
 
-        $percentageRate = (int) $administrationChargesConf->percentage_rate;
+        $percentageRate = (float) $administrationChargesConf->percentage_rate;
 
         return ceil($multiplier * $percentageRate / 100);
     }
@@ -173,9 +175,9 @@ class EmployeeSalary extends Model
         if ($edliChargesConf->percentage_applied_on == 'basic_salary') {
             $multiplier = $this->basic_salary;
         }
-        $percentageRate = (int) $edliChargesConf->percentage_rate;
+        $percentageRate = (float) $edliChargesConf->percentage_rate;
 
-        return min(ceil($multiplier * $percentageRate / 100), ceil(($edliChargesLimitConfig->fixed_amount ?? 0) * $percentageRate / 100));
+        return min(ceil($multiplier * $percentageRate / 100), ceil(((int) ($edliChargesLimitConfig->fixed_amount ?? 0)) * $percentageRate / 100));
     }
 
     public function getCtcAttribute()
