@@ -30,16 +30,16 @@
                         <span class="{{ $project->velocity >= 1 ? 'text-success' : 'text-danger'}} fz-lg-22">{{ $project->velocity }}</span>
                         <a target="_self" href="{{route('project.effort-tracking', $project )}}" class="btn-sm text-decoration-none btn-primary text-white ml-1 text-light rounded">{{ _('Check FTE') }}</a>
                     </div>
-                    
+
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-6 pl-4">
+                    <div class="col-md-6 pl-4">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold mb-6 ml-1">Client:</label>
                         </h4>
                         <a href="{{route('client.edit', $project->client->id)}}" class="text-capitalize ml-2 fz-lg-22">{{ $project->client->name }}</a>
                     </div>
-                    <div class="form-group offset-md-1 pl-4 col-md-5">
+                    <div class="offset-md-1 pl-4 col-md-5">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold mb-3">Status:</label>
                         </h4>
@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-6 pl-4">
+                    <div class="col-md-6 pl-4">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold mb-6 ml-1">Effortsheet:</label>
                         </h4>
@@ -58,7 +58,7 @@
                             <span class="ml-2 fz-lg-22">Not Available</span>
                         @endif
                     </div>
-                    <div class="form-group offset-md-1 pl-4 col-md-5">
+                    <div class="offset-md-1 pl-4 col-md-5">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold mt-0 mb-2">Project Type:</label>
                         </h4>
@@ -66,7 +66,7 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-6 pl-4">
+                    <div class="col-md-6 pl-4">
                         @if($project->billing_level)
                             <h4 class="d-inline-block">
                                 <label for="name" class="font-weight-bold mb-6 ml-1">Billing Level:</label>
@@ -74,38 +74,86 @@
                             <span class="text-capitalize ml-2 fz-lg-22">{{ config('project.meta_keys.billing_level.value.' . $project->billing_level . '.label') }}</span>
                         @endif
                     </div>
-                    <div class="form-group offset-md-1 pl-4 col-md-5">
-                        <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold">Total Estimated Hour:</label>
-                        </h4>
-                        <span class="text-capitalize ml-2 fz-lg-22">{{ $project->total_estimated_hours }}
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6 pl-4">
+                    <div class="offset-md-1 pl-4 col-md-5">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold">Start Date:</label>
                         </h4>
                         <span class="text-capitalize ml-2 fz-lg-22">{{ optional($project->start_date)->format('d M Y')}}</span>
                     </div>
-                    <div class="form-group offset-md-1 pl-4 col-md-5">
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6 pl-4">
                         <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold">Monthly Approved Pipeline:</label>
+                            <label for="name" class="font-weight-bold mb-6 ml-1">End Date:</label>
                         </h4>
-                        @if ($isApprovedWorkPipelineExist)
-                            <span class="text-capitalize ml-2 fz-lg-22">{{ $project->monthly_approved_pipeline }}</span>
-                        @else
-                            <span class="text-capitalize ml-2 text-danger fz-18">
-                                ERROR <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Formatting issue with effortsheet"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
-                            </span>
-                        @endif
+                        <span class="text-capitalize ml-2 fz-lg-22">{{ optional($project->end_date)->format('d M Y')}}</span>
                     </div>
                 </div>
-                <div class="form-group col-md-6 pl-4">
-                    <h4 class="d-inline-block">
-                        <label for="name" class="font-weight-bold mb-6 mr-4 mt-2">End Date:</label>
-                   </h4>
-                    <span class="text-capitalize ml-2 fz-lg-22">{{ optional($project->end_date)->format('d M Y')}}</span>
+                <div class="form-row d-flex justify-content-between">
+                    <div class="col-md-5 pl-4 d-flex justify-content-between">
+                        <div>
+                            <h4 class="d-inline-block">
+                                <label for="name" class="font-weight-bold mb-6 ml-1">Expected Hours:</label>
+                            </h4>
+                        </div>
+                        <div class="d-flex">
+                            <div class="pr-10 project-hour">
+                                <span class="fz-lg-22 text-capitalize">Monthly
+                                </span>
+                                <span>{{$totalExpectedHourInMonth}}</span>
+                            </div>
+                            <div class="d-flex">
+                                <div class="pr-10 project-hour">
+                                    <span class="fz-lg-22 text-capitalize">Weekly
+                                    </span>
+                                    <span>{{$totalWeeklyEffort}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-5 pl-4 d-flex justify-content-between">
+                        <div>
+                            <h4 class="d-inline-block">
+                                <label for="name" class="font-weight-bold mb-6 ml-1">Hours To Cover:</label>
+                            </h4>
+                        </div>
+                        <div class="d-flex">
+                            <div class="pr-10 project-hour">
+                                <span class="fz-lg-22 text-capitalize">Monthly
+                                </span>
+                                <span>{{$remainingExpectedEffort}}</span>
+                            </div>
+                            <div class="d-flex">
+                                <div class="pr-10 project-hour">
+                                    <span class="fz-lg-22 text-capitalize">Weekly
+                                    </span>
+                                    <span>{{round($weeklyHoursToCover,2)}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-5 pl-4 d-flex justify-content-between">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold mb-6 ml-1">Approved Pipeline:</label>
+                            @if ($isApprovedWorkPipelineExist)
+                            <span>{{$monthlyApprovedHour}} hrs
+                                @if($monthlyApprovedHour > $weeklyHoursToCover)
+                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Approved pipeline is sufficient for this week"><i class="fa fa-info-circle" style="color: green;" aria-hidden="true"></i></span>
+                                @else
+                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Approved pipeline is not sufficient for this week"><i class="fa fa-info-circle" style='color: red' aria-hidden="true"></i></span>
+                                @endif
+                            </span>
+                            @else
+                                <span class="text-capitalize ml-2 text-danger fz-18 font-weight-normal">
+                                    ERROR <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Formatting issue with effortsheet"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                                </span>
+                            @endif
+                        </h4>
+                    </div>
                 </div>
                 <div id= "project_detail_form" class="collapse show">
                     <div class="card-body">
@@ -120,7 +168,7 @@
                                     </div>
                                  </div>
                             </div>
-                @endif
+                        @endif
                 <br>
                 <div class="form-row ">
                     <div class="form-group col-lg-12 pl-4">
@@ -128,17 +176,17 @@
                             <label for="name" class="font-weight-bold">Team Members({{count($project->getTeamMembers)}})</label>
                         </h4>
                        <div class="fz-14 float-right mr-3 mt-1">
-                            <strong>Timeline:</strong>{{ (Carbon\Carbon::parse($project->client->month_start_date)->format('dS M')) }}                       
-                            -{{ (Carbon\Carbon::parse($project->client->month_end_date)->format('dS M')) }}                      
+                            <strong>Timeline:</strong>{{ (Carbon\Carbon::parse($project->client->month_start_date)->format('dS M')) }}
+                            -{{ (Carbon\Carbon::parse($project->client->month_end_date)->format('dS M')) }}
                              &nbsp;&nbsp;&nbsp; <strong>Last refreshed at:</strong>{{ (Carbon\Carbon::parse($project->last_updated_at)->setTimezone('Asia/Kolkata')->format('Y-M-d , D h:i:s A')) }}
-                        </div> 
+                        </div>
                             <div class="flex-column flex-md-row d-flex flex-wrap col-md-18 px-0 ml-1 mr-4">
                                 <div class="table">
                                     <table class="table">
                                         <thead>
                                             <tr class="bg-theme-gray text-light">
                                                 <th class="pb-md-3 pb-xl-4 px-9">Name</th>
-                                                <th>Hours Booked</th>   
+                                                <th>Hours Booked</th>
                                                 <th>Expected Hours
                                                     <div class="ml-lg-3 ml-xl-5 fz-md-10 fz-xl-14">
                                                         ({{$daysTillToday}} Days)

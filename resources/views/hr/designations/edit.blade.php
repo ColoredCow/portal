@@ -12,15 +12,22 @@
                     @csrf
                     <input value="{{ route('designation.edit', $designation->id) }}" type="hidden" class="hidden" aria-hidden="true" name="routePlaceHolder">
                     <div class="form-group">
-                        <label class="field-required" for="designationfield">name</label>
+                        <label class="field-required" for="designationfield">Name</label>
                         <input type="text" name="name" class="form-control" value="{{$designation->designation}}" required>
                     </div>
                     <div class='form-group'>
-                        <label class="field-required" for="designationfield">domain</label>
+                        <label class="field-required" for="designationfield">Domain</label>
                         @php
-                        foreach($domains as $domain)
-                            $domainName = $designation->domain_id!=NULL && $domain->id===($designation->domain_id) ? $domain->domain : ''; 
-                        @endphp 
+                        $domainName = 'Select domain';
+                        if ($designation->domain_id !== NULL) {
+                            foreach ($domains as $domain) {
+                                if ($domain->id === $designation->domain_id) {
+                                    $domainName = $domain->domain;
+                                    break;
+                                }
+                            }
+                        }
+                        @endphp
                         <select name="domain" class="form-control" required>
                             <option value="{{$designation->domain_id}}">{{$domainName}}</option>
                             @foreach($domains as $domain)

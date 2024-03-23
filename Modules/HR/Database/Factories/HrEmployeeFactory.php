@@ -6,7 +6,6 @@ use Faker\Factory as Faker;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\HrJobDesignation;
-use Modules\HR\Entities\HrJobDomain;
 use Modules\User\Entities\User;
 
 class HrEmployeeFactory extends Factory
@@ -32,7 +31,6 @@ class HrEmployeeFactory extends Factory
             'name' => $faker->name,
             'user_id' => $user->id,
             'designation_id' => optional(HrJobDesignation::inRandomOrder()->first())->id,
-            'domain_id' => optional(HrJobDomain::inRandomOrder()->first())->id,
             'joined_on' => $faker->dateTimeThisYear(),
             'staff_type' => 'Employee',
         ];

@@ -32,8 +32,22 @@
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr class="sticky-top">
-                    <th>Client Id</th>
-                    <th>Name</th>
+                    <th >
+                        <a class="text-white text-decoration-none" href="{{ route('client.index', ['sort' => 'client_id', 'direction' => request()->get('direction', 'asc') === 'asc' ? 'desc' : 'asc']) }}">
+                          Client Id
+                          @if (request()->get('sort') === 'client_id')
+                            <i class="fa fa-sort-{{ request()->get('direction', 'asc') }}"></i>
+                          @endif
+                        </a>
+                    </th>
+                    <th>
+                        <a class="text-white text-decoration-none" href="{{ route('client.index', ['sort' => 'name', 'direction' => request()->get('direction', 'asc') === 'asc' ? 'desc' : 'asc']) }}">
+                          Name
+                          @if (request()->get('sort') === 'name')
+                            <i class="fa fa-sort-{{ request()->get('direction', 'asc') }}"></i>
+                          @endif
+                        </a>
+                    </th>
                     <th>Client Type</th>
                     <th>Key Account Manager</th>
                 </tr>

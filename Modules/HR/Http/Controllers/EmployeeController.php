@@ -6,12 +6,14 @@ use App\Services\EmployeeService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use Modules\HR\Entities\Assessment;
 use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\IndividualAssessment;
 use Modules\HR\Entities\Job;
+use Modules\HR\Exports\EmployeePayrollExport;
 use Modules\Project\Entities\ProjectTeamMember;
 
 class EmployeeController extends Controller
@@ -32,33 +34,25 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         $this->authorize('list', Employee::class);
-        $search = request()->query('employeename') ?: '';
-        $employeeData = Employee::with('employees');
-        $filters = $request->all();
-        $filters = $filters ?: $this->service->defaultFilters();
-        $name = request('name');
-        $employeeData = Employee::where('staff_type', $name)
-            ->applyFilters($filters)
-            ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
-            ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
-            ->groupBy('employees.user_id')
-            ->orderby('project_count', 'desc')
-            ->get();
-        if ($search != '') {
-            $employeeData = Employee::where('name', 'LIKE', "%{$search}%")
-                ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
-                ->selectRaw('employees.*, team_member_id, count(team_member_id) as project_count')
-                ->get();
-        }
+        $filters = $request->all() ?: $this->service->defaultFilters();
 
-        return view('hr.employees.index', $this->service->index($filters))->with([
-            'employees' => $employeeData,
-        ]);
+        return view('hr.employees.index', $this->service->index($filters));
+    }
+
+    public function listPayroll(Request $request)
+    {
+        $this->authorize('list', Employee::class);
+        $filters = $request->all() ?: $this->service->defaultFilters();
+        $data = $this->service->getEmployeeListWithLatestPayroll($filters);
+
+        return view('hr.payroll.index', $data);
     }
 
     public function show(Employee $employee)
     {
-        return view('hr.employees.show', ['employee' => $employee]);
+        $user = $employee->user()->withTrashed()->first();
+
+        return view('hr.employees.show', compact('employee', 'user'));
     }
 
     public function reports()
@@ -76,7 +70,7 @@ class EmployeeController extends Controller
         return view('hr.employees.basic-details', ['domainIndex' => $domainIndex, 'employee' => $employee, 'domains' => $domains, 'designations' => $designations]);
     }
 
-    public function showFTEdata(request $request)
+    public function showFTEdata(Request $request)
     {
         $domainId = $request->domain_id;
         $employees = Employee::where('domain_id', $domainId)->get();
@@ -143,5 +137,14 @@ class EmployeeController extends Controller
         ]);
 
         return redirect()->back();
+    }
+
+    public function downloadPayRoll()
+    {
+        $employees = $this->service->getEmployeeListForExport();
+        $today = date('Y-m-d');
+        $filename = 'PayRoll Report-' . $today . '.xlsx';
+
+        return Excel::download(new EmployeePayrollExport($employees['employees']), $filename);
     }
 }

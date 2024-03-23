@@ -36,19 +36,4 @@ class EmployeeObserver
             ]);
         }
     }
-
-    /**
-     * Handle the employee "updated" event.
-     *
-     * @param  Employee  $employee
-     * @return void
-     */
-    public function updated(Employee $employee)
-    {
-        if ($employee->user->name != $employee->name) {
-            $employee->user->update([
-                'name' => $employee->name,
-            ]);
-        }
-    }
 }

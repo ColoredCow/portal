@@ -5,7 +5,6 @@ namespace Modules\HR\Entities;
 use App\Models\Project;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 use Modules\HR\Database\Factories\HrEmployeeFactory;
 use Modules\Salary\Entities\EmployeeSalary;
 use Modules\User\Entities\User;
@@ -28,11 +27,6 @@ class Employee extends Model
         return $this->belongsTo(HrJobDesignation::class, 'designation_id');
     }
 
-    public function hrJobDomain()
-    {
-        return $this->belongsTo(HrJobDomain::class, 'domain_id');
-    }
-
     public function scopeStatus($query, $status)
     {
         if ($status == 'current') {
@@ -40,6 +34,16 @@ class Employee extends Model
         }
 
         return $query->whereDoesntHave('user');
+    }
+
+    public function scopeStaffType($query, $staffName)
+    {
+        return $query->where('staff_type', $staffName);
+    }
+
+    public function scopeFilterByName($query, $name)
+    {
+        return $query->where('employees.name', 'LIKE', "%{$name}%");
     }
 
     public function scopeActive($query)
@@ -67,10 +71,18 @@ class Employee extends Model
 
     public function scopeApplyFilters($query, $filters)
     {
-        $status = Arr::get($filters, 'status', '');
-
-        if ($status) {
-            $query = $query->status($status);
+        foreach ($filters as $key => $value) {
+            switch ($key) {
+                case 'status':
+                    $query->status($value);
+                    break;
+                case 'employee_name':
+                    $query->filterByName($value);
+                    break;
+                case 'staff_type':
+                    $query->staffType($value);
+                    break;
+            }
         }
 
         return $query;
@@ -79,6 +91,30 @@ class Employee extends Model
     public function employeeSalaries()
     {
         return $this->hasMany(EmployeeSalary::class);
+    }
+
+    public function getCurrentSalary()
+    {
+        return $this->employeeSalaries()->latest('commencement_date')->first();
+    }
+
+    public function getPreviousSalary()
+    {
+        return $this->employeeSalaries()->latest('commencement_date')->skip(1)->first();
+    }
+
+    public function getLatestSalaryPercentageIncrementAttribute()
+    {
+        $currentCtc = optional($this->getCurrentSalary())->ctc_aggregated ?? 0;
+        $previousCtc = optional($this->getPreviousSalary())->ctc_aggregated ?? 0;
+
+        if ($currentCtc == 0 || $previousCtc == 0) {
+            return 0;
+        }
+
+        $percentageIncrementInFloat = (($currentCtc - $previousCtc) / $previousCtc) * 100;
+
+        return round($percentageIncrementInFloat, 2);
     }
 
     public function getFtes($startDate, $endDate)

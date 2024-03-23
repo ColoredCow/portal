@@ -79,12 +79,27 @@ class ProjectController extends Controller
         $effortTracking = new EffortTrackingService;
         $isApprovedWorkPipelineExist = $effortTracking->getIsApprovedWorkPipelineExist($project->effort_sheet_url);
 
+        $getProjectHourDeatils = $this->service->getProjectApprovedPipelineHour($project);
+
+        $monthlyApprovedHour = $getProjectHourDeatils['monthlyApprovedHour'];
+        $totalExpectedHourInMonth = $getProjectHourDeatils['totalExpectedHourInMonth'];
+        $totalWeeklyEffort = $getProjectHourDeatils['totalWeeklyEffort'];
+        $remainingApprovedPipeline = $getProjectHourDeatils['remainingApprovedPipeline'];
+        $remainingExpectedEffort = $getProjectHourDeatils['remainingExpectedEffort'];
+        $weeklyHoursToCover = $getProjectHourDeatils['weeklyHoursToCover'];
+
         return view('project::show', [
             'project' => $project,
             'contract' => $contract,
             'contractFilePath' => $contractFilePath,
             'daysTillToday' => $daysTillToday,
             'isApprovedWorkPipelineExist' => $isApprovedWorkPipelineExist,
+            'totalExpectedHourInMonth' => $totalExpectedHourInMonth,
+            'monthlyApprovedHour' => $monthlyApprovedHour,
+            'totalWeeklyEffort' => $totalWeeklyEffort,
+            'remainingApprovedPipeline' => $remainingApprovedPipeline,
+            'remainingExpectedEffort' => $remainingExpectedEffort,
+            'weeklyHoursToCover' => $weeklyHoursToCover,
         ]);
     }
 

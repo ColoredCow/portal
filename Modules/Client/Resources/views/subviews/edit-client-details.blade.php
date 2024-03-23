@@ -75,6 +75,15 @@
                         <span data-toggle="tooltip" data-placement="right" title="Check if this client will have multiple departments as a new client."><i class="fa fa-question-circle"></i></span>
                     </label>
                 </div>
+
+            </div>
+
+            <div class="col-md-5 form-check-inline mr-0 form-group">
+                <input type="checkbox" {{ ($client->is_billable || old('is_billable') == "1") ? 'checked' : '' }} class="checkbox-custom mb-1.9 mb-1.67 mr-3" name="is_billable" id="is_billable"
+                        value="1">
+                <label for="is_billable">Is Billable?
+                    <span data-toggle="tooltip" data-placement="right" title="Check if this client will be billable or partially billable."><i class="fa fa-question-circle"></i>&nbsp;</span>
+                </label>
             </div>
         </div>
         <div class="card-footer">
