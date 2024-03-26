@@ -84,6 +84,22 @@ Vue.component(
 	require("./components/Dashboard/UserDashboardLibrary.vue").default
 );
 Vue.component(
+	"user-dashboard-hiring",
+	require("./components/Dashboard/UserDashboardHiringActivity.vue").default
+);
+Vue.component(
+	"user-hiring-last-week",
+	require("./components/Dashboard/UserDashboardHiringLastWeek.vue").default
+);
+Vue.component(
+	"user-hiring-last-month",
+	require("./components/Dashboard/UserDashboardHiringLastMonth.vue").default
+);
+Vue.component(
+	"user-hiring-last-quarter",
+	require("./components/Dashboard/UserDashboardHiringLastQuarter.vue").default
+);
+Vue.component(
 	"user-dashboard-infrastructure",
 	require("./components/Dashboard/UserDashboardInfrastructure.vue").default
 );
