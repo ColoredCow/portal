@@ -157,9 +157,13 @@
                                                         <th class="fz-lg-20 my-2 px-5 font-weight-normal">
                                                             <span>
                                                                 <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation] }}">
+                                                                <a href="{{ route('employees.show', $teamMember->user->id) }}">
                                                                 <img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">
+                                                                </a>
                                                             </span>
+                                                            <a href="{{ route('employees.show', $teamMember->user->id) }}">
                                                             {{$teamMember->user->name}}
+                                                            </a>
                                                         </th>
                                                         <td class="{{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'text-success' : 'text-danger' }}">{{$teamMember->current_actual_effort}}</td>
                                                         <td>{{$teamMember->current_expected_effort }}</td>

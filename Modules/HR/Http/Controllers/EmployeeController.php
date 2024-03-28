@@ -56,8 +56,9 @@ class EmployeeController extends Controller
         ]);
     }
 
-    public function show(Employee $employee)
+    public function show($user_id)
     {
+        $employee = Employee::where('user_id', $user_id)->firstOrFail();
         return view('hr.employees.show', ['employee' => $employee]);
     }
 
