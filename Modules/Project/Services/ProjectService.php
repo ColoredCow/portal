@@ -366,7 +366,10 @@ class ProjectService implements ProjectServiceContract
         $daysTillToday = count($this->getProjectWorkingDays($project->client->month_start_date, $currentDate));
         $remainingDays = $workingDaysInMonth - $daysTillToday;
         $daysInAWeek = 5;
-        $weeklyHoursToCover = $remainingExpectedEffort / $remainingDays * $daysInAWeek;
+        $weeklyHoursToCover = 0;
+        if ($remainingDays !== 0) {
+            $weeklyHoursToCover = $remainingExpectedEffort / $remainingDays * $daysInAWeek;
+        }
 
         return [
             'monthlyApprovedHour' => $monthlyApprovedHour,
