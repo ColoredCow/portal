@@ -227,7 +227,13 @@
 
                 changePaidAmountListener() {
                     var emailBody = $("#emailBody").text();
-                    emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
+                    let paidAmount = @json($invoice->amount_paid);
+                    if (emailBody.includes("|*amount_paid*|")) {
+                        emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
+                    } else {
+                        emailBody = emailBody.replace(paidAmount, this.amountPaid);
+                    }
+                    
                     tinymce.get("emailBody").setContent(emailBody, {
                         format: "html"
                     });
@@ -386,7 +392,12 @@
                             if (index == totalNumbersInList - 1) {
                                 this.amountPaid = filtered_number_list[index]
                                 $('#amountPaid').val(this.amountPaid)
-                                emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
+                                let paidAmount = @json($invoice->amount_paid);
+                                if (emailBody.includes("|*amount_paid*|")) {
+                                    emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
+                                } else {
+                                    emailBody = emailBody.replace(paidAmount, this.amountPaid);
+                                }
                                 this.calculateTaxes()
                             }
                             continue;

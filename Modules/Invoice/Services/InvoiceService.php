@@ -225,7 +225,11 @@ class InvoiceService implements InvoiceServiceContract
         $body = str_replace($templateVariablesForBody['invoice-number'], $invoice->invoice_number, $body);
 
         if ($invoice->client->country->initials == 'IN') {
-            $body = str_replace($templateVariablesForBody['amount'], $templateVariablesForBody['amount_paid'], $body);
+            if ($invoice->amount_paid) {
+                $body = str_replace($templateVariablesForBody['amount'], $invoice->amount_paid, $body);
+            } else {
+                $body = str_replace($templateVariablesForBody['amount'], $templateVariablesForBody['amount_paid'], $body);
+            }
         } else {
             $body = str_replace($templateVariablesForBody['amount'], (string) $invoice->amount, $body);
         }
