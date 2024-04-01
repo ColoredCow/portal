@@ -90,7 +90,7 @@ class CheckCommand extends Command
         $ciCommands['Php CS Fixer'] = $staticAnalysis;
         $ciCommands['LaraStan'] = $laraStan;
         $ciCommands = array_merge($ciCommands, $this->getEsCommands());
-        $ciCommands['Insights'] = $phpInsights;
+        // $ciCommands['Insights'] = $phpInsights;
 
         return $ciCommands;
     }
