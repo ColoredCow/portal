@@ -127,9 +127,9 @@
                     </thead>
                     <tbody>
                         @foreach ($project->getTeamMembers as $teamMember)
-                        @php
-                            $previousDayEffort = $teamMember->getActualEffortBetween($yesterdayDate, $yesterdayDate);
-                            $teamMemberDailyExpectedEffort = $teamMember->daily_expected_effort;
+                            @php
+                                $previousDayEffort = $teamMember->getActualEffortBetween($yesterdayDate, $yesterdayDate);
+                                $teamMemberDailyExpectedEffort = $teamMember->daily_expected_effort;
                             @endphp
                             <tr>
                                 <th scope="row" id="user-name<?php echo $teamMember->user->id; ?>">{{ $teamMember->user->name }}</th>
