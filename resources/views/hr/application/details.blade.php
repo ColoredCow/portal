@@ -106,7 +106,7 @@
                         <div>{{ $applicant->reference ?? '-' }}</div>
                     </div>
                     @endif
-                    @if (is_array($applicationFormDetails->value) || is_object($applicationFormDetails->value))
+                    @if (isset($applicationFormDetails->value))
                         @foreach(json_decode($applicationFormDetails->value) as $field => $value)
                             <div class="form-group col-md-12">
                                 <label class="text-secondary fz-14 leading-none mb-0.16">{{ $field }}</label>
