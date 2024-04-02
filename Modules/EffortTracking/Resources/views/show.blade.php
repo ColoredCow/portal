@@ -96,7 +96,12 @@
                     <thead>
                         <tr>
                             <th scope="col" class="pb-lg-4">Name</th>
-                            <th scope="col" class="pb-lg-4">Hours Booked</th>
+                            <th scope="col" class="pb-lg-4">Hours Booked
+                                <span data-toggle="tooltip" data-placement="right"
+                                    title="{{ __('Bracket() denotes the hours added by individual yesterday. Red signifies a shortfall compared to the expected hours, while green indicates meeting or exceeding the expected hours.') }}">
+                                    <i class="fa fa-question-circle"></i>&nbsp;
+                                </span>
+                            </th>
                             <th scope="col" class="w-lg-200">Expected Hours
                                 <div class="ml-lg-3">
                                     ({{ $workingDays }} Days)
@@ -122,13 +127,17 @@
                     </thead>
                     <tbody>
                         @foreach ($project->getTeamMembers as $teamMember)
+                        @php
+                            $previousDayEffort = $teamMember->getActualEffortBetween($yesterdayDate, $yesterdayDate);
+                            $teamMemberDailyExpectedEffort = $teamMember->daily_expected_effort;
+                            @endphp
                             <tr>
-                                <th scope="row" id="user-name<?php echo $teamMember
-                                    ->user
-                                    ->id; ?>">{{ $teamMember->user->name }}</th>
+                                <th scope="row" id="user-name<?php echo $teamMember->user->id; ?>">{{ $teamMember->user->name }}</th>
                                 <td
                                     class="{{ $teamMember->current_actual_effort >= $teamMember->expected_effort_till_today ? 'text-success' : ($teamMember->current_actual_effort < $teamMember->current_expected_effort ? 'text-danger' : '') }}">
-                                    {{ $teamMember->current_actual_effort }}</td>
+                                    {{ $teamMember->current_actual_effort }}
+                                    <span class="{{ $previousDayEffort < $teamMemberDailyExpectedEffort ? 'text-danger' : 'text-success' }} fz-12 font-weight-bold">(+{{ $previousDayEffort }})</span>
+                                </td>
                                 <td>{{ $teamMember->current_expected_effort }}</td>
                                 <td>{{ $teamMember->expected_effort_till_today }}</td>
                                 <td>{{ $teamMember->expected_effort_till_today - $teamMember->current_actual_effort }}
