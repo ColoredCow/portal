@@ -7,7 +7,7 @@
             <h4 class="alert-heading mb-2">Hello! Great you made it to this page!</h4>
             <p class="fz-16">This is a calendar where you can see available slots to schedule your interview with ColoredCow. Simply click on a slot that suits you best and verify your email id!</p>
             <hr>
-            <p class="mb-0 fz-14"><i class="fa fa-lightbulb-o"></i>&nbsp;Pro tip: If there are no available slots, please move forward to the next month.</p>
+            <p class="mb-0 fz-14"><i class="fa fa-lightbulb-o"></i>&nbsp;Pro tip: In case you don't find any available slots, please use the navigation arrows to check the available slots in the next month.</p>
         </div>
         @include('appointmentslots::select_appointments.select_appointment_modal')
     </div>
@@ -65,9 +65,11 @@
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     headerToolbar: { left: 'prev,next today', center: 'title', right: null},
                     height: 'auto',
+                    initialView: 'dayGridMonth',
                     navLinks: true,
                     editable: true,
                     selectable: true,
+                    selectMirror: true,
                     nowIndicator: true,
                     events: @json($freeSlots),
                     eventClick: function(args) {
