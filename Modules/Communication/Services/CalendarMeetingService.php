@@ -48,6 +48,7 @@ class CalendarMeetingService implements CalendarMeetingContract
         $this->setAttendees($details['attendees']);
         $this->setStartDateTime($details['start']);
         $this->setEndDateTime($details['end']);
+        $this->setDescription($details['description']);
         $this->isDetailsSet = true;
     }
 
@@ -125,6 +126,7 @@ class CalendarMeetingService implements CalendarMeetingContract
         $this->setHangoutLink($event->hangoutLink);
         $this->setStartDateTime($event->start->dateTime, $event->start->timeZone);
         $this->setEndDateTime($event->end->dateTime, $event->end->timeZone);
+        $this->setDescription($event->description);
         $this->id = $eventId;
     }
 
@@ -146,6 +148,16 @@ class CalendarMeetingService implements CalendarMeetingContract
     public function setSummary($summary)
     {
         $this->summary = $summary;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    public function getDescription($description)
+    {
+        $this->description = $description;
     }
 
     public function getAttendees()
