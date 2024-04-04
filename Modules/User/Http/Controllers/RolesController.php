@@ -4,7 +4,7 @@ namespace Modules\User\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\User\Entities\User;
-use Modules\User\Http\Requests\RoleRequest;
+use Modules\User\Http\Requests\UserRoleRequest;
 use Modules\User\Services\RoleService;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
