@@ -39,7 +39,7 @@
                 @foreach ($employees as $employee)
                     <tr>
                         <td>
-                            <a href="{{ route('employees.show', $employee->user_id) }}">
+                            <a href="{{ route('employees.show', $employee->id) }}">
                                 @if ($employee->overall_status === 'pending' && $filters['status'] == 'current')
                                     {{ $employee->name }} <span
                                         class="{{ config('constants.review-tags.pending.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.pending.title') }}</span>

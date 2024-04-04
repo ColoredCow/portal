@@ -419,4 +419,9 @@ class Project extends Model implements Auditable
     {
         return new ProjectFactory();
     }
+
+    public function employees()
+    {
+        return $this->belongsToMany(\Modules\HR\Entities\Employee::class);
+    }
 }

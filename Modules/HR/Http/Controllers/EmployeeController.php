@@ -56,10 +56,10 @@ class EmployeeController extends Controller
         ]);
     }
 
-    public function show($user_id)
+    public function show(Employee $employee)
     {
-        $employee = Employee::where('user_id', $user_id)->firstOrFail();
-        return view('hr.employees.show', ['employee' => $employee]);
+        $user = $employee->user()->withTrashed()->first();
+        return view('hr.employees.show', compact('employee'));
     }
 
     public function reports()
