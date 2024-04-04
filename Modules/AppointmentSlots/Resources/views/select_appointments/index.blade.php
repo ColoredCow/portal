@@ -63,9 +63,9 @@
             renderCalender(that) {
                 var calendarEl = document.getElementById('calendar');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
                     headerToolbar: { left: 'prev,next today', center: 'title', right: null},
                     height: 'auto',
-                    initialView: 'dayGridMonth',
                     navLinks: true,
                     editable: true,
                     selectable: true,
