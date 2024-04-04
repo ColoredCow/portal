@@ -58,8 +58,7 @@ class EmployeeController extends Controller
 
     public function show(Employee $employee)
     {
-        $user = $employee->user()->withTrashed()->first();
-        return view('hr.employees.show', compact('employee'));
+        return view('hr.employees.show', ['employee' => $employee]);
     }
 
     public function reports()

@@ -14,7 +14,6 @@ use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Rules\ProjectNameExist;
-use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {

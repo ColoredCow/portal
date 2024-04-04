@@ -52,7 +52,7 @@ class Project extends Model implements Auditable
     {
         return $this->hasMany(ProjectRepository::class);
     }
-
+    
     public function resourceRequirement()
     {
         return $this->hasMany(ProjectResourceRequirement::class);
@@ -418,10 +418,5 @@ class Project extends Model implements Auditable
     protected static function newFactory()
     {
         return new ProjectFactory();
-    }
-
-    public function employees()
-    {
-        return $this->belongsToMany(\Modules\HR\Entities\Employee::class);
     }
 }
