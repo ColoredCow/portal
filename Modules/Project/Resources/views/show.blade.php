@@ -153,8 +153,6 @@
                                         @else
                                             <tbody>
                                             @foreach($project->getTeamMembers ?:[] as $teamMember)
-                                            user object: $teamMember
-                                            employee ID: $teamMember->user->employee->id
                                                 <tr>
                                                     <th class="fz-lg-20 my-2 px-5 font-weight-normal">
                                                         <span>
