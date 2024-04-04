@@ -84,10 +84,4 @@ mix
     "Modules/Expense/Resources/assets/sass/app.scss",
     "public/css/expense.css"
   );
-mix
-  .js('Modules/AppointmentSlots/Resources/assets/js/app.js', 'public/js/appointmentslots.js')
-  .sass(
-    'Modules/AppointmentSlots/Resources/assets/sass/app.scss', 
-    'public/css/appointmentslots.css'
-    );
 mix.version();
