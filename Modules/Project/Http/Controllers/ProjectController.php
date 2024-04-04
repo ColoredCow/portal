@@ -71,13 +71,6 @@ class ProjectController extends Controller
         $contract = ProjectContract::where('project_id', $project->id)->first();
         $contractFilePath = $contract ? storage_path('app/' . $contract->contract_file_path) : null;
         $currentDate = today(config('constants.timezone.indian'));
-        $projectTeamMemberIds = DB::table('project_team_members')
-            ->where('project_id', $project->id)
-            ->pluck('team_member_id');
-
-        $employeeIds = DB::table('employees')
-            ->whereIn('user_id', $projectTeamMemberIds)
-            ->pluck('id');
 
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = $currentDate->subDay();
@@ -93,7 +86,6 @@ class ProjectController extends Controller
             'contractFilePath' => $contractFilePath,
             'daysTillToday' => $daysTillToday,
             'isApprovedWorkPipelineExist' => $isApprovedWorkPipelineExist,
-            'employeeIds' => $employeeIds,
         ]);
     }
 
