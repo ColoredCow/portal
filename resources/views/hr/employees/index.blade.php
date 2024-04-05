@@ -73,7 +73,7 @@
                                 {{ $employee->active_project_count }}
                             @endif
                         </td>
-                        <td class={{ $totalFTE > 1 ? 'text-success' : 'text-danger' }}>
+                        <td class={{ $totalFTE >= 1 ? 'text-success' : 'text-danger' }}>
                             {{ $totalFTE }}
                         </td>
                         <td>
