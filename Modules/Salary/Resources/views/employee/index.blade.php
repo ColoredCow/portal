@@ -22,12 +22,15 @@
                                 <input name="submitType" type="submit" class="btn btn-primary ml-7 px-4" value="Update"/>
                             </span>
                             <span data-toggle="tooltip" data-placement="top" title="Create a new salary entry">
-                                <input name="submitType" type="submit" class="btn btn-primary ml-2 px-4" value="Save as Increment"/>
+                                {{-- <input name="submitType" type="submit" class="btn btn-primary ml-2 px-4" value="Save as Increment"/> --}}
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#saveAsIncrementModal">
+                                    Save as Increment
+                                </button>
                             </span>
                         </div>
                     </div>
-                    
                 </div>
+                @include('salary::employee.grossSalaryModal')
                 <div class="card-body">
                     <div class="d-flex justify-content-between mx-5 align-items-end">
                         <h1>{{ $employee->name }}</h1>
