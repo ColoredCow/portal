@@ -66,4 +66,8 @@ class SalaryController extends Controller
 
         return redirect()->back()->with('success', 'Gross Salary saved successfully!');
     }
+
+    public function generateAppraisalLetter(Request $request, Employee $employee){
+        dd($employee);
+    }
 }

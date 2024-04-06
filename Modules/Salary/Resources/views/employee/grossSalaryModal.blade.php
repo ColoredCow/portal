@@ -8,7 +8,7 @@
         </button>
         </div>
         <div class="modal-body">
-            <a class="btn btn-sm btn-info text-white font-weight-bold" target="_blank">Genearte PDF</a>
+            <a class="btn btn-sm btn-info text-white font-weight-bold" target="_blank" href="{{route ('salary.generate-appraisal-letter') }}">Genearte PDF</a>
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
