@@ -22,7 +22,6 @@
                                 <input name="submitType" type="submit" class="btn btn-primary ml-7 px-4" value="Update"/>
                             </span>
                             <span data-toggle="tooltip" data-placement="top" title="Create a new salary entry">
-                                {{-- <input name="submitType" type="submit" class="btn btn-primary ml-2 px-4" value="Save as Increment"/> --}}
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#saveAsIncrementModal">
                                     Save as Increment
                                 </button>
