@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="modal-footer">
-        <button id="generatePdfButton" class="btn btn-primary text-white font-weight-bold" data-url ="{{route('salary.generate-appraisal-letter')}}"onclick="generatePdf()">Generate PDF</button>
+        <button id="generatePdfButton" class="btn btn-primary text-white font-weight-bold" data-url ="{{route('salary.employee.generate-appraisal-letter', $employee)}}"onclick="generatePdf()">Generate PDF</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <input name="submitType" type="submit" class="btn btn-primary ml-2 px-4" value="Save"/>
         </div>
@@ -39,7 +39,6 @@
             var button = document.getElementById("generatePdfButton");
             var url = button.getAttribute("data-url");
             var form = document.getElementById("salaryForm");
-            console.log(form, "form");
             form.setAttribute("action", url);
             form.setAttribute('target', '_blank');
             form.submit();

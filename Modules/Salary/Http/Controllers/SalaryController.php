@@ -68,8 +68,7 @@ class SalaryController extends Controller
     }
 
     public function generateAppraisalLetter(Request $request, Employee $employee){
-       $text = "hello Jyoti";
-       dd($request, "request");
+       dd($employee, "request");
         return $request;
     }
 }
