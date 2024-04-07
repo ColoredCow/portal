@@ -29,7 +29,7 @@ class CurrencyService implements CurrencyServiceContract
 
     public function getCurrentRatesInINR()
     {
-        $seconds = 1;
+        $seconds = 1 * 60 * 60 * 4;
 
         return Cache::remember('current_usd_rates', $seconds, function () {
             return $this->fetchExchangeRateInINR();
