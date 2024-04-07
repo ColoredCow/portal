@@ -37,12 +37,15 @@
         function generatePdf() {
             event.preventDefault();
             var button = document.getElementById("generatePdfButton");
-            var url = button.getAttribute("data-url");
-            var form = document.getElementById("salaryForm");
-            form.setAttribute("action", url);
-            form.setAttribute('target', '_blank');
-            form.submit();
-            window.open(url);
+            if(button){
+                var url = button.getAttribute("data-url");
+                var form = document.getElementById("salaryForm");
+                form.setAttribute("action", url);
+                form.setAttribute('target', '_blank');
+                form.submit();
+                var newWindow = window.open(url);
+                form.removeAttribute('target');
             }
+        }
     </script>
 @endsection
