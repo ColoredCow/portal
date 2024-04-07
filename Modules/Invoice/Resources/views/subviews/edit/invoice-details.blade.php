@@ -143,7 +143,8 @@
                     <div class="d-flex">
                         <label for="conversion_rate" class="w-145 mr-4"><a target="_blank" href="https://www.google.co.in/search?q=conversion+rate+usd+to+inr">Today's Google Conversion Rate:</a></label>
                         <input type="number" id="currentConversionRate" class="form-control ml-auto w-200 w-xl-272 bg-white" step="0.01"
-                            value="{{$currencyService->getCurrentRatesInINR()}}" disabled>
+                            {{-- value="{{$currencyService->getCurrentRatesInINR()['USD']}}" disabled --}}
+                            >
                     </div>
                 </div>
 
@@ -337,7 +338,7 @@
                 parseComment($event) {
                     let comment = event.target.value
                     formattedComment = comment.replace(/\s/g, ""); // Variable for storing the formatted comment string so that we can match it with the stored bank patterns
-                    
+                    console.log(this.currentExchangeRate());
                     // Extracting the paid amount according to the bank transaction pattern string.
                     var bank = null; 
                     for(let bankName in bank_message_patterns) {
@@ -373,12 +374,12 @@
                     switch (bank) {
                         case bank_message_patterns.axis.key:
                                 this.conversionRate = (conversionRate / this.amountPaid).toFixed(2);
-                                this.conversionRateDiff = Math.abs(this.currentExchangeRate - this.conversionRate).toFixed(2)
+                                this.conversionRateDiff = Math.abs(this.currentExchangeRate() - this.conversionRate).toFixed(2)
                             break;
         
                         default:
                                 this.conversionRate = conversionRate;
-                                this.conversionRateDiff = Math.abs(this.currentExchangeRate - this.conversionRate).toFixed(2)
+                                this.conversionRateDiff = Math.abs(this.currentExchangeRate() - this.conversionRate).toFixed(2)
                             break;
                     }
                 },
@@ -416,6 +417,17 @@
                     tinymce.get("emailBody").setContent(emailBody, {
                         format: "html"
                     });
+                },
+
+                currentExchangeRate() {
+                    var rate = 0;
+                    for (var exchangeRate in this.exchangeRates) {
+                        if (this.invoice.currency == 'EUR') {
+                            rate = exchangeRate.EUR;
+                            break; // Once you find the rate for USD, exit the loop
+                        }
+                    }
+                    return rate;
                 }
             },
 
@@ -428,7 +440,7 @@
                     projectId: "{{ $invoice->project_id }}",
                     client: @json($invoice->client),
                     amountPaidText: "|*amount_paid*|",
-                    currentExchangeRate: "{{ $currencyService->getCurrentRatesInINR() }}",
+                    exchangeRates: @json($currencyService->getCurrentRatesInINR()),
                     currencyTransactionCharge: "{{ $invoice->currency_transaction_charge ?: $invoice->currency }}",
                     comments: `{{ $invoice->comments }}`,
                     status: "{{ $invoice->status }}",

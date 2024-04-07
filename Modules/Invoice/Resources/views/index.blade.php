@@ -43,7 +43,7 @@
             </div>
         @enderror
         <div class="font-muli-bold my-4">
-            Current Exchange rates ($1) : &nbsp; ₹{{ $currencyService->getCurrentRatesInINR() }}
+            Current Exchange rates ($1) : &nbsp; ₹{{ $currencyService->getCurrentRatesInINR()['USD'] }}
         </div>
         @if (request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
             <div class="font-muli-bold my-4">

@@ -19,12 +19,13 @@ class CurrencyService implements CurrencyServiceContract
     {
         $this->client = new Client([
             'base_uri' => 'http://apilayer.net/api',
+            // 'base_uri' => 'https://api.apilayer.com/currency_data',
         ]);
     }
 
     public function getCurrentRatesInINR()
     {
-        $seconds = 1 * 60 * 60 * 4;
+        $seconds = 1 ;
 
         return Cache::remember('current_usd_rates', $seconds, function () {
             return $this->fetchExchangeRateInINR();
@@ -40,12 +41,19 @@ class CurrencyService implements CurrencyServiceContract
         $response = $this->client->get('live', [
             'query' => [
                 'access_key' => config('services.currencylayer.access_key'),
-                'currencies' => 'INR',
+                'currencies' => 'INR, EUR',
             ],
         ]);
 
         $data = json_decode($response->getBody()->getContents(), true);
+        dd($data);
 
-        return round($data['quotes']['USDINR'], 2);
+        $usdinr = round($data['quotes']['USDINR'], 2);
+        $usdeur = round($data['quotes']['USDEUR'], 2);
+
+        return [
+            'USD' => $usdinr,
+            'EUR' => $usdeur,
+        ];
     }
 }

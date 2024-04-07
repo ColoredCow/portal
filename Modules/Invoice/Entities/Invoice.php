@@ -160,6 +160,16 @@ class Invoice extends Model implements Auditable
         return $this->currency == 'INR';
     }
 
+    public function isAmountInUSD()
+    {
+        return $this->currency == 'USD';
+    }
+    
+    public function isAmountInEUR()
+    {
+        return $this->currency == 'EUR';
+    }
+    
     public function invoiceAmount()
     {
         $country = optional($this->client)->country;

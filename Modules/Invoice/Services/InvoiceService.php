@@ -95,8 +95,12 @@ class InvoiceService implements InvoiceServiceContract
                 continue;
             }
 
-            $invoiceAmount = $currentRates * (int) $invoice->amount;
-            $totalAmount += $invoiceAmount;
+            if ($invoice->isAmountInINR()) {
+                $invoiceAmount = $currentRates * (int) $invoice->amount;
+                $totalAmount += $invoiceAmount;
+                continue;
+            }
+
         }
 
         return round($totalAmount, 2);
