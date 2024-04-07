@@ -7,13 +7,43 @@
             <span aria-hidden="true">&times;</span>
         </button>
         </div>
-        <div class="modal-body">
-            <a class="btn btn-sm btn-info text-white font-weight-bold" target="_blank" href="{{route ('salary.generate-appraisal-letter') }}">Genearte PDF</a>
+        <div class="d-md-flex">
+            <div class="form-group col-md-5">
+                <label class="leading-none fz-24 ml-4 d-flex align-items-center" for="grossSalary">
+                    <span class="mr-1 mb-1">{{ __('Monthly Gross Salary') }}</span>
+                    <span><i class="fa fa-rupee"></i></span>
+                </label>
+                <input v-model="grossSalary" type="number" step="0.01" name="grossSalary" id="grossSalary" class="form-control ml-4 bg-light" placeholder="Enter Monthly Gross Salary" min="0" required>
+            </div>
+            <div class="form-group col-md-5">
+                <label class="leading-none fz-24 ml-4 d-flex align-items-center" for="grossSalary">
+                    <span class="mr-1 mb-1">{{ __('Commencement Date') }}</span>
+                </label>
+                <input v-model="commencementDate" type="date" name="commencementDate" id="commencementDate" class="form-control ml-4 bg-light" required>
+            </div>
         </div>
         <div class="modal-footer">
+        <button id="generatePdfButton" class="btn btn-primary text-white font-weight-bold" data-url ="{{route('salary.generate-appraisal-letter')}}"onclick="generatePdf()">Generate PDF</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <input name="submitType" type="submit" class="btn btn-primary ml-2 px-4" value="Save"/>
         </div>
     </div>
     </div>
 </div>
+
+@section('js_scripts')
+    @parent
+    <script>
+        function generatePdf() {
+            event.preventDefault();
+            var button = document.getElementById("generatePdfButton");
+            var url = button.getAttribute("data-url");
+            var form = document.getElementById("salaryForm");
+            console.log(form, "form");
+            form.setAttribute("action", url);
+            form.setAttribute('target', '_blank');
+            form.submit();
+            window.open(url);
+            }
+    </script>
+@endsection

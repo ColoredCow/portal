@@ -4,7 +4,7 @@
         <br>
         @include('hr.employees.sub-views.menu')
         <br>
-        <form action="{{ route('salary.employee.store', $employee) }}" method="POST">
+        <form action="{{ route('salary.employee.store', $employee) }}" method="POST" id ="salaryForm">
             @csrf
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
