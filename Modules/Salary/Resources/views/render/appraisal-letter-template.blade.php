@@ -94,16 +94,16 @@
         <div class="paddingTop content-font-size">
             <table>
                 <tr>
-                  <td>Row 1, Column 1</td>
-                  <td>Row 1, Column 2</td>
-                  <td>Row 1, Column 3</td>
-                  <td>Row 1, Column 4</td>
+                  <td>Current CTC</td>
+                  <td>New CTC</td>
+                  <td>Increase in %age</td>
+                  <td>Effective Date</td>
                 </tr>
                 <tr>
                   <td>Row 2, Column 1</td>
-                  <td>Row 2, Column 2</td>
+                  <td>{{ $data->grossSalary}}/-</td>
                   <td>Row 2, Column 3</td>
-                  <td>Row 2, Column 4</td>
+                  <td>{{ $data->date}}</td>
                 </tr>
               </table>
         </div>

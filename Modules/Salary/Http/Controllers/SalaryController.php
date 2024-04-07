@@ -70,10 +70,18 @@ class SalaryController extends Controller
     }
 
     public function generateAppraisalLetter(Request $request, Employee $employee){
+        $currentSalary = $employee->getPreviousSalary();
+        // $newSalary = $employee->getCurrentSalary();
+        // $percentageIncrement = getPercentageIncrementOfSalary($currentSalary, $newSalary);
+        dd($currentSalary);
         $currentDateFormatted = Carbon::now()->format('jS, M Y');
+        $commencementDate = Carbon::parse($request->commencementDate);
+        $formattedCommencementDate = $commencementDate->format('jS F Y');
         $data = (object) [
             'employeeName' => $employee->name,
-            'date' => $currentDateFormatted
+            'date' => $currentDateFormatted,
+            'grossSalary' => $request->grossSalary,
+            'commencementDate' => $formattedCommencementDate
         ];
         $employeeName = $data->employeeName;
         $pdf = $this->showAppraisalLetterPdf($data);
