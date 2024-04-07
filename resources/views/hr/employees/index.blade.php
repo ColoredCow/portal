@@ -5,6 +5,9 @@
         <br>
         @include('hr.employees.menu')
         <br><br>
+        <!-- {{ url()->current() !== 'report/finance/employee/profitability' ? url()->current() : 'This is not the specified URL.' }} -->
+
+
         <div class="d-flex">
             <h1>{{ request()->get('staff_type') }} ({{ count($employees) }})</h1>
             <form id="employeeFilterForm" class="d-md-flex justify-content-between ml-md-3">

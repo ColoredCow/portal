@@ -71,7 +71,7 @@
 
                 <div class="col-md-3">
                     <div class="card h-75 bg-theme-gray-lighter">
-                        <a class="card-body text-decoration-none" href="#">
+                        <a class="card-body text-decoration-none" href="{{ route('report.employees.profitibality',['staff_type'=>'Employee', 'status'=>'current']) }}">
                             <h2 class="text-center">Employees</h2><br>
                         </a>
                     </div>
