@@ -6,8 +6,10 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\Employee;
+use Illuminate\Support\Facades\App;
 use Modules\Salary\Entities\EmployeeSalary;
 use Modules\Salary\Entities\SalaryConfiguration;
+use Carbon\Carbon;
 
 class SalaryController extends Controller
 {
@@ -68,7 +70,24 @@ class SalaryController extends Controller
     }
 
     public function generateAppraisalLetter(Request $request, Employee $employee){
-       dd($employee, "request");
-        return $request;
+        $currentDateFormatted = Carbon::now()->format('jS, M Y');
+        $data = (object) [
+            'employeeName' => $employee->name,
+            'date' => $currentDateFormatted
+        ];
+        $employeeName = $data->employeeName;
+        $pdf = $this->showAppraisalLetterPdf($data);
+
+        return $pdf->inline($employeeName . '.pdf');
     }
+
+
+    public function showAppraisalLetterPdf($data){
+        $pdf = App::make('snappy.pdf.wrapper');
+        $template = 'appraisal-letter-template';
+        $html = view('salary::render.' . $template, compact('data'));
+        $pdf->loadHTML($html);
+        return $pdf;
+    }
+
 }
