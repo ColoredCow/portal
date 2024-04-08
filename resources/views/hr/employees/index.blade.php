@@ -1,13 +1,14 @@
 @extends('layouts.app')
-
 @section('content')
+
+@php
+    $route_name = Route::getCurrentRoute()->getName();
+@endphp
+
     <div class="container">
         <br>
         @include('hr.employees.menu')
         <br><br>
-        <!-- {{ url()->current() !== 'report/finance/employee/profitability' ? url()->current() : 'This is not the specified URL.' }} -->
-
-
         <div class="d-flex">
             <h1>{{ request()->get('staff_type') }} ({{ count($employees) }})</h1>
             <form id="employeeFilterForm" class="d-md-flex justify-content-between ml-md-3">
@@ -33,6 +34,7 @@
             <thead class="thead-dark">
                 <tr class="sticky-top">
                     <th>Name</th>
+                @if($route_name==="employee")
                     <th>Active Projects Count</th>
                     <th>
                         Overall FTE
@@ -46,6 +48,14 @@
                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                         </span>
                     </th>
+                @else
+                    <th>
+                        Employee Earning
+                        <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="In Hours">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        </span>
+                    </th>
+                @endif
                 </tr>
                 @foreach ($employees as $employee)
                     <tr>
@@ -69,6 +79,7 @@
                                 @endif
                             </a>
                         </td>
+                        @if($route_name==="employee")
                         <td>
                             @if ($employee->user == null)
                                 0
@@ -88,6 +99,17 @@
                                 {{ $user->total_hours['non_billable'] }}
                             </span>
                         </td>
+                        @else
+                        <td>
+                            <span class="text-success">
+                                0
+                            </span>
+                            |
+                            <span class="text-secondary">
+                               0
+                            </span>
+                        </td>
+                        @endif
                     </tr>
                 @endforeach
         </table>
