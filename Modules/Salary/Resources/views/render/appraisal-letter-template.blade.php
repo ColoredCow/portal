@@ -84,7 +84,7 @@
             <span class="name">{{ $data->employeeName }}</span>,<br>
             <span class="address">Buxar</span>
         </div>
-        <div class="user-details name">Dear {{ $data->employeeName  }},</div>
+        <div class="user-details name">Dear {{ $data->employeeFirstName }},</div>
         <div class="pay-details">
             The management of ColoredCow Consulting Pvt. Ltd. takes pleasure in informing you that
             your remuneration has been appraised with {{ $data->salaryIncreasePercentage }} w.e.f <b>{{ $data->commencementDate }}</b>. Below are the

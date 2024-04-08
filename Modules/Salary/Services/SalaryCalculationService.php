@@ -38,6 +38,7 @@ class SalaryCalculationService
         $fetchEmployeeSalarydetails = $this->employeeSalaryDetails($request, $employee);
         $fetchEmployeeDetails = $this->employeeDetails($employee);
         $employeeName = $employee->name;
+        $employeeFirstName = explode(' ', $employeeName)[0];
         $currentDate = Carbon::now()->format('jS, M Y');
         $grossSalary = (int)$request->grossSalary;
         $commencementDate = Carbon::parse($request->commencementDate)->format('jS F Y');
@@ -52,6 +53,7 @@ class SalaryCalculationService
 
         $data = (object) [
             'employeeName' => $employeeName,
+            'employeeFirstName' => $employeeFirstName,
             'date' => $currentDate,
             'grossSalary' => $grossSalary,
             'commencementDate' => $commencementDate,
