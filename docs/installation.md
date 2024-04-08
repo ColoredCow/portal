@@ -363,3 +363,27 @@ Before you start following the guidelines, make sure to go through the [prerequi
         ```sh
         php artisan optimize
         ```
+14. _(Optional)_ Setup API Layer API Key for currency excahange rates:
+
+    1. Open site https://apilayer.com/
+
+    2. Click on "Browse API Marketplace".
+
+    <img src="https://github.com/ColoredCow/portal/assets/112390100/bfa6f50c-a863-4202-9445-6bf6e8a26319" width="400">
+
+    3. Under catogories click on "Currency"
+
+    <img src="https://github.com/ColoredCow/portal/assets/112390100/50b338cc-ed8c-498b-b8ea-e002f451d187" width="200">
+
+    4. Select Currency Data API.
+
+       <img src="https://github.com/ColoredCow/portal/assets/112390100/6d5d3318-ab0c-4c52-8cba-37725798bfa8" width="200">
+
+    6. Select the Free plan.
+
+       <img src="https://github.com/ColoredCow/portal/assets/112390100/e6c2bd61-153d-4260-9fe5-d97700199724" width="200">
+
+    8. Copy your API key and paste it in the `.env` file.
+       `CURRENCYLAYER_API_KEY=your api key`
+
+    9. Run the command `php artisan config:cache`
