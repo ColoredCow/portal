@@ -25,7 +25,7 @@
         <div class="modal-footer">
         <button id="generatePdfButton" class="btn btn-primary text-white font-weight-bold" data-url ="{{route('salary.employee.generate-appraisal-letter', $employee)}}"onclick="generatePdf()">Generate PDF</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input name="submitType" type="submit" class="btn btn-primary ml-2 px-4" value="Save"/>
+        <input name="submitType" type="submit" id="saveButton" class="btn btn-primary ml-2 px-4" value="Save" data-url ="{{ route('salary.employee.store', $employee) }}" onclick="resetPath()"/>
         </div>
     </div>
     </div>
@@ -40,11 +40,23 @@
             if(button){
                 var url = button.getAttribute("data-url");
                 var form = document.getElementById("salaryForm");
+                const originalUrl = form.getAttribute('action');
                 form.setAttribute("action", url);
                 form.setAttribute('target', '_blank');
                 form.submit();
                 var newWindow = window.open(url);
-                form.removeAttribute('target');
+            }
+        }
+
+        function resetPath(){
+            event.preventDefault();
+            var button = document.getElementById("saveButton");
+            if(button){
+                var url = button.getAttribute("data-url");
+                var form = document.getElementById("salaryForm");
+                form.removeAttribute('target', '_blank');
+                form.setAttribute("action", url);
+                form.submit();
             }
         }
     </script>
