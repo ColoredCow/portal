@@ -5,6 +5,7 @@ namespace Modules\Salary\Services;
 use Modules\Salary\Entities\SalaryConfiguration;
 use Modules\Salary\Entities\EmployeeSalary;
 use Carbon\Carbon;
+use Modules\HR\Entities\Employee;
 
 class SalaryCalculationService
 {
@@ -35,6 +36,7 @@ class SalaryCalculationService
     public function appraisalLetterData($request, $employee){
 
         $fetchEmployeeSalarydetails = $this->employeeSalaryDetails($request, $employee);
+        $fetchEmployeeDetails = $this->employeeDetails($employee);
         $employeeName = $employee->name;
         $currentDate = Carbon::now()->format('jS, M Y');
         $grossSalary = (int)$request->grossSalary;
@@ -43,9 +45,11 @@ class SalaryCalculationService
         $hra = (int)ceil($this->hra());
         $transportAllowance = (int)$this->salaryConfig->get('transport_allowance')->fixed_amount;
         $otherAllowance = $this->employeeOtherAllowance($grossSalary);
-        $employerShare = $this->employerShare($fetchEmployeeSalarydetails);
-        $annualCTC = $this->employerAnnualCTC($fetchEmployeeSalarydetails);
-        dd($annualCTC);
+        $employeeShare = $this->employeeShare($fetchEmployeeSalarydetails);
+        $annualCTC = $this->employeeAnnualCTC($fetchEmployeeSalarydetails);
+        $previousSalary = $this->employeePreviousSalary($fetchEmployeeDetails);
+        $salaryIncreasePercentage = $this->salaryIncreasePercentage($fetchEmployeeDetails);
+
         $data = (object) [
             'employeeName' => $employeeName,
             'date' => $currentDate,
@@ -55,7 +59,10 @@ class SalaryCalculationService
             'hra' => $hra,
             'tranportAllowance' => $transportAllowance,
             'otherAllowance' => $otherAllowance,
-            'employerShare' => $employerShare
+            'employeeShare' => $employeeShare,
+            'annualCTC' => $annualCTC,
+            'previousSalary' => $previousSalary,
+            'salaryIncreasePercentage' => $salaryIncreasePercentage
         ];
         return $data;
 
@@ -74,7 +81,7 @@ class SalaryCalculationService
         return $employeeSalaryDetails;
     }
 
-    public function employerShare($fetchEmployeeSalarydetails){
+    public function employeeShare($fetchEmployeeSalarydetails){
         $epfShare = (int)$fetchEmployeeSalarydetails->getEmployeeEpfAttribute();
         $edliShare = (int)$fetchEmployeeSalarydetails->getEdliChargesAttribute();
         $administrationShare = (int)$fetchEmployeeSalarydetails->getAdministrationChargesAttribute();
@@ -83,8 +90,28 @@ class SalaryCalculationService
         return $totalShare;
     }
 
-    public function employerAnnualCTC($fetchEmployeeSalarydetails){
-        $employerAnnualCTC = (int)$fetchEmployeeSalarydetails->getCtcAnnualAttribute();
-        return $employerAnnualCTC;
+    public function employeeAnnualCTC($fetchEmployeeSalarydetails){
+        $employeeAnnualCTC = (int)$fetchEmployeeSalarydetails->getCtcAnnualAttribute();
+        return $employeeAnnualCTC;
     }
+
+    public function employeeDetails($employee){
+        $employeeDetails = new Employee([
+            'user_id' => $employee->id,
+            'name' => $employee->name,
+            'staff_type' => 'Employee',
+        ]);
+        return $employeeDetails;
+    }
+
+    public function employeePreviousSalary($employeeDetails){
+        $employeePreviousCTC = (int)$employeeDetails->getPreviousSalary();
+        return $employeePreviousCTC;
+    }
+
+    public function salaryIncreasePercentage($employeeDetails){
+        $employeeIncreasePercentage = (int)$employeeDetails->getLatestSalaryPercentageIncrementAttribute();
+        return $employeeIncreasePercentage;
+    }
+
 }

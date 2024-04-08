@@ -72,14 +72,13 @@
 </head>
 
 <body>
-    {{-- @dd($data->date) --}}
     <div class="body-container">
         <div class="cc-image">
             <img src="{{ public_path() . '/images/coloredcow.png' }}" alt="" height="50" width="200">
         </div>
         <hr></hr>
         <div class="confidential-text">Confidential</div>
-        <div class="date">Date: <b>{{ $data->date }}</b></div>
+        <div class="date">Date: <b>{{ $data->commencementDate }}</b></div>
         <div class="user-details">
             To<br>
             <span class="name">{{ $data->employeeName }}</span>,<br>
@@ -88,7 +87,7 @@
         <div class="user-details name">Dear {{ $data->employeeName  }},</div>
         <div class="pay-details">
             The management of ColoredCow Consulting Pvt. Ltd. takes pleasure in informing you that
-            your remuneration has been appraised with 18.59% w.e.f <b>{{ $data->date }}</b>. Below are the
+            your remuneration has been appraised with {{ $data->salaryIncreasePercentage }} w.e.f <b>{{ $data->commencementDate }}</b>. Below are the
             details of the pay raise.
         </div>
         <div class="paddingTop content-font-size">
@@ -100,20 +99,29 @@
                   <td>Effective Date</td>
                 </tr>
                 <tr>
-                  <td>Row 2, Column 1</td>
-                  <td>{{ $data->grossSalary}}/-</td>
-                  <td>Row 2, Column 3</td>
-                  <td>{{ $data->date}}</td>
+                  <td>{{ $data->previousSalary }}</td>
+                  <td>{{ $data->annualCTC}}/-</td>
+                  <td>{{ $data->salaryIncreasePercentage }}</td>
+                  <td>{{ $data->commencementDate}}</td>
                 </tr>
               </table>
         </div>
         <div class="revised-details">
-            Your revised remuneration will be <b>INR 41,673/-</b> per month as per the following breakup.<br>
+            Your revised remuneration will be <b>INR {{ $data->grossSalary}}/-</b> per month as per the following breakup.<br>
             <div class="salary-details">
-            <span>Basic Salary</span><span>Rs. 19,575/-</span><br>
+            <span>Basic Salary</span><span>{{ $data->basicSalary }}/-</span><br>
             </div>
             <div class="salary-details">
-            <span >HRA. Allowance</span><span>Rs. 9,788/-</span>
+            <span >HRA. Allowance</span><span>{{ $data->hra }}/-</span>
+            </div>
+            <div class="salary-details">
+                <span >Conveyance Allowance</span><span>{{ $data->tranportAllowance }}/-</span>
+            </div>
+            <div class="salary-details">
+                <span >Other Allowance</span><span>{{ $data->otherAllowance }}/-</span>
+            </div>
+            <div class="salary-details">
+                <span >P.F. and Charges (Employer share)</span><span>{{ $data->employeeShare }}/-</span>
             </div>
         </div>
         <div class="paddingTop content-font-size"><b>***Additional Medical insurance of 5 Lakhs, rupees are added to your CTC.</b></div>

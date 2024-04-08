@@ -87,5 +87,4 @@ class SalaryController extends Controller
         return $pdf;
     }
 
-
 }
