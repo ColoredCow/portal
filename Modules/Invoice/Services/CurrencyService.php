@@ -18,7 +18,7 @@ class CurrencyService implements CurrencyServiceContract
     public function setClient()
     {
         $headers = $headers = [
-            'apikey' => config('services.currencylayer.access_key')
+            'apikey' => config('services.currencylayer.access_key'),
         ];
         $this->client = new Client([
             // 'base_uri' => 'http://apilayer.net/api',    //This is old API URL
