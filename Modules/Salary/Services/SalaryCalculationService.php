@@ -135,13 +135,13 @@ class SalaryCalculationService
         return $employeeIncreasePercentage;
     }
 
-    public function sendAppraisalLetterMail($request , $employee)
+    public function sendAppraisalLetterMail($request, $employee)
     {
         $employeeName = $employee->name;
         $employeeFirstName = explode(' ', $employeeName)[0];
         $commencementDate = Carbon::parse($request->commencementDate)->format('jS F Y');
         $employeeUserId = $employee->user_id;
-        $employeeDetails = User::where('id', $employeeUserId )->first();
+        $employeeDetails = User::where('id', $employeeUserId)->first();
         $employeeEmail = $employeeDetails->email;
         $ccEmail = $request->ccemails;
 
