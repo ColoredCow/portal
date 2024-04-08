@@ -22,10 +22,11 @@ class SendAppraisalLetterMail extends Mailable
 
     public function build()
     {
+        $ccEmails = array_map('trim', explode(',', $this->employee['ccemails']));
         return $this->from('hr@coloredcow.com', 'Mohit Sharma')
         ->subject('Appraisal Letter -', $this->employee['employeeName'])
         ->view('salary::emails.appraisalLetterMail', $this->employee)
         ->attachData($this->pdf, $this->employee['employeeName'] . '.pdf', ['mime' => 'application/pdf'],)
-        ->cc($this->employee['ccemails']);
+        ->cc($ccEmails);
     }
 }
