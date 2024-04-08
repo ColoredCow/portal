@@ -6,7 +6,7 @@ use Modules\Salary\Entities\SalaryConfiguration;
 use Modules\Salary\Entities\EmployeeSalary;
 use Carbon\Carbon;
 use Modules\HR\Entities\Employee;
-
+use Modules\User\Entities\User;
 class SalaryCalculationService
 {
     protected $grossSalary;
@@ -114,6 +114,24 @@ class SalaryCalculationService
     public function salaryIncreasePercentage($employeeDetails){
         $employeeIncreasePercentage = (int)$employeeDetails->getLatestSalaryPercentageIncrementAttribute();
         return $employeeIncreasePercentage;
+    }
+
+    public function sendAppraisalLetterMail($request , $employee){
+
+        $employeeName = $employee->name;
+        $employeeFirstName = explode(' ', $employeeName)[0];
+        $commencementDate = Carbon::parse($request->commencementDate)->format('jS F Y');
+        $employeeUserId = $employee->user_id;
+        $employeeDetails = User::where('id',$employeeUserId )->first();
+        $employeeEmail = $employeeDetails->email;
+
+        $data = [
+            'employeeName' => $employeeName,
+            'employeeFirstName' => $employeeFirstName,
+            'commencementDate' => $commencementDate,
+            'employeeEmail' => $employeeEmail
+        ];
+        return $data;
     }
 
 }

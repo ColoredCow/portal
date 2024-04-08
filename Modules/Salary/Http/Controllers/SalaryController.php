@@ -69,7 +69,10 @@ class SalaryController extends Controller
         $currentSalaryObject->commencement_date = $request->commencementDate;
         $currentSalaryObject->save();
 
-        Mail::to('jyoti.srivastava@coloredcow.com')->send(new SendAppraisalLetterMail($employee));
+        $salaryService = new SalaryCalculationService($request->grossSalary);
+        $data = $salaryService->sendAppraisalLetterMail($request, $employee);
+
+        Mail::to($data['employeeEmail'])->send(new SendAppraisalLetterMail($data));
 
         return redirect()->back()->with('success', 'Gross Salary saved successfully!');
     }
@@ -79,7 +82,7 @@ class SalaryController extends Controller
         $data = $salaryService->appraisalLetterData($request, $employee);
         $employeeName = $data->employeeName;
         $pdf = $this->showAppraisalLetterPdf($data);
-        return $pdf->inline($employeeName . '.pdf');
+        return $pdf->inline($employeeName.'.pdf');
     }
 
 

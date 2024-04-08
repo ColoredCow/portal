@@ -15,12 +15,13 @@ class SendAppraisalLetterMail extends Mailable
     public function __construct($employee)
     {
         $this->employee = $employee;
+
     }
 
     public function build()
     {
-        return $this->from('jyoti.srivastava@colored.com', 'Jyoti Srivastava')
-        ->subject('hello - Salary Notification')
-        ->view('salary::emails.appraisalLetterMail');
+        return $this->from('hr@coloredcow.com', 'Mohit Sharma')
+        ->subject('Appraisal Letter -', $this->employee['employeeName'])
+        ->view('salary::emails.appraisalLetterMail', $this->employee);
     }
 }
