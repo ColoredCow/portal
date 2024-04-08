@@ -124,12 +124,14 @@ class SalaryCalculationService
         $employeeUserId = $employee->user_id;
         $employeeDetails = User::where('id',$employeeUserId )->first();
         $employeeEmail = $employeeDetails->email;
+        $ccEmail = $request->ccemails;
 
         $data = [
             'employeeName' => $employeeName,
             'employeeFirstName' => $employeeFirstName,
             'commencementDate' => $commencementDate,
-            'employeeEmail' => $employeeEmail
+            'employeeEmail' => $employeeEmail,
+            'ccemails' => $ccEmail
         ];
         return $data;
     }

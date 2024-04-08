@@ -22,10 +22,10 @@ class SendAppraisalLetterMail extends Mailable
 
     public function build()
     {
-        // dd($this->pdf, %);
         return $this->from('hr@coloredcow.com', 'Mohit Sharma')
         ->subject('Appraisal Letter -', $this->employee['employeeName'])
         ->view('salary::emails.appraisalLetterMail', $this->employee)
-        ->attachData($this->pdf, $this->employee['employeeName'] . '.pdf', ['mime' => 'application/pdf'],);
+        ->attachData($this->pdf, $this->employee['employeeName'] . '.pdf', ['mime' => 'application/pdf'],)
+        ->cc($this->employee['ccemails']);
     }
 }

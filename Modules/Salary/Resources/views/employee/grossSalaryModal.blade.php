@@ -22,6 +22,12 @@
                 <input v-model="commencementDate" type="date" name="commencementDate" id="commencementDate" class="form-control ml-4 bg-light" required>
             </div>
         </div>
+        <div class="form-group col-md-5">
+            <label class="leading-none fz-24 ml-4 d-flex align-items-center" for="cc_emails">
+                <span class="mr-1 mb-1">{{ __('CC emails') }}</span>
+            </label>
+            <input v-model="cc_emails" type="email" step="0.01" name="ccemails" id="ccemails" class="form-control ml-4 bg-light" placeholder="Enter emails to be cced" min="0" required>
+        </div>
         <div class="modal-footer">
         <button id="generatePdfButton" class="btn btn-primary text-white font-weight-bold" data-url ="{{route('salary.employee.generate-appraisal-letter', $employee)}}"onclick="generatePdf()">Generate PDF</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
