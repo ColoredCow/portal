@@ -77,6 +77,6 @@ class CurrencyService implements CurrencyServiceContract
 
         $data = json_decode($response->getBody()->getContents(), true);
 
-        return ($data['quotes']);
+        return $data['quotes'];
     }
 }
