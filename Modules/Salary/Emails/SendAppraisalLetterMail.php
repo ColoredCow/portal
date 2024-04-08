@@ -11,17 +11,21 @@ class SendAppraisalLetterMail extends Mailable
     use Queueable, SerializesModels;
 
     public $employee;
+    public $pdf;
 
-    public function __construct($employee)
+    public function __construct($employee, $pdf)
     {
         $this->employee = $employee;
+        $this->pdf = $pdf;
 
     }
 
     public function build()
     {
+        // dd($this->pdf, %);
         return $this->from('hr@coloredcow.com', 'Mohit Sharma')
         ->subject('Appraisal Letter -', $this->employee['employeeName'])
-        ->view('salary::emails.appraisalLetterMail', $this->employee);
+        ->view('salary::emails.appraisalLetterMail', $this->employee)
+        ->attachData($this->pdf, $this->employee['employeeName'] . '.pdf', ['mime' => 'application/pdf'],);
     }
 }

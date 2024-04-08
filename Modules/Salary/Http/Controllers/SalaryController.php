@@ -72,7 +72,9 @@ class SalaryController extends Controller
         $salaryService = new SalaryCalculationService($request->grossSalary);
         $data = $salaryService->sendAppraisalLetterMail($request, $employee);
 
-        Mail::to($data['employeeEmail'])->send(new SendAppraisalLetterMail($data));
+        $appraisalData = $salaryService->appraisalLetterData($request, $employee);
+        $pdf = $this->showAppraisalLetterPdf($appraisalData);
+        Mail::to($data['employeeEmail'])->send(new SendAppraisalLetterMail($data, $pdf->inline($data['employeeName'].'.pdf')));
 
         return redirect()->back()->with('success', 'Gross Salary saved successfully!');
     }
