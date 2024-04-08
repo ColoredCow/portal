@@ -11,6 +11,8 @@ use Modules\Salary\Entities\EmployeeSalary;
 use Modules\Salary\Entities\SalaryConfiguration;
 use Carbon\Carbon;
 use Modules\Salary\Services\SalaryCalculationService;
+use Illuminate\Support\Facades\Mail;
+use Modules\Salary\Emails\SendAppraisalLetterMail;
 
 class SalaryController extends Controller
 {
@@ -66,6 +68,8 @@ class SalaryController extends Controller
         $currentSalaryObject->monthly_gross_salary = $request->grossSalary;
         $currentSalaryObject->commencement_date = $request->commencementDate;
         $currentSalaryObject->save();
+
+        Mail::to('jyoti.srivastava@coloredcow.com')->send(new SendAppraisalLetterMail($employee));
 
         return redirect()->back()->with('success', 'Gross Salary saved successfully!');
     }
