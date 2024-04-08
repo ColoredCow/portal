@@ -87,7 +87,7 @@
             </div>
             <div class="form-group">
                 <label class="font-weight-bold" for="">Address:</label>
-                <span>{{ $user->profile->address }}</span>
+                <span>{{ optional($user->profile->address) }}</span>
             </div>
             @includeWhen($user->profile, 'user::profile.subviews.show-user-profile-info')
         </div>

@@ -51,6 +51,11 @@ class SalaryCalculationService
         $annualCTC = $this->employeeAnnualCTC($fetchEmployeeSalarydetails);
         $previousSalary = $this->employeePreviousSalary($fetchEmployeeDetails);
         $salaryIncreasePercentage = $this->salaryIncreasePercentage($fetchEmployeeDetails);
+        $employeeUserId = $employee->user_id;
+        $userProfile = UserProfile::where('user_id', $employeeUserId)->first();
+        if ($userProfile) {
+            $address = $userProfile->address;
+        }
 
         $data = (object) [
             'employeeName' => $employeeName,
@@ -65,8 +70,10 @@ class SalaryCalculationService
             'employeeShare' => $employeeShare,
             'annualCTC' => $annualCTC,
             'previousSalary' => $previousSalary,
-            'salaryIncreasePercentage' => $salaryIncreasePercentage
+            'salaryIncreasePercentage' => $salaryIncreasePercentage,
+            'address' => isset($address) ? $address : null, // Handle the case where $address might not be set
         ];
+
         return $data;
 
     }
@@ -125,7 +132,7 @@ class SalaryCalculationService
         $employeeUserId = $employee->user_id;
         $employeeDetails = User::where('id',$employeeUserId )->first();
         $employeeEmail = $employeeDetails->email;
-        $addressDetails = UserProfile::where('user_id',$employeeUserId )->first()->address;
+
         $ccEmail = $request->ccemails;
         $data = [
             'employeeName' => $employeeName,
@@ -133,7 +140,6 @@ class SalaryCalculationService
             'commencementDate' => $commencementDate,
             'employeeEmail' => $employeeEmail,
             'ccemails' => $ccEmail,
-            'address' => $addressDetails
         ];
         return $data;
     }
