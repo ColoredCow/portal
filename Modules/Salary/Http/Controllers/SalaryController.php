@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\App;
 use Modules\Salary\Entities\EmployeeSalary;
 use Modules\Salary\Entities\SalaryConfiguration;
 use Carbon\Carbon;
+use Modules\Salary\Services\SalaryCalculationService;
 
 class SalaryController extends Controller
 {
@@ -70,22 +71,10 @@ class SalaryController extends Controller
     }
 
     public function generateAppraisalLetter(Request $request, Employee $employee){
-        $currentSalary = $employee->getPreviousSalary();
-        // $newSalary = $employee->getCurrentSalary();
-        // $percentageIncrement = getPercentageIncrementOfSalary($currentSalary, $newSalary);
-        dd($currentSalary);
-        $currentDateFormatted = Carbon::now()->format('jS, M Y');
-        $commencementDate = Carbon::parse($request->commencementDate);
-        $formattedCommencementDate = $commencementDate->format('jS F Y');
-        $data = (object) [
-            'employeeName' => $employee->name,
-            'date' => $currentDateFormatted,
-            'grossSalary' => $request->grossSalary,
-            'commencementDate' => $formattedCommencementDate
-        ];
+        $salaryService = new SalaryCalculationService($request->grossSalary);
+        $data = $salaryService->appraisalLetterData($request, $employee);
         $employeeName = $data->employeeName;
         $pdf = $this->showAppraisalLetterPdf($data);
-
         return $pdf->inline($employeeName . '.pdf');
     }
 
@@ -97,5 +86,6 @@ class SalaryController extends Controller
         $pdf->loadHTML($html);
         return $pdf;
     }
+
 
 }
