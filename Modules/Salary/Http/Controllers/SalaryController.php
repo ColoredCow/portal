@@ -7,11 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\Employee;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Mail;
 use Modules\Salary\Entities\EmployeeSalary;
 use Modules\Salary\Entities\SalaryConfiguration;
-use Carbon\Carbon;
 use Modules\Salary\Services\SalaryCalculationService;
-use Illuminate\Support\Facades\Mail;
 use Modules\Salary\Emails\SendAppraisalLetterMail;
 
 class SalaryController extends Controller
@@ -74,26 +73,29 @@ class SalaryController extends Controller
 
         $appraisalData = $salaryService->appraisalLetterData($request, $employee);
         $pdf = $this->showAppraisalLetterPdf($appraisalData);
-        Mail::to($data['employeeEmail'])->send(new SendAppraisalLetterMail($data, $pdf->inline($data['employeeName'].'.pdf')));
+        Mail::to($data['employeeEmail'])->send(new SendAppraisalLetterMail($data, $pdf->inline($data['employeeName'] . '.pdf')));
 
         return redirect()->back()->with('success', 'Gross Salary saved successfully!');
     }
 
-    public function generateAppraisalLetter(Request $request, Employee $employee){
+    public function generateAppraisalLetter(Request $request, Employee $employee)
+    {
         $salaryService = new SalaryCalculationService($request->grossSalary);
         $data = $salaryService->appraisalLetterData($request, $employee);
         $employeeName = $data->employeeName;
         $pdf = $this->showAppraisalLetterPdf($data);
-        return $pdf->inline($employeeName.'.pdf');
+
+        return $pdf->inline($employeeName . '.pdf');
     }
 
 
-    public function showAppraisalLetterPdf($data){
+    public function showAppraisalLetterPdf($data)
+    {
         $pdf = App::make('snappy.pdf.wrapper');
         $template = 'appraisal-letter-template';
         $html = view('salary::render.' . $template, compact('data'));
         $pdf->loadHTML($html);
+
         return $pdf;
     }
-
 }

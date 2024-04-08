@@ -2,12 +2,12 @@
 
 namespace Modules\Salary\Services;
 
-use Modules\Salary\Entities\SalaryConfiguration;
-use Modules\Salary\Entities\EmployeeSalary;
 use Carbon\Carbon;
 use Modules\HR\Entities\Employee;
 use Modules\User\Entities\User;
 use Modules\User\Entities\UserProfile;
+use Modules\Salary\Entities\SalaryConfiguration;
+use Modules\Salary\Entities\EmployeeSalary;
 class SalaryCalculationService
 {
     protected $grossSalary;
@@ -34,18 +34,18 @@ class SalaryCalculationService
         return $this->basicSalary() * $percentage / 100;
     }
 
-    public function appraisalLetterData($request, $employee){
-
+    public function appraisalLetterData($request, $employee)
+    {
         $fetchEmployeeSalarydetails = $this->employeeSalaryDetails($request, $employee);
         $fetchEmployeeDetails = $this->employeeDetails($employee);
         $employeeName = $employee->name;
         $employeeFirstName = explode(' ', $employeeName)[0];
         $currentDate = Carbon::now()->format('jS, M Y');
-        $grossSalary = (int)$request->grossSalary;
+        $grossSalary = (int) $request->grossSalary;
         $commencementDate = Carbon::parse($request->commencementDate)->format('jS F Y');
-        $basicSalary = (int)ceil($this->basicSalary());
-        $hra = (int)ceil($this->hra());
-        $transportAllowance = (int)$this->salaryConfig->get('transport_allowance')->fixed_amount;
+        $basicSalary = (int) ceil($this->basicSalary());
+        $hra = (int) ceil($this->hra());
+        $transportAllowance = (int) $this->salaryConfig->get('transport_allowance')->fixed_amount;
         $otherAllowance = $this->employeeOtherAllowance($grossSalary);
         $employeeShare = $this->employeeShare($fetchEmployeeSalarydetails);
         $annualCTC = $this->employeeAnnualCTC($fetchEmployeeSalarydetails);
@@ -75,65 +75,76 @@ class SalaryCalculationService
         ];
 
         return $data;
-
     }
 
-    public function employeeOtherAllowance($grossSalary){
-        return $grossSalary - (int)ceil($this->basicSalary()) - (int)ceil($this->hra()) -(int)$this->salaryConfig->get('transport_allowance')->fixed_amount - (int)$this->salaryConfig->get('food_allowance')->fixed_amount;
+    public function employeeOtherAllowance($grossSalary)
+    {
+        return $grossSalary - (int) ceil($this->basicSalary()) - (int) ceil($this->hra()) - (int) $this->salaryConfig->get('transport_allowance')->fixed_amount - (int) $this->salaryConfig->get('food_allowance')->fixed_amount;
     }
 
-    public function employeeSalaryDetails($request, $employee){
+    public function employeeSalaryDetails($request, $employee)
+    {
         $employeeSalaryDetails = new EmployeeSalary([
             'employee_id' => $employee->id,
             'monthly_gross_salary' => $request->grossSalary,
             'commencement_date' => $request->commencementDate,
         ]);
+
         return $employeeSalaryDetails;
     }
 
-    public function employeeShare($fetchEmployeeSalarydetails){
-        $epfShare = (int)$fetchEmployeeSalarydetails->getEmployeeEpfAttribute();
-        $edliShare = (int)$fetchEmployeeSalarydetails->getEdliChargesAttribute();
-        $administrationShare = (int)$fetchEmployeeSalarydetails->getAdministrationChargesAttribute();
+    public function employeeShare($fetchEmployeeSalarydetails)
+    {
+        $epfShare = (int) $fetchEmployeeSalarydetails->getEmployeeEpfAttribute();
+        $edliShare = (int) $fetchEmployeeSalarydetails->getEdliChargesAttribute();
+        $administrationShare = (int) $fetchEmployeeSalarydetails->getAdministrationChargesAttribute();
 
         $totalShare = $epfShare + $edliShare + $administrationShare;
+
         return $totalShare;
     }
 
-    public function employeeAnnualCTC($fetchEmployeeSalarydetails){
-        $employeeAnnualCTC = (int)$fetchEmployeeSalarydetails->getCtcAnnualAttribute();
+    public function employeeAnnualCTC($fetchEmployeeSalarydetails)
+    {
+        $employeeAnnualCTC = (int) $fetchEmployeeSalarydetails->getCtcAnnualAttribute();
+
         return $employeeAnnualCTC;
     }
 
-    public function employeeDetails($employee){
+    public function employeeDetails($employee)
+    {
         $employeeDetails = new Employee([
             'user_id' => $employee->id,
             'name' => $employee->name,
             'staff_type' => 'Employee',
         ]);
+
         return $employeeDetails;
     }
 
-    public function employeePreviousSalary($employeeDetails){
-        $employeePreviousCTC = (int)$employeeDetails->getPreviousSalary();
+    public function employeePreviousSalary($employeeDetails)
+    {
+        $employeePreviousCTC = (int) $employeeDetails->getPreviousSalary();
+
         return $employeePreviousCTC;
     }
 
-    public function salaryIncreasePercentage($employeeDetails){
-        $employeeIncreasePercentage = (int)$employeeDetails->getLatestSalaryPercentageIncrementAttribute();
+    public function salaryIncreasePercentage($employeeDetails)
+    {
+        $employeeIncreasePercentage = (int) $employeeDetails->getLatestSalaryPercentageIncrementAttribute();
         return $employeeIncreasePercentage;
     }
 
-    public function sendAppraisalLetterMail($request , $employee){
-
+    public function sendAppraisalLetterMail($request , $employee)
+    {
         $employeeName = $employee->name;
         $employeeFirstName = explode(' ', $employeeName)[0];
         $commencementDate = Carbon::parse($request->commencementDate)->format('jS F Y');
         $employeeUserId = $employee->user_id;
-        $employeeDetails = User::where('id',$employeeUserId )->first();
+        $employeeDetails = User::where('id', $employeeUserId )->first();
         $employeeEmail = $employeeDetails->email;
-
         $ccEmail = $request->ccemails;
+
         $data = [
             'employeeName' => $employeeName,
             'employeeFirstName' => $employeeFirstName,
@@ -141,6 +152,7 @@ class SalaryCalculationService
             'employeeEmail' => $employeeEmail,
             'ccemails' => $ccEmail,
         ];
+
         return $data;
     }
 
