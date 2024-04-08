@@ -23,7 +23,6 @@ class ProfitabilityController extends Controller
             ['meta_key' => 'profitability_threshold_value'],
             ['meta_value' => $request->profitability_threshold_value]
         );
-
         return redirect()->back()->with('status', 'Saved Successfully!');
     }
 }
