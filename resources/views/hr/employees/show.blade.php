@@ -3,10 +3,10 @@
 
 <div class="container">
     <br>
+    <h4 class="mb-5 font-weight-bold">Employee Details</h4>
         @include('hr.employees.sub-views.menu', $employee)
     <br>
     <div class="mt-4 card">
-        <div class="card-header pb-lg-5 fz-28"><div class="mt-4 ml-5">Employee Details</div></div>
         <div class="card-body">
             <div class="d-flex justify-content-between mx-5 align-items-end">
                 <div class="col">
@@ -18,7 +18,7 @@
                             <span class="font-weight-bold">Designation:</span>&nbsp;<p>{{$employee->hrJobDesignation->designation}}</p>
                         </div>
                         <div class="row ml-1">
-                            <span class="font-weight-bold">Domain:</span>&nbsp;<p>{{$employee->hrJobDesignation->hrJobDesignationDomain->domain}}</p>
+                            <span class="font-weight-bold">Domain:</span>&nbsp;<p>{{optional(optional($employee->hrJobDesignation)->hrJobDesignationDomain)->domain}}</p>
                         </div>
                     @endif
                 </div>

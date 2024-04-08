@@ -2,6 +2,7 @@
 @section('content')
     <div class="container" id="employee_salary_form">
         <br>
+        <h4 class="mb-5 font-weight-bold">Employee Salary ( <i class="fa fa-rupee"></i>&nbsp;)</h4>
         @include('hr.employees.sub-views.menu')
         <br>
         <form action="{{ route('salary.employee.store', $employee) }}" method="POST">
@@ -14,9 +15,6 @@
             <div class="mt-4 card">
                 <div class="card-header pb-lg-5 fz-28">
                     <div class="d-flex justify-content-between mt-4 ml-5">
-                        <div>
-                            Employee Salary ( <i class="fa fa-rupee"></i>&nbsp;)
-                        </div>
                         <div>
                             <span data-toggle="tooltip" data-placement="top" title="Update the existing entry">
                                 <input name="submitType" type="submit" class="btn btn-primary ml-7 px-4" value="Update"/>
