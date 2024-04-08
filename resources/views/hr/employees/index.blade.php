@@ -73,8 +73,12 @@
                                 {{ $employee->active_project_count }}
                             @endif
                         </td>
+                        @if(now()==now()->startOfMonth())
+                        <td>{{ 0 }}</td> 
+                        @else                       
                         <td class={{ $totalFTE >= 1 ? 'text-success' : 'text-danger' }}>
-                            {{ $totalFTE }}
+                        {{ $totalFTE }}
+                        @endif
                         </td>
                         <td>
                             <span class="text-success">
