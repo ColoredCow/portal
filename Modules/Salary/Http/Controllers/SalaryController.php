@@ -5,9 +5,9 @@ namespace Modules\Salary\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\HR\Entities\Employee;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
+use Modules\HR\Entities\Employee;
 use Modules\Salary\Entities\EmployeeSalary;
 use Modules\Salary\Entities\SalaryConfiguration;
 use Modules\Salary\Services\SalaryCalculationService;
@@ -87,7 +87,6 @@ class SalaryController extends Controller
 
         return $pdf->inline($employeeName . '.pdf');
     }
-
 
     public function showAppraisalLetterPdf($data)
     {
