@@ -38,7 +38,7 @@
                 </div>
                 <div class="form-group">
                     <label class="font-weight-bold" for="">Address:</label>
-                    {{-- <span>{{ $user->email }}</span> --}}
+                    <input type="text" class="form-control" id="address" name="address" >
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -87,7 +87,7 @@
             </div>
             <div class="form-group">
                 <label class="font-weight-bold" for="">Address:</label>
-                {{-- <span>{{ $user->email }}</span> --}}
+                <span>{{ $user->profile->address }}</span>
             </div>
             @includeWhen($user->profile, 'user::profile.subviews.show-user-profile-info')
         </div>

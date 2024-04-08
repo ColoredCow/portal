@@ -35,6 +35,7 @@ class ProfileController extends ModuleBaseController
             $user->profile->marital_status = $request->marital_status;
             $user->profile->current_location = $request->current_location;
             $user->profile->designation = $request->designation;
+            $user->profile->address =  $request->address;
         } else {
             $userProfile = new UserProfile();
             $userProfile->user_id = $user->id;
@@ -44,6 +45,7 @@ class ProfileController extends ModuleBaseController
             $userProfile->spouse_name = $request->spouse_name;
             $userProfile->current_location = $request->current_location;
             $userProfile->designation = $request->designation;
+            $user->profile->address =  $request->address;
             $userProfile->save();
         }
         $user->push();

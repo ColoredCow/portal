@@ -7,6 +7,7 @@ use Modules\Salary\Entities\EmployeeSalary;
 use Carbon\Carbon;
 use Modules\HR\Entities\Employee;
 use Modules\User\Entities\User;
+use Modules\User\Entities\UserProfile;
 class SalaryCalculationService
 {
     protected $grossSalary;
@@ -124,13 +125,15 @@ class SalaryCalculationService
         $employeeUserId = $employee->user_id;
         $employeeDetails = User::where('id',$employeeUserId )->first();
         $employeeEmail = $employeeDetails->email;
+        $addressDetails = UserProfile::where('user_id',$employeeUserId )->first()->address;
         $ccEmail = $request->ccemails;
         $data = [
             'employeeName' => $employeeName,
             'employeeFirstName' => $employeeFirstName,
             'commencementDate' => $commencementDate,
             'employeeEmail' => $employeeEmail,
-            'ccemails' => $ccEmail
+            'ccemails' => $ccEmail,
+            'address' => $addressDetails
         ];
         return $data;
     }
