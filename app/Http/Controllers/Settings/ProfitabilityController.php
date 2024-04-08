@@ -14,7 +14,6 @@ class ProfitabilityController extends Controller
 {
     public function index()
     {
-
         return view('settings.profitability-threshold-value.index');
     }
 

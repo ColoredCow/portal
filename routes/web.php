@@ -102,7 +102,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/profitability-threshold-value', 'profitabilityController@index')->name('settings.profitability-threshold-value');
         Route::post('/profitability-threshold-value', 'profitabilityController@update')->name('settings.update-profitability-threshold-value');
 
-
         Route::prefix('permissions')->group(function () {
             Route::get('/', function () {
                 return redirect(route('permissions.module.index', ['module' => 'users']));
