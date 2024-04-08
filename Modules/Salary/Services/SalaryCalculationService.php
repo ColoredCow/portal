@@ -3,8 +3,8 @@
 namespace Modules\Salary\Services;
 
 use Carbon\Carbon;
-use Modules\Salary\Entities\EmployeeSalary;
 use Modules\HR\Entities\Employee;
+use Modules\Salary\Entities\EmployeeSalary;
 use Modules\Salary\Entities\SalaryConfiguration;
 use Modules\User\Entities\User;
 use Modules\User\Entities\UserProfile;
