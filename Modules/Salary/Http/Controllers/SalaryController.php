@@ -8,10 +8,10 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use Modules\HR\Entities\Employee;
+use Modules\Salary\Emails\SendAppraisalLetterMail;
 use Modules\Salary\Entities\EmployeeSalary;
 use Modules\Salary\Entities\SalaryConfiguration;
 use Modules\Salary\Services\SalaryCalculationService;
-use Modules\Salary\Emails\SendAppraisalLetterMail;
 
 class SalaryController extends Controller
 {
