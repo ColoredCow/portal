@@ -6,7 +6,7 @@
               <h5 class="modal-title" id="staticBackdropLabel"><strong>Edit Profile</strong></h5>
               <button type="button" class="close" data-dismiss="modal"><b>&times;</b></button>
             </div>
-            
+
             <div class="modal-body">
             <div class="alert alert-danger d-none pr-0.83" id="profile-details-error">
                 <button type="button" id="segmentModalCloseBtn" class="float-right bg-transparent text-danger border-0 fz-16 mt-n1.33">
@@ -30,17 +30,21 @@
                         @foreach ($designations as $designation )
                         <option {{$designation['id'] == $user->employee->designation_id ? "selected" : ""}} value="{{ $designation['id'] }}">{{$designation['designation']}}</option>
                         @endforeach
-                    </select>   
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="text" class="form-control" id="email" name="email" value="{{$user->email}}" readonly>
                 </div>
-                <div class="form-group">  
+                <div class="form-group">
+                    <label class="font-weight-bold" for="">Address:</label>
+                    {{-- <span>{{ $user->email }}</span> --}}
+                </div>
+                <div class="form-group">
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
-            </form>  
+            </form>
         </div>
       </div>
     </div>
@@ -80,6 +84,10 @@
             <div class="form-group">
                 <label class="font-weight-bold" for="">Email:</label>
                 <span>{{ $user->email }}</span>
+            </div>
+            <div class="form-group">
+                <label class="font-weight-bold" for="">Address:</label>
+                {{-- <span>{{ $user->email }}</span> --}}
             </div>
             @includeWhen($user->profile, 'user::profile.subviews.show-user-profile-info')
         </div>
