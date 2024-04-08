@@ -99,6 +99,9 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('settings')->namespace('Settings')->group(function () {
         Route::get('/', 'SettingController@index')->name('settings.index');
+        Route::get('/profitability-threshold-value', 'profitabilityController@index')->name('settings.profitability-threshold-value');
+        Route::post('/profitability-threshold-value', 'profitabilityController@update')->name('settings.update-profitability-threshold-value');
+
 
         Route::prefix('permissions')->group(function () {
             Route::get('/', function () {
