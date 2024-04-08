@@ -8,6 +8,7 @@ use Modules\User\Entities\User;
 use Modules\User\Entities\UserProfile;
 use Modules\Salary\Entities\SalaryConfiguration;
 use Modules\Salary\Entities\EmployeeSalary;
+
 class SalaryCalculationService
 {
     protected $grossSalary;
@@ -155,5 +156,4 @@ class SalaryCalculationService
 
         return $data;
     }
-
 }
