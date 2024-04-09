@@ -38,7 +38,7 @@
                 </div>
                 <div class="form-group">
                     <label class="font-weight-bold" for="">Address:</label>
-                    <textarea name="address"  id="" class="form-control richeditor">{{ $user->profile->address }}</textarea>
+                    <textarea name="address" id="" class="form-control richeditor">{!! $user->profile && $user->profile->address ? $user->profile->address : "" !!}</textarea>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -87,7 +87,7 @@
             </div>
             <div class="form-group">
                 <label class="font-weight-bold" for="">Address:</label>
-                {{-- <span>{{ optional($user->profile->address) }}</span> --}}
+                <span>{!! ($user->profile && $user->profile->address ? $user->profile->address :"") !!}</span>
             </div>
             @includeWhen($user->profile, 'user::profile.subviews.show-user-profile-info')
         </div>
