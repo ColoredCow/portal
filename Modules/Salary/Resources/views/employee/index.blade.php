@@ -2,7 +2,6 @@
 @section('content')
     <div class="container" id="employee_salary_form">
         <br>
-        <h4 class="mb-5 font-weight-bold">Employee Salary ( <i class="fa fa-rupee"></i>&nbsp;)</h4>
         @include('hr.employees.sub-views.menu')
         <br>
         <form action="{{ route('salary.employee.store', $employee) }}" method="POST" id ="salaryForm"  enctype="multipart/form-data">
@@ -15,15 +14,20 @@
             <div class="mt-4 card">
                 <div class="card-header pb-lg-5 fz-28">
                     <div class="d-flex justify-content-between mt-4 ml-5">
+                        <h4 class="mb-5 font-weight-bold">Employee Salary ( <i class="fa fa-rupee"></i>&nbsp;)</h4>
                         <div>
+                            @can('employee_salary.update')
                             <span data-toggle="tooltip" data-placement="top" title="Update the existing entry">
                                 <input name="submitType" type="submit" class="btn btn-primary ml-7 px-4" value="Update"/>
                             </span>
+                            @endcan
+                            @can('employee_salary.create')
                             <span data-toggle="tooltip" data-placement="top" title="Create a new salary entry">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#saveAsIncrementModal">
                                     Create Appraisal
                                 </button>
                             </span>
+                            @endcan
                         </div>
                     </div>
                 </div>
