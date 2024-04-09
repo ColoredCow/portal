@@ -51,7 +51,7 @@
                 @else
                     <th>
                         Employee Earning
-                        <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="In Hours">
+                        <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Rate">
                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                         </span>
                     </th>
@@ -103,10 +103,12 @@
                         <td>
                             <span class="text-success">
                                 0
+                                <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/warning-symbol.svg')) !!}</span>
                             </span>
                             |
                             <span class="text-secondary">
                                 0
+                                <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/green-tick.svg')) !!}</span>
                             </span>
                         </td>
                         @endif
