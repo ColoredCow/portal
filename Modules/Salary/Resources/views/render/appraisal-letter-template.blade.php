@@ -50,16 +50,18 @@
             border-collapse: collapse;
         }
         td {
-            border: 1px solid black;
-            padding: 5px;
+            border: 2px solid black;
+            padding: 18px;
         }
         .revised-details{
             padding-top: 20px;
             font-size: 14px;
         }
         .salary-details{
-            text-align: center;
             font-size: 14px;
+            padding-top: 18px;
+            display: flex;
+            justify-content: space-between;
         }
         .paddingTop{
             padding-top: 20px;
@@ -68,6 +70,32 @@
             font-size:14px;
             line-height: 20px;
         }
+        .salary-text{
+            margin-left: 120px;
+        }
+        .salary-number {
+            align-self: center;
+        }
+        .salary-number-1{
+            margin-left: 178px;
+        }
+        .salary-number-2{
+            margin-left: 154px;
+        }
+
+        .salary-number-3{
+            margin-left: 109px;
+        }
+        .salary-number-4{
+            margin-left: 154px;
+        }
+        .salary-number-5{
+            margin-left:38px;
+        }
+        .table-content{
+            text-align: center;
+        }
+
     </style>
 </head>
 
@@ -93,35 +121,35 @@
         <div class="paddingTop content-font-size">
             <table>
                 <tr>
-                  <td>Current CTC</td>
-                  <td>New CTC</td>
-                  <td>Increase in %age</td>
-                  <td>Effective Date</td>
+                  <td class="table-content"><b>Current CTC</b></td>
+                  <td class="table-content"><b>New CTC</b></td>
+                  <td class="table-content"><b>Increase in %age</b></td>
+                  <td class="table-content"><b>Effective Date</b></td>
                 </tr>
                 <tr>
-                  <td>{{ $data->previousSalary }}</td>
-                  <td>{{ $data->annualCTC}}/-</td>
-                  <td>{{ $data->salaryIncreasePercentage }}</td>
-                  <td>{{ $data->commencementDate}}</td>
+                  <td class="table-content"><b>{{ $data->previousSalary }}/-</b></td>
+                  <td class="table-content"><b>{{ $data->annualCTC}}/- </b></td>
+                  <td class="table-content"><b>{{ $data->salaryIncreasePercentage }}</b></td>
+                  <td class="table-content"><b>{{ $data->commencementDate}}</b></td>
                 </tr>
               </table>
         </div>
         <div class="revised-details">
             Your revised remuneration will be <b>INR {{ $data->grossSalary}}/-</b> per month as per the following breakup.<br>
             <div class="salary-details">
-            <span>Basic Salary</span><span>{{ $data->basicSalary }}/-</span><br>
+            <span class="salary-text">Basic Salary</span><span class="salary-number-1">{{ $data->basicSalary }}/-</span><br>
             </div>
             <div class="salary-details">
-            <span >HRA. Allowance</span><span>{{ $data->hra }}/-</span>
+            <span class="salary-text">HRA. Allowance</span><span class="salary-number-2">{{ $data->hra }}/-</span>
             </div>
             <div class="salary-details">
-                <span >Conveyance Allowance</span><span>{{ $data->tranportAllowance }}/-</span>
+                <span class="salary-text">Conveyance Allowance</span><span class="salary-number-3">{{ $data->tranportAllowance }}/-</span>
             </div>
             <div class="salary-details">
-                <span >Other Allowance</span><span>{{ $data->otherAllowance }}/-</span>
+                <span class="salary-text">Other Allowance</span><span class="salary-number-4">{{ $data->otherAllowance }}/-</span>
             </div>
             <div class="salary-details">
-                <span >P.F. and Charges (Employer share)</span><span>{{ $data->employeeShare }}/-</span>
+                <span class="salary-text" >P.F. and Charges(Employer share)</span><span class="salary-number-5">{{ $data->employeeShare }}/-</span>
             </div>
         </div>
         <div class="paddingTop content-font-size"><b>***Additional Medical insurance of 5 Lakhs, rupees are added to your CTC.</b></div>
