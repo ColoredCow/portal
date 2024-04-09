@@ -34,6 +34,7 @@
                     <span class="mr-1 mb-1">{{ __('Upload Stamp') }}</span>
                 </label>
                 <input v-model="image" type="file" accept="image/*" name="signature" id="signature" class="form-control ml-4 bg-light" required>
+                <span class="ml-4">(Please upload image in png/jpg.)</span>
             </div>
         </div>
 

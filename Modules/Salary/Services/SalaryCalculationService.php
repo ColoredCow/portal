@@ -55,7 +55,9 @@ class SalaryCalculationService
         $previousSalary = $this->employeePreviousSalary($fetchEmployeeDetails);
         $salaryIncreasePercentage = $this->salaryIncreasePercentage($fetchEmployeeDetails);
         $employeeUserId = $employee->user_id;
+        if($request->signature){
         $imageData = file_get_contents($request->signature);
+        }
         $userProfile = UserProfile::where('user_id', $employeeUserId)->first();
         if ($userProfile) {
             $address = $userProfile->address;
@@ -76,7 +78,7 @@ class SalaryCalculationService
             'previousSalary' => $previousSalary,
             'salaryIncreasePercentage' => $salaryIncreasePercentage,
             'address' => isset($address) ? $address : null, // Handle the case where $address might not be set
-            'imageData' => $imageData
+            'imageData' => isset($imageData)? $imageData:null
         ];
 
         return $data;
