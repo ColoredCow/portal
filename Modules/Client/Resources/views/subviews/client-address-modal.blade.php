@@ -27,7 +27,7 @@
                 <div class="col-sm-4">
                     <select id="currency_symbol" name="currency_symbol" class="form-control">
                     @foreach(config('client.currency-symbols') as $key => $value)
-                        <option value="{{ $key }}">{{implode($value)}}</option>
+                        <option value="{{ implode($value) }}">{{implode($value)}}</option>
                     @endforeach
                     </select>
                 </div>
