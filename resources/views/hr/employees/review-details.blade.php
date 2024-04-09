@@ -3,12 +3,10 @@
 @section('content')
     <div class="container mb-20">
         <br>
+        <h4 class="mb-5 font-weight-bold">{{ $employee->name }}'s review details</h4>
         @include('hr.employees.sub-views.menu')
         <br>
         <div>
-            <br>
-            <h2>{{ $employee->name }}'s review details</h2>
-            <br>
             <br>
             <form method="POST" action="{{ route('update.employee.reviewers', $employee->id) }}">
                 @csrf

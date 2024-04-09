@@ -181,4 +181,10 @@ return [
             'value' => env('AXIS_BANK_MESSAGE_PATTERN'),
         ],
     ],
+
+    'currency_initials' => [
+        'usd' => 'USD',
+        'eur' => 'EUR',
+        'swi' => 'SWI',
+    ],
 ];

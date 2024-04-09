@@ -18,12 +18,12 @@ class CurrencyService implements CurrencyServiceContract
     public function setClient()
     {
         $headers = $headers = [
-            'apikey' => config('services.currencylayer.access_key')
+            'apikey' => config('services.currencylayer.access_key'),
         ];
         $this->client = new Client([
             // 'base_uri' => 'http://apilayer.net/api',    //This is old API URL
             'base_uri' => 'https://api.apilayer.com',  // This is new API created from https://apilayer.com/marketplace/currency_data-api
-            'headers' => $headers
+            'headers' => $headers,
         ]);
     }
 
@@ -33,6 +33,15 @@ class CurrencyService implements CurrencyServiceContract
 
         return Cache::remember('current_usd_rates', $seconds, function () {
             return $this->fetchExchangeRateInINR();
+        });
+    }
+
+    public function getAllSCurrentRatesInINR()
+    {
+        $seconds = 1 * 60 * 60 * 4;
+
+        return Cache::remember('all_current_usd_rates', $seconds, function () {
+            return $this->fetchAllExchangeRateInINR();
         });
     }
 
@@ -52,5 +61,22 @@ class CurrencyService implements CurrencyServiceContract
         $data = json_decode($response->getBody()->getContents(), true);
 
         return round($data['quotes']['USDINR'], 2);
+    }
+
+    private function fetchAllExchangeRateInINR()
+    {
+        if (! config('services.currencylayer.access_key')) {
+            return round(config('services.currencylayer.default_rate'), 2);
+        }
+
+        $response = $this->client->get('currency_data/live', [
+            'query' => [
+                'access_key' => config('services.currencylayer.access_key'),
+            ],
+        ]);
+
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        return $data['quotes'];
     }
 }
