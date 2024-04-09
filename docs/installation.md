@@ -414,9 +414,9 @@ Before you start following the guidelines, make sure to go through the [prerequi
         (ii) Grant this service account access to the project by selecting a role (Project -> Editor)
             <img width="1440" alt="Screenshot 2024-04-09 at 10 31 08 PM" src="https://github.com/ColoredCow/portal/assets/68751333/20be4c4f-50de-44b0-ab59-0e9b8ef77e0f">
 
-    8. A JSON file will be downloaded when you create credentials, move that JSON file to the `/portal/public/` folder inside the project.
+    7. A JSON file will be downloaded when you create credentials, move that JSON file to the `/portal/public/` folder inside the project.
 
-    9. Open the .env file and add the following  
+    8. Open the .env file and add the following  
 
         ```sh
         GOOGLE_CLIENT_ID= #Copy it from the credentials(OAuth 2 Client ID)
@@ -430,10 +430,10 @@ Before you start following the guidelines, make sure to go through the [prerequi
         GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION= #Copy the path of the downloaded JSON file after moving it to the /portal/public/ folder
         ```
 
-    10. Copy the Email from the Service Accounts details
+    9. Copy the Email from the Service Accounts details
         <img width="1440" alt="Screenshot 2024-04-09 at 10 59 51 PM" src="https://github.com/ColoredCow/portal/assets/68751333/acde29bc-f46f-4d4f-ab6a-d7b055e414ab">
 
-    11. Add the email by clicking on the share button
+    10. Add the email by clicking on the share button
         <img width="1440" alt="Screenshot 2024-04-09 at 11 02 35 PM" src="https://github.com/ColoredCow/portal/assets/68751333/89d80c7d-f176-42f8-aed8-5c3696f97d9d">
 
-    12. Run the command `php artisan config:cache`
+    11. Run the command `php artisan config:cache`
