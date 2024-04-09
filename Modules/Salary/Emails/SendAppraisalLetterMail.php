@@ -32,6 +32,6 @@ class SendAppraisalLetterMail extends Mailable
             ->attachData($this->pdf, $this->employee['employeeName'] . '_Appraisal Letter_' . $this->commencementDateFormat . '.pdf', ['mime' => 'application/pdf'])
             ->when(!empty($ccEmails) && is_array($ccEmails), function ($message) use ($ccEmails) {
                 $message->cc($ccEmails);
-        });
+            });
     }
 }

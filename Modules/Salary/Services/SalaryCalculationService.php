@@ -54,7 +54,7 @@ class SalaryCalculationService
         $salaryIncreasePercentage = $this->salaryIncreasePercentage($fetchEmployeeDetails);
         $employeeUserId = $employee->user_id;
         if($request->signature) {
-        $imageData = file_get_contents($request->signature);
+            $imageData = file_get_contents($request->signature);
         }
         $userProfile = UserProfile::where('user_id', $employeeUserId)->first();
         if ($userProfile) {
