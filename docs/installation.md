@@ -391,15 +391,15 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
     1. Open Google Console https://console.cloud.google.com/
 
-    2. Create a new project by clicking "create a new project".
+    2. Create a new project by clicking `CREATE PROJECT`.
 
         <img width="1438" alt="Screenshot 2024-04-09 at 10 20 35 PM" src="https://github.com/ColoredCow/portal/assets/68751333/45c52794-7e55-49ff-bfe0-0ae492747c97">
 
-    3. Give any name to the Project"
+    3. Give any name to the Project
 
         <img width="1440" alt="Screenshot 2024-04-09 at 10 21 32 PM" src="https://github.com/ColoredCow/portal/assets/68751333/fabf52d6-03af-4ab9-a67d-6959cc7207eb">
 
-    4. Enable the following APIs and services by clicking the "Enable APIs and Services" button
+    4. Enable the following APIs and services by clicking the "Enable APIs and Services" button:
         i. Google Drive API
         ii. Google Sheets API
 
@@ -407,7 +407,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
         <img width="1440" alt="Screenshot 2024-04-09 at 10 26 03 PM" src="https://github.com/ColoredCow/portal/assets/68751333/f44446ab-2a49-49a1-873e-b8441f671b07">
 
-    6. Fill in the following details
+    6. Fill in the following details:
         i. Service account details
             <img width="1438" alt="Screenshot 2024-04-09 at 10 28 54 PM" src="https://github.com/ColoredCow/portal/assets/68751333/2b1779a6-ac9a-4ca9-952c-5c55e9a85d55">
 
