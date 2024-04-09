@@ -103,12 +103,12 @@
                         <td>
                             <span class="text-success">
                                 0
-                                <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/warning-symbol.svg')) !!}</span>
+                                <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/green-tick.svg')) !!}</span>
                             </span>
                             |
                             <span class="text-secondary">
                                 0
-                                <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/green-tick.svg')) !!}</span>
+                                <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/warning-symbol.svg')) !!}</span>
                             </span>
                         </td>
                         @endif
