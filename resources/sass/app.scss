@@ -914,3 +914,9 @@ span.total-chart-count {
 .project-hour{
   display: grid !important;
 }
+
+#saveAsIncrementModal{
+  .modal-dialog{
+    max-width: 900px !important;
+  }
+}

@@ -5,7 +5,7 @@
         <h4 class="mb-5 font-weight-bold">Employee Salary ( <i class="fa fa-rupee"></i>&nbsp;)</h4>
         @include('hr.employees.sub-views.menu')
         <br>
-        <form action="{{ route('salary.employee.store', $employee) }}" method="POST">
+        <form action="{{ route('salary.employee.store', $employee) }}" method="POST" id ="salaryForm"  enctype="multipart/form-data">
             @csrf
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -20,12 +20,14 @@
                                 <input name="submitType" type="submit" class="btn btn-primary ml-7 px-4" value="Update"/>
                             </span>
                             <span data-toggle="tooltip" data-placement="top" title="Create a new salary entry">
-                                <input name="submitType" type="submit" class="btn btn-primary ml-2 px-4" value="Save as Increment"/>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#saveAsIncrementModal">
+                                    Create Appraisal
+                                </button>
                             </span>
                         </div>
                     </div>
-                    
                 </div>
+                @include('salary::employee.grossSalaryModal')
                 <div class="card-body">
                     <div class="d-flex justify-content-between mx-5 align-items-end">
                         <h1>{{ $employee->name }}</h1>
