@@ -363,27 +363,38 @@ Before you start following the guidelines, make sure to go through the [prerequi
         ```sh
         php artisan optimize
         ```
-14. _(Optional)_ Setup API Layer API Key for currency excahange rates:
+14. _(Optional)_ Setup Google Sheets Service Account for syncing effortsheet on local:
 
-    1. Open site https://apilayer.com/
+    1. Open Google Console https://console.cloud.google.com/
 
-    2. Click on "Browse API Marketplace".
+    2. Create a new project by clicking on "create a new project".
 
-    <img src="https://github.com/ColoredCow/portal/assets/112390100/bfa6f50c-a863-4202-9445-6bf6e8a26319" width="400">
+    3. Give any name to the Project"
 
-    3. Under catogories click on "Currency"
+    4. Enable the following APIs and services by clicking on the "Enable APIs and Services" button
+        i. Google Drive API
+        ii. Google Sheets API
 
-    <img src="https://github.com/ColoredCow/portal/assets/112390100/50b338cc-ed8c-498b-b8ea-e002f451d187" width="200">
+    5. The next step is to create credentials. Click on Credentials on the left panel and then Create Credentials.
 
-    4. Select Currency Data API.
+    6. Fill the following details
+       i. Service account details
+       ii. Grant this service account access to project by selecting a role (Project -> Editor)
 
-       <img src="https://github.com/ColoredCow/portal/assets/112390100/6d5d3318-ab0c-4c52-8cba-37725798bfa8" width="200">
+    7. A JSON file will be downloaded when you create credentials, move that JSON file to /portal/public/ folder inside the project.
 
-    6. Select the Free plan.
+    8. Open .env file and add the following  
 
-       <img src="https://github.com/ColoredCow/portal/assets/112390100/e6c2bd61-153d-4260-9fe5-d97700199724" width="200">
-
-    8. Copy your API key and paste it in the `.env` file.
-       `CURRENCYLAYER_API_KEY=your api key`
+        ```sh
+        GOOGLE_CLIENT_ID= Copy it from the credentials(OAuth 2 Client ID)
+        GOOGLE_CLIENT_SECRET= Copy it from the credentials(Key ID)
+        GOOGLE_CLIENT_CALLBACK=
+        GOOGLE_CLIENT_HD=
+        GOOGLE_API_KEY=
+        GOOGLE_APPLICATION_CREDENTIALS=
+        GOOGLE_SERVICE_ACCOUNT_IMPERSONATE=
+        GOOGLE_SERVICE_ENABLED=true
+        GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION= Copy the path of the downloaded JSON file
+        ```
 
     9. Run the command `php artisan config:cache`
