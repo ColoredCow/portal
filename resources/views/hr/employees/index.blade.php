@@ -2,7 +2,7 @@
 @section('content')
 
 @php
-    $route_name = Route::getCurrentRoute()->getName();
+    $routeName = Route::getCurrentRoute()->getName();
 @endphp
 
     <div class="container">
@@ -34,7 +34,7 @@
             <thead class="thead-dark">
                 <tr class="sticky-top">
                     <th>Name</th>
-                @if($route_name==="employee")
+                @if($routeName==="employee")
                     <th>Active Projects Count</th>
                     <th>
                         Overall FTE
@@ -79,7 +79,7 @@
                                 @endif
                             </a>
                         </td>
-                        @if($route_name==="employee")
+                        @if($routeName === "employee")
                         <td>
                             @if ($employee->user == null)
                                 0
