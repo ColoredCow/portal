@@ -391,34 +391,49 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
     1. Open Google Console https://console.cloud.google.com/
 
-    2. Create a new project by clicking on "create a new project".
+    2. Create a new project by clicking "create a new project".
+
+        <img width="1438" alt="Screenshot 2024-04-09 at 10 20 35 PM" src="https://github.com/ColoredCow/portal/assets/68751333/45c52794-7e55-49ff-bfe0-0ae492747c97">
 
     3. Give any name to the Project"
 
-    4. Enable the following APIs and services by clicking on the "Enable APIs and Services" button
+        <img width="1440" alt="Screenshot 2024-04-09 at 10 21 32 PM" src="https://github.com/ColoredCow/portal/assets/68751333/fabf52d6-03af-4ab9-a67d-6959cc7207eb">
+
+    4. Enable the following APIs and services by clicking the "Enable APIs and Services" button
         i. Google Drive API
         ii. Google Sheets API
 
     5. The next step is to create credentials. Click on Credentials on the left panel and then Create Credentials.
 
-    6. Fill the following details
-       i. Service account details
-       ii. Grant this service account access to project by selecting a role (Project -> Editor)
+        <img width="1440" alt="Screenshot 2024-04-09 at 10 26 03 PM" src="https://github.com/ColoredCow/portal/assets/68751333/f44446ab-2a49-49a1-873e-b8441f671b07">
 
-    7. A JSON file will be downloaded when you create credentials, move that JSON file to /portal/public/ folder inside the project.
+    6. Fill in the following details
+        i. Service account details
+            <img width="1438" alt="Screenshot 2024-04-09 at 10 28 54 PM" src="https://github.com/ColoredCow/portal/assets/68751333/2b1779a6-ac9a-4ca9-952c-5c55e9a85d55">
 
-    8. Open .env file and add the following  
+        ii. Grant this service account access to the project by selecting a role (Project -> Editor)
+            <img width="1440" alt="Screenshot 2024-04-09 at 10 31 08 PM" src="https://github.com/ColoredCow/portal/assets/68751333/20be4c4f-50de-44b0-ab59-0e9b8ef77e0f">
+
+    8. A JSON file will be downloaded when you create credentials, move that JSON file to the `/portal/public/` folder inside the project.
+
+    9. Open the .env file and add the following  
 
         ```sh
-        GOOGLE_CLIENT_ID= Copy it from the credentials(OAuth 2 Client ID)
-        GOOGLE_CLIENT_SECRET= Copy it from the credentials(Key ID)
+        GOOGLE_CLIENT_ID= #Copy it from the credentials(OAuth 2 Client ID)
+        GOOGLE_CLIENT_SECRET= #Copy it from the credentials(Key ID)
         GOOGLE_CLIENT_CALLBACK=
         GOOGLE_CLIENT_HD=
         GOOGLE_API_KEY=
         GOOGLE_APPLICATION_CREDENTIALS=
         GOOGLE_SERVICE_ACCOUNT_IMPERSONATE=
         GOOGLE_SERVICE_ENABLED=true
-        GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION= Copy the path of the downloaded JSON file
+        GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION= #Copy the path of the downloaded JSON file after moving it to the /portal/public/ folder
         ```
 
-    9. Run the command `php artisan config:cache`
+    10. Copy the Email from the Service Accounts details
+        <img width="1440" alt="Screenshot 2024-04-09 at 10 59 51 PM" src="https://github.com/ColoredCow/portal/assets/68751333/acde29bc-f46f-4d4f-ab6a-d7b055e414ab">
+
+    11. Add the email by clicking on the share button
+        <img width="1440" alt="Screenshot 2024-04-09 at 11 02 35 PM" src="https://github.com/ColoredCow/portal/assets/68751333/89d80c7d-f176-42f8-aed8-5c3696f97d9d">
+
+    12. Run the command `php artisan config:cache`
