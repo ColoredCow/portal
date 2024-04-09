@@ -96,6 +96,21 @@
             text-align: center;
         }
 
+        .signature{
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .signature-text{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        footer {
+            position: fixed;
+            bottom: -280px;
+            text-align: center;
+        }
+
     </style>
 </head>
 
@@ -106,7 +121,7 @@
         </div>
         <hr></hr>
         <div class="confidential-text">Confidential</div>
-        <div class="date">Date: <b>{{ $data->commencementDate }}</b></div>
+        <div class="date" style="display: block; float: right;" >Date: <b>{{ $data->commencementDate }}</b></div>
         <div class="user-details">
             To<br>
             <span class="name">{{ $data->employeeName }}</span>,<br>
@@ -173,8 +188,20 @@
             <b>
                 We wish you all the very best.
             </b>
+        </div><br><br>
+        <div class="signature">
+            Yours Sincerely,<br>
+            <div class="signature-text">
+                <span style="display: inline-block; margin-right: 400px;">For Coloredcow Consulting Pvt. Ltd.<br><br><br></span>
+                <div style="display: block; float: right;">{{$data->employeeName}}</div>
+            <div>
+            Mohit Sharma,<br>
+            HR, Admin
         </div>
     </div>
 </body>
-
+<footer style="float: bottom">
+    ColoredCow Consulting Pvt. Ltd. | +91 9818571035 | contact@coloredcow.com | F-61 Suncity,
+    Sector 54, Gurgaon, India | CIN No. U72900HR2019PTC081234 | https://coloredcow.com/
+</footer>
 </html>
