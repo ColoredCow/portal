@@ -16,7 +16,7 @@
         <div class="col" id="user-settings-content">
             <div class="card-body">
                 <h5 class="max-interview-heading fz-20"> Threshold value
-                    <input type="number" class="col-xs text-center outline-none h-40 w-100 rounded-12 quantity" id="quantity" name="profitability_threshold_value" min="1" max="1000000" value="{{ old ('profitability_threshold_value', Auth::user()->metaValue('profitability_threshold_value')) }}">
+                    <input type="number" class="col-xs text-center outline-none h-40 w-auto rounded-12 quantity" id="quantity" name="profitability_threshold_value" value="{{ old ('profitability_threshold_value', Auth::user()->metaValue('profitability_threshold_value')) }}">
                 </h5>        
                 <input type="submit" class="btn btn-primary" value="Save">
             </div>

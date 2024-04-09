@@ -106,7 +106,7 @@
                             </span>
                             |
                             <span class="text-secondary">
-                               0
+                                0
                             </span>
                         </td>
                         @endif
