@@ -12,6 +12,10 @@ class UserSettingsController extends ModuleBaseController
     {
         return view('user::user-settings.index');
     }
+    public function show()
+    {
+        return view('AppointmentSlots::user_appointments.show');
+    }
 
     public function update(Request $request)
     {
