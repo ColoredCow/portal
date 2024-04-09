@@ -24,9 +24,8 @@ class SendAppraisalLetterMail extends Mailable
     public function build()
     {
         $ccEmails = array_map('trim', explode(',', $this->employee['ccemails']));
-        $ccEmails = array_filter($ccEmails); // Remove any empty elements
-
-        return $this->from('hr@coloredcow.com', 'Mohit Sharma')
+        $ccEmails = array_filter($ccEmails);
+        return $this->from(config('salary.default.email'), config('salary.default.name'))
             ->subject('Appraisal Letter - ' . $this->employee['employeeName'])
             ->view('salary::emails.appraisalLetterMail', $this->employee)
             ->attachData($this->pdf, $this->employee['employeeName'].'_Appraisal Letter_'.$this->commencementDateFormat. '.pdf', ['mime' => 'application/pdf'])

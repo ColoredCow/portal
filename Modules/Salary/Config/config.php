@@ -32,4 +32,9 @@ return [
             'employer_esi_limit' => 'Employer ESI Limit',
         ],
     ],
+
+    'default' => [
+        'email' => env('HR_DEFAULT_FROM_EMAIL', 'hr@coloredcow.com'),
+        'name' => env('HR_DEFAULT_FROM_NAME', 'Mohit Sharma'),
+    ],
 ];

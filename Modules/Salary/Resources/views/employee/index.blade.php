@@ -23,7 +23,7 @@
                             </span>
                             <span data-toggle="tooltip" data-placement="top" title="Create a new salary entry">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#saveAsIncrementModal">
-                                    Save as Increment
+                                    Create Appraisal
                                 </button>
                             </span>
                         </div>

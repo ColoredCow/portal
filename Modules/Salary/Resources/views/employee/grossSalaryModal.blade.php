@@ -42,7 +42,7 @@
         <div class="modal-footer">
         <button id="generatePdfButton" class="btn btn-primary text-white font-weight-bold" data-url ="{{route('salary.employee.generate-appraisal-letter', $employee)}}"onclick="generatePdf()">View Appraisal Letter</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input name="submitType" type="submit" id="saveButton" class="btn btn-primary ml-2 px-4" value="Save And Send" data-url ="{{ route('salary.employee.store', $employee) }}" onclick="resetPath()"/>
+        <input name="submitType" type="submit" id="saveButton" class="btn btn-primary ml-2 px-4" value="Update" data-url ="{{ route('salary.employee.store', $employee) }}" onclick="resetPath()"/>
         </div>
     </div>
     </div>
