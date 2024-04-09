@@ -3,12 +3,8 @@
 namespace App\Http\Controllers\Settings;
 
 use Auth;
-use App\Helpers\ContentHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Setting\SettingRequest;
-use App\Models\Setting;
 use Illuminate\Http\Request;
-use Modules\User\Entities\User;
 
 class ProfitabilityController extends Controller
 {
