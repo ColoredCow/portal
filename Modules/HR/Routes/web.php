@@ -114,7 +114,9 @@ Route::middleware('auth')->group(function () {
         Route::put('/resources/update/{resource}', 'ResourcesController@update')->name('resources.update');
         Route::post('/resources/destroy/{resource}', 'ResourcesController@destroy')->name('resources.destroy');
         Route::post('/channel/create', 'HrChannelController@store')->name('channel.create');
-
+        
+        Route::get('/hr-details/{employee}/', 'EmployeeController@hrDetails')->name('employees.hr.details');
+        Route::get('/financial-details/{employee}/', 'EmployeeController@financialdetails')->name('employees.financial.details');
         Route::get('/employee-basic-details/{employee}/', 'EmployeeController@basicDetails')->name('employees.basic.details');
         Route::resource('employees', 'EmployeeController')
             ->only(['index', 'show'])
