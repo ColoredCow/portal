@@ -3,15 +3,6 @@
 @section('content')
 <div class="container" id='show_slots'>
     <div  class="justify-content-between d-flex mb-3">
-        <form action="{{ route('user.appointments') }}" method="POST">
-        @csrf
-            <div class="card-body">
-                <h5 class="max-interview-heading fz-20">Maximum interviews in a day:
-                    <input type="number" class="col-xs text-center outline-none h-40 w-68 rounded-12 quantity" id="quantity" name="max_interviews_per_day" min="0" max="10" value="{{ old ('max_interviews_per_day', Auth::user()->metaValue('max_interviews_per_day')) }}">
-                </h5>        
-                <input type="submit" class="btn btn-primary" value="Save">
-            </div>
-        </form>
         <div class="p-2">
             @if($user->id!=auth()->id())
              <a class="text-secondary" href="{{route("userappointmentslots.show",auth()->id())}}"><i class="fa fa-backward"></i> See Your Appointments</a>
