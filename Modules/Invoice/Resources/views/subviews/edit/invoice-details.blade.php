@@ -435,7 +435,7 @@
                             break;
                         case currency_initials.swi:
                             rate = (this.allExchangeRate['USDINR']) / (this.allExchangeRate['USDCHF']);
-                            url = "https://search.brave.com/search?q=chf+to+inr&source=web"
+                            url = "https://www.google.co.in/search?q=swiss+franc+to+inr"
                             break;
                     }
 
