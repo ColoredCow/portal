@@ -45,9 +45,7 @@ class ProfileController extends ModuleBaseController
             $userProfile->spouse_name = $request->spouse_name;
             $userProfile->current_location = $request->current_location;
             $userProfile->designation = $request->designation;
-            if (is_object($request) && isset($request->address)) {
-                $user->profile->address = $request->address;
-            }
+            $userProfile->address = $request->address;
             $userProfile->save();
         }
         $user->push();
