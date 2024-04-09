@@ -27,13 +27,13 @@
                 <label class="leading-none fz-24 ml-4 d-flex align-items-center" for="cc_emails">
                     <span class="mr-1 mb-1">{{ __('CC emails') }}</span>
                 </label>
-                <input v-model="cc_emails" type="email" step="0.01" name="ccemails" id="ccemails" class="form-control ml-4 bg-light" placeholder="Enter emails to be cced">
+                <input type="email" step="0.01" name="ccemails" id="ccemails" class="form-control ml-4 bg-light" placeholder="Enter emails to be cced">
             </div>
             <div class="form-group col-md-5">
                 <label class="leading-none fz-24 ml-4 d-flex align-items-center" for="signature">
                     <span class="mr-1 mb-1">{{ __('Upload Stamp') }}</span>
                 </label>
-                <input v-model="image" type="file" accept="image/*" name="signature" id="signature" class="form-control ml-4 bg-light" required>
+                <input type="file" accept="image/*" name="signature" id="signature" class="form-control ml-4 bg-light" required>
                 <span class="ml-4">(Please upload image in png/jpg.)</span>
             </div>
         </div>
