@@ -376,12 +376,12 @@
                     switch (bank) {
                         case bank_message_patterns.axis.key:
                                 this.conversionRate = (conversionRate / this.amountPaid).toFixed(2);
-                                this.conversionRateDiff = Math.abs(this.currentExchangeRate - this.conversionRate).toFixed(2)
+                                this.conversionRateDiff = Math.abs(this.rate - this.conversionRate).toFixed(2)
                             break;
         
                         default:
                                 this.conversionRate = conversionRate;
-                                this.conversionRateDiff = Math.abs(this.currentExchangeRate - this.conversionRate).toFixed(2)
+                                this.conversionRateDiff = Math.abs(this.rate - this.conversionRate).toFixed(2)
                             break;
                     }
                 },
