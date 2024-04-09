@@ -114,7 +114,6 @@ Route::middleware('auth')->group(function () {
         Route::put('/resources/update/{resource}', 'ResourcesController@update')->name('resources.update');
         Route::post('/resources/destroy/{resource}', 'ResourcesController@destroy')->name('resources.destroy');
         Route::post('/channel/create', 'HrChannelController@store')->name('channel.create');
-        
         Route::get('/hr-details/{employee}/', 'EmployeeController@hrDetails')->name('employees.hr.details');
         Route::get('/financial-details/{employee}/', 'EmployeeController@financialdetails')->name('employees.financial.details');
         Route::get('/employee-basic-details/{employee}/', 'EmployeeController@basicDetails')->name('employees.basic.details');
@@ -126,7 +125,6 @@ Route::middleware('auth')->group(function () {
             ]);
         Route::get('payroll', 'EmployeeController@listPayroll')->name('payroll');
         Route::post('payroll-download', 'EmployeeController@downloadPayroll')->name('payroll-download');
-
         Route::get('employee-review-details/{employee}', 'EmployeeController@reviewDetails')->name('employees.review-details');
         Route::post('employee-review-details', 'EmployeeController@createIndividualAssessment')->name('review.updateStatus');
         Route::get('/workhistory/{employee}/', 'EmployeeController@employeeWorkHistory')->name('employees.employeeWorkHistory');
