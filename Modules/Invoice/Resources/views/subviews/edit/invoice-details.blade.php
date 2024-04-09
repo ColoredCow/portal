@@ -141,9 +141,9 @@
                 
                 <div class="form-group" v-if="this.client.type !== 'indian'">
                     <div class="d-flex">
-                        <label for="conversion_rate" class="w-145 mr-4"><a target="_blank" href="https://www.google.co.in/search?q=conversion+rate+usd+to+inr">Today's Google Conversion Rate:</a></label>
+                        <label for="conversion_rate" class="w-145 mr-4"><a target="_blank" :href="url">Today's Google Conversion Rate:</a></label>
                         <input type="number" id="currentConversionRate" class="form-control ml-auto w-200 w-xl-272 bg-white" step="0.01"
-                            value="{{$currencyService->getCurrentRatesInINR()}}" disabled>
+                            v-model='rate' disabled>
                     </div>
                 </div>
 
@@ -210,9 +210,12 @@
 
 
 @section('js_scripts')
-        @php $bank_message_patterns = (config('invoice.bank_message_patterns')); @endphp
+        @php $bank_message_patterns = (config('invoice.bank_message_patterns')); 
+            $currency_initials = config('invoice.currency_initials');     
+        @endphp
         <script>
         let bank_message_patterns = @json($bank_message_patterns);
+        let currency_initials = @json($currency_initials);
         new Vue({
             el: '#edit_invoice_details_form',
 
@@ -373,12 +376,12 @@
                     switch (bank) {
                         case bank_message_patterns.axis.key:
                                 this.conversionRate = (conversionRate / this.amountPaid).toFixed(2);
-                                this.conversionRateDiff = Math.abs(this.currentExchangeRate - this.conversionRate).toFixed(2)
+                                this.conversionRateDiff = Math.abs(this.rate - this.conversionRate).toFixed(2)
                             break;
         
                         default:
                                 this.conversionRate = conversionRate;
-                                this.conversionRateDiff = Math.abs(this.currentExchangeRate - this.conversionRate).toFixed(2)
+                                this.conversionRateDiff = Math.abs(this.rate - this.conversionRate).toFixed(2)
                             break;
                     }
                 },
@@ -416,6 +419,30 @@
                     tinymce.get("emailBody").setContent(emailBody, {
                         format: "html"
                     });
+                },
+
+                calculateExchangeRate() {
+                    let rate = 0 ;
+                    let url = "";
+                    switch (this.invoice.currency.toUpperCase()) {
+                        case currency_initials.usd:
+                            rate = this.allExchangeRate['USDINR'];
+                            url = "https://www.google.co.in/search?q=conversion+rate+usd+to+inr"
+                            break;
+                        case currency_initials.eur:
+                            rate = (this.allExchangeRate['USDINR']) / (this.allExchangeRate['USDEUR']);
+                            url = "https://www.google.co.in/search?q=euro+to+inr"
+                            break;
+                        case currency_initials.swi:
+                            rate = (this.allExchangeRate['USDINR']) / (this.allExchangeRate['USDCHF']);
+                            url = "https://www.google.co.in/search?q=swiss+franc+to+inr"
+                            break;
+                    }
+
+                    return {
+                            'value': rate,
+                            'url': url
+                        };
                 }
             },
 
@@ -424,6 +451,7 @@
                     clients: @json($clients),
                     invoice: @json($invoice),
                     projects: @json($invoice->client->projects),
+                    allExchangeRate: @json($currencyService->getAllSCurrentRatesInINR()),
                     clientId: "{{ $invoice->client_id }}",
                     projectId: "{{ $invoice->project_id }}",
                     client: @json($invoice->client),
@@ -442,17 +470,22 @@
                     tds: "{{ $invoice->tds }}",
                     tdsPercentage: "{{ $invoice->tds_percentage }}",
                     show_on_select: true,
+                    rate: 0,
+                    url: "",
                 }
             },
 
 
 
-            mounted() {},
+            mounted() {
+                this.rate = this.calculateExchangeRate()['value'].toFixed(2);
+                this.url = this.calculateExchangeRate()['url'];
+            },
 
             computed: {
                 gst: function() {
                     return (this.amount * 0.18).toFixed(2);
-                },
+                }
             }
         });
     </script>

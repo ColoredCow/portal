@@ -36,6 +36,15 @@ class CurrencyService implements CurrencyServiceContract
         });
     }
 
+    public function getAllSCurrentRatesInINR()
+    {
+        $seconds = 1 * 60 * 60 * 4;
+
+        return Cache::remember('all_current_usd_rates', $seconds, function () {
+            return $this->fetchAllExchangeRateInINR();
+        });
+    }
+
     private function fetchExchangeRateInINR()
     {
         if (! config('services.currencylayer.access_key')) {
@@ -52,5 +61,22 @@ class CurrencyService implements CurrencyServiceContract
         $data = json_decode($response->getBody()->getContents(), true);
 
         return round($data['quotes']['USDINR'], 2);
+    }
+
+    private function fetchAllExchangeRateInINR()
+    {
+        if (! config('services.currencylayer.access_key')) {
+            return round(config('services.currencylayer.default_rate'), 2);
+        }
+
+        $response = $this->client->get('currency_data/live', [
+            'query' => [
+                'access_key' => config('services.currencylayer.access_key'),
+            ],
+        ]);
+
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        return $data['quotes'];
     }
 }

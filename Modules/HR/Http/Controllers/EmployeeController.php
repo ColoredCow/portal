@@ -147,4 +147,14 @@ class EmployeeController extends Controller
 
         return Excel::download(new EmployeePayrollExport($employees['employees']), $filename);
     }
+
+    public function hrDetails(Employee $employee)
+    {
+        return view('hr.employees.hr-details', ['employee' => $employee]);
+    }
+
+    public function financialdetails(Employee $employee)
+    {
+        return view('hr.employees.financial-details', ['employee' => $employee]);
+    }
 }

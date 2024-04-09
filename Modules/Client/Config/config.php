@@ -86,7 +86,10 @@ return [
         ],
 
         [
-            'pound' => '€',
+            'euro' => '€',
+        ],
+        [
+            'swiss-franc' => '₣',
         ],
     ],
 

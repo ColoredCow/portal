@@ -1,8 +1,11 @@
 <template>
 	<div class="card ">
-		<div class="card-header p-1">
+		<div class=" d-flex justify-content-between card-header py-1 px-3">
 			<h3 class="text-center">
-				<a href="/projects">My projects</a>
+				<a href="/projects?projects=my-projects">My projects</a>
+			</h3>
+			<h3 class="text-center">
+				<a href="/projects">All projects</a>
 			</h3>
 		</div>
 		<div class="card-body pt-3 h-360 w-389 overflow-y-scroll">
