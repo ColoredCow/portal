@@ -117,6 +117,7 @@
         }
 
         footer {
+            font-weight: 400;
             position: fixed;
             bottom: 0;
             text-align: center;
@@ -141,7 +142,7 @@
         <div class="user-details name">Dear {{ $data->employeeFirstName }},</div>
         <div class="pay-details">
             The management of ColoredCow Consulting Pvt. Ltd. takes pleasure in informing you that
-            your remuneration has been appraised with {{ $data->salaryIncreasePercentage }} w.e.f <b>{{ $data->commencementDate }}</b>. Below are the
+            your remuneration has been appraised with <b>{{ $data->salaryIncreasePercentage }}%</b> w.e.f <b>{{ $data->commencementDate }}</b>. Below are the
             details of the pay raise.
         </div>
         <div class="paddingTop content-font-size" style="width: 100%;">
@@ -204,7 +205,7 @@
             Yours Sincerely,<br>
             <div class="signature-text">
                 <span style="display: inline-block; margin-right: 400px;">For Coloredcow Consulting Pvt. Ltd.<br><br><br></span>
-                <div style="display: block; float: right;">{{$data->employeeName}}</div>
+                <div style="display: block; float: right; margin-top:40px;">{{$data->employeeName}}</div>
             <div>
             <div style="position: absolute; top: 10px; left: 120px;">
                 <img src="data:image/png;base64,{{ base64_encode($data->imageData) }}" height="110" width="180">

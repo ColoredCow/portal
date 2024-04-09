@@ -3,6 +3,7 @@
 namespace Modules\Salary\Services;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 use Modules\HR\Entities\Employee;
 use Modules\Salary\Entities\EmployeeSalary;
 use Modules\Salary\Entities\SalaryConfiguration;
@@ -12,6 +13,7 @@ use Modules\User\Entities\UserProfile;
 class SalaryCalculationService
 {
     protected $grossSalary;
+    protected $salaryConfig;
 
     public function __construct($grossSalary)
     {
@@ -39,19 +41,22 @@ class SalaryCalculationService
     {
         $fetchEmployeeSalarydetails = $this->employeeSalaryDetails($request, $employee);
         $fetchEmployeeDetails = $this->employeeDetails($employee);
+        $commencementDate = Carbon::parse($request->commencementDate)->format('jS F Y');
         $employeeName = $employee->name;
         $employeeFirstName = explode(' ', $employeeName)[0];
         $currentDate = Carbon::now()->format('jS, M Y');
         $grossSalary = (int) $request->grossSalary;
-        $commencementDate = Carbon::parse($request->commencementDate)->format('jS F Y');
-        $basicSalary = (int) ceil($this->basicSalary());
-        $hra = (int) ceil($this->hra());
-        $transportAllowance = (int) $this->salaryConfig->get('transport_allowance')->fixed_amount;
-        $otherAllowance = $this->employeeOtherAllowance($grossSalary);
-        $employeeShare = $this->employeeShare($fetchEmployeeSalarydetails);
-        $annualCTC = $this->employeeAnnualCTC($fetchEmployeeSalarydetails);
-        $previousSalary = $this->employeePreviousSalary($fetchEmployeeDetails);
-        $salaryIncreasePercentage = $this->salaryIncreasePercentage($fetchEmployeeDetails);
+        $newSalaryObject = new EmployeeSalary();
+        $newSalaryObject->monthly_gross_salary = $grossSalary;
+
+        $newBasicSalary = $newSalaryObject->basic_salary;
+        $newHra = $newSalaryObject->hra;
+        $newTransportAllowance = $newSalaryObject->transport_allowance;
+        $otherAllowance = $newSalaryObject->other_allowance;
+        $newEmployeeShare = $newSalaryObject->employee_epf + $newSalaryObject->edli_charges + $newSalaryObject->administration_charges;
+        $newAnnualCTC = $newSalaryObject->ctc_annual;
+        $currentAnnualCTC = $employee->getCurrentSalary()->ctc_annual;
+        $salaryIncreasePercentage = $this->getLatestSalaryPercentageIncrementAttribute($currentAnnualCTC, $newAnnualCTC);
         $employeeUserId = $employee->user_id;
         if ($request->signature) {
             $imageData = file_get_contents($request->signature);
@@ -67,19 +72,33 @@ class SalaryCalculationService
             'date' => $currentDate,
             'grossSalary' => $grossSalary,
             'commencementDate' => $commencementDate,
-            'basicSalary' => $basicSalary,
-            'hra' => $hra,
-            'tranportAllowance' => $transportAllowance,
+            'basicSalary' => $newBasicSalary,
+            'hra' => $newHra,
+            'tranportAllowance' => $newTransportAllowance,
             'otherAllowance' => $otherAllowance,
-            'employeeShare' => $employeeShare,
-            'annualCTC' => $annualCTC,
-            'previousSalary' => $previousSalary,
+            'employeeShare' => $newEmployeeShare,
+            'annualCTC' => $newAnnualCTC,
+            'previousSalary' => $currentAnnualCTC,
             'salaryIncreasePercentage' => $salaryIncreasePercentage,
             'address' => isset($address) ? $address : null, // Handle the case where $address might not be set
             'imageData' => isset($imageData) ? $imageData : null,
         ];
 
         return $data;
+    }
+
+    public function getLatestSalaryPercentageIncrementAttribute($currentAnnualCTC, $newAnnualCTC)
+    {
+        $currentCtc = $newAnnualCTC;
+        $previousCtc = $currentAnnualCTC;
+
+        if ($currentCtc == 0 || $previousCtc == 0) {
+            return 0;
+        }
+
+        $percentageIncrementInFloat = (($currentCtc - $previousCtc) / $previousCtc) * 100;
+
+        return round($percentageIncrementInFloat, 2);
     }
 
     public function employeeOtherAllowance($grossSalary)
@@ -141,7 +160,7 @@ class SalaryCalculationService
         return $employeeIncreasePercentage;
     }
 
-    public function sendAppraisalLetterMail($request, $employee)
+    public function getMailDataForAppraisalLetter($request, $employee)
     {
         $employeeName = $employee->name;
         $employeeFirstName = explode(' ', $employeeName)[0];
@@ -160,5 +179,15 @@ class SalaryCalculationService
         ];
 
         return $data;
+    }
+
+    public function getAppraisalLetterPdf($data)
+    {
+        $pdf = App::make('snappy.pdf.wrapper');
+        $template = 'appraisal-letter-template';
+        $html = view('salary::render.' . $template, compact('data'));
+        $pdf->loadHTML($html);
+
+        return $pdf;
     }
 }

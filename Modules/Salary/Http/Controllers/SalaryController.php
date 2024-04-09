@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use Modules\HR\Entities\Employee;
 use Modules\Salary\Emails\SendAppraisalLetterMail;
@@ -50,13 +49,23 @@ class SalaryController extends Controller
     public function storeOrUpdateSalary(Request $request, Employee $employee)
     {
         $currentSalaryObject = $employee->getCurrentSalary();
-
-        if (! $currentSalaryObject || $request->submitType == 'Save as Increment') {
+        if ((!$currentSalaryObject) || $request->submitType == "send_appraisal_letter") {
             EmployeeSalary::create([
                 'employee_id' => $employee->id,
                 'monthly_gross_salary' => $request->grossSalary,
                 'commencement_date' => $request->commencementDate,
             ]);
+
+            if ($currentSalaryObject) {
+                $salaryService = new SalaryCalculationService($request->grossSalary);
+                $data = $salaryService->getMailDataForAppraisalLetter($request, $employee);
+                $commencementDate = $data['commencementDate'];
+                $formattedCommencementDate = Carbon::parse($commencementDate)->format('F Y');
+
+                $appraisalData = $salaryService->appraisalLetterData($request, $employee);
+                $pdf = $salaryService->getAppraisalLetterPdf($appraisalData);
+                Mail::to($data['employeeEmail'])->send(new SendAppraisalLetterMail($data, $pdf->inline($data['employeeName'] . '_Appraisal Letter_' . $formattedCommencementDate . '.pdf'), $formattedCommencementDate));
+            }
 
             return redirect()->back()->with('success', 'Salary added successfully!');
         }
@@ -69,17 +78,7 @@ class SalaryController extends Controller
         $currentSalaryObject->commencement_date = $request->commencementDate;
         $currentSalaryObject->save();
 
-        $salaryService = new SalaryCalculationService($request->grossSalary);
-        $data = $salaryService->sendAppraisalLetterMail($request, $employee);
-        $commencementDate = $data['commencementDate'];
-        $date = Carbon::parse($commencementDate);
-        $commencementDateFormat = $date->format('F Y');
-
-        $appraisalData = $salaryService->appraisalLetterData($request, $employee);
-        $pdf = $this->showAppraisalLetterPdf($appraisalData);
-        Mail::to($data['employeeEmail'])->queue(new SendAppraisalLetterMail($data, $pdf->inline($data['employeeName'] . '_Appraisal Letter_' . $commencementDateFormat . '.pdf'), $commencementDateFormat));
-
-        return redirect()->back()->with('success', 'Gross Salary saved successfully!');
+        return redirect()->back()->with('success', 'Salary updated successfully!');
     }
 
     public function generateAppraisalLetter(Request $request, Employee $employee)
@@ -90,18 +89,8 @@ class SalaryController extends Controller
         $commencementDate = $data->commencementDate;
         $date = Carbon::parse($commencementDate);
         $commencementDateFormat = $date->format('F Y');
-        $pdf = $this->showAppraisalLetterPdf($data);
+        $pdf = $salaryService->getAppraisalLetterPdf($data);
 
         return $pdf->inline($employeeName . '_Appraisal Letter_' . $commencementDateFormat . '.pdf');
-    }
-
-    public function showAppraisalLetterPdf($data)
-    {
-        $pdf = App::make('snappy.pdf.wrapper');
-        $template = 'appraisal-letter-template';
-        $html = view('salary::render.' . $template, compact('data'));
-        $pdf->loadHTML($html);
-
-        return $pdf;
     }
 }
