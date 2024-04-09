@@ -76,7 +76,7 @@ class SalaryCalculationService
             'previousSalary' => $previousSalary,
             'salaryIncreasePercentage' => $salaryIncreasePercentage,
             'address' => isset($address) ? $address : null, // Handle the case where $address might not be set
-            'imageData' => isset($imageData) ? $imageData : null
+            'imageData' => isset($imageData) ? $imageData : null,
         ];
 
         return $data;
