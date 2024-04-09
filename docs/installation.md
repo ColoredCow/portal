@@ -387,7 +387,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
        `CURRENCYLAYER_API_KEY=your api key`
 
     9. Run the command `php artisan config:cache`
-15. _(Optional)_ Setup Google Sheets Service Account for syncing effortsheet on local:
+15. _(Optional)_ Setup Google Service Account for syncing effortsheet on local:
 
     1. Open Google Console https://console.cloud.google.com/
 
