@@ -1962,7 +1962,9 @@ $(document).ready(function() {
 $("#editform").on("submit", function(e) {
 	e.preventDefault();
 	let form = $("#editform");
-	let button = $("#editBT");
+	let editor = tinymce.get('address');
+	let addressFieldValue = editor.getContent();
+	$('#address').val(addressFieldValue)
 
 	$.ajax({
 		url: form.attr("action"),
@@ -1974,6 +1976,7 @@ $("#editform").on("submit", function(e) {
 				$("#successMessage").toggleClass("d-none");
 				$("#successMessage").fadeToggle(5000);
 			});
+			window.location.reload();
 		},
 		error: function(response) {
 			$("#profile-details-error").removeClass("d-none");
