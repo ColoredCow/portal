@@ -22,16 +22,26 @@
                 <input v-model="commencementDate" type="date" name="commencementDate" id="commencementDate" class="form-control ml-4 bg-light" required>
             </div>
         </div>
-        <div class="form-group col-md-5">
-            <label class="leading-none fz-24 ml-4 d-flex align-items-center" for="cc_emails">
-                <span class="mr-1 mb-1">{{ __('CC emails') }}</span>
-            </label>
-            <input v-model="cc_emails" type="email" step="0.01" name="ccemails" id="ccemails" class="form-control ml-4 bg-light" placeholder="Enter emails to be cced" min="0" required>
+        <div class="d-md-flex">
+            <div class="form-group col-md-5">
+                <label class="leading-none fz-24 ml-4 d-flex align-items-center" for="cc_emails">
+                    <span class="mr-1 mb-1">{{ __('CC emails') }}</span>
+                </label>
+                <input v-model="cc_emails" type="email" step="0.01" name="ccemails" id="ccemails" class="form-control ml-4 bg-light" placeholder="Enter emails to be cced">
+            </div>
+            <div class="form-group col-md-5">
+                <label class="leading-none fz-24 ml-4 d-flex align-items-center" for="signature">
+                    <span class="mr-1 mb-1">{{ __('Upload Stamp') }}</span>
+                </label>
+                <input v-model="image" type="file" accept="image/*" name="signature" id="signature" class="form-control ml-4 bg-light" required>
+            </div>
         </div>
+
+
         <div class="modal-footer">
-        <button id="generatePdfButton" class="btn btn-primary text-white font-weight-bold" data-url ="{{route('salary.employee.generate-appraisal-letter', $employee)}}"onclick="generatePdf()">Generate PDF</button>
+        <button id="generatePdfButton" class="btn btn-primary text-white font-weight-bold" data-url ="{{route('salary.employee.generate-appraisal-letter', $employee)}}"onclick="generatePdf()">View Appraisal Letter</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input name="submitType" type="submit" id="saveButton" class="btn btn-primary ml-2 px-4" value="Save" data-url ="{{ route('salary.employee.store', $employee) }}" onclick="resetPath()"/>
+        <input name="submitType" type="submit" id="saveButton" class="btn btn-primary ml-2 px-4" value="Save And Send" data-url ="{{ route('salary.employee.store', $employee) }}" onclick="resetPath()"/>
         </div>
     </div>
     </div>

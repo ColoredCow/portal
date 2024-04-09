@@ -3,8 +3,19 @@
 
 <head>
     <style>
-        body{
+        html,
+        body {
+            font-weight: normal;
             font-family: sans-serif;
+            line-height: 1.15;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-size: 100% 100%;
+            font-size: 12px;
+            background: white !important;
         }
 
         .cc-image {
@@ -51,7 +62,7 @@
         }
         td {
             border: 2px solid black;
-            padding: 18px;
+            padding: 15px;
         }
         .revised-details{
             padding-top: 20px;
@@ -133,8 +144,8 @@
             your remuneration has been appraised with {{ $data->salaryIncreasePercentage }} w.e.f <b>{{ $data->commencementDate }}</b>. Below are the
             details of the pay raise.
         </div>
-        <div class="paddingTop content-font-size">
-            <table>
+        <div class="paddingTop content-font-size" style="width: 100%;">
+            <table style="width: 100%;">
                 <tr>
                   <td class="table-content"><b>Current CTC</b></td>
                   <td class="table-content"><b>New CTC</b></td>
@@ -147,7 +158,7 @@
                   <td class="table-content"><b>{{ $data->salaryIncreasePercentage }}</b></td>
                   <td class="table-content"><b>{{ $data->commencementDate}}</b></td>
                 </tr>
-              </table>
+            </table>
         </div>
         <div class="revised-details">
             Your revised remuneration will be <b>INR {{ $data->grossSalary}}/-</b> per month as per the following breakup.<br>
@@ -189,12 +200,15 @@
                 We wish you all the very best.
             </b>
         </div><br><br>
-        <div class="signature">
+        <div class="signature" style="position: relative;">
             Yours Sincerely,<br>
             <div class="signature-text">
                 <span style="display: inline-block; margin-right: 400px;">For Coloredcow Consulting Pvt. Ltd.<br><br><br></span>
                 <div style="display: block; float: right;">{{$data->employeeName}}</div>
             <div>
+            <div style="position: absolute; top: 10px; left: 120px;">
+                <img src="data:image/png;base64,{{ base64_encode($data->imageData) }}" height="110" width="180">
+            </div>
             Mohit Sharma,<br>
             HR, Admin
         </div>
