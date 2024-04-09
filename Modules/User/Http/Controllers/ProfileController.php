@@ -36,6 +36,7 @@ class ProfileController extends ModuleBaseController
             $user->profile->current_location = $request->current_location;
             $user->profile->designation = $request->designation;
             $user->profile->address = $request->address;
+            $user->profile->save();
         } else {
             $userProfile = new UserProfile();
             $userProfile->user_id = $user->id;
@@ -48,7 +49,6 @@ class ProfileController extends ModuleBaseController
             $userProfile->address = $request->address;
             $userProfile->save();
         }
-        $user->push();
 
         return back();
     }
