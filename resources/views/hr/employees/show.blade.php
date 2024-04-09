@@ -18,7 +18,7 @@
                             <span class="font-weight-bold">Designation:</span>&nbsp;<p>{{$employee->hrJobDesignation->designation}}</p>
                         </div>
                         <div class="row ml-1">
-                            <span class="font-weight-bold">Domain:</span>&nbsp;<p>{{$employee->hrJobDesignation->hrJobDesignationDomain->domain}}</p>
+                            {{-- <span class="font-weight-bold">Domain:</span>&nbsp;<p>{{$employee->hrJobDesignation->hrJobDesignationDomain->domain}}</p> --}}
                         </div>
                     @endif
                 </div>
