@@ -25,13 +25,13 @@ class SendAppraisalLetterMail extends Mailable
     {
         $ccEmails = array_map('trim', explode(',', $this->employee['ccemails']));
         $ccEmails = array_filter($ccEmails);
+
         return $this->from(config('salary.default.email'), config('salary.default.name'))
             ->subject('Appraisal Letter - ' . $this->employee['employeeName'])
             ->view('salary::emails.appraisalLetterMail', $this->employee)
-            ->attachData($this->pdf, $this->employee['employeeName'].'_Appraisal Letter_'.$this->commencementDateFormat. '.pdf', ['mime' => 'application/pdf'])
+            ->attachData($this->pdf, $this->employee['employeeName'] . '_Appraisal Letter_' . $this->commencementDateFormat . '.pdf', ['mime' => 'application/pdf'])
             ->when(!empty($ccEmails) && is_array($ccEmails), function ($message) use ($ccEmails) {
                 $message->cc($ccEmails);
-            });
-
+        });
     }
 }

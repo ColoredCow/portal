@@ -77,7 +77,7 @@ class SalaryController extends Controller
 
         $appraisalData = $salaryService->appraisalLetterData($request, $employee);
         $pdf = $this->showAppraisalLetterPdf($appraisalData);
-        Mail::to($data['employeeEmail'])->send(new SendAppraisalLetterMail($data, $pdf->inline($data['employeeName'].'_Appraisal Letter_'.$commencementDateFormat . '.pdf'),  $commencementDateFormat));
+        Mail::to($data['employeeEmail'])->send(new SendAppraisalLetterMail($data, $pdf->inline($data['employeeName'] . '_Appraisal Letter_' . $commencementDateFormat . '.pdf'),  $commencementDateFormat));
 
         return redirect()->back()->with('success', 'Gross Salary saved successfully!');
     }
@@ -92,7 +92,7 @@ class SalaryController extends Controller
         $commencementDateFormat = $date->format('F Y');
         $pdf = $this->showAppraisalLetterPdf($data);
 
-        return $pdf->inline($employeeName.'_Appraisal Letter_'.$commencementDateFormat . '.pdf');
+        return $pdf->inline($employeeName . '_Appraisal Letter_' . $commencementDateFormat . '.pdf');
     }
 
     public function showAppraisalLetterPdf($data)
