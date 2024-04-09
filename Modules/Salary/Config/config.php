@@ -34,7 +34,7 @@ return [
     ],
 
     'default' => [
-        'email' => env('HR_DEFAULT_FROM_EMAIL', 'hr@coloredcow.com'),
-        'name' => env('HR_DEFAULT_FROM_NAME', 'Mohit Sharma'),
+        'email' => env('HR_EMPLOYEE_DEFAULT_EMAIL', 'hr@coloredcow.com'),
+        'name' => env('HR_EMPLOYEE_DEFAULT_NAME', 'Mohit Sharma'),
     ],
 ];
