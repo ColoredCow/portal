@@ -2,6 +2,7 @@
 
 namespace Modules\Salary\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -70,10 +71,13 @@ class SalaryController extends Controller
 
         $salaryService = new SalaryCalculationService($request->grossSalary);
         $data = $salaryService->sendAppraisalLetterMail($request, $employee);
+        $commencementDate = $data['commencementDate'];
+        $date = Carbon::parse($commencementDate);
+        $commencementDateFormat = $date->format('F Y');
 
         $appraisalData = $salaryService->appraisalLetterData($request, $employee);
         $pdf = $this->showAppraisalLetterPdf($appraisalData);
-        Mail::to($data['employeeEmail'])->send(new SendAppraisalLetterMail($data, $pdf->inline($data['employeeName'] . '.pdf')));
+        Mail::to($data['employeeEmail'])->send(new SendAppraisalLetterMail($data, $pdf->inline($data['employeeName'].'_Appraisal Letter_'.$commencementDateFormat . '.pdf'),  $commencementDateFormat));
 
         return redirect()->back()->with('success', 'Gross Salary saved successfully!');
     }
@@ -83,9 +87,12 @@ class SalaryController extends Controller
         $salaryService = new SalaryCalculationService($request->grossSalary);
         $data = $salaryService->appraisalLetterData($request, $employee);
         $employeeName = $data->employeeName;
+        $commencementDate = $data->commencementDate;
+        $date = Carbon::parse($commencementDate);
+        $commencementDateFormat = $date->format('F Y');
         $pdf = $this->showAppraisalLetterPdf($data);
 
-        return $pdf->inline($employeeName . '.pdf');
+        return $pdf->inline($employeeName.'_Appraisal Letter_'.$commencementDateFormat . '.pdf');
     }
 
     public function showAppraisalLetterPdf($data)

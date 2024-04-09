@@ -118,7 +118,7 @@
 
         footer {
             position: fixed;
-            bottom: -280px;
+            bottom: 0;
             text-align: center;
         }
 
@@ -163,19 +163,19 @@
         <div class="revised-details">
             Your revised remuneration will be <b>INR {{ $data->grossSalary}}/-</b> per month as per the following breakup.<br>
             <div class="salary-details">
-            <span class="salary-text">Basic Salary</span><span class="salary-number-1">{{ $data->basicSalary }}/-</span><br>
+            <span class="salary-text">Basic Salary</span><span class="salary-number-1">Rs{{ $data->basicSalary }}/-</span><br>
             </div>
             <div class="salary-details">
-            <span class="salary-text">HRA. Allowance</span><span class="salary-number-2">{{ $data->hra }}/-</span>
+            <span class="salary-text">HRA. Allowance</span><span class="salary-number-2">Rs{{ $data->hra }}/-</span>
             </div>
             <div class="salary-details">
-                <span class="salary-text">Conveyance Allowance</span><span class="salary-number-3">{{ $data->tranportAllowance }}/-</span>
+                <span class="salary-text">Conveyance Allowance</span><span class="salary-number-3">Rs{{ $data->tranportAllowance }}/-</span>
             </div>
             <div class="salary-details">
-                <span class="salary-text">Other Allowance</span><span class="salary-number-4">{{ $data->otherAllowance }}/-</span>
+                <span class="salary-text">Other Allowance</span><span class="salary-number-4">Rs{{ $data->otherAllowance }}/-</span>
             </div>
             <div class="salary-details">
-                <span class="salary-text" >P.F. and Charges(Employer share)</span><span class="salary-number-5">{{ $data->employeeShare }}/-</span>
+                <span class="salary-text" >P.F. and Charges(Employer share)</span><span class="salary-number-5">Rs{{ $data->employeeShare }}/-</span>
             </div>
         </div>
         <div class="paddingTop content-font-size"><b>***Additional Medical insurance of 5 Lakhs, rupees are added to your CTC.</b></div>

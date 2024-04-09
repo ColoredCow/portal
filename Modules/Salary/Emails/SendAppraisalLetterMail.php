@@ -12,11 +12,13 @@ class SendAppraisalLetterMail extends Mailable
 
     public $employee;
     public $pdf;
+    public $commencementDateFormat;
 
-    public function __construct($employee, $pdf)
+    public function __construct($employee, $pdf, $commencementDateFormat)
     {
         $this->employee = $employee;
         $this->pdf = $pdf;
+        $this->commencementDateFormat = $commencementDateFormat;
     }
 
     public function build()
@@ -27,7 +29,7 @@ class SendAppraisalLetterMail extends Mailable
         return $this->from('hr@coloredcow.com', 'Mohit Sharma')
             ->subject('Appraisal Letter - ' . $this->employee['employeeName'])
             ->view('salary::emails.appraisalLetterMail', $this->employee)
-            ->attachData($this->pdf, $this->employee['employeeName'] . '.pdf', ['mime' => 'application/pdf'])
+            ->attachData($this->pdf, $this->employee['employeeName'].'_Appraisal Letter_'.$this->commencementDateFormat. '.pdf', ['mime' => 'application/pdf'])
             ->when(!empty($ccEmails) && is_array($ccEmails), function ($message) use ($ccEmails) {
                 $message->cc($ccEmails);
             });
