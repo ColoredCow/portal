@@ -4,7 +4,8 @@
         <br>
         @include('hr.employees.sub-views.menu')
         <br>
-        <form action="{{ route('salary.employee.store', $employee) }}" method="POST" id ="salaryForm"  enctype="multipart/form-data">
+        @include('salary::employee.grossSalaryModal')
+        <form action="{{ route('salary.employee.store', $employee) }}" method="POST"  enctype="multipart/form-data">
             @csrf
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -31,7 +32,6 @@
                         </div>
                     </div>
                 </div>
-                @include('salary::employee.grossSalaryModal')
                 <div class="card-body">
                     <div class="d-flex justify-content-between mx-5 align-items-end">
                         <h1>{{ $employee->name }}</h1>
