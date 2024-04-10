@@ -52,6 +52,11 @@
             }
         .address{
                 font-weight: bold;
+               
+        }
+        .address  span {
+            font-size: 14px !important
+                    
         }
         .pay-details{
             font-size: 14px;
@@ -137,7 +142,7 @@
         <div class="user-details">
             To<br>
             <span class="name">{{ $data->employeeName }}</span>,<br>
-            <span class="address">{!! $data->address !!}</span>
+            <span class="address" style="font-size: 12px !important">{!! $data->address !!}</span>
         </div>
         <div class="user-details name">Dear {{ $data->employeeFirstName }},</div>
         <div class="pay-details">
@@ -207,12 +212,17 @@
                 <span style="display: inline-block; margin-right: 400px;">For Coloredcow Consulting Pvt. Ltd.<br><br><br></span>
                 <div style="display: block; float: right; margin-top:40px;">{{$data->employeeName}}</div>
             <div>
-            <div style="position: absolute; top: 10px; left: 120px;">
-                <img src="data:image/png;base64,{{ base64_encode($data->imageData) }}" height="110" width="180">
-            </div>
+            <!-- <div style="position: absolute; top: 10px; left: 120px;">
+                <img src="data:image/png;base64,{{-- base64_encode($data->imageData) --}}" height="110" width="180">
+            </div> -->
             Mohit Sharma,<br>
             HR, Admin
         </div>
+    </div>
+    <div class="body-container" style="text-align: center"><br><br><br>
+        <b>
+            ***This is an electronically generated document, hence does not require a signature and stamp
+        </b>
     </div>
 </body>
 <footer style="float: bottom">
