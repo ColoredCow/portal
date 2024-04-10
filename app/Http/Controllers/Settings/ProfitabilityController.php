@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use Auth;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 
@@ -12,6 +11,7 @@ class ProfitabilityController extends Controller
     public function index()
     {
         $employeeEarningThreshold = Setting::where('setting_key', 'employee_earning_threshold')->value('setting_value');
+
         return view('settings.employee-earning-threshold.index', ['employeeEarningThreshold' => $employeeEarningThreshold]);
     }
 
