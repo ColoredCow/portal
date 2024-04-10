@@ -49,8 +49,6 @@ class SalaryController extends Controller
     public function storeOrUpdateSalary(Request $request, Employee $employee)
     {
         $currentSalaryObject = $employee->getCurrentSalary();
-
-        if (!$currentSalaryObject || $request->submitType == 'Save as Increment') {
         if ((!$currentSalaryObject) || $request->submitType == "send_appraisal_letter") {
             EmployeeSalary::create([
                 'employee_id' => $employee->id,
