@@ -3,6 +3,8 @@
 
 @php
     $routeName = Route::getCurrentRoute()->getName();
+    <!-- As of now earningValue is hardcoded until we fetch the real data -->
+    $earningValue  = 0;
 @endphp
 
     <div class="container">
@@ -90,6 +92,7 @@
                         <td class={{ $totalFTE > 1 ? 'text-success' : 'text-danger' }}>
                             {{ $totalFTE }}
                         </td>
+                        if
                         <td>
                             <span class="text-success">
                                 {{ $user->total_hours['billable'] }}
@@ -101,15 +104,17 @@
                         </td>
                         @else
                         <td>
+                        @if($earningValue >= 0)
                             <span class="text-success">
-                                0
-                                <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/green-tick.svg')) !!}</span>
+                                0 
+                                <span class="d-inline-block pr-2 h-30 w-30">{!! file_get_contents(public_path('icons/green-tick.svg')) !!}</span>
                             </span>
-                            |
-                            <span class="text-secondary">
+                            @else
+                            <span class="text-secondary pl-2">
                                 0
-                                <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/warning-symbol.svg')) !!}</span>
+                                <span class="d-inline-block h-30 w-30">{!! file_get_contents(public_path('icons/warning-symbol.svg')) !!}</span>
                             </span>
+                            @endif
                         </td>
                         @endif
                     </tr>
