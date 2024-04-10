@@ -35,7 +35,7 @@
             <thead class="thead-dark">
                 <tr class="sticky-top">
                     <th>Name</th>
-                    @if($routeName==="employee")
+                    @if($routeName === "employee")
                     <th>Active Projects Count</th>
                     <th>
                         Overall FTE
