@@ -43,7 +43,7 @@ class AppointmentSlotsController extends Controller
     }
     public function show()
     {
-        return view('userappointmentslots::user_appointments.show');
+        return view('appointmentslots::user_appointments.show');
     }
     public function update(Request $request)
     {
