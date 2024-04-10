@@ -4,7 +4,7 @@ namespace Modules\User\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RoleRequest extends FormRequest
+class UserRoleRequest extends FormRequest
 {
     public function authorize()
     {

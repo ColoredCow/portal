@@ -200,6 +200,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         $description = "Application Link: {$applicationLink}";
 
         $event = new CalendarEventService;
+
         $event->create([
             'summary' => $summary,
             'start' => $applicationRound->scheduled_date->format(config('constants.datetime_format')),

@@ -65,7 +65,7 @@
                             $totalFTE = $user->ftes['main'] + $user->ftes['amc']
                         @endphp
                         <td>
-                            <a href="{{ route('employees.show', $employee->id) }}">
+                            <a href="{{ route('employees.hr.details', $employee) }}">
                                 @if ($employee->overall_status === 'pending' && $filters['status'] == 'current')
                                     {{ $employee->name }} <span
                                         class="{{ config('constants.review-tags.pending.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.pending.title') }}</span>
@@ -88,8 +88,12 @@
                                 {{ $employee->active_project_count }}
                             @endif
                         </td>
-                        <td class={{ $totalFTE > 1 ? 'text-success' : 'text-danger' }}>
-                            {{ $totalFTE }}
+                        @if(today()==today()->startOfMonth())
+                        <td>{{ 0 }}</td> 
+                        @else                       
+                        <td class={{ $totalFTE >= 1 ? 'text-success' : 'text-danger' }}>
+                        {{ $totalFTE }}
+                        @endif
                         </td>
                         if
                         <td>

@@ -1,22 +1,11 @@
-<ul class="nav nav-pills">
-    <li class="nav-item">
-        <a class="nav-item nav-link {{ Request::is('hr/employees*') && !Request::is('salary/employee*') ? 'active' : '' }}"
-            href="{{ route('employees.show', $employee) }}"><i class="fa fa-user"></i>&nbsp;Dashboard</a>
-    </li>
-    @can('employee_salary.view')
-        <li class="nav-item">
-            <a class="nav-item nav-link {{ Request::is('salary/employee*') ? 'active' : '' }}"
-                href="{{ route('salary.employee', $employee) }}"><i class="fa fa-rupee"></i>&nbsp;Salary</a>
-        </li>
-    @endcan
-    <li class="nav-item">
-        <a class="nav-item nav-link {{ Request::is('hr/employee-basic-details*') ? 'active' : ' ' }}"
-            href="{{ route('employees.basic.details', $employee) }}"><i class="fa fa-details"></i>&nbsp;Basic
-            Details</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-item nav-link {{ Request::is('hr/employee-review-details*') ? 'active' : ' ' }}"
-            href="{{ route('employees.review-details', $employee) }}"><i class="fa fa-details"></i>&nbsp;Review Details
-        </a>
-    </li>
-</ul>
+<div class="theme-tabs-container">
+    <div class="theme-tabs d-flex overflow-x-scroll mb-2 mx-md-auto">
+        <div class="theme-tabs-inner font-muli-bold px-2 px-md-0 d-flex justify-content-md-center mx-md-auto">
+            <div onclick="window.location.href='{{ route('employees.basic.details', $employee) }}'"  class="theme-tab c-pointer flex-center px-2 py-1 px-xl-4 py-xl-2 bg-theme-gray-lighter hover-bg-theme-gray-light rounded-6 mr-1 mr-xl-2  {{ Request::is('hr/employee-basic-details*') ? 'active' : ' ' }}">Basic Details</div>
+            <div onclick="window.location.href='{{ route('employees.show', $employee) }}'"  class="theme-tab c-pointer flex-center px-2 py-1 px-xl-4 py-xl-2 bg-theme-gray-lighter hover-bg-theme-gray-light rounded-6 mr-1 mr-xl-2  {{ Request::is('hr/employees*') && !Request::is('salary/employee*') ? 'active' : '' }}">Project Delivery Details </div> 
+            <div onclick="window.location.href='{{ route('salary.employee', $employee) }}'"  class="theme-tab c-pointer flex-center px-2 py-1 px-xl-4 py-xl-2 bg-theme-gray-lighter hover-bg-theme-gray-light rounded-6 mr-1 mr-xl-2  {{ Request::is('salary/employee*') ? 'active' : '' }}">Salary</div>  
+            <div onclick="window.location.href='{{ route('employees.hr.details', $employee) }}'"  class="theme-tab c-pointer flex-center px-2 py-1 px-xl-4 py-xl-2 bg-theme-gray-lighter hover-bg-theme-gray-light rounded-6 mr-1 mr-xl-2 {{ Request::is('hr/hr-details*') ? 'active' : '' }}">HR Details</div> 
+            <div onclick="window.location.href='{{ route('employees.financial.details', $employee) }}'" class="theme-tab c-pointer flex-center px-2 py-1 px-xl-6 py-xl-2 bg-theme-gray-lighter hover-bg-theme-gray-light rounded-6  mr-1 mr-xl-2  {{ Request::is('hr/financial-details*') ? 'active' : '' }}">Financial Details</div> 
+        </div>
+    </div>
+</div>

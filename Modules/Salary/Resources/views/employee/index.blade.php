@@ -4,7 +4,8 @@
         <br>
         @include('hr.employees.sub-views.menu')
         <br>
-        <form action="{{ route('salary.employee.store', $employee) }}" method="POST">
+        @include('salary::employee.grossSalaryModal')
+        <form action="{{ route('salary.employee.store', $employee) }}" method="POST"  enctype="multipart/form-data">
             @csrf
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -14,19 +15,22 @@
             <div class="mt-4 card">
                 <div class="card-header pb-lg-5 fz-28">
                     <div class="d-flex justify-content-between mt-4 ml-5">
+                        <h4 class="mb-5 font-weight-bold">Employee Salary ( <i class="fa fa-rupee"></i>&nbsp;)</h4>
                         <div>
-                            Employee Salary ( <i class="fa fa-rupee"></i>&nbsp;)
-                        </div>
-                        <div>
+                            @can('employee_salary.update')
                             <span data-toggle="tooltip" data-placement="top" title="Update the existing entry">
                                 <input name="submitType" type="submit" class="btn btn-primary ml-7 px-4" value="Update"/>
                             </span>
+                            @endcan
+                            @can('employee_salary.create')
                             <span data-toggle="tooltip" data-placement="top" title="Create a new salary entry">
-                                <input name="submitType" type="submit" class="btn btn-primary ml-2 px-4" value="Save as Increment"/>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#saveAsIncrementModal">
+                                    Create Appraisal
+                                </button>
                             </span>
+                            @endcan
                         </div>
                     </div>
-                    
                 </div>
                 <div class="card-body">
                     <div class="d-flex justify-content-between mx-5 align-items-end">
