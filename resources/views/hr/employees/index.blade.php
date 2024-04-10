@@ -105,12 +105,12 @@
                         <td>
                         @if($earningValue >= 0)
                             <span class="text-success">
-                                0 
+                                {{$earningValue}}
                                 <span class="d-inline-block pr-2 h-30 w-30">{!! file_get_contents(public_path('icons/green-tick.svg')) !!}</span>
                             </span>
                             @else
                             <span class="text-secondary pl-2">
-                                0
+                                {{$earningValue}}
                                 <span class="d-inline-block h-30 w-30">{!! file_get_contents(public_path('icons/warning-symbol.svg')) !!}</span>
                             </span>
                             @endif
