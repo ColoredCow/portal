@@ -3,7 +3,6 @@
 
 @php
     $routeName = Route::getCurrentRoute()->getName();
-    <!-- As of now earningValue is hardcoded until we fetch the real data -->
     $earningValue  = 0;
 @endphp
 

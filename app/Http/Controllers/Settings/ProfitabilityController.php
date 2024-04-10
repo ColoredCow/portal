@@ -11,15 +11,15 @@ class ProfitabilityController extends Controller
 {
     public function index()
     {
-        $profitabilityThreshold = Setting::where('setting_key', 'profitability_threshold_value')->value('setting_value');
-        return view('settings.profitability-threshold-value.index', ['profitabilityThreshold' => $profitabilityThreshold]);
+        $employeeEarningThreshold = Setting::where('setting_key', 'employee_earning_threshold')->value('setting_value');
+        return view('settings.employee-earning-threshold.index', ['employeeEarningThreshold' => $employeeEarningThreshold]);
     }
 
     public function update(Request $request)
     {
         Setting::updateOrCreate(
-            ['module' => 'setting', 'setting_key' => 'profitability_threshold_value'],
-            ['setting_value' => $request->profitability_threshold_value]
+            ['module' => 'setting', 'setting_key' => 'employee_earning_threshold'],
+            ['setting_value' => $request->employee_earning_threshold]
         );
 
         return redirect()->back()->with('status', 'Saved Successfully!');

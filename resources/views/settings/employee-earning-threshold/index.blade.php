@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form action="{{ route('settings.update-profitability-threshold-value') }}" method="POST">
+<form action="{{ route('settings.update-employee-earning-threshold') }}" method="POST">
 @csrf
     <div class="container">
         <div class="row justify-content-start">
@@ -13,7 +13,7 @@
         <div class="col" id="user-settings-content">
             <div class="card-body">
                 <h5 class="max-interview-heading fz-20"> Threshold value
-                <input type="number" class="col-xs text-center outline-none h-40 w-auto rounded-12 quantity" id="quantity" name="profitability_threshold_value" value="{{ old('profitability_threshold_value', $profitabilityThreshold) }}">
+                <input type="number" class="col-xs text-center outline-none h-40 w-auto rounded-12 quantity" id="quantity" name="employee_earning_threshold" value="{{ old('employee_earning_threshold', $employeeEarningThreshold) }}">
                 </h5>        
                 <input type="submit" class="btn btn-primary" value="Save">
             </div>
