@@ -357,7 +357,13 @@ Before you start following the guidelines, make sure to go through the [prerequi
     
     2. Open .env file and add the following
         ```sh
+        
+        For Windows: 
         PDF_BINARY='C://"Program Files"/wkhtmltopdf/bin/wkhtmltopdf.exe'
+
+        For Mac:
+        PDF_BINARY="/usr/local/bin/wkhtmltopdf"
+
         ```
     3. Run the following command in the terminal
         ```sh
