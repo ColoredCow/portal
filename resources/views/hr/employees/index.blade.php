@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
 
+<!-- As of now we have hardCoded the earningValue until we unable to fetch the real data -->
 @php
     $routeName = Route::getCurrentRoute()->getName();
     $earningValue  = 0;
 @endphp
-
     <div class="container">
         <br>
         @include('hr.employees.menu')
@@ -35,7 +35,7 @@
             <thead class="thead-dark">
                 <tr class="sticky-top">
                     <th>Name</th>
-                @if($routeName==="employee")
+                    @if($routeName==="employee")
                     <th>Active Projects Count</th>
                     <th>
                         Overall FTE
