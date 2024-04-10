@@ -142,7 +142,7 @@
         <div class="user-details">
             To<br>
             <span class="name">{{ $data->employeeName }}</span>,<br>
-            <span class="address" style="font-size: 12px !important">{!! $data->address !!}</span>
+            <span class="address">{!! $data->address !!}</span>
         </div>
         <div class="user-details name">Dear {{ $data->employeeFirstName }},</div>
         <div class="pay-details">
