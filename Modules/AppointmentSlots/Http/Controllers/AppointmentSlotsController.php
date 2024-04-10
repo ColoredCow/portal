@@ -42,16 +42,16 @@ class AppointmentSlotsController extends Controller
         return $this->service->appointmentSelected($request->all());
     }
     public function show()
-        {
-            return view('userappointmentslots::user_appointments.show');
-        }
-        public function update(Request $request)
-        {
-            Auth::user()->meta()->updateOrCreate(
-                ['meta_key' => 'max_interviews_per_day'],
-                ['meta_value' => $request->max_interviews_per_day]
-            );
+    {
+        return view('userappointmentslots::user_appointments.show');
+    }
+    public function update(Request $request)
+    {
+        Auth::user()->meta()->updateOrCreate(
+            ['meta_key' => 'max_interviews_per_day'],
+            ['meta_value' => $request->max_interviews_per_day]
+        );
 
-            return redirect()->back()->with('status', 'Saved Successfully!');
-        }
+        return redirect()->back()->with('status', 'Saved Successfully!');
+    }
 }
