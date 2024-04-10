@@ -33,13 +33,13 @@
                         </label>
                         <input type="email" step="0.01" name="ccemails" id="ccemails" class="form-control bg-light" placeholder="Comma separated emails">
                     </div>
-                    <div class="form-group col-md-5">
+                    <!-- <div class="form-group col-md-5">
                         <label class="leading-none fz-24 ml-4 d-flex align-items-center" for="signature">
                             <span class="mr-1 mb-1">{{ __('Upload Stamp') }} <small>(png/jpg only)</small></span>
                         </label>
                         <input type="file" accept="image/*" name="signature" id="signature" class="form-control ml-4 bg-light" required>
                         <small class="d-none ml-4 text-danger" id="signatureErrorMessage"><strong>File Required</strong></small>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="modal-footer">
@@ -108,11 +108,11 @@
                 isValid = false;
             }
 
-            // Validate signature
-            if (signature.val().trim() === '') {
-                signatureErrorMessage.removeClass('d-none')
-                isValid = false;
-            }
+            // // Validate signature
+            // if (signature.val().trim() === '') {
+            //     signatureErrorMessage.removeClass('d-none')
+            //     isValid = false;
+            // }
 
             return isValid
         }
