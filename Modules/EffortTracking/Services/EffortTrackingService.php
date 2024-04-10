@@ -32,6 +32,8 @@ class EffortTrackingService
         $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
         $totalEffort = $project->getCurrentHoursForMonthAttribute($startDate, $endDate);
         $daysTillToday = count($this->getWorkingDays($project->client->month_start_date, $currentDate));
+        $currentTime = new Carbon();
+        $yesterdayDate = $currentTime->yesterday();
 
         return [
             'project' => $project,
@@ -46,6 +48,7 @@ class EffortTrackingService
             'daysTillToday' => $daysTillToday,
             'totalMonths' => $totalMonths,
             'currentYear' => $currentYear,
+            'yesterdayDate' => $yesterdayDate,
         ];
     }
 
