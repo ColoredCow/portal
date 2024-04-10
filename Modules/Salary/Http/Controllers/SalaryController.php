@@ -46,7 +46,7 @@ class SalaryController extends Controller
     {
         $currentSalaryObject = $employee->getCurrentSalary();
 
-        if (! $currentSalaryObject || $request->submitType == 'Save as Increment') {
+        if (!$currentSalaryObject || $request->submitType == 'Save as Increment') {
             EmployeeSalary::create([
                 'employee_id' => $employee->id,
                 'monthly_gross_salary' => $request->grossSalary,
