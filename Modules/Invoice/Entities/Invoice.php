@@ -6,6 +6,7 @@ use App\Traits\Encryptable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Modules\Client\Entities\Client;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
 use Modules\Project\Entities\Project;
@@ -15,7 +16,7 @@ class Invoice extends Model implements Auditable
 {
     use Encryptable, SoftDeletes, \OwenIt\Auditing\Auditable;
 
-    protected $fillable = ['client_id', 'project_id', 'status', 'billing_level', 'currency', 'amount', 'sent_on', 'due_on', 'receivable_date', 'gst', 'file_path', 'comments', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'conversion_rate', 'tds', 'tds_percentage', 'currency_transaction_charge', 'payment_at', 'invoice_number', 'reminder_mail_count', 'payment_confirmation_mail_sent', 'deleted_at', 'term_start_date', 'term_end_date'];
+    protected $fillable = ['client_id', 'project_id', 'status', 'billing_level', 'currency', 'amount', 'sent_on', 'due_on', 'receivable_date', 'gst', 'file_path', 'comments', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'conversion_rate', 'tds', 'tds_percentage', 'currency_transaction_charge', 'payment_at', 'invoice_number', 'reminder_mail_count', 'payment_confirmation_mail_sent', 'deleted_at', 'term_start_date', 'term_end_date', 'amount_for_analytics', 'gst_for_analytics', 'amount_paid_for_analytics', 'bank_charges_for_analytics', 'conversion_rate_for_analytics', 'conversion_rate_diff_for_analytics', 'tds_for_analytics'];
 
     protected $dates = ['sent_on', 'due_on', 'receivable_date', 'payment_at', 'term_start_date', 'term_end_date'];
 
@@ -276,5 +277,68 @@ class Invoice extends Model implements Auditable
         }
 
         return $term;
+    }
+
+    public function getEncryptedValue($value)
+    {
+        $result = DB::select("SELECT TO_BASE64(AES_ENCRYPT('{$value}', '" . config('database.connections.mysql.encryption_key') . "')) AS encrypted_value");
+
+        return $result[0]->encrypted_value;
+    }
+
+    public function setAmountForAnalyticsAttribute($value)
+    {
+        $value = $value ?? 'null';
+        $encryptedValue = $this->getEncryptedValue($value);
+
+        $this->attributes['amount_for_analytics'] = $encryptedValue;
+    }
+
+    public function setGstForAnalyticsAttribute($value)
+    {
+        $value = $value ?? 'null';
+        $encryptedValue = $this->getEncryptedValue($value);
+
+        $this->attributes['gst_for_analytics'] = $encryptedValue;
+    }
+
+    public function setAmountPaidForAnalyticsAttribute($value)
+    {
+        $value = $value ?? 'null';
+        $encryptedValue = $this->getEncryptedValue($value);
+
+        $this->attributes['amount_paid_for_analytics'] = $encryptedValue;
+    }
+
+    public function setBankChargesForAnalyticsAttribute($value)
+    {
+        $value = $value ?? 'null';
+        $encryptedValue = $this->getEncryptedValue($value);
+
+        $this->attributes['bank_charges_for_analytics'] = $encryptedValue;
+    }
+
+    public function setConversionRateForAnalyticsAttribute($value)
+    {
+        $value = $value ?? 'null';
+        $encryptedValue = $this->getEncryptedValue($value);
+
+        $this->attributes['conversion_rate_for_analytics'] = $encryptedValue;
+    }
+
+    public function setConversionRateDiffForAnalyticsAttribute($value)
+    {
+        $value = $value ?? 'null';
+        $encryptedValue = $this->getEncryptedValue($value);
+
+        $this->attributes['conversion_rate_diff_for_analytics'] = $encryptedValue;
+    }
+
+    public function setTdsForAnalyticsAttribute($value)
+    {
+        $value = $value ?? 'null';
+        $encryptedValue = $this->getEncryptedValue($value);
+
+        $this->attributes['tds_for_analytics'] = $encryptedValue;
     }
 }

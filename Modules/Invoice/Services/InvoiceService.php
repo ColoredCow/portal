@@ -154,6 +154,8 @@ class InvoiceService implements InvoiceServiceContract
     public function store($data)
     {
         $data['receivable_date'] = $data['due_on'];
+        $data['amount_for_analytics'] = $data['amount'];
+        $data['gst_for_analytics'] = $data['gst'] ?? 'null';
         if ($data['billing_level'] == config('project.meta_keys.billing_level.value.client.key')) {
             $data['project_id'] = null;
         }
@@ -166,21 +168,35 @@ class InvoiceService implements InvoiceServiceContract
 
     public function update($data, $invoice)
     {
-        $invoice->update($data);
-        if (isset($data['send_mail'])) {
-            $emailData = $this->getSendEmailData($data, $invoice);
-            Mail::queue(new SendPaymentReceivedMail($invoice, $emailData));
-            $webHookUrl = $invoice->project->google_chat_webhook_url
-                ?? $invoice->client->google_chat_webhook_url;
-            if ($webHookUrl) {
-                $projectAndClientName = (optional($invoice->project)->name ?? $invoice->client->name);
-                Notification::route('googleChat', $webHookUrl)
-                    ->notify(new SendPaymentReceivedNotification($projectAndClientName));
-            }
-            $invoice->update([
-                'payment_confirmation_mail_sent' => true,
-            ]);
+        $data['amount_paid_for_analytics'] = $data['amount_paid'];
+        if(isset($data['bank_charges'])) {
+            $data['bank_charges_for_analytics'] = $data['bank_charges'];
         }
+        if(isset($data['conversion_rate'])) {
+            $data['conversion_rate_for_analytics'] = $data['conversion_rate'];
+        }
+        if(isset($data['conversion_rate_diff'])) {
+            $data['conversion_rate_diff_for_analytics'] = $data['conversion_rate_diff'];
+        }
+        if(isset($data['tds'])) {
+            $data['tds_for_analytics'] = $data['tds'];
+        }
+
+        $invoice->update($data);
+        // if (isset($data['send_mail'])) {
+        //     $emailData = $this->getSendEmailData($data, $invoice);
+        //     Mail::queue(new SendPaymentReceivedMail($invoice, $emailData));
+        //     $webHookUrl = $invoice->project->google_chat_webhook_url
+        //         ?? $invoice->client->google_chat_webhook_url;
+        //     if ($webHookUrl) {
+        //         $projectAndClientName = (optional($invoice->project)->name ?? $invoice->client->name);
+        //         Notification::route('googleChat', $webHookUrl)
+        //             ->notify(new SendPaymentReceivedNotification($projectAndClientName));
+        //     }
+        //     $invoice->update([
+        //         'payment_confirmation_mail_sent' => true,
+        //     ]);
+        // }
         if (isset($data['invoice_file']) and $data['invoice_file']) {
             $this->saveInvoiceFile($invoice, $data['invoice_file']);
             $this->setInvoiceNumber($invoice, $data['sent_on']);
@@ -645,7 +661,9 @@ class InvoiceService implements InvoiceServiceContract
             'receivable_date' => $dueOn,
             'currency' => $client ? $client->country->currency : $project->client->country->currency,
             'amount' => $amount,
+            'amount_for_analytics' => $amount,
             'gst' => $gst,
+            'gst_for_analytics' => $gst,
             'term_start_date' => $periodStartDate,
             'term_end_date' => $periodEndDate,
         ]);
