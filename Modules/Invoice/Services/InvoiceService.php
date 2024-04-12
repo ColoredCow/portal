@@ -183,20 +183,20 @@ class InvoiceService implements InvoiceServiceContract
         }
 
         $invoice->update($data);
-        // if (isset($data['send_mail'])) {
-        //     $emailData = $this->getSendEmailData($data, $invoice);
-        //     Mail::queue(new SendPaymentReceivedMail($invoice, $emailData));
-        //     $webHookUrl = $invoice->project->google_chat_webhook_url
-        //         ?? $invoice->client->google_chat_webhook_url;
-        //     if ($webHookUrl) {
-        //         $projectAndClientName = (optional($invoice->project)->name ?? $invoice->client->name);
-        //         Notification::route('googleChat', $webHookUrl)
-        //             ->notify(new SendPaymentReceivedNotification($projectAndClientName));
-        //     }
-        //     $invoice->update([
-        //         'payment_confirmation_mail_sent' => true,
-        //     ]);
-        // }
+        if (isset($data['send_mail'])) {
+            $emailData = $this->getSendEmailData($data, $invoice);
+            Mail::queue(new SendPaymentReceivedMail($invoice, $emailData));
+            $webHookUrl = $invoice->project->google_chat_webhook_url
+                ?? $invoice->client->google_chat_webhook_url;
+            if ($webHookUrl) {
+                $projectAndClientName = (optional($invoice->project)->name ?? $invoice->client->name);
+                Notification::route('googleChat', $webHookUrl)
+                    ->notify(new SendPaymentReceivedNotification($projectAndClientName));
+            }
+            $invoice->update([
+                'payment_confirmation_mail_sent' => true,
+            ]);
+        }
         if (isset($data['invoice_file']) and $data['invoice_file']) {
             $this->saveInvoiceFile($invoice, $data['invoice_file']);
             $this->setInvoiceNumber($invoice, $data['sent_on']);
