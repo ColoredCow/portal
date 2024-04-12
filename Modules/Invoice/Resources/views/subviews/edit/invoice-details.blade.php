@@ -25,7 +25,7 @@
 
                 <div class="form-group">
                     <div class="d-flex">
-                        <label for="client_id font-weight-bold" class="mr-3 w-90">Client:</label>
+                        <label for="client_id" class="mr-3 w-90">Client:</label>
                         <span>
                             <p>{{ $invoice->client->name }}</p>
                         </span>
