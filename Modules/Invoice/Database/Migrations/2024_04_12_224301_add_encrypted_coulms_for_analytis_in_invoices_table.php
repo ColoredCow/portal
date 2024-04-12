@@ -15,13 +15,15 @@ class AddEncryptedCoulmsForAnalytisInInvoicesTable extends Migration
      */
     public function up()
     {
-        DB::statement('ALTER TABLE `invoices` ADD `amount_for_analytics` VARBINARY(255)');
-        DB::statement('ALTER TABLE `invoices` ADD `gst_for_analytics` VARBINARY(255)');
-        DB::statement('ALTER TABLE `invoices` ADD `amount_paid_for_analytics` VARBINARY(255)');
-        DB::statement('ALTER TABLE `invoices` ADD `bank_charges_for_analytics` VARBINARY(255)');
-        DB::statement('ALTER TABLE `invoices` ADD `conversion_rate_for_analytics` VARBINARY(255)');
-        DB::statement('ALTER TABLE `invoices` ADD `conversion_rate_diff_for_analytics` VARBINARY(255)');
-        DB::statement('ALTER TABLE `invoices` ADD `tds_for_analytics` VARBINARY(255)');
+        Schema::table('invoices', function (Blueprint $table) {
+            $table->text('amount_for_analytics')->nullable();
+            $table->text('gst_for_analytics')->nullable();
+            $table->text('amount_paid_for_analytics')->nullable();
+            $table->text('bank_charges_for_analytics')->nullable();
+            $table->text('conversion_rate_for_analytics')->nullable();
+            $table->text('conversion_rate_diff_for_analytics')->nullable();
+            $table->text('tds_for_analytics')->nullable();
+        });
 
         $invoices = Invoice::all();
         $encryptionKey = config('database.connections.mysql.encryption_key');
@@ -37,13 +39,13 @@ class AddEncryptedCoulmsForAnalytisInInvoicesTable extends Migration
             DB::statement("
                 UPDATE `invoices`
                 SET 
-                    `amount_for_analytics` = AES_ENCRYPT('{$amount}', '{$encryptionKey}'),
-                    `gst_for_analytics` = AES_ENCRYPT('{$gst}', '{$encryptionKey}'),
-                    `amount_paid_for_analytics` = AES_ENCRYPT('{$amountPaid}', '{$encryptionKey}'),
-                    `bank_charges_for_analytics` = AES_ENCRYPT('{$bankCharges}', '{$encryptionKey}'),
-                    `conversion_rate_for_analytics` = AES_ENCRYPT('{$conversionRate}', '{$encryptionKey}'),
-                    `conversion_rate_diff_for_analytics` = AES_ENCRYPT('{$conversionRateDiff}', '{$encryptionKey}'),
-                    `tds_for_analytics` = AES_ENCRYPT('{$tds}', '{$encryptionKey}')
+                    `amount_for_analytics` = TO_BASE64(AES_ENCRYPT('{$amount}', '{$encryptionKey}')),
+                    `gst_for_analytics` = TO_BASE64(AES_ENCRYPT('{$gst}', '{$encryptionKey}')),
+                    `amount_paid_for_analytics` = TO_BASE64(AES_ENCRYPT('{$amountPaid}', '{$encryptionKey}')),
+                    `bank_charges_for_analytics` = TO_BASE64(AES_ENCRYPT('{$bankCharges}', '{$encryptionKey}')),
+                    `conversion_rate_for_analytics` = TO_BASE64(AES_ENCRYPT('{$conversionRate}', '{$encryptionKey}')),
+                    `conversion_rate_diff_for_analytics` = TO_BASE64(AES_ENCRYPT('{$conversionRateDiff}', '{$encryptionKey}')),
+                    `tds_for_analytics` = TO_BASE64(AES_ENCRYPT('{$tds}', '{$encryptionKey}'))
                 WHERE `id` = {$invoice->id}
             ");
         }
