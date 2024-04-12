@@ -52,6 +52,7 @@ return [
             'prefix' => '',
             'strict' => false,
             'engine' => null,
+            'encryption_key' => env('DB_DATABASE_ENCRYPTION_KEY', 'secret')
         ],
 
         'testing' => [
