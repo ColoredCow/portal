@@ -22,15 +22,15 @@ class AddEncryptedCoulmsForAnalytisInInvoicesTable extends Migration
         DB::statement('ALTER TABLE `invoices` ADD `conversion_rate_for_analytics` VARBINARY(255)');
         DB::statement('ALTER TABLE `invoices` ADD `conversion_rate_diff_for_analytics` VARBINARY(255)');
         DB::statement('ALTER TABLE `invoices` ADD `tds_for_analytics` VARBINARY(255)');
-        
+
         $invoices = Invoice::all();
         $encryptionKey = config('database.connections.mysql.encryption_key');
-        foreach($invoices as $invoice) {
+        foreach ($invoices as $invoice) {
             $amount = $invoice->amount;
             $gst = $invoice->gst ?? "null";
             $amountPaid = $invoice->amount_paid ?? "null";
             $bankCharges = $invoice->bank_charges ?? "null";
-            $conversionRateDiff = $invoice->conversion_rate_diff ?? "null" ;
+            $conversionRateDiff = $invoice->conversion_rate_diff ?? "null";
             $conversionRate = $invoice->conversion_rate ?? "null";
             $tds = $invoice->td ?? "null";
 
@@ -58,8 +58,8 @@ class AddEncryptedCoulmsForAnalytisInInvoicesTable extends Migration
     {
         Schema::table('invoices', function (Blueprint $table) {
             $table->dropColumn([
-                'amount_for_analytics', 
-                'gst_for_analytics', 
+                'amount_for_analytics',
+                'gst_for_analytics',
                 'amount_paid_for_analytics',
                 'bank_charges_for_analytics',
                 'conversion_rate_for_analytics',
