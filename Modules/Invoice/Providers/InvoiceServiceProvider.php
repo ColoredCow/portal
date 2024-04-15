@@ -136,7 +136,17 @@ class InvoiceServiceProvider extends ServiceProvider
             \Modules\Invoice\Console\FixInvoiceAmountsCommand::class,
         ]);
     }
-
+        
+    /**
+     * Register the observers for the module.
+     *
+     * @return void
+     */
+    protected function registerObservers()
+    {
+        Invoice::observe(InvoiceObserver::class);
+    }
+    
     private function getPublishableViewPaths(): array
     {
         $paths = [];
@@ -163,14 +173,5 @@ class InvoiceServiceProvider extends ServiceProvider
             });
         }
     }
-    
-    /**
-     * Register the observers for the module.
-     *
-     * @return void
-     */
-    protected function registerObservers()
-    {
-        Invoice::observe(InvoiceObserver::class);
-    }
+
 }
