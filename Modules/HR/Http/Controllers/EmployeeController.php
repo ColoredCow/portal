@@ -24,7 +24,6 @@ class EmployeeController extends Controller
 
     public function __construct(EmployeeService $service)
     {
-        $this->authorizeResource(Employee::class);
         $this->service = $service;
     }
 
@@ -41,7 +40,7 @@ class EmployeeController extends Controller
 
     public function listPayroll(Request $request)
     {
-        $this->authorize('list', Employee::class);
+        $this->authorize('listPayroll', Employee::class);
         $filters = $request->all() ?: $this->service->defaultFilters();
         $data = $this->service->getEmployeeListWithLatestPayroll($filters);
 
