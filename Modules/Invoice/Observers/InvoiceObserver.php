@@ -34,7 +34,6 @@ class InvoiceObserver
         }
 
         $invoice->save();
-
     }
 
     /**

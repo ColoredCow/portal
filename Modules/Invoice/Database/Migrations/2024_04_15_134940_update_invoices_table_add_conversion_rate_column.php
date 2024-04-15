@@ -14,7 +14,6 @@ class UpdateInvoicesTableAddConversionRateColumn extends Migration
     public function up()
     {
         Schema::table('', function (Blueprint $table) {
-
         });
     }
 
