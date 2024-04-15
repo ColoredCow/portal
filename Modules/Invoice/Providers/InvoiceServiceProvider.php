@@ -42,16 +42,6 @@ class InvoiceServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the observers for the module.
-     *
-     * @return void
-     */
-    protected function registerObservers()
-    {
-        Invoice::observe(InvoiceObserver::class);
-    }
-
-    /**
      * Register the service provider.
      *
      * @return void
@@ -60,6 +50,16 @@ class InvoiceServiceProvider extends ServiceProvider
     {
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(InvoiceAuthServiceProvider::class);
+    }
+
+    /**
+     * Register the observers for the module.
+     *
+     * @return void
+     */
+    protected function registerObservers()
+    {
+        Invoice::observe(InvoiceObserver::class);
     }
 
     /**
