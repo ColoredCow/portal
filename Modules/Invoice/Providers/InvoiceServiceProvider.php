@@ -53,16 +53,6 @@ class InvoiceServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the observers for the module.
-     *
-     * @return void
-     */
-    protected function registerObservers()
-    {
-        Invoice::observe(InvoiceObserver::class);
-    }
-
-    /**
      * Register views.
      *
      * @return void
@@ -172,5 +162,15 @@ class InvoiceServiceProvider extends ServiceProvider
                 return new CurrencyService();
             });
         }
+    }
+    
+    /**
+     * Register the observers for the module.
+     *
+     * @return void
+     */
+    protected function registerObservers()
+    {
+        Invoice::observe(InvoiceObserver::class);
     }
 }
