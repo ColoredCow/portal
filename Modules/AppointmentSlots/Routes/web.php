@@ -26,4 +26,6 @@ Route::middleware('auth')->group(function () {
     ->name('userappointmentslots.store');
     Route::patch('userappointmentslots/{appointmentSlot}', 'UserAppointmentSlotsController@update');
     Route::delete('userappointmentslots/{appointmentSlot}', 'UserAppointmentSlotsController@destroy');
+    Route::get('/user_appointments', 'AppointmentSlotsController@index')->name('userappointments.show');
+    Route::post('/user_appointments', 'AppointmentSlotsController@update')->name('userappointments.show.update');
 });
