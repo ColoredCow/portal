@@ -7,10 +7,10 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
+use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Observers\InvoiceObserver;
 use Modules\Invoice\Services\CurrencyService;
 use Modules\Invoice\Services\InvoiceService;
-use Modules\Invoice\Observers\InvoiceObserver;
-use Modules\Invoice\Entities\Invoice;
 
 class InvoiceServiceProvider extends ServiceProvider
 {
@@ -49,7 +49,6 @@ class InvoiceServiceProvider extends ServiceProvider
     protected function registerObservers()
     {
         Invoice::observe(InvoiceObserver::class);
-
     }
 
     /**

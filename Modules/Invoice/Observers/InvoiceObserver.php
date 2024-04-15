@@ -15,24 +15,21 @@ class InvoiceObserver
      */
     public function created(Invoice $invoice)
     {
-        $conversionRates = New CurrencyService();
+        $conversionRates = new CurrencyService();
         $conversionRate = $conversionRates->getAllSCurrentRatesInINR();
         $initial = config('invoice.currency_initials');
-        $i = 0;
-        
+
         switch (strtoupper($invoice->client->country->currency)) {
             case $initial['usd']:
                 $invoice->sent_conversion_rate = $conversionRate['USDINR'];
-                $i = 0;
                 break;
-            
+
             case $initial['eur']:
-                $invoice->sent_conversion_rate = round(($conversionRate['USDINR']) /($conversionRate['USDEUR']), 2);
-                $i = 1;
+                $invoice->sent_conversion_rate = round(($conversionRate['USDINR']) / ($conversionRate['USDEUR']), 2);
                 break;
 
             case $initial['swi']:
-                $invoice->sent_conversion_rate = round(($conversionRate['USDINR']) /($conversionRate['USDCHF']), 2);
+                $invoice->sent_conversion_rate = round(($conversionRate['USDINR']) / ($conversionRate['USDCHF']), 2);
                 break;
         }
 

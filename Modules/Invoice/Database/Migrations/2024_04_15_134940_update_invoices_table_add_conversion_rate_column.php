@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 
 class UpdateInvoicesTableAddConversionRateColumn extends Migration
 {
@@ -26,7 +26,7 @@ class UpdateInvoicesTableAddConversionRateColumn extends Migration
     public function down()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->decimal('sent_conversion_rate', 10, 2)->nullable()->after('conversion_rate');;
+            $table->decimal('sent_conversion_rate', 10, 2)->nullable()->after('conversion_rate');
         });
     }
 }
