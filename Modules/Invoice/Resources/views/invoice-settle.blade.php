@@ -355,24 +355,32 @@
         });
 
         function parseComment(comment) {
-            let extractedNumbers = comment.match(/\d+(\.\d+)?/g);
 
+            let extractedNumbers = comment.match(/\d+(\.\d+)?/g);
             if (extractedNumbers && extractedNumbers.length > 0) {
                 let lastNumber = extractedNumbers[extractedNumbers.length - 1];
                 document.getElementById('amountPaid').value = lastNumber;
             }
         }
 
+        function calculateAmount(numbers) {
+            const reducedNumbers = numbers.map(number => {
+                const parsedNumber = parseFloat(number.replace(/[^\d.]/g, ''));
+                return (parsedNumber * 100) / 118;
+            });
+
+            const netPayableAmount = reducedNumbers.map(reduceNumber => reduceNumber - (reduceNumber * 0.1) + (reduceNumber * 0.18));
+            return netPayableAmount;
+        }
+
+
         function findSubsetWithSum(numbers, targetSum) {
             const powerSet = (array) => array.reduce((subsets, value) => subsets.concat(subsets.map(set => [value, ...set])), [[]]);
+            
             const allSubsets = powerSet(numbers);
-            const resultSubset = allSubsets.find(subset => {
-                const subsetSum = subset.reduce((sum, [, num]) => {
-                    const numericValue = parseFloat(num.replace(/[^\d.]/g, ''));
-                    return sum + numericValue;
-                }, 0);
-                return subsetSum === targetSum;
-            });
+
+            const resultSubset = allSubsets.find(subset => subset.reduce((sum, [,num]) => sum + num, 0) === targetSum);
+
             return resultSubset || null;
         }
 
@@ -381,10 +389,12 @@
             
             const numbers =  @json($invoices_amount);
             const targetSum = parseFloat(document.getElementById('amountPaid').value) || 0;
-            const subset = findSubsetWithSum(Object.entries(numbers), targetSum);
-
-            if (subset) {
-                subset.forEach(([key]) => {
+            const subset = calculateAmount(numbers);
+            const finalSubset = findSubsetWithSum(Object.entries(subset), targetSum);
+            console.log(finalSubset);
+// 211680
+            if (finalSubset) {
+                finalSubset.forEach(([key]) => {
                     const row = document.getElementById(`row_${key}`);
                     if (row) {
                         row.style.backgroundColor = 'lightgreen';
