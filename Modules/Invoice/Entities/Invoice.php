@@ -20,7 +20,7 @@ class Invoice extends Model implements Auditable
     protected $dates = ['sent_on', 'due_on', 'receivable_date', 'payment_at', 'term_start_date', 'term_end_date'];
 
     protected $encryptable = [
-        'amount', 'gst', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'tds', 'sent_conversion_rate'
+        'amount', 'gst', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'tds', 'sent_conversion_rate',
     ];
 
     public function scopeStatus($query, $status)
