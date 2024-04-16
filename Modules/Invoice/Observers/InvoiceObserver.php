@@ -16,7 +16,7 @@ class InvoiceObserver
     public function created(Invoice $invoice)
     {
         $conversionRates = new CurrencyService();
-        $conversionRate = $conversionRates->getAllSCurrentRatesInINR();
+        $conversionRate = $conversionRates->getAllCurrentRatesInINR();
         $initial = config('invoice.currency_initials');
 
         switch (strtoupper($invoice->client->country->currency)) {
