@@ -84,6 +84,10 @@ Vue.component(
 	require("./components/Dashboard/UserDashboardLibrary.vue").default
 );
 Vue.component(
+	"employee-profitability-list",
+	require("./components/Dashboard/EmployeeProfitabilityList.vue").default
+);
+Vue.component(
 	"user-dashboard-infrastructure",
 	require("./components/Dashboard/UserDashboardInfrastructure.vue").default
 );

@@ -45,6 +45,10 @@
             </div>
         @endcan
 
+        <div class="pr-5 mb-4 min-w-389">
+            <employee-profitability-list />
+        </div>
+
         @can('projects.view')
         <div class="pr-5 mb-4 min-w-389">
             <user-dashboard-projects />
