@@ -120,7 +120,7 @@ class HRPermissionsTableSeeder extends Seeder
             ['name' => 'hr_job_requisition.delete'],
         ];
         $employeePermission = [
-            ['name' => 'employee_profitability_list.view']
+            ['name' => 'employee_profitability_list.view'],
         ];
 
         $allHrPermissions = array_merge(
