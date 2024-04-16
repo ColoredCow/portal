@@ -178,6 +178,21 @@ Before you start following the guidelines, make sure to go through the [prerequi
                 </Directory>
             </VirtualHost>
             ```
+            In case you are using Apache version 2.4 or above, the above code will give you a 403 Forbidden error. Make the following changes:
+            ```apacheconf
+            <Directory>
+                # some code above
+                Order allow,deny
+                Allow from all
+            </Directory>
+            ```
+            Change to:
+            ```apacheconf
+            <Directory>
+                 # some code above
+                 Require all granted
+            </Directory>
+            ```
         - Restart WAMP. Next, open this url in your browser: http://portal.test
 
     2. For XAMPP:
@@ -198,15 +213,24 @@ Before you start following the guidelines, make sure to go through the [prerequi
                     Allow from all
                 </Directory>
             </VirtualHost>
+            
+            In case you are using Apache version 2.4 or above, the above code will give you a 403 Forbidden error. Make the following changes:
+            ```apacheconf
+            <Directory>
+                # some code above
+                Order allow,deny
+                Allow from all
+            </Directory>
             ```
-            - After adding the above code, if you are getting the "403 Forbidden" error, try to resolve it through the following addition in your code:
+            Change to:
             ```apacheconf
             <Directory>
                  # some code above
-                 Allow from all   #add this line
                  Require all granted
             </Directory>
             ```
+           - Restart XAMPP. Next, open this url in your browser: http://portal.test
+        
 
         - Restart XAMPP. Next, open this url in your browser: http://portal.test
 
@@ -357,7 +381,13 @@ Before you start following the guidelines, make sure to go through the [prerequi
     
     2. Open .env file and add the following
         ```sh
+        
+        For Windows: 
         PDF_BINARY='C://"Program Files"/wkhtmltopdf/bin/wkhtmltopdf.exe'
+
+        For Mac:
+        PDF_BINARY="/usr/local/bin/wkhtmltopdf"
+
         ```
     3. Run the following command in the terminal
         ```sh
