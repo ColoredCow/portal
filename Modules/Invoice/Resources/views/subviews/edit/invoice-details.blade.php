@@ -451,7 +451,7 @@
                     clients: @json($clients),
                     invoice: @json($invoice),
                     projects: @json($invoice->client->projects),
-                    allExchangeRate: @json($currencyService->getAllSCurrentRatesInINR()),
+                    allExchangeRate: @json($currencyService->getAllCurrentRatesInINR()),
                     clientId: "{{ $invoice->client_id }}",
                     projectId: "{{ $invoice->project_id }}",
                     client: @json($invoice->client),
