@@ -17,16 +17,14 @@ class InvoicesAnalyticsEncryptedDataTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('invoice_id');
             $table->foreign('invoice_id')->references('id')->on('invoices');
-            $table->string('currency', 3);
-            $table->text('amount');
-            $table->string('gst')->nullable()->comment('Currency is always Indian Rupees for this field.');
-            $table->text('bank_charges');
-            $table->text('conversion_rate_diff');
-            $table->text('tds');
-            $table->text('sent_conversion_rate');
-            $table->text('comments')->nullable();
+            $table->text('amount')->nullable();
+            $table->text('gst')->nullable();
+            $table->text('amount_paid')->nullable();
+            $table->text('bank_charges')->nullable();
+            $table->text('conversion_rate_diff')->nullable();
+            $table->text('tds')->nullable();
+            $table->text('sent_conversion_rate')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
