@@ -14,7 +14,7 @@ class UpdateInvoicesTableAddConversionRateColumn extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->string('sent_conversion_rate')->nullable()->after('conversion_rate');
+            $table->text('sent_conversion_rate')->nullable()->after('conversion_rate');
         });
     }
 
