@@ -1,6 +1,11 @@
 @extends('layouts.app')
-
 @section('content')
+
+<!-- As of now we have hardCoded the earningValue until we unable to fetch the real data -->
+@php
+    $routeName = Route::getCurrentRoute()->getName();
+    $earningValue  = 0;
+@endphp
     <div class="container">
         <br>
         @include('hr.employees.menu')
@@ -30,6 +35,7 @@
             <thead class="thead-dark">
                 <tr class="sticky-top">
                     <th>Name</th>
+                    @if($routeName === "employee")
                     <th>Active Projects Count</th>
                     <th>
                         Overall FTE
@@ -43,6 +49,14 @@
                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                         </span>
                     </th>
+                @else
+                    <th>
+                        Employee Earning
+                        <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Rate">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        </span>
+                    </th>
+                @endif
                 </tr>
                 @foreach ($employees as $employee)
                     <tr>
@@ -66,6 +80,7 @@
                                 @endif
                             </a>
                         </td>
+                        @if($routeName === "employee")
                         <td>
                             @if ($employee->user == null)
                                 0
@@ -80,6 +95,7 @@
                         {{ $totalFTE }}
                         @endif
                         </td>
+                        if
                         <td>
                             <span class="text-success">
                                 {{ $user->total_hours['billable'] }}
@@ -89,6 +105,21 @@
                                 {{ $user->total_hours['non_billable'] }}
                             </span>
                         </td>
+                        @else
+                        <td>
+                        @if($earningValue >= 0)
+                            <span class="text-success">
+                                {{$earningValue}}
+                                <span class="d-inline-block pr-2 h-30 w-30">{!! file_get_contents(public_path('icons/green-tick.svg')) !!}</span>
+                            </span>
+                            @else
+                            <span class="text-secondary pl-2">
+                                {{$earningValue}}
+                                <span class="d-inline-block h-30 w-30">{!! file_get_contents(public_path('icons/warning-symbol.svg')) !!}</span>
+                            </span>
+                            @endif
+                        </td>
+                        @endif
                     </tr>
                 @endforeach
         </table>

@@ -57,6 +57,14 @@
                         </a>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="card h-75 mx-4 mt-3 mb-5 ">
+                        <a class="card-body no-transition" href="{{ route('settings.employee-earning-threshold') }}">
+                            <br>
+                            <h2 class="text-center">Config Variable</h2><br>
+                        </a>
+                    </div>
+                </div>
         </div>
     </div>
 @endsection
