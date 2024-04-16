@@ -26,8 +26,6 @@ class UserPermissionsTableSeeder extends Seeder
         Permission::updateOrCreate(['name' => 'user_role_management.update']);
         Permission::updateOrCreate(['name' => 'user_role_management.delete']);
 
-        Permission::updateOrCreate(['name' => 'employee_profitability_list.view']);
-
         $userManagementPermissions = [
             ['name' => 'user_management.create'],
             ['name' => 'user_management.view'],
