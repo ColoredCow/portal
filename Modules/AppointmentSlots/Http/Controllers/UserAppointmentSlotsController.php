@@ -65,3 +65,5 @@ class UserAppointmentSlotsController extends Controller
         ->with('status', 'Slot deleted successfully');
     }
 }
+
+

@@ -56,7 +56,6 @@
                         <h2 class="text-center">Bank Details</h2><br>
                     </a>
                 </div>
-<<<<<<< HEAD
             </div>
             <div class="col-md-4">
                 <div class="card h-75 mx-4 mt-3 mb-5 ">
@@ -66,7 +65,6 @@
                     </a>
                 </div>
             </div>
-=======
                 <div class="col-md-4">
                     <div class="card h-75 mx-4 mt-3 mb-5 ">
                         <a class="card-body no-transition" href="{{ route('settings.employee-earning-threshold') }}">
@@ -75,7 +73,6 @@
                         </a>
                     </div>
                 </div>
->>>>>>> 512abc68633ba85c9ee9d92bbdfdfa68e7579c0b
         </div>
     </div>
 @endsection
