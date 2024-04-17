@@ -35,7 +35,7 @@
             <thead class="thead-dark">
                 <tr class="sticky-top">
                     <th>Name</th>
-                    @if($routeName === "employee")
+                    @if($routeName === "employees")
                     <th>Active Projects Count</th>
                     <th>
                         Overall FTE
@@ -52,7 +52,7 @@
                 @else
                     <th>
                         Employee Earning
-                        <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Rate">
+                        <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Calculated on the basis of the total project and earnings of each project.">
                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                         </span>
                     </th>
@@ -80,7 +80,7 @@
                                 @endif
                             </a>
                         </td>
-                        @if($routeName === "employee")
+                        @if($routeName === "employees")
                         <td>
                             @if ($employee->user == null)
                                 0
