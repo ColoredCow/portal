@@ -107,6 +107,7 @@ function clientWiseRevenueTrendsReport(reportsData) {
 	const labels = reportsData.labels;
 	const currentPeriodTotalRevenue = reportsData.data.total_amount;
 	const averageRevenue = reportsData.data.average_amount;
+	console.log(reportsData.data);
 	const chartData = {
 		labels: labels,
 		datasets: [
