@@ -6,7 +6,7 @@ use Modules\Client\Entities\Country;
 use Modules\Client\Http\Requests\CountryRequest;
 
 class CountryController extends ModuleBaseController
-{   
+{
     protected $service;
     public function store(CountryRequest $request)
     {
