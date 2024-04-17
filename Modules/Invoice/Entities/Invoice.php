@@ -246,7 +246,7 @@ class Invoice extends Model implements Auditable
         }
 
         if ($this->sent_conversion_rate) {
-            return $this->getTotalAmountAttribute() * (int)($this->sent_conversion_rate);
+            return $this->getTotalAmountAttribute() * ($this->sent_conversion_rate);
         }
 
         return $this->getTotalAmountAttribute() * app(CurrencyServiceContract::class)->getCurrentRatesInINR();
