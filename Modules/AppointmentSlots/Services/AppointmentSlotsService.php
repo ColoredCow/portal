@@ -137,11 +137,11 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
     public function schedule(ApplicationRound $applicationRound, $data)
     {
         $applicant = $applicationRound->application->applicant;
-        $summary = "{$applicant->name} – {$applicationRound->round->name} with ColoredCow";
+        $summary = "{$applicant->name} – {$applicationRound->round->name} with ColoredCow for {$applicationRound->application->job->title}";
         $guests = [['email' => $data['applicant_email'], 'responseStatus' => 'accepted']];
         $route = 'applications.' . $applicationRound->application->job->type . '.edit';
         $applicationLink = URL::route($route, $applicationRound->application->id);
-        $description = "Application Link: {$applicationLink}";
+        $description = "<a href='{$applicationLink}'>Application Link</a> for Job role: <a href='{$applicationRound->application->job->link}'>{$applicationRound->application->job->title}</a>";
         $calendarMeetingService = app(CalendarMeetingContract::class);
         $calendarMeetingService->setOrganizer($applicationRound->scheduledPerson);
 
@@ -197,7 +197,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         $summary = 'Appointment Scheduled';
         $route = 'applications.' . $applicationRound->application->job->type . '.edit';
         $applicationLink = URL::route($route, $applicationRound->application->id);
-        $description = "Application Link: {$applicationLink}";
+        $description = "<a href='{$applicationLink}'>Application Link</a> for Job role: <a href='{$applicationRound->application->job->link}'>{$applicationRound->application->job->title}</a>";
 
         $event = new CalendarEventService;
 

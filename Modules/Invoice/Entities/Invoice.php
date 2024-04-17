@@ -15,12 +15,12 @@ class Invoice extends Model implements Auditable
 {
     use Encryptable, SoftDeletes, \OwenIt\Auditing\Auditable;
 
-    protected $fillable = ['client_id', 'project_id', 'status', 'billing_level', 'currency', 'amount', 'sent_on', 'due_on', 'receivable_date', 'gst', 'file_path', 'comments', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'conversion_rate', 'tds', 'tds_percentage', 'currency_transaction_charge', 'payment_at', 'invoice_number', 'reminder_mail_count', 'payment_confirmation_mail_sent', 'deleted_at', 'term_start_date', 'term_end_date'];
+    protected $fillable = ['client_id', 'project_id', 'status', 'billing_level', 'currency', 'amount', 'sent_on', 'due_on', 'receivable_date', 'gst', 'file_path', 'comments', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'conversion_rate', 'tds', 'tds_percentage', 'currency_transaction_charge', 'payment_at', 'invoice_number', 'reminder_mail_count', 'payment_confirmation_mail_sent', 'deleted_at', 'term_start_date', 'term_end_date', 'sent_conversion_rate'];
 
     protected $dates = ['sent_on', 'due_on', 'receivable_date', 'payment_at', 'term_start_date', 'term_end_date'];
 
     protected $encryptable = [
-        'amount', 'gst', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'tds',
+        'amount', 'gst', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'tds', 'sent_conversion_rate',
     ];
 
     public function scopeStatus($query, $status)
@@ -245,11 +245,31 @@ class Invoice extends Model implements Auditable
             return $this->getTotalAmountAttribute();
         }
 
-        if ($this->conversion_rate) {
-            return $this->getTotalAmountAttribute() * $this->conversion_rate;
+        if ($this->sent_conversion_rate) {
+            return $this->getTotalAmountAttribute() * ($this->sent_conversion_rate);
         }
 
-        return $this->getTotalAmountAttribute() * app(CurrencyServiceContract::class)->getCurrentRatesInINR();
+        if ($this->conversion_rate) {
+            return $this->getTotalAmountAttribute() * ($this->conversion_rate);
+        }
+
+        $conversionRate = app(CurrencyServiceContract::class)->getAllCurrentRatesInINR();
+        $initial = config('invoice.currency_initials');
+        switch (strtoupper($this->currency)) {
+            case  $initial['usd']:
+                $totalAmount = $this->getTotalAmountAttribute() * round($conversionRate['USDINR'], 2);
+                break;
+
+            case $initial['eur']:
+                $totalAmount = $this->getTotalAmountAttribute() * round(($conversionRate['USDINR']) / ($conversionRate['USDEUR']), 2);
+                break;
+
+            case $initial['swi']:
+                $totalAmount = $this->getTotalAmountAttribute() * round(($conversionRate['USDINR']) / ($conversionRate['USDCHF']), 2);
+                break;
+        }
+
+        return $totalAmount;
     }
 
     public function getTermAttribute()

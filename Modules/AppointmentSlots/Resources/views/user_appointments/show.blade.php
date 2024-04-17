@@ -7,7 +7,7 @@
         @csrf
             <div class="card-body">
                 <h5 class="max-interview-heading fz-22">Maximum interviews in a day:
-                    <input type="number" class="col-xs text-center outline-none h-26 w-50 rounded-12 quantity" id="quantity" name="max_interviews_per_day" min="0" max="10" value="{{ old ('max_interviews_per_day', Auth::user()->metaValue('max_interviews_per_day')) }}">
+                    <input type="number" class="col-xs text-center outline-none h-26 w-50 rounded-12 quantity" id="quantity" name="max_interviews_per_day" min="0" max="15" value="{{ old ('max_interviews_per_day', Auth::user()->metaValue('max_interviews_per_day')) }}">
                     <input type="submit" class="btn btn-primary h-28 w-55 mt-0 pt-0.5 mb-1" value="Save">
                 </h5>
             </div>

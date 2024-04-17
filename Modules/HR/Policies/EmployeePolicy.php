@@ -20,6 +20,16 @@ class EmployeePolicy
         return $user->id === $employee->user_id || $user->hasPermissionTo('hr_employees.view');
     }
 
+    public function list(User $user)
+    {
+        return $user->hasPermissionTo('hr_employees.view');
+    }
+
+    public function listPayroll(User $user)
+    {
+        return $user->hasPermissionTo('employee_salary.view');
+    }
+
     public function create(User $user)
     {
         return $user->hasPermissionTo('hr_employees.create');
