@@ -63,5 +63,4 @@ class UserAppointmentSlotsController extends Controller
 
         return redirect(route('userappointmentslots.show', $appointmentSlot->user_id))
         ->with('status', 'Slot deleted successfully');
-    }
-}
+    }}
