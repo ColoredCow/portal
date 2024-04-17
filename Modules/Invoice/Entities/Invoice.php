@@ -249,7 +249,27 @@ class Invoice extends Model implements Auditable
             return $this->getTotalAmountAttribute() * ($this->sent_conversion_rate);
         }
 
-        return $this->getTotalAmountAttribute() * app(CurrencyServiceContract::class)->getCurrentRatesInINR();
+        if ($this->conversion_rate) {
+            return $this->getTotalAmountAttribute() * ($this->conversion_rate);
+        }
+
+        $conversionRate = app(CurrencyServiceContract::class)->getAllCurrentRatesInINR();
+        $initial = config('invoice.currency_initials');
+        switch (strtoupper($this->currency)) {
+            case  $initial['usd']:
+                $taotalAmount = $this->getTotalAmountAttribute() * round($conversionRate['USDINR'], 2);
+                break;
+
+            case $initial['eur']:
+                $taotalAmount = $this->getTotalAmountAttribute() * round(($conversionRate['USDINR']) / ($conversionRate['USDEUR']), 2);
+                break;
+
+            case $initial['swi']:
+                $taotalAmount = $this->getTotalAmountAttribute() * round(($conversionRate['USDINR']) / ($conversionRate['USDCHF']), 2);
+                break;
+        }
+        
+        return $taotalAmount;
     }
 
     public function getTermAttribute()
