@@ -49,14 +49,22 @@
                     </div>
                 </div>
             @endcan
-                <div class="col-md-4">
-                    <div class="card h-75 mx-4 mt-3 mb-5 ">
-                        <a class="card-body no-transition" href="{{ route('settings.bank-details') }}">
-                            <br>
-                            <h2 class="text-center">Bank Details</h2><br>
-                        </a>
-                    </div>
+            <div class="col-md-4">
+                <div class="card h-75 mx-4 mt-3 mb-5 ">
+                    <a class="card-body no-transition" href="{{ route('settings.bank-details') }}">
+                        <br>
+                        <h2 class="text-center">Bank Details</h2><br>
+                    </a>
                 </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-75 mx-4 mt-3 mb-5 ">
+                    <a class="card-body no-transition" href="{{ route('settings.country-details') }}">
+                        <br>
+                        <h2 class="text-center">Country Details</h2><br>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
