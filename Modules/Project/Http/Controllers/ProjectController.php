@@ -137,6 +137,10 @@ class ProjectController extends Controller
         $designations = $this->service->getDesignations();
         $designationKeys = array_keys($designations);
 
+        $contract = ProjectContract::where('project_id', $project->id)->first();
+        $contractFilePath = $contract ? storage_path('app/' . $contract->contract_file_path) : null;
+        $contractName = basename($contractFilePath);
+
         return view('project::edit', [
             'project' => $project,
             'clients' => Client::orderBy('name')->get(),
@@ -146,6 +150,7 @@ class ProjectController extends Controller
             'designations' => $designations,
             'workingDaysInMonth' => $this->service->getWorkingDays($project),
             'designationKeys' => $designationKeys,
+            'contractName' => $contractName,
         ]);
     }
 
