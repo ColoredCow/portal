@@ -95,7 +95,6 @@
                         {{ $totalFTE }}
                         @endif
                         </td>
-                        if
                         <td>
                             <span class="text-success">
                                 {{ $user->total_hours['billable'] }}
