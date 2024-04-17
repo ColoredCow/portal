@@ -268,7 +268,7 @@ class Invoice extends Model implements Auditable
                 $taotalAmount = $this->getTotalAmountAttribute() * round(($conversionRate['USDINR']) / ($conversionRate['USDCHF']), 2);
                 break;
         }
-        
+
         return $taotalAmount;
     }
 
