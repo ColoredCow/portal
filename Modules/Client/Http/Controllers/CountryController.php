@@ -31,7 +31,7 @@ class CountryController extends ModuleBaseController
     public function edit($id)
     {
         $country = Country::find($id);
-        
+
         $previousValues = [
             'name' => $country->name,
             'initials' => $country->initials,
@@ -43,25 +43,25 @@ class CountryController extends ModuleBaseController
 
         if (empty($requestData['name'])) {
             $country->name = $previousValues['name'];
-        }else{
+        } else {
             $country->name = request('name');
         }
 
         if (empty($requestData['initials'])) {
             $country->initials = $previousValues['initials'];
-        }else{
+        } else {
             $country->initials = request('initials');
         }
 
         if (empty($requestData['currency'])) {
             $country->currency = $previousValues['currency'];
-        }else{
+        } else {
             $country->currency = request('currency');
         }
 
         if (empty($requestData['currency_symbol'])) {
             $country->currency_symbol = $previousValues['currency_symbol'];
-        }else{
+        } else {
             $country->currency_symbol = request('currency_symbol');
         }
 
