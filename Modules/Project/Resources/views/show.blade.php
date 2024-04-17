@@ -10,9 +10,9 @@
         @endcan
     </div>
     <br>
-    <div class="card-header d-flex" data-toggle="collapse" data-target="#resource-engagement">
+    <div class="card-header d-flex" data-toggle="collapse" data-target="#resource-engagement" onclick="toggleAccordion('resource-engagement', this)">
         <h4>Resource Engagement</h4>
-        <span class ="ml-auto">&#9660;</span>
+        <span class ="arrow ml-auto">&#9660;</span>
     </div>
     <div id="resource-engagement" class= "collapse card mt-3">
         <div class="collapes-body">
@@ -98,9 +98,9 @@
             </div>
         </div>
     <br>
-    <div class="card-header d-flex" data-toggle="collapse" data-target="#approved-pipeline">
+    <div class="card-header d-flex" data-toggle="collapse" data-target="#approved-pipeline" onclick="toggleAccordion('approved-pipeline', this)">
         <h4>Approved Pipeline</h4>
-        <span class ="ml-auto">&#9660;</span>
+        <span class ="arrow ml-auto">&#9660;</span>
     </div>
     <div id="approved-pipeline" class="collapse card mt-3">
         <div class="panel-body">
@@ -192,9 +192,9 @@
             </div>
     </div>
     <br>
-    <div class="card-header d-flex" data-toggle="collapse" data-target="#basic-details">
+    <div class="card-header d-flex" data-toggle="collapse" data-target="#basic-details" onclick="toggleAccordion('basic-details', this)">
         <h4>Basic Details</h4>
-        <span class ="ml-auto">&#9660;</span>
+        <span class ="arrow ml-auto">&#9660;</span>
     </div>
     <div id="basic-details" class="collapse card mt-3">
         <div class="panel-body">
@@ -230,3 +230,32 @@
     </div>
 </div>
 @endsection
+<script>
+    function toggleAccordion(sectionId, arrowElement) {
+        var section = document.getElementById(sectionId);
+        var allSections = document.querySelectorAll('.collapse');
+        var allArrows = document.querySelectorAll('.arrow');
+        
+        // Close all sections except the clicked one
+        allSections.forEach(function(sec) {
+            if (sec.id !== sectionId) {
+                sec.classList.remove('show');
+            }
+        });
+
+        // Rotate the arrow of the clicked section
+        allArrows.forEach(function(arrow) {
+            if (arrow === arrowElement.querySelector('.arrow')) {
+                arrow.classList.toggle('rotate180');
+            } else {
+                arrow.classList.remove('rotate180');
+            }
+        });
+    }
+</script>
+
+<style>
+.rotate180 {
+    transform: rotate(180deg);
+}
+</style>
