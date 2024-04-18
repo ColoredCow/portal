@@ -11,6 +11,19 @@
 |
 */
 
+Route::prefix('finance')->middleware('auth')->group(function () {
+    Route::resource('/employee-loan', 'EmployeeLoanController')
+    ->only(['index', 'edit', 'update', 'destroy', 'store'])
+    ->names([
+        'index' => "employee-loan.index",
+        'edit' => "employee-loan.edit",
+        'update' => "employee-loan.update",
+        'destroy' => "employee-loan.destroy",
+        'store' => "employee-loan.store",
+    ]);
+    Route::get('/employee-loan/create', 'EmployeeLoanController@create')->name('employee-loan.create');
+});
+
 Route::prefix('invoice')->middleware('auth')->group(function () {
     Route::get('/', 'InvoiceController@index')->name('invoice.index');
     Route::get('/tax-report', 'InvoiceController@taxReport')->name('invoice.tax-report');
