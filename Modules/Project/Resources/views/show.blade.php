@@ -9,7 +9,7 @@
         @endcan
     </div>
     <br>
-    <div class="card-header d-flex" data-toggle="collapse" data-target="#resource-engagement" onclick="toggleAccordion('resource-engagement', this)">
+    <div class="card-header d-flex" data-toggle="collapse" data-target="#resource-engagement" >
         <h4>Resource Engagement</h4>
         <span class ="arrow ml-auto">&#9660;</span>
     </div>
@@ -97,7 +97,7 @@
             </div>
         </div>
     <br>
-    <div class="card-header d-flex" data-toggle="collapse" data-target="#approved-pipeline" onclick="toggleAccordion('approved-pipeline', this)">
+    <div class="card-header d-flex" data-toggle="collapse" data-target="#approved-pipeline">
         <h4>Approved Pipeline</h4>
         <span class ="arrow ml-auto">&#9660;</span>
     </div>
@@ -191,7 +191,7 @@
             </div>
     </div>
     <br>
-    <div class="card-header d-flex" data-toggle="collapse" data-target="#basic-details" onclick="toggleAccordion('basic-details', this)">
+    <div class="card-header d-flex" data-toggle="collapse" data-target="#basic-details" >
         <h4>Basic Details</h4>
         <span class ="arrow ml-auto">&#9660;</span>
     </div>
