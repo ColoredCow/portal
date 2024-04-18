@@ -18,7 +18,6 @@ class SentConversionRateSeederTableSeeder extends Seeder
     {
         Model::unguard();
 
-
         $csvFilePath = storage_path('Revennue-Data-Cleanup.csv');
         $csv = array_map('str_getcsv', file($csvFilePath));
 
@@ -33,6 +32,5 @@ class SentConversionRateSeederTableSeeder extends Seeder
                 $existingRow->save();
             }
         }
-
     }
 }
