@@ -1,6 +1,5 @@
 @extends('project::layouts.master')
 @section('content')
-
 <div class="container" id="vueContainer">
     <br>
     <div class=" d-flex">
@@ -230,32 +229,4 @@
     </div>
 </div>
 @endsection
-<script>
-    function toggleAccordion(sectionId, arrowElement) {
-        var section = document.getElementById(sectionId);
-        var allSections = document.querySelectorAll('.collapse');
-        var allArrows = document.querySelectorAll('.arrow');
-        
-        // Close all sections except the clicked one
-        allSections.forEach(function(sec) {
-            if (sec.id !== sectionId) {
-                sec.classList.remove('show');
-            }
-        });
 
-        // Rotate the arrow of the clicked section
-        allArrows.forEach(function(arrow) {
-            if (arrow === arrowElement.querySelector('.arrow')) {
-                arrow.classList.toggle('rotate180');
-            } else {
-                arrow.classList.remove('rotate180');
-            }
-        });
-    }
-</script>
-
-<style>
-.rotate180 {
-    transform: rotate(180deg);
-}
-</style>
