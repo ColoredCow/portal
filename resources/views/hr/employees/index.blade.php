@@ -65,7 +65,11 @@
                             $totalFTE = $user->ftes['main'] + $user->ftes['amc']
                         @endphp
                         <td>
+                            @if($routeName === "employees")
                             <a href="{{ route('employees.hr.details', $employee) }}">
+                                @else
+                                <a href="{{ route('employee.earning.value', $employee) }}">
+                            @endif
                                 @if ($employee->overall_status === 'pending' && $filters['status'] == 'current')
                                     {{ $employee->name }} <span
                                         class="{{ config('constants.review-tags.pending.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.pending.title') }}</span>

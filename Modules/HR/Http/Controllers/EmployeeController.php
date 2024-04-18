@@ -152,6 +152,11 @@ class EmployeeController extends Controller
         return view('hr.employees.hr-details', ['employee' => $employee]);
     }
 
+    public function employeeEarningValue(Employee $employee)
+    {
+        return view('finance.employees.index', ['employee' => $employee]);
+    }
+
     public function financialdetails(Employee $employee)
     {
         return view('hr.employees.financial-details', ['employee' => $employee]);

@@ -41,6 +41,7 @@ Route::prefix('report')->group(function () {
 
         Route::prefix('employee')->group(function () {
             Route::get('/profitibality', [EmployeeController::class, 'index'])->name('report.employees.profitibality');
+            Route::get('/{employee}/', [EmployeeController::class, 'employeeEarningValue'])->name('employee.earning.value');
         });
 
         Route::prefix('monthly-sales-register')->group(function () {
