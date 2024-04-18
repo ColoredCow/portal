@@ -2,7 +2,9 @@
 
 namespace Modules\Invoice\Observers;
 
+use Illuminate\Support\Facades\DB;
 use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Entities\InvoicesAnalyticsEncryptedData;
 use Modules\Invoice\Services\CurrencyService;
 
 class InvoiceObserver
@@ -34,6 +36,18 @@ class InvoiceObserver
         }
 
         $invoice->save();
+
+        InvoicesAnalyticsEncryptedData::create([
+            'invoice_id' => $invoice->id,
+            'amount' => $this->encryptValue($invoice->amount),
+            'gst' => $this->encryptValue($invoice->gst),
+            'amount_paid' => $this->encryptValue($invoice->amount_paid),
+            'bank_charges' => $this->encryptValue($invoice->bank_charges),
+            'conversion_rate' => $this->encryptValue($invoice->conversion_rate),
+            'conversion_rate_diff' => $this->encryptValue($invoice->conversion_rate_diff),
+            'tds' => $this->encryptValue($invoice->tds),
+            'sent_conversion_rate' => $this->encryptValue($invoice->sent_conversion_rate),
+        ]);
     }
 
     /**
@@ -44,7 +58,22 @@ class InvoiceObserver
      */
     public function updated(Invoice $invoice)
     {
-        //
+        $invoiceAnalyticsEntity = InvoicesAnalyticsEncryptedData::where('invoice_id', $invoice->id);
+
+        if (! $invoiceAnalyticsEntity) {
+            return;
+        }
+
+        $invoiceAnalyticsEntity->update([
+            'amount' => $this->encryptValue($invoice->amount),
+            'gst' => $this->encryptValue($invoice->gst),
+            'amount_paid' => $this->encryptValue($invoice->amount_paid),
+            'bank_charges' => $this->encryptValue($invoice->bank_charges),
+            'conversion_rate' => $this->encryptValue($invoice->conversion_rate),
+            'conversion_rate_diff' => $this->encryptValue($invoice->conversion_rate_diff),
+            'tds' => $this->encryptValue($invoice->tds),
+            'sent_conversion_rate' => $this->encryptValue($invoice->sent_conversion_rate),
+        ]);
     }
 
     /**
@@ -55,7 +84,13 @@ class InvoiceObserver
      */
     public function deleted(Invoice $invoice)
     {
-        //
+        $invoiceAnalyticsEntity = InvoicesAnalyticsEncryptedData::where('invoice_id', $invoice->id);
+
+        if (! $invoiceAnalyticsEntity) {
+            return;
+        }
+
+        $invoiceAnalyticsEntity->delete();
     }
 
     /**
@@ -78,5 +113,11 @@ class InvoiceObserver
     public function forceDeleted(Invoice $invoice)
     {
         //
+    }
+
+    protected function encryptValue($value)
+    {
+        $result = DB::select("SELECT TO_BASE64(AES_ENCRYPT('" . $value . "', '" . config('database.connections.mysql.encryption_key') . "')) AS encrypted_value");
+        return $result[0]->encrypted_value;
     }
 }
