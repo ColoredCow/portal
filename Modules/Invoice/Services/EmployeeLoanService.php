@@ -18,7 +18,7 @@ class EmployeeLoanService
 
     public function create(array $params)
     {
-        $allEmployees = Employee::with('user')->get()->sortBy(function($user) { 
+        $allEmployees = Employee::with('user')->get()->sortBy(function ($user) {
             return $user->name;
         });
         return [

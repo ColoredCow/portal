@@ -16,7 +16,8 @@ class EmployeeLoan extends Model
     protected $dates = ['start_date', 'end_date', 'created_at', 'updated_at'];
     protected $encryptable = ['total_amount', 'monthly_deduction'];
 
-    public function employee() {
+    public function employee()
+    {
         return $this->belongsTo(Employee::class);
     }
 }
