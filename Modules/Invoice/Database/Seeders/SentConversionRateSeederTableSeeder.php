@@ -2,10 +2,9 @@
 
 namespace Modules\Invoice\Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Seeder;
 use Modules\Invoice\Entities\Invoice;
-use Illuminate\Support\Facades\Log;
 
 class SentConversionRateSeederTableSeeder extends Seeder
 {
