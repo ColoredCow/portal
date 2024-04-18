@@ -69,7 +69,7 @@ class ProjectController extends Controller
     {
         $contractData = $this->getContractData($project);
         $contract = $contractData['contract'];
-        $contractFilePath = $contractData['contractFilePath'];  
+        $contractFilePath = $contractData['contractFilePath'];
         $currentDate = today(config('constants.timezone.indian'));
 
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
@@ -199,7 +199,7 @@ class ProjectController extends Controller
         return [
             'contract' => $contract,
             'contractFilePath' => $contractFilePath,
-            'contractName' => $contractName
+            'contractName' => $contractName,
         ];
     }
 }
