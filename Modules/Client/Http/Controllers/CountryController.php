@@ -32,38 +32,10 @@ class CountryController extends ModuleBaseController
     {
         $country = Country::find($id);
 
-        $previousValues = [
-            'name' => $country->name,
-            'initials' => $country->initials,
-            'currency' => $country->currency,
-            'currency_symbol' => $country->currency_symbol,
-        ];
-
-        $requestData = request()->only(['name', 'initials', 'currency', 'currency_symbol']);
-
-        if (empty($requestData['name'])) {
-            $country->name = $previousValues['name'];
-        } else {
-            $country->name = request('name');
-        }
-
-        if (empty($requestData['initials'])) {
-            $country->initials = $previousValues['initials'];
-        } else {
-            $country->initials = request('initials');
-        }
-
-        if (empty($requestData['currency'])) {
-            $country->currency = $previousValues['currency'];
-        } else {
-            $country->currency = request('currency');
-        }
-
-        if (empty($requestData['currency_symbol'])) {
-            $country->currency_symbol = $previousValues['currency_symbol'];
-        } else {
-            $country->currency_symbol = request('currency_symbol');
-        }
+        $country->name = request('name');
+        $country->initials = request('initials');
+        $country->currency = request('currency');
+        $country->currency_symbol = request('currency_symbol');
 
         $country->update();
 

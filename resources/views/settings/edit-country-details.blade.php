@@ -14,23 +14,23 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Country</label>
                 <div class="col-sm-4">
-                    <input type="text" id="name" name="name" class="form-control" placeholder="Country">
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Country" value="{{ old('name', $country->name) }}">
                 </div>
                 <label class="col-sm-2 col-form-label">Initials</label>
                 <div class="col-sm-4">
-                    <input type="text" id ="initials" name="initials" class="form-control" placeholder="Initials">
+                    <input type="text" id ="initials" name="initials" class="form-control" placeholder="Initials" value="{{ old('initials', $country->initials) }}">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Currency</label>
                 <div class="col-sm-4">
-                    <input type="text" id ="currency" name="currency" class="form-control" placeholder="Currency">
+                    <input type="text" id ="currency" name="currency" class="form-control" placeholder="Currency" value="{{ old('currency', $country->currency) }}">
                 </div>
                 <label class="col-sm-2 col-form-label">Symbols</label>
                 <div class="col-sm-4">
                     <select id="currency_symbol" name="currency_symbol" class="form-control">
                     @foreach(config('client.currency-symbols') as $key => $value)
-                        <option value="{{ implode($value) }}">{{implode($value)}}</option>
+                        <option value="{{ implode($value) }}" @if(old('currency_symbol', $country->currency_symbol) == implode($value)) selected @endif>{{implode($value)}}</option>
                     @endforeach
                     </select>
                 </div>
