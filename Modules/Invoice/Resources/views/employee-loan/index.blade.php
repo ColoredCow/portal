@@ -15,7 +15,7 @@
                     <th>Employee Name</th>
                     <th>Loan Amount</th>
                     <th>Monthly Deduction</th>
-                    <th>End Date</th>
+                    <th>End Month</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -25,7 +25,7 @@
                         <td>{{ optional($loan->employee->user)->name ?? "User Deleted" }}</td>
                         <td>{{ $loan->total_amount . " INR"}}</td>
                         <td>{{ $loan->monthly_deduction . " INR"}}</td>
-                        <td>{{ $loan->end_date->format('d M Y') }}</td>
+                        <td>{{ $loan->end_date->format('M Y') }}</td>
                         <td>
                             @if($loan->employee->user)
                                 <a class="c-pointer" href="{{ route('employee-loan.edit', $loan) }}">

@@ -33,7 +33,7 @@ class EmployeeLoanService
             'total_amount' => $params["total_amount"],
             'monthly_deduction' => $params["monthly_deduction"],
             'start_date' => Carbon::parse($params["start_date"]),
-            'end_date' => Carbon::parse($params["end_date"]),
+            'end_date' => Carbon::parse($params["end_date"])->endOfMonth(),
         ]);
     }
 
@@ -43,7 +43,7 @@ class EmployeeLoanService
             'total_amount' => $params["total_amount"],
             'monthly_deduction' => $params["monthly_deduction"],
             'start_date' => Carbon::parse($params["start_date"]),
-            'end_date' => Carbon::parse($params["end_date"]),
+            'end_date' => Carbon::parse($params["end_date"])->endOfMonth(),
         ]);
     }
 }
