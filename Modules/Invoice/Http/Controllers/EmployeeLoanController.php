@@ -41,7 +41,6 @@ class EmployeeLoanController extends Controller
         return view('invoice::employee-loan.create', $data);
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -87,7 +86,7 @@ class EmployeeLoanController extends Controller
     public function destroy(EmployeeLoan $loan)
     {
         $loan->delete();
-        
+
         return redirect()->back()->with('success', 'Loan deleted successfully!');
     }
 }

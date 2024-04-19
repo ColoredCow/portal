@@ -24,7 +24,7 @@ class CreateEmployeesLoanTable extends Migration
             $table->timestamps();
             $table->foreign('employee_id')->references('id')->on('employees');
         });
-        
+
         Schema::create('employees_loan_analytics_encrypted_data', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('loan_id');
@@ -40,7 +40,7 @@ class CreateEmployeesLoanTable extends Migration
             ['name' => 'employee_loan.update'],
             ['name' => 'employee_loan.delete'],
         ];
-        
+
         foreach ($employeeLoanPermissions as $permission) {
             Permission::updateOrCreate($permission);
         }

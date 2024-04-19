@@ -3,7 +3,6 @@
 namespace Modules\Invoice\Entities;
 
 use App\Traits\Encryptable;
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Modules\HR\Entities\Employee;
 

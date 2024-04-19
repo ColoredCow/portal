@@ -11,8 +11,9 @@ class EmployeeLoanService
     public function index(array $params)
     {
         $employeeLoans = EmployeeLoan::with('employee')->get();
+
         return [
-            "employeeLoans" => $employeeLoans
+            'employeeLoans' => $employeeLoans
         ];
     }
 
@@ -21,29 +22,30 @@ class EmployeeLoanService
         $allEmployees = Employee::with('user')->get()->sortBy(function ($user) {
             return $user->name;
         });
+
         return [
-            "allEmployees" => $allEmployees,
+            'allEmployees' => $allEmployees,
         ];
     }
 
     public function store(array $params)
     {
         EmployeeLoan::create([
-            'employee_id' => $params["employee_id"],
-            'total_amount' => $params["total_amount"],
-            'monthly_deduction' => $params["monthly_deduction"],
-            'start_date' => Carbon::parse($params["start_date"]),
-            'end_date' => Carbon::parse($params["end_date"])->endOfMonth(),
+            'employee_id' => $params['employee_id'],
+            'total_amount' => $params['total_amount'],
+            'monthly_deduction' => $params['monthly_deduction'],
+            'start_date' => Carbon::parse($params['start_date']),
+            'end_date' => Carbon::parse($params['end_date'])->endOfMonth(),
         ]);
     }
 
     public function update(array $params, EmployeeLoan $employeeLoan)
     {
         $employeeLoan->update([
-            'total_amount' => $params["total_amount"],
-            'monthly_deduction' => $params["monthly_deduction"],
-            'start_date' => Carbon::parse($params["start_date"]),
-            'end_date' => Carbon::parse($params["end_date"])->endOfMonth(),
+            'total_amount' => $params['total_amount'],
+            'monthly_deduction' => $params['monthly_deduction'],
+            'start_date' => Carbon::parse($params['start_date']),
+            'end_date' => Carbon::parse($params['end_date'])->endOfMonth(),
         ]);
     }
 }

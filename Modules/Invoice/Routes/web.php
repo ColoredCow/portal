@@ -13,14 +13,14 @@
 
 Route::prefix('finance')->middleware('auth')->group(function () {
     Route::resource('/employee-loan', 'EmployeeLoanController')
-    ->only(['index', 'edit', 'update', 'destroy', 'store'])
-    ->names([
-        'index' => "employee-loan.index",
-        'edit' => "employee-loan.edit",
-        'update' => "employee-loan.update",
-        'destroy' => "employee-loan.destroy",
-        'store' => "employee-loan.store",
-    ]);
+        ->only(['index', 'edit', 'update', 'destroy', 'store'])
+        ->names([
+            'index' => 'employee-loan.index',
+            'edit' => 'employee-loan.edit',
+            'update' => 'employee-loan.update',
+            'destroy' => 'employee-loan.destroy',
+            'store' => 'employee-loan.store',
+        ]);
     Route::get('/employee-loan/create', 'EmployeeLoanController@create')->name('employee-loan.create');
 });
 

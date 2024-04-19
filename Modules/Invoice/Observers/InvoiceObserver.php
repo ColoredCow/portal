@@ -118,6 +118,7 @@ class InvoiceObserver
     protected function encryptValue($value)
     {
         $result = DB::select("SELECT TO_BASE64(AES_ENCRYPT('" . $value . "', '" . config('database.connections.mysql.encryption_key') . "')) AS encrypted_value");
+
         return $result[0]->encrypted_value;
     }
 }

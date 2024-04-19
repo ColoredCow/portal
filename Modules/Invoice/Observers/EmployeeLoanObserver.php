@@ -21,7 +21,7 @@ class EmployeeLoanObserver
         EmployeeLoanAnalyticsEncryptedData::create([
             'loan_id' => $loan->id,
             'total_amount' => $aes_encrypted_total_amount,
-            'monthly_deduction' => $aes_encrypted_monthly_deduction
+            'monthly_deduction' => $aes_encrypted_monthly_deduction,
         ]);
     }
 
@@ -43,7 +43,7 @@ class EmployeeLoanObserver
 
         $employeeLoanAnalyticsEntity->update([
             'total_amount' => $aes_encrypted_total_amount,
-            'monthly_deduction' => $aes_encrypted_monthly_deduction
+            'monthly_deduction' => $aes_encrypted_monthly_deduction,
         ]);
     }
 
@@ -89,6 +89,7 @@ class EmployeeLoanObserver
     protected function encryptValue($value)
     {
         $result = DB::select("SELECT TO_BASE64(AES_ENCRYPT('" . $value . "', '" . config('database.connections.mysql.encryption_key') . "')) AS encrypted_value");
+
         return $result[0]->encrypted_value;
     }
 }
