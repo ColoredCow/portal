@@ -4,7 +4,6 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                {{ $employees }}
                 {{-- <h1 class="mb-5 mt-10 font-weight-bold"> {{ $employees->[name] }} </h4> --}}
             </div>
             <div class="col-md-12 text-center">
@@ -46,12 +45,31 @@
                                 <h4>Total</h4>
                             </td>
                             <td colspan="1">
-                                <h4>
-                                    @php
-                                        $totalServiceRates = $employees->sum('service_rates') * 2;
-                                    @endphp
-                                    {{ $totalServiceRates }}
-                                </h4>
+                                @php
+                                    $totalServiceRates = $employees->sum('service_rates') * 2;
+                                    $thresholdValue = 109090;
+                                @endphp
+                                @if ($thresholdValue <= $totalServiceRates)
+                                    <span class="text-success d-flex justify-content-center">
+                                        <h4>
+                                            {{ $totalServiceRates }}
+                                        </h4>
+                                        <span class="d-inline-block pl-2 h-30 w-30">{!! file_get_contents(public_path('icons/green-tick.svg')) !!}</span>
+                                    </span>
+                                @else
+                                    <span class="text-danger d-flex justify-content-center">
+                                        <h4>
+                                            {{ $totalServiceRates }}
+                                        </h4>
+                                        <span class="d-inline-block h-30 w-30">{!! file_get_contents(public_path('icons/warning-symbol.svg')) !!}</span>
+                                    </span>
+                                @endif
+                            </td>
+                            <h4>
+                                @php
+                                    $totalServiceRates = $employees->sum('service_rates') * 2;
+                                @endphp
+                            </h4>
                             </td>
                         </tr>
                 </table>
