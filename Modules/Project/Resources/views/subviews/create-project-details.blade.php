@@ -63,19 +63,19 @@
                 <input type="checkbox" id="isamc" name="is_amc" value="true">
                 <label for="is_amc">AMC</label><br>
             </div>
-            <div class="form-group offset col-md-2" v-if="projectType === 'fixed-budget'">
+            <div class="form-group offset col-md-2" v-if="projectType !== 'non-billable'">
                 <label for="start_date">Start Date</label>
                 <input type="date" class="form-control" name="start_date" id="startDate"
                     value="{{ old('start_date') }}">
             </div>
-            <div class="form-group offset-md-1 col-md-2" v-if="projectType === 'fixed-budget'">
+            <div class="form-group offset-md-1 col-md-2" v-if="projectType !== 'non-billable'">
                 <label for="end_date">End Date</label>
                 <input type="date" class="form-control" name="end_date" id="endDate"
                      value="{{ old('start_date') }}">
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-md-5" v-if="projectType ==='fixed-budget'">
+            <div class="form-group col-md-5" v-if="projectType !== 'non-billable'">
                 <label for="total_estimated_hours">{{ __('Total Estimated Hours') }}</label>
                 <input type="number" class="form-control" name="total_estimated_hours" id="total_estimated_hours"
                     placeholder="Enter total estimated hours" value="{{ old('total_estimated_hours') }}">
