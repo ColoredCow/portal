@@ -13,7 +13,7 @@ class EmployeeLoanService
         $employeeLoans = EmployeeLoan::with('employee')->get();
 
         return [
-            'employeeLoans' => $employeeLoans
+            'employeeLoans' => $employeeLoans,
         ];
     }
 
