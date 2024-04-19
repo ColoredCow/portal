@@ -35,7 +35,7 @@ class EmployeeLoanObserver
     {
         $aes_encrypted_total_amount = $this->encryptValue($loan->total_amount);
         $aes_encrypted_monthly_deduction = $this->encryptValue($loan->monthly_deduction);
-        $employeeLoanAnalyticsEntity = EmployeeLoanAnalyticsEncryptedData::where('loan_id', $loan->id);
+        $employeeLoanAnalyticsEntity = EmployeeLoanAnalyticsEncryptedData::where('loan_id', $loan->id)->first();
 
         if (! $employeeLoanAnalyticsEntity) {
             return;
