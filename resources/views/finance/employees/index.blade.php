@@ -16,7 +16,7 @@
                                     <i class="fa fa-info-circle" aria-hidden="true"></i>
                                 </span>
                             </th>
-                            <th> Total Efforts</th>
+                            <th> Total Billable Efforts</th>
                             <th>
                                 Earning
                                 <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Per hour Rate">
@@ -30,13 +30,12 @@
                                     {{ $employee->project_name }}
                                 </td>
                                 <td>
-                                    {{ $employee->service_rates }}
+                                    {{ $employee->service_rates }} {{$employee->currency ? $employee->currency : 'INR'}}
                                 </td>
                                 <td>
                                 </td>
                                 <td>
                                     {{ $employee->service_rates * 2 }}
-
                                 </td>
                             </tr>
                         @endforeach
@@ -47,7 +46,7 @@
                             <td colspan="1">
                                 @php
                                     $totalServiceRates = $employees->sum('service_rates') * 2;
-                                    $thresholdValue = 109090;
+                                    $thresholdValue = 109;
                                 @endphp
                                 @if ($thresholdValue <= $totalServiceRates)
                                     <span class="text-success d-flex justify-content-center">

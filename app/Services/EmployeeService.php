@@ -83,7 +83,8 @@ class EmployeeService
             'projects.is_amc',
             'project_billing_details.project_id as pb_project_id',
             'project_billing_details.service_rates',
-            'project_billing_details.service_rate_term'
+            'project_billing_details.service_rate_term',
+            'project_billing_details.currency'
         )
         ->where('employees.id', $employeeId)
         ->where('projects.status', 'active')
