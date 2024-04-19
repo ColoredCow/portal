@@ -151,7 +151,7 @@ class ProjectController extends Controller
             'designations' => $designations,
             'workingDaysInMonth' => $this->service->getWorkingDays($project),
             'designationKeys' => $designationKeys,
-            'contractName' => $contractName, 
+            'contractName' => $contractName,
         ]);
     }
 

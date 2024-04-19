@@ -107,7 +107,7 @@
                 <div class="form-row">
                         <div class="form-row d-flex justify-content-between">
                             <div class="col-md-5 pl-4 d-flex justify-content-between">
-                                <div style="margin-right: 2em">
+                                <div class="mr-5">
                                     <h4 class="d-inline-block">
                                         <label for="name" class="font-weight-bold mb-6 ml-1">Expected Hours:</label>
                                     </h4>
@@ -132,7 +132,7 @@
                     <div class="form-row">
                         <div class="form-row d-flex justify-content-between">
                             <div class="col-md-5 pl-4 d-flex justify-content-between">
-                                <div style="margin-right: 2em">
+                                <div class="mr-5">
                                     <h4 class="d-inline-block">
                                         <label for="name" class="font-weight-bold mb-6 ml-1">Hours To Cover:</label>
                                     </h4>
@@ -183,21 +183,21 @@
     </div>
 
     <div id="basic-details" class="collapse card mt-3">
-       <div style="margin: 3em"> 
+       <div class="m-5"> 
         <div class="d-flex" style="flex-wrap: wrap">
-            <div class="pr-10 project-hour " style="width: 33%;height: 100%;margin-bottom: 3em;">
+            <div class="pr-10 project-hour w-33p mb-10">
                 <h4 class="d-inline-block">
                     <label for="name" class="font-weight-bold">Start Date:</label>
                 </h4>
                 <span class="text-capitalize  fz-lg-22">{{ optional($project->start_date)->format('d M Y')}}</span>
             </div>
-                <div class="pr-10 project-hour " style="width: 33%;height: 100%;margin-bottom: 3em;">
+                <div class="pr-10 project-hour w-33p mb-10">
                     <h4 class="d-inline-block">
                     <label for="name" class="font-weight-bold ">End Date:</label>
                     </h4>
                     <span class="text-capitalize  fz-lg-22">{{ optional($project->end_date)->format('d M Y')}}</span>
                 </div>
-                <div class="pr-10 project-hour " style="width: 33%;height: 100%;margin-bottom: 3em;">
+                <div class="pr-10 project-hour w-33p mb-10">
                     <h4 class="d-inline-block">
                         <label for="name" class="font-weight-bold ">Project Name:</label>
                     </h4>
@@ -206,33 +206,33 @@
                     <span class="badge badge-pill badge-success mr-1  mt-1">AMC</span>
                     @endif
                 </div>
-                <div class="pr-10 project-hour " style="width: 33%;height: 100%;margin-bottom: 3em;">
+                <div class="pr-10 project-hour w-33p mb-10">
                     <h4 class="d-inline-block">
                         <label for="name" class="font-weight-bold">Client Name:</label>
                     </h4>
                     <a href="{{route('client.edit', $project->client->id)}}" class="text-capitalize fz-lg-22">{{ $project->client->name }}</a>
                 </div>
-                    <div class="pr-10 project-hour " style="width: 33%;height: 100%;margin-bottom: 3em;">
+                    <div class="pr-10 project-hour w-33p mb-10">
                         <h4 class="d-inline-block">
                         <label for="name" class="font-weight-bold ">Status:</label>
                         </h4>
                         <span class="text-capitalize fz-lg-22">{{ $project->status }}</span>
                     </div>
-                    <div class="pr-10 project-hour " style="width: 33%;height: 100%;margin-bottom: 3em;">
+                    <div class="pr-10 project-hour w-33p mb-10">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold ">Project Type:</label>
                         </h4>
                         <span class="text-capitalize fz-lg-22">{{ $project->type }}</span>
                     </div>
-                    <div class="pr-10 project-hour " style="width: 33%;height: 100%;margin-bottom: 3em;">
+                    <div class="pr-10 project-hour w-33p mb-10">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold ">Contract File:</label>
                         </h4>
                         <div class="flex-row">
-                            <a id="contract_file" style="margin-left: 5px "
+                            <a id="contract_file"
                             style="{{ $project->projectContracts ? '' : 'd-none' }}"
                             href="{{ route('pdf.show', $project->projectContracts->first()) }}">
-                             <span class="text-capitalize fz-lg-22" style="text-decoration: underline;">{{ $contractName}}</span>
+                             <span class="text-capitalize fz-lg-22">{{ $contractName}}</span>
                              <i class="fa fa-external-link-square fa-1x"></i></a>
                         </div>
                     </div>
