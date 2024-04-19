@@ -227,9 +227,15 @@
                     </div>
                     <div class="pr-10 project-hour " style="width: 33%;height: 100%;margin-bottom: 3em;">
                         <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold ">Contract Url:</label>
+                            <label for="name" class="font-weight-bold ">Contract File:</label>
                         </h4>
-                        <span class="text-capitalize fz-lg-22">{{ $contractFilePath }}</span>
+                        <div class="flex-row">
+                            <a id="contract_file" style="margin-left: 5px "
+                            style="{{ $project->projectContracts ? '' : 'd-none' }}"
+                            href="{{ route('pdf.show', $project->projectContracts->first()) }}">
+                             <span class="text-capitalize fz-lg-22" style="text-decoration: underline;">{{ $contractName}}</span>
+                             <i class="fa fa-external-link-square fa-1x"></i></a>
+                        </div>
                     </div>
         </div>
        </div>

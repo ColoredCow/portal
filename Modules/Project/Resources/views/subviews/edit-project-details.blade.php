@@ -97,12 +97,11 @@
                                 Contract</label>
                             <div class="indicator" style="margin-top: 3px">
                                 @if ($project->projectContracts->isEmpty() == false)
-                                    <span style="color: #1b93c9; font-size: 15px; margin-right:4px">File:
-                                        {{ $contractName }}</span>
                                     <a id="contract_file" style="margin-top: 5px"
                                         style="{{ $project->projectContracts ? '' : 'd-none' }}"
-                                        href="{{ route('pdf.show', $project->projectContracts->first()) }}"> <i
-                                            class="fa fa-external-link-square fa-1x"></i></a>
+                                        href="{{ route('pdf.show', $project->projectContracts->first()) }}"> 
+                                        <span style="color: #1b93c9; font-size: 15px; margin-right:4px; text-decoration: underline;">File:{{ $contractName }}</span>
+                                        <i class="fa fa-external-link-square fa-1x"></i></a>
                                 @endif
                             </div>
                         </div>
