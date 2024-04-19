@@ -154,7 +154,8 @@ class EmployeeController extends Controller
 
     public function employeeEarningValue(Employee $employee)
     {
-        return view('finance.employees.index', ['employee' => $employee]);
+        $data = $this->service->fetchEmployeeEarnings($employee->id);
+        return view('finance.employees.index', $data);
     }
 
     public function financialdetails(Employee $employee)

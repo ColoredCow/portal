@@ -65,4 +65,36 @@ class EmployeeService
             'staff_type' => '',
         ];
     }
+    public function fetchEmployeeEarnings($employeeId)
+    {
+        $employees = Employee::leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
+        ->leftJoin('projects', 'project_team_members.project_id', '=', 'projects.id')
+        ->leftJoin('project_billing_details', 'projects.id', '=', 'project_billing_details.project_id')
+        ->select(
+            'employees.id',
+            'employees.user_id',
+            'employees.name',
+            'employees.staff_type',
+            'project_team_members.project_id as ptm_project_id',
+            'project_team_members.team_member_id as ptm_team_member_id',
+            'projects.type as project_type',
+            'projects.name as project_name',
+            'projects.status as project_status',
+            'projects.is_amc',
+            'project_billing_details.project_id as pb_project_id',
+            'project_billing_details.service_rates',
+            'project_billing_details.service_rate_term'
+        )
+        ->where('employees.id', $employeeId)
+        ->where('projects.status', 'active')
+        ->get();
+    
+            
+        return [
+            'employees' => $employees,
+            'filters' => [], 
+        ];
+    }
+    
+
 }

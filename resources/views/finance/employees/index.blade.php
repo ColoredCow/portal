@@ -4,8 +4,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                {{$employee}}
-                <h1 class="mb-5 mt-10 font-weight-bold"> {{ $employee->name }} </h4>
+                {{ $employees }}
+                {{-- <h1 class="mb-5 mt-10 font-weight-bold"> {{ $employees->[name] }} </h4> --}}
             </div>
             <div class="col-md-12 text-center">
                 <table class="table table-striped table-bordered">
@@ -25,23 +25,34 @@
                                 </span>
                             </th>
                         </tr>
+                        @foreach ($employees as $employee)
+                            <tr>
+                                <td>
+                                    {{ $employee->project_name }}
+                                </td>
+                                <td>
+                                    {{ $employee->service_rates }}
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    {{ $employee->service_rates * 2 }}
+
+                                </td>
+                            </tr>
+                        @endforeach
                         <tr>
-                            <td>
-                                Shubham
+                            <td colspan="3">
+                                <h4>Total</h4>
                             </td>
-                            <td>
-                                Shubham
+                            <td colspan="1">
+                                <h4>
+                                    @php
+                                        $totalServiceRates = $employees->sum('service_rates') * 2;
+                                    @endphp
+                                    {{ $totalServiceRates }}
+                                </h4>
                             </td>
-                            <td>
-                                Shubham
-                            </td>
-                            <td>
-                                Shubham
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3"><h4>Total</h4></td>
-                            <td colspan="1"> <h4>0</h4> </td>
                         </tr>
                 </table>
             </div>
