@@ -459,6 +459,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
         GOOGLE_SERVICE_ENABLED=true
         GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION= #Copy the path of the downloaded JSON file after moving it to the /portal/public/ folder
         ```
+        ``Note`` Add double backward slash ``\\`` while adding the file path because single backward slash is considered as escape sequence
 
     9. Copy the Email from the Service Accounts details
         <img width="1440" alt="Screenshot 2024-04-09 at 10 59 51 PM" src="https://github.com/ColoredCow/portal/assets/68751333/acde29bc-f46f-4d4f-ab6a-d7b055e414ab">
