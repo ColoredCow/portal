@@ -133,7 +133,7 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
                 $totalCtc ?: '-',
                 $totalCtcAnnual ?: '-',
                 $totalHealthInsurance ?: '-',
-                $totalCtcAgg
+                $totalCtcAgg,
             ]
         ]);
 
