@@ -1,6 +1,5 @@
 @extends('project::layouts.master')
 @section('content')
-
 <div class="container" id="vueContainer">
     <br>
     <div class=" d-flex">
@@ -10,9 +9,9 @@
         @endcan
     </div>
     <br>
-    <div class="card-header d-flex" data-toggle="collapse" data-target="#resource-engagement">
+    <div class="card-header d-flex" data-toggle="collapse" data-target="#resource-engagement" >
         <h4>Resource Engagement</h4>
-        <span class ="ml-auto">&#9660;</span>
+        <span class ="arrow ml-auto">&#9660;</span>
     </div>
     <div id="resource-engagement" class= "collapse card mt-3">
         <div class="collapes-body">
@@ -100,7 +99,7 @@
     <br>
     <div class="card-header d-flex" data-toggle="collapse" data-target="#approved-pipeline">
         <h4>Approved Pipeline</h4>
-        <span class ="ml-auto">&#9660;</span>
+        <span class ="arrow ml-auto">&#9660;</span>
     </div>
     <div id="approved-pipeline" class="collapse card mt-3">
         <div class="panel-body">
@@ -178,9 +177,9 @@
             </div>
     </div>
     <br>
-    <div class="card-header d-flex" data-toggle="collapse" data-target="#basic-details">
+    <div class="card-header d-flex" data-toggle="collapse" data-target="#basic-details" >
         <h4>Basic Details</h4>
-        <span class ="ml-auto">&#9660;</span>
+        <span class ="arrow ml-auto">&#9660;</span>
     </div>
 
     <div id="basic-details" class="collapse card mt-3">
@@ -242,3 +241,4 @@
     </div>
 </div>
 @endsection
+
