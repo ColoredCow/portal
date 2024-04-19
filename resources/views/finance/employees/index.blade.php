@@ -4,6 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                {{$employee}}
                 <h1 class="mb-5 mt-10 font-weight-bold"> {{ $employee->name }} </h4>
             </div>
             <div class="col-md-12 text-center">
@@ -39,8 +40,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3">Total</td>
-                            <td colspan="1"> 0 </td>
+                            <td colspan="3"><h4>Total</h4></td>
+                            <td colspan="1"> <h4>0</h4> </td>
                         </tr>
                 </table>
             </div>
