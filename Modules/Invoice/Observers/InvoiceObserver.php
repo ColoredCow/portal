@@ -58,7 +58,7 @@ class InvoiceObserver
      */
     public function updated(Invoice $invoice)
     {
-        $invoiceAnalyticsEntity = InvoicesAnalyticsEncryptedData::where('invoice_id', $invoice->id);
+        $invoiceAnalyticsEntity = InvoicesAnalyticsEncryptedData::where('invoice_id', $invoice->id)->first();
 
         if (! $invoiceAnalyticsEntity) {
             return;
@@ -84,7 +84,7 @@ class InvoiceObserver
      */
     public function deleted(Invoice $invoice)
     {
-        $invoiceAnalyticsEntity = InvoicesAnalyticsEncryptedData::where('invoice_id', $invoice->id);
+        $invoiceAnalyticsEntity = InvoicesAnalyticsEncryptedData::where('invoice_id', $invoice->id)->first();
 
         if (! $invoiceAnalyticsEntity) {
             return;

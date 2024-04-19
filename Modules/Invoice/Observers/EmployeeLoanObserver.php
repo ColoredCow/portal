@@ -55,7 +55,7 @@ class EmployeeLoanObserver
      */
     public function deleted(EmployeeLoan $loan)
     {
-        $employeeLoanAnalyticsEntity = EmployeeLoanAnalyticsEncryptedData::where('loan_id', $loan->id);
+        $employeeLoanAnalyticsEntity = EmployeeLoanAnalyticsEncryptedData::where('loan_id', $loan->id)->first();
 
         if (! $employeeLoanAnalyticsEntity) {
             return;

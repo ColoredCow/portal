@@ -57,7 +57,7 @@ class EmployeeLoanController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param EmployeeLoan $loan
+     * @param EmployeeLoan $employeeLoan
      */
     public function edit(EmployeeLoan $employeeLoan)
     {
@@ -68,7 +68,7 @@ class EmployeeLoanController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param EmployeeLoan $loan
+     * @param EmployeeLoan $employeeLoan
      */
     public function update(Request $request, EmployeeLoan $employeeLoan)
     {
@@ -81,11 +81,11 @@ class EmployeeLoanController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param EmployeeLoan $loan
+     * @param EmployeeLoan $employeeLoan
      */
-    public function destroy(EmployeeLoan $loan)
+    public function destroy(EmployeeLoan $employeeLoan)
     {
-        $loan->delete();
+        $employeeLoan->delete();
 
         return redirect()->back()->with('success', 'Loan deleted successfully!');
     }
