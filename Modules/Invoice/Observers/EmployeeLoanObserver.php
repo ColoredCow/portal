@@ -78,7 +78,7 @@ class EmployeeLoanObserver
     /**
      * Handle the EmployeeLoan "force deleted" event.
      *
-     * @param  \Modules\Invoice\Entities\Invoice  $loan
+     * @param  \Modules\Invoice\Entities\EmployeeLoan  $loan
      * @return void
      */
     public function forceDeleted(EmployeeLoan $loan)
