@@ -6,6 +6,7 @@ use App\Models\Project;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\HR\Database\Factories\HrEmployeeFactory;
+use Modules\Invoice\Entities\EmployeeLoan;
 use Modules\Salary\Entities\EmployeeSalary;
 use Modules\User\Entities\User;
 
@@ -161,5 +162,26 @@ class Employee extends Model
     public static function newFactory()
     {
         return new HrEmployeeFactory();
+    }
+
+    public function loans()
+    {
+        return $this->hasMany(EmployeeLoan::class);
+    }
+
+    public function getLoanDeductionForMonthAttribute()
+    {
+        $currentDate = today();
+        $loans = $this->loans()
+            ->whereDate('start_date', '<=', $currentDate)
+            ->whereDate('end_date', '>=', $currentDate)
+            ->get();
+
+        $totalLoanDeduction = 0;
+        foreach ($loans as $loan) {
+            $totalLoanDeduction += (float) $loan->current_month_deduction;
+        }
+
+        return round($totalLoanDeduction, 2);
     }
 }

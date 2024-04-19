@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Modules\Invoice\Entities\Invoice;
 
 class InvoicesAnalyticsEncryptedDataTable extends Migration
@@ -34,13 +34,13 @@ class InvoicesAnalyticsEncryptedDataTable extends Migration
         $encryptionKey = config('database.connections.mysql.encryption_key');
         foreach ($invoices as $invoice) {
             $amount = $invoice->amount;
-            $gst = $invoice->gst ?? "null";
-            $amountPaid = $invoice->amount_paid ?? "null";
-            $bankCharges = $invoice->bank_charges ?? "null";
-            $conversionRateDiff = $invoice->conversion_rate_diff ?? "null";
-            $conversionRate = $invoice->conversion_rate ?? "null";
-            $tds = $invoice->td ?? "null";
-            $sentConversionRate = $invoice->sent_conversion_rate ?? "null";
+            $gst = $invoice->gst ?? 'null';
+            $amountPaid = $invoice->amount_paid ?? 'null';
+            $bankCharges = $invoice->bank_charges ?? 'null';
+            $conversionRateDiff = $invoice->conversion_rate_diff ?? 'null';
+            $conversionRate = $invoice->conversion_rate ?? 'null';
+            $tds = $invoice->td ?? 'null';
+            $sentConversionRate = $invoice->sent_conversion_rate ?? 'null';
 
             DB::statement("
                 INSERT INTO `invoices_analytics_encrypted_data` (

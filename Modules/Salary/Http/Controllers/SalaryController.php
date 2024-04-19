@@ -53,6 +53,7 @@ class SalaryController extends Controller
             EmployeeSalary::create([
                 'employee_id' => $employee->id,
                 'monthly_gross_salary' => $request->grossSalary,
+                'tds' => $request->tds,
                 'commencement_date' => $request->commencementDate,
             ]);
 
@@ -76,6 +77,7 @@ class SalaryController extends Controller
 
         $currentSalaryObject->monthly_gross_salary = $request->grossSalary;
         $currentSalaryObject->commencement_date = $request->commencementDate;
+        $currentSalaryObject->tds = $request->tds;
         $currentSalaryObject->save();
 
         return redirect()->back()->with('success', 'Salary updated successfully!');
