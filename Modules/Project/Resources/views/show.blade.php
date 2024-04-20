@@ -229,11 +229,13 @@
                             <label for="name" class="font-weight-bold ">Contract File:</label>
                         </h4>
                         <div class="flex-row">
+                            @if ($project->projectContracts->isEmpty() == false)
                             <a id="contract_file"
                             style="{{ $project->projectContracts ? '' : 'd-none' }}"
                             href="{{ route('pdf.show', $project->projectContracts->first()) }}">
                              <span class="text-capitalize fz-lg-22">{{ $contractName}}</span>
                              <i class="fa fa-external-link-square fa-1x"></i></a>
+                            @endif
                         </div>
                     </div>
         </div>
