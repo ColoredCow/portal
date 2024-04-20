@@ -14,7 +14,7 @@ class EmployeeSalary extends Model
 
     protected $dates = ['commencement_date'];
 
-    protected $encryptable = ['monthly_gross_salary'];
+    protected $encryptable = ['monthly_gross_salary', 'tds'];
 
     public function employee()
     {
@@ -112,7 +112,7 @@ class EmployeeSalary extends Model
 
     public function getTotalDeductionAttribute()
     {
-        return $this->employee_esi + $this->employee_epf + $this->food_allowance;
+        return $this->employee_esi + $this->employee_epf + $this->food_allowance + $this->employee->loan_deduction_for_month + $this->tds;
     }
 
     public function getNetPayAttribute()
