@@ -44,6 +44,12 @@
                 <user-dashboard-library />
             </div>
         @endcan
+        
+        {{-- @can('employee_profitability_list.view')
+        <div class="pr-5 mb-4 min-w-389">
+            <employee-profitability-list />
+        </div>
+        @endcan --}}
 
         @can('projects.view')
         <div class="pr-5 mb-4 min-w-389">

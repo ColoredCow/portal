@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateAddressColumTypeInUserProfile extends Migration
+class UpdateInvoicesTableAddConversionRateColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class UpdateAddressColumTypeInUserProfile extends Migration
      */
     public function up()
     {
-        Schema::table('user_profiles', function (Blueprint $table) {
-            $table->text('address')->change();
+        Schema::table('invoices', function (Blueprint $table) {
+            $table->text('sent_conversion_rate')->nullable()->after('conversion_rate');
         });
     }
 
@@ -25,8 +25,8 @@ class UpdateAddressColumTypeInUserProfile extends Migration
      */
     public function down()
     {
-        Schema::table('user_profiles', function (Blueprint $table) {
-            $table->string('address')->change();
+        Schema::table('invoices', function (Blueprint $table) {
+            $table->dropColumn('sent_conversion_rate');
         });
     }
 }

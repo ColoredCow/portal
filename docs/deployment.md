@@ -62,18 +62,18 @@ For more information, check out [production-deployment.yml](../.github/workflows
 
 ### Staging Deployment
 **Pre-requisites:**
-You need to have permissions to deploy on staging Environment. Please reach out to Infra team for the access
+You need to have permission to deploy on the staging Environment. If you don't have the required access, please reach out to the Infra team for your deployment approval access
 
-1. Raise the PR against `master` branch.
-2. Get the PR reviewed and merged on `master` branch.
+1. Raise the PR against the `master` branch.
+2. Get the PR reviewed and merged into the `master` branch.
 3. Go to [Staging Deployment GitHub action](https://github.com/ColoredCow/portal/actions/workflows/staging-deployment.yml)
 4. Approve the deployment.
 
 ### Production Deployment
 **Pre-requisites:**
-You need to have permissions to deploy on production Environment. Please reach out to Infra team for the access
+You need to have permission to deploy on the staging Environment. If you don't have the required access, please reach out to the Infra team for your deployment approval access
 
-1. Raise the PR against `release` branch.
-2. Get the PR reviewed and merged on `release` branch.
+1. Raise the PR against the `release` branch.
+2. Get the PR reviewed and merged into the `release` branch.
 3. Go to [Production Deployment GitHub action](https://github.com/ColoredCow/portal/actions/workflows/production-deployment.yml)
 4. Approve the deployment.

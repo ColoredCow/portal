@@ -36,7 +36,7 @@ class CurrencyService implements CurrencyServiceContract
         });
     }
 
-    public function getAllSCurrentRatesInINR()
+    public function getAllCurrentRatesInINR()
     {
         $seconds = 1 * 60 * 60 * 4;
 

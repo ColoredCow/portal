@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Modules\HR\Http\Controllers\EmployeeController;
 
 Route::prefix('report')->group(function () {
     Route::get('/', 'ReportController@index');
@@ -36,6 +37,10 @@ Route::prefix('report')->group(function () {
             Route::get('/dashboard/client-wise', 'FinanceReportController@clientWiseInvoiceDashboard')->name('reports.finance.dashboard.client');
             Route::get('/detailed', 'ClientRevenueReportController@detailed')->name('reports.finance.revenue-by-client.detailed');
             Route::get('client-revenue-report-export', 'ClientRevenueReportController@clientRevenueReportExport')->name('reports.finance.client-revenue.report.export');
+        });
+
+        Route::prefix('employee')->group(function () {
+            Route::get('/profitibality', [EmployeeController::class, 'index'])->name('report.employees.profitibality');
         });
 
         Route::prefix('monthly-sales-register')->group(function () {

@@ -1,184 +1,51 @@
 @extends('project::layouts.master')
 @section('content')
-
 <div class="container" id="vueContainer">
     <br>
-    <div class="d-flex">
-        <h4 class="c-pointer d-inline-block" v-on:click="counter += 1">{{$project->name}}</h4>
+    <div class=" d-flex">
+        <h4 class="c-pointer d-inline-block font-weight-bold" v-on:click="counter += 1">Project Name : {{$project->name}}</h4>
         @can('update', $project)
             <a id="view_effort_sheet_badge" target="_self" href="{{route('project.edit', $project )}}" class="btn btn-primary text-white ml-auto">{{ _('Edit') }}</a>
         @endcan
     </div>
-    <div class="card mt-3">
-        <div class="card-header" data-toggle="collapse" data-target="#project_detail_form">
-            <h4>Project details </h4>
-        </div>
+    <br>
+    <div class="card-header d-flex" data-toggle="collapse" data-target="#resource-engagement" >
+        <h4>Resource Engagement</h4>
+        <span class ="arrow ml-auto">&#9660;</span>
+    </div>
+    <div id="resource-engagement" class= "collapse card mt-3">
+        <div class="collapes-body">
+            <br>
+            <div class="container" id="vueContainer">
                 <div class="form-row">
-                    <div class="form-group col-md-6 pl-4 mb-0">
-                        <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold mb-6 mt-2 ml-1">Name:</label>
-                        </h4>
-                        <span class="text-capitalize ml-2 fz-lg-22">{{ $project->name }}</span>
-                        @if ($project->is_amc == 1 )
-                        <span class="badge badge-pill badge-success mr-1  mt-1">AMC</span>
-                        @endif
-                    </div>
-                    <div class="form-group offset-md-1 pl-4 col-md-5 mt-3">
+                    <div class="form-group col-md-6 pl-4">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold mb-1">Current Velocity:</label>
                         </h4>
                         <span class="{{ $project->velocity >= 1 ? 'text-success' : 'text-danger'}} fz-lg-22">{{ $project->velocity }}</span>
                         <a target="_self" href="{{route('project.effort-tracking', $project )}}" class="btn-sm text-decoration-none btn-primary text-white ml-1 text-light rounded">{{ _('Check FTE') }}</a>
                     </div>
-
-                </div>
-                <div class="form-row">
-                    <div class="col-md-6 pl-4">
-                        <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold mb-6 ml-1">Client:</label>
-                        </h4>
-                        <a href="{{route('client.edit', $project->client->id)}}" class="text-capitalize ml-2 fz-lg-22">{{ $project->client->name }}</a>
-                    </div>
-                    <div class="offset-md-1 pl-4 col-md-5">
-                        <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold mb-3">Status:</label>
-                        </h4>
-                        <span class="text-capitalize ml-2 fz-lg-22">{{ $project->status }}</span>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-6 pl-4">
-                        <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold mb-6 ml-1">Effortsheet:</label>
-                        </h4>
-                        @if($project->effort_sheet_url)
-                            <a id="view_effort_sheet_badge" href="{{ $project->effort_sheet_url }}" class="btn-sm btn-primary btn-smtext-white ml-2 text-light rounded"
-                                target="_blank">{{ _('Open Sheet') }}</a>
-                        @else
-                            <span class="ml-2 fz-lg-22">Not Available</span>
-                        @endif
-                    </div>
-                    <div class="offset-md-1 pl-4 col-md-5">
-                        <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold mt-0 mb-2">Project Type:</label>
-                        </h4>
-                        <span class="text-capitalize ml-2 fz-lg-22">{{ $project->type }}</span>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-6 pl-4">
-                        @if($project->billing_level)
+                    <div class="form-group col-md-6 pl-10">
                             <h4 class="d-inline-block">
-                                <label for="name" class="font-weight-bold mb-6 ml-1">Billing Level:</label>
+                                <label for="name" class="font-weight-bold mb-6 ml-1">Effortsheet:</label>
                             </h4>
-                            <span class="text-capitalize ml-2 fz-lg-22">{{ config('project.meta_keys.billing_level.value.' . $project->billing_level . '.label') }}</span>
-                        @endif
-                    </div>
-                    <div class="offset-md-1 pl-4 col-md-5">
-                        <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold">Start Date:</label>
-                        </h4>
-                        <span class="text-capitalize ml-2 fz-lg-22">{{ optional($project->start_date)->format('d M Y')}}</span>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-6 pl-4">
-                        <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold mb-6 ml-1">End Date:</label>
-                        </h4>
-                        <span class="text-capitalize ml-2 fz-lg-22">{{ optional($project->end_date)->format('d M Y')}}</span>
-                    </div>
-                </div>
-                <div class="form-row d-flex justify-content-between">
-                    <div class="col-md-5 pl-4 d-flex justify-content-between">
-                        <div>
-                            <h4 class="d-inline-block">
-                                <label for="name" class="font-weight-bold mb-6 ml-1">Expected Hours:</label>
-                            </h4>
-                        </div>
-                        <div class="d-flex">
-                            <div class="pr-10 project-hour">
-                                <span class="fz-lg-22 text-capitalize">Monthly
-                                </span>
-                                <span>{{$totalExpectedHourInMonth}}</span>
-                            </div>
-                            <div class="d-flex">
-                                <div class="pr-10 project-hour">
-                                    <span class="fz-lg-22 text-capitalize">Weekly
-                                    </span>
-                                    <span>{{$totalWeeklyEffort}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-5 pl-4 d-flex justify-content-between">
-                        <div>
-                            <h4 class="d-inline-block">
-                                <label for="name" class="font-weight-bold mb-6 ml-1">Hours To Cover:</label>
-                            </h4>
-                        </div>
-                        <div class="d-flex">
-                            <div class="pr-10 project-hour">
-                                <span class="fz-lg-22 text-capitalize">Monthly
-                                </span>
-                                <span>{{$remainingExpectedEffort}}</span>
-                            </div>
-                            <div class="d-flex">
-                                <div class="pr-10 project-hour">
-                                    <span class="fz-lg-22 text-capitalize">Weekly
-                                    </span>
-                                    <span>{{round($weeklyHoursToCover,2)}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-5 pl-4 d-flex justify-content-between">
-                        <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold mb-6 ml-1">Approved Pipeline:</label>
-                            @if ($isApprovedWorkPipelineExist)
-                            <span>{{$monthlyApprovedHour}} hrs
-                                @if($monthlyApprovedHour > $weeklyHoursToCover)
-                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Approved pipeline is sufficient for this week"><i class="fa fa-info-circle" style="color: green;" aria-hidden="true"></i></span>
-                                @else
-                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Approved pipeline is not sufficient for this week"><i class="fa fa-info-circle" style='color: red' aria-hidden="true"></i></span>
-                                @endif
-                            </span>
+                            @if($project->effort_sheet_url)
+                                <a id="view_effort_sheet_badge" href="{{ $project->effort_sheet_url }}" class="btn-sm btn-primary btn-smtext-white ml-2 text-light rounded"
+                                    target="_blank">{{ _('Open Sheet') }}</a>
                             @else
-                                <span class="text-capitalize ml-2 text-danger fz-18 font-weight-normal">
-                                    ERROR <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Formatting issue with effortsheet"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
-                                </span>
+                                <span class="ml-2 fz-lg-22">Not Available</span>
                             @endif
-                        </h4>
                     </div>
-                </div>
-                <div id= "project_detail_form" class="collapse show">
-                    <div class="card-body">
-                        @if($contractFilePath)
-                            <div class="form-row">
-                                <div class="form-group col-md-0 pl-1 ml-0 mr-5">
-                                    <h4 class="d-inline-block ">
-                                        <label for="name" class="font-weight-bold mb-16 ml-1">Project Contract:</label>
-                                    </h4>
-                                        <div class="text-capitalize d-inline ml-2 fz-lg-22 "> {{pathinfo($contractFilePath)['filename']}} </div>
-                                        <a href="{{route('pdf.show', ['contract' => $contract])}}" target="_blank" class="btn btn-sm btn-primary text-white ml-4">View</a>
-                                    </div>
-                                 </div>
-                            </div>
-                        @endif
-                <br>
+                </div>                  
                 <div class="form-row ">
                     <div class="form-group col-lg-12 pl-4">
                         <h4 class="d-inline-block ">
                             <label for="name" class="font-weight-bold">Team Members({{count($project->getTeamMembers)}})</label>
                         </h4>
-                       <div class="fz-14 float-right mr-3 mt-1">
+                    <div class="fz-14 float-right mr-3 mt-1">
                             <strong>Timeline:</strong>{{ (Carbon\Carbon::parse($project->client->month_start_date)->format('dS M')) }}
                             -{{ (Carbon\Carbon::parse($project->client->month_end_date)->format('dS M')) }}
-                             &nbsp;&nbsp;&nbsp; <strong>Last refreshed at:</strong>{{ (Carbon\Carbon::parse($project->last_updated_at)->setTimezone('Asia/Kolkata')->format('Y-M-d , D h:i:s A')) }}
+                            &nbsp;&nbsp;&nbsp; <strong>Last refreshed at:</strong>{{ (Carbon\Carbon::parse($project->last_updated_at)->setTimezone('Asia/Kolkata')->format('Y-M-d , D h:i:s A')) }}
                         </div>
                             <div class="flex-column flex-md-row d-flex flex-wrap col-md-18 px-0 ml-1 mr-4">
                                 <div class="table">
@@ -229,6 +96,151 @@
                 </div>
             </div>
         </div>
+    <br>
+    <div class="card-header d-flex" data-toggle="collapse" data-target="#approved-pipeline">
+        <h4>Approved Pipeline</h4>
+        <span class ="arrow ml-auto">&#9660;</span>
+    </div>
+    <div id="approved-pipeline" class="collapse card mt-3">
+        <div class="panel-body">
+            <br>
+                <div class="form-row">
+                        <div class="form-row d-flex justify-content-between">
+                            <div class="col-md-5 pl-4 d-flex justify-content-between">
+                                <div class="mr-5">
+                                    <h4 class="d-inline-block">
+                                        <label for="name" class="font-weight-bold mb-6 ml-1">Expected Hours:</label>
+                                    </h4>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="pr-10 project-hour text-center">
+                                        <span class="fz-lg-22 text-capitalize">Monthly
+                                        </span>
+                                        <span>{{$totalExpectedHourInMonth}}</span>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="pr-10 project-hour text-center">
+                                            <span class="fz-lg-22 text-capitalize">Weekly
+                                            </span>
+                                            <span>{{$totalWeeklyEffort}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                    <div class="form-row">
+                        <div class="form-row d-flex justify-content-between">
+                            <div class="col-md-5 pl-4 d-flex justify-content-between">
+                                <div class="mr-5">
+                                    <h4 class="d-inline-block">
+                                        <label for="name" class="font-weight-bold mb-6 ml-1">Hours To Cover:</label>
+                                    </h4>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="pr-10 project-hour text-center">
+                                        <span class="fz-lg-22 text-capitalize">Monthly
+                                        </span>
+                                        <span>{{$remainingExpectedEffort}}</span>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="pr-10 project-hour text-center">
+                                            <span class="fz-lg-22 text-capitalize">Weekly
+                                            </span>
+                                            <span>{{round($weeklyHoursToCover,2)}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-5 pl-4 d-flex justify-content-between">
+                            <h4 class="d-inline-block">
+                                <label for="name" class="font-weight-bold mb-6 ml-1">Approved Pipeline:</label>
+                                @if ($isApprovedWorkPipelineExist)
+                                <span>{{$monthlyApprovedHour}} hrs
+                                    @if($monthlyApprovedHour > $weeklyHoursToCover)
+                                    <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Approved pipeline is sufficient for this week"><i class="fa fa-info-circle" style="color: green;" aria-hidden="true"></i></span>
+                                    @else
+                                    <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Approved pipeline is not sufficient for this week"><i class="fa fa-info-circle" style='color: red' aria-hidden="true"></i></span>
+                                    @endif
+                                </span>
+                                @else
+                                    <span class="text-capitalize ml-2 text-danger fz-18 font-weight-normal">
+                                        ERROR <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Formatting issue with effortsheet"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                                    </span>
+                                @endif
+                            </h4>
+                        </div>
+                    </div>
+            </div>
+    </div>
+    <br>
+    <div class="card-header d-flex" data-toggle="collapse" data-target="#basic-details" >
+        <h4>Basic Details</h4>
+        <span class ="arrow ml-auto">&#9660;</span>
     </div>
 
-    @endsection
+    <div id="basic-details" class="collapse card mt-3">
+       <div class="m-5"> 
+        <div class="d-flex" style="flex-wrap: wrap">
+            <div class="pr-10 project-hour w-33p mb-10">
+                <h4 class="d-inline-block">
+                    <label for="name" class="font-weight-bold">Start Date:</label>
+                </h4>
+                <span class="text-capitalize  fz-lg-22">{{ optional($project->start_date)->format('d M Y')}}</span>
+            </div>
+                <div class="pr-10 project-hour w-33p mb-10">
+                    <h4 class="d-inline-block">
+                    <label for="name" class="font-weight-bold ">End Date:</label>
+                    </h4>
+                    <span class="text-capitalize  fz-lg-22">{{ optional($project->end_date)->format('d M Y')}}</span>
+                </div>
+                <div class="pr-10 project-hour w-33p mb-10">
+                    <h4 class="d-inline-block">
+                        <label for="name" class="font-weight-bold ">Project Name:</label>
+                    </h4>
+                    <span class="text-capitalize  fz-lg-22">{{ $project->name }}</span>
+                    @if ($project->is_amc == 1 )
+                    <span class="badge badge-pill badge-success mr-1  mt-1">AMC</span>
+                    @endif
+                </div>
+                <div class="pr-10 project-hour w-33p mb-10">
+                    <h4 class="d-inline-block">
+                        <label for="name" class="font-weight-bold">Client Name:</label>
+                    </h4>
+                    <a href="{{route('client.edit', $project->client->id)}}" class="text-capitalize fz-lg-22">{{ $project->client->name }}</a>
+                </div>
+                    <div class="pr-10 project-hour w-33p mb-10">
+                        <h4 class="d-inline-block">
+                        <label for="name" class="font-weight-bold ">Status:</label>
+                        </h4>
+                        <span class="text-capitalize fz-lg-22">{{ $project->status }}</span>
+                    </div>
+                    <div class="pr-10 project-hour w-33p mb-10">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold ">Project Type:</label>
+                        </h4>
+                        <span class="text-capitalize fz-lg-22">{{ $project->type }}</span>
+                    </div>
+                    <div class="pr-10 project-hour w-33p mb-10">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold ">Contract File:</label>
+                        </h4>
+                        <div class="flex-row">
+                            @if ($project->projectContracts->isEmpty() == false)
+                            <a id="contract_file"
+                            style="{{ $project->projectContracts ? '' : 'd-none' }}"
+                            href="{{ route('pdf.show', $project->projectContracts->first()) }}">
+                             <span class="text-capitalize fz-lg-22">{{ $contractName}}</span>
+                             <i class="fa fa-external-link-square fa-1x"></i></a>
+                            @endif
+                        </div>
+                    </div>
+        </div>
+       </div>
+    </div>
+</div>
+@endsection
+

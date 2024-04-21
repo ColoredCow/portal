@@ -18,4 +18,7 @@ Route::prefix('client')->middleware('auth')->group(function () {
     Route::post('/', 'ClientController@store')->name('client.store');
     Route::post('/{client}/update', 'ClientController@update')->name('client.update');
     Route::post('/create/country', 'CountryController@store')->name('country.store');
+    Route::get('/settings', 'CountryController@index')->name('settings.country-details');
+    Route::post('/delete/{id}', 'CountryController@destroy')->name('country.delete');
+    Route::post('/{id}/edit', 'CountryController@edit')->name('country.edit');
 });

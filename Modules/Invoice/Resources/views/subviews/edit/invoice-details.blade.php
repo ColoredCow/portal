@@ -25,7 +25,7 @@
 
                 <div class="form-group">
                     <div class="d-flex">
-                        <label for="client_id font-weight-bold" class="mr-3 w-90">Client:</label>
+                        <label for="client_id" class="mr-3 w-90">Client:</label>
                         <span>
                             <p>{{ $invoice->client->name }}</p>
                         </span>
@@ -451,7 +451,7 @@
                     clients: @json($clients),
                     invoice: @json($invoice),
                     projects: @json($invoice->client->projects),
-                    allExchangeRate: @json($currencyService->getAllSCurrentRatesInINR()),
+                    allExchangeRate: @json($currencyService->getAllCurrentRatesInINR()),
                     clientId: "{{ $invoice->client_id }}",
                     projectId: "{{ $invoice->project_id }}",
                     client: @json($invoice->client),

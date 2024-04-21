@@ -67,8 +67,10 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $contract = ProjectContract::where('project_id', $project->id)->first();
-        $contractFilePath = $contract ? storage_path('app/' . $contract->contract_file_path) : null;
+        $contractData = $this->getContractData($project);
+        $contract = $contractData['contract'];
+        $contractFilePath = $contractData['contractFilePath'];
+        $contractName = $contractData['contractName'];
         $currentDate = today(config('constants.timezone.indian'));
 
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
@@ -92,6 +94,7 @@ class ProjectController extends Controller
             'project' => $project,
             'contract' => $contract,
             'contractFilePath' => $contractFilePath,
+            'contractName' => $contractName,
             'daysTillToday' => $daysTillToday,
             'isApprovedWorkPipelineExist' => $isApprovedWorkPipelineExist,
             'totalExpectedHourInMonth' => $totalExpectedHourInMonth,
@@ -136,6 +139,8 @@ class ProjectController extends Controller
     {
         $designations = $this->service->getDesignations();
         $designationKeys = array_keys($designations);
+        $contractData = $this->getContractData($project);
+        $contractName = $contractData['contractName'];
 
         return view('project::edit', [
             'project' => $project,
@@ -146,6 +151,7 @@ class ProjectController extends Controller
             'designations' => $designations,
             'workingDaysInMonth' => $this->service->getWorkingDays($project),
             'designationKeys' => $designationKeys,
+            'contractName' => $contractName,
         ]);
     }
 
@@ -184,5 +190,18 @@ class ProjectController extends Controller
             'domainName' => $domainName,
             'jobName' => $jobName,
         ]);
+    }
+    // storing Contract related data here
+    private function getContractData(Project $project)
+    {
+        $contract = ProjectContract::where('project_id', $project->id)->first();
+        $contractFilePath = $contract ? storage_path('app/' . $contract->contract_file_path) : null;
+        $contractName = basename($contractFilePath);
+
+        return [
+            'contract' => $contract,
+            'contractFilePath' => $contractFilePath,
+            'contractName' => $contractName,
+        ];
     }
 }

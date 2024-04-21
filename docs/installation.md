@@ -178,6 +178,21 @@ Before you start following the guidelines, make sure to go through the [prerequi
                 </Directory>
             </VirtualHost>
             ```
+            In case you are using Apache version 2.4 or above, the above code will give you a 403 Forbidden error. Make the following changes:
+            ```apacheconf
+            <Directory>
+                # some code above
+                Order allow,deny
+                Allow from all
+            </Directory>
+            ```
+            Change to:
+            ```apacheconf
+            <Directory>
+                 # some code above
+                 Require all granted
+            </Directory>
+            ```
         - Restart WAMP. Next, open this url in your browser: http://portal.test
 
     2. For XAMPP:
@@ -198,15 +213,24 @@ Before you start following the guidelines, make sure to go through the [prerequi
                     Allow from all
                 </Directory>
             </VirtualHost>
+            
+            In case you are using Apache version 2.4 or above, the above code will give you a 403 Forbidden error. Make the following changes:
+            ```apacheconf
+            <Directory>
+                # some code above
+                Order allow,deny
+                Allow from all
+            </Directory>
             ```
-            - After adding the above code, if you are getting the "403 Forbidden" error, try to resolve it through the following addition in your code:
+            Change to:
             ```apacheconf
             <Directory>
                  # some code above
-                 Allow from all   #add this line
                  Require all granted
             </Directory>
             ```
+           - Restart XAMPP. Next, open this url in your browser: http://portal.test
+        
 
         - Restart XAMPP. Next, open this url in your browser: http://portal.test
 
@@ -435,6 +459,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
         GOOGLE_SERVICE_ENABLED=true
         GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION= #Copy the path of the downloaded JSON file after moving it to the /portal/public/ folder
         ```
+        ``Note`` Add double backward slash ``\\`` while adding the file path because single backward slash is considered as escape sequence
 
     9. Copy the Email from the Service Accounts details
         <img width="1440" alt="Screenshot 2024-04-09 at 10 59 51 PM" src="https://github.com/ColoredCow/portal/assets/68751333/acde29bc-f46f-4d4f-ab6a-d7b055e414ab">
