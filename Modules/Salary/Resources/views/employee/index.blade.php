@@ -74,6 +74,7 @@
                         <div class="ml-4">
                             <salary-breakdown
                                 :salary-configs="{{ json_encode($salaryConfigs) }}"
+                                :insurance-tenants="{{ $employee->user->profile->insurance_tenants }}"
                                 :gross-salary="grossSalary"
                                 :tds="{{ optional($employee->getCurrentSalary())->tds ?: 0  }}"
                                 :commencement-date="commencementDate"

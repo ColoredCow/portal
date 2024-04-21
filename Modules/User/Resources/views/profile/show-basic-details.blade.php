@@ -41,6 +41,10 @@
                     <textarea name="address" id="address" class="richeditor">{{ optional($user->profile)->address }}</textarea>
                 </div>
                 <div class="form-group">
+                    <label class="font-weight-bold" for="">Insurance Tenants:</label>
+                    <input type="number" name="insurance_tenants" id="insurance_tenants" value="{{ optional($user->profile)->insurance_tenants }}"></input>
+                </div>
+                <div class="form-group">
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
@@ -89,6 +93,11 @@
                 <label class="font-weight-bold" for="">Address:</label>
                 <span class="ml-2">{!! optional($user->profile)->address !!}</span>
             </div>
+            <div class="form-group">
+                <label class="font-weight-bold" for="">Insurance Tenants:</label>
+                <span>{{ optional($user->profile)->insurance_tenants }}</span>
+            </div>
+            
             {{-- @includeWhen($user->profile, 'user::profile.subviews.show-user-profile-info') --}}
         </div>
     </div>

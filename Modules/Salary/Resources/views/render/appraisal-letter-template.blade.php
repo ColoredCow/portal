@@ -87,7 +87,7 @@
             line-height: 20px;
         }
         .salary-text{
-            margin-left: 120px;
+            margin-left: 160px;
         }
         .salary-number {
             align-self: center;
@@ -96,17 +96,20 @@
             margin-left: 178px;
         }
         .salary-number-2{
-            margin-left: 154px;
+            margin-left: 154.5px;
         }
 
         .salary-number-3{
-            margin-left: 109px;
+            margin-left: 110px;
         }
         .salary-number-4{
-            margin-left: 154px;
+            margin-left: 153px;
         }
         .salary-number-5{
-            margin-left:38px;
+            margin-left:37px;
+        }
+        .salary-number-6{
+            margin-left:68px;
         }
         .table-content{
             text-align: center;
@@ -160,14 +163,14 @@
                 </tr>
                 <tr>
                   <td class="table-content"><b>{{ $data->previousSalary }}/-</b></td>
-                  <td class="table-content"><b>{{ $data->annualCTC}}/- </b></td>
+                  <td class="table-content"><b>{{ $data->ctcAggregated}}/- </b></td>
                   <td class="table-content"><b>{{ $data->salaryIncreasePercentage }}</b></td>
                   <td class="table-content"><b>{{ $data->commencementDate}}</b></td>
                 </tr>
             </table>
         </div>
         <div class="revised-details">
-            Your revised remuneration will be <b>INR {{ $data->grossSalary}}/-</b> per month as per the following breakup.<br>
+            Your revised remuneration will be <b>INR {{ ($data->ctcAggregated)/12}}/-</b> per month as per the following breakup.<br>
             <div class="salary-details">
             <span class="salary-text">Basic Salary</span><span class="salary-number-1">Rs {{ $data->basicSalary }}/-</span><br>
             </div>
@@ -183,8 +186,11 @@
             <div class="salary-details">
                 <span class="salary-text" >P.F. and Charges(Employer share)</span><span class="salary-number-5">Rs {{ $data->employeeShare }}/-</span>
             </div>
+            <div class="salary-details">
+                <span class="salary-text" >Medical Insurance(per month)</span><span class="salary-number-6">Rs {{ $data->healthInsurance }}/-</span>
+            </div>
         </div>
-        <div class="paddingTop content-font-size"><b>***Additional Medical insurance of 5 Lakhs, rupees are added to your CTC.</b></div>
+        <div class="paddingTop content-font-size"><b>***Medical insurance of 5 Lakhs, rupees are added to your CTC.</b></div>
         <div class="content-font-size">
             <b>
                 ***TDS on the above will be deducted as per the income tax rules.

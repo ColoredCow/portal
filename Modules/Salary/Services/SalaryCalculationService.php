@@ -55,6 +55,8 @@ class SalaryCalculationService
         $otherAllowance = $newSalaryObject->other_allowance;
         $newEmployeeShare = $newSalaryObject->employee_epf + $newSalaryObject->edli_charges + $newSalaryObject->administration_charges;
         $newAnnualCTC = $newSalaryObject->ctc_annual;
+        $newAggregateCTC = $newSalaryObject->ctc_aggregated;
+        $healthInsurance = ($newSalaryObject->health_insurance) * ($employee->user->profile->insurance_tenants) / 12;
         $currentAnnualCTC = $employee->getCurrentSalary()->ctc_annual;
         $salaryIncreasePercentage = $this->getLatestSalaryPercentageIncrementAttribute($currentAnnualCTC, $newAnnualCTC);
         $employeeUserId = $employee->user_id;
@@ -71,6 +73,7 @@ class SalaryCalculationService
             'employeeFirstName' => $employeeFirstName,
             'date' => $currentDate,
             'grossSalary' => $grossSalary,
+            'healthInsurance' => $healthInsurance,
             'commencementDate' => $commencementDate,
             'basicSalary' => $newBasicSalary,
             'hra' => $newHra,
@@ -78,6 +81,7 @@ class SalaryCalculationService
             'otherAllowance' => $otherAllowance,
             'employeeShare' => $newEmployeeShare,
             'annualCTC' => $newAnnualCTC,
+            'ctcAggregated' => $newAggregateCTC,
             'previousSalary' => $currentAnnualCTC,
             'salaryIncreasePercentage' => $salaryIncreasePercentage,
             'address' => isset($address) ? $address : null, // Handle the case where $address might not be set
