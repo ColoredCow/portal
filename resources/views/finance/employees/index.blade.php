@@ -30,12 +30,13 @@
                                     {{ $employee->project_name }}
                                 </td>
                                 <td>
-                                    {{ $employee->service_rates }} {{$employee->currency ? $employee->currency : 'INR'}}
+                                    {{ $employee->service_rates }} {{ $employee->currency ? $employee->currency : 'INR' }}
                                 </td>
                                 <td>
+                                    {{ $employee->actual_effort ? $employee->actual_effort : '0' }}
                                 </td>
                                 <td>
-                                    {{ $employee->service_rates * 2 }}
+                                    {{ $employee->service_rates *  $employee->actual_effort }}
                                 </td>
                             </tr>
                         @endforeach
