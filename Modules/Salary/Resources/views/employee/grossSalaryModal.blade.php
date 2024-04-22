@@ -26,12 +26,18 @@
                         <small class="d-none ml-4 text-danger" id="commencementDateErrorMessage"><strong>Date Required</strong></small>
                     </div>
                 </div>
+                <div class="form-group pl-6 col-md-5">
+                    <label class="leading-none fz-24 d-flex align-items-center" for="tds">
+                        <span class="mr-1 mb-1">{{ __('TDS') }}</span>
+                    </label>
+                    <input type="number" step="0.01" name="tds" id="tds" value="0" class="form-control bg-light" placeholder="Enter TDS">
+                </div>
                 <div class="d-md-flex">
-                    <div class="form-group pl-6 col-md-5">
+                    <div class="form-group pl-6 col-md-10">
                         <label class="leading-none fz-24 d-flex align-items-center" for="cc_emails">
                             <span class="mr-1 mb-1">{{ __('CC emails') }}</span>
                         </label>
-                        <input type="email" step="0.01" name="ccemails" id="ccemails" class="form-control bg-light" placeholder="Comma separated emails">
+                        <input type="email" name="ccemails" id="ccemails" class="form-control bg-light" placeholder="Comma separated emails">
                     </div>
                     <!-- <div class="form-group col-md-5">
                         <label class="leading-none fz-24 ml-4 d-flex align-items-center" for="signature">

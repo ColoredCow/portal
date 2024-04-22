@@ -50,12 +50,6 @@ class SalaryController extends Controller
     {
         $currentSalaryObject = $employee->getCurrentSalary();
         if ((! $currentSalaryObject) || $request->submitType == 'send_appraisal_letter') {
-            EmployeeSalary::create([
-                'employee_id' => $employee->id,
-                'monthly_gross_salary' => $request->grossSalary,
-                'commencement_date' => $request->commencementDate,
-            ]);
-
             if ($currentSalaryObject) {
                 $salaryService = new SalaryCalculationService($request->grossSalary);
                 $data = $salaryService->getMailDataForAppraisalLetter($request, $employee);
@@ -67,6 +61,13 @@ class SalaryController extends Controller
                 Mail::to($data['employeeEmail'])->send(new SendAppraisalLetterMail($data, $pdf->inline($data['employeeName'] . '_Appraisal Letter_' . $formattedCommencementDate . '.pdf'), $formattedCommencementDate));
             }
 
+            EmployeeSalary::create([
+                'employee_id' => $employee->id,
+                'monthly_gross_salary' => $request->grossSalary,
+                'tds' => $request->tds,
+                'commencement_date' => $request->commencementDate,
+            ]);
+
             return redirect()->back()->with('success', 'Salary added successfully!');
         }
 
@@ -76,6 +77,7 @@ class SalaryController extends Controller
 
         $currentSalaryObject->monthly_gross_salary = $request->grossSalary;
         $currentSalaryObject->commencement_date = $request->commencementDate;
+        $currentSalaryObject->tds = $request->tds;
         $currentSalaryObject->save();
 
         return redirect()->back()->with('success', 'Salary updated successfully!');

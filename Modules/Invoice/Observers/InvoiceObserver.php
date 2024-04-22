@@ -58,7 +58,7 @@ class InvoiceObserver
      */
     public function updated(Invoice $invoice)
     {
-        $invoiceAnalyticsEntity = InvoicesAnalyticsEncryptedData::where('invoice_id', $invoice->id);
+        $invoiceAnalyticsEntity = InvoicesAnalyticsEncryptedData::where('invoice_id', $invoice->id)->first();
 
         if (! $invoiceAnalyticsEntity) {
             return;
@@ -84,7 +84,7 @@ class InvoiceObserver
      */
     public function deleted(Invoice $invoice)
     {
-        $invoiceAnalyticsEntity = InvoicesAnalyticsEncryptedData::where('invoice_id', $invoice->id);
+        $invoiceAnalyticsEntity = InvoicesAnalyticsEncryptedData::where('invoice_id', $invoice->id)->first();
 
         if (! $invoiceAnalyticsEntity) {
             return;
@@ -118,6 +118,7 @@ class InvoiceObserver
     protected function encryptValue($value)
     {
         $result = DB::select("SELECT TO_BASE64(AES_ENCRYPT('" . $value . "', '" . config('database.connections.mysql.encryption_key') . "')) AS encrypted_value");
+
         return $result[0]->encrypted_value;
     }
 }

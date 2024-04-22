@@ -60,13 +60,25 @@
                             <input v-model="commencementDate" type="date" name="commencementDate" id="commencementDate" class="form-control ml-4 bg-light" required>
                         </div>
                     </div>
+                    <div class="d-md-flex">
+                        <div class="form-group col-md-5">
+                            <label class="leading-none fz-24 ml-4 d-flex align-items-center" for="tds">
+                                <span class="mr-1 mb-1">{{ __('TDS') }}</span>
+                                <span><i class="fa fa-rupee"></i></span>
+                            </label>
+                            <input v-model="tds" type="number" step="0.01" name="tds" id="tds" class="form-control ml-4 bg-light" placeholder="Enter TDS" min="0" required>
+                        </div>
+                    </div>
                     <br>
                     <div class="form-group col-md-12">
                         <div class="ml-4">
                             <salary-breakdown
                                 :salary-configs="{{ json_encode($salaryConfigs) }}"
+                                :insurance-tenants="{{ optional($employee->user->profile)->insurance_tenants ?: 1 }}"
                                 :gross-salary="grossSalary"
+                                :tds="{{ optional($employee->getCurrentSalary())->tds ?: 0  }}"
                                 :commencement-date="commencementDate"
+                                :loan-deduction="{{ $employee->loan_deduction_for_month ?: 0 }}"
                             ></salary-breakdown>
                         </div>
                     </div>
@@ -82,8 +94,9 @@
             el: '#employee_salary_form',
             data() {
                 return {
+                    tds: "{{ optional($employee->getCurrentSalary())->tds ?: 0 }}",
                     grossSalary: "{{ optional($employee->getCurrentSalary())->monthly_gross_salary }}",
-                    commencementDate: "{{ optional(optional($employee->getCurrentSalary())->commencement_date)->format('Y-m-d') }}"
+                    commencementDate: "{{ optional(optional($employee->getCurrentSalary())->commencement_date)->format('Y-m-d') }}",
                 }
             }
         });
