@@ -74,7 +74,6 @@
                                         @else
                                             <tbody>
                                             @foreach($project->getTeamMembers  as $teamMember)
-                                            {{-- @php dd($effortData['teamMembersEffort'] ); @endphp   --}}
                                                 <tr>
                                                     <th class="fz-lg-20 my-2 px-5 font-weight-normal">
                                                         <span>
@@ -88,7 +87,7 @@
                                                         </a>
                                                     </th>
                                                     <td id="projectHours">{{$teamMember->daily_expected_effort }}</td>
-                                                    <td data-toggle="tooltip" title="Start and End date can be displayed for individual team member.">{{$effortData['totalWorkingDays']}} Days | {{$effortData['daysTillToday']}} Days</td>
+                                                    <td data-toggle="tooltip" title="Start date: {{$teamMember->started_on->format('Y-m-d')}}  {{$teamMember->ended_on != null ? "End date: " . ($teamMember->ended_on->format('Y-m-d')) : ""}}">{{$effortData['totalWorkingDays']}} Days | {{$effortData['daysTillToday']}} Days</td>
                                                     <td>{{$project->getbillableEffortOfTeamMember([$teamMember->id])}}hrs | {{$project->getactualEffortOfTeamMember([$teamMember->id])}}hrs</td>
                                                     {{-- <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}</td> --}}
                                                 </tr>

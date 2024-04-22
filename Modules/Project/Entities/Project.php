@@ -212,20 +212,22 @@ class Project extends Model implements Auditable
     public function getactualEffortOfTeamMember($id)
     {
         $teamMembers = new ProjectTeamMemberEffort();
+        $currentMonth = date('m');
 
         $actualEffort = $teamMembers->where('project_team_member_id', $id)
-                                    ->latest('added_on')
-                                    ->value('actual_effort');
+                                    ->whereMonth('added_on', $currentMonth)
+                                    ->sum('employee_actual_working_effort');
 
         return $actualEffort;
     }
     public function getbillableEffortOfTeamMember($id)
     {
         $teamMembers = new ProjectTeamMemberEffort();
+        $currentMonth = date('m');
 
         $billableEffort = $teamMembers->where('project_team_member_id', $id)
-                                    ->latest('added_on')
-                                    ->value('total_effort_in_effortsheet');
+                                    ->whereMonth('added_on', $currentMonth)
+                                    ->sum('actual_effort');
 
         return $billableEffort;
     }
