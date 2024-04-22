@@ -17,6 +17,7 @@ use Modules\Invoice\Services\InvoiceService;
 use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
 use OwenIt\Auditing\Contracts\Auditable;
+use Modules\Project\Entities\ProjectTeamMemberEffort;
 
 class Project extends Model implements Auditable
 {
@@ -176,13 +177,55 @@ class Project extends Model implements Auditable
     public function getCurrentHoursForMonthAttribute()
     {
         $teamMembers = $this->getTeamMembers()->get();
-        $totalEffort = 0;
+        $actualEffort = 0;
 
         foreach ($teamMembers as $teamMember) {
-            $totalEffort += $teamMember->projectTeamMemberEffort->whereBetween('added_on', [$this->client->month_start_date->subday(), $this->client->month_end_date])->sum('actual_effort');
+            $actualEffort += $teamMember->projectTeamMemberEffort->whereBetween('added_on', [$this->client->month_start_date->subday(), $this->client->month_end_date])->sum('actual_effort');
+        }
+
+        return $actualEffort;
+    }
+
+    public function getTotalEffort()
+    {
+        $teamMembers = $this->getTeamMembers()->get();
+        $totalEffort = [];
+
+        foreach ($teamMembers as $teamMember) {
+            $totalEffort [] = $teamMember->projectTeamMemberEffort->whereBetween('added_on', [$this->client->month_start_date->subday(), $this->client->month_end_date])->sum('total_effort_in_effortsheet');
         }
 
         return $totalEffort;
+    }
+
+    public function getDailyTotalEffort()
+    {
+        $teamMEmbers = $this->getTeamMembers()->get();
+        $totalEffortPerDay = 0;
+
+        foreach ($teamMEmbers as $teamMember) {
+            $totalEffortPerDay += $teamMember->daily_expected_effort;
+        }
+        return $totalEffortPerDay;
+    }
+
+    public function getactualEffortOfTeamMember($id) 
+    {
+        $teamMembers = new ProjectTeamMemberEffort();
+
+        $actualEffort = $teamMembers->where('project_team_member_id', $id)
+                                    ->latest('added_on')
+                                    ->value('actual_effort');
+        return $actualEffort;
+    }
+    public function getbillableEffortOfTeamMember($id) 
+    {
+        $teamMembers = new ProjectTeamMemberEffort();
+
+        $billableEffort = $teamMembers->where('project_team_member_id', $id)
+                                    ->latest('added_on')
+                                    ->value('total_effort_in_effortsheet');
+        return $billableEffort;
     }
 
     public function getVelocityAttribute()

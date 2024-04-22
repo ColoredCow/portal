@@ -26,7 +26,7 @@ class EffortTrackingService
         $currentDate = now(config('constants.timezone.indian'));
         $currentMonth = $data['month'] ?? Carbon::now()->format('F');
         $currentYear = $data['year'] ?? Carbon::now()->format('Y');
-        $totalMonths = $this->getTotalMonthsFilterParameter($currentMonth, $currentYear);
+        $totalMonths = abs($this->getTotalMonthsFilterParameter($currentMonth, $currentYear));
         $startDate = $project->client->getMonthStartDateAttribute($totalMonths);
         $endDate = $project->client->getMonthEndDateAttribute($totalMonths);
         $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
@@ -34,6 +34,7 @@ class EffortTrackingService
         $daysTillToday = count($this->getWorkingDays($project->client->month_start_date, $currentDate));
         $currentTime = new Carbon();
         $yesterdayDate = $currentTime->yesterday();
+        $workingDaysObject = json_encode($this->getWorkingDays($startDate, $endDate));
 
         return [
             'project' => $project,
@@ -49,6 +50,7 @@ class EffortTrackingService
             'totalMonths' => $totalMonths,
             'currentYear' => $currentYear,
             'yesterdayDate' => $yesterdayDate,
+            'workingDaysObject' => $workingDaysObject,
         ];
     }
 
@@ -246,6 +248,7 @@ class EffortTrackingService
             $sheetIndexForTotalBillableEffort = $this->getColumnIndex($sheetColumnsName['billable_effort'], $sheet[0]);
             $sheetIndexForStartDate = $this->getColumnIndex($sheetColumnsName['start_date'], $sheet[0]);
             $sheetIndexForEndDate = $this->getColumnIndex($sheetColumnsName['end_date'], $sheet[0]);
+            $sheetIndexForActualEffort = $this->getColumnIndex($sheetColumnsName['actual_effort'], $sheet[0]);
 
             if ($sheetIndexForTeamMemberName === false || $sheetIndexForTotalBillableEffort === false || $sheetIndexForStartDate === false || $sheetIndexForEndDate === false) {
                 return false;
@@ -256,6 +259,7 @@ class EffortTrackingService
                     'id' => $project->id,
                     'name' => $project->name,
                     'sheetIndex' => $sheetIndexForTotalBillableEffort,
+                    'actualEffortSheetIndex' => $sheetIndexForActualEffort,
                 ];
             }
 
@@ -280,6 +284,7 @@ class EffortTrackingService
                     $billingStartDate = Carbon::create($sheetUser[$sheetIndexForStartDate]);
                     $billingEndDate = Carbon::create($sheetUser[$sheetIndexForEndDate]);
                     $currentDate = now(config('constants.timezone.indian'))->today();
+                    $actualEfforts = $sheetUser[$sheetIndexForActualEffort];
 
                     if ($currentDate < $billingStartDate || $currentDate > $billingEndDate) {
                         continue;
@@ -292,6 +297,7 @@ class EffortTrackingService
                         'billing_start_date' => $billingStartDate,
                         'billing_end_date' => $billingEndDate,
                         'sheet_index_for_billable_effort' => $sheetIndexForTotalBillableEffort,
+                        'sheet_index_for_actual_effort' => $actualEfforts,
                     ];
 
                     foreach ($projectsInSheet as $sheetProject) {
@@ -360,6 +366,7 @@ class EffortTrackingService
             ->orderBy('added_on', 'DESC')->first();
 
         $billableEffort = $effortData['sheet_user'][$effortData['sheet_project']['sheetIndex']];
+        $actualEffort = $effortData['sheet_user'][$effortData['sheet_project']['actualEffortSheetIndex']];
 
         if ($latestProjectTeamMemberEffort) {
             $previousEffortDate = Carbon::parse($latestProjectTeamMemberEffort->added_on);
@@ -373,7 +380,7 @@ class EffortTrackingService
                 'added_on' => $currentDate,
             ],
             [
-                'actual_effort' => $billableEffort,
+                'actual_effort' => $actualEffort,
                 'total_effort_in_effortsheet' => $effortData['sheet_user'][$effortData['sheet_project']['sheetIndex']],
             ]
         );
