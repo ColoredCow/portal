@@ -444,9 +444,13 @@ Before you start following the guidelines, make sure to go through the [prerequi
         (ii) Grant this service account access to the project by selecting a role (Project -> Editor)
             <img width="1440" alt="Screenshot 2024-04-09 at 10 31 08 PM" src="https://github.com/ColoredCow/portal/assets/68751333/20be4c4f-50de-44b0-ab59-0e9b8ef77e0f">
 
-    7. A JSON file will be downloaded when you create credentials, move that JSON file to the `/portal/public/` folder inside the project.
+    7. Go back to credentials and click on edit option in service account section.
+        <img src="public\images\editServiceAccount.jpeg">
+    8. Go to keys and click on add key button and select Create New Key option.
+        <img src="public\images\createkey.jpeg">
+    9. A JSON file will be downloaded when you create credentials and key, move that JSON file to the `/portal/public/` folder inside the project.
 
-    8. Open the .env file and add the following  
+    10. Open the .env file and add the following  
 
         ```sh
         GOOGLE_CLIENT_ID= #Copy it from the credentials(OAuth 2 Client ID)
@@ -461,10 +465,16 @@ Before you start following the guidelines, make sure to go through the [prerequi
         ```
         ``Note`` Add double backward slash ``\\`` while adding the file path because single backward slash is considered as escape sequence
 
-    9. Copy the Email from the Service Accounts details
+    11. Copy the Email from the Service Accounts details
         <img width="1440" alt="Screenshot 2024-04-09 at 10 59 51 PM" src="https://github.com/ColoredCow/portal/assets/68751333/acde29bc-f46f-4d4f-ab6a-d7b055e414ab">
 
-    10. Add the email by clicking on the share button
+    12. Add the email by clicking on the share button
         <img width="1440" alt="Screenshot 2024-04-09 at 11 02 35 PM" src="https://github.com/ColoredCow/portal/assets/68751333/89d80c7d-f176-42f8-aed8-5c3696f97d9d">
 
-    11. Run the command `php artisan config:cache`
+    13. Run the command php artisan config:cache
+
+    14. Open the ColoredCow portal http://portal.test/login/
+
+    15. Go to CRM->Projects and select any of the projects.
+
+    16. After opening the project click on edit button and enter the Effortsheet URL then, click on Save button.
