@@ -96,6 +96,7 @@
                         @endif
                         </td>
                         <td>
+                            {{-- @php dd($user->total_hours['non_billable']); @endphp --}}
                             <span class="text-success">
                                 {{ $user->total_hours['billable'] }}
                             </span>
