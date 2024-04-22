@@ -55,10 +55,11 @@ class SalaryCalculationService
         $otherAllowance = $newSalaryObject->other_allowance;
         $newEmployeeShare = $newSalaryObject->employee_epf + $newSalaryObject->edli_charges + $newSalaryObject->administration_charges;
         $newAnnualCTC = $newSalaryObject->ctc_annual;
-        $newAggregateCTC = $newSalaryObject->ctc_aggregated;
-        $healthInsurance = ($newSalaryObject->health_insurance) * ($employee->user->profile->insurance_tenants) / 12;
+        $totalHealthInsurance = ($newSalaryObject->health_insurance) * ($employee->user->profile->insurance_tenants);
+        $monthlyHealthInsurance = $totalHealthInsurance / 12;
+        $newAggregateCTC = $newSalaryObject->ctc_annual + $totalHealthInsurance;
         $currentAnnualCTC = $employee->getCurrentSalary()->ctc_annual;
-        $salaryIncreasePercentage = $this->getLatestSalaryPercentageIncrementAttribute($currentAnnualCTC, $newAnnualCTC);
+        $salaryIncreasePercentage = $this->getLatestSalaryPercentageIncrementAttribute($currentAnnualCTC, $newAggregateCTC);
         $employeeUserId = $employee->user_id;
         // if ($request->signature) {
         //     $imageData = file_get_contents($request->signature);
@@ -73,7 +74,7 @@ class SalaryCalculationService
             'employeeFirstName' => $employeeFirstName,
             'date' => $currentDate,
             'grossSalary' => $grossSalary,
-            'healthInsurance' => $healthInsurance,
+            'monthlyHealthInsurance' => $monthlyHealthInsurance,
             'commencementDate' => $commencementDate,
             'basicSalary' => $newBasicSalary,
             'hra' => $newHra,

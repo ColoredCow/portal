@@ -187,7 +187,7 @@
                 <span class="salary-text" >P.F. and Charges(Employer share)</span><span class="salary-number-5">Rs {{ $data->employeeShare }}/-</span>
             </div>
             <div class="salary-details">
-                <span class="salary-text" >Medical Insurance(per month)</span><span class="salary-number-6">Rs {{ $data->healthInsurance }}/-</span>
+                <span class="salary-text" >Medical Insurance(per month)</span><span class="salary-number-6">Rs {{ $data->monthlyHealthInsurance }}/-</span>
             </div>
         </div>
         <div class="paddingTop content-font-size"><b>***Medical insurance of 5 Lakhs, rupees are added to your CTC.</b></div>
