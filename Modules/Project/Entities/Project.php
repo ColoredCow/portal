@@ -17,7 +17,6 @@ use Modules\Invoice\Services\InvoiceService;
 use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
 use OwenIt\Auditing\Contracts\Auditable;
-use Modules\Project\Entities\ProjectTeamMemberEffort;
 
 class Project extends Model implements Auditable
 {
