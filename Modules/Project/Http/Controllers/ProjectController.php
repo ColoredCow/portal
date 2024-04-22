@@ -92,7 +92,7 @@ class ProjectController extends Controller
         $remainingExpectedEffort = $getProjectHourDeatils['remainingExpectedEffort'];
         $weeklyHoursToCover = $getProjectHourDeatils['weeklyHoursToCover'];
         $effortData = $effortTracking->show($request->all(), $project);
-        
+
         return view('project::show', [
             'project' => $project,
             'contract' => $contract,
