@@ -99,8 +99,8 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('settings')->namespace('Settings')->group(function () {
         Route::get('/', 'SettingController@index')->name('settings.index');
-        Route::get('/employee-earning-threshold', 'profitabilityController@index')->name('settings.employee-earning-threshold');
-        Route::post('/employee-earning-threshold', 'profitabilityController@update')->name('settings.update-employee-earning-threshold');
+        Route::get('/employee-earning-threshold', 'ProfitabilityController@index')->name('settings.employee-earning-threshold');
+        Route::post('/employee-earning-threshold', 'ProfitabilityController@update')->name('settings.update-employee-earning-threshold');
 
         Route::prefix('permissions')->group(function () {
             Route::get('/', function () {
