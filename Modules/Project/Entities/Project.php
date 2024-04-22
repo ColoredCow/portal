@@ -192,7 +192,7 @@ class Project extends Model implements Auditable
         $totalEffort = [];
 
         foreach ($teamMembers as $teamMember) {
-            $totalEffort [] = $teamMember->projectTeamMemberEffort->whereBetween('added_on', [$this->client->month_start_date->subday(), $this->client->month_end_date])->sum('total_effort_in_effortsheet');
+            $totalEffort[] = $teamMember->projectTeamMemberEffort->whereBetween('added_on', [$this->client->month_start_date->subday(), $this->client->month_end_date])->sum('total_effort_in_effortsheet');
         }
 
         return $totalEffort;
@@ -206,25 +206,28 @@ class Project extends Model implements Auditable
         foreach ($teamMEmbers as $teamMember) {
             $totalEffortPerDay += $teamMember->daily_expected_effort;
         }
+
         return $totalEffortPerDay;
     }
 
-    public function getactualEffortOfTeamMember($id) 
+    public function getactualEffortOfTeamMember($id)
     {
         $teamMembers = new ProjectTeamMemberEffort();
 
         $actualEffort = $teamMembers->where('project_team_member_id', $id)
                                     ->latest('added_on')
                                     ->value('actual_effort');
+
         return $actualEffort;
     }
-    public function getbillableEffortOfTeamMember($id) 
+    public function getbillableEffortOfTeamMember($id)
     {
         $teamMembers = new ProjectTeamMemberEffort();
 
         $billableEffort = $teamMembers->where('project_team_member_id', $id)
                                     ->latest('added_on')
                                     ->value('total_effort_in_effortsheet');
+
         return $billableEffort;
     }
 

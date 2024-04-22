@@ -6,7 +6,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Client\Entities\Client;
-use Modules\EffortTracking\Http\Controllers\EffortTrackingController;
 use Modules\EffortTracking\Services\EffortTrackingService;
 use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\Job;
@@ -93,6 +92,7 @@ class ProjectController extends Controller
         $remainingExpectedEffort = $getProjectHourDeatils['remainingExpectedEffort'];
         $weeklyHoursToCover = $getProjectHourDeatils['weeklyHoursToCover'];
         $effortData = $effortTracking->show($request->all(), $project);
+        
         return view('project::show', [
             'project' => $project,
             'contract' => $contract,
