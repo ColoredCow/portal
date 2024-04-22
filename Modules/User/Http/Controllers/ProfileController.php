@@ -48,7 +48,7 @@ class ProfileController extends ModuleBaseController
             $userProfile->current_location = $request->current_location;
             $userProfile->designation = $request->designation;
             $userProfile->address = $request->address;
-            $user->profile->insurance_tenants = $request->insurance_tenants;
+            $userProfile->insurance_tenants = $request->insurance_tenants;
             $userProfile->save();
         }
 
