@@ -445,9 +445,9 @@ Before you start following the guidelines, make sure to go through the [prerequi
             <img width="1440" alt="Screenshot 2024-04-09 at 10 31 08 PM" src="https://github.com/ColoredCow/portal/assets/68751333/20be4c4f-50de-44b0-ab59-0e9b8ef77e0f">
 
     7. Go back to credentials and click on edit option in service account section.
-        <img src="public\images\editServiceAccount.jpeg">
+        <img src="https://github.com/ColoredCow/portal/blob/update_installation/public/images/editServiceAccount.jpeg">
     8. Go to keys and click on add key button and select Create New Key option.
-        <img src="public\images\createkey.jpeg">
+        <img src="https://github.com/ColoredCow/portal/blob/update_installation/public/images/createKey.jpeg">
     9. A JSON file will be downloaded when you create credentials and key, move that JSON file to the `/portal/public/` folder inside the project.
 
     10. Open the .env file and add the following  
