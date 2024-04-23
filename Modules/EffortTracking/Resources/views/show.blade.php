@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <form action="{{ route('project.effort-tracking', $project) }}" id="FilterForm" method="GET">
+        {{-- <form action="{{ route('project.effort-tracking', $project) }}" id="FilterForm" method="GET">
             <div class="d-flex">
                 <div class='form-group mr-4 ml-1 mt-1 w-168'>
                     <select class="form-control bg-light" name="month"
@@ -58,8 +58,8 @@
                     </select>
                 </div>
             </div>
-        </form>
-        @if ($project->current_hours_for_month === 0 || $totalMonths != 0)
+        </form> --}}
+        {{-- @if ($project->current_hours_for_month === 0 || $totalMonths != 0)
             <h2 class="text-center pb-6 mr-15 mt-5 font-weight-bold text-uppercase text-danger">No data available</h2>
         @else
             <div class="mt-4">
@@ -68,7 +68,7 @@
                 <input type="hidden" name="users" value="{{ $users }}">
                 <canvas class="w-full" id="effortTrackingGraph"></canvas>
             </div>
-        @endif
+        @endif --}}
     </div>
 </div>
 @if ($totalMonths === 0)
