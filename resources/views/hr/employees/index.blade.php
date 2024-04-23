@@ -96,7 +96,7 @@
                         @endif
                         </td>
                         <td>
-                            <a href="{{ route('employees.show', $employee) }}">
+                            <a href="{{ route('employees.show', $employee) }}" class="text-underline">
                                 <span class="text-success">
                                     {{ $user->total_hours['billable'] }}
                                 </span>
