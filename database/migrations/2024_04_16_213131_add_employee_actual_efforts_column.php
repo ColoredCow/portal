@@ -15,7 +15,7 @@ class AddEmployeeActualEffortsColumn extends Migration
     {
         Schema::table('project_team_members_effort', function (Blueprint $table) {
             $table->float('employee_actual_working_effort');
-            $table->float('total_employee_actual_working_effort');
+            $table->float('total_employee_actual_working_effort'); 
         });
     }
 
