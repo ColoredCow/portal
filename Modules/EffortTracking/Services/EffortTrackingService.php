@@ -367,7 +367,7 @@ class EffortTrackingService
             ->orderBy('added_on', 'DESC')->first();
 
         $billableEffort = $effortData['sheet_user'][$effortData['sheet_project']['sheetIndex']];
-        $actualBillableEffort = $effortData['sheet_user'] [$effortData['sheet_project']['actualEffortIndex']];
+        $actualBillableEffort = $effortData['sheet_user'][$effortData['sheet_project']['actualEffortIndex']];
 
         if ($latestProjectTeamMemberEffort) {
             $previousEffortDate = Carbon::parse($latestProjectTeamMemberEffort->added_on);
@@ -385,7 +385,7 @@ class EffortTrackingService
                 'actual_effort' => $billableEffort,
                 'total_effort_in_effortsheet' => $effortData['sheet_user'][$effortData['sheet_project']['sheetIndex']],
                 'employee_actual_working_effort' => $actualBillableEffort,
-                'total_employee_actual_working_effort' => $effortData['sheet_user'] [$effortData['sheet_project']['actualEffortIndex']],
+                'total_employee_actual_working_effort' => $effortData['sheet_user'][$effortData['sheet_project']['actualEffortIndex']],
             ]
         );
     }
