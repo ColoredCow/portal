@@ -385,7 +385,7 @@ class EffortTrackingService
                 'actual_effort' => $billableEffort,
                 'total_effort_in_effortsheet' => $effortData['sheet_user'][$effortData['sheet_project']['sheetIndex']],
                 'employee_actual_working_effort' => $actualBillableEffort,
-                'total_employee_actual_working_effort' => $effortData['sheet_user'] [$effortData['sheet_project']['actualEffortIndex']],
+                'total_employee_actual_working_effort' => $effortData['sheet_user'][$effortData['sheet_project']['actualEffortIndex']],
             ]
         );
     }
