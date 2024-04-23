@@ -478,3 +478,5 @@ Before you start following the guidelines, make sure to go through the [prerequi
     15. Go to CRM->Projects and select any of the projects.
 
     16. After opening the project click on edit button and enter the Effortsheet URL then, click on Save button.
+
+    17. Go to phpmyadmin, open users table and change the nicknames of users as team member names in effortsheet.
