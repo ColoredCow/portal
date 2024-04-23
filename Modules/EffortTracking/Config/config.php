@@ -6,6 +6,7 @@ return [
     'update_date_count_after_time' => '22:00:00',
     'columns_name' => [
         'team_member_name' => 'team member name',
+        'working_days' => 'working days',
         'start_date' => 'start date',
         'end_date' => 'end date',
         'actual_effort' => 'actual effort',

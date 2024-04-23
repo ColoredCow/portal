@@ -65,7 +65,7 @@ class ProjectController extends Controller
      *
      * @param Project $project
      */
-    public function show(Project $project)
+    public function show(Request $request, Project $project)
     {
         $contractData = $this->getContractData($project);
         $contract = $contractData['contract'];
@@ -84,11 +84,14 @@ class ProjectController extends Controller
         $getProjectHourDeatils = $this->service->getProjectApprovedPipelineHour($project);
 
         $monthlyApprovedHour = $getProjectHourDeatils['monthlyApprovedHour'];
+        $totalEffort = $project->getTotalEffort();
+        $dailyEffort = $project->getDailyTotalEffort();
         $totalExpectedHourInMonth = $getProjectHourDeatils['totalExpectedHourInMonth'];
         $totalWeeklyEffort = $getProjectHourDeatils['totalWeeklyEffort'];
         $remainingApprovedPipeline = $getProjectHourDeatils['remainingApprovedPipeline'];
         $remainingExpectedEffort = $getProjectHourDeatils['remainingExpectedEffort'];
         $weeklyHoursToCover = $getProjectHourDeatils['weeklyHoursToCover'];
+        $effortData = $effortTracking->show($request->all(), $project);
 
         return view('project::show', [
             'project' => $project,
@@ -103,6 +106,9 @@ class ProjectController extends Controller
             'remainingApprovedPipeline' => $remainingApprovedPipeline,
             'remainingExpectedEffort' => $remainingExpectedEffort,
             'weeklyHoursToCover' => $weeklyHoursToCover,
+            'effortData' => $effortData,
+            'totalEffort' => json_encode($totalEffort),
+            'dailyEffort' => $dailyEffort,
         ]);
     }
 

@@ -26,7 +26,7 @@ class EffortTrackingService
         $currentDate = now(config('constants.timezone.indian'));
         $currentMonth = $data['month'] ?? Carbon::now()->format('F');
         $currentYear = $data['year'] ?? Carbon::now()->format('Y');
-        $totalMonths = $this->getTotalMonthsFilterParameter($currentMonth, $currentYear);
+        $totalMonths = abs($this->getTotalMonthsFilterParameter($currentMonth, $currentYear));
         $startDate = $project->client->getMonthStartDateAttribute($totalMonths);
         $endDate = $project->client->getMonthEndDateAttribute($totalMonths);
         $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
@@ -34,6 +34,7 @@ class EffortTrackingService
         $daysTillToday = count($this->getWorkingDays($project->client->month_start_date, $currentDate));
         $currentTime = new Carbon();
         $yesterdayDate = $currentTime->yesterday();
+        $workingDaysObject = json_encode($this->getWorkingDays($startDate, $endDate));
 
         return [
             'project' => $project,
@@ -49,6 +50,7 @@ class EffortTrackingService
             'totalMonths' => $totalMonths,
             'currentYear' => $currentYear,
             'yesterdayDate' => $yesterdayDate,
+            'workingDaysObject' => $workingDaysObject,
         ];
     }
 
