@@ -37,20 +37,22 @@
                             @endif
                     </div>
                 </div>                  
-                <div class="form-row ">
+                <div class="form-row">
                     <div class="form-group col-lg-12 pl-4">
-                        <h4 class="d-inline-block ">
-                            <label for="name" class="font-weight-bold">Team Members({{count($project->getTeamMembers)}})</label>
-                        </h4>
-                        <div class="fz-14 float-right mr-3 mt-1 d-flex">
-                            <h4 class="mr-5">{{ $project->name }} - Members
+                        <div class="fz-14 mr-3 mt-1 d-flex justify-content-between">
+                            <h4 class="d-inline-block ">
+                                <label for="name" class="font-weight-bold">Team Members({{count($project->getTeamMembers)}})</label>
+                            </h4>
+                        <div class="d-flex">
+                            <h4 class="mr-5">
                                 <i class="fa fa-spinner fa-spin ml-2 d-none"></i>
                                 <i class="ml-2 font-weight-bold fa fa-refresh c-pointer" aria-hidden="true"
                                 data-url="{{ route('effort-tracking.refresh', $project) }}"></i>
                             </h4>
-                            <strong>Timeline:</strong>{{ (Carbon\Carbon::parse($project->client->month_start_date)->format('dS M')) }}
-                            -{{ (Carbon\Carbon::parse($project->client->month_end_date)->format('dS M')) }}
-                            &nbsp;&nbsp;&nbsp; <strong>Last refreshed at:</strong>{{ (Carbon\Carbon::parse($project->last_updated_at)->setTimezone('Asia/Kolkata')->format('Y-M-d , D h:i:s A')) }}
+                                <strong>Timeline:</strong>{{ (Carbon\Carbon::parse($project->client->month_start_date)->format('dS M')) }}
+                                -{{ (Carbon\Carbon::parse($project->client->month_end_date)->format('dS M')) }}
+                                &nbsp;&nbsp;&nbsp; <strong>Last refreshed at:</strong>{{ (Carbon\Carbon::parse($project->last_updated_at)->setTimezone('Asia/Kolkata')->format('Y-M-d , D h:i:s A')) }}
+                        </div>
                         </div>
                             <div class="flex-column flex-md-row d-flex flex-wrap col-md-18 px-0 ml-1 mr-4">
                                 <div class="table">
