@@ -198,7 +198,7 @@ class User extends Authenticatable
 
     public function getTotalBillableHours($isBillable = true)
     {
-        return $this->projectTeamMembers()->whereHas('project', function ($query) use ($isBillable) {
+        return $this->projectTeamMembers()->whereHas('project', function ($query) use ($isBillable) { 
             $query->billable($isBillable);
         })->get()->sum->getCurrentActualEffort();
     }
