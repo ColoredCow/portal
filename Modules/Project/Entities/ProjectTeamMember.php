@@ -47,6 +47,13 @@ class ProjectTeamMember extends Model
         return $this->projectTeamMemberEffort()->where('added_on', '>=', $startDate)->sum('actual_effort');
     }
 
+    public function getNonBillableEffortAttribute($startDate = null)
+    {
+        $startDate = $startDate ?? $this->project->client->month_start_date;
+
+        return $this->projectTeamMemberEffort()->where('added_on', '>=', $startDate)->sum('employee_actual_working_effort');
+    }
+
     public function getCurrentExpectedEffortAttribute($startDate = null)
     {
         $project = new Project;
@@ -103,6 +110,13 @@ class ProjectTeamMember extends Model
         $firstDayOfMonth = date('Y-m-01');
 
         return $this->getCurrentActualEffortAttribute($firstDayOfMonth);
+    }
+
+    public function getNonBillableEffort()
+    {
+        $firstDayOfMonth = date('Y-m-01');
+
+        return $this->getNonBillableEffortAttribute($firstDayOfMonth);
     }
 
     public function getBorderColorClassAttribute()

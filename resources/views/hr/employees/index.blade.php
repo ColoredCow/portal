@@ -96,13 +96,15 @@
                         @endif
                         </td>
                         <td>
-                            <span class="text-success">
-                                {{ $user->total_hours['billable'] }}
-                            </span>
-                            |
-                            <span class="text-secondary">
-                                {{ $user->total_hours['non_billable'] }}
-                            </span>
+                            <a href="{{ route('employees.show', $employee) }}" class="text-underline">
+                                <span class="text-success">
+                                    {{ $user->total_hours['billable'] }}
+                                </span>
+                                |
+                                <span class="text-secondary">
+                                    {{ $user->total_hours['non_billable'] }}
+                                </span>
+                            </a>
                         </td>
                         @else
                         <td>
