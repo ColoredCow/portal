@@ -91,7 +91,7 @@
                                                     </th>
                                                     <td id="projectHours">{{$teamMember->daily_expected_effort }}</td>
                                                     <td data-toggle="tooltip" title="Start date: {{$teamMember->started_on->format('Y-m-d')}}  {{$teamMember->ended_on != null ? "End date: " . ($teamMember->ended_on->format('Y-m-d')) : ""}}">{{$effortData['totalWorkingDays']}} Days | {{$effortData['daysTillToday']}} Days</td>
-                                                    <td>{{$teamMember->current_actual_effort}}hrs 
+                                                    <td>{{$teamMember->current_actual_effort}}hrs
                                                         {{-- | {{$project->getactualEffortOfTeamMember([$teamMember->id])}}hrs</td> --}}
                                                     {{-- <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}</td> --}}
                                                 </tr>
