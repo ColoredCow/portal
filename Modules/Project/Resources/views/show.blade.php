@@ -66,7 +66,8 @@
                                                     </div> --}}
                                                 </th>
                                                 <th>Working Days <br>Total | Completed</th>
-                                                <th>Total Efforts Booked <br>Billable | Actual</th>
+                                                <th>Total Efforts Booked 
+                                                    {{-- <br>Billable | Actual</th> --}}
                                                 {{-- <th>Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th> --}}
                                             </tr>
                                         </thead>
@@ -90,7 +91,8 @@
                                                     </th>
                                                     <td id="projectHours">{{$teamMember->daily_expected_effort }}</td>
                                                     <td data-toggle="tooltip" title="Start date: {{$teamMember->started_on->format('Y-m-d')}}  {{$teamMember->ended_on != null ? "End date: " . ($teamMember->ended_on->format('Y-m-d')) : ""}}">{{$effortData['totalWorkingDays']}} Days | {{$effortData['daysTillToday']}} Days</td>
-                                                    <td>{{$project->getbillableEffortOfTeamMember([$teamMember->id])}}hrs | {{$project->getactualEffortOfTeamMember([$teamMember->id])}}hrs</td>
+                                                    <td>{{$teamMember->current_actual_effort}}hrs
+                                                        {{-- | {{$project->getactualEffortOfTeamMember([$teamMember->id])}}hrs</td> --}}
                                                     {{-- <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}</td> --}}
                                                 </tr>
                                             @endforeach
