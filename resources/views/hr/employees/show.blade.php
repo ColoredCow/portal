@@ -87,7 +87,7 @@
                                             </td>
 
                                             <td>
-                                                <div class="{{ $activeProjectTeamMember->project->getbillableEffortOfTeamMember($activeProjectTeamMember->id) >= ($activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->client->month_start_date, today()->subDay()))) ? 'text-success' : 'text-danger' }}"> {{ $activeProjectTeamMember->project->getbillableEffortOfTeamMember($activeProjectTeamMember->id) }}</div>
+                                                <div class="{{ $activeProjectTeamMember->project->getbillableEffortOfTeamMember($activeProjectTeamMember->id) >= ($activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->client->month_start_date, today()->subDay()))) ? 'text-success' : 'text-danger' }}"> {{ $activeProjectTeamMember->current_actual_effort }}</div>
                                             </td>
 
                                             <td>
