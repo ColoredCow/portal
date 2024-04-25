@@ -576,7 +576,7 @@ class ProjectService implements ProjectServiceContract
                     $activeProjectTeamMember->project->name,
                     number_format($activeProjectTeamMember->getFte($startDate, $endDate), 2),
                     number_format($activeProjectTeamMember->getCommittedEfforts($startDate, $endDate), 2),
-                    number_format($activeProjectTeamMember->getActualEffortBetween($startDate, $endDate, 'actual_effort'), 2),
+                    number_format($activeProjectTeamMember->getActualEffortBetween($startDate, $endDate), 2),
                 ];
                 $teamMembers[] = $teamMember;
             }
