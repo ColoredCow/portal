@@ -35,6 +35,39 @@
         },
 
         methods: {
+            calculateMinDate(that) {
+                this.minDate = null;
+                this.events.forEach(event => {
+                this.eventStart = new Date(event.start);
+                if (this.minDate === null || this.eventStart < this.minDate) {
+                    this.minDate = this.eventStart;
+                }
+                });
+                this.minDateString = this.minDate.toISOString().split('T')[0]; // Extracts the date part
+                return this.minDateString;
+            },
+            calculateMaxDate(that) {
+                this.maxDate = null;
+                this.events.forEach(event => {
+                    this.eventEnd = event.end ? new Date(event.end) : new Date(event.start);
+                if (this.maxDate === null || this.eventEnd > this.maxDate) {
+                    this.maxDate = this.eventEnd;
+                }
+                });
+                this.maxDateString = this.maxDate.toISOString().split('T')[0];
+                return this.maxDateString;
+            },
+            // calculateVisibleRange(that) {
+            // var today = new Date();
+            // var startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+            // var endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+            //     return {
+            //         start: startOfMonth,
+            //         end: endOfMonth
+            //     };
+            // },
+
             selectAppointment(id) {
                 this.selected_appointment_id = id;
                 $('#select_appointment_modal').modal('show');
@@ -62,6 +95,7 @@
 
             renderCalender(that) {
                 var calendarEl = document.getElementById('calendar');
+                
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     initialView: 'dayGridMonth',
                     headerToolbar: { left: 'prev,next today', center: 'title', right: null},
@@ -70,8 +104,12 @@
                     editable: true,
                     selectable: true,
                     selectMirror: true,
+                    validRange: {
+                        start: this.minDate,
+                        end: this.maxDate + 1
+                    },
                     nowIndicator: true,
-                    events: @json($freeSlots),
+                    events: this.events,
                     eventClick: function(args) {
                         that.selectAppointment(args.event.id);
                     },
@@ -88,6 +126,11 @@
         },
 
         mounted() {
+            this.events = @json($freeSlots);
+            // this.dates = this.calculateVisibleRange(this);
+            this.minDate = this.calculateMinDate(this);
+            this.maxDate = this.calculateMaxDate(this);
+            console.log(this.minDate, this.maxDate);
             this.renderCalender(this)
         }
     });
