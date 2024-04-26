@@ -100,7 +100,7 @@
                                     <a id="contract_file mt-5"
                                         style="{{ $project->projectContracts ? '' : 'd-none' }}"
                                         href="{{ route('pdf.show', $project->projectContracts->first()) }}"> 
-                                        <span class="mr-1 underline theme-info fz-16">File:{{ $contractName }}</span>
+                                        <span class="mr-1 underline theme-info fz-16">File:{{ str_limit($contractName,8) }}</span>
                                         <i class="fa fa-external-link-square fa-1x"></i></a>
                                 @endif
                             </div>

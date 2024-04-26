@@ -55,6 +55,14 @@
 
                 <div class="col-md-3">
                     <div class="card h-75">
+                        <a class="card-body no-transition" href="{{ route('report.project.contracts.get') }}">
+                            <h2 class="text-center">Project Contract</h2><br>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card h-75">
                         <a class="card-body no-transition" href="{{ route('reports.finance.monthly-sales-register.index') }}">
                             <h2 class="text-center">Monthly Sales Register</h2><br>
                         </a>
