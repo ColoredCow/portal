@@ -223,6 +223,7 @@ class EffortTrackingService
 
                     $columnIndex++;
                     if (isset($sheet[0]) && count($sheet[0]) == $columnIndex) {
+                        $sheetIndexForTotalActualEffort = $this->getColumnIndex($sheetColumnsName['actual_effort'], $sheet[0]);
                         $subProjectName = $sheet[0][count($sheet[0]) - 1];
                         $subProject = Project::where(['name' => $subProjectName, 'status' => 'active'])->first();
                         if ($subProject) {
@@ -230,6 +231,7 @@ class EffortTrackingService
                                 'id' => $subProject->id,
                                 'name' => $subProjectName,
                                 'sheetIndex' => $columnIndex - 1,
+                                'actualEffortIndex' => $sheetIndexForTotalActualEffort,
                             ];
                         }
                         continue;
