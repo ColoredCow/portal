@@ -46,6 +46,7 @@
                 this.minDateString = this.minDate.toISOString().split('T')[0]; // Extracts the date part
                 return this.minDateString;
             },
+
             calculateMaxDate(that) {
                 this.maxDate = null;
                 this.events.forEach(event => {
@@ -57,16 +58,6 @@
                 this.maxDateString = this.maxDate.toISOString().split('T')[0];
                 return this.maxDateString;
             },
-            // calculateVisibleRange(that) {
-            // var today = new Date();
-            // var startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-            // var endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-            //     return {
-            //         start: startOfMonth,
-            //         end: endOfMonth
-            //     };
-            // },
 
             selectAppointment(id) {
                 this.selected_appointment_id = id;
@@ -104,9 +95,10 @@
                     editable: true,
                     selectable: true,
                     selectMirror: true,
+                    hiddenDays: [0, 6],
                     validRange: {
-                        start: this.minDate,
-                        end: this.maxDate + 1
+                        start: this.startDate,
+                        end: this.endDate + 1
                     },
                     nowIndicator: true,
                     events: this.events,
@@ -127,10 +119,9 @@
 
         mounted() {
             this.events = @json($freeSlots);
-            // this.dates = this.calculateVisibleRange(this);
-            this.minDate = this.calculateMinDate(this);
-            this.maxDate = this.calculateMaxDate(this);
-            console.log(this.minDate, this.maxDate);
+            this.startDate = this.calculateMinDate(this);
+            this.endDate = this.calculateMaxDate(this);
+            console.log(this.events);
             this.renderCalender(this)
         }
     });
