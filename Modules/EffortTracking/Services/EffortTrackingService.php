@@ -199,7 +199,7 @@ class EffortTrackingService
             $sheets = new Sheets();
             $projectMembersCount = 0;
             $lastColumn = config('efforttracking.default_last_column_in_effort_sheet');
-            $columnIndex = 5;
+            $columnIndex = 6;
             $projectsInSheet = [];
 
             $range = config('efforttracking.default_start_column_in_effort_sheet') . '2:' . config('efforttracking.default_start_column_in_effort_sheet');
@@ -230,6 +230,7 @@ class EffortTrackingService
                                 'id' => $subProject->id,
                                 'name' => $subProjectName,
                                 'sheetIndex' => $columnIndex - 1,
+                                'actualEffortIndex' => $columnIndex - 1,
                             ];
                         }
                         continue;
