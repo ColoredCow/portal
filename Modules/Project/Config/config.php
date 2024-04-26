@@ -15,6 +15,7 @@ return [
         'solution_architect' => 'Solution Architect',
         'customer_support' => 'Customer Support',
         'consultant' => 'Consultant',
+        'business_analyst' => 'Business Analyst',
     ],
     'type' => [
         'monthly-billing' => 'Monthly Billing',

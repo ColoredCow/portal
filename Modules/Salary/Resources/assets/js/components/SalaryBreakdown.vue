@@ -167,11 +167,11 @@
 
 <script>
 export default {
-	props:["salaryConfigs", "grossSalary", "tds", "commencementDate", "loanDeduction"],
+	props:["salaryConfigs", "grossSalary", "tds", "commencementDate", "loanDeduction", "insuranceTenants"],
 
 	computed: {
 		monthlyLoanDeduction() {
-			return this.loanDeduction
+			return this.loanDeduction;
 		},
 		basicSalary() {
 			let percentage = parseInt(this.salaryConfigs.basic_salary.percentage_rate);
@@ -268,7 +268,7 @@ export default {
 			if (this.grossSalary === "" || this.employerEsi !== 0 || this.employeeEsi !== 0) {
 				return 0;
 			}
-			return parseInt(this.salaryConfigs.health_insurance.fixed_amount);
+			return parseInt((this.salaryConfigs.health_insurance.fixed_amount) * this.insuranceTenants);
 		},
 		ctcAggregated() {
 			return this.ctcAnnual + this.healthInsurance;		

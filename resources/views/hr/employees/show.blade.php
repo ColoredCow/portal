@@ -42,14 +42,8 @@
                                 <th scope="col" class="pb-3 lg-4">Project Term</th>
                                 <th scope="col" class="lg-4">Expected Hours For Term</th>
                                 <th scope="col" class="lg-4">Expected Hours Till Today</th>
-                                <th scope="col" class="lg-4">Hours Booked <span data-toggle="tooltip" data-placement="right" title="Hours in effortsheet for the current project term."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
-                                <th scope="col" class="lg-4">Velocity <span data-toggle="tooltip" data-placement="right" title="Its  the productivity of employee in a project for project term."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
-                                <th scope="col" class="lg-4">
-                                    FTE Covered
-                                    <span data-toggle="tooltip" data-placement="right" title="This is portion of the overall FTE that is contributed to the projects by the employee from {{ today()->startOfMonth()->format('dS M') }} to {{ today()->subDay()->format('dS M') }}."  >
-                                        <i class="fa fa-question-circle"></i>&nbsp;
-                                    </span>
-                                </th>
+                                <th scope="col" class="lg-4">Billable Effort</th>
+                                {{-- <th scope="col" class="lg-4">Actual Effort</th> --}}
                             </tr>
                         </thead>
                         <thead>
@@ -93,20 +87,13 @@
                                             </td>
 
                                             <td>
-                                                <div class="{{ $activeProjectTeamMember->current_actual_effort >= ($activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->client->month_start_date, today()->subDay()))) ? 'text-success' : 'text-danger' }}"> {{ $activeProjectTeamMember->current_actual_effort }}
-                                                </div>
+                                                <div class="{{ $activeProjectTeamMember->project->getbillableEffortOfTeamMember($activeProjectTeamMember->id) >= ($activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->client->month_start_date, today()->subDay()))) ? 'text-success' : 'text-danger' }}"> {{ $activeProjectTeamMember->current_actual_effort }}</div>
                                             </td>
 
-                                            <td>
+                                            {{-- <td>
                                                 <div>
-                                                    <div class="{{$activeProjectTeamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">
-                                                        {{$activeProjectTeamMember->velocity}}
-                                                    </div>
-                                                </td>
-
-                                            <td>
-                                                <div>{{$activeProjectTeamMember->fte}}</div>
-                                            </td>
+                                                    <div>{{$activeProjectTeamMember->project->getactualEffortOfTeamMember($activeProjectTeamMember->id)}}</div>
+                                                </td> --}}
                                         </tr>
                                     @endif
                                 @endforeach

@@ -176,13 +176,60 @@ class Project extends Model implements Auditable
     public function getCurrentHoursForMonthAttribute()
     {
         $teamMembers = $this->getTeamMembers()->get();
-        $totalEffort = 0;
+        $actualEffort = 0;
 
         foreach ($teamMembers as $teamMember) {
-            $totalEffort += $teamMember->projectTeamMemberEffort->whereBetween('added_on', [$this->client->month_start_date->subday(), $this->client->month_end_date])->sum('actual_effort');
+            $actualEffort += $teamMember->projectTeamMemberEffort->whereBetween('added_on', [$this->client->month_start_date->subday(), $this->client->month_end_date])->sum('actual_effort');
+        }
+
+        return $actualEffort;
+    }
+
+    public function getTotalEffort()
+    {
+        $teamMembers = $this->getTeamMembers()->get();
+        $totalEffort = [];
+
+        foreach ($teamMembers as $teamMember) {
+            $totalEffort[] = $teamMember->projectTeamMemberEffort->whereBetween('added_on', [$this->client->month_start_date->subday(), $this->client->month_end_date])->sum('total_effort_in_effortsheet');
         }
 
         return $totalEffort;
+    }
+
+    public function getDailyTotalEffort()
+    {
+        $teamMEmbers = $this->getTeamMembers()->get();
+        $totalEffortPerDay = 0;
+
+        foreach ($teamMEmbers as $teamMember) {
+            $totalEffortPerDay += $teamMember->daily_expected_effort;
+        }
+
+        return $totalEffortPerDay;
+    }
+
+    public function getactualEffortOfTeamMember($id)
+    {
+        $teamMembers = new ProjectTeamMemberEffort();
+        $currentMonth = date('m');
+
+        $actualEffort = $teamMembers->where('project_team_member_id', $id)
+                                    ->whereMonth('added_on', $currentMonth)
+                                    ->sum('employee_actual_working_effort');
+
+        return $actualEffort;
+    }
+    public function getbillableEffortOfTeamMember($id)
+    {
+        $teamMembers = new ProjectTeamMemberEffort();
+        $currentMonth = date('m');
+
+        $billableEffort = $teamMembers->where('project_team_member_id', $id)
+                                    ->whereMonth('added_on', $currentMonth)
+                                    ->sum('actual_effort');
+
+        return $billableEffort;
     }
 
     public function getVelocityAttribute()

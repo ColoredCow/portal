@@ -26,7 +26,7 @@ class EffortTrackingService
         $currentDate = now(config('constants.timezone.indian'));
         $currentMonth = $data['month'] ?? Carbon::now()->format('F');
         $currentYear = $data['year'] ?? Carbon::now()->format('Y');
-        $totalMonths = $this->getTotalMonthsFilterParameter($currentMonth, $currentYear);
+        $totalMonths = abs($this->getTotalMonthsFilterParameter($currentMonth, $currentYear));
         $startDate = $project->client->getMonthStartDateAttribute($totalMonths);
         $endDate = $project->client->getMonthEndDateAttribute($totalMonths);
         $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
@@ -34,6 +34,7 @@ class EffortTrackingService
         $daysTillToday = count($this->getWorkingDays($project->client->month_start_date, $currentDate));
         $currentTime = new Carbon();
         $yesterdayDate = $currentTime->yesterday();
+        $workingDaysObject = json_encode($this->getWorkingDays($startDate, $endDate));
 
         return [
             'project' => $project,
@@ -49,6 +50,7 @@ class EffortTrackingService
             'totalMonths' => $totalMonths,
             'currentYear' => $currentYear,
             'yesterdayDate' => $yesterdayDate,
+            'workingDaysObject' => $workingDaysObject,
         ];
     }
 
@@ -197,7 +199,7 @@ class EffortTrackingService
             $sheets = new Sheets();
             $projectMembersCount = 0;
             $lastColumn = config('efforttracking.default_last_column_in_effort_sheet');
-            $columnIndex = 5;
+            $columnIndex = 6;
             $projectsInSheet = [];
 
             $range = config('efforttracking.default_start_column_in_effort_sheet') . '2:' . config('efforttracking.default_start_column_in_effort_sheet');
@@ -221,6 +223,7 @@ class EffortTrackingService
 
                     $columnIndex++;
                     if (isset($sheet[0]) && count($sheet[0]) == $columnIndex) {
+                        $sheetIndexForTotalActualEffort = $this->getColumnIndex($sheetColumnsName['actual_effort'], $sheet[0]);
                         $subProjectName = $sheet[0][count($sheet[0]) - 1];
                         $subProject = Project::where(['name' => $subProjectName, 'status' => 'active'])->first();
                         if ($subProject) {
@@ -228,6 +231,7 @@ class EffortTrackingService
                                 'id' => $subProject->id,
                                 'name' => $subProjectName,
                                 'sheetIndex' => $columnIndex - 1,
+                                'actualEffortIndex' => $sheetIndexForTotalActualEffort,
                             ];
                         }
                         continue;
@@ -242,12 +246,15 @@ class EffortTrackingService
             }
 
             $range = config('efforttracking.default_start_column_in_effort_sheet') . '2:' . $lastColumn . ($projectMembersCount + 1); // this will depend on the number of people on the project
+
+            //compare by preforming trim and lowercase
             $sheetIndexForTeamMemberName = $this->getColumnIndex($sheetColumnsName['team_member_name'], $sheet[0]);
             $sheetIndexForTotalBillableEffort = $this->getColumnIndex($sheetColumnsName['billable_effort'], $sheet[0]);
+            $sheetIndexForTotalActualEffort = $this->getColumnIndex($sheetColumnsName['actual_effort'], $sheet[0]);
             $sheetIndexForStartDate = $this->getColumnIndex($sheetColumnsName['start_date'], $sheet[0]);
             $sheetIndexForEndDate = $this->getColumnIndex($sheetColumnsName['end_date'], $sheet[0]);
 
-            if ($sheetIndexForTeamMemberName === false || $sheetIndexForTotalBillableEffort === false || $sheetIndexForStartDate === false || $sheetIndexForEndDate === false) {
+            if ($sheetIndexForTeamMemberName === false || $sheetIndexForTotalBillableEffort === false || $sheetIndexForStartDate === false || $sheetIndexForEndDate === false || $sheetIndexForTotalActualEffort === false) {
                 return false;
             }
 
@@ -256,6 +263,7 @@ class EffortTrackingService
                     'id' => $project->id,
                     'name' => $project->name,
                     'sheetIndex' => $sheetIndexForTotalBillableEffort,
+                    'actualEffortIndex' => $sheetIndexForTotalActualEffort,
                 ];
             }
 
@@ -292,6 +300,7 @@ class EffortTrackingService
                         'billing_start_date' => $billingStartDate,
                         'billing_end_date' => $billingEndDate,
                         'sheet_index_for_billable_effort' => $sheetIndexForTotalBillableEffort,
+                        'sheet_index_for_actual_effort' => $sheetIndexForTotalActualEffort,
                     ];
 
                     foreach ($projectsInSheet as $sheetProject) {
@@ -360,11 +369,13 @@ class EffortTrackingService
             ->orderBy('added_on', 'DESC')->first();
 
         $billableEffort = $effortData['sheet_user'][$effortData['sheet_project']['sheetIndex']];
+        $actualBillableEffort = $effortData['sheet_user'][$effortData['sheet_project']['actualEffortIndex']];
 
         if ($latestProjectTeamMemberEffort) {
             $previousEffortDate = Carbon::parse($latestProjectTeamMemberEffort->added_on);
             if ($previousEffortDate >= $effortData['billing_start_date'] && $previousEffortDate <= $effortData['billing_end_date']) {
                 $billableEffort -= $latestProjectTeamMemberEffort->total_effort_in_effortsheet;
+                $actualBillableEffort -= $latestProjectTeamMemberEffort->total_employee_actual_working_effort;
             }
         }
         ProjectTeamMemberEffort::updateOrCreate(
@@ -375,6 +386,8 @@ class EffortTrackingService
             [
                 'actual_effort' => $billableEffort,
                 'total_effort_in_effortsheet' => $effortData['sheet_user'][$effortData['sheet_project']['sheetIndex']],
+                'employee_actual_working_effort' => $actualBillableEffort,
+                'total_employee_actual_working_effort' => $effortData['sheet_user'][$effortData['sheet_project']['actualEffortIndex']],
             ]
         );
     }

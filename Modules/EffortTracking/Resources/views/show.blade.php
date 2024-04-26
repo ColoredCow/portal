@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <form action="{{ route('project.effort-tracking', $project) }}" id="FilterForm" method="GET">
+        {{-- <form action="{{ route('project.effort-tracking', $project) }}" id="FilterForm" method="GET">
             <div class="d-flex">
                 <div class='form-group mr-4 ml-1 mt-1 w-168'>
                     <select class="form-control bg-light" name="month"
@@ -58,8 +58,8 @@
                     </select>
                 </div>
             </div>
-        </form>
-        @if ($project->current_hours_for_month === 0 || $totalMonths != 0)
+        </form> --}}
+        {{-- @if ($project->current_hours_for_month === 0 || $totalMonths != 0)
             <h2 class="text-center pb-6 mr-15 mt-5 font-weight-bold text-uppercase text-danger">No data available</h2>
         @else
             <div class="mt-4">
@@ -68,7 +68,7 @@
                 <input type="hidden" name="users" value="{{ $users }}">
                 <canvas class="w-full" id="effortTrackingGraph"></canvas>
             </div>
-        @endif
+        @endif --}}
     </div>
 </div>
 @if ($totalMonths === 0)
@@ -102,6 +102,12 @@
                                     <i class="fa fa-question-circle"></i>&nbsp;
                                 </span>
                             </th>
+                            <th scope="col" class="pb-lg-4">Actual Hours Booked
+                                <span data-toggle="tooltip" data-placement="right"
+                                    title="Bracket() denotes the actual hours added by individual yesterday.">
+                                    <i class="fa fa-question-circle"></i>&nbsp;
+                                </span>
+                            </th>
                             <th scope="col" class="w-lg-200">Expected Hours
                                 <div class="ml-lg-3">
                                     ({{ $workingDays }} Days)
@@ -128,7 +134,8 @@
                     <tbody>
                         @foreach ($project->getTeamMembers as $teamMember)
                             @php
-                                $previousDayEffort = $teamMember->getActualEffortBetween($yesterdayDate, $yesterdayDate);
+                                $previousDayEffort = $teamMember->getActualEffortBetween($yesterdayDate, $yesterdayDate, 'actual_effort');
+                                $previousDayActualEffort = $teamMember->getActualEffortBetween($yesterdayDate, $yesterdayDate, 'employee_actual_working_effort');
                                 $teamMemberDailyExpectedEffort = $teamMember->daily_expected_effort;
                             @endphp
                             <tr>
@@ -137,6 +144,10 @@
                                     class="{{ $teamMember->current_actual_effort >= $teamMember->expected_effort_till_today ? 'text-success' : ($teamMember->current_actual_effort < $teamMember->current_expected_effort ? 'text-danger' : '') }}">
                                     {{ $teamMember->current_actual_effort }}
                                     <span class="{{ $previousDayEffort < $teamMemberDailyExpectedEffort ? 'text-danger' : 'text-success' }} fz-12 font-weight-bold">(+{{ $previousDayEffort }})</span>
+                                </td>
+                                <td>
+                                    {{ $teamMember->employee_actual_working_effort }}
+                                    <span class="fz-12 font-weight-bold">(+{{ $previousDayActualEffort }})</span>
                                 </td>
                                 <td>{{ $teamMember->current_expected_effort }}</td>
                                 <td>{{ $teamMember->expected_effort_till_today }}</td>
