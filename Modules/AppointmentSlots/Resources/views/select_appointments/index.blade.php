@@ -121,7 +121,6 @@
             this.events = @json($freeSlots);
             this.startDate = this.calculateMinDate(this);
             this.endDate = this.calculateMaxDate(this);
-            console.log(this.events);
             this.renderCalender(this)
         }
     });
