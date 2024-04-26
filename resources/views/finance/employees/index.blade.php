@@ -36,7 +36,7 @@
                                     {{ $employee->actual_effort ? $employee->actual_effort : '0' }}
                                 </td>
                                 <td>
-                                    {{ $employee->service_rates *  $employee->actual_effort }}
+                                    {{ number_format($employee->service_rates * $employee->rate_after_conversion * $employee->actual_effort, 2) }}
                                 </td>
                             </tr>
                         @endforeach
@@ -46,7 +46,10 @@
                             </td>
                             <td colspan="1">
                                 @php
-                                    $totalServiceRates = $employees->sum('service_rates') * 2;
+                                    $totalServiceRates = number_format(
+                                        $employees->sum('total_amount_after_conversion'),
+                                        2,
+                                    );
                                     $thresholdValue = 109;
                                 @endphp
                                 @if ($thresholdValue <= $totalServiceRates)
@@ -64,13 +67,6 @@
                                         <span class="d-inline-block h-30 w-30">{!! file_get_contents(public_path('icons/warning-symbol.svg')) !!}</span>
                                     </span>
                                 @endif
-                            </td>
-                            <h4>
-                                @php
-                                    $totalServiceRates = $employees->sum('service_rates') * 2;
-                                @endphp
-                            </h4>
-                            </td>
                         </tr>
                 </table>
             </div>
