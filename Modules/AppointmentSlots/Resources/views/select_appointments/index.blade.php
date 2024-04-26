@@ -55,7 +55,9 @@
                     this.maxDate = this.eventEnd;
                 }
                 });
-                this.maxDateString = this.maxDate.toISOString().split('T')[0];
+                this.maxDateWithOneDayAdded = new Date(this.maxDate);
+                this.maxDateWithOneDayAdded.setDate(this.maxDateWithOneDayAdded.getDate() + 1);
+                this.maxDateString = this.maxDateWithOneDayAdded.toISOString().split('T')[0];
                 return this.maxDateString;
             },
 
@@ -98,7 +100,7 @@
                     hiddenDays: [0, 6],
                     validRange: {
                         start: this.startDate,
-                        end: this.endDate + 1
+                        end: this.endDate
                     },
                     nowIndicator: true,
                     events: this.events,
