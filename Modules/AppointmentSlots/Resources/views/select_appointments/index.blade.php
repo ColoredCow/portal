@@ -57,7 +57,7 @@
                 });
                 this.maxDateWithOneDayAdded = new Date(this.maxDate);
                 this.maxDateWithOneDayAdded.setDate(this.maxDateWithOneDayAdded.getDate() + 1);
-                this.maxDateString = this.maxDateWithOneDayAdded.toISOString().split('T')[0];
+                this.maxDateString = this.maxDateWithOneDayAdded.toISOString().split('T')[0]; // Extracts the date part
                 return this.maxDateString;
             },
 
@@ -88,7 +88,6 @@
 
             renderCalender(that) {
                 var calendarEl = document.getElementById('calendar');
-                
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     initialView: 'dayGridMonth',
                     headerToolbar: { left: 'prev,next today', center: 'title', right: null},
