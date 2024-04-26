@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use Modules\Report\Services\Finance\ContractReportService;
 use App\Models\Client;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 class ContractReportController extends Controller
 {
     use AuthorizesRequests;
