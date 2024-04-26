@@ -51,6 +51,5 @@ Route::prefix('report')->group(function () {
         Route::prefix('project-contract-list')->group(function () {
             Route::get('/list', 'ContractReportController@getAllProject')->name('report.project.contracts.get');
         });
-        
     });
 });

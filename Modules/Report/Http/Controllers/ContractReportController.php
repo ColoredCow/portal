@@ -10,7 +10,6 @@ use App\Models\Client;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 // use Modules\Client\Entities\Client;
-
 class ContractReportController extends Controller
 {  
     use AuthorizesRequests;
@@ -20,8 +19,6 @@ class ContractReportController extends Controller
     {
         $this->service = $service;
     }
-
-  
   /**
      * Show the specified resource.
      *
@@ -36,8 +33,6 @@ class ContractReportController extends Controller
          return view('report::finance.project-contract.index', [
              'project' => $client,
              'ClientDetail' => $clientData,
-      
          ]);
-        }
+     }
     }
-
