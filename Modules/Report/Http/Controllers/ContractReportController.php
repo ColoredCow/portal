@@ -2,10 +2,10 @@
 
 namespace Modules\Report\Http\Controllers;
 
-use Illuminate\Routing\Controller;
-use Modules\Report\Services\Finance\ContractReportService;
 use App\Models\Client;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Routing\Controller;
+use Modules\Report\Services\Finance\ContractReportService;
 
 class ContractReportController extends Controller
 {
