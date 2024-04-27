@@ -27,16 +27,14 @@
                         $firstProject = true;
                     @endphp
                     @foreach ($clientData->projects as $project)
-{{-- @dd($project->projectContracts->first()->contract_file_path); --}}
                     @php
                          $endDate = optional($project->end_date);
                          $endDateDiff = $endDate ? $endDate->diffInDays(now()) : null;
                          
-                         $endDateWithinSevenDays = $endDateDiff !== null && $endDateDiff < 7;
+                         $endDateAlert = $endDateDiff !== null && $endDateDiff < 7;
                          $endDatePassed = $endDate && $endDate->isPast();
                          
                      @endphp
-                    {{-- @dd($client->projectContracts->first()->contract_file_path); --}}
                         <tr >
                             @if ($firstProject)
                             <td rowspan="{{ count($clientData->projects) }}"><a href="{{route('client.edit', $project->client->id)}}">{{ $clientData->name }}</a></td>
@@ -56,9 +54,9 @@
                             </td>
                             <td><span class="text-capitalize fz-lg-22">{{ optional($project->start_date)->format('d M Y') ?? '-'}}</span></td>
                             <td @if ($endDatePassed) class="text-danger" @endif>
-                                <span class="text-capitalize fz-lg-22  {{ $endDateWithinSevenDays  }}">
+                                <span class="text-capitalize fz-lg-22  {{ $endDateAlert  }}">
                                     {{ optional($endDate)->format('d M Y') ?? '-' }}
-                                    @if ($endDateWithinSevenDays && !$endDatePassed)
+                                    @if ($endDateAlert && !$endDatePassed)
                                     <i class="fa fa-exclamation-triangle ml-4 text-danger " aria-hidden="true" ></i>
                                     @endif
                                 </span>
