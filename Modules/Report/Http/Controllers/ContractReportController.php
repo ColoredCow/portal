@@ -17,7 +17,7 @@ class ContractReportController extends Controller
     }
     public function index()
     {
-        $clientData = $this->service->getAllProjectsData();
+        $clientData = $this->service->getAllClientsData();
 
         return view('report::finance.project-contract.index', [
             'clientDetail' => $clientData,

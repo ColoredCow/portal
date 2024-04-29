@@ -1,10 +1,6 @@
 @extends('layouts.app')
 @section('content')
 
-@php
-  
-@endphp 
-
     <div class="container">
         <br>
         <h1>Project Contract Report</h1>
@@ -45,7 +41,7 @@
                             <td> <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a></td>
                             <td>
                                 @if($project->projectContracts->first())
-                                <a href="{{ route('pdf.show', $project->projectContracts->first()) }}">
+                                <a href="{{ route('pdf.show', $project->projectContracts->first()) }}" target="_blank">
                                     {{ str_limit(basename($project->projectContracts->first()->contract_file_path),8) }}
                                 </a>
                                 @else

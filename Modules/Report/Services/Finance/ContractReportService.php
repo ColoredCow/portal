@@ -7,7 +7,7 @@ use Modules\Project\Contracts\ProjectServiceContract;
 
 class ContractReportService implements ProjectServiceContract
 {
-    public function getAllProjectsData()
+    public function getAllClientsData()
     {
         $clientData = Client::query()
             ->with(['projects' => function ($query) {
