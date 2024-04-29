@@ -35,6 +35,32 @@
         },
 
         methods: {
+            calculateMinDate(that) {
+                this.minDate = null;
+                this.events.forEach(event => {
+                this.eventStart = new Date(event.start);
+                if (this.minDate === null || this.eventStart < this.minDate) {
+                    this.minDate = this.eventStart;
+                }
+                });
+                this.minDateString = this.minDate.toISOString().split('T')[0]; // Extracts the date part
+                return this.minDateString;
+            },
+
+            calculateMaxDate(that) {
+                this.maxDate = null;
+                this.events.forEach(event => {
+                    this.eventEnd = event.end ? new Date(event.end) : new Date(event.start);
+                if (this.maxDate === null || this.eventEnd > this.maxDate) {
+                    this.maxDate = this.eventEnd;
+                }
+                });
+                this.maxDateWithOneDayAdded = new Date(this.maxDate);
+                this.maxDateWithOneDayAdded.setDate(this.maxDateWithOneDayAdded.getDate() + 1);
+                this.maxDateString = this.maxDateWithOneDayAdded.toISOString().split('T')[0]; // Extracts the date part
+                return this.maxDateString;
+            },
+
             selectAppointment(id) {
                 this.selected_appointment_id = id;
                 $('#select_appointment_modal').modal('show');
@@ -70,8 +96,13 @@
                     editable: true,
                     selectable: true,
                     selectMirror: true,
+                    hiddenDays: [0, 6],
+                    validRange: {
+                        start: this.startDate,
+                        end: this.endDate
+                    },
                     nowIndicator: true,
-                    events: @json($freeSlots),
+                    events: this.events,
                     eventClick: function(args) {
                         that.selectAppointment(args.event.id);
                     },
@@ -88,6 +119,9 @@
         },
 
         mounted() {
+            this.events = @json($freeSlots);
+            this.startDate = this.calculateMinDate(this);
+            this.endDate = this.calculateMaxDate(this);
             this.renderCalender(this)
         }
     });
