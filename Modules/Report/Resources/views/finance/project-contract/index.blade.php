@@ -18,7 +18,7 @@
             </thead>
 
             <tbody>
-                @foreach ($clientDetail as $clientData)
+                @foreach ($clientsData as $clientData)
                 @php
                         $firstProject = true;
                     @endphp
