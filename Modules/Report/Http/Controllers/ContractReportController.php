@@ -15,7 +15,7 @@ class ContractReportController extends Controller
     {
         $this->service = $service;
     }
-    public function getAllProject()
+    public function index()
     {
         $clientData = $this->service->getAllProjectsData();
 
