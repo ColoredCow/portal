@@ -16,11 +16,6 @@ class ContractReportController extends Controller
     {
         $this->service = $service;
     }
-    /**
-     * Show the specified resource.
-     *
-     * @param client $client
-     */
     public function getAllProject()
     {
         $clientData = $this->service->getAllProjectsData();
