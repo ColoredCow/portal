@@ -15,7 +15,8 @@ class ContractReportService implements ProjectServiceContract
             }])
             ->whereHas('projects')
             ->orderBy('name')
-            ->paginate(config('constants.pagination_size'));          
+            ->paginate(config('constants.pagination_size'));
+
         return $clientData;
     }
 }
