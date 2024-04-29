@@ -9,12 +9,13 @@ class ContractReportService implements ProjectServiceContract
 {
     public function getAllProjectsData()
     {
-        $ClientData = Client::query()
-            ->with('projects')
-            ->whereHas('projects')
-            ->orderBy('name')
-            ->paginate(config('constants.pagination_size'));
-
-        return $ClientData;
+        $clientData = Client::query()
+        ->with(['projects' => function($query) {
+            $query->where('status', 'active');
+        }])
+        ->whereHas('projects')
+        ->orderBy('name')
+        ->paginate(config('constants.pagination_size'));
+    return $clientData;
     }
 }

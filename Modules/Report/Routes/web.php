@@ -48,8 +48,6 @@ Route::prefix('report')->group(function () {
             Route::get('/export', 'MonthlySalesRegisterController@exportReport')->name('reports.finance.monthly-sales-register.export');
         });
 
-        Route::prefix('project-contract-list')->group(function () {
-            Route::get('/list', 'ContractReportController@getAllProject')->name('report.project.contracts.get');
-        });
+        Route::get('/project-contract-list', 'ContractReportController@getAllProject')->name('report.project.contracts.get');
     });
 });

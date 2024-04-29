@@ -21,13 +21,12 @@ class ContractReportController extends Controller
      *
      * @param client $client
      */
-    public function getAllProject(client $client)
+    public function getAllProject()
     {
-        $clientData = $this->service->getAllProjectsData($client->all());
+        $clientData = $this->service->getAllProjectsData();
 
         return view('report::finance.project-contract.index', [
-            'project' => $client,
-            'ClientDetail' => $clientData,
+            'clientDetail' => $clientData,
         ]);
     }
 }

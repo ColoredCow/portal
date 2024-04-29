@@ -22,11 +22,11 @@
             </thead>
 
             <tbody>
-                @foreach ($ClientDetail as $clientData)
-                    @php
+                @foreach ($clientDetail as $clientData)
+                @php
                         $firstProject = true;
                     @endphp
-                    @foreach ($clientData->projects as $project)
+                    @foreach ($clientData->projects as $project) 
                     @php
                          $endDate = optional($project->end_date);
                          $endDateDiff = $endDate ? $endDate->diffInDays(now()) : null;
@@ -48,8 +48,8 @@
                                 <a href="{{ route('pdf.show', $project->projectContracts->first()) }}">
                                     {{ str_limit(basename($project->projectContracts->first()->contract_file_path),8) }}
                                 </a>
-                            @else
-                            <span class="text-danger">No Contract</span>
+                                @else
+                                <span class="text-danger">No Contract</span>
                             @endif
                             </td>
                             <td><span class="text-capitalize fz-lg-22">{{ optional($project->start_date)->format('d M Y') ?? '-'}}</span></td>
