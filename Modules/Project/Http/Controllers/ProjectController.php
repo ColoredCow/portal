@@ -84,8 +84,6 @@ class ProjectController extends Controller
         $getProjectHourDeatils = $this->service->getProjectApprovedPipelineHour($project);
 
         $monthlyApprovedHour = $getProjectHourDeatils['monthlyApprovedHour'];
-        $totalEffort = $project->getTotalEffort();
-        $dailyEffort = $project->getDailyTotalEffort();
         $totalExpectedHourInMonth = $getProjectHourDeatils['totalExpectedHourInMonth'];
         $totalWeeklyEffort = $getProjectHourDeatils['totalWeeklyEffort'];
         $remainingApprovedPipeline = $getProjectHourDeatils['remainingApprovedPipeline'];
@@ -107,8 +105,6 @@ class ProjectController extends Controller
             'remainingExpectedEffort' => $remainingExpectedEffort,
             'weeklyHoursToCover' => $weeklyHoursToCover,
             'effortData' => $effortData,
-            'totalEffort' => json_encode($totalEffort),
-            'dailyEffort' => $dailyEffort,
         ]);
     }
 

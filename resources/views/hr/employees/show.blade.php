@@ -43,7 +43,6 @@
                                 <th scope="col" class="lg-4">Expected Hours For Term</th>
                                 <th scope="col" class="lg-4">Expected Hours Till Today</th>
                                 <th scope="col" class="lg-4">Billable Effort</th>
-                                {{-- <th scope="col" class="lg-4">Actual Effort</th> --}}
                             </tr>
                         </thead>
                         <thead>
@@ -90,10 +89,6 @@
                                                 <div class="{{ $activeProjectTeamMember->project->getbillableEffortOfTeamMember($activeProjectTeamMember->id) >= ($activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList($activeProjectTeamMember->project->client->month_start_date, today()->subDay()))) ? 'text-success' : 'text-danger' }}"> {{ $activeProjectTeamMember->current_actual_effort }}</div>
                                             </td>
 
-                                            {{-- <td>
-                                                <div>
-                                                    <div>{{$activeProjectTeamMember->project->getactualEffortOfTeamMember($activeProjectTeamMember->id)}}</div>
-                                                </td> --}}
                                         </tr>
                                     @endif
                                 @endforeach

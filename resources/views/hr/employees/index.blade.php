@@ -65,7 +65,7 @@
                             $totalFTE = $user->ftes['main'] + $user->ftes['amc']
                         @endphp
                         <td>
-                            <a href="{{ route('employees.hr.details', $employee) }}">
+                            <a href="{{ route('employees.show', $employee) }}">
                                 @if ($employee->overall_status === 'pending' && $filters['status'] == 'current')
                                     {{ $employee->name }} <span
                                         class="{{ config('constants.review-tags.pending.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.pending.title') }}</span>
@@ -96,15 +96,13 @@
                         @endif
                         </td>
                         <td>
-                            <a href="{{ route('employees.show', $employee) }}" class="text-underline">
-                                <span class="text-success">
-                                    {{ $user->total_hours['billable'] }}
-                                </span>
-                                |
-                                <span class="text-secondary">
-                                    {{ $user->total_hours['non_billable'] }}
-                                </span>
-                            </a>
+                            <span class="text-success">
+                                {{ $user->total_hours['billable'] }}
+                            </span>
+                            |
+                            <span class="text-secondary">
+                                {{ $user->total_hours['non_billable'] }}
+                            </span>
                         </td>
                         @else
                         <td>
