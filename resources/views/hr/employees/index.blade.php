@@ -68,7 +68,7 @@
                             @if($routeName === "employees")
                             <a href="{{ route('employees.hr.details', $employee) }}">
                                 @else
-                                <a href="{{ route('employee.earning.value', $employee) }}">
+                                <a href="{{ route('employees.financial.details', $employee) }}">
                             @endif
                                 @if ($employee->overall_status === 'pending' && $filters['status'] == 'current')
                                     {{ $employee->name }} <span

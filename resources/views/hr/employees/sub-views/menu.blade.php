@@ -5,7 +5,7 @@
             <div onclick="window.location.href='{{ route('employees.show', $employee) }}'"  class="theme-tab c-pointer flex-center px-2 py-1 px-xl-4 py-xl-2 bg-theme-gray-lighter hover-bg-theme-gray-light rounded-6 mr-1 mr-xl-2  {{ Request::is('hr/employees*') && !Request::is('salary/employee*') ? 'active' : '' }}">Project Delivery Details </div> 
             <div onclick="window.location.href='{{ route('salary.employee', $employee) }}'"  class="theme-tab c-pointer flex-center px-2 py-1 px-xl-4 py-xl-2 bg-theme-gray-lighter hover-bg-theme-gray-light rounded-6 mr-1 mr-xl-2  {{ Request::is('salary/employee*') ? 'active' : '' }}">Salary</div>  
             <div onclick="window.location.href='{{ route('employees.hr.details', $employee) }}'"  class="theme-tab c-pointer flex-center px-2 py-1 px-xl-4 py-xl-2 bg-theme-gray-lighter hover-bg-theme-gray-light rounded-6 mr-1 mr-xl-2 {{ Request::is('hr/hr-details*') ? 'active' : '' }}">HR Details</div> 
-            <div onclick="window.location.href='{{ route('employees.financial.details', $employee) }}'" class="theme-tab c-pointer flex-center px-2 py-1 px-xl-6 py-xl-2 bg-theme-gray-lighter hover-bg-theme-gray-light rounded-6  mr-1 mr-xl-2  {{ Request::is('hr/financial-details*') ? 'active' : '' }}">Financial Details</div> 
+            <div onclick="window.location.href='{{ route('employee.earning.value', $employee) }}'" class="theme-tab c-pointer flex-center px-2 py-1 px-xl-6 py-xl-2 bg-theme-gray-lighter hover-bg-theme-gray-light rounded-6  mr-1 mr-xl-2  {{ Request::is('hr/financial-details*') ? 'active' : '' }}">Financial Details</div> 
         </div>
     </div>
 </div>
