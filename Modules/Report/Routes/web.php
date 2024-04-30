@@ -47,5 +47,7 @@ Route::prefix('report')->group(function () {
             Route::get('/', 'MonthlySalesRegisterController@index')->name('reports.finance.monthly-sales-register.index');
             Route::get('/export', 'MonthlySalesRegisterController@exportReport')->name('reports.finance.monthly-sales-register.export');
         });
+
+        Route::get('/project-contract-list', 'ContractReportController@index')->name('report.project.contracts.index');
     });
 });
