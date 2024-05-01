@@ -5,32 +5,34 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use App\Services\ConfigurationService;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ConfigurationController extends Controller
 {
+
+    use AuthorizesRequests;
+    protected $service;
+
+    public function __construct(ConfigurationService $service)
+    {
+        $this->service = $service;
+    }
     public function index()
     {
-        $employeeEarningThreshold = Setting::where('setting_key', 'employee_earning_threshold')->value('setting_value');
-        $endDateAlert =  Setting::where('setting_key', 'contract_endDate_threshold')->value('setting_value');
+        $configsData = $this->service->index();
 
         return view('settings.configuration-threshold.index', [
-            'employeeEarningThreshold' => $employeeEarningThreshold,
-            'endDateAlert' => $endDateAlert,
+            'configsData' => $configsData,
         ]);
     }
     public function update(Request $request)
     {
-        $this->updateSetting('employee_earning_threshold', $request->employee_earning_threshold);
-        $this->updateSetting('contract_endDate_threshold', $request->contract_endDate_threshold);
+        $this->service->updateSetting([
+            'employee_earning_threshold' => $request->employee_earning_threshold,
+            'contract_endDate_threshold' => $request->contract_endDate_threshold
+        ]);
 
         return redirect()->back()->with('status', 'Saved Successfully!');
-    }
-
-    private function updateSetting($settingKey, $settingValue)
-    {
-        Setting::updateOrCreate(
-            ['module' => 'setting', 'setting_key' => $settingKey],
-            ['setting_value' => $settingValue]
-        );
     }
 }
