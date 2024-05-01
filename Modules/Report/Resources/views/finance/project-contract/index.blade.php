@@ -27,7 +27,7 @@
                          $endDate = optional($project->end_date);
                          $endDateDiff = $endDate ? $endDate->diffInDays(now()) : null;
                          
-                         $endDateAlert = $endDateDiff !== null && $endDateDiff < 30;
+                         $endDateAlert = $endDateDiff !== null && $endDateDiff < $alertDiff;
                          $endDatePassed = $endDate && $endDate->isPast();
                          
                      @endphp
