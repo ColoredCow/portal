@@ -21,6 +21,24 @@
 @section('js_scripts')
 
     <script type = "text/javascript" src = "/lib/fullcalendar/lib/main.js"> </script>
+    <script>
+        window.onload = function() {
+            checkAndHideRows();
+        };
+        function checkAndHideRows() {
+            var candidateCalendar = document.getElementById("calendar");
+            var rows = candidateCalendar.querySelectorAll('tr');
+            rows.forEach(function (row) {
+                var disabledClasses = row.querySelectorAll('.fc-day-disabled');
+                if (disabledClasses.length == 7) {
+                    row.style.display = 'none';
+                }
+            });
+        }
+        document.addEventListener('click', function(){
+            checkAndHideRows();
+        });
+    </script>
 
     <script >
     new Vue({
@@ -43,7 +61,8 @@
                     this.minDate = this.eventStart;
                 }
                 });
-                this.minDateString = this.minDate.toISOString().split('T')[0]; // Extracts the date part
+                this.minDate.setDate(this.minDate.getDate() + 1);
+                this.minDateString = this.minDate.toISOString().split('T')[0];
                 return this.minDateString;
             },
 
@@ -55,9 +74,10 @@
                     this.maxDate = this.eventEnd;
                 }
                 });
-                this.maxDateWithOneDayAdded = new Date(this.maxDate);
-                this.maxDateWithOneDayAdded.setDate(this.maxDateWithOneDayAdded.getDate() + 1);
-                this.maxDateString = this.maxDateWithOneDayAdded.toISOString().split('T')[0]; // Extracts the date part
+                this.offset = this.maxDate.getTimezoneOffset();
+                this.maxDate.setDate(this.maxDate.getDate() + 1);
+                this.maxDateWithOneDayAdded = new Date(this.maxDate.getTime() - (this.offset*60*1000));
+                this.maxDateString = this.maxDateWithOneDayAdded.toISOString().split('T')[0];
                 return this.maxDateString;
             },
 
@@ -96,7 +116,6 @@
                     editable: true,
                     selectable: true,
                     selectMirror: true,
-                    hiddenDays: [0, 6],
                     validRange: {
                         start: this.startDate,
                         end: this.endDate
