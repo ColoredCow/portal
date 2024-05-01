@@ -12,7 +12,7 @@ class ConfigurationService
             ->where('setting_key', 'employee_earning_threshold')
             ->orWhere('setting_key', 'contract_endDate_threshold')
             ->get();
-            
+
         return $ConfigsValue;
     }
     public function updateSetting($settings)

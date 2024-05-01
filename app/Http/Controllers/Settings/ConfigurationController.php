@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Models\Setting;
-use Illuminate\Http\Request;
 use App\Services\ConfigurationService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
 
 class ConfigurationController extends Controller
 {
