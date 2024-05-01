@@ -10,7 +10,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ConfigurationController extends Controller
 {
-
     use AuthorizesRequests;
     protected $service;
 
@@ -30,7 +29,7 @@ class ConfigurationController extends Controller
     {
         $this->service->updateSetting([
             'employee_earning_threshold' => $request->employee_earning_threshold,
-            'contract_endDate_threshold' => $request->contract_endDate_threshold
+            'contract_endDate_threshold' => $request->contract_endDate_threshold,
         ]);
 
         return redirect()->back()->with('status', 'Saved Successfully!');
