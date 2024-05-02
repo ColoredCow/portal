@@ -6,14 +6,14 @@ use App\Models\Setting;
 
 class ConfigurationService
 {
-    public function index()
+    public function getThresholdValue()
     {
-        $ConfigsValue = Setting::query()
+        $ThresholdValues = Setting::query()
             ->where('setting_key', 'employee_earning_threshold')
-            ->orWhere('setting_key', 'contract_endDate_threshold')
+            ->orWhere('setting_key', 'contract_end_date_threshold')
             ->get();
 
-        return $ConfigsValue;
+        return $ThresholdValues;
     }
     public function updateSetting($settings)
     {

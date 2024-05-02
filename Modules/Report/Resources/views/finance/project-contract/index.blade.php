@@ -27,7 +27,7 @@
                          $endDate = optional($project->end_date);
                          $endDateDiff = $endDate ? $endDate->diffInDays(now()) : null;
                          
-                         $endDateAlert = $endDateDiff !== null && $endDateDiff < $alertDiff;
+                         $endDateAlert = $endDateDiff !== null && $endDateDiff < $contractEndDateThreshold;
                          $endDatePassed = $endDate && $endDate->isPast();
                          
                      @endphp

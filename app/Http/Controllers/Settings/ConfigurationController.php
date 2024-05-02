@@ -18,17 +18,17 @@ class ConfigurationController extends Controller
     }
     public function index()
     {
-        $configsData = $this->service->index();
+        $ThresholdValues = $this->service->getThresholdValue();
 
         return view('settings.configuration-threshold.index', [
-            'configsData' => $configsData,
+            'ThresholdValues' => $ThresholdValues,
         ]);
     }
     public function update(Request $request)
     {
         $this->service->updateSetting([
             'employee_earning_threshold' => $request->employee_earning_threshold,
-            'contract_endDate_threshold' => $request->contract_endDate_threshold,
+            'contract_end_date_threshold' => $request->contract_end_date_threshold,
         ]);
 
         return redirect()->back()->with('status', 'Saved Successfully!');

@@ -19,11 +19,11 @@ class ContractReportController extends Controller
     public function index()
     {
         $clientsData = $this->service->getAllClientsData();
-        $alertDiff = Setting::where('setting_key', 'contract_endDate_threshold')->value('setting_value');
+        $contractEndDateThreshold = Setting::where('setting_key', 'contract_end_date_threshold')->value('setting_value');
 
         return view('report::finance.project-contract.index', [
             'clientsData' => $clientsData,
-            'alertDiff' => $alertDiff,
+            'contractEndDateThreshold' => $contractEndDateThreshold,
         ]);
     }
 }
