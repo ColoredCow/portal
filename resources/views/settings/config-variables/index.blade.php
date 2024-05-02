@@ -1,7 +1,7 @@
 @extends('user::layouts.master')
 
 @section('content')
-    <form action="{{ route('settings.update-configuration-threshold') }}" method="POST">
+    <form action="{{ route('settings.update-config-variables') }}" method="POST">
         @csrf
         <div class="container">
             <div class="row justify-content-start">

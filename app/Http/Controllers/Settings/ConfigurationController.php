@@ -23,7 +23,7 @@ class ConfigurationController extends Controller
         $settingKeys = config('constants.module-settings.config-variable');
         $settings = $this->service->getSettings($settingKeys);
 
-        return view('settings.configuration-threshold.index', [
+        return view('settings.config-variables.index', [
             'settings' => $settings,
         ]);
     }

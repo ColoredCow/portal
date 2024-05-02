@@ -99,8 +99,8 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('settings')->namespace('Settings')->group(function () {
         Route::get('/', 'SettingController@index')->name('settings.index');
-        Route::get('/configuration-threshold', 'ConfigurationController@index')->name('settings.configuration-threshold');
-        Route::post('/configuration-threshold', 'ConfigurationController@update')->name('settings.update-configuration-threshold');
+        Route::get('/config-variables', 'ConfigurationController@index')->name('settings.config-variables');
+        Route::post('/config-variables', 'ConfigurationController@update')->name('settings.update-config-variables');
 
         Route::prefix('permissions')->group(function () {
             Route::get('/', function () {
