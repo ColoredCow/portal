@@ -10,24 +10,27 @@ use Illuminate\Http\Request;
 class ConfigurationController extends Controller
 {
     use AuthorizesRequests;
+
     protected $service;
 
     public function __construct(SettingService $service)
     {
         $this->service = $service;
     }
+
     public function index()
     {
         $settingKeys = config('constants.module-settings.config-variable');
-        $getSettings = $this->service->getThresholdValue($settingKeys);
+        $settings = $this->service->getSettings($settingKeys);
 
         return view('settings.configuration-threshold.index', [
-            'getSettings' => $getSettings,
+            'settings' => $settings,
         ]);
     }
+    
     public function update(Request $request)
     {
-        $this->service->updateSetting([
+        $this->service->updateSettings([
             'employee_earning_threshold' => $request->employee_earning_threshold,
             'contract_end_date_threshold' => $request->contract_end_date_threshold,
         ]);

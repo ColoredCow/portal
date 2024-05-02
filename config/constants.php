@@ -317,7 +317,8 @@ return [
     ],
     'module-settings' => [
         'config-variable' => [
-            'employee_earning_threshold', 'contract_end_date_threshold',
+            'employee_earning_threshold',
+            'contract_end_date_threshold',
         ],
     ],
 ];

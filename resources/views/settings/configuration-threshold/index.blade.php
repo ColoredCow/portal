@@ -10,32 +10,32 @@
                 </div>
             </div>
             <div class="col" id="user-settings-content">
-                @foreach ($getSettings as $getSetting)
+                @foreach ($settings as $setting)
                     <div class="card-body">
-                        @if ($getSetting->setting_key === 'employee_earning_threshold')
+                        @if ($setting->setting_key === 'employee_earning_threshold')
                             <div>
                                 <h5 class="max-interview-heading fz-20 d-flex justify-content-between">Employee Profitability
                                     threshold value :
                                     <input type="number"
                                         class="col-xs text-center outline-none h-40 w-auto rounded-12 quantity"
                                         id="quantity" name="employee_earning_threshold"
-                                        value="{{ old('employee_earning_threshold', $getSetting->setting_value) }}">
+                                        value="{{ old('employee_earning_threshold', $setting->setting_value) }}">
                                 </h5>
                             </div>
-                        @elseif ($getSetting->setting_key === 'contract_end_date_threshold')
+                        @elseif ($setting->setting_key === 'contract_end_date_threshold')
                             <div>
                                 <h5 class="max-interview-heading fz-20 d-flex justify-content-between">Contract End Date
                                     Alert(days):
                                     <input type="number"
                                         class="col-xs text-center outline-none h-40 w-auto rounded-12 quantity"
                                         id="quantity" name="contract_end_date_threshold"
-                                        value="{{ old('contract_end_date_threshold', $getSetting->setting_value) }}">
+                                        value="{{ old('contract_end_date_threshold', $setting->setting_value) }}">
                                 </h5>
                             </div>
                         @endif
                     </div>
                 @endforeach
-                @if (!$getSettings->contains('setting_key', 'employee_earning_threshold'))
+                @if (!$settings->contains('setting_key', 'employee_earning_threshold'))
                     <div class="card-body">
                         <div>
                             <h5 class="max-interview-heading fz-20 d-flex justify-content-between">Employee Profitability
@@ -47,7 +47,7 @@
                         </div>
                     </div>
                 @endif
-                @if (!$getSettings->contains('setting_key', 'contract_end_date_threshold'))
+                @if (!$settings->contains('setting_key', 'contract_end_date_threshold'))
                     <div class="card-body">
                         <div>
                             <h5 class="max-interview-heading fz-20 d-flex justify-content-between">Contract End Date

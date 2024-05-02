@@ -6,7 +6,7 @@ use App\Models\Setting;
 
 class SettingService
 {
-    public function getThresholdValue($setting_keys)
+    public function getSettings($setting_keys)
     {
         $getSettings = Setting::query()
             ->whereIn('setting_key', $setting_keys)
@@ -14,11 +14,15 @@ class SettingService
 
         return $getSettings;
     }
-    public function updateSetting($settings)
+
+    public function updateSettings($settings)
     {
         foreach ($settings as $settingKey => $settingValue) {
             Setting::updateOrCreate(
-                ['module' => 'setting', 'setting_key' => $settingKey],
+                [
+                    'module' => 'setting',
+                    'setting_key' => $settingKey
+                ],
                 ['setting_value' => $settingValue]
             );
         }
