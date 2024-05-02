@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Services\SettingService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
 
 class ConfigurationController extends Controller
 {
