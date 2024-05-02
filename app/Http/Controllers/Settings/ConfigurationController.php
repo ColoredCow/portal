@@ -27,7 +27,7 @@ class ConfigurationController extends Controller
             'settings' => $settings,
         ]);
     }
-    
+
     public function update(Request $request)
     {
         $this->service->updateSettings([

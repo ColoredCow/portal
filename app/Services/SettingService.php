@@ -21,7 +21,7 @@ class SettingService
             Setting::updateOrCreate(
                 [
                     'module' => 'setting',
-                    'setting_key' => $settingKey
+                    'setting_key' => $settingKey,
                 ],
                 ['setting_value' => $settingValue]
             );
