@@ -3,25 +3,27 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Services\ConfigurationService;
+use App\Services\SettingService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 
 class ConfigurationController extends Controller
 {
     use AuthorizesRequests;
     protected $service;
 
-    public function __construct(ConfigurationService $service)
+    public function __construct(SettingService $service)
     {
         $this->service = $service;
     }
     public function index()
     {
-        $ThresholdValues = $this->service->getThresholdValue();
+        $settingKeys = config('constants.module-settings.config-variable');
+        $getSettings = $this->service->getThresholdValue($settingKeys);
 
         return view('settings.configuration-threshold.index', [
-            'ThresholdValues' => $ThresholdValues,
+            'getSettings' => $getSettings,
         ]);
     }
     public function update(Request $request)

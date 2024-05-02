@@ -4,16 +4,15 @@ namespace App\Services;
 
 use App\Models\Setting;
 
-class ConfigurationService
+class SettingService
 {
-    public function getThresholdValue()
+    public function getThresholdValue($setting_keys)
     {
-        $ThresholdValues = Setting::query()
-            ->where('setting_key', 'employee_earning_threshold')
-            ->orWhere('setting_key', 'contract_end_date_threshold')
+        $getSettings = Setting::query()
+            ->whereIn('setting_key', $setting_keys)
             ->get();
 
-        return $ThresholdValues;
+        return $getSettings;
     }
     public function updateSetting($settings)
     {
