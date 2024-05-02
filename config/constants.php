@@ -319,6 +319,5 @@ return [
         'config-variable' => [
             'employee_earning_threshold', 'contract_end_date_threshold',
         ],
-    ],
-    
+    ], 
 ];
