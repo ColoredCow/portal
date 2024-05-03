@@ -21,6 +21,24 @@
 @section('js_scripts')
 
     <script type = "text/javascript" src = "/lib/fullcalendar/lib/main.js"> </script>
+    <script>
+        window.onload = function() {
+            checkAndHideRows();
+        };
+        function checkAndHideRows() {
+            var candidateCalendar = document.getElementById("calendar");
+            var rows = candidateCalendar.querySelectorAll('tr');
+            rows.forEach(function (row) {
+                var disabledClasses = row.querySelectorAll('.fc-day-disabled');
+                if (disabledClasses.length == 7) {
+                    row.style.display = 'none';
+                }
+            });
+        }
+        document.addEventListener('click', function(){
+            checkAndHideRows();
+        });
+    </script>
 
     <script >
     new Vue({
@@ -35,6 +53,34 @@
         },
 
         methods: {
+            calculateMinDate(that) {
+                this.minDate = null;
+                this.events.forEach(event => {
+                this.eventStart = new Date(event.start);
+                if (this.minDate === null || this.eventStart < this.minDate) {
+                    this.minDate = this.eventStart;
+                }
+                });
+                this.minDate.setDate(this.minDate.getDate() + 1);
+                this.minDateString = this.minDate.toISOString().split('T')[0];
+                return this.minDateString;
+            },
+
+            calculateMaxDate(that) {
+                this.maxDate = null;
+                this.events.forEach(event => {
+                    this.eventEnd = event.end ? new Date(event.end) : new Date(event.start);
+                if (this.maxDate === null || this.eventEnd > this.maxDate) {
+                    this.maxDate = this.eventEnd;
+                }
+                });
+                this.offset = this.maxDate.getTimezoneOffset();
+                this.maxDate.setDate(this.maxDate.getDate() + 1);
+                this.maxDateWithOneDayAdded = new Date(this.maxDate.getTime() - (this.offset*60*1000));
+                this.maxDateString = this.maxDateWithOneDayAdded.toISOString().split('T')[0];
+                return this.maxDateString;
+            },
+
             selectAppointment(id) {
                 this.selected_appointment_id = id;
                 $('#select_appointment_modal').modal('show');
@@ -70,8 +116,12 @@
                     editable: true,
                     selectable: true,
                     selectMirror: true,
+                    validRange: {
+                        start: this.startDate,
+                        end: this.endDate
+                    },
                     nowIndicator: true,
-                    events: @json($freeSlots),
+                    events: this.events,
                     eventClick: function(args) {
                         that.selectAppointment(args.event.id);
                     },
@@ -88,6 +138,9 @@
         },
 
         mounted() {
+            this.events = @json($freeSlots);
+            this.startDate = this.calculateMinDate(this);
+            this.endDate = this.calculateMaxDate(this);
             this.renderCalender(this)
         }
     });
