@@ -28,7 +28,7 @@ class ConfigurationController extends Controller
         ]);
     }
 
-    public function update(Request $request)
+    public function updateAll(Request $request)
     {
         $this->service->updateSettings([
             'employee_earning_threshold' => $request->employee_earning_threshold,
