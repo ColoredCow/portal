@@ -2,6 +2,7 @@
 
 namespace Modules\Report\Http\Controllers;
 
+use App\Models\Setting;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
 use Modules\Report\Services\Finance\ContractReportService;
@@ -18,9 +19,11 @@ class ContractReportController extends Controller
     public function index()
     {
         $clientsData = $this->service->getAllClientsData();
+        $contractEndDateThreshold = Setting::where('setting_key', 'contract_end_date_threshold')->value('setting_value');
 
         return view('report::finance.project-contract.index', [
             'clientsData' => $clientsData,
+            'contractEndDateThreshold' => $contractEndDateThreshold,
         ]);
     }
 }

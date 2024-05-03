@@ -27,7 +27,7 @@
                          $endDate = optional($project->end_date);
                          $endDateDiff = $endDate ? $endDate->diffInDays(now()) : null;
                          
-                         $endDateAlert = $endDateDiff !== null && $endDateDiff < 30;
+                         $endDateAlert = $endDateDiff !== null && $endDateDiff < $contractEndDateThreshold;
                          $endDatePassed = $endDate && $endDate->isPast();
                          
                      @endphp
@@ -53,7 +53,7 @@
                                 <span class="text-capitalize fz-lg-22  {{ $endDateAlert  }}">
                                     {{ optional($endDate)->format('d M Y') ?? '-' }}
                                     @if ($endDateAlert && !$endDatePassed)
-                                    <i class="fa fa-exclamation-triangle ml-4 text-danger " aria-hidden="true" ></i>
+                                    <i class="fa fa-exclamation-triangle ml-4 toolpit text-theme-orange" aria-hidden="true" title="This is about to expire in {{$endDateDiff}} days"></i>
                                     @endif
                                 </span>
                             </td>
