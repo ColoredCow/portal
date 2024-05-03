@@ -53,7 +53,7 @@
                                 <span class="text-capitalize fz-lg-22  {{ $endDateAlert  }}">
                                     {{ optional($endDate)->format('d M Y') ?? '-' }}
                                     @if ($endDateAlert && !$endDatePassed)
-                                    <i class="fa fa-exclamation-triangle ml-4 toolpit text-theme-orange" aria-hidden="true" title="This is about to expire in {{$endDateDiff}}"></i>
+                                    <i class="fa fa-exclamation-triangle ml-4 toolpit text-theme-orange" aria-hidden="true" title="This is about to expire in {{$endDateDiff}} days"></i>
                                     @endif
                                 </span>
                             </td>
