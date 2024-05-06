@@ -38,7 +38,7 @@
                                     $firstProject = false;
                                 @endphp
                             @endif
-                            <td> <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a></td>
+                            <td> <a href="{{route('project.edit', $project )}}">{{ $project->name }}</a></td>
                             <td>
                                 @if($project->projectContracts->first())
                                 <a href="{{ route('pdf.show', $project->projectContracts->first()) }}" target="_blank">
