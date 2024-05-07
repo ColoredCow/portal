@@ -506,15 +506,16 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
     10. You have to create a OAuth 2.0 Client ID to get your Client ID and Client Secret
 
-        -> For this Click on Create Credentials and select OAuth Client ID
+        1. For this Click on Create Credentials and select OAuth Client ID
 
-        -> You may need to first configure your consent screen. Click on Configure Consent Screen. Select your User Type as External, click on create
+        2. You may need to first configure your consent screen. Click on Configure Consent Screen. Select your User Type as External, click on create
 
-        -> In the App information give any name and your user email. In the Authorized domains click on add domain and fill it with "auth0.com" and again give your email in Developer Contact Information.
+        3. In the App information give any name and your user email. In the Authorized domains click on add domain and fill it with "auth0.com" and again give your email in Developer Contact Information.
 
-        -> Click save on the next step and in the Test users step provide your email, click on save. Now you have configured. Now go to Credentials to create OAuth Client 2.0 ID
+        4. Click save on the next step and in the Test users step provide your email, click on save. Now you have configured. Now go to Credentials to create OAuth Client 2.0 ID
 
-        -> Select your Application Type as Web and name as anything(Ex: Client). CLick on save and now you will get both Google Client ID and Client Secret
+        5. Select your Application Type as Web and name as anything(Ex: Client). CLick on save and now you will get both Google Client ID and Client Secret
+           <img width="1440" alt="Screenshot (3136)" src="https://github.com/rahul420206/test/blob/main/Screenshot%20(3136).png">
 
     11. Open the .env file and add the following
 
@@ -548,14 +549,14 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
     18. Go to phpmyadmin, open users table and change the nicknames of users as team member names in effortsheet.
 
-16. Testing:
+16. _(Optional)_ Steps to Verify the syncing of effortsheet on local:
 
-    -> To test if the Effort Sheet and the Portal application has synced, Go to CRM->Projects->select a project, click on edit and add a team member(Ex: Admin), designation of your choice in the drop down lists and give a random number in the Expected Efforts In Hours. Click on save
+    1. Go to CRM -> Projects -> select a project, click on edit, and add a team member (e.g., Admin). Choose a designation from the drop-down lists and input a random number in the Expected Efforts In Hours field. Click on save.
 
-    -> Now go to the Effort Sheet and choose a name(Ex: PK). Open Phpmyadmin and go to users table. Find the team member you added as team member(Ex; Admin) and give him the nick name of the person you chose from the Effort Sheet(Ex: PK)
+    2. Next, navigate to the Effort Sheet and choose a name (e.g., Mike). Open PhpMyAdmin and go to the users table. Locate the team member you added (e.g., Admin) and assign them the nickname of the person you chose from the Effort Sheet (e.g., Mike).
 
-    -> Go to employees table, add/edit rows with exact id and name from the users table(Don't use nick name). Save them
+    3. Go to employees table, add/edit rows with the exact ID and name from the users table (do not use nicknames). Save the changes.
 
-    -> Now again go to portal site and select your project, click on the Sync button. Now you should see the Team member added in the Team Members table.
+    4. Return to the portal site, select your project, and click on the Sync button. You should now see the team member added in the Team Members table.
 
     <img width="1440" alt="Screenshot (3135)" src="https://github.com/rahul420206/test/blob/main/Screenshot%20(3135).png">
