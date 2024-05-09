@@ -99,8 +99,8 @@
                                 @if ($project->projectContracts->isEmpty() == false)
                                     <a id="contract_file mt-5"
                                         style="{{ $project->projectContracts ? '' : 'd-none' }}"
-                                        href="{{ route('pdf.show', $project->projectContracts->first()) }}" target="_blank"> 
-                                        <span class="mr-1 underline theme-info fz-16">File: {{ $contractName }}</span>
+                                        href="{{ route('pdf.show', $project->projectContracts->first()) }}" target="_blank">
+                                        <span class="mr-1 underline theme-info fz-16">File: {{ $project->name}}_contract_{{ optional($project->start_date)->format('d M Y')}}</span>
                                         <i class="fa fa-external-link-square fa-1x"></i></a>
                                 @endif
                             </div>
@@ -115,13 +115,7 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-5" v-if="projectType !== 'non-billable'">
-                        <label for="total_estimated_hours">{{ __('Total Estimated Hours') }}</label>
-                        <input type="number" class="form-control" name="total_estimated_hours"
-                            id="total_estimated_hours" placeholder="Enter total estimated hours"
-                            value="{{ old('total_estimated_hours', $project->total_estimated_hours) }}">
-                    </div>
-                    <div class="form-group offset-md-1 col-md-2" v-if="projectType !== 'non-billable'">
+                    <div class="form-group offset-md-1 col-md-2 ml-0" v-if="projectType !== 'non-billable'">
                         <label for="start_date">Start date</label>
                         <input type="date" class="form-control" name="start_date" id="start_date"
                             value="{{ optional($project->start_date)->format('Y-m-d') }}">
@@ -130,6 +124,12 @@
                         <label for="end_date">End date</label>
                         <input type="date" class="form-control" name="end_date" id="end_date"
                             value="{{ optional($project->end_date)->format('Y-m-d') }}">
+                    </div>
+                    <div class="form-group col-md-5" style="margin-left:8%" v-if="projectType !== 'non-billable'">
+                        <label for="total_estimated_hours">{{ __('Total Estimated Hours') }}</label>
+                        <input type="number" class="form-control" name="total_estimated_hours"
+                            id="total_estimated_hours" placeholder="Enter total estimated hours"
+                            value="{{ old('total_estimated_hours', $project->total_estimated_hours) }}">
                     </div>
                 </div>
                 <div>
