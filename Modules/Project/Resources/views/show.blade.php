@@ -284,10 +284,9 @@
                             <a id="contract_file"
                             style="{{ $project->projectContracts ? '' : 'd-none' }}"
                             href="{{ route('pdf.show', $project->projectContracts->first()) }}">
-                             <span class="text-capitalize fz-lg-22">{{ $contractName}}</span>
+                             <span class="text-capitalize fz-lg-22">{{ $project->name}}_contract_{{ optional($project->projectContracts->first()->updated_at)->format('d-m-y') }}</span>
                              <i class="fa fa-external-link-square fa-1x"></i></a>
                             @endif
-                        </div>
                     </div>
         </div>
        </div>
