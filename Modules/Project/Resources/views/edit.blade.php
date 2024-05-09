@@ -39,6 +39,11 @@
                     <a class="nav-link" data-toggle="pill" data-target="#projectResourceRequirement" type="button"
                         role="tab" aria-selected="false">Resource Requirement</a>
                 </li>
+                @can('finance_reports.view')
+                <li>
+                    <span class="input-group-text w-12p ml-5"><a href="{{ route('report.project.contracts.index') }}">View All Contract</a></span>
+                </li>
+                @endcan
             </ul>
             @include('status', ['errors' => $errors->all()])
             <div class="tab-content">
