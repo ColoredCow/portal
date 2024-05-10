@@ -7,8 +7,8 @@
         <table class="table table-bordered">
             <thead class="thead-dark">
                 <tr class="sticky-top">
-                    <th class="w-23p">Client Name: </th>
-                    <th>Project Name</th>
+                    <th class="w-25p">Client Name: </th>
+                    <th class="w-25p">Project Name</th>
                     <th>Contract</th>
                     <th>Start Date</th>
                     <th>End Date</th>
