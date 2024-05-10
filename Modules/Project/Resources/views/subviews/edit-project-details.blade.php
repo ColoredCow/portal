@@ -90,10 +90,10 @@
                 <div class="form-row">
 
                     <div class="form-group col-md-5">
-                        <div class="d-flex flex-row">
+                        <div class="flex-row">
                                 <label for="contract_file"> {{ __('Upload Contract File') }}</label>
                             @can('finance_reports.view')   
-                                <span  class="input-group-text w-23p ml-4" style="height:23px" ><a class="fz-12" href="{{ route('report.project.contracts.index') }}">View All Contracts</a></span>
+                                <a class="badge badge-primary p-1 ml-2 text-light" href="{{ route('report.project.contracts.index') }}">Contract Reports</a>
                             @endcan
                         </div>
                         <div class="custom-file mb-3">
