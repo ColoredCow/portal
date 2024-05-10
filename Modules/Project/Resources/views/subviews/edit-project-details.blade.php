@@ -91,7 +91,7 @@
 
                     <div class="form-group col-md-5">
                         <div class="flex-row">
-                                <label for="contract_file"> {{ __('Upload Contract File') }}</label>
+                            <label for="contract_file"> {{ __('Upload Contract File') }}</label>
                             @can('finance_reports.view')   
                                 <a class="badge badge-primary p-1 ml-2 text-light" href="{{ route('report.project.contracts.index') }}">Contract Reports</a>
                             @endcan
