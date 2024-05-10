@@ -15,6 +15,7 @@ use Modules\HR\Entities\IndividualAssessment;
 use Modules\HR\Entities\Job;
 use Modules\HR\Exports\EmployeePayrollExport;
 use Modules\Project\Entities\ProjectTeamMember;
+use Modules\Invoice\Services\CurrencyService;
 
 class EmployeeController extends Controller
 {
@@ -150,6 +151,44 @@ class EmployeeController extends Controller
     public function hrDetails(Employee $employee)
     {
         return view('hr.employees.hr-details', ['employee' => $employee]);
+    }
+
+    public function employeeEarningValue(Employee $employee)
+    {
+        $data = $this->service->fetchEmployeeEarnings($employee->id);
+    
+        foreach ($data['employees'] as &$employeeData) {
+            $currency = $employeeData['currency'];
+            $rateAfterConversion = $this->getTotalServiceRates($currency);
+            $employeeData['rate_after_conversion'] = $rateAfterConversion;
+            $employeeData['total_amount_after_conversion'] = $rateAfterConversion * $employeeData['actual_effort'] * $employeeData['service_rates'];
+        }
+            //   echo json_encode($data, JSON_PRETTY_PRINT);
+        return view('finance.employees.index', $data);
+    }
+    
+
+    public function getTotalServiceRates($currency) {
+        $conversionRates = new CurrencyService();
+        $conversionRate = $conversionRates->getAllCurrentRatesInINR();
+        $initial = config('invoice.currency_initials');
+        $service_rates_value = 0;
+
+        switch (strtoupper($currency)) {
+            case $initial['usd']:
+                $service_rates_value = $conversionRate['USDINR'];
+                break;
+
+            case $initial['eur']:
+                $service_rates_value = round(($conversionRate['USDINR']) / ($conversionRate['USDEUR']), 2);
+                break;
+
+            case $initial['swi']:
+                $service_rates_value = round(($conversionRate['USDINR']) / ($conversionRate['USDCHF']), 2);
+                break;
+        }
+
+       return $service_rates_value;
     }
 
     public function financialdetails(Employee $employee)
