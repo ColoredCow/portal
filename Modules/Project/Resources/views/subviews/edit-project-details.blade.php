@@ -90,7 +90,12 @@
                 <div class="form-row">
 
                     <div class="form-group col-md-5">
-                        <label for="contract_file"> {{ __('Upload Contract File') }}</label>
+                        <div class="flex-row">
+                            <label for="contract_file"> {{ __('Upload Contract File') }}</label>
+                            @can('finance_reports.view')   
+                                <a class="badge badge-primary p-1 ml-2 text-light" href="{{ route('report.project.contracts.index') }}">Contract Reports</a>
+                            @endcan
+                        </div>
                         <div class="custom-file mb-3">
                             <input type="file" id="contract_file" name="contract_file" class="custom-file-input">
                             <label for="contract_file" class="custom-file-label overflow-hidden">Upload New
