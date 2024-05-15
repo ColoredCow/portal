@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\HR\Database\Factories\HrEmployeeFactory;
 use Modules\Salary\Entities\EmployeeSalary;
 use Modules\User\Entities\User;
+use App\Services\EmployeeService;
+use Modules\HR\Http\Controllers\EmployeeController;
+use Modules\Invoice\Services\CurrencyService;
 
 class Employee extends Model
 {
@@ -161,5 +164,50 @@ class Employee extends Model
     public static function newFactory()
     {
         return new HrEmployeeFactory();
+    }
+
+    public function getCurrentMonthProfitabilityAttribute($employee) {
+        $employeeService = new EmployeeService();
+        $data = $employeeService->fetchEmployeeEarnings($employee->id);
+    
+        $totalAmount = 0;
+    
+        foreach ($data['employees'] as &$employeeData) {
+            $currency = $employeeData['currency'];
+            $rateAfterConversion =  $this->getTotalServiceRates($currency);
+
+            $totalAmountAfterConversion = $rateAfterConversion * $employeeData['actual_effort'] * $employeeData['service_rates'];
+            
+            $employeeData['rate_after_conversion'] = $rateAfterConversion;
+            $employeeData['total_amount_after_conversion'] = $totalAmountAfterConversion;
+            
+            $totalAmount += $totalAmountAfterConversion;
+        }
+    
+        return  number_format($totalAmount, 2);
+    }
+    
+
+    public function getTotalServiceRates($currency) {
+        $conversionRates = new CurrencyService();
+        $conversionRate = $conversionRates->getAllCurrentRatesInINR();
+        $initial = config('invoice.currency_initials');
+        $service_rates_value = 0;
+
+        switch (strtoupper($currency)) {
+            case $initial['usd']:
+                $service_rates_value = $conversionRate['USDINR'];
+                break;
+
+            case $initial['eur']:
+                $service_rates_value = round(($conversionRate['USDINR']) / ($conversionRate['USDEUR']), 2);
+                break;
+
+            case $initial['swi']:
+                $service_rates_value = round(($conversionRate['USDINR']) / ($conversionRate['USDCHF']), 2);
+                break;
+        }
+
+       return $service_rates_value;
     }
 }

@@ -4,7 +4,6 @@
 <!-- As of now we have hardCoded the earningValue until we unable to fetch the real data -->
 @php
     $routeName = Route::getCurrentRoute()->getName();
-    $earningValue  = 0;
 @endphp
     <div class="container">
         <br>
@@ -62,13 +61,14 @@
                     <tr>
                         @php
                             $user = $employee->user()->withTrashed()->first();
-                            $totalFTE = $user->ftes['main'] + $user->ftes['amc']
+                            $totalFTE = $user->ftes['main'] + $user->ftes['amc'];
+                             $earningValue = $employee->getCurrentMonthProfitabilityAttribute($employee);
                         @endphp
                         <td>
                             @if($routeName === "employees")
                             <a href="{{ route('employees.hr.details', $employee) }}">
                                 @else
-                                <a href="{{ route('employees.financial.details', $employee) }}">
+                                <a href="{{ route('employees.hr.details', $employee) }}">
                             @endif
                                 @if ($employee->overall_status === 'pending' && $filters['status'] == 'current')
                                     {{ $employee->name }} <span
@@ -110,7 +110,7 @@
                         </td>
                         @else
                         <td>
-                        @if($earningValue >= 0)
+                        @if($earningValue >= 1)
                             <span class="text-success">
                                 {{$earningValue}}
                                 <span class="d-inline-block pr-2 h-30 w-30">{!! file_get_contents(public_path('icons/green-tick.svg')) !!}</span>

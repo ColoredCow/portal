@@ -156,6 +156,7 @@ class EmployeeController extends Controller
     public function employeeEarningValue(Employee $employee)
     {
         $data = $this->service->fetchEmployeeEarnings($employee->id);
+            // echo json_encode($employee->id, JSON_PRETTY_PRINT);
     
         foreach ($data['employees'] as &$employeeData) {
             $currency = $employeeData['currency'];
@@ -163,7 +164,6 @@ class EmployeeController extends Controller
             $employeeData['rate_after_conversion'] = $rateAfterConversion;
             $employeeData['total_amount_after_conversion'] = $rateAfterConversion * $employeeData['actual_effort'] * $employeeData['service_rates'];
         }
-            //   echo json_encode($data, JSON_PRETTY_PRINT);
         return view('finance.employees.index', $data);
     }
     
