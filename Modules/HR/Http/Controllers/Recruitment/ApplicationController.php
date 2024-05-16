@@ -26,7 +26,6 @@ use Modules\HR\Http\Requests\Recruitment\ApplicationRequest;
 use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
 use Modules\HR\Http\Requests\TeamInteractionRequest;
 use Modules\HR\Services\ApplicationService;
-use App\Services\CalendarEventService;
 use Modules\User\Entities\User;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
@@ -166,122 +165,12 @@ abstract class ApplicationController extends Controller
         }
         return view('hr.application.index')->with($attr);
     }
+
     /**
-     * Display a listing of the resource.
+     * Display a listing of current date's interviews.
      */
     public function secondaryIndex()
     {
-        $referer = request()->headers->get('referer');
-
-        // We need this so that we can redirect user to the older page number.
-        // we can improve this logic in the future.
-
-        if (! session()->get('should_skip_page') && Str::endsWith($referer, 'edit')) {
-            session()->put(['should_skip_page' => true]);
-
-            return redirect()->route(request()->route()->getName(), session()->get('previous_application_data'))->with('status', session()->get('status'));
-        }
-
-        session()->put([
-            'previous_application_data' => request()->all(),
-            'should_skip_page' => false,
-        ]);
-
-        //#TO DO: Move this logic to application service.
-        $filters = [
-            'status' => request()->get('status') ?: 'non-rejected',
-            'job-type' => $this->getApplicationType(),
-            'job' => request()->get('hr_job_id'),
-            'university' => request()->get('hr_university_id'),
-            'graduation_year' => request()->get('end-year'),
-            // 'sortby' => request()->get('sort_by'), Commenting, as we need to brainstorm on this feature a bit
-            'search' => request()->get('search'),
-            'tags' => request()->get('tags'),
-            'assignee' => request()->get('assignee'), // TODO
-            'round' => str_replace('-', ' ', request()->get('round')),
-            'roundFilters' => request()->get('roundFilters'),
-        ];
-        $loggedInUserId = auth()->id();
-        $applications = Application::select('hr_applications.*')
-        ->join('hr_application_round', function ($join) {
-            $join->on('hr_application_round.hr_application_id', '=', 'hr_applications.id')
-                ->where('hr_application_round.is_latest', true);
-        })
-        ->with(['applicant', 'job', 'tags', 'latestApplicationRound'])
-        ->whereHas('latestApplicationRound')
-        ->applyFilter($filters)
-        ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
-        ->orderByRaw('ISNULL(hr_application_round.scheduled_date) ASC')
-        ->orderByRaw('hr_application_round.scheduled_date ASC')
-        ->latest()
-        ->paginate(config('constants.pagination_size'))
-        ->appends(request()->except('page'));
-        $countFilters = array_except($filters, ['status', 'round']);
-        $attr = [
-            'applications' => $applications,
-            'status' => request()->get('status'),
-        ];
-        $hrRounds = ['Resume Screening', 'Telephonic Interview', 'Introductory Call', 'Basic Technical Round', 'Detailed Technical Round', 'Team Interaction Round', 'HR Round', 'Trial Program', 'Volunteer Screening'];
-        $strings = array_pluck(config('constants.hr.status'), 'label');
-        $hrRoundsCounts = [];
-
-        foreach ($strings as $string) {
-            $attr[camel_case($string) . 'ApplicationsCount'] = Application::applyFilter($countFilters)
-                ->where('status', $string)
-                ->whereHas('latestApplicationRound', function ($subQuery) {
-                    return $subQuery->where('is_latest', true);
-                })
-                ->count();
-        }
-
-        $jobType = $this->getApplicationType();
-
-        foreach ($hrRounds as $round) {
-            $applicationCount = Application::query()->filterByJobType($jobType)
-                ->whereIn('hr_applications.status', ['in-progress', 'new', 'trial-program'])
-                ->FilterByRoundName($round)
-                ->count();
-            $hrRoundsCounts[$round] = $applicationCount;
-            $attr[camel_case($round) . 'Count'] = Application::applyFilter($countFilters)
-                ->where('status', config('constants.hr.status.in-progress.label'))
-                ->whereHas('latestApplicationRound', function ($subQuery) use ($round) {
-                    return $subQuery->where('is_latest', true)
-                        ->whereHas('round', function ($subQuery) use ($round) {
-                            return $subQuery->where('name', $round);
-                        });
-                })
-                ->count();
-        }
-
-        $attr['jobs'] = Job::all();
-        $attr['universities'] = University::all();
-        $attr['tags'] = Tag::orderBy('name')->get();
-        $attr['rounds'] = $hrRoundsCounts;
-        $attr['roundFilters'] = round::orderBy('name')->get();
-        $attr['assignees'] = User::whereHas('roles', function ($query) {
-            $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
-        })->orderby('name', 'asc')->get();
-
-        $openApplicationCountForJob = Application::whereIn('hr_job_id', $applications->pluck('hr_job_id'))
-            ->isOpen()
-            ->selectRaw('hr_job_id, COUNT(*) as count')
-            ->groupBy('hr_job_id')
-            ->get()
-            ->keyBy('hr_job_id')
-            ->toArray();
-
-        foreach ($applications->items() as $application) {
-            $attr['openApplicationsCountForJobs'][$application->job->title] = $openApplicationCountForJob[$application->hr_job_id]['count'] ?? 0;
-        }
-
-        $attr['applicantId'] = [];
-        $applications = Application::pluck('hr_applicant_id');
-        $applicantData = ApplicantMeta::whereIn('hr_applicant_id', $applications)->get();
-
-        foreach ($applicantData as $data) {
-            $attr['applicantId'][$data->hr_applicant_id] = $data;
-        }
-
         $today = today()->toDateString();
         $applicationRound = new ApplicationRound();
         $applications = $applicationRound
@@ -295,27 +184,27 @@ abstract class ApplicationController extends Controller
         $jobCount= [];
         foreach ($applications as $key => $appRound) {
             // if($appRound->scheduled_person_id == auth()->id()){
-                $application = $appRound->application;
-                $round = $appRound->round;
-                $meeting_link = $appRound->meetingLink;
-                $scheduled_person = $appRound->scheduled_person_id;
-                $meeting_time = $appRound->scheduled_date->format(config('constants.display_time_format'));
+            $application = $appRound->application;
+            $round = $appRound->round;
+            $meeting_link = $appRound->meetingLink;
+            $scheduled_person = $appRound->scheduled_person_id;
+            $meeting_time = $appRound->scheduled_date->format(config('constants.display_time_format'));
 
-                $jobId = $application->job->id;
-                $jobName = $application->job->title;
-                if (isset($jobCount[$jobName][$jobId])) {
-                    $jobCount[$jobName][$jobId]++;
-                } else {
-                    $jobCount[$jobName][$jobId] = 1;
-                }
-                
-                $todaysApplications[$key] = [
-                    'application' => $application,
-                    'round' => $round,
-                    'meeting_link' => $meeting_link,
-                    'scheduled_person' => $scheduled_person,
-                    'meeting_time' => $meeting_time,
-                ];
+            $jobId = $application->job->id;
+            $jobName = $application->job->title;
+            if (isset($jobCount[$jobName][$jobId])) {
+                $jobCount[$jobName][$jobId]++;
+            } else {
+                $jobCount[$jobName][$jobId] = 1;
+            }
+            
+            $todaysApplications[$key] = [
+                'application' => $application,
+                'round' => $round,
+                'meeting_link' => $meeting_link,
+                'scheduled_person' => $scheduled_person,
+                'meeting_time' => $meeting_time,
+            ];
             // }
         }
         
@@ -372,6 +261,7 @@ abstract class ApplicationController extends Controller
             $attr['hasGraduated'] = $application->applicant->hasGraduated();
             $attr['internships'] = Job::isInternship()->latest()->get();
         }
+        
         return view('hr.application.edit')->with($attr);
     }
 
