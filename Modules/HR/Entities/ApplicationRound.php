@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Modules\Communication\Entities\CalendarMeeting;
 use Modules\Communication\Traits\HasCalendarMeetings;
 use Modules\HR\Emails\Recruitment\Applicant\OnHold;
 use Modules\HR\Emails\Recruitment\SendForApproval;
@@ -306,6 +307,11 @@ class ApplicationRound extends Model
     public function application()
     {
         return $this->belongsTo(Application::class, 'hr_application_id');
+    }
+
+    public function meetingLink()
+    {
+        return $this->belongsTo(CalendarMeeting::class, 'calendar_meeting_id');
     }
 
     public function trialRound()

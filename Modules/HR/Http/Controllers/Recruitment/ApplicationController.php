@@ -26,6 +26,7 @@ use Modules\HR\Http\Requests\Recruitment\ApplicationRequest;
 use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
 use Modules\HR\Http\Requests\TeamInteractionRequest;
 use Modules\HR\Services\ApplicationService;
+use App\Services\CalendarEventService;
 use Modules\User\Entities\User;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
@@ -163,7 +164,6 @@ abstract class ApplicationController extends Controller
         foreach ($applicantData as $data) {
             $attr['applicantId'][$data->hr_applicant_id] = $data;
         }
-
         return view('hr.application.index')->with($attr);
     }
     /**
@@ -284,22 +284,20 @@ abstract class ApplicationController extends Controller
 
         $today = today()->toDateString();
         $applicationRound = new ApplicationRound();
-        
-        // dd($applicationRound.getHangoutLinkAttribute());
         $applications = $applicationRound
             ->where('hr_round_id', 2)
             ->whereDate('scheduled_date', '2024-04-17')
-            ->with('application.applicant', 'application.job', 'round')
+            ->with('application.applicant', 'application.job', 'round', 'meetingLink')
             ->orderByRaw('hr_application_round.scheduled_date ASC')
             ->get();
-
+        
         $todaysApplications = [];
         $jobCount= [];
         foreach ($applications as $key => $appRound) {
             // if($appRound->scheduled_person_id == auth()->id()){
                 $application = $appRound->application;
                 $round = $appRound->round;
-                $meeting_link = $appRound->calendar_event;
+                $meeting_link = $appRound->meetingLink;
                 $scheduled_person = $appRound->scheduled_person_id;
                 $meeting_time = $appRound->scheduled_date->format(config('constants.display_time_format'));
 
@@ -310,17 +308,17 @@ abstract class ApplicationController extends Controller
                 } else {
                     $jobCount[$jobName][$jobId] = 1;
                 }
-            
+                
                 $todaysApplications[$key] = [
-                    'application' => $application->toArray(),
-                    'round' => $round->toArray(),
-                    'scheduled_person' => $scheduled_person,
+                    'application' => $application,
+                    'round' => $round,
                     'meeting_link' => $meeting_link,
+                    'scheduled_person' => $scheduled_person,
                     'meeting_time' => $meeting_time,
                 ];
             // }
         }
-        // dd($todaysApplications);
+        
         $attr['todaysApplications'] = $todaysApplications;
         $attr['jobCount'] = $jobCount;
         return view('hr::application.secondary-index')->with($attr);
@@ -374,7 +372,6 @@ abstract class ApplicationController extends Controller
             $attr['hasGraduated'] = $application->applicant->hasGraduated();
             $attr['internships'] = Job::isInternship()->latest()->get();
         }
-
         return view('hr.application.edit')->with($attr);
     }
 

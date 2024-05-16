@@ -19,6 +19,7 @@
             </div>
             <div v-bind:class="[showResumeFrame ? 'offset-md-2 col-md-7 pl-9' : 'col-md-8']">
                 <div class="card bg-transparent border-0">
+                    
                     @if (sizeOf($application->trialApplicationRounds))
                         <nav>
                             <div class="nav nav-pills" id="nav-tab" role="tablist">

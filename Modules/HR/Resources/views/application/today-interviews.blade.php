@@ -1,39 +1,57 @@
-<div>
-	<?php if($todaysApplications) : ?>
-		<div class="d-flex justify-content-start align-items-center">
-			<?php foreach ( $jobCount as $jobTitle => $jobData ) : ?>
-				<div class="rounded-pill w-fit bg-success fz-12" style="padding-left: 8px; padding-right: 8px; margin: 8px;">
-					<span>{{ $jobTitle }} - {{ array_sum($jobData) }}</span>
-				</div>
-			<?php endforeach; ?>
-		</div>
-		<div class="mt-5">
-			<div class="border-success" style="border: 2px solid; border-radius: 50px; padding: 20px;">
-				<?php foreach ( $todaysApplications as $key => $todayApplication ) : ?>
-					<div class="d-flex justify-content-between align-items-center pt-5 pb-5" <?php echo $key != 0 ? 'style="border-top: 1px solid gray;"' : '' ?>>
-						<div class="text-start">
-							<p class="mb-0 fz-20"><i class="fa fa-user-circle-o fz-14 pr-1" aria-hidden="true"></i>{{ $todayApplication['application']['applicant']['name'] }}</p>
-							<p class="mb-0 fz-16"><i class="fa fa-info-circle pr-1" aria-hidden="true"></i>{{ $todayApplication['application']['job']['title'] }}</p>
-							<p class="mb-0 fz-16"><i class="fa fa-clock-o pr-1" aria-hidden="true"></i>{{ $todayApplication['meeting_time'] }}</p>
-						</div>
-						<div class="color-primary" style="padding-left: 8px; padding-right: 8px; margin: 8px;">
-							<a target="_blank"
-								class="ml-5 font-muli-bold text-decoration-none"
-								href="{{ $todayApplication['meeting_link'] }}">
-								<i class="fa fa-video-camera"
-									aria-hidden="true"></i>
-								<span>Meeting Link</span>
-							</a>
-						</div>
-					</div>
-				<?php endforeach; ?>
+
+<tr>
+	<td>
+		<div class="text-start fz-xl-14 text-secondary d-flex flex-column">
+			<p class="mb-0 fz-20 text-dark">{{ $todayApplication['application']->applicant->name }}</p>
+			<div class="d-flex text-white my-2">
+			<a href="{{ route('hr.applicant.details.show', ['applicationID' => $todayApplication['application']->id ]) }}"
+				class="btn-sm btn-primary mr-1 text-decoration-none text-center" target="_self">View</a>
+			<a href="{{ route('applications.job.edit', $todayApplication['application']->id) }}"
+				class="btn-sm btn-primary text-decoration-none text-center" target="_self">Evaluate</a>
+			</div>
+			<span class="mr-1 text-truncate fz-14">
+                <i class="fa fa-envelope-o mr-1"></i>{{ $todayApplication['application']->applicant->email }}</span>
+            @if ($todayApplication['application']->applicant->phone)
+                <span class="mr-1 fz-14"><i class="fa fa-phone mr-1"></i>{{ $todayApplication['application']->applicant->phone }}</span>
+            @endif
+            <div>
+                @if ($todayApplication['application']->applicant->college && $todayApplication['application']->applicant->university)
+                    <span class="mr-1 fz-14"><i class="fa fa-university mr-1"></i>{{ $todayApplication['application']->applicant->college }}</span>
+                @endif
+            </div>
+			<div class="fz-18">
+				@if ($todayApplication['application']->applicant->linkedin)
+					<a href="{{ $todayApplication['application']->applicant->linkedin }}" target="_blank" data-toggle="tooltip"
+						data-placement="top" title="LinkedIn" class="mr-1 text-decoration-none">
+						<span><i class="fa fa-linkedin-square" aria-hidden="true"></i></span>
+					</a>
+				@endif
+				@if ($todayApplication['application']->resume)
+					<a href="{{ $todayApplication['application']->resume }}" target="_blank" data-toggle="tooltip" data-placement="top"
+						title="Resume" class="mr-1 text-decoration-none">
+						<span><i class="fa fa-file-text" aria-hidden="true"></i></span>
+					</a>
+				@endif
 			</div>
 		</div>
-	<?php else : ?>
-		<div class="d-flex justify-content-center mt-20 w-full">
-			<div class="fz-36">
-				<p>No Upcoming meetings for Today</p>
-			</div>
+	</td>
+	<td>
+		<div class="d-flex flex-column">
+			<p class="mb-0 fz-18"><i class="fa fa-clock-o pr-1" aria-hidden="true"></i>{{ $todayApplication['meeting_time'] }}</p>
+			<span class="fz-16"><i class="fa fa-info-circle pr-1"></i>{{ $todayApplication['application']->job->title }}</span>
+			<span class="fz-14 text-secondary">Applied on
+                {{ $todayApplication['application']->created_at->format(config('constants.display_date_format')) }}</span>
 		</div>
-	<?php endif; ?>
-</div>
+	</td>
+	<td>
+		<div class="color-primary fz-18">
+			<a target="_blank"
+				class="font-muli-bold text-decoration-none"
+				href="{{ $todayApplication['meeting_link']->hangout_link }}">
+				<i class="fa fa-video-camera"
+					aria-hidden="true"></i>
+				<span>Meeting Link</span>
+			</a>
+		</div>
+	</td>
+</tr>
