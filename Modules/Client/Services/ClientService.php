@@ -5,9 +5,12 @@ namespace Modules\Client\Services;
 use App\Models\Country;
 use Modules\Client\Contracts\ClientServiceContract;
 use Modules\Client\Entities\Client;
+use Illuminate\Support\Facades\Storage;
 use Modules\Client\Entities\ClientAddress;
 use Modules\Client\Entities\ClientBillingDetail;
 use Modules\Client\Entities\ClientContactPerson;
+use Modules\Client\Entities\ClientContract;
+use Modules\Client\Entities\ClientMeta;
 use Modules\User\Entities\User;
 
 class ClientService implements ClientServiceContract
@@ -99,6 +102,7 @@ class ClientService implements ClientServiceContract
                 'clientBillingAddress' => $this->getClientBillingAddress($client),
                 'keyAccountManagers' => $this->getKeyAccountManagers()->whereNull('deleted_at')->sortBy('name'),
                 'clientBillingDetail' => $client->billingDetails,
+                'contract' => $client->clientContracts,
             ];
         }
 
@@ -135,6 +139,7 @@ class ClientService implements ClientServiceContract
 
             case 'billing-details':
                 $this->updateBillingDetails($data, $client);
+                $nextStage = route('client.edit', [$client, 'projects']);
                 break;
 
             case 'default':
@@ -281,8 +286,55 @@ class ClientService implements ClientServiceContract
     private function updateBillingDetails($data, $client)
     {
         $client->update(['key_account_manager_id' => $data['key_account_manager_id']]);
+        
         ClientBillingDetail::updateOrCreate(['client_id' => $client->id], $data);
+        
+        $this->saveOrUpdateClientContract($data, $client);
 
+        if (isset($data['contract_level'])) {
+         ClientMeta::updateOrCreate(
+            [
+                'key' => config('client.meta_keys.contract_level.key'),
+                'client_id' => $client->id,
+            ],
+            [
+                'value' => $data['contract_level'],
+            ]
+        );
+        } else {
+        $data['contract_level'] = 'project';
+        ClientMeta::updateOrCreate(
+            [
+                'key' => config('client.meta_keys.contract_level.key'),
+                'client_id' => $client->id,
+            ],
+            [
+                'value' => 'project',
+            ]
+          );
+        }
         return true;
     }
+    
+    public function saveOrUpdateClientContract($data, $client)
+    {   
+        if ($data['contract_file'] ?? null  instanceof \Illuminate\Http\UploadedFile) {
+            $file = $data['contract_file'];
+            $folder = '/clientcontract/' . date('Y') . '/' . date('m');
+            $fileName = $file->getClientOriginalName();
+            
+            $filePath = Storage::putFileAs($folder, $file, $fileName);
+            $start_date = $data['start_date'] ?? null;
+            $end_date = $data['end_date'] ?? null;
+
+            ClientContract::updateOrCreate(
+                ['client_id' => $client->id],
+                [
+                    'contract_file_path' => $filePath,
+                    'start_date' => $start_date,
+                    'end_date' => $end_date,
+                ],
+            );
+        }
+    }   
 }

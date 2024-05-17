@@ -102,6 +102,23 @@ class Client extends Model
         return $this->hasOne(ClientBillingDetail::class)->withDefault();
     }
 
+    public function clientContracts()
+    {
+        return $this->hasMany(ClientContract::class);
+    }
+
+    public function meta()
+    {
+        return $this->hasMany(ClientMeta::class);
+    }
+
+    public function getMetaValue($metaKey)
+    {
+        $meta = $this->meta()->where('key', $metaKey)->first();
+        if ($meta) {
+            return $meta->value;
+        }
+    }
     public function getTypeAttribute()
     {
         $address = $this->addresses->first();
