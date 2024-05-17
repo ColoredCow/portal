@@ -292,32 +292,32 @@ class ClientService implements ClientServiceContract
         $this->saveOrUpdateClientContract($data, $client);
 
         if (isset($data['contract_level'])) {
-         ClientMeta::updateOrCreate(
-            [
-                'key' => config('client.meta_keys.contract_level.key'),
-                'client_id' => $client->id,
-            ],
-            [
-                'value' => $data['contract_level'],
-            ]
-        );
+            ClientMeta::updateOrCreate(
+                [
+                    'key' => config('client.meta_keys.contract_level.key'),
+                    'client_id' => $client->id,
+                ],
+                [
+                    'value' => $data['contract_level'],
+                ]
+            );
         } else {
-        $data['contract_level'] = 'project';
-        ClientMeta::updateOrCreate(
-            [
-                'key' => config('client.meta_keys.contract_level.key'),
-                'client_id' => $client->id,
-            ],
-            [
-                'value' => 'project',
-            ]
-          );
+            $data['contract_level'] = 'project';
+            ClientMeta::updateOrCreate(
+                [
+                    'key' => config('client.meta_keys.contract_level.key'),
+                    'client_id' => $client->id,
+                ],
+                [
+                    'value' => 'project',
+                ]
+            );
         }
         return true;
     }
     
     public function saveOrUpdateClientContract($data, $client)
-    {   
+    {
         if ($data['contract_file'] ?? null  instanceof \Illuminate\Http\UploadedFile) {
             $file = $data['contract_file'];
             $folder = '/clientcontract/' . date('Y') . '/' . date('m');
@@ -336,5 +336,5 @@ class ClientService implements ClientServiceContract
                 ],
             );
         }
-    }   
+    }
 }
