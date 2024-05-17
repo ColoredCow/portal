@@ -213,7 +213,6 @@ class ClientService implements ClientServiceContract
             $file = $data['contract_file'];
             $folder = '/clientcontract/' . date('Y') . '/' . date('m');
             $fileName = $file->getClientOriginalName();
-
             $filePath = Storage::putFileAs($folder, $file, $fileName);
             $start_date = $data['start_date'] ?? null;
             $end_date = $data['end_date'] ?? null;
