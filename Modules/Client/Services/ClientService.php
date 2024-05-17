@@ -209,7 +209,7 @@ class ClientService implements ClientServiceContract
 
     public function saveOrUpdateClientContract($data, $client)
     {
-        if ($data['contract_file'] ?? null  instanceof \Illuminate\Http\UploadedFile) {
+        if ($data['contract_file'] ?? null ) {
             $file = $data['contract_file'];
             $folder = '/clientcontract/' . date('Y') . '/' . date('m');
             $fileName = $file->getClientOriginalName();
