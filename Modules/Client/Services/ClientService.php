@@ -313,7 +313,7 @@ class ClientService implements ClientServiceContract
                 ]
             );
         }
-        
+
         return true;
     }
     
