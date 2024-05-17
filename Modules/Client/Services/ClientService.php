@@ -207,6 +207,28 @@ class ClientService implements ClientServiceContract
         return $addresses->first();
     }
 
+    public function saveOrUpdateClientContract($data, $client)
+    {
+        if ($data['contract_file'] ?? null  instanceof \Illuminate\Http\UploadedFile) {
+            $file = $data['contract_file'];
+            $folder = '/clientcontract/' . date('Y') . '/' . date('m');
+            $fileName = $file->getClientOriginalName();
+            
+            $filePath = Storage::putFileAs($folder, $file, $fileName);
+            $start_date = $data['start_date'] ?? null;
+            $end_date = $data['end_date'] ?? null;
+
+            ClientContract::updateOrCreate(
+                ['client_id' => $client->id],
+                [
+                    'contract_file_path' => $filePath,
+                    'start_date' => $start_date,
+                    'end_date' => $end_date,
+                ],
+            );
+        }
+    }
+
     private function updateClientDetails($data, $client)
     {
         $data['is_channel_partner'] = $data['is_channel_partner'] ?? false;
@@ -315,27 +337,5 @@ class ClientService implements ClientServiceContract
         }
 
         return true;
-    }
-
-    public function saveOrUpdateClientContract($data, $client)
-    {
-        if ($data['contract_file'] ?? null  instanceof \Illuminate\Http\UploadedFile) {
-            $file = $data['contract_file'];
-            $folder = '/clientcontract/' . date('Y') . '/' . date('m');
-            $fileName = $file->getClientOriginalName();
-            
-            $filePath = Storage::putFileAs($folder, $file, $fileName);
-            $start_date = $data['start_date'] ?? null;
-            $end_date = $data['end_date'] ?? null;
-
-            ClientContract::updateOrCreate(
-                ['client_id' => $client->id],
-                [
-                    'contract_file_path' => $filePath,
-                    'start_date' => $start_date,
-                    'end_date' => $end_date,
-                ],
-            );
-        }
     }
 }
