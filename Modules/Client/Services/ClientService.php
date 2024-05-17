@@ -3,9 +3,9 @@
 namespace Modules\Client\Services;
 
 use App\Models\Country;
+use Illuminate\Support\Facades\Storage;
 use Modules\Client\Contracts\ClientServiceContract;
 use Modules\Client\Entities\Client;
-use Illuminate\Support\Facades\Storage;
 use Modules\Client\Entities\ClientAddress;
 use Modules\Client\Entities\ClientBillingDetail;
 use Modules\Client\Entities\ClientContactPerson;
@@ -286,9 +286,9 @@ class ClientService implements ClientServiceContract
     private function updateBillingDetails($data, $client)
     {
         $client->update(['key_account_manager_id' => $data['key_account_manager_id']]);
-        
+
         ClientBillingDetail::updateOrCreate(['client_id' => $client->id], $data);
-        
+
         $this->saveOrUpdateClientContract($data, $client);
 
         if (isset($data['contract_level'])) {
@@ -313,6 +313,7 @@ class ClientService implements ClientServiceContract
                 ]
             );
         }
+        
         return true;
     }
     
