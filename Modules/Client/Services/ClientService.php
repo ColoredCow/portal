@@ -316,7 +316,7 @@ class ClientService implements ClientServiceContract
 
         return true;
     }
-    
+
     public function saveOrUpdateClientContract($data, $client)
     {
         if ($data['contract_file'] ?? null  instanceof \Illuminate\Http\UploadedFile) {
