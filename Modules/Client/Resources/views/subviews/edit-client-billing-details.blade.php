@@ -8,7 +8,7 @@
             @if($clientCountry && $clientCountry->id)
             <input type="hidden" name="currency" value="{{ $clientCountry->currency }}">
             <div class="form-row">
-                <div class="col-md-5 ">  
+                <div class="col-md-5 ">
                     <div class="form-group ">
                         <label for="key_account_manager_id" class="field-required">Key Account manager</label>
                         <select name="key_account_manager_id" id="key_account_manager_id" class="form-control" required="required">
@@ -51,7 +51,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5 offset-md-1">  
+                <div class="col-md-5 offset-md-1">
                     <div class="form-group">
                         <label for="billing_frequency" >Billing Frequency</label>
                         <select name="billing_frequency" id="billing_frequency" class="form-control">
@@ -112,10 +112,10 @@
                 <div class="col-3">
                     Start Date:
                 </div>
-                <div class="col-3"> 
+                <div class="col-3">
                     End date:
                 </div>
-                
+
             </div>
             <div class="row mt-3" >
                 <div class="col-4">
@@ -131,10 +131,10 @@
                 <div class="col-3">
                     <input type="date" class="form-control" name="end_date" id="end_date" value= {{$client->clientContracts->first()->end_date ?? ''}}>
                 </div>
-                
+
             </div>
             <div class="mt-3 mb-4">
-                <span class="mb-3"  style="text-decoration: underline;" type="button" data-toggle="collapse" data-target="#contractHistory" aria-expanded="false" aria-controls="contractHistory">Contract History <i class="fa fa-arrow-down" aria-hidden="true"></i></span>
+                <span class="mb-3"  style="text-decoration: underline;" type="button" data-toggle="collapse" data-target="#contractHistory" aria-expanded="false" aria-controls="contractHistory">Contract History <i class="fa fa-history ml-1" aria-hidden="true"></i></span>
                 <div class="collapse" id="contractHistory">
                     <table class="table">
                         <thead>
@@ -147,7 +147,7 @@
                         <tbody>
                             @foreach ($client->clientContracts as $contract)
                             <tr>
-                                <td>{{ basename($contract->contract_file_path) }}</td>
+                                <td> <a href="{{ route('client.pdf.show',$client->clientContracts->first())}}" target="_blank">{{ basename($contract->contract_file_path)}}</a></td>
                                 <td>{{ optional($contract->start_date)->format('d M Y') ?? '-' }}</td>
                                 <td>{{ optional($contract->end_date)->format('d M Y') ?? '-' }}</td>
                             </tr>
@@ -156,7 +156,7 @@
                     </table>
                 </div>
             </div>
-            
+
         </div>
         <div class="col-md-5">
             @can('finance.view')
@@ -165,7 +165,7 @@
                     Revenue by Client
                     <i class="fa fa-bar-chart"></i>
                 </a>
-            </div> 
+            </div>
             @endcan
         </div>
         <div class="card-footer">

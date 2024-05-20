@@ -92,8 +92,8 @@
                     <div class="form-group col-md-5">
                         <div class="flex-row">
                             <label for="contract_file"> {{ __('Upload Contract File') }}</label>
-                            @can('finance_reports.view')   
-                                <a class="badge badge-primary p-1 ml-2 text-light" href="{{ route('report.project.contracts.index') }}">Contract Reports</a>
+                            @can('finance_reports.view')
+                                <a class="badge badge-primary p-1 ml-2 text-light" href="{{ route('report.project.contracts.index') }}">Contract Report</a>
                             @endcan
                         </div>
                         <div class="custom-file mb-3">
@@ -111,7 +111,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="google_chat_webhook_url">{{ __('Google Chat Webhook URL') }}</label>
                         <input type="url" class="form-control" name="google_chat_webhook_url"
