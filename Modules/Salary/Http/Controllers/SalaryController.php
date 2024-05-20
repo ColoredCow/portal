@@ -47,17 +47,17 @@ class SalaryController extends Controller
         $edliChargesLimitConfig = $salaryConf->formatAll()->get('edli_charges_limit');
         $healthInsuranceConf = $salaryConf->formatAll()->get('health_insurance');
 
-        $calculationData["basicSalaryPercentageFactor"] = $salaryConf->basicSalary();
-        $calculationData["epfPercentageRate"] = (float) $employerEpfConf->percentage_rate;
-        $calculationData["adminChargesPercentageRate"] = (float) $administrationChargesConf->percentage_rate;
-        $calculationData["edliChargesPercentageRate"] = (float) $edliChargesConf->percentage_rate;
-        $calculationData["edliChargesLimit"] = (float) $edliChargesLimitConfig->fixed_amount;
-        $calculationData["insuranceAmount"] = (float) $healthInsuranceConf->fixed_amount;
+        $calculationData['basicSalaryPercentageFactor'] = $salaryConf->basicSalary();
+        $calculationData['epfPercentageRate'] = (float) $employerEpfConf->percentage_rate;
+        $calculationData['adminChargesPercentageRate'] = (float) $administrationChargesConf->percentage_rate;
+        $calculationData['edliChargesPercentageRate'] = (float) $edliChargesConf->percentage_rate;
+        $calculationData['edliChargesLimit'] = (float) $edliChargesLimitConfig->fixed_amount;
+        $calculationData['insuranceAmount'] = (float) $healthInsuranceConf->fixed_amount;
 
         return view('salary::employee.index')->with([
             'employee' => $employee,
             'salaryConfigs' => $salaryConf::formatAll(),
-            'grossCalculationData' => json_encode($calculationData)
+            'grossCalculationData' => json_encode($calculationData),
         ]);
     }
 
