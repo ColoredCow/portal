@@ -37,7 +37,7 @@ class SalaryController extends Controller
 
     public function employee(Employee $employee)
     {
-        
+
         $this->authorize('view', EmployeeSalary::class);
         $salaryConf = new SalaryConfiguration();
         $calculationData = [];
@@ -47,7 +47,7 @@ class SalaryController extends Controller
         $edliChargesLimitConfig = $salaryConf->formatAll()->get('edli_charges_limit');
         $edliChargesLimitConfig = $salaryConf->formatAll()->get('edli_charges_limit');
         $healthInsuranceConf = $salaryConf->formatAll()->get('health_insurance');
-        
+
         $calculationData["basicSalaryPercentageFactor"] = $salaryConf->basicSalary();
         $calculationData["epfPercentageRate"] = (float) $employerEpfConf->percentage_rate;
         $calculationData["adminChargesPercentageRate"] = (float) $administrationChargesConf->percentage_rate;
@@ -100,7 +100,7 @@ class SalaryController extends Controller
     }
 
     public function generateAppraisalLetter(Request $request, Employee $employee)
-    {        
+    {
         $salaryService = new SalaryCalculationService($request->grossSalary);
         $data = $salaryService->appraisalLetterData($request, $employee);
         $employeeName = $data->employeeName;
