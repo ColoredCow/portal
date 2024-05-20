@@ -29,7 +29,7 @@ class ContractReportService implements ProjectServiceContract
                 } elseif ($metaValue == 'project' || is_null($metaValue)) {
                     return optional($client->projects->sortBy('end_date')->first())->end_date;
                 } else {
-                    return null;
+                    return;
                 }
             })
             ->values();
