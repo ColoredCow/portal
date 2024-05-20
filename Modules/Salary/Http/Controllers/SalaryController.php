@@ -37,7 +37,6 @@ class SalaryController extends Controller
 
     public function employee(Employee $employee)
     {
-
         $this->authorize('view', EmployeeSalary::class);
         $salaryConf = new SalaryConfiguration();
         $calculationData = [];
