@@ -26,6 +26,7 @@ class ContractReportService implements ProjectServiceContract
 
                 if ($metaValue == 'client' || $metaValue == 'project' || is_null($metaValue)) {
                     $collection = $metaValue == 'client' ? $client->clientContracts : $client->projects;
+
                     return optional($collection->sortBy('end_date')->first())->end_date;
                 }
             })
