@@ -15,21 +15,18 @@ class ContractReportService implements ProjectServiceContract
             }])
             ->with('clientContracts')
             ->with(['meta' => function ($query) {
-                $query->select('client_id', 'value');
+                $query->select('client_id', 'key', 'value');
             }])
             ->whereHas('projects', function ($query) {
                 $query->where('status', 'active');
             })
             ->get()
             ->sortBy(function ($client) {
-                $metaValue = optional($client->meta->first())->value;
+                $metaValue = optional($client->meta->where('key', 'contract_level')->first())->value;
 
-                if ($metaValue == 'client') {
-                    return optional($client->clientContracts->sortBy('end_date')->first())->end_date;
-                } elseif ($metaValue == 'project' || is_null($metaValue)) {
-                    return optional($client->projects->sortBy('end_date')->first())->end_date;
-                } else {
-                    return;
+                if ($metaValue == 'client' || $metaValue == 'project' || is_null($metaValue)) {
+                    $collection = $metaValue == 'client' ? $client->clientContracts : $client->projects;
+                    return optional($collection->sortBy('end_date')->first())->end_date;
                 }
             })
             ->values();
