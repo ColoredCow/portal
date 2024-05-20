@@ -170,7 +170,7 @@
             </table>
         </div>
         <div class="revised-details">
-            Your revised remuneration will be <b>INR {{ ($data->ctcAggregated)/12}}/-</b> per month as per the following breakup.<br>
+            Your revised remuneration will be <b>INR {{ round(($data->ctcAggregated)/12, 2)}}/-</b> per month as per the following breakup.<br>
             <div class="salary-details">
             <span class="salary-text">Basic Salary</span><span class="salary-number-1">Rs {{ $data->basicSalary }}/-</span><br>
             </div>
@@ -187,7 +187,7 @@
                 <span class="salary-text" >P.F. and Charges(Employer share)</span><span class="salary-number-5">Rs {{ $data->employeeShare }}/-</span>
             </div>
             <div class="salary-details">
-                <span class="salary-text" >Medical Insurance(per month)</span><span class="salary-number-6">Rs {{ $data->monthlyHealthInsurance }}/-</span>
+                <span class="salary-text" >Medical Insurance(per month)</span><span class="salary-number-6">Rs {{ round($data->monthlyHealthInsurance, 2) }}/-</span>
             </div>
         </div>
         <div class="paddingTop content-font-size"><b>***Medical insurance of 5 Lakhs, rupees are added to your CTC.</b></div>
