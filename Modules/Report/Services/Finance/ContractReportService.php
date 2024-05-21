@@ -29,13 +29,13 @@ class ContractReportService implements ProjectServiceContract
                     $collection = $metaValue == 'client' ? $client->clientContracts : $client->projects;
 
                     $filteredNullEndDate = $collection->filter(function ($item) {
-                        return !is_null($item->end_date);
+                        return ! is_null($item->end_date);
                     });
 
                     return optional($filteredNullEndDate->sortBy('end_date')->first())->end_date;
                 }
 
-                return;
+                return null;
             })
             ->values();
 
