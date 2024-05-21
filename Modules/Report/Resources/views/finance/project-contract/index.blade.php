@@ -92,7 +92,7 @@
                                         <span class="text-capitalize fz-lg-17 {{ $endDateAlert }}">
                                             {{ optional($endDate)->format('d M Y') ?? '-' }}
                                             @if ($endDateAlert && !$endDatePassed)
-                                            <span data-toggle="tooltip" data-placement="right" title="This is about to expire in {{ $endDateDiff }} days"><i class="fa fa-exclamation-triangle ml-4 toolpit text-theme-orange"
+                                            <span data-toggle="tooltip" data-placement="right" title="This is about to expired in {{ $endDateDiff }} days"><i class="fa fa-exclamation-triangle ml-4 toolpit text-theme-orange"
                                                 aria-hidden="true"></i>
                                             </span>
                                             @endif
@@ -105,7 +105,7 @@
                                     <span class="text-capitalize fz-lg-17 {{ $endDateAlert }}">
                                         {{ optional($endDate)->format('d M Y') ?? '-' }}
                                         @if ($endDateAlert && !$endDatePassed)
-                                        <span data-toggle="tooltip" data-placement="right" title="This is about to expire in {{ $endDateDiff }} days"><i class="fa fa-exclamation-triangle ml-4 toolpit text-theme-orange"
+                                        <span data-toggle="tooltip" data-placement="right" title="This is about to expired in {{ $endDateDiff }} days"><i class="fa fa-exclamation-triangle ml-4 toolpit text-theme-orange"
                                             aria-hidden="true"></i>
                                         </span>
                                         @endif
