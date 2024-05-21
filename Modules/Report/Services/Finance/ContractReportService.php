@@ -35,7 +35,6 @@ class ContractReportService implements ProjectServiceContract
                     return optional($filteredNullEndDate->sortBy('end_date')->first())->end_date;
                 }
 
-                return null;
             })
             ->values();
 
