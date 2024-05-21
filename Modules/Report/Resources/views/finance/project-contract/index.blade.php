@@ -34,7 +34,7 @@
                         <tr>
                             @if ($key === 0)
                                 <td style="border-bottom: 1px solid black; vertical-align: middle;" rowspan="{{ $totalProjects }}">
-                                    <a href="{{ route('client.edit', $project->client->id) }}">{{ $clientData->name }}</a>
+                                    <a href="{{ route('client.edit', [$project->client->id, 'billing-details']) }}">{{ $clientData->name }}</a>
                                 </td>
                             @endif
                             <td style="border-bottom: {{ $isLastProject ? '1px solid black' : 'none' }}">
@@ -92,9 +92,9 @@
                                         <span class="text-capitalize fz-lg-17 {{ $endDateAlert }}">
                                             {{ optional($endDate)->format('d M Y') ?? '-' }}
                                             @if ($endDateAlert && !$endDatePassed)
-                                                <i class="fa fa-exclamation-triangle ml-4 toolpit text-theme-orange"
-                                                    aria-hidden="true"
-                                                    title="This is about to expire in {{ $endDateDiff }} days"></i>
+                                            <span data-toggle="tooltip" data-placement="right" title="This is about to expired in {{ $endDateDiff }} days"><i class="fa fa-exclamation-triangle ml-4 toolpit text-theme-orange"
+                                                aria-hidden="true"></i>
+                                            </span>
                                             @endif
                                         </span>
                                     </td>
@@ -105,9 +105,9 @@
                                     <span class="text-capitalize fz-lg-17 {{ $endDateAlert }}">
                                         {{ optional($endDate)->format('d M Y') ?? '-' }}
                                         @if ($endDateAlert && !$endDatePassed)
-                                            <i class="fa fa-exclamation-triangle ml-4 toolpit text-theme-orange"
-                                                aria-hidden="true"
-                                                title="This is about to expire in {{ $endDateDiff }} days"></i>
+                                        <span data-toggle="tooltip" data-placement="right" title="This is about to expired in {{ $endDateDiff }} days"><i class="fa fa-exclamation-triangle ml-4 toolpit text-theme-orange"
+                                            aria-hidden="true"></i>
+                                        </span>
                                         @endif
                                     </span>
                                 </td>
