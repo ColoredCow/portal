@@ -34,7 +34,7 @@
                         <tr>
                             @if ($key === 0)
                                 <td style="border-bottom: 1px solid black; vertical-align: middle;" rowspan="{{ $totalProjects }}">
-                                    <a href="{{ route('client.edit', $project->client->id) }}">{{ $clientData->name }}</a>
+                                    <a href="{{ route('client.edit', [$project->client->id, 'billing-details']) }}">{{ $clientData->name }}</a>
                                 </td>
                             @endif
                             <td style="border-bottom: {{ $isLastProject ? '1px solid black' : 'none' }}">

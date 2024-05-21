@@ -108,6 +108,9 @@
             <div class="row">
                 <div class="col-4">
                     Upload Contract:
+                    @can('finance_reports.view')
+                                <a class="badge badge-primary p-1 ml-2 text-light" href="{{ route('report.project.contracts.index') }}">Contract Report</a>
+                    @endcan
                 </div>
                 <div class="col-3">
                     Start Date:
@@ -123,6 +126,15 @@
                         <input type="file" id="contract_file" name="contract_file" class="custom-file-input">
                         <label for="contract_file" class="custom-file-label overflow-hidden">Upload New
                             Contract</label>
+                        <div class="indicator" style="margin-top: 3px">
+                            @if ($client->clientContracts->isEmpty() == false)
+                                <a id="contract_file mt-5"
+                                    style="{{ $client->clientContracts ? '' : 'd-none' }}"
+                                    href="{{ route('client.pdf.show',$client->clientContracts->first())}}" target="_blank">
+                                    <span class="mr-1 underline theme-info fz-16">File: {{ $client->name}}_Contract</span>
+                                    <i class="fa fa-external-link-square fa-1x"></i></a>
+                            @endif
+                        </div>
                     </div>
                 </div>
                 <div class="col-3">
@@ -133,7 +145,7 @@
                 </div>
 
             </div>
-            <div class="mt-3 mb-4">
+            <div class="mt-5 mb-4">
                 <span class="mb-3"  style="text-decoration: underline;" type="button" data-toggle="collapse" data-target="#contractHistory" aria-expanded="false" aria-controls="contractHistory">Contract History <i class="fa fa-history ml-1" aria-hidden="true"></i></span>
                 <div class="collapse" id="contractHistory">
                     <table class="table">

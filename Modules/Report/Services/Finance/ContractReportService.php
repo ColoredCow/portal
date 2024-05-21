@@ -17,6 +17,7 @@ class ContractReportService implements ProjectServiceContract
             ->with(['meta' => function ($query) {
                 $query->select('client_id', 'key', 'value');
             }])
+            ->where('is_billable', 1)
             ->whereHas('projects', function ($query) {
                 $query->where('status', 'active');
             })
@@ -27,7 +28,11 @@ class ContractReportService implements ProjectServiceContract
                 if ($metaValue == 'client' || $metaValue == 'project' || is_null($metaValue)) {
                     $collection = $metaValue == 'client' ? $client->clientContracts : $client->projects;
 
-                    return optional($collection->sortBy('end_date')->first())->end_date;
+                    $filteredNullEndDate = $collection->filter(function ($item) {
+                        return ! is_null($item->end_date);
+                    });
+
+                    return optional($filteredNullEndDate->sortBy('end_date')->first())->end_date;
                 }
             })
             ->values();
