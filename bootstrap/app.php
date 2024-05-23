@@ -1,5 +1,10 @@
 <?php
 
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+use Sentry\Laravel\Integration;
+
 /*
 |--------------------------------------------------------------------------
 | Create The Application
@@ -45,6 +50,39 @@ $app->register(
     OwenIt\Auditing\AuditingServiceProvider::class
 );
 
+/*
+|--------------------------------------------------------------------------
+| Custom Application Configuration
+|--------------------------------------------------------------------------
+|
+| Additional configuration for the application can be done here.
+|
+*/
+
+// Ensure these methods are defined in your custom setup
+if (method_exists($app, 'configure')) {
+    $app->configure(dirname(__DIR__));
+}
+
+if (method_exists($app, 'withRouting')) {
+    $app->withRouting(
+        __DIR__.'/../routes/web.php',
+        __DIR__.'/../routes/console.php',
+        '/up'
+    );
+}
+
+if (method_exists($app, 'withMiddleware')) {
+    $app->withMiddleware(function (Middleware $middleware) {
+        // Add middleware configuration here
+    });
+}
+
+if (method_exists($app, 'withExceptions')) {
+    $app->withExceptions(function (Exceptions $exceptions) {
+        Integration::handles($exceptions);
+    });
+}
 
 /*
 |--------------------------------------------------------------------------
