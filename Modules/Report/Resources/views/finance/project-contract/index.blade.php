@@ -7,6 +7,13 @@
             @php
                 $request = request()->all();
             @endphp
+            <li class="nav-item">
+                @php
+                    $allContractsRequest = $request;
+                    unset($allContractsRequest['status']);
+                @endphp
+                <a class="nav-link {{ request()->input('status', false) === false ? 'active' : '' }}" href="{{ route('report.project.contracts.index', $allContractsRequest) }}">All Contracts</a>
+            </li>
             <li class="nav-item mr-3">
                 @php
                     $activeRequest = array_merge($request, ['status' => 'active']);
@@ -19,14 +26,7 @@
                 @endphp
                 <a class="nav-link {{ request()->input('status') == 'inactive' ? 'active' : '' }}" href="{{ route('report.project.contracts.index', $inactiveRequest) }}">Inactive Contracts</a>
             </li>
-            <li class="nav-item">
-                @php
-                    // Remove the 'status' key from the request array for all contracts
-                    $allContractsRequest = $request;
-                    unset($allContractsRequest['status']);
-                @endphp
-                <a class="nav-link {{ request()->input('status', false) === false ? 'active' : '' }}" href="{{ route('report.project.contracts.index', $allContractsRequest) }}">All Contracts</a>
-            </li>
+
         </ul>
 
         <br>

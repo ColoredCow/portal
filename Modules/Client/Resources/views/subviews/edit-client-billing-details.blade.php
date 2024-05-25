@@ -105,14 +105,3 @@
         </div>
     </div>
 </div>
-
-{{-- <script>
-    document.getElementById('contract_level_checkbox').addEventListener('change', function() {
-        var cardBody = document.getElementById('contract_fields');
-        if (this.checked) {
-            cardBody.style.display = '';
-        } else {
-            cardBody.style.display = 'none';
-        }
-    });
-</script> --}}
