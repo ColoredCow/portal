@@ -71,8 +71,8 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
 
             $contractorPayrollData = [
                 $contractor->user()->withTrashed()->first()->name,
-                "",
-                "Consultant",
+                '',
+                'Consultant',
                 optional($contractor->getCurrentSalary())->monthly_gross_salary ?: '-',
                 optional($contractor->getCurrentSalary())->basic_salary ?: '-',
                 optional($contractor->getCurrentSalary())->hra ?: '-',
