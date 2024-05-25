@@ -11,12 +11,18 @@
 					</div>
 					<div class="modal-body">
 						<label class="w-75 form-control-label" for="Staff Type">Working Staff Type</label>
-						<select class="w-75 form-control" name="" id="" @change="onChange($event)">
-							<option value="">Select Working Staff Type</option>
-							<option value="Employee">{{stafftypes.employee}}</option>
-							<option value="Intern">{{stafftypes.intern}}</option>
-							<option value="Contractor">{{stafftypes.contractor}}</option>
-							<option value="Support Staff">{{stafftypes.supportstaff}}</option>
+						<select class="w-75 form-control" name="" id="" @change="onChange($event, 'staffType')">
+							<option value="" :selected="!this.user.employee.staff_type">Select Working Staff Type</option>
+							<option value="Employee" :selected="this.user.employee.staff_type === 'Employee'">{{stafftypes.employee}}</option>
+							<option value="Intern" :selected="this.user.employee.staff_type === 'Intern'">{{stafftypes.intern}}</option>
+							<option value="Contractor" :selected="this.user.employee.staff_type === 'Contractor'">{{stafftypes.contractor}}</option>
+							<option value="Support Staff" :selected="this.user.employee.staff_type === 'Support Staff'">{{stafftypes.supportstaff}}</option>
+						</select>
+						<label class="w-75 form-control-label mt-3" for="Staff Type">Payroll Type</label>
+						<select class="w-75 form-control" name="" id="" @change="onChange($event, 'payrollType')" required>
+							<option value="" :selected="!this.user.employee.payroll_type">Select Payroll Type</option>
+							<option value="full-time" :selected="this.user.employee.payroll_type === 'full-time'">Full Time</option>
+							<option value="contractor" :selected="this.user.employee.payroll_type === 'contractor'">Contractor</option>
 						</select>
 					</div>
 					<div class="modal-footer">
@@ -35,22 +41,34 @@ export default {
 	props: ["user", "config", "stafftypes"],
 	data() {
 		return {
-			StaffType: "",
-			typeOfStaff: "",
+			staffType: null,
+			payrollType: null
 		};
 	},
 
 	methods: {
-		onChange(e) {
-			this.StaffType = (e.target.value);
+		onChange(e, type) {
+			const value = e.target.value
+			if (type === "staffType") {
+				this.staffType = value;
+			} else {
+				this.payrollType = value
+			}
 		},
 
 		updateStaffType() {
+			const newStaffType = this.staffType || this.user.employee.staff_type
+			const newPayrollType = this.payrollType || this.user.employee.payroll_type
 
-			axios.post("/user/add-staff-type", { typeOfStaff: this.StaffType, id: this.user.id })
+			console.log(newStaffType, newPayrollType)
+
+			axios.post("/user/add-staff-type", { 
+					typeOfStaff: newStaffType,  
+					id: this.user.id,
+					payrollType: newPayrollType
+				})
 				.then((response) => {
 					window.location.reload(); //since we are not using vue-router
-					this.destroyFormModal();
 				})
 				.catch(error => {
 					console.log("err", error);
