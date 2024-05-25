@@ -145,13 +145,15 @@ class EmployeeController extends Controller
         $currentMonth = date('M');
         $currentYear = date('Y');
         $employees = $this->service->getEmployeeListForExport($exportType);
-        
+
         if ($exportType === 'full-time') {
             $filename = 'Salary Computations_' . $currentMonth . ' ' . $currentYear . '.xlsx';
+
             return Excel::download(new EmployeePayrollExport($employees['employees']), $filename);
         }
 
         $filename = 'ConsultantFee_Computation_' . $currentMonth . '_' . $currentYear . '.xlsx';
+
         return Excel::download(new ContractorFeeExport($employees['employees']), $filename);
     }
 
