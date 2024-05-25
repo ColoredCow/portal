@@ -206,8 +206,13 @@ class EmployeeSalary extends Model
         return (int) $healthInsuranceConf->fixed_amount;
     }
 
+    public function getTotalHealthInsuranceAttribute()
+    {
+        return $this->health_insurance * (optional($this->employee->user->profile)->insurance_tenants ?? 1);
+    }
+
     public function getCtcAggregatedAttribute()
     {
-        return $this->ctc_annual + $this->health_insurance;
+        return $this->ctc_annual + $this->total_health_insurance;
     }
 }

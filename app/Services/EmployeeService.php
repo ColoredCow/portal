@@ -44,12 +44,12 @@ class EmployeeService
         ];
     }
 
-    public function getEmployeeListForExport()
+    public function getEmployeeListForExport($exportType)
     {
-        $employees = Employee::with('user')->whereHas('user', function ($query) {
-            $query->whereNull('deleted_at');
-        })
-            ->orderBy('name')
+        $employees = Employee::with('user')->where('payroll_type', $exportType)->whereHas('user', function ($query) {
+                $query->whereNull('deleted_at');
+            })
+            ->orderBy('cc_employee_id')
             ->get();
 
         return [

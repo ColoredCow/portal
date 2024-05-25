@@ -17,7 +17,7 @@
 
 <script>
 export default {
-	props:["salaryConfigs", "grossCalculationData", "tds", "loanDeduction", "proposedCtc"],
+	props:["salaryConfigs", "grossCalculationData", "tds", "loanDeduction", "proposedCtc", "insuranceTenants"],
 
 	computed: {
 		grossSalary() {
@@ -33,7 +33,7 @@ export default {
 					(100 * parseFloat(this.proposedCtc)) / (1200 + (12 * parseFloat(this.grossCalculationData.basicSalaryPercentageFactor) * (parseFloat(this.grossCalculationData.epfPercentageRate) + parseFloat(this.grossCalculationData.edliChargesPercentageRate) + parseFloat(this.grossCalculationData.adminChargesPercentageRate))));
 			}
 			
-			grossSalary = Math.ceil(grossSalary - (parseFloat(this.grossCalculationData.insuranceAmount) / 12))
+			grossSalary = Math.ceil(grossSalary - ((parseFloat(this.grossCalculationData.insuranceAmount) * this.insuranceTenants)/ 12))
 
 			return grossSalary + (100 - (grossSalary % 100))
 		},
@@ -135,7 +135,7 @@ export default {
 			if (this.grossSalary === "" || this.employerEsi !== 0 || this.employeeEsi !== 0) {
 				return 0;
 			}
-			return parseInt(this.salaryConfigs.health_insurance.fixed_amount);
+			return parseFloat(this.salaryConfigs.health_insurance.fixed_amount) * parseFloat(this.insuranceTenants);
 		},
 		ctcAggregated() {
 			if (!Number.isFinite(this.grossSalary) || parseInt(this.grossSalary) === 0) {

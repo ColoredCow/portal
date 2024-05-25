@@ -32,7 +32,13 @@
   <div>
     <form method="POST" action="{{ route('payroll-download') }}">
       @csrf
-      <button type="submit" class="btn btn-primary">Export To Excel</button>
+      <div class="d-flex align-items-center">
+        <select name="export" class="p-0.5">
+          <option value="full-time">Employee Salary</option>
+          <option value="contractor">Contractor Fee</option>
+        </select>
+        <button type="submit" class="ml-1 btn btn-primary">Export</button>
+      </div>
     </form>
   </div>
 </div>

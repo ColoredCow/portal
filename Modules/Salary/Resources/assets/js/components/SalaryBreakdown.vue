@@ -268,7 +268,7 @@ export default {
 			if (this.grossSalary === "" || this.employerEsi !== 0 || this.employeeEsi !== 0) {
 				return 0;
 			}
-			return parseInt((this.salaryConfigs.health_insurance.fixed_amount) * this.insuranceTenants);
+			return parseFloat(this.salaryConfigs.health_insurance.fixed_amount) * parseFloat(this.insuranceTenants);
 		},
 		ctcAggregated() {
 			return this.ctcAnnual + this.healthInsurance;		
