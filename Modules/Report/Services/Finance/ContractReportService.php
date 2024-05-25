@@ -10,7 +10,7 @@ class ContractReportService implements ProjectServiceContract
     public function getAllClientsData(array $data = [])
     {
         $statusFilter = [
-            'status' => $data['status'] ??  null,
+            'status' => $data['status'] ?? null,
             'name' => $data['name'] ?? null,
             'date' => $data['end_date'] ?? null,
             'sort' => $data['sort'] ?? 'name',
@@ -18,10 +18,10 @@ class ContractReportService implements ProjectServiceContract
         ];
 
         $clientData = Client::with(['projects' => function ($query) use ($statusFilter) {
-            if (!empty($statusFilter['status'])) {
+            if (! empty($statusFilter['status'])) {
                 $query->where('status', $statusFilter['status']);
             }
-            if (!empty($statusFilter['date'])) {
+            if (! empty($statusFilter['date'])) {
                 $query->whereDate('end_date', '<=', $statusFilter['date']);
             }
             $query->orderBy('end_date', $statusFilter['direction']);
@@ -32,10 +32,10 @@ class ContractReportService implements ProjectServiceContract
         }])
         ->where('is_billable', 1)
         ->whereHas('projects', function ($query) use ($statusFilter) {
-            if (!empty($statusFilter['status'])) {
+            if (! empty($statusFilter['status'])) {
                 $query->where('status', $statusFilter['status']);
             }
-            if (!empty($statusFilter['date'])) {
+            if (! empty($statusFilter['date'])) {
                 $query->whereDate('end_date', '<=', $statusFilter['date']);
             }
         })
@@ -51,7 +51,7 @@ class ContractReportService implements ProjectServiceContract
                 $collection = $metaValue == 'client' ? $client->clientContracts : $client->projects;
 
                 $filteredNullEndDate = $collection->filter(function ($item) {
-                    return !is_null($item->end_date);
+                    return ! is_null($item->end_date);
                 });
 
                 return optional($filteredNullEndDate->first())->end_date;
