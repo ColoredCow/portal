@@ -35,7 +35,7 @@
       <div class="d-flex align-items-center">
         <select name="export" class="p-0.5">
           <option value="full-time">Employee Salary</option>
-          <option value="contractor">Contractor Fee</option>
+          <option disabled value="contractor">Contractor Fee</option>
         </select>
         <button type="submit" class="ml-1 btn btn-primary">Export</button>
       </div>
