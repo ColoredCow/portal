@@ -22,6 +22,9 @@ class ClientFormsRequest extends FormRequest
             case 'billing-details':
                 return $this->billingDetailsValidation();
 
+            case 'contract':
+                return $this->contractValidation();
+
             case 'default':
                 return [];
         }
@@ -106,6 +109,15 @@ class ClientFormsRequest extends FormRequest
             'discount_rate_term' => 'nullable|string',
             'billing_frequency' => 'nullable|string',
             'bank_charges' => 'nullable|string',
+            // 'contract_file' => 'nullable|max:5220',
+            // 'start_date' => 'nullable|date',
+            // 'end_date' => 'nullable|date',
+        ];
+    }
+
+    private function contractValidation()
+    {
+        return [
             'contract_file' => 'nullable|max:5220',
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date',

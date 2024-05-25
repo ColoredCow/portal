@@ -7,35 +7,57 @@ use Modules\Project\Contracts\ProjectServiceContract;
 
 class ContractReportService implements ProjectServiceContract
 {
-    public function getAllClientsData()
+    public function getAllClientsData(array $data = [])
     {
-        $clientData = Client::query()
-            ->with(['projects' => function ($query) {
-                $query->where('status', 'active')->orderBy('end_date', 'asc');
-            }])
-            ->with('clientContracts')
-            ->with(['meta' => function ($query) {
-                $query->select('client_id', 'key', 'value');
-            }])
-            ->where('is_billable', 1)
-            ->whereHas('projects', function ($query) {
-                $query->where('status', 'active');
-            })
-            ->get()
-            ->sortBy(function ($client) {
-                $metaValue = optional($client->meta->where('key', 'contract_level')->first())->value;
+        $statusFilter = [
+            'status' => $data['status'] ??  null,
+            'name' => $data['name'] ?? null,
+            'date' => $data['end_date'] ?? null,
+            'sort' => $data['sort'] ?? 'name',
+            'direction' => $data['direction'] ?? 'asc',
+        ];
 
-                if ($metaValue == 'client' || $metaValue == 'project' || is_null($metaValue)) {
-                    $collection = $metaValue == 'client' ? $client->clientContracts : $client->projects;
+        $clientData = Client::with(['projects' => function ($query) use ($statusFilter) {
+            if (!empty($statusFilter['status'])) {
+                $query->where('status', $statusFilter['status']);
+            }
+            if (!empty($statusFilter['date'])) {
+                $query->whereDate('end_date', '<=', $statusFilter['date']);
+            }
+            $query->orderBy('end_date', $statusFilter['direction']);
+        }])
+        ->with('clientContracts')
+        ->with(['meta' => function ($query) {
+            $query->select('client_id', 'key', 'value');
+        }])
+        ->where('is_billable', 1)
+        ->whereHas('projects', function ($query) use ($statusFilter) {
+            if (!empty($statusFilter['status'])) {
+                $query->where('status', $statusFilter['status']);
+            }
+            if (!empty($statusFilter['date'])) {
+                $query->whereDate('end_date', '<=', $statusFilter['date']);
+            }
+        })
+        ->get()
+        ->sortBy(function ($client) use ($statusFilter) {
+            if ($statusFilter['sort'] === 'name') {
+                return strtolower($client->name);
+            }
 
-                    $filteredNullEndDate = $collection->filter(function ($item) {
-                        return ! is_null($item->end_date);
-                    });
+            $metaValue = optional($client->meta->where('key', 'contract_level')->first())->value;
 
-                    return optional($filteredNullEndDate->sortBy('end_date')->first())->end_date;
-                }
-            })
-            ->values();
+            if ($metaValue == 'client' || $metaValue == 'project' || is_null($metaValue)) {
+                $collection = $metaValue == 'client' ? $client->clientContracts : $client->projects;
+
+                $filteredNullEndDate = $collection->filter(function ($item) {
+                    return !is_null($item->end_date);
+                });
+
+                return optional($filteredNullEndDate->first())->end_date;
+            }
+        }, SORT_REGULAR, $statusFilter['direction'] === 'desc')
+        ->values();
 
         return $clientData;
     }
