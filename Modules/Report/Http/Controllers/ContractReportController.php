@@ -16,9 +16,10 @@ class ContractReportController extends Controller
     {
         $this->service = $service;
     }
+
     public function index()
     {
-        $clientsData = $this->service->getAllClientsData();
+        $clientsData = $this->service->getAllClientsData(request()->all());
         $contractEndDateThreshold = Setting::where('setting_key', 'contract_end_date_threshold')->value('setting_value');
 
         return view('report::finance.project-contract.index', [
