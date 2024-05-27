@@ -17,7 +17,6 @@ class ContractReportService implements ProjectServiceContract
         ];
 
         $clientData = Client::with(['projects' => function ($query) use ($statusFilter) {
-
             if (! empty($statusFilter['status'])) {
                 $query->where('status', $statusFilter['status']);
             }
