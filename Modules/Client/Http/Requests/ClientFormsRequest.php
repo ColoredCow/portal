@@ -108,10 +108,7 @@ class ClientFormsRequest extends FormRequest
             'discount_rate' => 'nullable|string',
             'discount_rate_term' => 'nullable|string',
             'billing_frequency' => 'nullable|string',
-            'bank_charges' => 'nullable|string',
-            // 'contract_file' => 'nullable|max:5220',
-            // 'start_date' => 'nullable|date',
-            // 'end_date' => 'nullable|date',
+            'bank_charges' => 'nullable|string'
         ];
     }
 

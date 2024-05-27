@@ -11,18 +11,18 @@ class ContractReportService implements ProjectServiceContract
     {
         $statusFilter = [
             'status' => $data['status'] ?? null,
-            'name' => $data['name'] ?? null,
-            'date' => $data['end_date'] ?? null,
+            'end_date' => $data['end_date'] ?? null,
             'sort' => $data['sort'] ?? 'name',
             'direction' => $data['direction'] ?? 'asc',
         ];
 
         $clientData = Client::with(['projects' => function ($query) use ($statusFilter) {
+
             if (! empty($statusFilter['status'])) {
                 $query->where('status', $statusFilter['status']);
             }
-            if (! empty($statusFilter['date'])) {
-                $query->whereDate('end_date', '<=', $statusFilter['date']);
+            if (! empty($statusFilter['end_date'])) {
+                $query->whereDate('end_date', $statusFilter['end_date']);
             }
             $query->orderBy('end_date', $statusFilter['direction']);
         }])
@@ -31,20 +31,11 @@ class ContractReportService implements ProjectServiceContract
             $query->select('client_id', 'key', 'value');
         }])
         ->where('is_billable', 1)
-        ->whereHas('projects', function ($query) use ($statusFilter) {
-            if (! empty($statusFilter['status'])) {
-                $query->where('status', $statusFilter['status']);
-            }
-            if (! empty($statusFilter['date'])) {
-                $query->whereDate('end_date', '<=', $statusFilter['date']);
-            }
-        })
         ->get()
         ->sortBy(function ($client) use ($statusFilter) {
             if ($statusFilter['sort'] === 'name') {
                 return strtolower($client->name);
             }
-
             $metaValue = optional($client->meta->where('key', 'contract_level')->first())->value;
 
             if ($metaValue == 'client' || $metaValue == 'project' || is_null($metaValue)) {

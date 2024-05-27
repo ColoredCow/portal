@@ -77,14 +77,14 @@
                         <tr>
                             @if ($key === 0)
                                 <td style="border-bottom: 1px solid black; vertical-align: middle;" rowspan="{{ $totalProjects }}">
-                                    <a href="{{ route('client.edit', [$project->client->id, 'client-details']) }}">{{ $clientData->name }}</a>
+                                    <a href="{{ route('client.edit', [$project->client->id, 'client-details']) }}" data-toggle="tooltip" title="{{ $clientData->name }}">{{ str_limit($clientData->name, 23) }}</a>
                                 </td>
                             @endif
                             <td style="border-bottom: {{ $isLastProject ? '1px solid black' : 'none' }}">
                                 @if($project->status === 'active')
-                                <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a>
+                                <a href="{{ route('project.show', $project) }}" data-toggle="tooltip" title="{{ $project->name }}">{{ $project->name }}</a>
                                 @else
-                                <a class="text-danger" href="{{ route('project.show', $project) }}">{{ $project->name }}</a>
+                                <a class="text-danger" href="{{ route('project.show', $project) }}" data-toggle="tooltip" title="{{ $project->name }}">{{ $project->name }}</a>
                                 @endif
                             </td>
                             @if ($contractType === 'client')
@@ -92,7 +92,7 @@
                                     <td style="border-bottom: 1px solid black; vertical-align: middle;" rowspan="{{ $totalProjects }}">
                                         @if ($clientData->clientContracts->first())
                                             <a href="{{ route('client.pdf.show', $clientData->clientContracts->first()) }}" target="_blank">
-                                                <span data-toggle="tooltip" data-placement="right" title= {{basename($clientData->clientContracts->first()->contract_file_path)}} >{{ str_limit(basename($clientData->clientContracts->first()->contract_file_path), 10) }}</span>
+                                                <span data-toggle="tooltip" data-placement="right" title= "{{basename($clientData->clientContracts->first()->contract_file_path)}}">{{ str_limit(basename($clientData->clientContracts->first()->contract_file_path), 10) }}</span>
                                             </a>
                                         @else
                                             <span class="text-danger">No Contract</span>
@@ -103,7 +103,7 @@
                                 <td style="border-bottom: {{ $isLastProject ? '1px solid black' : 'none' }}">
                                     @if ($project->projectContracts->first())
                                         <a href="{{ route('pdf.show', $project->projectContracts->first()) }}" target="_blank">
-                                           <span data-toggle="tooltip" data-placement="right" title= {{basename($project->projectContracts->first()->contract_file_path)}}> {{ str_limit(basename($project->projectContracts->first()->contract_file_path), 10) }} </span>
+                                           <span data-toggle="tooltip" data-placement="right" title= "{{basename($project->projectContracts->first()->contract_file_path)}}"> {{ str_limit(basename($project->projectContracts->first()->contract_file_path), 10) }} </span>
                                         </a>
                                     @else
                                         <span class="text-danger">No Contract</span>
