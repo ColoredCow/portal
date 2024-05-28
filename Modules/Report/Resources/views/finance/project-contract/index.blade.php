@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="container">
+    <div class="container">
         <h1>Project Contract</h1>
         <br><br>
         <ul class="nav nav-pills">
@@ -12,21 +12,23 @@
                     $allContractsRequest = $request;
                     unset($allContractsRequest['status']);
                 @endphp
-                <a class="nav-link {{ request()->input('status', false) === false ? 'active' : '' }}" href="{{ route('report.project.contracts.index', $allContractsRequest) }}">All Contracts</a>
+                <a class="nav-link {{ request()->input('status', false) === false ? 'active' : '' }}"
+                    href="{{ route('report.project.contracts.index', $allContractsRequest) }}">All Contracts</a>
             </li>
             <li class="nav-item mr-3">
                 @php
                     $activeRequest = array_merge($request, ['status' => 'active']);
                 @endphp
-                <a class="nav-link {{ request()->input('status') == 'active' ? 'active' : '' }}" href="{{ route('report.project.contracts.index', $activeRequest) }}">Active Contracts</a>
+                <a class="nav-link {{ request()->input('status') == 'active' ? 'active' : '' }}"
+                    href="{{ route('report.project.contracts.index', $activeRequest) }}">Active Contracts</a>
             </li>
             <li class="nav-item">
                 @php
                     $inactiveRequest = array_merge($request, ['status' => 'inactive']);
                 @endphp
-                <a class="nav-link {{ request()->input('status') == 'inactive' ? 'active' : '' }}" href="{{ route('report.project.contracts.index', $inactiveRequest) }}">Inactive Contracts</a>
+                <a class="nav-link {{ request()->input('status') == 'inactive' ? 'active' : '' }}"
+                    href="{{ route('report.project.contracts.index', $inactiveRequest) }}">Inactive Contracts</a>
             </li>
-
         </ul>
 
         <br>
@@ -34,12 +36,13 @@
             <thead class="thead-dark">
                 <tr class="sticky-top">
                     <th class="w-25p">
-                        <a class="text-white text-decoration-none" href="{{ route('report.project.contracts.index', array_merge($request, ['sort' => 'name', 'direction' => request()->get('direction', 'asc') === 'asc' ? 'desc' : 'asc'])) }}">
+                        <a class="text-white text-decoration-none"
+                            href="{{ route('report.project.contracts.index', array_merge($request, ['sort' => 'name', 'direction' => request()->get('direction', 'asc') === 'asc' ? 'desc' : 'asc'])) }}">
                             Client Name
                             @if (request()->get('sort') === 'name')
                                 <i class="fa fa-sort-{{ request()->get('direction', 'asc') }}"></i>
                             @else
-                            <i class="fa fa-sort"></i>
+                                <i class="fa fa-sort"></i>
                             @endif
                         </a>
                     </th>
@@ -47,12 +50,13 @@
                     <th>Contract</th>
                     <th>Start Date</th>
                     <th>
-                        <a class="text-white text-decoration-none" href="{{ route('report.project.contracts.index', array_merge($request, ['sort' => 'date', 'direction' => request()->get('direction', 'asc') === 'asc' ? 'desc' : 'asc'])) }}">
+                        <a class="text-white text-decoration-none"
+                            href="{{ route('report.project.contracts.index', array_merge($request, ['sort' => 'date', 'direction' => request()->get('direction', 'asc') === 'asc' ? 'desc' : 'asc'])) }}">
                             End Date
                             @if (request()->get('sort') === 'date')
                                 <i class="fa fa-sort-{{ request()->get('direction', 'asc') }}"></i>
                             @else
-                            <i class="fa fa-sort"></i>
+                                <i class="fa fa-sort"></i>
                             @endif
                         </a>
                     </th>
@@ -76,43 +80,66 @@
                         @endphp
                         <tr>
                             @if ($key === 0)
-                                <td style="border-bottom: 1px solid black; vertical-align: middle;" rowspan="{{ $totalProjects }}">
-                                    <a href="{{ route('client.edit', [$project->client->id, 'client-details']) }}" data-toggle="tooltip" title="{{ $clientData->name }}">{{ str_limit($clientData->name, 23) }}</a>
+                                <td style="border-bottom: 1px solid black; vertical-align: middle;"
+                                    rowspan="{{ $totalProjects }}">
+                                    <a href="{{ route('client.edit', [$project->client->id, 'client-details']) }}"
+                                        data-toggle="tooltip"
+                                        title="{{ $clientData->name }}">{{ str_limit($clientData->name, 23) }}</a>
                                 </td>
                             @endif
                             <td style="border-bottom: {{ $isLastProject ? '1px solid black' : 'none' }}">
-                                @if($project->status === 'active')
-                                <a href="{{ route('project.show', $project) }}" data-toggle="tooltip" title="{{ $project->name }}">{{ $project->name }}</a>
+                                @if ($project->status === 'active' || $project->status === 'yet to start')
+                                    <a href="{{ route('project.show', $project) }}" data-toggle="tooltip"
+                                        title="{{ $project->name }}">{{ $project->name }}</a>
                                 @else
-                                <a class="text-danger" href="{{ route('project.show', $project) }}" data-toggle="tooltip" title="{{ $project->name }}">{{ $project->name }}</a>
+                                    <a class="text-danger" href="{{ route('project.show', $project) }}"
+                                        data-toggle="tooltip"
+                                        title="{{ $project->name }}">{{ str_limit($project->name, 23) }}</a>
                                 @endif
                             </td>
                             @if ($contractType === 'client')
                                 @if ($key === 0)
-                                    <td style="border-bottom: 1px solid black; vertical-align: middle;" rowspan="{{ $totalProjects }}">
+                                    <td style="border-bottom: 1px solid black; vertical-align: middle; text-align: center"
+                                        rowspan="{{ $totalProjects }}">
                                         @if ($clientData->clientContracts->first())
-                                            <a href="{{ route('client.pdf.show', $clientData->clientContracts->first()) }}" target="_blank">
-                                                <span data-toggle="tooltip" data-placement="right" title= "{{basename($clientData->clientContracts->first()->contract_file_path)}}">{{ str_limit(basename($clientData->clientContracts->first()->contract_file_path), 10) }}</span>
+                                            <a href="{{ route('client.pdf.show', $clientData->clientContracts->first()) }}"
+                                                target="_blank">
+                                                <span data-toggle="tooltip" data-placement="right"
+                                                    title= "{{ basename($clientData->clientContracts->first()->contract_file_path) }}"><i
+                                                        class="fa fa-file-pdf-o" aria-hidden="true"></i></span>
                                             </a>
                                         @else
-                                            <span class="text-danger">No Contract</span>
+                                            @if ($clientData->status === 'yet to start')
+                                                <span>Yet to start</span>
+                                            @else
+                                                <span class="text-danger">No Contract</span>
+                                            @endif
                                         @endif
                                     </td>
                                 @endif
                             @else
-                                <td style="border-bottom: {{ $isLastProject ? '1px solid black' : 'none' }}">
+                                <td
+                                    style="vertical-align: middle; text-align: center; border-bottom: {{ $isLastProject ? '1px solid black' : 'none' }}">
                                     @if ($project->projectContracts->first())
-                                        <a href="{{ route('pdf.show', $project->projectContracts->first()) }}" target="_blank">
-                                           <span data-toggle="tooltip" data-placement="right" title= "{{basename($project->projectContracts->first()->contract_file_path)}}"> {{ str_limit(basename($project->projectContracts->first()->contract_file_path), 10) }} </span>
+                                        <a href="{{ route('pdf.show', $project->projectContracts->first()) }}"
+                                            target="_blank">
+                                            <span data-toggle="tooltip" data-placement="right"
+                                                title= "{{ basename($project->projectContracts->first()->contract_file_path) }}">
+                                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i> </span>
                                         </a>
                                     @else
-                                        <span class="text-danger">No Contract</span>
+                                        @if ($project->status === 'yet to start')
+                                            <span>Yet to start</span>
+                                        @else
+                                            <span class="text-danger">No Contract</span>
+                                        @endif
                                     @endif
                                 </td>
                             @endif
                             @if ($contractType === 'client')
                                 @if ($key === 0)
-                                    <td style="border-bottom: 1px solid black; vertical-align: middle;" rowspan="{{ $totalProjects }}">
+                                    <td style="border-bottom: 1px solid black; vertical-align: middle;"
+                                        rowspan="{{ $totalProjects }}">
                                         <span class="text-capitalize fz-lg-17">
                                             {{ optional($clientData->clientContracts->first()->start_date)->format('d M Y') ?? '-' }}
                                         </span>
@@ -127,23 +154,31 @@
                             @endif
                             @if ($contractType === 'client')
                                 @if ($key === 0)
-                                    <td style="border-bottom: 1px solid black; vertical-align: middle;" rowspan="{{ $totalProjects }}"
+                                    <td style="border-bottom: 1px solid black; vertical-align: middle;"
+                                        rowspan="{{ $totalProjects }}"
                                         @if ($endDatePassed) class="text-danger" @endif>
                                         <span class="text-capitalize fz-lg-17 {{ $endDateAlert }}">
                                             {{ optional($endDate)->format('d M Y') ?? '-' }}
                                             @if ($endDateAlert && !$endDatePassed)
-                                                <span data-toggle="tooltip" data-placement="right" title="This is about to expire in {{ $endDateDiff }} days"><i class="fa fa-clock-o fa-lg ml-5 toolpit text-theme-orange" aria-hidden="true"></i>
+                                                <span data-toggle="tooltip" data-placement="right"
+                                                    title="This is about to expire in {{ $endDateDiff }} days"><i
+                                                        class="fa fa-clock-o fa-lg ml-5 toolpit text-theme-orange"
+                                                        aria-hidden="true"></i>
                                                 </span>
                                             @endif
                                         </span>
                                     </td>
                                 @endif
                             @else
-                                <td style="border-bottom: {{ $isLastProject ? '1px solid black' : 'none' }}" @if ($endDatePassed) class="text-danger" @endif>
+                                <td style="border-bottom: {{ $isLastProject ? '1px solid black' : 'none' }}"
+                                    @if ($endDatePassed) class="text-danger" @endif>
                                     <span class="text-capitalize fz-lg-17 {{ $endDateAlert }}">
                                         {{ optional($endDate)->format('d M Y') ?? '-' }}
                                         @if ($endDateAlert && !$endDatePassed)
-                                            <span data-toggle="tooltip" data-placement="right" title="This is about to expire in {{ $endDateDiff }} days"><i class="fa fa-clock-o fa-lg ml-5 toolpit text-theme-orange" aria-hidden="true"></i>
+                                            <span data-toggle="tooltip" data-placement="right"
+                                                title="This is about to expire in {{ $endDateDiff }} days"><i
+                                                    class="fa fa-clock-o fa-lg ml-5 toolpit text-theme-orange"
+                                                    aria-hidden="true"></i>
                                             </span>
                                         @endif
                                     </span>
@@ -154,5 +189,7 @@
                 @endforeach
             </tbody>
         </table>
+        <br>
+        <br>
     </div>
 @endsection
