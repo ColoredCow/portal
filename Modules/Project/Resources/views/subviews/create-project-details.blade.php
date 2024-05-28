@@ -19,11 +19,22 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-5">
+                <label for="status" class="field-required">Status</label>
+                <select name="status" id="status" class="form-control" required="required">
+                    @foreach (config('project.status') as $key => $display_name)
+                        <option value="{{ $key }}" {{ old('status') == $key ? 'selected' : '' }}>{{ $display_name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group offset-md-1 col-md-5">
                 <label for="effort_sheet_url">{{ __('Effort Sheet URL') }}</label>
                 <input type="url" class="form-control" name="effort_sheet_url" id="effort_sheet_url"
                     placeholder="Enter effort sheet url" value="{{ old('effort_sheet_url') }}">
             </div>
-            <div class="form-group offset-md-1 col-md-5">
+        </div>
+            <br>
+        <div class="form-row">
+            <div class="form-group col-md-5">
                 <label for="project_type" class="field-required">{{ __('Project Type') }}</label>
                 <select v-model="projectType" name="project_type" id="project_type" class="form-control" required>
                     <option value="">Select project type</option>
@@ -31,15 +42,6 @@
                         <option value="{{ $key }}" {{ old('project_type') == $key ? 'selected' : '' }}>{{ $project_type }}</option>
                     @endforeach
                 </select>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-5">
-                <label for="contract_file"> {{ __('Upload Contract File') }}</label>
-                <div class="custom-file">
-                    <input type="file" id="contract_file" name="contract_file" class="custom-file-input">
-                    <label for="contract" class="custom-file-label">Choose file</label>
-                </div>
             </div>
             <div class="form-group offset-md-1 col-md-5">
                 <label for="billing_level" class="field-required">Billing Level</label>
@@ -52,17 +54,24 @@
                 </select>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-5">
+        <br>
+    <div class="form-row">
+        <div class="form-group col-md-5">
+            <label for="contract_file"> {{ __('Upload Contract File') }}</label>
+            <div class="custom-file">
+                <input type="file" id="contract_file" name="contract_file" class="custom-file-input">
+                <label for="contract" class="custom-file-label">Choose file</label>
+            </div>
+        </div>
+            <div class="form-group offset-md-1 col-md-5">
                 <label for="google_chat_webhook_url">{{ __('Google Chat Webhook URL') }}</label>
                 <input type="url" class="form-control" name="google_chat_webhook_url" id="google_chat_webhook_url"
                     placeholder="Enter Google Chat Webhook URL"
                     value="{{ old('google_chat_webhook_url') }}">
             </div>
-            <div class="form-group offset-md-1 col-md-5">
-                <input type="checkbox" id="isamc" name="is_amc" value="true">
-                <label for="is_amc">AMC</label><br>
-            </div>
+    </div>
+    <br>
+    <div class="form-row">
             <div class="form-group offset col-md-2" v-if="projectType !== 'non-billable'">
                 <label for="start_date">Start Date</label>
                 <input type="date" class="form-control" name="start_date" id="startDate"
@@ -73,7 +82,12 @@
                 <input type="date" class="form-control" name="end_date" id="endDate"
                      value="{{ old('start_date') }}">
             </div>
+            <div class="form-group offset-md-1 col-md-5">
+                <input type="checkbox" id="isamc" name="is_amc" value="true">
+                <label for="is_amc">AMC</label><br>
+            </div>
         </div>
+        <br>
         <div class="form-row">
             <div class="form-group col-md-5" v-if="projectType !== 'non-billable'">
                 <label for="total_estimated_hours">{{ __('Total Estimated Hours') }}</label>
@@ -83,7 +97,7 @@
         </div>
     </div>
     <div class="card-footer">
-        <button type="button" class="btn btn-primary" id="save-btn-action">Create</button>
+        <button type="button" class="btn btn-primary mb-10" id="save-btn-action">Create</button>
     </div>
 </div>
 

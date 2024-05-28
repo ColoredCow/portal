@@ -52,6 +52,7 @@ class ProjectRequest extends FormRequest
                 $rules = [
                     'name' => 'required|string|unique:projects',
                     'client_id' => 'required|integer',
+                    'status' => 'required|string',
                     'project_manager' => 'nullable|string',
                     'effort_sheet_url' => 'nullable|active_url|max:191',
                     'google_chat_webhook_url' => 'nullable|url',
