@@ -29,8 +29,9 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
         $totalOtherAllowance = 0;
         $totalFoodAllowance = 0;
         $totalSalary = 0;
-        $totalDays = $this->employees->count() * 30;
-        $totalPaidDays = $this->employees->count() * 30;
+        $daysInMonth = Carbon::now()->daysInMonth;
+        $totalDays = $this->employees->count() * $daysInMonth;
+        $totalPaidDays = $this->employees->count() * $daysInMonth;
         $totalEmployeeEsi = 0;
         $totalEmployeeEpf = 0;
         $totalTds = 0;
@@ -68,7 +69,6 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
             $totalCtcAnnual += optional($employee->getCurrentSalary())->ctc_annual;
             $totalHealthInsurance += optional($employee->getCurrentSalary())->total_health_insurance;
             $totalCtcAgg += optional($employee->getCurrentSalary())->ctc_aggregated;
-            $daysInMonth = Carbon::now()->daysInMonth;
 
             $employeePayrollData = [
                 $employee->user()->withTrashed()->first()->name,
