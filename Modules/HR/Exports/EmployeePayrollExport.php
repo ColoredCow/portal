@@ -49,7 +49,7 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
 
         foreach ($this->employees as $employee) {
             $currentSalaryObject = $employee->getCurrentSalary();
-            
+
             if (! $currentSalaryObject) {
                 continue;
             }
