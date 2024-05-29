@@ -29,8 +29,9 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
         $totalOtherAllowance = 0;
         $totalFoodAllowance = 0;
         $totalSalary = 0;
-        $totalDays = $this->contractors->count() * 30;
-        $totalPaidDays = $this->contractors->count() * 30;
+        $daysInMonth = Carbon::now()->daysInMonth;
+        $totalDays = $this->contractors->count() * $daysInMonth;
+        $totalPaidDays = $this->contractors->count() * $daysInMonth;
         $totalEmployeeEsi = 0;
         $totalEmployeeEpf = 0;
         $totalTds = 0;
@@ -80,8 +81,8 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
                 optional($contractor->getCurrentSalary())->other_allowance ?: '-',
                 optional($contractor->getCurrentSalary())->food_allowance ?: '-',
                 optional($contractor->getCurrentSalary())->total_salary ?: '-',
-                30,
-                30,
+                $daysInMonth,
+                $daysInMonth,
                 optional($contractor->getCurrentSalary())->employee_esi,
                 optional($contractor->getCurrentSalary())->employee_epf,
                 optional($contractor->getCurrentSalary())->tds ?: '-',
