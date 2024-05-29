@@ -102,6 +102,13 @@ class ClientService implements ClientServiceContract
                 'clientBillingAddress' => $this->getClientBillingAddress($client),
                 'keyAccountManagers' => $this->getKeyAccountManagers()->whereNull('deleted_at')->sortBy('name'),
                 'clientBillingDetail' => $client->billingDetails,
+            ];
+        }
+
+        if ($section == 'contract') {
+            return [
+                'client' => $client,
+                'section' => $section,
                 'contract' => $client->clientContracts,
             ];
         }
@@ -139,6 +146,11 @@ class ClientService implements ClientServiceContract
 
             case 'billing-details':
                 $this->updateBillingDetails($data, $client);
+                $nextStage = route('client.edit', [$client, 'contract']);
+                break;
+
+            case 'contract':
+                $this->updateContract($data, $client);
                 $nextStage = route('client.edit', [$client, 'projects']);
                 break;
 
@@ -310,6 +322,10 @@ class ClientService implements ClientServiceContract
 
         ClientBillingDetail::updateOrCreate(['client_id' => $client->id], $data);
 
+        return true;
+    }
+    private function updateContract($data, $client)
+    {
         $this->saveOrUpdateClientContract($data, $client);
 
         if (isset($data['contract_level'])) {

@@ -77,7 +77,7 @@ class ProjectService implements ProjectServiceContract
             'name' => $data['name'],
             'client_id' => $data['client_id'],
             'client_project_id' => $this->getClientProjectID($data['client_id']),
-            'status' => 'active',
+            'status' => $data['status'],
             'start_date' => $data['start_date'] ?? null,
             'end_date' => $data['end_date'] ?? null,
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,

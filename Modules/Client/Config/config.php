@@ -23,6 +23,10 @@ return [
         'billing-details' => [
             'display-name' => 'Billing details',
         ],
+
+        'contract' => [
+            'display-name' => 'Contract',
+        ],
     ],
 
     'client-contact-person-type'=>[

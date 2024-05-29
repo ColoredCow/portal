@@ -5,10 +5,10 @@
 
     <br> <h4 class="mb-5 font-weight-bold">Edit client information</h4>
 
-    @include('client::subviews.edit-client-form-header') 
-    
+    @include('client::subviews.edit-client-form-header')
+
     <div>
-        @include('status', ['errors' => $errors->all()]) 
+        @include('status', ['errors' => $errors->all()])
             <div id="edit_client_form_container">
                 <form action="{{ route('client.update', $client) }}" method="POST" enctype="multipart/form-data" id="edit_client_info_form">
                     <input type="hidden" name="section" value="{{ $section }}">
@@ -18,7 +18,7 @@
                     @includeWhen( $section == 'contact-persons' ,'client::subviews.edit-client-contact-persons')
                     @includeWhen( $section == 'address' ,'client::subviews.edit-client-address')
                     @includeWhen( $section == 'billing-details' ,'client::subviews.edit-client-billing-details')
-                    {{-- @includeWhen( $section == 'document' ,'client::subviews.edit-client-document') --}}
+                    @includeWhen( $section == 'contract' ,'client::subviews.edit-client-contract')
                     @includeWhen( $section == 'client-type' ,'client::subviews.edit-client-type-info')
                 </form>
                 @includeWhen( $section == 'projects' ,'client::subviews.edit-client-projects')

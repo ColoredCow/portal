@@ -66,7 +66,7 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
             $totalEdliCharges += optional($employee->getCurrentSalary())->edli_charges;
             $totalCtc += optional($employee->getCurrentSalary())->ctc;
             $totalCtcAnnual += optional($employee->getCurrentSalary())->ctc_annual;
-            $totalHealthInsurance += optional($employee->getCurrentSalary())->health_insurance;
+            $totalHealthInsurance += optional($employee->getCurrentSalary())->total_health_insurance;
             $totalCtcAgg += optional($employee->getCurrentSalary())->ctc_aggregated;
 
             $employeePayrollData = [
@@ -96,7 +96,7 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
                 optional($employee->getCurrentSalary())->edli_charges ?: '-',
                 optional($employee->getCurrentSalary())->ctc ?: '-',
                 optional($employee->getCurrentSalary())->ctc_annual ?: '-',
-                optional($employee->getCurrentSalary())->health_insurance ?: '-',
+                optional($employee->getCurrentSalary())->total_health_insurance ?: '-',
                 optional($employee->getCurrentSalary())->ctc_aggregated ?: '-',
             ];
 
