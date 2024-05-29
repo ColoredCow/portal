@@ -22,7 +22,7 @@
                     :salary-configs="{{ json_encode($salaryConfigs) }}"
                     :gross-calculation-data="{{ $grossCalculationData }}"
                     :proposed-ctc="proposedCtc"
-                    :tds="{{ optional($employee->getCurrentSalary())->tds ?: 0  }}"
+                    :tds="{{ optional($employee->getLatestSalary())->tds ?: 0  }}"
                     :loan-deduction="{{ $employee->loan_deduction_for_month ?: 0 }}"
                     :insurance-tenants="{{ optional($employee->user->profile)->insurance_tenants ?? 1 }}"
                 ></gross-calculation-section>
