@@ -19,7 +19,7 @@
                 <tr>
                     @php
                         $user = $employee->user()->withTrashed()->first();
-                        $employeeCurrentSalaryObject = $employee->getCurrentSalary();
+                        $employeeCurrentSalaryObject = $employee->getLatestSalary();
                         $employeePreviousSalaryObject = $employee->getPreviousSalary();
                     @endphp
                     <td>
