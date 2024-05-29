@@ -50,7 +50,7 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
         foreach ($this->contractors as $contractor) {
             $currentSalaryObject = $contractor->getCurrentSalary();
             
-            if(! $currentSalaryObject) {
+            if (! $currentSalaryObject) {
                 continue;
             }
 
