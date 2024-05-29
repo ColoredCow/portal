@@ -68,6 +68,7 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
             $totalCtcAnnual += optional($contractor->getCurrentSalary())->ctc_annual;
             $totalHealthInsurance += optional($contractor->getCurrentSalary())->total_health_insurance;
             $totalCtcAgg += optional($contractor->getCurrentSalary())->ctc_aggregated;
+            $daysInMonth = Carbon::now()->daysInMonth;
 
             $contractorPayrollData = [
                 $contractor->user()->withTrashed()->first()->name,
@@ -80,8 +81,8 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
                 optional($contractor->getCurrentSalary())->other_allowance ?: '-',
                 optional($contractor->getCurrentSalary())->food_allowance ?: '-',
                 optional($contractor->getCurrentSalary())->total_salary ?: '-',
-                30,
-                30,
+                $daysInMonth,
+                $daysInMonth,
                 optional($contractor->getCurrentSalary())->employee_esi,
                 optional($contractor->getCurrentSalary())->employee_epf,
                 optional($contractor->getCurrentSalary())->tds ?: '-',
