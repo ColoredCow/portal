@@ -36,7 +36,7 @@
                                 <span class="ml-2 fz-lg-22">Not Available</span>
                             @endif
                     </div>
-                </div>                  
+                </div>
                 <div class="form-row">
                     <div class="form-group col-lg-12 pl-4">
                         <div class="fz-14 mr-3 mt-1 d-flex justify-content-between">
@@ -66,7 +66,7 @@
                                                     </div> --}}
                                                 </th>
                                                 <th>Working Days <br>Total | Completed</th>
-                                                <th>Total Efforts Booked 
+                                                <th>Total Efforts Booked
                                                     {{-- <br>Billable | Actual</th> --}}
                                                 {{-- <th>Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th> --}}
                                             </tr>
@@ -81,12 +81,12 @@
                                                     <th class="fz-lg-20 my-2 px-5 font-weight-normal">
                                                         <span>
                                                             <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation] }}">
-                                                            <a href="{{ route('employees.show', $teamMember->user->employee->id) }}"> 
+                                                            <a href="{{ route('employees.show', $teamMember->user->employee->id) }}">
                                                             <img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">
                                                             </a>
                                                         </span>
-                                                        <a href="{{ route('employees.show', $teamMember->user->employee->id) }}"> 
-                                                        {{$teamMember->user->name}} 
+                                                        <a href="{{ route('employees.show', $teamMember->user->employee->id) }}">
+                                                        {{$teamMember->user->name}}
                                                         </a>
                                                     </th>
                                                     <td id="projectHours">{{$teamMember->daily_expected_effort }}</td>
@@ -100,7 +100,7 @@
                                             </tbody>
                                             </table>
                                         @endif
-                                        
+
                                 </div>
                             </div>
                         </div>
@@ -118,7 +118,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                
+
                                 <div class='form-group mr-4 mt-1 w-168'>
                                     <select class="form-control bg-light" name="year"
                                         onchange="document.getElementById('FilterForm').submit();">
@@ -234,7 +234,7 @@
     </div>
 
     <div id="basic-details" class="collapse card mt-3">
-       <div class="m-5"> 
+       <div class="m-5">
         <div class="d-flex" style="flex-wrap: wrap">
             <div class="pr-10 project-hour w-33p mb-10">
                 <h4 class="d-inline-block">
@@ -292,5 +292,33 @@
        </div>
     </div>
 </div>
+<br>
+@can('finance_reports.view')
+    <div class="card-header d-flex mb-4" data-toggle="collapse" data-target="#contract-history" >
+        <h4>Contract History</h4>
+        <span class ="arrow ml-auto">&#9660;</span>
+    </div>
+    <div class="collapse" id="contract-history">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">File</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($project->projectContracts as $contract)
+                    <tr>
+                        <td> <a href="{{ route('pdf.show', $contract->first()) }}"
+                                target="_blank">{{ basename($contract->contract_file_path) }}</a></td>
+                        <td>{{ optional($project->start_date)->format('d M Y') ?? '-' }}</td>
+                        <td>{{ optional($project->end_date)->format('d M Y') ?? '-' }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+@endcan
 @endsection
 
