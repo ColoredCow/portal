@@ -92,7 +92,7 @@
                                     <a href="{{ route('project.show', $project) }}" data-toggle="tooltip"
                                         title="{{ $project->name }}">{{ $project->name }}</a>
                                 @else
-                                    <a class="text-danger" href="{{ route('project.show', $project) }}"
+                                    <a class="text-muted" href="{{ route('project.show', $project) }}"
                                         data-toggle="tooltip"
                                         title="{{ $project->name }}">{{ str_limit($project->name, 23) }}</a>
                                 @endif
