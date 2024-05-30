@@ -96,6 +96,11 @@ class Employee extends Model
 
     public function getCurrentSalary()
     {
+        return $this->employeeSalaries()->where('commencement_date', '<=', today())->latest('commencement_date')->first();
+    }
+
+    public function getLatestSalary()
+    {
         return $this->employeeSalaries()->latest('commencement_date')->first();
     }
 
@@ -106,7 +111,7 @@ class Employee extends Model
 
     public function getLatestSalaryPercentageIncrementAttribute()
     {
-        $currentCtc = optional($this->getCurrentSalary())->ctc_aggregated ?? 0;
+        $currentCtc = optional($this->getLatestSalary())->ctc_aggregated ?? 0;
         $previousCtc = optional($this->getPreviousSalary())->ctc_aggregated ?? 0;
 
         if ($currentCtc == 0 || $previousCtc == 0) {

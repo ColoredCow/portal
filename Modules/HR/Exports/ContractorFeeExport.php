@@ -29,8 +29,9 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
         $totalOtherAllowance = 0;
         $totalFoodAllowance = 0;
         $totalSalary = 0;
-        $totalDays = $this->contractors->count() * 30;
-        $totalPaidDays = $this->contractors->count() * 30;
+        $daysInMonth = Carbon::now()->daysInMonth;
+        $totalDays = $this->contractors->count() * $daysInMonth;
+        $totalPaidDays = $this->contractors->count() * $daysInMonth;
         $totalEmployeeEsi = 0;
         $totalEmployeeEpf = 0;
         $totalTds = 0;
@@ -47,57 +48,63 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
         $totalCtcAgg = 0;
 
         foreach ($this->contractors as $contractor) {
-            $totalGrossSalary += optional($contractor->getCurrentSalary())->monthly_gross_salary;
-            $totalBasicSalary += optional($contractor->getCurrentSalary())->basic_salary;
-            $totalHra += optional($contractor->getCurrentSalary())->hra;
-            $totalTransportAllowance += optional($contractor->getCurrentSalary())->transport_allowance;
-            $totalOtherAllowance += optional($contractor->getCurrentSalary())->other_allowance;
-            $totalFoodAllowance += optional($contractor->getCurrentSalary())->food_allowance;
-            $totalSalary += optional($contractor->getCurrentSalary())->total_salary;
-            $totalEmployeeEsi += optional($contractor->getCurrentSalary())->employee_esi;
-            $totalEmployeeEpf += optional($contractor->getCurrentSalary())->employee_epf;
-            $totalTds += optional($contractor->getCurrentSalary())->tds;
+            $currentSalaryObject = $contractor->getCurrentSalary();
+
+            if (! $currentSalaryObject) {
+                continue;
+            }
+
+            $totalGrossSalary += optional($currentSalaryObject)->monthly_gross_salary;
+            $totalBasicSalary += optional($currentSalaryObject)->basic_salary;
+            $totalHra += optional($currentSalaryObject)->hra;
+            $totalTransportAllowance += optional($currentSalaryObject)->transport_allowance;
+            $totalOtherAllowance += optional($currentSalaryObject)->other_allowance;
+            $totalFoodAllowance += optional($currentSalaryObject)->food_allowance;
+            $totalSalary += optional($currentSalaryObject)->total_salary;
+            $totalEmployeeEsi += optional($currentSalaryObject)->employee_esi;
+            $totalEmployeeEpf += optional($currentSalaryObject)->employee_epf;
+            $totalTds += optional($currentSalaryObject)->tds;
             $totalAdvanceRecovery += $contractor->loan_deduction_for_month;
-            $totalDeduction += optional($contractor->getCurrentSalary())->total_deduction;
-            $totalNetPay += optional($contractor->getCurrentSalary())->net_pay;
-            $totalEmployerEsi += optional($contractor->getCurrentSalary())->employer_esi;
-            $totalEmployerEpf += optional($contractor->getCurrentSalary())->employer_epf;
-            $totalAdministrationCharges += optional($contractor->getCurrentSalary())->administration_charges;
-            $totalEdliCharges += optional($contractor->getCurrentSalary())->edli_charges;
-            $totalCtc += optional($contractor->getCurrentSalary())->ctc;
-            $totalCtcAnnual += optional($contractor->getCurrentSalary())->ctc_annual;
-            $totalHealthInsurance += optional($contractor->getCurrentSalary())->total_health_insurance;
-            $totalCtcAgg += optional($contractor->getCurrentSalary())->ctc_aggregated;
+            $totalDeduction += optional($currentSalaryObject)->total_deduction;
+            $totalNetPay += optional($currentSalaryObject)->net_pay;
+            $totalEmployerEsi += optional($currentSalaryObject)->employer_esi;
+            $totalEmployerEpf += optional($currentSalaryObject)->employer_epf;
+            $totalAdministrationCharges += optional($currentSalaryObject)->administration_charges;
+            $totalEdliCharges += optional($currentSalaryObject)->edli_charges;
+            $totalCtc += optional($currentSalaryObject)->ctc;
+            $totalCtcAnnual += optional($currentSalaryObject)->ctc_annual;
+            $totalHealthInsurance += optional($currentSalaryObject)->total_health_insurance;
+            $totalCtcAgg += optional($currentSalaryObject)->ctc_aggregated;
 
             $contractorPayrollData = [
                 $contractor->user()->withTrashed()->first()->name,
                 '',
                 'Consultant',
-                optional($contractor->getCurrentSalary())->monthly_gross_salary ?: '-',
-                optional($contractor->getCurrentSalary())->basic_salary ?: '-',
-                optional($contractor->getCurrentSalary())->hra ?: '-',
-                optional($contractor->getCurrentSalary())->transport_allowance ?: '-',
-                optional($contractor->getCurrentSalary())->other_allowance ?: '-',
-                optional($contractor->getCurrentSalary())->food_allowance ?: '-',
-                optional($contractor->getCurrentSalary())->total_salary ?: '-',
-                30,
-                30,
-                optional($contractor->getCurrentSalary())->employee_esi,
-                optional($contractor->getCurrentSalary())->employee_epf,
-                optional($contractor->getCurrentSalary())->tds ?: '-',
+                optional($currentSalaryObject)->monthly_gross_salary ?: '-',
+                optional($currentSalaryObject)->basic_salary ?: '-',
+                optional($currentSalaryObject)->hra ?: '-',
+                optional($currentSalaryObject)->transport_allowance ?: '-',
+                optional($currentSalaryObject)->other_allowance ?: '-',
+                optional($currentSalaryObject)->food_allowance ?: '-',
+                optional($currentSalaryObject)->total_salary ?: '-',
+                $daysInMonth,
+                $daysInMonth,
+                optional($currentSalaryObject)->employee_esi,
+                optional($currentSalaryObject)->employee_epf,
+                optional($currentSalaryObject)->tds ?: '-',
                 $contractor->loan_deduction_for_month ?: '-',
-                optional($contractor->getCurrentSalary())->food_allowance ?: '-',
-                optional($contractor->getCurrentSalary())->total_deduction ?: '-',
+                optional($currentSalaryObject)->food_allowance ?: '-',
+                optional($currentSalaryObject)->total_deduction ?: '-',
                 '-',
-                optional($contractor->getCurrentSalary())->net_pay ?: '-',
-                optional($contractor->getCurrentSalary())->employer_esi ?: '-',
-                optional($contractor->getCurrentSalary())->employer_epf ?: '-',
-                optional($contractor->getCurrentSalary())->administration_charges ?: '-',
-                optional($contractor->getCurrentSalary())->edli_charges ?: '-',
-                optional($contractor->getCurrentSalary())->ctc ?: '-',
-                optional($contractor->getCurrentSalary())->ctc_annual ?: '-',
-                optional($contractor->getCurrentSalary())->total_health_insurance ?: '-',
-                optional($contractor->getCurrentSalary())->ctc_aggregated ?: '-',
+                optional($currentSalaryObject)->net_pay ?: '-',
+                optional($currentSalaryObject)->employer_esi ?: '-',
+                optional($currentSalaryObject)->employer_epf ?: '-',
+                optional($currentSalaryObject)->administration_charges ?: '-',
+                optional($currentSalaryObject)->edli_charges ?: '-',
+                optional($currentSalaryObject)->ctc ?: '-',
+                optional($currentSalaryObject)->ctc_annual ?: '-',
+                optional($currentSalaryObject)->total_health_insurance ?: '-',
+                optional($currentSalaryObject)->ctc_aggregated ?: '-',
             ];
 
             array_push($data, $contractorPayrollData);

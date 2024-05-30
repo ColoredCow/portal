@@ -63,7 +63,7 @@ class SalaryController extends Controller
 
     public function storeOrUpdateSalary(Request $request, Employee $employee)
     {
-        $currentSalaryObject = $employee->getCurrentSalary();
+        $currentSalaryObject = $employee->getLatestSalary();
         if ((! $currentSalaryObject) || $request->submitType == 'send_appraisal_letter') {
             if ($currentSalaryObject) {
                 $salaryService = new SalaryCalculationService($request->grossSalary);
