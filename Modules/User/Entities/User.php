@@ -203,20 +203,11 @@ class User extends Authenticatable
         })->get()->sum->getCurrentActualEffort();
     }
 
-    public function getTotalNonBillableHours($isBillable = false)
+    public function getTotalNonBillableHours()
     {
-        $nonBillableActualEffort = $this->projectTeamMembers()->whereHas('project', function ($query) use ($isBillable) {
-            $query->billable($isBillable);
-        })->get()->sum->getNonBillableEffort();
+        $nonBillableActualEffort = $this->projectTeamMembers()->get()->sum->getNonBillableEffort();
 
-        $isBillable = true;
-
-        $billableActualEffort = $this->projectTeamMembers()->whereHas('project', function ($query) use ($isBillable) {
-            $query->billable($isBillable);
-        })->get()->sum->getNonBillableEffort();
-
-        $nonBillableEffortInBillableProject = $billableActualEffort - $this->getTotalBillableHours();
-        $totalNonBillableEffort = $nonBillableEffortInBillableProject + $nonBillableActualEffort;
+        $totalNonBillableEffort = $nonBillableActualEffort - $this->getTotalBillableHours();
 
         return $totalNonBillableEffort;
     }
