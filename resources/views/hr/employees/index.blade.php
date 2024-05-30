@@ -89,8 +89,8 @@
                             @endif
                         </td>
                         @if(today()==today()->startOfMonth())
-                        <td>{{ 0 }}</td> 
-                        @else                       
+                        <td>{{ 0 }}</td>
+                        @else
                         <td class={{ $totalFTE >= 1 ? 'text-success' : 'text-danger' }}>
                         {{ $totalFTE }}
                         @endif

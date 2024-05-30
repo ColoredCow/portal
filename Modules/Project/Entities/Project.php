@@ -197,6 +197,18 @@ class Project extends Model implements Auditable
         return $billableEffort;
     }
 
+    public function getActualEffortOfTeamMember($id)
+    {
+        $teamMembers = new ProjectTeamMemberEffort();
+        $currentMonth = date('m');
+
+        $actualEffort = $teamMembers->where('project_team_member_id', $id)
+                                    ->whereMonth('added_on', $currentMonth)
+                                    ->sum('employee_actual_working_effort');
+
+        return $actualEffort;
+    }
+
     public function getVelocityAttribute()
     {
         return $this->current_expected_hours ? round($this->current_hours_for_month / $this->current_expected_hours, 2) : 0;
