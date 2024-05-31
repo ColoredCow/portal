@@ -302,7 +302,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">File</th>
+                    <th class="w-50p" scope="col">File</th>
                     <th scope="col">Start Date</th>
                     <th scope="col">End Date</th>
                 </tr>
@@ -319,6 +319,8 @@
             </tbody>
         </table>
     </div>
+    <br>
+    <br>
 @endcan
 @endsection
 
