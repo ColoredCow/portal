@@ -53,11 +53,11 @@
                 </div>
                 <div class="col-3">
                     <input type="date" class="form-control" name="start_date" id="start_date"
-                        value="{{ $client->clientContracts->first()->start_date ?? '' }}">
+                        value={{ $client->clientContracts->first()->start_date ?? '' }}>
                 </div>
                 <div class="col-3">
                     <input type="date" class="form-control" name="end_date" id="end_date"
-                        value="{{ $client->clientContracts->first()->end_date ?? '' }}">
+                        value={{ $client->clientContracts->first()->end_date ?? '' }}>
                 </div>
 
             </div>
