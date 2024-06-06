@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="pl-6">
-			<small class="font-weight-bold">Suggestions: </small>
+			<small v-if="ctcSuggestions.length > 0" class="font-weight-bold">Suggestions: </small>
 			<span 
 				v-on:click="insertCTC(ctc)" 
 				v-for="(ctc, index) in ctcSuggestions" 
