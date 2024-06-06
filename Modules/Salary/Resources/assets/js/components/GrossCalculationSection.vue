@@ -2,9 +2,13 @@
 	<div>
 		<div class="pl-6">
 			<small class="font-weight-bold">Suggestions: </small>
-			<span v-on:click="insertCTC(ctc)" v-for="(ctc, index) in this.ctcSuggestions" class="badge mt-1 mr-2 p-1.5 badge-pill badge-theme-gray-lightest c-pointer">
-				{{ctc}}
-			</span>
+			<span 
+				v-on:click="insertCTC(ctc)" 
+				v-for="(ctc, index) in ctcSuggestions" 
+				:key="index"
+				:class="['badge', 'mt-1', 'mr-2', 'p-1.5', 'badge-pill', ctc === proposedCtc ? 'badge-theme-gray-darker text-light' : 'badge-theme-gray-lightest', 'c-pointer']">
+				{{ ctc }}
+			</span>		
 		</div>
 		<div class="row pl-2 my-3">
 			<input hidden type="number" step="0.01" v-model="grossSalary" name="grossSalary" class="form-control bg-light" placeholder="Monthly Gross Salary" min="0" required>
