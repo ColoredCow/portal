@@ -23,6 +23,7 @@
                     :salary-configs="{{ json_encode($salaryConfigs) }}"
                     :gross-calculation-data="{{ $grossCalculationData }}"
                     :proposed-ctc="proposedCtc"
+                    v-on:update-ctc="updateProposedCtc"
                     :tds="{{ optional($employee->getLatestSalary())->tds ?: 0  }}"
                     :loan-deduction="{{ $employee->loan_deduction_for_month ?: 0 }}"
                     :insurance-tenants="{{ optional($employee->user->profile)->insurance_tenants ?? 1 }}"
@@ -77,6 +78,11 @@
             data() {
                 return {
                     proposedCtc: "{{ 0 }}",
+                }
+            },
+            methods: {
+                updateProposedCtc(newProposedCtc) {
+                    this.proposedCtc = newProposedCtc;
                 }
             }
         });

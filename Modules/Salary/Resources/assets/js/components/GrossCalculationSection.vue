@@ -170,7 +170,7 @@ export default {
 		insertCTC(amount) {
             var proposedCtcField = document.getElementById("proposedCtc");
             proposedCtcField.value = amount;
-			this.proposedCtc = amount;
+			this.$emit('update-ctc', amount)
 		}
 	}
 };
