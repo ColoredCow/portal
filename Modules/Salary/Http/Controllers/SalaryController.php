@@ -75,7 +75,7 @@ class SalaryController extends Controller
             'employee' => $employee,
             'salaryConfigs' => $salaryConf::formatAll(),
             'grossCalculationData' => json_encode($calculationData),
-            'ctcSuggestions' => $ctcSuggestions
+            'ctcSuggestions' => $ctcSuggestions,
         ]);
     }
 
