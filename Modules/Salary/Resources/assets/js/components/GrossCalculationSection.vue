@@ -1,9 +1,25 @@
 <template>
 	<div>
-		<small class="pl-6"><strong> Due to financial calculation the applicable CTC will be {{ this.formatCurrency(ctcAggregated) }}</strong></small>
-		<div class="row pl-2 mt-2">
+		<div class="pl-6">
+			<small v-if="ctcSuggestions.length > 0" class="font-weight-bold">Suggestions: </small>
+			<span 
+				v-on:click="insertCTC(ctc)" 
+				v-for="(ctc, index) in ctcSuggestions" 
+				:key="index"
+				:class="['badge', 'mt-1', 'mr-2', 'p-1.5', 'badge-pill', ctc === proposedCtc ? 'badge-theme-gray-darker text-light' : 'badge-theme-gray-lightest', 'c-pointer']">
+				{{ ctc }}
+			</span>		
+		</div>
+		<div class="row pl-2 my-3">
 			<input hidden type="number" step="0.01" v-model="grossSalary" name="grossSalary" class="form-control bg-light" placeholder="Monthly Gross Salary" min="0" required>
 			<input hidden type="number" step="0.01" v-model="ctcAggregated" name="ctcAggregated" class="form-control bg-light" min="0" required>
+			<div class="pl-6 col-md-5">
+				<div class="leading-none fz-24 d-flex align-items-center text-nowrap">Applicable CTC <small class="fz-12 ml-2">(Due to financial calculation)</small></div>
+				<div class="fz-24 mt-2">
+					<i class="fa fa-rupee"></i>
+					<span>{{ this.formatCurrency(ctcAggregated) }}</span>
+				</div>
+			</div>
 			<div class="form-group pl-6 col-md-5">
 				<div class="leading-none fz-24 mb-2">Monthly Gross Salary</div>
 				<div class="fz-24">
@@ -17,7 +33,7 @@
 
 <script>
 export default {
-	props:["salaryConfigs", "grossCalculationData", "tds", "loanDeduction", "proposedCtc", "insuranceTenants"],
+	props:["ctcSuggestions", "salaryConfigs", "grossCalculationData", "tds", "loanDeduction", "proposedCtc", "insuranceTenants"],
 
 	computed: {
 		grossSalary() {
@@ -151,6 +167,11 @@ export default {
 			}
 			return amount.toLocaleString("en-IN");
 		},
+		insertCTC(amount) {
+            var proposedCtcField = document.getElementById("proposedCtc");
+            proposedCtcField.value = amount;
+			this.$emit('update-ctc', amount)
+		}
 	}
 };
 </script>
