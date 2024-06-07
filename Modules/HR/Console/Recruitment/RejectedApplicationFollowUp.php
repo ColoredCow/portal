@@ -30,7 +30,21 @@ class RejectedApplicationFollowUp extends Command
      */
     public function handle()
     {
-        Mail::to(config('hr.default.email'))->send(new SendApplicationRejectionMail());
+        $applications = Application::with('latestApplicationRound')->isOpen()->whereHas('applicationRounds', function ($query) {
+            $query->whereNull('scheduled_date')->whereNotNull('scheduled_person_id')->whereNull('round_status');
+        })->get();
+
+        foreach ($applications as $application) {
+            $applicationRound = $application->latestApplicationRound;
+            if($applicationRound->getPreviousApplicationRound()){
+            $awaitingForDays = $applicationRound->getPreviousApplicationRound()->conducted_date->diffInDays(today());
+            } else{
+                return;
+            }
+
+        }
+        // Mail::to(config('hr.default.email'))->send(new SendApplicationRejectionMail());
+
     }
 
 }
