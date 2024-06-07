@@ -9,6 +9,19 @@ return [
         'disputed' => 'Disputed',
     ],
 
+    'loan' => [
+        'status' => [
+            'active' => [
+                'label' => 'Active',
+                'slug' => 'active',
+            ],
+            'completed' => [
+                'label' => 'Completed',
+                'slug' => 'completed',
+            ],
+        ],
+    ],
+
     'default-date-format' => 'd M Y',
 
     'mail' => [

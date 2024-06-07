@@ -34,11 +34,11 @@ class EmployeeLoan extends Model
         $thisMonthDeduction = (float) $this->monthly_deduction;
         $balance = $this->remaining_balance;
 
-        if ($balance < $thisMonthDeduction) {
-            return $balance;
+        if ($balance <= 0) {
+            return 0;
         }
 
-        return (float) $thisMonthDeduction;
+        return min($thisMonthDeduction, (float) $balance);
     }
 
     public function getRemainingBalanceAttribute()
@@ -47,6 +47,10 @@ class EmployeeLoan extends Model
         $startDate = $this->start_date;
         $diffInMonths = ($endDate->year - $startDate->year) * 12 + ($endDate->month - $startDate->month);
         $balance = (float) $this->total_amount - (($diffInMonths) * (float) $this->monthly_deduction);
+
+        if ($balance < 0) {
+            return 0;
+        }
 
         return $balance;
     }

@@ -37,6 +37,14 @@
                         <input type="number" class="form-control" name="monthly_deduction" placeholder="Enter Amount"
                             required="required" step=".01" min="0" value="{{ old('monthly_deduction') ?: $employeeLoan->monthly_deduction }}">
                     </div>
+                    <div class="form-group offset-md-1 col-md-5">
+                        <label class="field-required">Loan End Month</label>
+                        <select class="form-control" name="status" required="required">
+                            @foreach (config('invoice.loan.status') as $status)
+                                <option value="{{ $status['slug'] }}" {{ $employeeLoan->status === $status['slug'] ? 'selected' : '' }}> {{ $status['label'] }} </option>
+                            @endforeach
+                        </select>   
+                    </div>
                 </div>
             </div> 
             <div class="card-footer">
