@@ -169,48 +169,20 @@ abstract class ApplicationController extends Controller
     /**
      * Display a listing of current date's interviews.
      */
-    public function secondaryIndex()
+    public function secondaryIndex(Request $request)
     {
-        $today = today()->toDateString();
-        $applicationRound = new ApplicationRound();
-        $applications = $applicationRound
-            ->where('hr_round_id', 2)
-            ->whereDate('scheduled_date', '2024-04-17')
-            ->with('application.applicant', 'application.job', 'round', 'meetingLink')
-            ->orderByRaw('hr_application_round.scheduled_date ASC')
-            ->get();
-        
-        $todaysApplications = [];
-        $jobCount= [];
-        foreach ($applications as $key => $appRound) {
-            // if($appRound->scheduled_person_id == auth()->id()){
-            $application = $appRound->application;
-            $round = $appRound->round;
-            $meeting_link = $appRound->meetingLink;
-            $scheduled_person = $appRound->scheduled_person_id;
-            $meeting_time = $appRound->scheduled_date->format(config('constants.display_time_format'));
-
-            $jobId = $application->job->id;
-            $jobName = $application->job->title;
-            if (isset($jobCount[$jobName][$jobId])) {
-                $jobCount[$jobName][$jobId]++;
-            } else {
-                $jobCount[$jobName][$jobId] = 1;
-            }
-            
-            $todaysApplications[$key] = [
-                'application' => $application,
-                'round' => $round,
-                'meeting_link' => $meeting_link,
-                'scheduled_person' => $scheduled_person,
-                'meeting_time' => $meeting_time,
-            ];
-            // }
+        $selectedCategory = null;
+        if ($request->query()) {
+            $parsedData = $request->query();
+            $selectedCategory = $parsedData['selected_category'];
+            // $today = $parsedData['interview-date'];
+        } 
+        $applicationService = new ApplicationService;
+        $data = $applicationService->getApplicationsForDate('2024-04-17', $selectedCategory);
+        if ($request->query()) {
+          return view('hr::application.today-interviews')->with($data);
         }
-        
-        $attr['todaysApplications'] = $todaysApplications;
-        $attr['jobCount'] = $jobCount;
-        return view('hr::application.secondary-index')->with($attr);
+        return view('hr::application.secondary-index')->with($data);
     }
 
     /**

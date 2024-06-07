@@ -10,6 +10,7 @@ use Module;
 use Modules\HR\Contracts\ApplicationServiceContract;
 use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Application;
+use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Job;
 use Modules\HR\Events\CustomMailTriggeredForApplication;
 use Modules\User\Entities\User;
@@ -155,4 +156,85 @@ class ApplicationService implements ApplicationServiceContract
 
         return $accessToken;
     }
+	
+	public function getApplicationsForDate( $date, $selectedCategory = null ) {
+		$total_opportunities_count = Job::where( 'status', 'published' )->count();
+		$todayApplications         = Application::whereDate( 'created_at', $date )->get();
+		$interviewApplications     = ApplicationRound::whereNotNull( 'calendar_meeting_id' )
+			// ->whereNull('conducted_date')
+			->whereDate( 'scheduled_date', $date )
+			// ->where( 'scheduled_person_id', auth()->id() )
+			->with( 'application.applicant', 'application.job', 'round', 'meetingLink', 'scheduledPerson' )
+			->orderByRaw( 'hr_application_round.scheduled_date ASC' )
+			->get();
+
+		$totalTodayApplication = array();
+		foreach ( $todayApplications as $key => $todayApplication ) {
+			$applicationId   = $todayApplication->job->id;
+			$applicationName = $todayApplication->job->title;
+			if ( isset( $totalTodayApplication[ $applicationName ][ $applicationId ] ) ) {
+				++$totalTodayApplication[ $applicationName ][ $applicationId ];
+			} else {
+				$totalTodayApplication[ $applicationName ][ $applicationId ] = 1;
+			}
+		}
+		// dd($interviewApplications->toArray());
+		$todayInterviews = array();
+		$applicationType = array();
+		foreach ($interviewApplications as $key => $interviewApplication) {
+			if ($selectedCategory !== null && $selectedCategory !== "null") {
+				$jobTitle = $interviewApplication->application->job->title;
+				$jobType = $interviewApplication->application->job->type;
+				$roundName = $interviewApplication->round->name;
+				
+				if ($jobTitle !== $selectedCategory && $jobType !== $selectedCategory && $roundName !== $selectedCategory) {
+					continue;
+				}
+			}
+			$application = $interviewApplication->application;
+			$round = $interviewApplication->round;
+			$meetingLink = $interviewApplication->meetingLink;
+			$scheduledPersonId = $interviewApplication->scheduled_person_id;
+			$scheduledPersonName = $interviewApplication->scheduledPerson->name;
+			$meetingStart = $interviewApplication->scheduled_date->format(config('constants.display_time_format'));
+			$meetingEnd = Carbon::parse($interviewApplication->scheduled_end)->format(config('constants.display_time_format'));
+			$meetingTime = $meetingStart . '-' . $meetingEnd;
+		
+			$jobId = $application->job->id;
+			$jobName = $application->job->title;
+			$jobType = $application->job->type;
+		
+			if (!isset($applicationType[$jobType])) {
+				$applicationType[$jobType] = [];
+			}
+		
+			if (!isset($applicationType[$jobType][$jobName])) {
+				$applicationType[$jobType][$jobName] = [];
+			}
+		
+			if (!isset($applicationType[$jobType][$jobName][$jobId])) {
+				$applicationType[$jobType][$jobName][$jobId] = 0;
+			}
+		
+			++$applicationType[$jobType][$jobName][$jobId];
+		
+			$todayInterviews[$key] = [
+				'application' => $application,
+				'round' => $round,
+				'meeting_link' => $meetingLink,
+				'scheduled_person' => [
+					'id' => $scheduledPersonId,
+					'name' => $scheduledPersonName,
+				],
+				'meeting_time' => $meetingTime,
+			];
+		}		
+
+		return array(
+			'todayInterviews'    => $todayInterviews,
+			'todayApplications'  => $totalTodayApplication,
+			'totalOpportunities' => $total_opportunities_count,
+			'applicationType'    => $applicationType,
+		);
+	}
 }
