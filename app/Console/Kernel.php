@@ -12,7 +12,7 @@ use Modules\Project\Console\SendEffortSummaryCommand;
 use Modules\Project\Console\SyncEffortsheet;
 use Modules\Project\Console\ZeroEffortInProject;
 use Modules\Project\Console\ZeroExpectedHourInProject;
-
+use Modules\HR\Console\Recruitment\RejectedApplicationFollowUp;
 class Kernel extends ConsoleKernel
 {
     /**
@@ -29,6 +29,7 @@ class Kernel extends ConsoleKernel
         FixedBudgetProject::class,
         NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat::class,
         JobExpiredEmailToHr::class,
+        RejectedApplicationFollowUp::class
         // QuarterlyReviewSystemForEmployee::class, //This line will be commented for some time. After the feature is completed, it will be uncommented.
 
     ];
@@ -50,6 +51,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('hr:send-follow-up-mail')->dailyAt('08:00');
         $schedule->command('hr:message-for-email-verified')->dailyAt('7:00');
         $schedule->command('hr:send-job-expired-email-to-hr')->dailyAt('11:00');
+        $schedule->command('hr:send-application-close-mail-to-candidate')->dailyAt('11:00');
         $schedule->command('mapping-of-jobs-and-hr-rounds');
         $schedule->command('project:fixed-budget-project');
         $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');
