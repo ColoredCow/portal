@@ -38,13 +38,15 @@ class RejectedApplicationFollowUp extends Command
             $applicationRound = $application->latestApplicationRound;
             if($applicationRound->getPreviousApplicationRound()){
             $awaitingForDays = $applicationRound->getPreviousApplicationRound()->conducted_date->diffInDays(today());
+                if($awaitingForDays >10){
+                $hrApplicationId = $application->id;
+                $updateStatus = Application::where('id', $hrApplicationId)->update(['status'=> 'rejected']);
+                Mail::to(config('hr.default.email'))->send(new SendApplicationRejectionMail());
+                }
             } else{
                 return;
             }
-
         }
-        // Mail::to(config('hr.default.email'))->send(new SendApplicationRejectionMail());
-
     }
 
 }
