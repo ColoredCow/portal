@@ -162,8 +162,8 @@ class ApplicationService implements ApplicationServiceContract
         $totalOpportunitiesCount = Job::where('status', 'published')->count();
         $todayApplications = Application::whereDate('created_at', $today)->get();
         $interviewApplicationsQuery = ApplicationRound::whereNotNull('calendar_meeting_id')
-            // ->whereNull('conducted_date')
-            // ->where('scheduled_person_id', auth()->id())
+            ->whereNull('conducted_date')
+            ->where('scheduled_person_id', auth()->id())
             ->with('application.applicant', 'application.job', 'round', 'meetingLink', 'scheduledPerson')
         ->orderByRaw('hr_application_round.scheduled_date ASC');
 
