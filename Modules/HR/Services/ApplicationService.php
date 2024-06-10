@@ -79,7 +79,7 @@ class ApplicationService implements ApplicationServiceContract
         if (Module::has('User')) {
             $attr['assignees'] = User::orderBy('name')->get();
         }
-        
+
         return $attr;
     }
 
@@ -160,7 +160,7 @@ class ApplicationService implements ApplicationServiceContract
     public function getApplicationsForDate($today, $selectedOperator, $searchCategory, $selectedJob, $selectedOpportunity, $selectedRound)
     {
         $totalOpportunitiesCount = Job::where('status', 'published')->count();
-        $todayApplications       = Application::whereDate('created_at', $today)->get();
+        $todayApplications = Application::whereDate('created_at', $today)->get();
         $interviewApplicationsQuery = ApplicationRound::whereNotNull('calendar_meeting_id')
             // ->whereNull('conducted_date')
             // ->where('scheduled_person_id', auth()->id())
@@ -203,59 +203,60 @@ class ApplicationService implements ApplicationServiceContract
             ->mapWithKeys(
                 function ($applications, $jobId) {
                     $jobName = $applications->first()->job->title;
-                    return array( $jobName => $applications->count() );
+
+                    return [$jobName => $applications->count()];
                 }
             );
 
-        $todayInterviews = array();
-        $applicationType = array();
+        $todayInterviews = [];
+        $applicationType = [];
         foreach ($interviewApplications as $interviewApplication) {
             $application = $interviewApplication->application;
-            $job         = $application->job;
-            $round       = $interviewApplication->round;
+            $job = $application->job;
+            $round = $interviewApplication->round;
 
             $meetingStart = $interviewApplication->scheduled_date->format(config('constants.display_time_format'));
-            $meetingEnd   = Carbon::parse($interviewApplication->scheduled_end)->format(config('constants.display_time_format'));
-            $meetingTime  = $meetingStart . '-' . $meetingEnd;
-            $meetingDate  = Carbon::parse($interviewApplication->scheduled_date)->format(config('constants.full_display_date_format'));
+            $meetingEnd = Carbon::parse($interviewApplication->scheduled_end)->format(config('constants.display_time_format'));
+            $meetingTime = $meetingStart . '-' . $meetingEnd;
+            $meetingDate = Carbon::parse($interviewApplication->scheduled_date)->format(config('constants.full_display_date_format'));
 
-            $todayInterviews[] = array(
+            $todayInterviews[] = [
                 'application'      => $application,
                 'round'            => $round,
                 'meeting_link'     => $interviewApplication->meetingLink,
-                'scheduled_person' => array(
+                'scheduled_person' => [
                     'id'   => $interviewApplication->scheduled_person_id,
                     'name' => $interviewApplication->scheduledPerson->name,
-                ),
+                ],
                 'meeting_time'     => $meetingTime,
                 'meeting_date'     => $selectedOperator !== null ? $meetingDate : null,
-            );
+            ];
 
-            $jobType  = $job->type;
+            $jobType = $job->type;
             $jobTitle = $job->title;
-            $jobId    = $job->id;
+            $jobId = $job->id;
 
-            if (! isset($applicationType[ $jobType ])) {
-                $applicationType[ $jobType ] = array();
+            if (! isset($applicationType[$jobType])) {
+                $applicationType[ $jobType ] = [];
             }
 
-            if (! isset($applicationType[ $jobType ][ $jobTitle ])) {
-                $applicationType[ $jobType ][ $jobTitle ] = array();
+            if (! isset($applicationType[$jobType][$jobTitle])) {
+                $applicationType[$jobType][$jobTitle] = [];
             }
 
             if (! isset($applicationType[ $jobType ][ $jobTitle ][ $jobId ])) {
-                $applicationType[ $jobType ][ $jobTitle ][ $jobId ] = 0;
+                $applicationType[$jobType][$jobTitle][$jobId] = 0;
             }
 
-            ++$applicationType[ $jobType ][ $jobTitle ][ $jobId ];
+            $applicationType[$jobType][$jobTitle][$jobId]++;
         }
 
-        return array(
+        return [
             'todayInterviews'       => $todayInterviews,
             'todayApplications'     => $totalTodayApplication,
             'totalOpportunities'    => $totalOpportunitiesCount,
             'applicationType'       => $applicationType,
             'pagination'            => $interviewApplications->links(),
-        );
+        ];
     }
 }
