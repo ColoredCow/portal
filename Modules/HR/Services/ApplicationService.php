@@ -207,17 +207,17 @@ class ApplicationService implements ApplicationServiceContract
 				}
 			);
 
-		 $todayInterviews = array();
-		 $applicationType = array();
-		 foreach ( $interviewApplications as $interviewApplication ) {
-			 $application = $interviewApplication->application;
-			 $job         = $application->job;
-			 $round       = $interviewApplication->round;
+		$todayInterviews = array();
+		$applicationType = array();
+		foreach ( $interviewApplications as $interviewApplication ) {
+			$application = $interviewApplication->application;
+			$job         = $application->job;
+			$round       = $interviewApplication->round;
 
-			 $meetingStart = $interviewApplication->scheduled_date->format( config( 'constants.display_time_format' ) );
-			 $meetingEnd   = Carbon::parse( $interviewApplication->scheduled_end )->format( config( 'constants.display_time_format' ) );
-			 $meetingTime  = $meetingStart . '-' . $meetingEnd;
-			 $meetingDate  = Carbon::parse( $interviewApplication->scheduled_date )->format( config( 'constants.full_display_date_format' ) );
+			$meetingStart = $interviewApplication->scheduled_date->format( config( 'constants.display_time_format' ) );
+			$meetingEnd   = Carbon::parse( $interviewApplication->scheduled_end )->format( config( 'constants.display_time_format' ) );
+			$meetingTime  = $meetingStart . '-' . $meetingEnd;
+			$meetingDate  = Carbon::parse( $interviewApplication->scheduled_date )->format( config( 'constants.full_display_date_format' ) );
 
 			$todayInterviews[] = array(
 				'application'      => $application,
