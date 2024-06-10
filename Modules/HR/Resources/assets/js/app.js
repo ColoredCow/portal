@@ -252,7 +252,8 @@ $(document).ready(function () {
 		opportunityValue: null,
 		roundValue: null,
 		dateValue: null,
-		searchValue: null
+		searchValue: null,
+		page: 1
 	};
 	var jobValueDisplay = null;
 	var roundValueDisplay = null;
@@ -263,6 +264,7 @@ $(document).ready(function () {
 		values.opportunityValue = null;
 		values.roundValue = null;
 		values.searchValue = null;
+		values.page = 1;
 		jobValueDisplay = null;
 		roundValueDisplay = null;
 		opportunityValueDisplay = null;
@@ -300,7 +302,8 @@ $(document).ready(function () {
 				updateDisplay('opportunity', values.opportunityValue, opportunityValueDisplay);
 				updateDisplay('round', values.roundValue, roundValueDisplay);
 
-
+				// Update pagination links
+				$('.pagination-wrapper').html($(response).find('.pagination-wrapper').html());
 			},
 			error: function (xhr, status, error) {
 				console.log("Error:", error);
@@ -332,6 +335,7 @@ $(document).ready(function () {
 			values.searchValue = $('#searchInterviews').val();
 		}
 
+		values.page = 1; // Reset to the first page when applying new filters
 		sendAjaxRequest();
 	});
 
@@ -350,7 +354,17 @@ $(document).ready(function () {
 			roundValueDisplay = null;
 		}
 
+		values.page = 1;
 		sendAjaxRequest();
 	});
+
+	$(document).on('click', '.pagination-links a', function (e) {
+		e.preventDefault();
+		var page = $(this).attr('href').split('page=')[1];
+		values.page = page;
+		sendAjaxRequest();
+	});
+
 });
+
 

@@ -211,7 +211,7 @@ class ApplicationService implements ApplicationServiceContract
 				$totalTodayApplication[ $applicationName ][ $applicationId ] = 1;
 			}
 		}
-		// dump($interviewApplications);
+        
 		$todayInterviews = array();
 		$applicationType = array();
 		foreach ($interviewApplications as $key => $interviewApplication) {
@@ -255,7 +255,7 @@ class ApplicationService implements ApplicationServiceContract
                 'meeting_date' => $selectedDate !== null ? $meetingDate : null,
 			];
 		}
-        
+
 		return array(
 			'todayInterviews'       => $todayInterviews,
 			'todayApplications'     => $totalTodayApplication,

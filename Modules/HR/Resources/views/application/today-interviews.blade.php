@@ -30,8 +30,15 @@
 			</div>
 		</div>
 	<?php endforeach; ?>
-	<div class="pagination-wrapper">
-		{!! $pagination !!}
+	<div class="d-flex justify-content-between align-items-center">
+		<div class="pagination-wrapper">
+			<nav class="pagination-links">
+				{!! $pagination !!}
+			</nav>
+		</div>
+		<div class="interview-loader d-none btn btn-primary">
+			<span class="rounded-lg text-center py-1 px-2">Loading...</span>
+		</div>
 	</div>
 	<?php else : ?>
 		<div class="d-flex justify-content-center mt-20 w-full">
