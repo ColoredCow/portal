@@ -1,115 +1,98 @@
-@extends('layouts.app')
+@extends('hr::layouts.master')
 
 @section('content')
 
 <div class="container">
-    <br>
-    @include('hr.menu')
-    <br>
-    <div class="row">
-        <div class="col-md-6">
-            <h1>Applications</h1>
-        </div>
-    </div>
-    <div class="nav nav-tabs" id="recruitmentTabs" role="tablist">
-        <button class="nav-link active" id="todayInterviewsButton" data-toggle="tab" data-target="#todayInterviewsTab" type="button" role="tab" aria-controls="todayInterviewsTab" aria-selected="true">Today's Interviews</button>
-        <button class="nav-link" id="applicationTableButton" data-toggle="tab" data-target="#applicationTableTab" type="button" role="tab" aria-controls="applicationTableTab" aria-selected="false">Application Table</button>
-    </div>
-    <div class="tab-content" id="recruitmentTabsContent">
-        <div class="tab-pane fade show active" id="todayInterviewsTab" role="tabpanel" aria-labelledby="todayInterviewsTab">
-            <div>
-                <?php if($todaysApplications) : ?>
-                    <div class="d-flex justify-content-start align-items-center">
-                        <?php foreach ( $jobCount as $jobTitle => $jobData ) : ?>
-                            <div class="rounded-pill w-fit bg-success text-white fz-14 px-2 py-1 m-2">
-                                <span>{{ $jobTitle }} - {{ array_sum($jobData) }}</span>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                    <div class="mt-5">
-                        <table class="table table-striped table-bordered" id="today_interviews_table">
-                            <thead class="thead-dark sticky-top">
-                                <th>Name</th>
-                                <th>Details</th>
-                                <th>Meeting Link</th>
-                            </thead>
-                            <tbody>
-                                <?php foreach ( $todaysApplications as $key => $todayApplication ) : ?>
-                                    @include('hr::application.today-interviews')
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <?php else : ?>
-                    <div class="d-flex justify-content-center mt-20 w-full">
-                        <div class="fz-36">
-                            <p>No Upcoming meetings for Today</p>
-                        </div>
-                    </div>
-                <?php endif; ?>
-            </div>
-            <div class="tab-pane fade" id="applicationTableTab" role="tabpanel" aria-labelledby="applicationTableTab">
-                <!-- <table class="table table-striped table-bordered" id="applicants_table">
-                    <thead>
-                        <th>Name</th>
-                        <th>Details</th>
-                        <th>
-                            <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="assigneeDropdown">Assignee</span>
-                            <div class="dropdown-menu" aria-labelledby="assigneeDropdown">
-                                <span class="dropdown-item-text fz-12">Filter by assignee</span>
-                                @foreach ($assignees as $assignee)
-                                @php
-                                $target = route(request()->route()->getName(), ['assignee' => [$assignee->id]]);
-                                $class = in_array($assignee->id, request()->get('assignee') ?? []) ? 'visible' : 'invisible';
-                                @endphp
-                                <a class="dropdown-item" href="{{ $target }}">
-                                    <i class="fa fa-check fz-12 {{ $class }}"></i>
-                                    <img src="{{ $assignee->avatar }}" alt="{{ $assignee->name }}"
-                                        class="w-20 h-20 rounded-circle mr-1">
-                                    <span>{{ $assignee->name }}</span>
-                                </a>
-                                @endforeach
-                            </div>
-                        </th>
-                        <th>
-                            <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="statusDropdown">Status</span>
-                            <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                                <span class="dropdown-item-text fz-12">Filter by status</span>
-                                @foreach ($tags as $tag)
-                                    @php
-                                        $target = request()->fullUrlWithQuery(['tags' => [
-                                        $tag->id
-                                        ]]);
-                                        $class = in_array($tag->id, request()->get('tags') ?? []) ? 'visible' : 'invisible';
-                                    @endphp
-                                    <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
-                                        <i class="fa fa-check fz-12 mr-1 {{ $class }}"></i>
-                                        <div class="rounded w-13 h-13 d-inline-block mr-1"
-                                            style="background-color: {{$tag->background_color}};color: {{$tag->text_color}};"></div>
-                                        <span>{{ $tag->name }}</span>
-                                    </a>
-                                @endforeach
-                            </div>
-                        </th>
-                    </thead>
-                    <tbody>
-                        @forelse ($applications as $application)
-                            @include('hr::application.render-application-row')
-                        @empty
-                        <tr>
-                            <td colspan="100%" class="text-center">No application found for this filter.</td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            {{ $applications->links() }} -->
-            <div class="d-flex justify-content-center mt-20 w-full">
-                <div class="fz-36">
-                    <p>Coming Soon</p>
-                </div>
-            </div>
-            </div>
-    </div>
+	<div class="nav nav-pills">
+		<div class="mr-3 nav-item">
+			<a class="nav-item nav-link {{ Request::is('hr/recruitment/opportunities*') ? 'active' : '' }}" href="{{ route('recruitment.opportunities') }}">
+				<div class="d-flex align-items-center">
+					<p class="mb-0"><i class="fa fa-list-ul"></i> Total Opportunities : </p>
+					<p class="mb-0">&nbsp;&nbsp;{{ $totalOpportunities }}</p>
+				</div>
+			</a>
+		</div>
+		<div class="nav nav-pills mr-3">
+			<a class="nav-item nav-link" href="{{ route('recruitment.reports.index') }}">
+				<div class="">
+					<h5 class="">Resume Received Today</h5>
+					<!-- <p class="card-text">{{ count($todayApplications) }}</p> -->
+					<div class="max-h-60" style="overflow-y: scroll; scrollbar-width: none">
+						<ol class="d-flex" style="list-style-type: lower-alpha;">
+							<?php foreach ( $todayApplications as $title => $todayApplication ) : ?>
+								<li class="pb-2">
+									{{ $title }} : {{ count($todayApplications) }}&nbsp; &nbsp;
+								</li>
+							<?php endforeach; ?>
+						</ol>
+					</div>
+				</div>
+			</a>
+		</div>
+	</div>
+	
+	<br>
+	<div class="d-flex justify-content-between align-items-start">
+		<div class="fz-30 interview-data-reset c-pointer" data-id="null">
+			<h1 class="mb-0">My Tasks&nbsp;&nbsp;<i class="fa fa-arrow-right fz-24" aria-hidden="true"></i>&nbsp;&nbsp;<span class="badge badge-secondary fz-20 total-interview-tasks"><?php echo $todayInterviews ? count( $todayInterviews ) : 0; ?></span></h1>
+		</div>
+		<div class="w-500">
+			<form class="d-flex justify-content-end align-items-center">
+				<input
+					type="text" name="searchInterviews" class="form-control" id="searchInterviews" placeholder="Name, Round, or Designation"
+					value>
+				<button class="btn btn-info ml-2 interview-search">Search</button>
+			</form>
+		</div>
+	</div>
+	<div class="mt-3">
+		<div class="d-flex justify-content-between align-items-center text-white mb-5">
+			<div class="d-flex justify-content-start align-items-center">
+				<div class="fz-24 text-dark rounded-lg text-center mr-3 py-1 px-2 interview-date-filter c-pointer active" data-id>
+					<span>Today</span>
+				</div>
+				<div class="fz-24 text-dark rounded-lg text-center mr-3 py-1 px-2 interview-date-filter c-pointer" data-id="*">
+					<span>All</span>
+				</div>
+				<div class="badge badge-pill bg-theme-green text-center mr-3 d-none selected-job-category">
+					<span></span>
+					<i class="fa fa-times pl-1 c-pointer remove-job" aria-hidden="true"></i>
+				</div>
+				<div class="badge badge-pill bg-success text-center mr-3 d-none selected-round-category">
+					<span></span>
+					<i class="fa fa-times pl-1 c-pointer remove-round" aria-hidden="true"></i>
+				</div>
+				<div class="badge badge-pill bg-secondary text-center mr-3 d-none selected-opportunity-category">
+					<span></span>
+					<i class="fa fa-times pl-1 c-pointer remove-opportunity" aria-hidden="true"></i>
+				</div>
+			</div>
+			<div class="interview-loader d-none btn btn-primary">
+				<span class="rounded-lg text-center py-1 px-2">Loading...</span>
+			</div>
+		</div>
+		<div>
+			<div class="d-flex justify-content-start align-items-center shadow-lg w-full py-2 px-3 mb-3 min-h-70 text-white sticky-top interview-header">
+				<div class="w-150 fz-18 text-start mr-5">
+					<span>NAME</span>
+				</div>
+				<div class="w-200 fz-18 text-left mr-5">
+					<span>INTERVIEW DETAILS</span>
+				</div>
+				<div class="w-200 text-center mr-5">
+					<span>DESIGNATION</span>
+				</div>
+				<div class="w-200 text-center mr-5">
+					<span>ROUND</span>
+				</div>
+				<div class="w-100 text-center text-white">
+					<span>INTERVIEW TYPE</span>
+				</div>
+			</div>
+			<form class="interview-data-fetch" method="GET" action="{{ route('secondaryIndex') }}">
+				@include('hr::application.today-interviews')
+			</form>
+		</div>
+	</div>
 </div>
 @endsection

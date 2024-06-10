@@ -1,3 +1,13 @@
 .table-nostriped tbody tr:nth-of-type(odd) {
     background-color:transparent;
-}   
+}
+.interview-date-filter.active{
+    background-color: #3490dc;
+    >span {
+        color: white;
+        font-weight: 500;
+    }
+}
+.interview-header{
+    background-color: #343a40;
+}

@@ -7,17 +7,17 @@ $(document).on("click", ".delete-form", (e) => {
 		url: form.attr("action"),
 		type: form.attr("method"),
 		data: form.serialize(),
-		beforeSend: function() {
+		beforeSend: function () {
 			container.prop("disabled", true);
 			$(loaderAndText).toggleClass("d-none");
 		},
-		success: function(response) {
+		success: function (response) {
 			setTimeout(() => {
 				$(loaderAndText).toggleClass("d-none");
 				card.remove();
 			}, 2000);
 		},
-		error: function(response) {
+		error: function (response) {
 			container.prop("disabled", false);
 			$(loaderAndText).toggleClass("d-none");
 		},
@@ -46,21 +46,21 @@ $(document).on("submit", ".contact-form", (e) => {
 			.find("input")
 			.map((key, val) => {
 				switch (val.name) {
-				case "name":
-					val.value = contact.name;
-					return val;
-				case "email":
-					val.value = contact.email;
-					return val;
-				case "phone":
-					val.value = contact.phone;
-					return val;
-				case "designation":
-					val.value = contact.designation;
-					return val;
-				case "hr_university_id":
-					val.value = contact.hr_university_id;
-					return val;
+					case "name":
+						val.value = contact.name;
+						return val;
+					case "email":
+						val.value = contact.email;
+						return val;
+					case "phone":
+						val.value = contact.phone;
+						return val;
+					case "designation":
+						val.value = contact.designation;
+						return val;
+					case "hr_university_id":
+						val.value = contact.hr_university_id;
+						return val;
 				}
 			});
 		$("#update_form_list").append(form);
@@ -73,7 +73,7 @@ $(document).on("submit", ".contact-form", (e) => {
 		url: form.attr("action"),
 		type: form.attr("method"),
 		data: form.serialize(),
-		beforeSend: function() {
+		beforeSend: function () {
 			button.prop("disabled", true);
 			loaderAndText.toggleClass("d-none");
 			setErrors(form, {
@@ -84,7 +84,7 @@ $(document).on("submit", ".contact-form", (e) => {
 				hr_university_id: [],
 			});
 		},
-		success: function(response) {
+		success: function (response) {
 			loaderAndText.addClass("d-none");
 			form.find(".icon").toggleClass("d-none");
 			setTimeout(() => {
@@ -96,7 +96,7 @@ $(document).on("submit", ".contact-form", (e) => {
 				}
 			}, 2000);
 		},
-		error: function(response) {
+		error: function (response) {
 			loaderAndText.toggleClass("d-none");
 			setErrors(form, response.responseJSON.errors);
 			button.prop("disabled", false);
@@ -162,9 +162,9 @@ $(document).on("submit", ".alias-form", (e) => {
 			.find("input")
 			.map((key, val) => {
 				switch (val.name) {
-				case "name":
-					val.value = alias.name;
-					return val;
+					case "name":
+						val.value = alias.name;
+						return val;
 				}
 			});
 		$("#update_alias_form_list").append(form);
@@ -177,14 +177,14 @@ $(document).on("submit", ".alias-form", (e) => {
 		url: form.attr("action"),
 		type: form.attr("method"),
 		data: form.serialize(),
-		beforeSend: function() {
+		beforeSend: function () {
 			button.prop("disabled", true);
 			loaderAndText.toggleClass("d-none");
 			setErrors(form, {
 				name: [],
 			});
 		},
-		success: function(response) {
+		success: function (response) {
 			loaderAndText.addClass("d-none");
 			form.find(".icon").toggleClass("d-none");
 			setTimeout(() => {
@@ -196,7 +196,7 @@ $(document).on("submit", ".alias-form", (e) => {
 				}
 			}, 2000);
 		},
-		error: function(response) {
+		error: function (response) {
 			loaderAndText.toggleClass("d-none");
 			setErrors(form, response.responseJSON.errors);
 			button.prop("disabled", false);
@@ -216,7 +216,7 @@ function updateUniversityId(applicantId, universityId) {
 		data: {
 			university_id: universityId,
 		},
-		success: function(res) {
+		success: function (res) {
 			if (res.status == true) {
 				$(".university-update-success").removeClass("d-none");
 				showFlashMessage("university-update-success", 2000);
@@ -225,7 +225,7 @@ function updateUniversityId(applicantId, universityId) {
 				updateUniversityFailureAction();
 			}
 		},
-		error: function(res) {
+		error: function (res) {
 			updateUniversityFailureAction();
 		},
 	});
@@ -241,7 +241,116 @@ function updateUniversityFailureAction() {
  */
 function showFlashMessage(className, fadingTimeout) {
 	$("." + className).removeClass("d-none");
-	setTimeout(function() {
+	setTimeout(function () {
 		$("." + className).addClass("d-none");
 	}, fadingTimeout);
 }
+
+$(document).ready(function () {
+	var values = {
+		jobValue: null,
+		opportunityValue: null,
+		roundValue: null,
+		dateValue: null,
+		searchValue: null
+	};
+	var jobValueDisplay = null;
+	var roundValueDisplay = null;
+	var opportunityValueDisplay = null;
+
+	function resetValues() {
+		values.jobValue = null;
+		values.opportunityValue = null;
+		values.roundValue = null;
+		values.searchValue = null;
+		jobValueDisplay = null;
+		roundValueDisplay = null;
+		opportunityValueDisplay = null;
+	}
+
+	function updateDisplay(category, value, displayValue) {
+		var categoryElement = $(`.selected-${category}-category`);
+		categoryElement.find('span').html(displayValue ? displayValue.replace(/\b\w/g, char => char.toUpperCase()) : '');
+		categoryElement.attr('data-value', value);
+		categoryElement.toggleClass('d-none', !displayValue);
+	}
+
+	function sendAjaxRequest() {
+		var form = $(".interview-data-fetch");
+		var interviewLoader = $(".interview-loader");
+
+		interviewLoader.removeClass('d-none');
+
+		$.ajax({
+			url: form.attr("action"),
+			type: form.attr("method"),
+			contentType: 'application/json',
+			data: values,
+			success: function (response) {
+				var selectedInterviews = $(response).find('[data-counter]');
+				$('.total-interview-tasks').html(selectedInterviews.length);
+				if (selectedInterviews.length > 0) {
+					form.html(response);
+				} else {
+					form.html('<div class="mt-10 fz-24 text-center w-full">No interviews found for this filter.</div>');
+				}
+				interviewLoader.addClass('d-none');
+
+				updateDisplay('job', values.jobValue, jobValueDisplay);
+				updateDisplay('opportunity', values.opportunityValue, opportunityValueDisplay);
+				updateDisplay('round', values.roundValue, roundValueDisplay);
+
+
+			},
+			error: function (xhr, status, error) {
+				console.log("Error:", error);
+			}
+		});
+	}
+
+	$(document).on("click", ".interview-job-filter, .interview-opportunity-filter, .interview-round-filter, .interview-data-reset, .interview-date-filter, .interview-search", function (e) {
+		e.preventDefault();
+		var $this = $(this);
+
+		if ($this.hasClass('interview-data-reset')) {
+			resetValues();
+			$('#searchInterviews').val('');
+		} else if ($this.hasClass('interview-job-filter')) {
+			values.jobValue = $this.attr('data-id');
+			jobValueDisplay = $this.attr('value');
+		} else if ($this.hasClass('interview-opportunity-filter')) {
+			values.opportunityValue = $this.attr('data-id');
+			opportunityValueDisplay = $this.attr('value');
+		} else if ($this.hasClass('interview-round-filter')) {
+			values.roundValue = $this.attr('data-id');
+			roundValueDisplay = $this.attr('value');
+		} else if ($this.hasClass('interview-date-filter')) {
+			values.dateValue = $this.attr('data-id');
+			$('.interview-date-filter').removeClass('active');
+			$(this).addClass('active');
+		} else if ($this.hasClass('interview-search')) {
+			values.searchValue = $('#searchInterviews').val();
+		}
+
+		sendAjaxRequest();
+	});
+
+	$(document).on("click", ".remove-round, .remove-opportunity, .remove-job", function (e) {
+		e.preventDefault();
+		var $this = $(this);
+
+		if ($this.hasClass('remove-job')) {
+			values.jobValue = null;
+			jobValueDisplay = null;
+		} else if ($this.hasClass('remove-opportunity')) {
+			values.opportunityValue = null;
+			opportunityValueDisplay = null;
+		} else if ($this.hasClass('remove-round')) {
+			values.roundValue = null;
+			roundValueDisplay = null;
+		}
+
+		sendAjaxRequest();
+	});
+});
+
