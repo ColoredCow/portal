@@ -239,7 +239,7 @@ class ApplicationService implements ApplicationServiceContract
                 $applicationType[ $jobType ] = array();
             }
 
-            if (! isset( $applicationType[ $jobType ][ $jobTitle ])) {
+            if (! isset($applicationType[ $jobType ][ $jobTitle ])) {
                 $applicationType[ $jobType ][ $jobTitle ] = array();
             }
 
