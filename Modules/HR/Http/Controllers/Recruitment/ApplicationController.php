@@ -176,20 +176,20 @@ abstract class ApplicationController extends Controller
         $selectedOpportunity = null;
         $selectedRound = null;
         $today = '2024-04-17';
-        $selectedDate = null;
+        $selectedOperator = null;
         
         if ($request->query()) {
             $parsedData = $request->query();
             $searchCategory = $parsedData['searchValue'];
             $selectedJob = $parsedData['jobValue'];
-            $selectedOpportunity = $parsedData['opportunityValue']; 
+            $selectedOpportunity = $parsedData['opportunityValue'];
             $selectedRound = $parsedData['roundValue'];
-            $selectedDate = $parsedData['dateValue'] ? '>=' : null;
+            $selectedOperator = $parsedData['dateValue'] ? '>=' : null;
         }
         $applicationService = new ApplicationService;
-        $data = $applicationService->getApplicationsForDate($today, $selectedDate, $searchCategory, $selectedJob, $selectedOpportunity, $selectedRound);
+        $data = $applicationService->getApplicationsForDate($today, $selectedOperator, $searchCategory, $selectedJob, $selectedOpportunity, $selectedRound);
         if ($request->query()) {
-          return view('hr::application.today-interviews')->with($data);
+            return view('hr::application.today-interviews')->with($data);
         }
         return view('hr::application.secondary-index')->with($data);
     }
