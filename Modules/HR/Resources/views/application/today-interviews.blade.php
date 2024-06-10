@@ -42,7 +42,7 @@
 	</div>
 	<?php else : ?>
 		<div class="d-flex justify-content-center mt-20 w-full">
-			<div class="fz-36">
+			<div class="mt-10 fz-24 text-center w-full">
 				<p>No Upcoming meetings for Today</p>
 			</div>
 		</div>

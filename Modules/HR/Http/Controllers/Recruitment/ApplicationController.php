@@ -176,7 +176,7 @@ abstract class ApplicationController extends Controller
         $selectedJob = null;
         $selectedOpportunity = null;
         $selectedRound = null;
-        $today = '2024-04-17';
+        $today = today()->toDateString();
         $selectedOperator = null;
 
         if ($request->query()) {
