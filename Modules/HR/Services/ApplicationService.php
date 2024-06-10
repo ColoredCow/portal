@@ -207,10 +207,10 @@ class ApplicationService implements ApplicationServiceContract
                     return [$jobName => $applications->count()];
                 }
             );
-
+        $interviewApplicationsItems = $interviewApplications->items();
         $todayInterviews = [];
         $applicationType = [];
-        foreach ($interviewApplications as $interviewApplication) {
+        foreach ($interviewApplicationsItems as $interviewApplication) {
             $application = $interviewApplication->application;
             $job = $application->job;
             $round = $interviewApplication->round;
