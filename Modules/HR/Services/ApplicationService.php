@@ -158,7 +158,7 @@ class ApplicationService implements ApplicationServiceContract
     }
 	
 	public function getApplicationsForDate($today, $selectedOperator, $searchCategory, $selectedJob, $selectedOpportunity, $selectedRound)
-    {
+	{
 		$totalOpportunitiesCount = Job::where('status', 'published')->count();
 		$todayApplications       = Application::whereDate('created_at', $today)->get();
 		$interviewApplicationsQuery = ApplicationRound::whereNotNull('calendar_meeting_id')
@@ -167,21 +167,21 @@ class ApplicationService implements ApplicationServiceContract
 			->with('application.applicant', 'application.job', 'round', 'meetingLink', 'scheduledPerson')
 			->orderByRaw('hr_application_round.scheduled_date ASC');
 
-        if ($selectedOperator !== null) {
-            $interviewApplicationsQuery->whereDate('scheduled_date', $selectedOperator, $today);
-        } else {
-            $interviewApplicationsQuery->whereDate('scheduled_date', $today);
-        }
-        if ($selectedJob !== null) {
-            $interviewApplicationsQuery->whereHas('application.job', function ($query) use ($selectedJob) {
-                $query->where('id', $selectedJob);
-            });
-        }
-        if ($selectedOpportunity !== null) {
-            $interviewApplicationsQuery->whereHas('application.job', function ($query) use ($selectedOpportunity) {
-                $query->where('opportunity_id', $selectedOpportunity);
-            });
-        }
+		if ($selectedOperator !== null) {
+			$interviewApplicationsQuery->whereDate('scheduled_date', $selectedOperator, $today);
+		} else {
+			$interviewApplicationsQuery->whereDate('scheduled_date', $today);
+		}
+		if ($selectedJob !== null) {
+			$interviewApplicationsQuery->whereHas('application.job', function ($query) use ($selectedJob) {
+				$query->where('id', $selectedJob);
+			});
+		}
+		if ($selectedOpportunity !== null) {
+			$interviewApplicationsQuery->whereHas('application.job', function ($query) use ($selectedOpportunity) {
+				$query->where('opportunity_id', $selectedOpportunity);
+			});
+		}
 		if ($selectedRound !== null) {
 			$interviewApplicationsQuery->where('hr_round_id', $selectedRound);
 		}
@@ -255,7 +255,7 @@ class ApplicationService implements ApplicationServiceContract
 			'todayApplications'     => $totalTodayApplication,
 			'totalOpportunities'    => $totalOpportunitiesCount,
 			'applicationType'       => $applicationType,
-            'pagination'            => $interviewApplications->links(),
+			'pagination'            => $interviewApplications->links(),
 		);
 	}
 }
