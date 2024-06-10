@@ -163,6 +163,7 @@ abstract class ApplicationController extends Controller
         foreach ($applicantData as $data) {
             $attr['applicantId'][$data->hr_applicant_id] = $data;
         }
+
         return view('hr.application.index')->with($attr);
     }
 
@@ -177,7 +178,7 @@ abstract class ApplicationController extends Controller
         $selectedRound = null;
         $today = '2024-04-17';
         $selectedOperator = null;
-        
+
         if ($request->query()) {
             $parsedData = $request->query();
             $searchCategory = $parsedData['searchValue'];
@@ -191,6 +192,7 @@ abstract class ApplicationController extends Controller
         if ($request->query()) {
             return view('hr::application.today-interviews')->with($data);
         }
+
         return view('hr::application.secondary-index')->with($data);
     }
 
