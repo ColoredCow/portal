@@ -170,7 +170,7 @@ abstract class ApplicationController extends Controller
     /**
      * Display a listing of current date's interviews.
      */
-    public function secondaryIndex(Request $request)
+    public function interviewsIndex(Request $request)
     {
         $searchCategory = null;
         $selectedJob = null;

@@ -89,7 +89,7 @@
 					<span>INTERVIEW TYPE</span>
 				</div>
 			</div>
-			<form class="interview-data-fetch" method="GET" action="{{ route('secondaryIndex') }}">
+			<form class="interview-data-fetch" method="GET" action="{{ route('interviewsIndex') }}">
 				@include('hr::application.today-interviews')
 			</form>
 		</div>

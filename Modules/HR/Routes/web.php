@@ -99,7 +99,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/teaminteraction', 'JobApplicationController@generateTeamInteractionEmail');
             Route::get('/finishinterview', 'JobApplicationController@markInterviewFinished')->name('markInterviewFinished');
             Route::get('/onHoldEmail', 'JobApplicationController@generateOnHoldEmail');
-            Route::get('/secondaryIndex', 'JobApplicationController@secondaryIndex')->name('secondaryIndex');
+            Route::get('/interviewsIndex', 'JobApplicationController@interviewsIndex')->name('interviewsIndex');
 
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
