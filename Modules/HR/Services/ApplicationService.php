@@ -156,7 +156,7 @@ class ApplicationService implements ApplicationServiceContract
 
         return $accessToken;
     }
-	
+
     public function getApplicationsForDate($today, $selectedOperator, $searchCategory, $selectedJob, $selectedOpportunity, $selectedRound)
     {
         $totalOpportunitiesCount = Job::where('status', 'published')->count();
@@ -199,9 +199,9 @@ class ApplicationService implements ApplicationServiceContract
         $interviewApplications = $interviewApplicationsQuery->paginate(config('constants.pagination_size'));
 
         // Process today's applications
-        $totalTodayApplication = $todayApplications->groupBy( 'job.id' )
+        $totalTodayApplication = $todayApplications->groupBy('job.id')
             ->mapWithKeys(
-                function ( $applications, $jobId ) {
+                function ($applications, $jobId) {
                     $jobName = $applications->first()->job->title;
                     return array( $jobName => $applications->count() );
                 }
@@ -209,15 +209,15 @@ class ApplicationService implements ApplicationServiceContract
 
         $todayInterviews = array();
         $applicationType = array();
-        foreach ( $interviewApplications as $interviewApplication ) {
+        foreach ($interviewApplications as $interviewApplication) {
             $application = $interviewApplication->application;
             $job         = $application->job;
             $round       = $interviewApplication->round;
 
-            $meetingStart = $interviewApplication->scheduled_date->format( config( 'constants.display_time_format' ) );
-            $meetingEnd   = Carbon::parse( $interviewApplication->scheduled_end )->format( config( 'constants.display_time_format' ) );
+            $meetingStart = $interviewApplication->scheduled_date->format(config('constants.display_time_format'));
+            $meetingEnd   = Carbon::parse($interviewApplication->scheduled_end)->format(config('constants.display_time_format'));
             $meetingTime  = $meetingStart . '-' . $meetingEnd;
-            $meetingDate  = Carbon::parse( $interviewApplication->scheduled_date )->format( config( 'constants.full_display_date_format' ) );
+            $meetingDate  = Carbon::parse($interviewApplication->scheduled_date)->format(config('constants.full_display_date_format'));
 
             $todayInterviews[] = array(
                 'application'      => $application,
@@ -235,15 +235,15 @@ class ApplicationService implements ApplicationServiceContract
             $jobTitle = $job->title;
             $jobId    = $job->id;
 
-            if ( ! isset( $applicationType[ $jobType ] ) ) {
+            if (! isset($applicationType[ $jobType ])) {
                 $applicationType[ $jobType ] = array();
             }
 
-            if ( ! isset( $applicationType[ $jobType ][ $jobTitle ] ) ) {
+            if (! isset( $applicationType[ $jobType ][ $jobTitle ])) {
                 $applicationType[ $jobType ][ $jobTitle ] = array();
             }
 
-            if ( ! isset( $applicationType[ $jobType ][ $jobTitle ][ $jobId ] ) ) {
+            if (! isset($applicationType[ $jobType ][ $jobTitle ][ $jobId ])) {
                 $applicationType[ $jobType ][ $jobTitle ][ $jobId ] = 0;
             }
 
