@@ -5,6 +5,7 @@ namespace Modules\HR\Console\Recruitment;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use Modules\HR\Emails\SendApplicationRejectionMail;
+use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Application;
 
 class RejectedApplicationFollowUp extends Command
@@ -41,7 +42,9 @@ class RejectedApplicationFollowUp extends Command
                 if($awaitingForDays >10){
                 $hrApplicationId = $application->id;
                 $updateStatus = Application::where('id', $hrApplicationId)->update(['status'=> 'rejected']);
-                Mail::to(config('hr.default.email'))->send(new SendApplicationRejectionMail());
+                $hrApplicantId = Application::where('id', $hrApplicationId)->first()->hr_applicant_id;
+                $applicantEmailId = Applicant::where('id', $hrApplicantId)->first()->email;
+                Mail::to(config('hr.default.email'))->send(new SendApplicationRejectionMail($applicantEmailId));
                 }
             } else{
                 return;

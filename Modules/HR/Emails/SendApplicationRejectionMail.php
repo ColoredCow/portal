@@ -10,16 +10,17 @@ class SendApplicationRejectionMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $hrApplicantEmail;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($email)
     {
-
+        $this->hrApplicantEmail = $email;
     }
-
     /**
      * Build the message.
      *
@@ -27,8 +28,9 @@ class SendApplicationRejectionMail extends Mailable
      */
     public function build()
     {
-        return $this->from(config('hr.default.email'), config('hr.default.name'))
-        ->subject('You have expired Jobs opening.')
-        ->view('emails.send-application-rejection-mail');
+        return $this->from(config('hr.default.email'))
+            ->to($this->hrApplicantEmail)
+            ->subject('Application Rejected Mail')
+            ->view('emails.send-application-rejection-mail');
     }
 }
