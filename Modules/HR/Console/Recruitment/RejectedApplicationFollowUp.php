@@ -36,11 +36,10 @@ class RejectedApplicationFollowUp extends Command
         })->get();
 
         foreach ($applications as $application) {
-            // dd($application);
             $applicationRound = $application->latestApplicationRound;
-            if($applicationRound->getPreviousApplicationRound()){
-            $awaitingForDays = $applicationRound->getPreviousApplicationRound()->conducted_date->diffInDays(today());
-                if($awaitingForDays >10){
+            if($applicationRound->getPreviousApplicationRound()) {
+                $awaitingForDays = $applicationRound->getPreviousApplicationRound()->conducted_date->diffInDays(today());
+                if($awaitingForDays >10) {
                 $hrApplicationId = $application->id;
                 $jobId = $application->hr_job_id;
                 $hrApplicantId = Application::where('id', $hrApplicationId)->first()->hr_applicant_id;
@@ -48,7 +47,7 @@ class RejectedApplicationFollowUp extends Command
                 $updateStatus = Application::where('id', $hrApplicationId)->update(['status'=> 'rejected']);
                 Mail::to(config('hr.default.email'))->send(new SendApplicationRejectionMail($hrApplicantId, $jobTitle));
                 }
-            } else{
+            } else {
                 return;
             }
         }
