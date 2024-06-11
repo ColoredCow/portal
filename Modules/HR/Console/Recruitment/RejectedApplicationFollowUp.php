@@ -39,7 +39,7 @@ class RejectedApplicationFollowUp extends Command
             $applicationRound = $application->latestApplicationRound;
             if ($applicationRound->getPreviousApplicationRound()) {
                 $awaitingForDays = $applicationRound->getPreviousApplicationRound()->conducted_date->diffInDays(today());
-                if ($awaitingForDays >10) {
+                if ($awaitingForDays > 10) {
                     $hrApplicationId = $application->id;
                     $jobId = $application->hr_job_id;
                     $interviewLink = $application->getScheduleInterviewLink();
@@ -47,7 +47,7 @@ class RejectedApplicationFollowUp extends Command
                     $jobTitle = Job::where('id', $jobId)->first()->title;
                     $updateStatus = Application::where('id', $hrApplicationId)->update([
                         'status' => 'rejected',
-                        'is_unresponsive' => 1
+                        'is_unresponsive' => 1,
                     ]);
                     Mail::send(new SendApplicationRejectionMail($hrApplicantId, $jobTitle, $interviewLink));
                 }

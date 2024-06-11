@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\HR\Console\JobExpiredEmailToHr;
+use Modules\HR\Console\Recruitment\RejectedApplicationFollowUp;
 use Modules\Project\Console\EndedProject;
 use Modules\Project\Console\FixedBudgetProject;
 use Modules\Project\Console\GoogleChat\NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat;
@@ -12,7 +13,6 @@ use Modules\Project\Console\SendEffortSummaryCommand;
 use Modules\Project\Console\SyncEffortsheet;
 use Modules\Project\Console\ZeroEffortInProject;
 use Modules\Project\Console\ZeroExpectedHourInProject;
-use Modules\HR\Console\Recruitment\RejectedApplicationFollowUp;
 
 class Kernel extends ConsoleKernel
 {

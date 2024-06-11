@@ -2,7 +2,6 @@
 
 namespace Modules\HR\Emails;
 
-use Dotenv\Util\Str;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
