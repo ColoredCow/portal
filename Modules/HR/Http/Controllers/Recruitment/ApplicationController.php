@@ -165,6 +165,8 @@ abstract class ApplicationController extends Controller
             $attr['applicantId'][$data->hr_applicant_id] = $data;
         }
 
+        $this->updateRescheduledApplication();
+
         return view('hr.application.index')->with($attr);
     }
 
@@ -362,4 +364,19 @@ abstract class ApplicationController extends Controller
 
         return redirect(route('applications.job.index'))->with('status', $status);
     }
+
+    public function updateRescheduledApplication(){
+
+        $applications = Application::where('is_unresponsive', 1)->get();
+
+        foreach ($applications as $application) {
+            $applicationId = $application->id;
+            $scheduledTime = ApplicationRound::where('hr_application_id', $applicationId)->where('hr_round_id', 3)->first()->scheduled_date;
+            if($scheduledTime !== null){
+                $application->status = 'in-progress';
+                $application->save();
+            }
+        }
+    }
+
 }
