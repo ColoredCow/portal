@@ -5,8 +5,8 @@ namespace Modules\HR\Console\Recruitment;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use Modules\HR\Emails\SendApplicationRejectionMail;
-use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Application;
+use Modules\HR\Entities\Job;
 
 class RejectedApplicationFollowUp extends Command
 {
@@ -36,15 +36,17 @@ class RejectedApplicationFollowUp extends Command
         })->get();
 
         foreach ($applications as $application) {
+            // dd($application);
             $applicationRound = $application->latestApplicationRound;
             if($applicationRound->getPreviousApplicationRound()){
             $awaitingForDays = $applicationRound->getPreviousApplicationRound()->conducted_date->diffInDays(today());
                 if($awaitingForDays >10){
                 $hrApplicationId = $application->id;
-                $updateStatus = Application::where('id', $hrApplicationId)->update(['status'=> 'rejected']);
+                $jobId = $application->hr_job_id;
                 $hrApplicantId = Application::where('id', $hrApplicationId)->first()->hr_applicant_id;
-                $applicantEmailId = Applicant::where('id', $hrApplicantId)->first()->email;
-                Mail::to(config('hr.default.email'))->send(new SendApplicationRejectionMail($applicantEmailId));
+                $jobTitle = Job::where('id', $jobId)->first()->title;
+                $updateStatus = Application::where('id', $hrApplicationId)->update(['status'=> 'rejected']);
+                Mail::to(config('hr.default.email'))->send(new SendApplicationRejectionMail($hrApplicantId, $jobTitle));
                 }
             } else{
                 return;
