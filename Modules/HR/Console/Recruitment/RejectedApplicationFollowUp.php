@@ -46,7 +46,7 @@ class RejectedApplicationFollowUp extends Command
                 $hrApplicantId = Application::where('id', $hrApplicationId)->first()->hr_applicant_id;
                 $jobTitle = Job::where('id', $jobId)->first()->title;
                 $updateStatus = Application::where('id', $hrApplicationId)->update(['status'=> 'rejected']);
-                Mail::to(config('hr.default.email'))->send(new SendApplicationRejectionMail($hrApplicantId, $jobTitle, $interviewLink));
+                Mail::send(new SendApplicationRejectionMail($hrApplicantId, $jobTitle, $interviewLink));
                 }
             } else {
                 return;
