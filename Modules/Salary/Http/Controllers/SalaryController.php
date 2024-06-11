@@ -108,7 +108,7 @@ class SalaryController extends Controller
 
     public function storeOrUpdateContractorSalary(Request $request, Employee $employee)
     {
-        $currentSalaryObject = $employee->getLatestSalary(config('salary.type.contractor_fee.slug'));
+        $currentSalaryObject = $employee->getLatestSalary();
         if (! $currentSalaryObject) {
             EmployeeSalary::create([
                 'employee_id' => $employee->id,
