@@ -35,9 +35,10 @@
       <div class="d-flex align-items-center">
         <select name="export" class="p-0.5">
           <option value="full-time">Employee Salary</option>
-          <option disabled value="contractor">Contractor Fee</option>
+          <option value="contractor">Contractor Fee</option>
         </select>
         <button type="submit" class="ml-1 btn btn-primary">Export</button>
+        <i class="fa fz-40 fa-envelope ml-1 c-pointer mb-0.5" data-toggle="modal" data-target="#sendPayrollMailModal" aria-hidden="true"></i>
       </div>
     </form>
   </div>

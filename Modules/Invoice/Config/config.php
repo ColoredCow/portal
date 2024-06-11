@@ -187,4 +187,9 @@ return [
         'eur' => 'EUR',
         'swi' => 'SWI',
     ],
+
+    'ca-email' => [
+        'name' => env('CA_NAME'),
+        'email' => env('CA_EMAIL'),
+    ],
 ];

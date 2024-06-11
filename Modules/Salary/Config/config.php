@@ -37,4 +37,13 @@ return [
         'email' => env('HR_EMPLOYEE_DEFAULT_EMAIL', 'hr@coloredcow.com'),
         'name' => env('HR_EMPLOYEE_DEFAULT_NAME', 'Mohit Sharma'),
     ],
+
+    'type' => [
+        'employee_salary' => [
+            'slug' => 'employee-salary'
+        ],
+        'contractor_fee' => [
+            'slug' => 'contractor-fee'
+        ],
+    ]
 ];

@@ -153,6 +153,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}/edit', 'HrJobDesignationController@edit')->name('designation.edit');
         Route::post('/store', 'HrJobDesignationController@storeDesignation')->name('hr-job-designation.storeJobDesignation');
     });
+
+    Route::prefix('finance')->group(function () {
+        Route::post('payroll-list-mail', 'EmployeeController@sendPayrollListMail')->name('payroll-list-mail');
+    });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');
 Route::get('/viewForm/{id}/{email}', 'Recruitment\ApplicantController@viewForm')->name('hr.applicant.view-form');

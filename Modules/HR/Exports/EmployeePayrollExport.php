@@ -30,8 +30,8 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
         $totalFoodAllowance = 0;
         $totalSalary = 0;
         $daysInMonth = Carbon::now()->daysInMonth;
-        $totalDays = $this->employees->count() * $daysInMonth;
-        $totalPaidDays = $this->employees->count() * $daysInMonth;
+        $totalDays = 0;
+        $totalPaidDays = 0;
         $totalEmployeeEsi = 0;
         $totalEmployeeEpf = 0;
         $totalTds = 0;
@@ -54,6 +54,8 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
                 continue;
             }
 
+            $totalDays += $daysInMonth;
+            $totalPaidDays += $daysInMonth;
             $totalGrossSalary += optional($currentSalaryObject)->monthly_gross_salary;
             $totalBasicSalary += optional($currentSalaryObject)->basic_salary;
             $totalHra += optional($currentSalaryObject)->hra;
