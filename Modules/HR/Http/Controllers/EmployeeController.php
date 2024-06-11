@@ -162,10 +162,10 @@ class EmployeeController extends Controller
     public function sendPayrollListMail(Request $request)
     {
         $toEmail = [
-            "email" => $request->to,
-            "name" => $request->name,
+            'email' => $request->to,
+            'name' => $request->name,
         ];
-        $ccEmails = explode(',', $request->cc ?? "");
+        $ccEmails = explode(',', $request->cc ?? '');
         Mail::send(new SendPayrollListMail($toEmail, $ccEmails, [
             'full-time' => $this->service->getEmployeeListForExport('full-time')['employees'],
             'contractor' => $this->service->getEmployeeListForExport('contractor')['employees'],

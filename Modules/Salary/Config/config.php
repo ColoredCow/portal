@@ -40,10 +40,10 @@ return [
 
     'type' => [
         'employee_salary' => [
-            'slug' => 'employee-salary'
+            'slug' => 'employee-salary',
         ],
         'contractor_fee' => [
-            'slug' => 'contractor-fee'
+            'slug' => 'contractor-fee',
         ],
-    ]
+    ],
 ];

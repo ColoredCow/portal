@@ -97,7 +97,7 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
             ['Coloredcow Consulting Private Limited'],
             [Carbon::now()->format('F Y'), 'Paid', Carbon::today()->toDateString()],
             [
-            'Contractor Name', 'Designation', 'Total Fee', 'Total No of Days', 'Paid Days', 'TDS', 'Advance Recovery', 'Total Deduction', 'Advance Fee', 'Net Pay', 'Monthly Fee', 'CTC Annual', 'CTC Aggreed'
+            'Contractor Name', 'Designation', 'Total Fee', 'Total No of Days', 'Paid Days', 'TDS', 'Advance Recovery', 'Total Deduction', 'Advance Fee', 'Net Pay', 'Monthly Fee', 'CTC Annual', 'CTC Aggreed',
             ],
         ];
     }

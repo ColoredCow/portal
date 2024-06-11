@@ -12,10 +12,10 @@ use Modules\HR\Exports\EmployeePayrollExport;
 class SendPayrollListMail extends Mailable
 {
     use Queueable, SerializesModels;
-
-    protected $ccEmails;
     public $toEmail;
     public $employeesData;
+
+    protected $ccEmails;
     /**
      * Create a new message instance.
      *
@@ -53,14 +53,14 @@ class SendPayrollListMail extends Mailable
         return $mail
             ->attachData(
                 Excel::raw(new EmployeePayrollExport($this->employeesData['full-time']), \Maatwebsite\Excel\Excel::XLSX), 
-                $employeeExportFilename, 
+                $employeeExportFilename,
                 [
                     'mime' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 ]
             )
             ->attachData(
                 Excel::raw(new ContractorFeeExport($this->employeesData['contractor']), \Maatwebsite\Excel\Excel::XLSX), 
-                $contractorExportFilename, 
+                $contractorExportFilename,
                 [
                     'mime' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 ]

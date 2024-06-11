@@ -105,11 +105,11 @@ class SalaryController extends Controller
 
         return redirect()->back()->with('success', 'Salary updated successfully!');
     }
-    
+
     public function storeOrUpdateContractorSalary(Request $request, Employee $employee)
     {
         $currentSalaryObject = $employee->getLatestSalary(config('salary.type.contractor_fee.slug'));
-        if (!$currentSalaryObject) {
+        if (! $currentSalaryObject) {
             EmployeeSalary::create([
                 'employee_id' => $employee->id,
                 'monthly_fee' => $request->contractorFee,
@@ -117,6 +117,7 @@ class SalaryController extends Controller
                 'commencement_date' => $request->commencementDate,
                 'salary_type' => config('salary.type.contractor_fee.slug'),
             ]);
+
             return redirect()->back()->with('success', 'Contractor fee added successfully!');
         }
 
