@@ -45,7 +45,10 @@ class RejectedApplicationFollowUp extends Command
                 $interviewLink = $application->getScheduleInterviewLink();
                 $hrApplicantId = Application::where('id', $hrApplicationId)->first()->hr_applicant_id;
                 $jobTitle = Job::where('id', $jobId)->first()->title;
-                $updateStatus = Application::where('id', $hrApplicationId)->update(['status'=> 'rejected']);
+                $updateStatus = Application::where('id', $hrApplicationId)->update([
+                    'status' => 'rejected',
+                    'is_unresponsive' => 1
+                ]);
                 Mail::send(new SendApplicationRejectionMail($hrApplicantId, $jobTitle, $interviewLink));
                 }
             } else {
