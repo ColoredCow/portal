@@ -238,6 +238,7 @@ class ApplicationService implements ApplicationServiceContract
         return $todayApplications->groupBy('job.id')
             ->mapWithKeys(function ($applications, $jobId) {
                 $jobName = $applications->first()->job->title;
+
                 return [$jobName => $applications->count()];
             });
     }
@@ -281,15 +282,15 @@ class ApplicationService implements ApplicationServiceContract
             $jobTitle = $job->title;
             $jobId = $job->id;
 
-            if (!isset($applicationType[$jobType])) {
+            if (! isset($applicationType[$jobType])) {
                 $applicationType[$jobType] = [];
             }
 
-            if (!isset($applicationType[$jobType][$jobTitle])) {
+            if (! isset($applicationType[$jobType][$jobTitle])) {
                 $applicationType[$jobType][$jobTitle] = [];
             }
 
-            if (!isset($applicationType[$jobType][$jobTitle][$jobId])) {
+            if (! isset($applicationType[$jobType][$jobTitle][$jobId])) {
                 $applicationType[$jobType][$jobTitle][$jobId] = 0;
             }
 
