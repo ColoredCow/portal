@@ -42,7 +42,7 @@ class SendApplicationRejectionMail extends Mailable
             ->with([
                 'applicant' => $this->applicant,
                 $this->jobTitle,
-                $this->interviewLink
+                $this->interviewLink,
             ]);
     }
 }

@@ -37,9 +37,9 @@ class RejectedApplicationFollowUp extends Command
 
         foreach ($applications as $application) {
             $applicationRound = $application->latestApplicationRound;
-            if($applicationRound->getPreviousApplicationRound()) {
+            if ($applicationRound->getPreviousApplicationRound()) {
                 $awaitingForDays = $applicationRound->getPreviousApplicationRound()->conducted_date->diffInDays(today());
-                if($awaitingForDays >10) {
+                if ($awaitingForDays >10) {
                 $hrApplicationId = $application->id;
                 $jobId = $application->hr_job_id;
                 $interviewLink = $application->getScheduleInterviewLink();
@@ -56,5 +56,4 @@ class RejectedApplicationFollowUp extends Command
             }
         }
     }
-
 }

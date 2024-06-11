@@ -13,6 +13,7 @@ use Modules\Project\Console\SyncEffortsheet;
 use Modules\Project\Console\ZeroEffortInProject;
 use Modules\Project\Console\ZeroExpectedHourInProject;
 use Modules\HR\Console\Recruitment\RejectedApplicationFollowUp;
+
 class Kernel extends ConsoleKernel
 {
     /**
@@ -29,7 +30,7 @@ class Kernel extends ConsoleKernel
         FixedBudgetProject::class,
         NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat::class,
         JobExpiredEmailToHr::class,
-        RejectedApplicationFollowUp::class
+        RejectedApplicationFollowUp::class,
         // QuarterlyReviewSystemForEmployee::class, //This line will be commented for some time. After the feature is completed, it will be uncommented.
 
     ];
