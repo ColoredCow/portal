@@ -314,27 +314,51 @@ $(document).ready(function () {
 	$(document).on("click", ".interview-job-filter, .interview-opportunity-filter, .interview-round-filter, .interview-data-reset, .interview-date-filter, .interview-search", function (e) {
 		e.preventDefault();
 		var $this = $(this);
-
-		if ($this.hasClass('interview-data-reset')) {
-			resetValues();
-			$('#searchInterviews').val('');
-		} else if ($this.hasClass('interview-job-filter')) {
-			values.jobValue = $this.attr('data-id');
-			jobValueDisplay = $this.attr('value');
-		} else if ($this.hasClass('interview-opportunity-filter')) {
-			values.opportunityValue = $this.attr('data-id');
-			opportunityValueDisplay = $this.attr('value');
-		} else if ($this.hasClass('interview-round-filter')) {
-			values.roundValue = $this.attr('data-id');
-			roundValueDisplay = $this.attr('value');
-		} else if ($this.hasClass('interview-date-filter')) {
-			values.dateValue = $this.attr('data-id');
-			$('.interview-date-filter').removeClass('active');
-			$(this).addClass('active');
-		} else if ($this.hasClass('interview-search')) {
-			values.searchValue = $('#searchInterviews').val();
+		
+		var elementClass = $this.attr('class').split(' ').find(cls => {
+			return cls === 'interview-data-reset' ||
+				   cls === 'interview-job-filter' ||
+				   cls === 'interview-opportunity-filter' ||
+				   cls === 'interview-round-filter' ||
+				   cls === 'interview-date-filter' ||
+				   cls === 'interview-search';
+		});
+	
+		switch (elementClass) {
+			case 'interview-data-reset':
+				resetValues();
+				$('#searchInterviews').val('');
+				break;
+	
+			case 'interview-job-filter':
+				values.jobValue = $this.attr('data-id');
+				jobValueDisplay = $this.attr('value');
+				break;
+	
+			case 'interview-opportunity-filter':
+				values.opportunityValue = $this.attr('data-id');
+				opportunityValueDisplay = $this.attr('value');
+				break;
+	
+			case 'interview-round-filter':
+				values.roundValue = $this.attr('data-id');
+				roundValueDisplay = $this.attr('value');
+				break;
+	
+			case 'interview-date-filter':
+				values.dateValue = $this.attr('data-id');
+				$('.interview-date-filter').removeClass('active');
+				$this.addClass('active');
+				break;
+	
+			case 'interview-search':
+				values.searchValue = $('#searchInterviews').val();
+				break;
+	
+			default:
+				console.error('Unexpected class');
 		}
-
+	
 		values.page = 1; // Reset to the first page when applying new filters
 		sendAjaxRequest();
 	});

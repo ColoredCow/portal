@@ -309,11 +309,6 @@ class ApplicationRound extends Model
         return $this->belongsTo(Application::class, 'hr_application_id');
     }
 
-    public function meetingLink()
-    {
-        return $this->belongsTo(CalendarMeeting::class, 'calendar_meeting_id');
-    }
-
     public function trialRound()
     {
         return $this->belongsTo(Round::class, 'trial_round_id');

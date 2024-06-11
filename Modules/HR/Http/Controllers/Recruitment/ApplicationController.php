@@ -172,29 +172,25 @@ abstract class ApplicationController extends Controller
      */
     public function interviewsIndex(Request $request)
     {
-        $searchCategory = null;
-        $selectedJob = null;
-        $selectedOpportunity = null;
-        $selectedRound = null;
-        $today = today()->toDateString();
-        $selectedOperator = null;
+    $today = today()->toDateString();
+    $applicationService = new ApplicationService;
 
-        if ($request->query()) {
-            $parsedData = $request->query();
-            $searchCategory = $parsedData['searchValue'];
-            $selectedJob = $parsedData['jobValue'];
-            $selectedOpportunity = $parsedData['opportunityValue'];
-            $selectedRound = $parsedData['roundValue'];
-            $selectedOperator = $parsedData['dateValue'] ? '>=' : null;
-        }
-        $applicationService = new ApplicationService;
-        $data = $applicationService->getApplicationsForDate($today, $selectedOperator, $searchCategory, $selectedJob, $selectedOpportunity, $selectedRound);
-        if ($request->query()) {
-            return view('hr::application.today-interviews')->with($data);
-        }
+    $parsedData = $request->query();
+    $searchCategory = $parsedData['searchValue'] ?? null;
+    $selectedJob = $parsedData['jobValue'] ?? null;
+    $selectedOpportunity = $parsedData['opportunityValue'] ?? null;
+    $selectedRound = $parsedData['roundValue'] ?? null;
+    $allInterviews = $parsedData['dateValue'] ?? null;
 
-        return view('hr::application.secondary-index')->with($data);
+    $data = $applicationService->getApplicationsForDate($today, $allInterviews, $searchCategory, $selectedJob, $selectedOpportunity, $selectedRound);
+
+    if ($request->query()) {
+        return view('hr::application.today-interviews')->with($data);
     }
+
+    return view('hr::application.secondary-index')->with($data);
+    }
+
 
     /**
      * Show the form for editing the specified resource.
