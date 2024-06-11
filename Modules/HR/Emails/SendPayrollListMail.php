@@ -52,14 +52,14 @@ class SendPayrollListMail extends Mailable
 
         return $mail
             ->attachData(
-                Excel::raw(new EmployeePayrollExport($this->employeesData['full-time']), \Maatwebsite\Excel\Excel::XLSX), 
+                Excel::raw(new EmployeePayrollExport($this->employeesData['full-time']), \Maatwebsite\Excel\Excel::XLSX),
                 $employeeExportFilename,
                 [
                     'mime' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 ]
             )
             ->attachData(
-                Excel::raw(new ContractorFeeExport($this->employeesData['contractor']), \Maatwebsite\Excel\Excel::XLSX), 
+                Excel::raw(new ContractorFeeExport($this->employeesData['contractor']), \Maatwebsite\Excel\Excel::XLSX),
                 $contractorExportFilename,
                 [
                     'mime' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
