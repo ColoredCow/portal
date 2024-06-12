@@ -10,6 +10,7 @@ use Module;
 use Modules\HR\Contracts\ApplicationServiceContract;
 use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Application;
+use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Job;
 use Modules\HR\Events\CustomMailTriggeredForApplication;
 use Modules\User\Entities\User;
@@ -154,5 +155,159 @@ class ApplicationService implements ApplicationServiceContract
         Cache::put('campaign_token', $accessToken, 60 * 24);
 
         return $accessToken;
+    }
+
+    public function getApplicationsForDate($today, $allInterviews, $searchCategory, $selectedJob, $selectedOpportunity, $selectedRound)
+    {
+        $totalOpportunitiesCount = $this->getTotalOpportunitiesCount();
+        $todayApplications = $this->getTodayApplications($today);
+        $interviewApplicationsQuery = $this->buildInterviewApplicationsQuery($today, $allInterviews);
+        $this->applyFilters($interviewApplicationsQuery, $searchCategory, $selectedJob, $selectedOpportunity, $selectedRound);
+        $interviewApplications = $this->paginateInterviewApplications($interviewApplicationsQuery);
+        $totalTodayApplication = $this->processTodayApplications($todayApplications);
+        $interviewApplicationsItems = $interviewApplications->items();
+        $todayInterviews = $this->prepareTodayInterviews($interviewApplicationsItems, $allInterviews);
+        $applicationType = $this->prepareApplicationType($interviewApplicationsItems);
+
+        return $this->prepareFinalData($todayInterviews, $totalTodayApplication, $totalOpportunitiesCount, $applicationType, $interviewApplications);
+    }
+
+    private function getTotalOpportunitiesCount()
+    {
+        return Job::where('status', 'published')->count();
+    }
+    private function getTodayApplications($today)
+    {
+        return Application::whereDate('created_at', $today)->get();
+    }
+
+    private function buildInterviewApplicationsQuery($today, $allInterviews)
+    {
+        $query = ApplicationRound::whereNotNull('calendar_meeting_id')
+            ->whereNull('conducted_date')
+            ->where('scheduled_person_id', auth()->id())
+            ->with('application.applicant', 'application.job', 'round', 'calendarMeeting', 'scheduledPerson')
+        ->orderByRaw('hr_application_round.scheduled_date ASC');
+
+        if ($allInterviews !== null) {
+            $query->whereDate('scheduled_date', '>=', $today);
+        } else {
+            $query->whereDate('scheduled_date', $today);
+        }
+
+        return $query;
+    }
+    private function applyFilters($query, $searchCategory, $selectedJob, $selectedOpportunity, $selectedRound)
+    {
+        if ($selectedJob !== null) {
+            $query->whereHas('application.job', function ($query) use ($selectedJob) {
+                $query->where('id', $selectedJob);
+            });
+        }
+
+        if ($selectedOpportunity !== null) {
+            $query->whereHas('application.job', function ($query) use ($selectedOpportunity) {
+                $query->where('opportunity_id', $selectedOpportunity);
+            });
+        }
+
+        if ($selectedRound !== null) {
+            $query->where('hr_round_id', $selectedRound);
+        }
+
+        if ($searchCategory !== null) {
+            $query->where(function ($query) use ($searchCategory) {
+                $query->whereHas('application.applicant', function ($query) use ($searchCategory) {
+                    $query->where('name', 'LIKE', "%{$searchCategory}%");
+                })->orWhereHas('application.job', function ($query) use ($searchCategory) {
+                    $query->where('title', 'LIKE', "%{$searchCategory}%");
+                })->orWhereHas('round', function ($query) use ($searchCategory) {
+                    $query->where('name', 'LIKE', "%{$searchCategory}%");
+                });
+            });
+        }
+    }
+
+    private function paginateInterviewApplications($query)
+    {
+        return $query->paginate(config('constants.pagination_size'));
+    }
+
+    private function processTodayApplications($todayApplications)
+    {
+        return $todayApplications->groupBy('job.id')
+            ->mapWithKeys(function ($applications, $jobId) {
+                $jobName = $applications->first()->job->title;
+
+                return [$jobName => $applications->count()];
+            });
+    }
+
+    private function prepareTodayInterviews($interviewApplicationsItems, $allInterviews)
+    {
+        $todayInterviews = [];
+
+        foreach ($interviewApplicationsItems as $interviewApplication) {
+            $application = $interviewApplication->application;
+            $round = $interviewApplication->round;
+            $meetingStart = $interviewApplication->scheduled_date->format(config('constants.display_time_format'));
+            $meetingEnd = Carbon::parse($interviewApplication->scheduled_end)->format(config('constants.display_time_format'));
+            $meetingTime = $meetingStart . '-' . $meetingEnd;
+            $meetingDate = Carbon::parse($interviewApplication->scheduled_date)->format(config('constants.full_display_date_format'));
+
+            $todayInterviews[] = [
+                'application' => $application,
+                'round' => $round,
+                'meeting_link' => $interviewApplication->calendarMeeting,
+                'scheduled_person' => [
+                    'id' => $interviewApplication->scheduled_person_id,
+                    'name' => $interviewApplication->scheduledPerson->name,
+                ],
+                'meeting_time' => $meetingTime,
+                'meeting_date' => $allInterviews !== null ? $meetingDate : null,
+            ];
+        }
+
+        return $todayInterviews;
+    }
+
+    private function prepareApplicationType($interviewApplicationsItems)
+    {
+        $applicationType = [];
+
+        foreach ($interviewApplicationsItems as $interviewApplication) {
+            $application = $interviewApplication->application;
+            $job = $application->job;
+            $jobType = $job->type;
+            $jobTitle = $job->title;
+            $jobId = $job->id;
+
+            if (! isset($applicationType[$jobType])) {
+                $applicationType[$jobType] = [];
+            }
+
+            if (! isset($applicationType[$jobType][$jobTitle])) {
+                $applicationType[$jobType][$jobTitle] = [];
+            }
+
+            if (! isset($applicationType[$jobType][$jobTitle][$jobId])) {
+                $applicationType[$jobType][$jobTitle][$jobId] = 0;
+            }
+
+            $applicationType[$jobType][$jobTitle][$jobId]++;
+        }
+
+        return $applicationType;
+    }
+
+    private function prepareFinalData($todayInterviews, $totalTodayApplication, $totalOpportunitiesCount, $applicationType, $interviewApplications)
+    {
+        return [
+            'todayInterviews' => $todayInterviews,
+            'todayApplications' => $totalTodayApplication,
+            'totalOpportunities' => $totalOpportunitiesCount,
+            'applicationType' => $applicationType,
+            'pagination' => $interviewApplications->links(),
+        ];
     }
 }
