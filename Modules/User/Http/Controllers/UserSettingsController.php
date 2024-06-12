@@ -26,6 +26,7 @@ class UserSettingsController extends ModuleBaseController
     {
         $chosenEmployee = User::find($request->id)->employee;
         $chosenEmployee->staff_type = $request->typeOfStaff;
+        $chosenEmployee->payroll_type = $request->payrollType;
         $chosenEmployee->save();
     }
 }

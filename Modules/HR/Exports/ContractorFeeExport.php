@@ -10,13 +10,13 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, WithTitle, WithStyles
+class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, WithTitle, WithStyles
 {
-    protected $employees;
+    protected $contractors;
 
-    public function __construct($employees)
+    public function __construct($contractors)
     {
-        $this->employees = $employees;
+        $this->contractors = $contractors;
     }
 
     public function array(): array
@@ -30,8 +30,8 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
         $totalFoodAllowance = 0;
         $totalSalary = 0;
         $daysInMonth = Carbon::now()->daysInMonth;
-        $totalDays = $this->employees->count() * $daysInMonth;
-        $totalPaidDays = $this->employees->count() * $daysInMonth;
+        $totalDays = $this->contractors->count() * $daysInMonth;
+        $totalPaidDays = $this->contractors->count() * $daysInMonth;
         $totalEmployeeEsi = 0;
         $totalEmployeeEpf = 0;
         $totalTds = 0;
@@ -47,8 +47,8 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
         $totalHealthInsurance = 0;
         $totalCtcAgg = 0;
 
-        foreach ($this->employees as $employee) {
-            $currentSalaryObject = $employee->getCurrentSalary();
+        foreach ($this->contractors as $contractor) {
+            $currentSalaryObject = $contractor->getCurrentSalary();
 
             if (! $currentSalaryObject) {
                 continue;
@@ -64,7 +64,7 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
             $totalEmployeeEsi += optional($currentSalaryObject)->employee_esi;
             $totalEmployeeEpf += optional($currentSalaryObject)->employee_epf;
             $totalTds += optional($currentSalaryObject)->tds;
-            $totalAdvanceRecovery += $employee->loan_deduction_for_month;
+            $totalAdvanceRecovery += $contractor->loan_deduction_for_month;
             $totalDeduction += optional($currentSalaryObject)->total_deduction;
             $totalNetPay += optional($currentSalaryObject)->net_pay;
             $totalEmployerEsi += optional($currentSalaryObject)->employer_esi;
@@ -76,10 +76,10 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
             $totalHealthInsurance += optional($currentSalaryObject)->total_health_insurance;
             $totalCtcAgg += optional($currentSalaryObject)->ctc_aggregated;
 
-            $employeePayrollData = [
-                $employee->user()->withTrashed()->first()->name,
-                $employee->cc_employee_id,
-                optional($employee->hrJobDesignation)->designation,
+            $contractorPayrollData = [
+                $contractor->user()->withTrashed()->first()->name,
+                '',
+                'Consultant',
                 optional($currentSalaryObject)->monthly_gross_salary ?: '-',
                 optional($currentSalaryObject)->basic_salary ?: '-',
                 optional($currentSalaryObject)->hra ?: '-',
@@ -92,7 +92,7 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
                 optional($currentSalaryObject)->employee_esi,
                 optional($currentSalaryObject)->employee_epf,
                 optional($currentSalaryObject)->tds ?: '-',
-                $employee->loan_deduction_for_month ?: '-',
+                $contractor->loan_deduction_for_month ?: '-',
                 optional($currentSalaryObject)->food_allowance ?: '-',
                 optional($currentSalaryObject)->total_deduction ?: '-',
                 '-',
@@ -107,7 +107,7 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
                 optional($currentSalaryObject)->ctc_aggregated ?: '-',
             ];
 
-            array_push($data, $employeePayrollData);
+            array_push($data, $contractorPayrollData);
         }
 
         array_push($data, [

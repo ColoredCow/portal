@@ -55,10 +55,10 @@ class SalaryCalculationService
         $otherAllowance = $newSalaryObject->other_allowance;
         $newEmployeeShare = $newSalaryObject->employee_epf + $newSalaryObject->edli_charges + $newSalaryObject->administration_charges;
         $newAnnualCTC = $newSalaryObject->ctc_annual;
-        $totalHealthInsurance = ($newSalaryObject->health_insurance) * ($employee->user->profile->insurance_tenants);
+        $totalHealthInsurance = $newSalaryObject->health_insurance * (optional($employee->user->profile)->insurance_tenants ?? 1);
         $monthlyHealthInsurance = $totalHealthInsurance / 12;
         $newAggregateCTC = $newSalaryObject->ctc_annual + $totalHealthInsurance;
-        $currentAnnualCTC = $employee->getCurrentSalary()->ctc_annual;
+        $currentAnnualCTC = $employee->getLatestSalary()->ctc_annual;
         $salaryIncreasePercentage = $this->getLatestSalaryPercentageIncrementAttribute($currentAnnualCTC, $newAggregateCTC);
         $employeeUserId = $employee->user_id;
         // if ($request->signature) {

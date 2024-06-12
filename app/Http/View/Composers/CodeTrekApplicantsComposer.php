@@ -10,11 +10,11 @@ class CodeTrekApplicantsComposer
 {
     public function compose(View $view)
     {
-        $codeTrekApplicants = CodeTrekApplicant::where('status', 'active')
-        ->orderBy('first_name', 'asc')
-        ->get();
+        // $codeTrekApplicants = CodeTrekApplicant::where('status', 'active')
+        // ->orderBy('first_name', 'asc')
+        // ->get();
 
-        $feedbackCategories = CodeTrekFeedbackCategories::all();
-        $view->with(['codeTrekApplicants' => $codeTrekApplicants, 'feedbackCategories' => $feedbackCategories]);
+        // $feedbackCategories = CodeTrekFeedbackCategories::all();
+        // $view->with(['codeTrekApplicants' => $codeTrekApplicants, 'feedbackCategories' => $feedbackCategories]);
     }
 }

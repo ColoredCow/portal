@@ -38,17 +38,54 @@ class SalaryController extends Controller
     public function employee(Employee $employee)
     {
         $this->authorize('view', EmployeeSalary::class);
-        $salaryConfigs = SalaryConfiguration::formatAll();
+        $salaryConf = new SalaryConfiguration();
+        $calculationData = [];
+        $employerEpfConf = $salaryConf->formatAll()->get('employer_epf');
+        $administrationChargesConf = $salaryConf->formatAll()->get('administration_charges');
+        $edliChargesConf = $salaryConf->formatAll()->get('edli_charges');
+        $edliChargesLimitConfig = $salaryConf->formatAll()->get('edli_charges_limit');
+        $edliChargesLimitConfig = $salaryConf->formatAll()->get('edli_charges_limit');
+        $healthInsuranceConf = $salaryConf->formatAll()->get('health_insurance');
+
+        $calculationData['basicSalaryPercentageFactor'] = $salaryConf->basicSalary();
+        $calculationData['epfPercentageRate'] = (float) $employerEpfConf->percentage_rate;
+        $calculationData['adminChargesPercentageRate'] = (float) $administrationChargesConf->percentage_rate;
+        $calculationData['edliChargesPercentageRate'] = (float) $edliChargesConf->percentage_rate;
+        $calculationData['edliChargesLimit'] = (float) $edliChargesLimitConfig->fixed_amount;
+        $calculationData['insuranceAmount'] = (float) $healthInsuranceConf->fixed_amount;
+        $grossSalariesList = [];
+
+        $currentGrossSalary = optional($employee->getCurrentSalary())->monthly_gross_salary;
+        if ($currentGrossSalary) {
+            $grossSalariesList = EmployeeSalary::all()->filter(function ($salary) use ($currentGrossSalary) {
+                return $salary->monthly_gross_salary >= $currentGrossSalary;
+            })->pluck('monthly_gross_salary')
+            ->unique()
+            ->sort()
+            ->values()
+            ->take(7);
+        }
+
+        $ctcSuggestions = [];
+
+        foreach ($grossSalariesList as $grossSalary) {
+            $tempSalaryObject = new EmployeeSalary;
+            $tempSalaryObject->employee_id = $employee->id;
+            $tempSalaryObject->monthly_gross_salary = $grossSalary;
+            array_push($ctcSuggestions, $tempSalaryObject->ctc_aggregated);
+        }
 
         return view('salary::employee.index')->with([
             'employee' => $employee,
-            'salaryConfigs' => $salaryConfigs,
+            'salaryConfigs' => $salaryConf::formatAll(),
+            'grossCalculationData' => json_encode($calculationData),
+            'ctcSuggestions' => $ctcSuggestions,
         ]);
     }
 
     public function storeOrUpdateSalary(Request $request, Employee $employee)
     {
-        $currentSalaryObject = $employee->getCurrentSalary();
+        $currentSalaryObject = $employee->getLatestSalary();
         if ((! $currentSalaryObject) || $request->submitType == 'send_appraisal_letter') {
             if ($currentSalaryObject) {
                 $salaryService = new SalaryCalculationService($request->grossSalary);

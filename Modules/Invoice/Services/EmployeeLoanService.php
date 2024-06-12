@@ -10,7 +10,7 @@ class EmployeeLoanService
 {
     public function index(array $params)
     {
-        $employeeLoans = EmployeeLoan::with('employee')->get();
+        $employeeLoans = EmployeeLoan::with('employee')->where('status', $params['status'] ?? config('invoice.loan.status.active.slug'))->orderBy('employee_id')->get();
 
         return [
             'employeeLoans' => $employeeLoans,
@@ -44,6 +44,7 @@ class EmployeeLoanService
         $employeeLoan->update([
             'total_amount' => $params['total_amount'],
             'monthly_deduction' => $params['monthly_deduction'],
+            'status' => $params['status'],
             'start_date' => Carbon::parse($params['start_date']),
             'end_date' => Carbon::parse($params['end_date'])->endOfMonth(),
         ]);
