@@ -207,7 +207,7 @@ class ApplicationService implements ApplicationServiceContract
 
         if ($selectedOpportunity !== null) {
             $query->whereHas('application.job', function ($query) use ($selectedOpportunity) {
-                $query->where('opportunity_id', $selectedOpportunity);
+                $query->where('type', $selectedOpportunity);
             });
         }
 

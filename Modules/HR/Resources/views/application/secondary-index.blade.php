@@ -1,31 +1,41 @@
 @extends('hr::layouts.master')
 
 @section('content')
-
+<div class="interview-loader text-center bg-theme-semi-transparent position-fixed w-full h-full d-none" style="top: 0%; right: 0%; z-index: 9999" id="preloader">
+    <div class="spinner-border position-relative" style="top: 40%" id="spinner">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
 <div class="container">
 	<div class="nav nav-pills">
 		<div class="mr-3 nav-item">
 			<a class="nav-item nav-link {{ Request::is('hr/recruitment/opportunities*') ? 'active' : '' }}" href="{{ route('recruitment.opportunities') }}">
 				<div class="d-flex align-items-center">
-					<p class="mb-0"><i class="fa fa-list-ul"></i> Total Opportunities : </p>
+					<p class="mb-0"><i class="fa fa-list-ul"></i> Open Opportunities : </p>
 					<p class="mb-0">&nbsp;&nbsp;{{ $totalOpportunities }}</p>
 				</div>
 			</a>
 		</div>
-		<div class="nav nav-pills mr-3">
+		<div class="nav nav-pills">
 			<a class="nav-item nav-link" href="{{ route('recruitment.reports.index') }}">
-				<div class="">
-					<h5 class="">Resume Received Today</h5>
+				<div>
+					<h5>Resume Received Today :</h5>
 					<!-- <p class="card-text">{{ count($todayApplications) }}</p> -->
-					<div class="max-h-60" style="overflow-y: scroll; scrollbar-width: none">
-						<ol class="d-flex" style="list-style-type: lower-alpha;">
-							<?php foreach ( $todayApplications as $title => $todayApplication ) : ?>
-								<li class="pb-2">
-									{{ $title }} : {{ count($todayApplications) }}&nbsp; &nbsp;
-								</li>
-							<?php endforeach; ?>
-						</ol>
-					</div>
+					<?php if ( count( $todayApplications ) ) : ?>
+						<div class="w-xl-800 w-auto">
+							<ul class="d-flex flex-wrap" style="list-style-type: circle;">
+								<?php foreach ( $todayApplications as $title => $todayApplication ) : ?>
+									<li class="pb-2 pr-4">
+										{{ $title }} : {{ count($todayApplications) }}&nbsp; &nbsp;
+									</li>
+								<?php endforeach; ?>
+							</ul>
+						</div>
+					<?php else : ?>
+						<div class="text-dark">
+							<p class="fz-16 leading-24"><i class="fa fa-question-circle pr-1"></i>No resume received today</p>
+						</div>
+					<?php endif; ?>
 				</div>
 			</a>
 		</div>
@@ -67,9 +77,6 @@
 					<i class="fa fa-times pl-1 c-pointer remove-opportunity" aria-hidden="true"></i>
 				</div>
 			</div>
-			<div class="interview-loader d-none btn btn-primary">
-				<span class="rounded-lg text-center py-1 px-2">Loading...</span>
-			</div>
 		</div>
 		<div>
 			<div class="d-flex justify-content-start align-items-center shadow-lg w-full py-2 px-3 mb-3 min-h-70 text-white sticky-top interview-header">
@@ -89,7 +96,7 @@
 					<span>INTERVIEW TYPE</span>
 				</div>
 			</div>
-			<form class="interview-data-fetch" method="GET" action="{{ route('interviewsIndex') }}">
+			<form class="interview-data-fetch" method="GET" action="{{ route('applications.interviewsIndex') }}">
 				@include('hr::application.today-interviews')
 			</form>
 		</div>
