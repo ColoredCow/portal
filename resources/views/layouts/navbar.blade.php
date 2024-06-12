@@ -9,6 +9,9 @@
                 @can('hr_recruitment_applications.view')
                     <a class="dropdown-item" href="{{ route('applications.job.index') }}">Recruitment</a>
                 @endcan
+                @can('hr_recruitment_applications.view')
+                    <a class="dropdown-item" href="{{ route('applications.interviewsIndex') }}">Interviews</a>
+                @endcan
                 @can('hr_employees.view')
                 @php
                     $params = array_merge(['staff_type' => 'Employee'], ['status' => 'current']);

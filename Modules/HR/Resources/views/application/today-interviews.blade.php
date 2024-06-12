@@ -24,7 +24,7 @@
 					{{ $todayInterview['round']->isTrialRound() ? optional($todayInterview['round']->trialRound)->name : $todayInterview['round']->name }}</span>
 					</div>
 					<div class="w-100 text-center text-white">
-						<span class="fz-12 badge badge-pill bg-secondary interview-opportunity-filter c-pointer" data-id="{{ $todayInterview['application']->job->opportunity_id }}" value="{{ $todayInterview['application']->job->type }}">{{ ucfirst($todayInterview['application']->job->type) }}</span>
+						<span class="fz-12 badge badge-pill bg-secondary interview-opportunity-filter c-pointer" data-id="{{ $todayInterview['application']->job->type }}" value="{{ $todayInterview['application']->job->type }}">{{ ucfirst($todayInterview['application']->job->type) }}</span>
 					</div>
 				</div>
 			</div>
@@ -36,13 +36,10 @@
 				{!! $pagination !!}
 			</nav>
 		</div>
-		<div class="interview-loader d-none btn btn-primary">
-			<span class="rounded-lg text-center py-1 px-2">Loading...</span>
-		</div>
 	</div>
 	<?php else : ?>
-		<div class="d-flex justify-content-center mt-20 w-full">
-			<div class="mt-10 fz-24 text-center w-full">
+		<div class="d-flex justify-content-center mt-10 w-full">
+			<div class="fz-24 text-center w-full">
 				<p>No Upcoming meetings for Today</p>
 			</div>
 		</div>
