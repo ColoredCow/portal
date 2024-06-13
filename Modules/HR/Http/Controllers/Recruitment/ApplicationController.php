@@ -186,7 +186,7 @@ abstract class ApplicationController extends Controller
 
         if ($request->query()) {
             return [
-                'status' => 200, 'html' => view('hr::application.today-interviews')->with($data)->render()
+                'status' => 200, 'html' => view('hr::application.today-interviews')->with($data)->render(),
             ];
         }
 
