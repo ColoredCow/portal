@@ -185,7 +185,9 @@ abstract class ApplicationController extends Controller
         $data = $applicationService->getApplicationsForDate($today, $allInterviews, $searchCategory, $selectedJob, $selectedOpportunity, $selectedRound);
 
         if ($request->query()) {
-            return view('hr::application.today-interviews')->with($data);
+            return [
+                'status' => 200, 'html' => view('hr::application.today-interviews')->with($data)->render(),
+            ];
         }
 
         return view('hr::application.secondary-index')->with($data);

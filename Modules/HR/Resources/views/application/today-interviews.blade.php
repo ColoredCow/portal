@@ -23,9 +23,17 @@
 					<span class="fz-12 badge badge-pill bg-success interview-round-filter c-pointer" data-id="{{ $todayInterview['round']->id }}" value="{{ $todayInterview['round']->name }}">
 					{{ $todayInterview['round']->isTrialRound() ? optional($todayInterview['round']->trialRound)->name : $todayInterview['round']->name }}</span>
 					</div>
-					<div class="w-100 text-center text-white">
+					<div class="w-100 text-center text-white mr-3">
 						<span class="fz-12 badge badge-pill bg-secondary interview-opportunity-filter c-pointer" data-id="{{ $todayInterview['application']->job->type }}" value="{{ $todayInterview['application']->job->type }}">{{ ucfirst($todayInterview['application']->job->type) }}</span>
 					</div>
+					<?php if(! $todayInterview['meeting_date']) :?>
+						<div class="w-100 text-center text-white">
+							<button type="button" id="meet_time"
+								value="{{ $todayInterview['id'] }}"
+								class="btn-sm btn-primary text-decoration-none finish_interview">Finish
+								Interview</button>
+						</div>
+					<?php endif; ?>
 				</div>
 			</div>
 		</div>
