@@ -184,7 +184,7 @@ class ApplicationService implements ApplicationServiceContract
     private function buildInterviewApplicationsQuery($today, $allInterviews)
     {
         $query = ApplicationRound::whereNotNull('calendar_meeting_id')
-            ->whereNull('conducted_date')
+            ->whereNull('actual_end_time')
             ->where('scheduled_person_id', auth()->id())
             ->with('application.applicant', 'application.job', 'round', 'calendarMeeting', 'scheduledPerson')
         ->orderByRaw('hr_application_round.scheduled_date ASC');
@@ -256,6 +256,7 @@ class ApplicationService implements ApplicationServiceContract
             $meetingDate = Carbon::parse($interviewApplication->scheduled_date)->format(config('constants.full_display_date_format'));
 
             $todayInterviews[] = [
+                'id' => $interviewApplication->id,
                 'application' => $application,
                 'round' => $round,
                 'meeting_link' => $interviewApplication->calendarMeeting,

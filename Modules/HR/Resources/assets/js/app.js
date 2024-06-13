@@ -289,10 +289,10 @@ $(document).ready(function () {
 			contentType: 'application/json',
 			data: values,
 			success: function (response) {
-				var selectedInterviews = $(response).find('[data-counter]');
+				var selectedInterviews = $(response.html).find('[data-counter]');
 				$('.total-interview-tasks').html(selectedInterviews.length);
 				if (selectedInterviews.length > 0) {
-					form.html(response);
+					form.html(response.html);
 				} else {
 					form.html('<div class="mt-10 fz-24 text-center w-full">No interviews found for this filter.</div>');
 				}
@@ -303,7 +303,7 @@ $(document).ready(function () {
 				updateDisplay('round', values.roundValue, roundValueDisplay);
 
 				// Update pagination links
-				$('.pagination-wrapper').html($(response).find('.pagination-wrapper').html());
+				$('.pagination-wrapper').html($(response.html).find('.pagination-wrapper').html());
 			},
 			error: function (xhr, status, error) {
 				console.log("Error:", error);
@@ -387,6 +387,12 @@ $(document).ready(function () {
 		var page = $(this).attr('href').split('page=')[1];
 		values.page = page;
 		sendAjaxRequest();
+	});
+
+	$(document).on('click', '.finish_interview', function () {
+		setTimeout(function() {
+			sendAjaxRequest();
+		}.bind(this), 1000);
 	});
 
 });
