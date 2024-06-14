@@ -174,7 +174,7 @@ class ApplicationService implements ApplicationServiceContract
 
     private function getTotalOpportunitiesCount()
     {
-        return Job::where('status', 'published')->count();
+        return Job::all()->count();
     }
     private function getTodayApplications($today)
     {
