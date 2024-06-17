@@ -2074,7 +2074,7 @@ $(".opt").on("click", function() {
 
 $(document).on("click", ".finish_interview", function(e) {
 	e.preventDefault();
-	var actualEndTime = $(".finish_interview").val();
+	var actualEndTime = $(this).val();
 	var duration = moment().format("YYYY/MM/DD H:m:s");
 	$.ajax({
 		type: "GET",

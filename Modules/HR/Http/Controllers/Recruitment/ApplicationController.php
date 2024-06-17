@@ -118,7 +118,6 @@ abstract class ApplicationController extends Controller
         }
 
         $jobType = $this->getApplicationType();
-
         foreach ($hrRounds as $round) {
             $applicationCount = Application::query()->filterByJobType($jobType)
                 ->whereIn('hr_applications.status', ['in-progress', 'new', 'trial-program'])
@@ -166,6 +165,32 @@ abstract class ApplicationController extends Controller
         }
 
         return view('hr.application.index')->with($attr);
+    }
+
+    /**
+     * Display a listing of current date's interviews.
+     */
+    public function interviewsIndex(Request $request)
+    {
+        $today = today()->toDateString();
+        $applicationService = new ApplicationService;
+
+        $parsedData = $request->query();
+        $searchCategory = $parsedData['searchValue'] ?? null;
+        $selectedJob = $parsedData['jobValue'] ?? null;
+        $selectedOpportunity = $parsedData['opportunityValue'] ?? null;
+        $selectedRound = $parsedData['roundValue'] ?? null;
+        $allInterviews = $parsedData['dateValue'] ?? null;
+
+        $data = $applicationService->getApplicationsForDate($today, $allInterviews, $searchCategory, $selectedJob, $selectedOpportunity, $selectedRound);
+
+        if ($request->query()) {
+            return [
+                'status' => 200, 'html' => view('hr::application.today-interviews')->with($data)->render(),
+            ];
+        }
+
+        return view('hr::application.secondary-index')->with($data);
     }
 
     /**
