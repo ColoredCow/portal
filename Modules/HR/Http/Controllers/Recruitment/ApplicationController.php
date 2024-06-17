@@ -366,22 +366,22 @@ abstract class ApplicationController extends Controller
     }
 
     public function updateRescheduledApplication()
-    {
-        $applications = Application::where('is_unresponsive', 1)->get();
-        $reappliedTag = Tag::where('name', 'Reapplied')->first();
-        foreach ($applications as $application) {
-            $applicationId = $application->id;
-            $scheduledTime = ApplicationRound::where('hr_application_id', $applicationId)
-                ->where('hr_round_id', 3)
-                ->first()
-                ->scheduled_date;
-            if ($scheduledTime !== null) {
-                $application->status = 'in-progress';
-                $application->save();
-                $application->tags()->syncWithoutDetaching([$reappliedTag->id]);
-            } else {
-                continue;
-            }
+{
+    $applications = Application::where('is_unresponsive', 1)->get();
+    $reappliedTag = Tag::where('name', 'Reapplied')->first();
+
+    foreach ($applications as $application) {
+        $applicationId = $application->id;
+        $applicationRound = ApplicationRound::where('hr_application_id', $applicationId)
+            ->where('hr_round_id', 3)
+            ->first();
+
+        if ($applicationRound !== null && $applicationRound->scheduled_date !== null) {
+            $application->status = 'in-progress';
+            $application->save();
+            $application->tags()->syncWithoutDetaching([$reappliedTag->id]);
         }
     }
+}
+
 }
