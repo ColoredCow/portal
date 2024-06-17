@@ -294,7 +294,7 @@
 </div>
 <br>
 @can('finance_reports.view')
-    <div class="card-header d-flex mb-4" data-toggle="collapse" data-target="#contract-history" >
+    <div class="card-header d-flex" data-toggle="collapse" data-target="#contract-history" >
         <h4>Contract History</h4>
         <span class ="arrow ml-auto">&#9660;</span>
     </div>
@@ -320,7 +320,9 @@
         </table>
     </div>
     <br>
-    <br>
 @endcan
+@include('project::project-stages');
+<br>
+<br>
 @endsection
 
