@@ -61,11 +61,33 @@ class SalaryController extends Controller
         $calculationData['edliChargesPercentageRate'] = (float) $edliChargesConf->percentage_rate;
         $calculationData['edliChargesLimit'] = (float) $edliChargesLimitConfig->fixed_amount;
         $calculationData['insuranceAmount'] = (float) $healthInsuranceConf->fixed_amount;
+        $grossSalariesList = [];
+
+        $currentGrossSalary = optional($employee->getCurrentSalary())->monthly_gross_salary;
+        if ($currentGrossSalary) {
+            $grossSalariesList = EmployeeSalary::all()->filter(function ($salary) use ($currentGrossSalary) {
+                return $salary->monthly_gross_salary >= $currentGrossSalary;
+            })->pluck('monthly_gross_salary')
+            ->unique()
+            ->sort()
+            ->values()
+            ->take(7);
+        }
+
+        $ctcSuggestions = [];
+
+        foreach ($grossSalariesList as $grossSalary) {
+            $tempSalaryObject = new EmployeeSalary;
+            $tempSalaryObject->employee_id = $employee->id;
+            $tempSalaryObject->monthly_gross_salary = $grossSalary;
+            array_push($ctcSuggestions, $tempSalaryObject->ctc_aggregated);
+        }
 
         return view('salary::employee.index')->with([
             'employee' => $employee,
             'salaryConfigs' => $salaryConf::formatAll(),
             'grossCalculationData' => json_encode($calculationData),
+            'ctcSuggestions' => $ctcSuggestions,
         ]);
     }
 

@@ -188,6 +188,7 @@ class Employee extends Model
     {
         $currentDate = today();
         $loans = $this->loans()
+            ->where('status', 'active')
             ->whereDate('start_date', '<=', $currentDate)
             ->whereDate('end_date', '>=', $currentDate)
             ->get();
