@@ -42,7 +42,7 @@ class SalaryController extends Controller
         if ($employee->payroll_type === 'contractor') {
             return view('salary::employee.contractor-index')->with([
                 'employee' => $employee,
-                'salary' => $employee->getLatestSalary(config('salary.type.contractor_fee.slug')),
+                'salary' => $employee->getLatestSalary(),
             ]);
         }
 
