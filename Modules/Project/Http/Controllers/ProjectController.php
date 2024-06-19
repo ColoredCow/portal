@@ -16,7 +16,6 @@ use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Rules\ProjectNameExist;
 use Modules\Project\Entities\ProjectStages;
 
-
 class ProjectController extends Controller
 {
     use AuthorizesRequests;
@@ -231,4 +230,5 @@ class ProjectController extends Controller
 
         return response()->json(['success' => 'Stage added successfully!']);
     }
+
 }
