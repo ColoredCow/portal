@@ -21,7 +21,7 @@ class UpdateProjectOldStageTable extends Migration
             $table->dropColumn(['name', 'cost', 'currency_cost', 'type', 'cost_include_gst', 'start_date']);
         });
         Schema::table('project_old_stages', function (Blueprint $table) {
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('project_id')->references('id')->on('projects')->change();
         });
     }
 

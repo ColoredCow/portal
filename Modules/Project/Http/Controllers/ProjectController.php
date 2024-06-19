@@ -253,4 +253,5 @@ class ProjectController extends Controller
             'success' => 'Stages managed successfully!'
         ]);
     }
+
 }
