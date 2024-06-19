@@ -625,5 +625,4 @@ class ProjectService implements ProjectServiceContract
     {
         ProjectStages::whereIn('id', $idArr)->delete();
     }
-
 }
