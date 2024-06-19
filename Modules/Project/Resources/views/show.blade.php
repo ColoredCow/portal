@@ -321,8 +321,84 @@
     </div>
     <br>
 @endcan
-@include('project::project-stages');
+</div>
+<div class="container" id="stages_app">
+    @include('project::subviews.project-stages')
+</div>
 <br>
 <br>
 @endsection
-
+@section('vue_scripts')
+    <script>
+        new Vue({
+            el: '#stages_app',
+            data() {
+                return {
+                    stages: [],
+                    deletedStages: [],
+                    projectId: "{{ $project->id }}",
+                    loaderVisible: false,
+                    submitButton: true
+                };
+            },
+            methods: {
+                formattedDate(dateTime) {
+                    var date = new Date(dateTime);
+                    if (!dateTime) return '';
+                    return date.toISOString().split('T')[0];
+                },
+                addStage() {
+                    this.submitButton = false;
+                    this.stages.push({ stage_name: '', comments: '', created_at: new Date().toISOString().split('T')[0], end_date: '', status: 'pending' });
+                },
+                deleteStage(stage) {
+                    this.submitButton = false;
+                    if (!this.deletedStages.includes(stage) && (stage.id)) {
+                        this.deletedStages.push(stage.id);
+                    }
+                    var index = this.stages.indexOf(stage);
+                    if (index !== -1) {
+                        this.stages.splice(index, 1);
+                    }
+                },
+                markStageAsUpdated(stage) {
+                    this.submitButton = false;
+                    if (stage.id) {
+                        stage.isUpdated = true;
+                    }
+                },
+                submitForm() {
+                    var newStages = this.stages.filter(stage => !stage.id);
+                    var updatedStages = this.stages.filter(stage => stage.id && stage.isUpdated);
+                    this.toggleLoader();
+                    axios.post('{{ route('projects.manage-stage') }}', {
+                        newStages: newStages,
+                        updatedStages: updatedStages,
+                        deletedStages: this.deletedStages,
+                        project_id: this.projectId,
+                        _token: '{{ csrf_token() }}'
+                    }).then(response => {
+                        this.toggleLoader();
+                        this.$toast.success('Stages Managed Successfully!');
+                        location.reload(true);
+                    }).catch(error => {
+                        this.toggleLoader();
+                        var errorMessage = error.response.data.message ? error.response.data.message : error.response.data.error;
+                        console.error(error.response.data);
+                        if (errorMessage) {
+                            this.$toast.error(errorMessage);
+                        } else{
+                            this.$toast.error("An error occurred. Please check console");
+                        }
+                    });
+                },
+                toggleLoader() {
+                    this.loaderVisible = ! this.loaderVisible;
+                }
+            },
+            mounted() {
+                this.stages = @json($stages) || [];
+            }
+        });
+    </script>
+@endsection

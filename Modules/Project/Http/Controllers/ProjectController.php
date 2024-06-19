@@ -14,19 +14,20 @@ use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Rules\ProjectNameExist;
-use Modules\Project\Entities\ProjectStages;
-
+use Modules\Project\Services\ProjectService;
 
 class ProjectController extends Controller
 {
     use AuthorizesRequests;
 
     protected $service;
+    protected $projectService;
 
-    public function __construct(ProjectServiceContract $service)
+    public function __construct(ProjectServiceContract $service, ProjectService $projectService)
     {
         $this->authorizeResource(Project::class);
         $this->service = $service;
+        $this->projectService = $projectService;
     }
 
     /**
@@ -111,6 +112,7 @@ class ProjectController extends Controller
             'effortData' => $effortData,
             'totalEffort' => json_encode($totalEffort),
             'dailyEffort' => $dailyEffort,
+            'stages' => $this->projectService->getProjectStages($project),
         ]);
     }
 
@@ -213,22 +215,42 @@ class ProjectController extends Controller
         ];
     }
 
-    public function addStage(Request $request)
+    public function manageStage(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'project_id' => 'required|integer|exists:projects,id',
-            'stage_name' => 'required|string',
-            'comment' => 'nullable|string',
-            'status' => 'nullable|string',
+            'newStages' => 'nullable|array',
+            'newStages.*.stage_name' => 'required|string',
+            'newStages.*.comments' => 'nullable|string',
+            'newStages.*.status' => 'nullable|string',
+            'deletedStages' => 'nullable|array',
+            'deletedStages.*' => 'required|integer|exists:project_old_stages,id',
+            'updatedStages' => 'nullable|array',
+            'updatedStages.*.id' => 'required|integer|exists:project_old_stages,id',
         ]);
 
-        ProjectStages::create([
-            'project_id' => $request->project_id,
-            'stage_name' => $request->stage_name,
-            'comments' => $request->comment,
-            'status' => $request->status ?? 'pending',
-        ]);
+        if (empty($validatedData['deletedStages']) && empty($validatedData['newStages']) && empty($validatedData['updatedStages'])) {
+            return response()->json([
+                'status' => 400,
+                'error' => 'No New Changes Detected'
+            ], 400);
+        }
 
-        return response()->json(['success' => 'Stage added successfully!']);
+        if (! empty($validatedData['deletedStages'])) {
+            $this->projectService->removeStage($validatedData['deletedStages']);
+        }
+
+        if (! empty($validatedData['newStages'])) {
+            $this->projectService->storeStage($validatedData['newStages'], $validatedData['project_id']);
+        }
+
+        if (! empty($validatedData['updatedStages'])) {
+            $this->projectService->updateStage($validatedData['updatedStages']);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'success' => 'Stages managed successfully!'
+        ]);
     }
 }

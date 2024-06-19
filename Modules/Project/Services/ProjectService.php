@@ -21,6 +21,7 @@ use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Entities\ProjectTeamMembersEffort;
 use Modules\Project\Exports\ProjectFTEExport;
 use Modules\User\Entities\User;
+use Modules\Project\Entities\ProjectStages;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -583,5 +584,45 @@ class ProjectService implements ProjectServiceContract
         }
 
         return $teamMembers;
+    }
+
+    public function getProjectStages(Project $project)
+    {
+        $project_id = $project->id;
+        $stages = ProjectStages::where('project_id', $project_id)->orderBy('id')->get();
+        return $stages;
+    }
+
+    public function storeStage(array $newStages, int $projectId)
+    {
+        foreach ($newStages as $stage) {
+            ProjectStages::create([
+                'project_id' => $projectId,
+                'stage_name' => $stage['stage_name'],
+                'comments' => $stage['comments'] ?? null,
+                'status' => $stage['status'] ?? 'pending',
+                'created_at' => now(),
+                'updated_at' => now(),
+                'end_date' => $stage['status'] !== 'pending' ? now() : null
+            ]);
+        }
+    }
+
+    public function updateStage(array $updatedStages)
+    {
+        foreach ($updatedStages as $stage) {
+            $existingStage = ProjectStages::find($stage['id']);
+            $existingStage->update([
+                'stage_name' => $stage['stage_name'],
+                'comments' => $stage['comments'] ?? null,
+                'status' => $stage['status'] ?? 'pending',
+                'end_date' => $stage['status'] !== 'pending' ? now() : null
+            ]);
+        }
+    }
+
+    public function removeStage(array $idArr)
+    {
+        ProjectStages::whereIn('id', $idArr)->delete();
     }
 }
