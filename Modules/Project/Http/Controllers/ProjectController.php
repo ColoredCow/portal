@@ -201,19 +201,6 @@ class ProjectController extends Controller
             'jobName' => $jobName,
         ]);
     }
-    // storing Contract related data here
-    private function getContractData(Project $project)
-    {
-        $contract = ProjectContract::where('project_id', $project->id)->first();
-        $contractFilePath = $contract ? storage_path('app/' . $contract->contract_file_path) : null;
-        $contractName = basename($contractFilePath);
-
-        return [
-            'contract' => $contract,
-            'contractFilePath' => $contractFilePath,
-            'contractName' => $contractName,
-        ];
-    }
 
     public function manageStage(Request $request)
     {
@@ -232,7 +219,7 @@ class ProjectController extends Controller
         if (empty($validatedData['deletedStages']) && empty($validatedData['newStages']) && empty($validatedData['updatedStages'])) {
             return response()->json([
                 'status' => 400,
-                'error' => 'No New Changes Detected'
+                'error' => 'No New Changes Detected',
             ], 400);
         }
 
@@ -250,7 +237,21 @@ class ProjectController extends Controller
 
         return response()->json([
             'status' => 200,
-            'success' => 'Stages managed successfully!'
+            'success' => 'Stages managed successfully!',
         ]);
+    }
+
+    // storing Contract related data here
+    private function getContractData(Project $project)
+    {
+        $contract = ProjectContract::where('project_id', $project->id)->first();
+        $contractFilePath = $contract ? storage_path('app/' . $contract->contract_file_path) : null;
+        $contractName = basename($contractFilePath);
+
+        return [
+            'contract' => $contract,
+            'contractFilePath' => $contractFilePath,
+            'contractName' => $contractName,
+        ];
     }
 }
