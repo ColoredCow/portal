@@ -386,6 +386,7 @@ class ProjectService implements ProjectServiceContract
     {
         $project_id = $project->id;
         $stages = ProjectStages::where('project_id', $project_id)->orderBy('id')->get();
+
         return $stages;
     }
 
