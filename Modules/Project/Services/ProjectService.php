@@ -382,25 +382,6 @@ class ProjectService implements ProjectServiceContract
         ];
     }
 
-    private function getListTabCounts($filters, $showAllProjects, $userId)
-    {
-        $counts = [
-            'mainProjectsCount' => array_merge($filters, ['status' => 'active', 'is_amc' => false]),
-            'AMCProjectCount' => array_merge($filters, ['status' => 'active', 'is_amc' => true]),
-            'haltedProjectsCount' => array_merge($filters, ['status' => 'halted', 'is_amc' => false]),
-            'inactiveProjectsCount' => array_merge($filters, ['status' => 'inactive', 'is_amc' => false]),
-        ];
-
-        foreach ($counts as $key => $tabFilters) {
-            $query = Project::query()->applyFilter($tabFilters);
-            $counts[$key] = $showAllProjects
-                ? $query->count()
-                : $query->linkedToTeamMember($userId)->count();
-        }
-
-        return $counts;
-    }
-
     public function getProjectStages(Project $project)
     {
         $project_id = $project->id;
@@ -418,7 +399,7 @@ class ProjectService implements ProjectServiceContract
                 'status' => $stage['status'] ?? 'pending',
                 'created_at' => now(),
                 'updated_at' => now(),
-                'end_date' => $stage['status'] !== 'pending' ? now() : null
+                'end_date' => $stage['status'] !== 'pending' ? now() : null,
             ]);
         }
     }
@@ -431,7 +412,7 @@ class ProjectService implements ProjectServiceContract
                 'stage_name' => $stage['stage_name'],
                 'comments' => $stage['comments'] ?? null,
                 'status' => $stage['status'] ?? 'pending',
-                'end_date' => $stage['status'] !== 'pending' ? now() : null
+                'end_date' => $stage['status'] !== 'pending' ? now() : null,
             ]);
         }
     }
@@ -439,6 +420,25 @@ class ProjectService implements ProjectServiceContract
     public function removeStage(array $idArr)
     {
         ProjectStages::whereIn('id', $idArr)->delete();
+    }
+
+    private function getListTabCounts($filters, $showAllProjects, $userId)
+    {
+        $counts = [
+            'mainProjectsCount' => array_merge($filters, ['status' => 'active', 'is_amc' => false]),
+            'AMCProjectCount' => array_merge($filters, ['status' => 'active', 'is_amc' => true]),
+            'haltedProjectsCount' => array_merge($filters, ['status' => 'halted', 'is_amc' => false]),
+            'inactiveProjectsCount' => array_merge($filters, ['status' => 'inactive', 'is_amc' => false]),
+        ];
+
+        foreach ($counts as $key => $tabFilters) {
+            $query = Project::query()->applyFilter($tabFilters);
+            $counts[$key] = $showAllProjects
+                ? $query->count()
+                : $query->linkedToTeamMember($userId)->count();
+        }
+
+        return $counts;
     }
 
     private function updateProjectDetails($data, $project)
