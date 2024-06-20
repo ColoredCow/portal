@@ -14,16 +14,16 @@ class UpdateProjectOldStageTable extends Migration
     public function up()
     {
         Schema::table('project_old_stages', function (Blueprint $table) {
-            $table->dropForeign('project_id');
+            $table->dropForeign(['project_id']);
+
             $table->dropColumn(['project_id', 'name', 'cost', 'currency_cost', 'type', 'cost_include_gst', 'start_date']);
             $table->text('comments')->nullable();
             $table->text('stage_name')->after('project_id');
             $table->text('status')->after('stage_name')->nullable();
             $table->datetime('end_date')->nullable()->change();
         });
-
         Schema::table('project_old_stages', function (Blueprint $table) {
-            $table->unsignedInteger('project_id')->after('id');
+            $table->unsignedBigInteger('project_id')->after('id');
             $table->foreign('project_id')->references('id')->on('projects');
         });
     }
