@@ -14,6 +14,7 @@ class UpdateProjectOldStageTable extends Migration
     public function up()
     {
         Schema::table('project_old_stages', function (Blueprint $table) {
+            $table->dropForeign('project_id');
             $table->dropColumn(['project_id', 'name', 'cost', 'currency_cost', 'type', 'cost_include_gst', 'start_date']);
             $table->text('comments')->nullable();
             $table->text('stage_name')->after('project_id');
