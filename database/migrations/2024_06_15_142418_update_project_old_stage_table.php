@@ -40,7 +40,6 @@ class UpdateProjectOldStageTable extends Migration
             $table->dropColumn('stage_name');
             $table->dropColumn('status');
             $table->dropColumn('project_id');
-
         });
         Schema::table('project_old_stages', function (Blueprint $table) {
             $table->string('name')->nullable();
