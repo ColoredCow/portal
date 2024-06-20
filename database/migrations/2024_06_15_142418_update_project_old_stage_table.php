@@ -18,12 +18,12 @@ class UpdateProjectOldStageTable extends Migration
 
             $table->dropColumn(['project_id', 'name', 'cost', 'currency_cost', 'type', 'cost_include_gst', 'start_date']);
             $table->text('comments')->nullable();
-            $table->text('stage_name')->after('project_id');
-            $table->text('status')->after('stage_name')->nullable();
             $table->datetime('end_date')->nullable()->change();
         });
         Schema::table('project_old_stages', function (Blueprint $table) {
-            $table->unsignedBigInteger('project_id')->after('id');
+            $table->unsignedBigInteger('project_id')->nullable()->after('id');
+            $table->text('stage_name')->after('project_id');
+            $table->text('status')->after('stage_name')->nullable();
             $table->foreign('project_id')->references('id')->on('projects');
         });
     }
@@ -41,6 +41,8 @@ class UpdateProjectOldStageTable extends Migration
             $table->dropColumn('status');
             $table->dropColumn('project_id');
 
+        });
+        Schema::table('project_old_stages', function (Blueprint $table) {
             $table->string('name')->nullable();
             $table->decimal('cost', 8, 2)->nullable();
             $table->string('currency_cost')->nullable();
@@ -48,6 +50,7 @@ class UpdateProjectOldStageTable extends Migration
             $table->string('cost_include_gst')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable()->change();
+            $table->unsignedInteger('project_id');
         });
     }
 }
