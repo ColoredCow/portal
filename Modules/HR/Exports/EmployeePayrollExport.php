@@ -54,7 +54,7 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
                 continue;
             }
 
-            $isEmployeeLeavingThisMonth = optional($employee->termination_date)->startOfDay() === today()->startOfDay();
+            $isEmployeeLeavingThisMonth = optional($employee->termination_date)->isSameMonth(today());
 
             $totalDays += $daysInMonth;
             $paidDays = $isEmployeeLeavingThisMonth ? $employee->termination_date->day : $daysInMonth;
@@ -129,11 +129,11 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
             $totalCtcAgg += $employeeCtcAgg;
             $commentMessage = '';
 
-            if ($currentSalaryObject->commencement_date->startOfDay() === today()->startOfDay()) {
+            if ($currentSalaryObject->commencement_date->isSameMonth(today())) {
                 $commentMessage = 'Salary incremented done on ' . optional($currentSalaryObject->commencement_date)->format('d M Y') . '. ';
             }
 
-            if (optional($employee->termination_date)->startOfDay() === today()->startOfDay()) {
+            if (optional($employee->termination_date)->isSameMonth(today())) {
                 $commentMessage = 'Employee left on ' . optional($employee->termination_date)->format('d M Y');
             }
 

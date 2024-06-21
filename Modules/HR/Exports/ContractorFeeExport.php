@@ -40,7 +40,7 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
                 continue;
             }
 
-            $isContractorLeavingThisMonth = optional($contractor->termination_date)->startOfDay() === today()->startOfDay();
+            $isContractorLeavingThisMonth = optional($contractor->termination_date)->isSameMonth(today());
 
             $totalDays += $daysInMonth;
 
@@ -75,11 +75,11 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
 
             $commentMessage = '';
 
-            if ($currentSalaryObject->commencement_date->startOfDay() === today()->startOfDay()) {
+            if ($currentSalaryObject->commencement_date->isSameMonth(today())) {
                 $commentMessage = 'Salary incremented done on ' . optional($currentSalaryObject->commencement_date)->format('d M Y') . '. ';
             }
 
-            if (optional($contractor->termination_date)->startOfDay() === today()->startOfDay()) {
+            if (optional($contractor->termination_date)->isSameMonth(today())) {
                 $commentMessage = 'Contractor left on ' . optional($contractor->termination_date)->format('d M Y');
             }
 
@@ -88,7 +88,7 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
                 'Consultant',
                 $contractorMonthlyFee ?: '-',
                 $daysInMonth,
-                $daysInMonth,
+                $paidDays,
                 $contractorTds ?? '-',
                 $contractorAdvanceFee ?? '-',
                 $contractorDeduction ?? '-',
@@ -130,7 +130,7 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
     {
         return [
             ['Coloredcow Consulting Private Limited'],
-            [Carbon::now()->format('F Y'), 'Paid', Carbon::today()->toDateString()],
+            [now()->format('F Y'), 'Paid', today()->toDateString()],
             [
             'Contractor Name', 'Designation', 'Total Fee', 'Total No of Days', 'Paid Days', 'TDS', 'Advance Recovery', 'Total Deduction', 'Advance Fee', 'Net Pay', 'Monthly Fee', 'CTC Annual', 'CTC Aggreed', 'Comment',
             ],

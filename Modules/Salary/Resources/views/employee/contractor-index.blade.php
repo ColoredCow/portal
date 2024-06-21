@@ -49,7 +49,7 @@
                             <label class="leading-none fz-24 ml-4 d-flex align-items-center" for="commencementDate">
                                 <span class="mr-1 mb-1">{{ __('Commencement Date') }}</span>
                             </label>
-                            <input type="date" name="commencementDate" value="{{ optional($salary)->commencement_date->format('Y-m-d') }}" id="commencementDate" class="form-control ml-4 bg-light" required>
+                            <input type="date" name="commencementDate" value="{{ optional(optional($salary)->commencement_date)->format('Y-m-d') }}" id="commencementDate" class="form-control ml-4 bg-light" required>
                         </div>
                     </div>
                     <div class="d-md-flex">
