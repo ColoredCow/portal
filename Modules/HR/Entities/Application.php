@@ -618,7 +618,7 @@ class Application extends Model
 
     public function getScheduleInterviewLink($scheduledPersonId)
     {
-        $params = encrypt(json_encode(['application_id' => $this->id, 'user_id' => $scheduledPersonId ]));
+        $params = encrypt(json_encode(['application_id' => $this->id, 'user_id' => $scheduledPersonId]));
 
         return route('select-appointments', $params);
     }

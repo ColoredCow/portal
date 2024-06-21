@@ -47,7 +47,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
             $application = Application::find($applicationId);
             $userId = $application->latestApplicationRound->scheduled_person_id;
             // if already rejected
-            if (($application->isRejected() && $application->is_unresponsive == 0)  || $application->latestApplicationRound->scheduled_date) {
+            if (($application->isRejected() && $application->is_unresponsive == 0) || $application->latestApplicationRound->scheduled_date) {
                 return false;
             }
         } else {
