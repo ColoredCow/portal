@@ -616,9 +616,9 @@ class Application extends Model
         return '/storage/' . $file;
     }
 
-    public function getScheduleInterviewLink()
+    public function getScheduleInterviewLink($scheduledPersonId)
     {
-        $params = encrypt(json_encode(['application_id' => $this->id]));
+        $params = encrypt(json_encode(['application_id' => $this->id, 'user_id' => $scheduledPersonId]));
 
         return route('select-appointments', $params);
     }

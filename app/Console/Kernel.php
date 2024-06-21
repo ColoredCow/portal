@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\HR\Console\JobExpiredEmailToHr;
+use Modules\HR\Console\Recruitment\RejectedApplicationFollowUp;
 use Modules\Project\Console\EndedProject;
 use Modules\Project\Console\FixedBudgetProject;
 use Modules\Project\Console\GoogleChat\NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat;
@@ -29,6 +30,7 @@ class Kernel extends ConsoleKernel
         FixedBudgetProject::class,
         NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat::class,
         JobExpiredEmailToHr::class,
+        RejectedApplicationFollowUp::class,
         // QuarterlyReviewSystemForEmployee::class, //This line will be commented for some time. After the feature is completed, it will be uncommented.
 
     ];
@@ -50,6 +52,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('hr:send-follow-up-mail')->dailyAt('08:00');
         $schedule->command('hr:message-for-email-verified')->dailyAt('7:00');
         $schedule->command('hr:send-job-expired-email-to-hr')->dailyAt('11:00');
+        $schedule->command('hr:send-application-close-mail-to-candidate')->dailyAt('11:00');
         $schedule->command('mapping-of-jobs-and-hr-rounds');
         $schedule->command('project:fixed-budget-project');
         $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');

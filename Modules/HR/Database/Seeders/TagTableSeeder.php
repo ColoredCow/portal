@@ -26,6 +26,7 @@ class TagTableSeeder extends Seeder
            'onboarded' => '#38c172',
            'rejected' => '#343a40',
            'sent-for-approval' =>'#17a2b8',
+           're-opened-application' => '#38c172',
         ];
 
         if (! app()->environment('production')) {
