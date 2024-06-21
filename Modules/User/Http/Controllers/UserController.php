@@ -2,9 +2,9 @@
 
 namespace Modules\User\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Modules\User\Contracts\UserServiceContract;
 use Modules\User\Entities\User;
-use Illuminate\Http\Request;
 use Modules\User\Http\Requests\UpdateUserRolesRequest;
 
 class UserController extends ModuleBaseController

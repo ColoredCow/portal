@@ -47,7 +47,7 @@ class CreateLoanInstallmentsTable extends Migration
         Schema::dropIfExists('loan_installments_analytics_data');
         Schema::dropIfExists('loan_installments');
     }
-    
+
     /**
      * Seed database with installments for existing loans.
      *

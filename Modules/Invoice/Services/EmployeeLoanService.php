@@ -35,7 +35,7 @@ class EmployeeLoanService
 
         return [
             'employeeLoan' => $employeeLoan,
-            'installments' => $installments
+            'installments' => $installments,
         ];
     }
 
