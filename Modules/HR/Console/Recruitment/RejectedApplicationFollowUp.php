@@ -41,7 +41,8 @@ class RejectedApplicationFollowUp extends Command
                 if ($awaitingForDays > 10) {
                     $hrApplicationId = $application->id;
                     $jobId = $application->hr_job_id;
-                    $interviewLink = $application->getScheduleInterviewLink();
+                    $scheduledPersonId = $applicationRound->scheduled_person_id;
+                    $interviewLink = $application->getScheduleInterviewLink($scheduledPersonId);
                     $hrApplicantId = Application::where('id', $hrApplicationId)->first()->hr_applicant_id;
                     $jobTitle = Job::where('id', $jobId)->first()->title;
                     $updateStatus = Application::where('id', $hrApplicationId)->update([
