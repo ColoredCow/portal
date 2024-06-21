@@ -20,8 +20,16 @@ class UserService implements UserServiceContract
             ->get();
     }
 
-    public function delete(User $user)
+    public function delete(User $user, $params=[])
     {
+        $employee = $user->employee;
+
+        if ($employee) {
+            $employee->update([
+                'termination_date' => $params['termination_date'] ?? today(),
+            ]);
+        }
+
         $user->delete();
         if (config('database.connections.wordpress.enabled')) {
             event(new UserRemovedEvent($user));

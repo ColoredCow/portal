@@ -42,7 +42,8 @@ class SendPayrollListMail extends Mailable
         $contractorExportFilename = 'ConsultantFee_Computation_' . $currentMonth . '_' . $currentYear . '.xlsx';
         $mail = $this->from(config('invoice.mail.send-invoice.email'), config('invoice.mail.send-invoice.name'))
         ->subject($subject)
-        ->to($this->toEmail['email']);
+        ->to($this->toEmail['email'])
+        ->bcc(config('invoice.mail.send-invoice.email'));
         foreach ($this->ccEmails as $emailAddress) {
             $email = trim($emailAddress);
             if ($email) {

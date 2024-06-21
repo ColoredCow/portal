@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\HR\Console\JobExpiredEmailToHr;
+use Modules\Invoice\Console\SeedLoanInstallmentForMonth;
 use Modules\Project\Console\EndedProject;
 use Modules\Project\Console\FixedBudgetProject;
 use Modules\Project\Console\GoogleChat\NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat;
@@ -29,6 +30,7 @@ class Kernel extends ConsoleKernel
         FixedBudgetProject::class,
         NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat::class,
         JobExpiredEmailToHr::class,
+        SeedLoanInstallmentForMonth::class,
         // QuarterlyReviewSystemForEmployee::class, //This line will be commented for some time. After the feature is completed, it will be uncommented.
 
     ];
@@ -57,6 +59,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('project:ended-project')->dailyAt('09:00');
         $schedule->command('project:zero-expected-hours-in-project')->weekly()->tuesdays()->at('11:00');
         $schedule->command('project:reminder-for-effortsheet-lock')->dailyAt('21:00');
+        $schedule->command('loan:seed-loan-installment-for-month')->timezone(config('constants.timezone.indian'))->lastDayOfMonth('23:30');
         // $schedule->command('employee:quarterly-review-system-for-employee')->quarterly(); //This command generates assessments corresponding to each employee. Currently this feature is in-progress and will be released shortly.
     }
 

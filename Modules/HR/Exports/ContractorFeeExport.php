@@ -40,30 +40,64 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
                 continue;
             }
 
+            $isContractorLeavingThisMonth = optional($contractor->termination_date)->month() === today()->month();
+
             $totalDays += $daysInMonth;
-            $totalPaidDays += $daysInMonth;
-            $totalFee += optional($currentSalaryObject)->monthly_fee;
-            $totalTds += optional($currentSalaryObject)->tds;
-            $totalAdvanceFee += $contractor->loan_deduction_for_month;
-            $totalDeduction += optional($currentSalaryObject)->total_deduction;
-            $totalNetPay += optional($currentSalaryObject)->net_pay;
-            $totalCtcAnnual += optional($currentSalaryObject)->ctc_annual;
-            $totalCtcAgg += optional($currentSalaryObject)->ctc_aggregated;
+
+            if ($isContractorLeavingThisMonth) {
+                $paidDays = $contractor->termination_date->day;
+                $contractorMonthlyFee = $currentSalaryObject->monthly_fee * $paidDays / $daysInMonth;
+                $contractorTds = $currentSalaryObject->monthly_fee * $paidDays / $daysInMonth;
+                $contractorAdvanceFee = $contractor->loan_deduction_for_month;
+                $contractorDeduction = $contractor->loan_deduction_for_month + ($currentSalaryObject->monthly_fee * $paidDays / $daysInMonth);
+                $contractorNetPay = $contractorMonthlyFee - $contractorDeduction;
+                $contractorCtcAnnual = optional($currentSalaryObject)->ctc_annual;
+                $contractorCtcAgg = optional($currentSalaryObject)->ctc_aggregated;
+            } else {
+                $paidDays = $daysInMonth;
+                $contractorMonthlyFee = $currentSalaryObject->monthly_fee;
+                $contractorTds = $currentSalaryObject->tds;
+                $contractorAdvanceFee = $contractor->loan_deduction_for_month;
+                $contractorDeduction = optional($currentSalaryObject)->total_deduction;
+                $contractorNetPay = optional($currentSalaryObject)->net_pay;
+                $contractorCtcAnnual = optional($currentSalaryObject)->ctc_annual;
+                $contractorCtcAgg = optional($currentSalaryObject)->ctc_aggregated;
+            }
+            
+            $totalPaidDays += $paidDays;
+            $totalFee += $contractorMonthlyFee;
+            $totalTds += $contractorTds;
+            $totalAdvanceFee += $contractorAdvanceFee;
+            $totalDeduction += $contractorDeduction;
+            $totalNetPay += $contractorNetPay;
+            $totalCtcAnnual += $contractorCtcAnnual;
+            $totalCtcAgg += $contractorCtcAgg;
+
+            $commentMessage = '';
+
+            if ($currentSalaryObject->commencement_date->month() === today()->month()) {
+                $commentMessage = 'Salary incremented done on ' . optional($currentSalaryObject->commencement_date)->format('d M Y') . '. ';
+            }
+            
+            if (optional($contractor->termination_date)->month() === today()->month()) {
+                $commentMessage = 'Contractor left on ' . optional($contractor->termination_date)->format('d M Y');
+            }
 
             $contractorPayrollData = [
                 $contractor->user()->withTrashed()->first()->name,
                 'Consultant',
-                optional($currentSalaryObject)->monthly_fee ?: '-',
+                $contractorMonthlyFee ?: '-',
                 $daysInMonth,
                 $daysInMonth,
-                optional($currentSalaryObject)->tds ?: '-',
-                $contractor->loan_deduction_for_month ?: '-',
-                optional($currentSalaryObject)->total_deduction ?: '-',
+                $contractorTds ?? '-',
+                $contractorAdvanceFee ?? '-',
+                $contractorDeduction ?? '-',
                 '-',
-                optional($currentSalaryObject)->net_pay ?: '-',
-                optional($currentSalaryObject)->monthly_fee ?: '-',
-                optional($currentSalaryObject)->ctc_annual ?: '-',
-                optional($currentSalaryObject)->ctc_aggregated ?: '-',
+                $contractorNetPay ?? '-',
+                $contractorMonthlyFee ?? '-',
+                $contractorCtcAnnual ?? '-',
+                $contractorCtcAgg ?? '-',
+                $commentMessage,
             ];
 
             array_push($data, $contractorPayrollData);
@@ -85,6 +119,7 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
                 $totalFee ?: '-',
                 $totalCtcAnnual ?: '-',
                 $totalCtcAgg,
+                null
             ],
         ]);
 
@@ -97,7 +132,7 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
             ['Coloredcow Consulting Private Limited'],
             [Carbon::now()->format('F Y'), 'Paid', Carbon::today()->toDateString()],
             [
-            'Contractor Name', 'Designation', 'Total Fee', 'Total No of Days', 'Paid Days', 'TDS', 'Advance Recovery', 'Total Deduction', 'Advance Fee', 'Net Pay', 'Monthly Fee', 'CTC Annual', 'CTC Aggreed',
+            'Contractor Name', 'Designation', 'Total Fee', 'Total No of Days', 'Paid Days', 'TDS', 'Advance Recovery', 'Total Deduction', 'Advance Fee', 'Net Pay', 'Monthly Fee', 'CTC Annual', 'CTC Aggreed', 'Comment'
             ],
         ];
     }
@@ -112,11 +147,6 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
      */
     public function styles(Worksheet $sheet)
     {
-        $sheet->mergeCells('M2:P2');
-        $sheet->setCellValue('M2', 'Deduction');
-        $sheet->mergeCells('U2:X2');
-        $sheet->setCellValue('U2', ' Employer Contribution');
-
         return [
             1 => [
                 'font' => [
