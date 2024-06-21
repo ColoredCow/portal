@@ -59,7 +59,7 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
             $totalDays += $daysInMonth;
             $paidDays = $isEmployeeLeavingThisMonth ? $employee->termination_date->day : $daysInMonth;
             $totalPaidDays += $paidDays;
-            
+
             if ($isEmployeeLeavingThisMonth) {
                 $employeeGrossSalary = $currentSalaryObject->monthly_gross_salary * $paidDays / $totalDays;
                 $employeeBasicSalary = $currentSalaryObject->basic_salary * $paidDays / $totalDays;
@@ -72,7 +72,7 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
                 $employeeEmployeeEpf = $currentSalaryObject->employee_epf * $paidDays / $totalDays;
                 $employeeTds = $currentSalaryObject->tds * $paidDays / $totalDays;
                 $employeeAdvanceRecovery = $employee->loan_deduction_for_month;
-                $employeeDeduction = (($currentSalaryObject->employee_esi + $currentSalaryObject->employee_epf + $currentSalaryObject->food_allowance + $currentSalaryObject->tds)  * $paidDays / $totalDays) + $currentSalaryObject->employee->loan_deduction_for_month;
+                $employeeDeduction = (($currentSalaryObject->employee_esi + $currentSalaryObject->employee_epf + $currentSalaryObject->food_allowance + $currentSalaryObject->tds) * $paidDays / $totalDays) + $currentSalaryObject->employee->loan_deduction_for_month;
                 $employeeNetPay = $employeeSalary - $employeeDeduction;
                 $employeeEmployerEsi = $currentSalaryObject->employer_esi * $paidDays / $totalDays;
                 $employeeEmployerEpf = $currentSalaryObject->employer_epf * $paidDays / $totalDays;
@@ -105,7 +105,7 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
                 $employeeHealthInsurance = $currentSalaryObject->total_health_insurance;
                 $employeeCtcAgg = $currentSalaryObject->ctc_aggregated;
             }
-            
+
             $totalGrossSalary += $employeeGrossSalary;
             $totalBasicSalary += $employeeBasicSalary;
             $totalHra += $employeeHra;
@@ -132,7 +132,7 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
             if ($currentSalaryObject->commencement_date->month() === today()->month()) {
                 $commentMessage = 'Salary incremented done on ' . optional($currentSalaryObject->commencement_date)->format('d M Y') . '. ';
             }
-            
+
             if (optional($employee->termination_date)->month() === today()->month()) {
                 $commentMessage = 'Employee left on ' . optional($employee->termination_date)->format('d M Y');
             }

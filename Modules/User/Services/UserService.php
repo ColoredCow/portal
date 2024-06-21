@@ -20,7 +20,7 @@ class UserService implements UserServiceContract
             ->get();
     }
 
-    public function delete(User $user, $params=[])
+    public function delete(User $user, $params = [])
     {
         $employee = $user->employee;
 

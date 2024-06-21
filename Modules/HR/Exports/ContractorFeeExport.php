@@ -63,7 +63,7 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
                 $contractorCtcAnnual = optional($currentSalaryObject)->ctc_annual;
                 $contractorCtcAgg = optional($currentSalaryObject)->ctc_aggregated;
             }
-            
+
             $totalPaidDays += $paidDays;
             $totalFee += $contractorMonthlyFee;
             $totalTds += $contractorTds;
@@ -78,7 +78,7 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
             if ($currentSalaryObject->commencement_date->month() === today()->month()) {
                 $commentMessage = 'Salary incremented done on ' . optional($currentSalaryObject->commencement_date)->format('d M Y') . '. ';
             }
-            
+
             if (optional($contractor->termination_date)->month() === today()->month()) {
                 $commentMessage = 'Contractor left on ' . optional($contractor->termination_date)->format('d M Y');
             }
@@ -119,7 +119,7 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
                 $totalFee ?: '-',
                 $totalCtcAnnual ?: '-',
                 $totalCtcAgg,
-                null
+                null,
             ],
         ]);
 
@@ -132,7 +132,7 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
             ['Coloredcow Consulting Private Limited'],
             [Carbon::now()->format('F Y'), 'Paid', Carbon::today()->toDateString()],
             [
-            'Contractor Name', 'Designation', 'Total Fee', 'Total No of Days', 'Paid Days', 'TDS', 'Advance Recovery', 'Total Deduction', 'Advance Fee', 'Net Pay', 'Monthly Fee', 'CTC Annual', 'CTC Aggreed', 'Comment'
+            'Contractor Name', 'Designation', 'Total Fee', 'Total No of Days', 'Paid Days', 'TDS', 'Advance Recovery', 'Total Deduction', 'Advance Fee', 'Net Pay', 'Monthly Fee', 'CTC Annual', 'CTC Aggreed', 'Comment',
             ],
         ];
     }

@@ -48,7 +48,7 @@ class EmployeeService
     {
         $employees = Employee::with('user')->where('payroll_type', $exportType)->whereHas('user', function ($query) {
             $query->whereNull('deleted_at')
-                ->orWhereDate('deleted_at', now()->toDateString());            
+                ->orWhereDate('deleted_at', now()->toDateString());
         })
             ->orderBy('cc_employee_id')
             ->get();

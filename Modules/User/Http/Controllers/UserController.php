@@ -45,7 +45,7 @@ class UserController extends ModuleBaseController
     {
         $this->authorize('delete', $user);
         $this->service->delete($user, $request->all());
-        if (!$request->expectsJson()) {
+        if (! $request->expectsJson()) {
             // Redirecting in case of form request
             return redirect()->back()->with(['success' => 'User Deleted Successfully.']);
         }

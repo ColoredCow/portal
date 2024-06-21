@@ -62,6 +62,7 @@ class EmployeeLoanController extends Controller
     public function edit(EmployeeLoan $employeeLoan)
     {
         $data = $this->service->edit($employeeLoan);
+
         return view('invoice::employee-loan.edit', $data);
     }
 

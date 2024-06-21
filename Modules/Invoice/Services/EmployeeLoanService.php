@@ -32,6 +32,7 @@ class EmployeeLoanService
     public function edit(EmployeeLoan $employeeLoan)
     {
         $installments = LoanInstallment::where('loan_id', $employeeLoan->id)->orderBy('installment_date')->get();
+
         return [
             'employeeLoan' => $employeeLoan,
             'installments' => $installments

@@ -4,8 +4,8 @@ namespace Modules\Invoice\Observers;
 
 use Illuminate\Support\Facades\DB;
 use Modules\Invoice\Entities\EmployeeLoan;
-use Modules\Invoice\Entities\LoanInstallmentAnalyticsData;
 use Modules\Invoice\Entities\LoanInstallment;
+use Modules\Invoice\Entities\LoanInstallmentAnalyticsData;
 
 class LoanInstallmentObserver
 {

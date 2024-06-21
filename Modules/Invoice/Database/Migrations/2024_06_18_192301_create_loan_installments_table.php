@@ -35,19 +35,28 @@ class CreateLoanInstallmentsTable extends Migration
         });
 
         $this->seedExistingLoansInstallment();
-        
     }
 
-
     /**
-     * Seed database with installments for existing loans
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('loan_installments_analytics_data');
+        Schema::dropIfExists('loan_installments');
+    }
+    
+    /**
+     * Seed database with installments for existing loans.
      *
      * @return void
      */
     protected function seedExistingLoansInstallment()
     {
         $loans = EmployeeLoan::all();
-        
+
         foreach ($loans as $loan) {
             $startDate = $loan->start_date;
             $remainingAmount = $loan->total_amount;
@@ -63,18 +72,6 @@ class CreateLoanInstallmentsTable extends Migration
                 ]);
                 $startDate->addDay()->endOfMonth();
             }
-
         }
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('loan_installments_analytics_data');
-        Schema::dropIfExists('loan_installments');
     }
 }

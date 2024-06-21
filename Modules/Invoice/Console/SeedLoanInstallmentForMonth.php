@@ -30,7 +30,7 @@ class SeedLoanInstallmentForMonth extends Command
     public function handle()
     {
         $loans = EmployeeLoan::with('employee')->where('status', 'active')->get();
-        
+
         foreach ($loans as $loan) {
             if ($loan->employee->terminated_date && optional($loan->employee->terminated_date)->endOfMonth() < today()->endOfMonth()) {
                 continue;

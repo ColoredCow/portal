@@ -19,7 +19,7 @@ class EmployeeLoan extends Model
     {
         return $this->belongsTo(Employee::class);
     }
-    
+
     public function installments()
     {
         return $this->hasMany(LoanInstallment::class, 'loan_id');

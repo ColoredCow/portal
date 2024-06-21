@@ -4,7 +4,6 @@ namespace Modules\Invoice\Entities;
 
 use App\Traits\Encryptable;
 use Illuminate\Database\Eloquent\Model;
-use Modules\HR\Entities\Employee;
 
 class LoanInstallment extends Model
 {
