@@ -62,7 +62,7 @@ return [
         'onboarded' => 'Onboarded',
         'rejected' => 'Rejected',
         'sent-for-approval' => 'Sent for Approval',
-        're-applied' => 'ReApplied',
+        're-opened-application' => 'ReOpened Application',
     ],
 
     'opportunities-status' => [
