@@ -36,7 +36,7 @@ class SendApplicationRejectionMail extends Mailable
     {
         return $this->from(config('hr.default.email'))
             ->to($this->applicant->email)
-            ->subject('Application Rejected')
+            ->subject('Follow-Up: Opportunity to Reschedule Your Interview with ColoredCow')
             ->view('emails.send-application-rejection-mail')
             ->with([
                 'applicant' => $this->applicant,
