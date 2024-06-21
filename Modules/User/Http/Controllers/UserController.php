@@ -39,7 +39,7 @@ class UserController extends ModuleBaseController
      *
      * @param User $user
      *
-     * @return void
+     * @return mixed
      */
     public function destroy(Request $request, User $user)
     {

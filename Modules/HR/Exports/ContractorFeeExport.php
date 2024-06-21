@@ -40,7 +40,7 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
                 continue;
             }
 
-            $isContractorLeavingThisMonth = optional($contractor->termination_date)->month() === today()->month();
+            $isContractorLeavingThisMonth = optional($contractor->termination_date)->startOfDay() === today()->startOfDay();
 
             $totalDays += $daysInMonth;
 
@@ -75,11 +75,11 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
 
             $commentMessage = '';
 
-            if ($currentSalaryObject->commencement_date->month() === today()->month()) {
+            if ($currentSalaryObject->commencement_date->startOfDay() === today()->startOfDay()) {
                 $commentMessage = 'Salary incremented done on ' . optional($currentSalaryObject->commencement_date)->format('d M Y') . '. ';
             }
 
-            if (optional($contractor->termination_date)->month() === today()->month()) {
+            if (optional($contractor->termination_date)->startOfDay() === today()->startOfDay()) {
                 $commentMessage = 'Contractor left on ' . optional($contractor->termination_date)->format('d M Y');
             }
 
