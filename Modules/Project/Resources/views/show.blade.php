@@ -445,8 +445,8 @@
         mounted() {
             this.stages = @json($stages) || [];
             this.stages.forEach(stage => {
-                stage.started = stage.status === 'started' || stage.status === 'completed' ? stage.status : false;
-                stage.completed = stage.status === 'completed' ? stage.status : false;
+                stage.started = stage.status === 'started' || stage.status === 'completed' ? true : false;
+                stage.completed = stage.status === 'completed' ? true : false;
             });
         }
     });
