@@ -393,29 +393,55 @@ class ProjectService implements ProjectServiceContract
     public function storeStage(array $newStages, int $projectId)
     {
         foreach ($newStages as $stage) {
-            ProjectStages::create([
+            $stageData = $this->prepareStageData($stage);
+
+            ProjectStages::create(array_merge($stageData, [
                 'project_id' => $projectId,
-                'stage_name' => $stage['stage_name'],
-                'comments' => $stage['comments'] ?? null,
-                'status' => $stage['status'] ?? 'pending',
                 'created_at' => now(),
                 'updated_at' => now(),
-                'end_date' => $stage['status'] !== 'pending' ? now() : null,
-            ]);
+            ]));
         }
     }
 
     public function updateStage(array $updatedStages)
     {
         foreach ($updatedStages as $stage) {
+            $stageData = $this->prepareStageData($stage);
+
             $existingStage = ProjectStages::find($stage['id']);
-            $existingStage->update([
-                'stage_name' => $stage['stage_name'],
-                'comments' => $stage['comments'] ?? null,
-                'status' => $stage['status'] ?? 'pending',
-                'end_date' => $stage['status'] !== 'pending' ? now() : null,
-            ]);
+            if ($existingStage) {
+                $existingStage->update(array_merge($stageData, [
+                    'updated_at' => now(),
+                ]));
+            }
         }
+    }
+
+    private function prepareStageData(array $stage): array
+    {
+        $startDate = null;
+        $endDate = null;
+        $duration = null;
+
+        if ($stage['start_date']) {
+            $formattedStartDate = Carbon::parse($stage['start_date']);
+            $startDate = $formattedStartDate->setTimezone(config('app.timezone'))->format(config('constants.datetime_format'));
+        }
+
+        if ($stage['end_date']) {
+            $formattedEndDate = Carbon::parse($stage['end_date']);
+            $endDate = $formattedEndDate->setTimezone(config('app.timezone'))->format(config('constants.datetime_format'));
+            $duration = Carbon::parse($stage['start_date'])->diffInSeconds($formattedEndDate);
+        }
+
+        return [
+            'stage_name' => $stage['stage_name'],
+            'comments' => $stage['comments'] ?? null,
+            'status' => $stage['status'] ?? 'pending',
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'duration' => $duration,
+        ];
     }
 
     public function removeStage(array $idArr)

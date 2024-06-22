@@ -329,76 +329,127 @@
 <br>
 @endsection
 @section('vue_scripts')
-    <script>
-        new Vue({
-            el: '#stages_app',
-            data() {
-                return {
-                    stages: [],
-                    deletedStages: [],
-                    projectId: "{{ $project->id }}",
-                    loaderVisible: false,
-                    submitButton: true
-                };
+<script>
+    new Vue({
+        el: '#stages_app',
+        data() {
+            return {
+                stages: [],
+                deletedStages: [],
+                projectId: "{{ $project->id }}",
+                loaderVisible: false,
+                submitButton: true,
+                editButtonStates: {}
+            };
+        },
+        methods: {
+            convertDuration(seconds) {
+                const days = Math.floor(seconds / (24 * 3600));
+                seconds %= 24 * 3600;
+                const hours = Math.floor(seconds / 3600);
+                seconds %= 3600;
+                const minutes = Math.floor(seconds / 60);
+                seconds %= 60;
+                return `${days}d ${hours}h ${minutes}m ${seconds}s`;
             },
-            methods: {
-                formattedDate(dateTime) {
-                    var date = new Date(dateTime);
-                    if (!dateTime) return '';
-                    return date.toISOString().split('T')[0];
-                },
-                addStage() {
-                    this.submitButton = false;
-                    this.stages.push({ stage_name: '', comments: '', created_at: new Date().toISOString().split('T')[0], end_date: '', status: 'pending' });
-                },
-                deleteStage(stage) {
-                    this.submitButton = false;
-                    if (!this.deletedStages.includes(stage) && (stage.id)) {
-                        this.deletedStages.push(stage.id);
-                    }
-                    var index = this.stages.indexOf(stage);
-                    if (index !== -1) {
-                        this.stages.splice(index, 1);
-                    }
-                },
-                markStageAsUpdated(stage) {
-                    this.submitButton = false;
-                    if (stage.id) {
-                        stage.isUpdated = true;
-                    }
-                },
-                submitForm() {
-                    var newStages = this.stages.filter(stage => !stage.id);
-                    var updatedStages = this.stages.filter(stage => stage.id && stage.isUpdated);
-                    this.toggleLoader();
-                    axios.post('{{ route('projects.manage-stage') }}', {
-                        newStages: newStages,
-                        updatedStages: updatedStages,
-                        deletedStages: this.deletedStages,
-                        project_id: this.projectId,
-                        _token: '{{ csrf_token() }}'
-                    }).then(response => {
-                        this.toggleLoader();
-                        this.$toast.success('Stages Managed Successfully!');
-                        location.reload(true);
-                    }).catch(error => {
-                        this.toggleLoader();
-                        var errorMessage = error.response.data.message ? error.response.data.message : error.response.data.error;
-                        console.error(error.response.data);
-                        if (errorMessage) {
-                            this.$toast.error(errorMessage);
-                        } else{
-                            this.$toast.error("An error occurred. Please check console");
-                        }
-                    });
-                },
-                toggleLoader() {
-                    this.loaderVisible = ! this.loaderVisible;
+            formattedDate(dateTime) {
+                var date = new Date(dateTime);
+                if (!dateTime) return '';
+                return date.toISOString().split('T')[0];
+            },
+            addStage() {
+                var newIndex = this.stages.length;
+                this.editStage(newIndex);
+                this.submitButton = false;
+                this.stages.push({ stage_name: '', comments: '', start_date: '', end_date: '', status: 'pending' });
+            },
+            editStage(index) {
+                this.submitButton = false;
+                this.$set(this.editButtonStates, index, true);
+            },
+            isEditing(index) {
+                return this.editButtonStates[index] || false;
+            },
+            deleteStage(stage) {
+                this.submitButton = false;
+                if (!this.deletedStages.includes(stage) && (stage.id)) {
+                    this.deletedStages.push(stage.id);
+                }
+                var index = this.stages.indexOf(stage);
+                if (index !== -1) {
+                    this.stages.splice(index, 1);
                 }
             },
-            mounted() {
-                this.stages = @json($stages) || [];
+            markStageAsUpdated(stage) {
+                if (stage.id) {
+                    stage.isUpdated = true;
+                }
+            },
+            updateStatus(status, index) {
+                if (status === 'started') {
+                    this.stages[index].started = !this.stages[index].started;
+                    if (this.stages[index].started) {
+                        this.stages[index].status = 'started';
+                        this.stages[index].start_date = new Date().toISOString();
+                        this.stages[index].end_date = null;
+                    } else {
+                        this.stages[index].status = 'pending';
+                        this.stages[index].start_date = null;
+                        this.stages[index].end_date = null;
+                    }
+                } else if (status === 'completed') {
+                    this.stages[index].completed = !this.stages[index].completed;
+                    if (this.stages[index].completed) {
+                        this.stages[index].status = 'completed';
+                        this.stages[index].end_date = new Date().toISOString();
+                    } else {
+                        this.stages[index].status = this.stages[index].started ? 'started' : 'pending';
+                        this.stages[index].end_date = null;
+                    }
+                }
+                this.markStageAsUpdated(this.stages[index]);
+            },
+            submitForm() {
+                var newStages = this.stages.filter(stage => !stage.id).map(stage => this.cleanStageData(stage));
+                var updatedStages = this.stages.filter(stage => stage.id && stage.isUpdated).map(stage => this.cleanStageData(stage));
+                this.toggleLoader();
+                axios.post('{{ route('projects.manage-stage') }}', {
+                    newStages: newStages,
+                    updatedStages: updatedStages,
+                    deletedStages: this.deletedStages,
+                    project_id: this.projectId,
+                    _token: '{{ csrf_token() }}'
+                }).then(response => {
+                    this.toggleLoader();
+                    this.$toast.success('Stages Managed Successfully!');
+                    location.reload(true);
+                }).catch(error => {
+                    this.toggleLoader();
+                    var errorMessage = error.response.data.message ? error.response.data.message : error.response.data.error;
+                    console.error(error.response.data);
+                    if (errorMessage) {
+                        this.$toast.error(errorMessage);
+                    } else {
+                        this.$toast.error("An error occurred. Please check console");
+                    }
+                });
+            },
+            toggleLoader() {
+                this.loaderVisible = !this.loaderVisible;
+            },
+            cleanStageData(stage) {
+                var { comments, duration, start_date, end_date, id, project_id, stage_name, status } = stage;
+                return { comments, duration, start_date, end_date, id, project_id, stage_name, status };
             }
-        });
-    </script>
+        },
+        mounted() {
+            this.stages = @json($stages) || [];
+            this.stages.forEach(stage => {
+                stage.started = stage.status === 'started' || stage.status === 'completed' ? stage.status : false;
+                stage.completed = stage.status === 'completed' ? stage.status : false;
+            });
+        }
+    });
+</script>
+
 @endsection
