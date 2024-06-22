@@ -86,17 +86,11 @@ class InvoiceController extends Controller
      *
      * @param  \App\Models\Finance\Invoice  $invoice
      *
-     * @return \Illuminate\View\View
+     * @return void
      */
     public function edit(Invoice $invoice)
     {
-        $clients = Client::getInvoicableClients(collect($invoice->projectStageBillings)->pluck('id')->toArray());
-        $invoice->load('projectStageBillings', 'projectStageBillings.projectStage', 'projectStageBillings.projectStage.project');
-
-        return view('finance.invoice.edit')->with([
-            'invoice' => $invoice,
-            'clients' => $clients,
-        ]);
+        // Show the form for editing the specified resource.
     }
 
     /**

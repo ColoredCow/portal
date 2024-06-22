@@ -448,7 +448,6 @@
 
             data() {
                 return {
-                    clients: @json($clients),
                     invoice: @json($invoice),
                     projects: @json($invoice->client->projects),
                     allExchangeRate: @json($currencyService->getAllCurrentRatesInINR()),
