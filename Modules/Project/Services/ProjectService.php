@@ -417,6 +417,11 @@ class ProjectService implements ProjectServiceContract
         }
     }
 
+    public function removeStage(array $idArr)
+    {
+        ProjectStages::whereIn('id', $idArr)->delete();
+    }
+
     private function prepareStageData(array $stage): array
     {
         $startDate = null;
@@ -442,11 +447,6 @@ class ProjectService implements ProjectServiceContract
             'end_date' => $endDate,
             'duration' => $duration,
         ];
-    }
-
-    public function removeStage(array $idArr)
-    {
-        ProjectStages::whereIn('id', $idArr)->delete();
     }
 
     private function getListTabCounts($filters, $showAllProjects, $userId)
