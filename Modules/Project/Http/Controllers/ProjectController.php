@@ -14,6 +14,7 @@ use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Rules\ProjectNameExist;
+use Modules\Project\Entities\ProjectStages;
 
 class ProjectController extends Controller
 {
@@ -210,4 +211,24 @@ class ProjectController extends Controller
             'contractName' => $contractName,
         ];
     }
+
+    public function addStage(Request $request)
+    {
+        $request->validate([
+            'project_id' => 'required|integer|exists:projects,id',
+            'stage_name' => 'required|string',
+            'comment' => 'nullable|string',
+            'status' => 'nullable|string',
+        ]);
+
+        ProjectStages::create([
+            'project_id' => $request->project_id,
+            'stage_name' => $request->stage_name,
+            'comments' => $request->comment,
+            'status' => $request->status ?? 'pending',
+        ]);
+
+        return response()->json(['success' => 'Stage added successfully!']);
+    }
+
 }

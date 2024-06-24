@@ -23,4 +23,7 @@ Route::prefix('projects')->middleware('auth')->group(function () {
     Route::post('/project-fte-export', 'ProjectController@projectFTEExport')->name('project.fte.export');
     Route::get('/project-resource', 'ProjectController@projectResource')->name('project.resource-requirement');
     //Route::get('/', 'ProjectController@edit')->name('project.edit');
+
+    Route::post('/projects/add-stage-listing', 'ProjectController@addStageListing')->name('projects.add-stage-listing');
+    Route::post('/projects/add-stage', 'ProjectController@addStage')->name('projects.add-stage');
 });
