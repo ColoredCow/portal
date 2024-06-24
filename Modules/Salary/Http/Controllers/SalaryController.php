@@ -38,6 +38,14 @@ class SalaryController extends Controller
     public function employee(Employee $employee)
     {
         $this->authorize('view', EmployeeSalary::class);
+
+        if ($employee->payroll_type === 'contractor') {
+            return view('salary::employee.contractor-index')->with([
+                'employee' => $employee,
+                'salary' => $employee->getLatestSalary(),
+            ]);
+        }
+
         $salaryConf = new SalaryConfiguration();
         $calculationData = [];
         $employerEpfConf = $salaryConf->formatAll()->get('employer_epf');
@@ -118,6 +126,29 @@ class SalaryController extends Controller
         $currentSalaryObject->save();
 
         return redirect()->back()->with('success', 'Salary updated successfully!');
+    }
+
+    public function storeOrUpdateContractorSalary(Request $request, Employee $employee)
+    {
+        $currentSalaryObject = $employee->getLatestSalary();
+        if (! $currentSalaryObject) {
+            EmployeeSalary::create([
+                'employee_id' => $employee->id,
+                'monthly_fee' => $request->contractorFee,
+                'tds' => $request->tds,
+                'commencement_date' => $request->commencementDate,
+                'salary_type' => config('salary.type.contractor_fee.slug'),
+            ]);
+
+            return redirect()->back()->with('success', 'Contractor fee added successfully!');
+        }
+
+        $currentSalaryObject->monthly_fee = $request->contractorFee;
+        $currentSalaryObject->commencement_date = $request->commencementDate;
+        $currentSalaryObject->tds = $request->tds;
+        $currentSalaryObject->save();
+
+        return redirect()->back()->with('success', 'Contractor fee updated successfully!');
     }
 
     public function generateAppraisalLetter(Request $request, Employee $employee)
