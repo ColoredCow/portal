@@ -18,6 +18,7 @@ use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectResourceRequirement;
 use Modules\Project\Entities\ProjectStages;
+use Modules\Project\Entities\ProjectStagesListing;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Entities\ProjectTeamMembersEffort;
 use Modules\Project\Exports\ProjectFTEExport;
@@ -422,6 +423,14 @@ class ProjectService implements ProjectServiceContract
         ProjectStages::whereIn('id', $idArr)->delete();
     }
 
+    public function createProjectStageList(string $stageName)
+    {
+        $formattedStageName = strtolower($stageName);
+        ProjectStagesListing::firstOrCreate(
+            ['name' => $formattedStageName]
+        );
+    }
+
     private function prepareStageData(array $stage): array
     {
         $startDate = null;
@@ -438,6 +447,8 @@ class ProjectService implements ProjectServiceContract
             $endDate = $formattedEndDate->setTimezone(config('app.timezone'))->format(config('constants.datetime_format'));
             $duration = Carbon::parse($stage['start_date'])->diffInSeconds($formattedEndDate);
         }
+
+        $this->createProjectStageList($stage['stage_name']);
 
         return [
             'stage_name' => $stage['stage_name'],
