@@ -152,6 +152,7 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
     public function styles(Worksheet $sheet)
     {
         $lastRow = $this->contractorsRowCount + 3;
+
         return [
             1 => [
                 'font' => [

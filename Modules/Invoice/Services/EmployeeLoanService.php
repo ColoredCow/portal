@@ -56,7 +56,7 @@ class EmployeeLoanService
         $newStartDate = Carbon::parse($params['start_date']);
         $monthlyDeduction = $params['monthly_deduction'];
         if (! $employeeLoan->start_date->isSameMonth($newStartDate)) {
-            $this->createOrRemoveLoanInstallmentData($employeeLoan, $newStartDate, $monthlyDeduction);
+            $this->createOrRemoveLoanInstallmentData($employeeLoan, Carbon::parse($params['start_date']), $monthlyDeduction);
         }
 
         $employeeLoan->update([
@@ -80,6 +80,7 @@ class EmployeeLoanService
 
         $remainingAmount = $loan->total_amount;
         $startDate->endOfMonth();
+        // dd($startDate);
         while ($startDate <= today() && $remainingAmount > 0) {
             $remainingAmount -= $monthlyDeduction;
             LoanInstallment::create([
