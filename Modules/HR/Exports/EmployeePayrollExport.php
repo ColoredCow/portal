@@ -13,6 +13,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, WithTitle, WithStyles
 {
     protected $employees;
+    protected $employeesRowCount = 0;
 
     public function __construct($employees)
     {
@@ -170,6 +171,7 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
             ];
 
             array_push($data, $employeePayrollData);
+            $this->employeesRowCount++;
         }
 
         array_push($data, [
@@ -206,6 +208,7 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
                 '',
             ],
         ]);
+        $this->employeesRowCount += 2;
 
         return $data;
     }
@@ -234,6 +237,8 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
         $sheet->mergeCells('U2:X2');
         $sheet->setCellValue('U2', ' Employer Contribution');
 
+        $lastRow = $this->employeesRowCount + 3;
+
         return [
             1 => [
                 'font' => [
@@ -246,6 +251,11 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
                 ],
             ],
             3 => [
+                'font' => [
+                    'bold' => true,
+                ],
+            ],
+            $lastRow => [
                 'font' => [
                     'bold' => true,
                 ],

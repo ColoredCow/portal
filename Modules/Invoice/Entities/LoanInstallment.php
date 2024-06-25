@@ -18,4 +18,9 @@ class LoanInstallment extends Model
     {
         return $this->belongsTo(EmployeeLoan::class);
     }
+
+    public function analyticEntry()
+    {
+        return $this->hasOne(LoanInstallmentAnalyticsData::class, 'loan_installment_id');
+    }
 }

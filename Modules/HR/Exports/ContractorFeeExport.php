@@ -13,6 +13,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, WithTitle, WithStyles
 {
     protected $contractors;
+    protected $contractorsRowCount = 0;
 
     public function __construct($contractors)
     {
@@ -101,6 +102,7 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
             ];
 
             array_push($data, $contractorPayrollData);
+            $this->contractorsRowCount++;
         }
 
         array_push($data, [
@@ -122,6 +124,8 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
                 null,
             ],
         ]);
+
+        $this->contractorsRowCount += 2;
 
         return $data;
     }
@@ -147,6 +151,7 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
      */
     public function styles(Worksheet $sheet)
     {
+        $lastRow = $this->contractorsRowCount + 3;
         return [
             1 => [
                 'font' => [
@@ -159,6 +164,11 @@ class ContractorFeeExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
                 ],
             ],
             3 => [
+                'font' => [
+                    'bold' => true,
+                ],
+            ],
+            $lastRow => [
                 'font' => [
                     'bold' => true,
                 ],
