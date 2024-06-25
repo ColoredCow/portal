@@ -80,7 +80,6 @@ class EmployeeLoanService
 
         $remainingAmount = $loan->total_amount;
         $startDate->endOfMonth();
-        // dd($startDate);
         while ($startDate <= today() && $remainingAmount > 0) {
             $remainingAmount -= $monthlyDeduction;
             LoanInstallment::create([
