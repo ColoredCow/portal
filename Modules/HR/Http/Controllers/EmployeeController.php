@@ -3,7 +3,6 @@
 namespace Modules\HR\Http\Controllers;
 
 use App\Services\EmployeeService;
-use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -38,22 +37,23 @@ class EmployeeController extends Controller
         $filters = $request->all();
         $filters = $filters ?: $this->service->defaultFilters();
         $name = request('name');
-        $currentQuarter = Carbon::now()->quarter;
-        $currentYear = Carbon::now()->year;
 
         $employeeData = Employee::leftJoin('assessments', 'assessments.reviewee_id', '=', 'employees.id')
+            ->selectRaw('employees.*,
+                CASE
+                WHEN COUNT(DISTINCT individual_assessments.status) = 1 AND MIN(individual_assessments.status) = "pending" THEN "pending"
+                WHEN COUNT(DISTINCT individual_assessments.status) = 1 AND MIN(individual_assessments.status) = "completed" THEN "completed"
+                ELSE "in-progress"
+                END AS overall_status,
+                individual_assessments.status,
+                team_member_id,
+                count(team_member_id) as project_count')
             ->leftJoin('individual_assessments', 'individual_assessments.assessment_id', '=', 'assessments.id')
-            ->where(function ($query) use ($currentYear, $currentQuarter, $name, $filters) {
-                $query->where(function ($subquery) use ($currentYear, $currentQuarter) {
-                    $subquery->whereIn('individual_assessments.status', ['pending', 'in-progress', 'completed'])
-                        ->whereRaw('YEAR(assessments.created_at) = ?', [strval($currentYear)])
-                        ->whereRaw('QUARTER(assessments.created_at) = ?', [$currentQuarter]);
-                })->orWhere('staff_type', $name)
-                    ->applyFilters($filters);
-            })
-            ->Where('staff_type', $name)
             ->leftJoin('project_team_members', 'employees.user_id', '=', 'project_team_members.team_member_id')
-            ->selectRaw('employees.*, individual_assessments.status, team_member_id, count(team_member_id) as project_count')
+            ->applyFilters($filters)
+            ->where('staff_type', $name)
+            ->whereRaw('YEAR(assessments.created_at) = YEAR(CURDATE())')
+            ->whereRaw('QUARTER(assessments.created_at) = QUARTER(CURDATE())')
             ->groupBy('employees.user_id')
             ->orderBy('project_count', 'desc')
             ->get();

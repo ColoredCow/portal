@@ -40,13 +40,13 @@
                     <tr>
                         <td>
                             <a href="{{ route('employees.show', $employee->id) }}">
-                                @if ($employee->status === 'pending')
+                                @if ($employee->overall_status === 'pending')
                                     {{ $employee->name }} <span
                                         class="{{ config('constants.review-tags.pending.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.pending.title') }}</span>
-                                @elseif ($employee->status === 'in-progress')
+                                @elseif ($employee->overall_status === 'in-progress')
                                     {{ $employee->name }} <span
                                         class="{{ config('constants.review-tags.in-progress.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.in-progress.title') }}</span>
-                                @elseif ($employee->status === 'completed')
+                                @elseif ($employee->overall_status === 'completed')
                                     {{ $employee->name }} <span
                                         class="{{ config('constants.review-tags.completed.class') }} badge-pill mr-1 mb-1">{{ config('constants.review-tags.completed.title') }}</span>
                                 @else
