@@ -61,7 +61,9 @@ class EmployeeLoanController extends Controller
      */
     public function edit(EmployeeLoan $employeeLoan)
     {
-        return view('invoice::employee-loan.edit', ['employeeLoan' => $employeeLoan]);
+        $data = $this->service->edit($employeeLoan);
+
+        return view('invoice::employee-loan.edit', $data);
     }
 
     /**
@@ -75,7 +77,7 @@ class EmployeeLoanController extends Controller
         $requestParams = $request->all();
         $data = $this->service->update($requestParams, $employeeLoan);
 
-        return redirect(route('employee-loan.index'))->with('success', 'Loan updated successfully!');
+        return redirect()->back()->with('success', 'Loan updated successfully!');
     }
 
     /**

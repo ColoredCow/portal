@@ -9,8 +9,10 @@ use Modules\Invoice\Contracts\CurrencyServiceContract;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Invoice\Entities\EmployeeLoan;
 use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Entities\LoanInstallment;
 use Modules\Invoice\Observers\EmployeeLoanObserver;
 use Modules\Invoice\Observers\InvoiceObserver;
+use Modules\Invoice\Observers\LoanInstallmentObserver;
 use Modules\Invoice\Services\CurrencyService;
 use Modules\Invoice\Services\InvoiceService;
 
@@ -148,6 +150,7 @@ class InvoiceServiceProvider extends ServiceProvider
     {
         Invoice::observe(InvoiceObserver::class);
         EmployeeLoan::observe(EmployeeLoanObserver::class);
+        LoanInstallment::observe(LoanInstallmentObserver::class);
     }
 
     private function getPublishableViewPaths(): array

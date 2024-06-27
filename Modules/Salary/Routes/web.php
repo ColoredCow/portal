@@ -15,6 +15,7 @@ Route::prefix('salary')->middleware('auth')->group(function () {
     Route::get('/', 'SalaryController@index')->name('salary.index');
     Route::get('/employee/{employee}/', 'SalaryController@employee')->name('salary.employee');
     Route::post('/employee/store/{employee}', 'SalaryController@storeOrUpdateSalary')->name('salary.employee.store');
+    Route::post('/contractor/store/{employee}', 'SalaryController@storeOrUpdateContractorSalary')->name('salary.contractor.store');
     Route::post('{employee}/generate-appraisal-letter', 'SalaryController@generateAppraisalLetter')->name('salary.employee.generate-appraisal-letter');
 });
 
