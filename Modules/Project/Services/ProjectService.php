@@ -448,7 +448,7 @@ class ProjectService implements ProjectServiceContract
 
         $project->is_ready_to_renew ? $project->tag('get-renewed') : $project->untag('get-renewed');
 
-        $invoiceTerms = $data['invoiceTerms'];
+        $invoiceTerms = $data['invoiceTerms'] ?? [];
         $this->updateInvoiceTerms($invoiceTerms, $project);
 
         return $isProjectUpdated;
