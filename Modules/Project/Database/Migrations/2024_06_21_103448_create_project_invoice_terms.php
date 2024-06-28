@@ -18,7 +18,7 @@ class CreateProjectInvoiceTerms extends Migration
             $table->unsignedBigInteger('project_id');
             $table->date('invoice_date')->nullable();
             $table->decimal('amount', 10, 2)->nullable();
-            $table->string('status')->nullable()->default('yet-to-be-created');
+            $table->string('status')->nullable();
             $table->timestamps();
 
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');

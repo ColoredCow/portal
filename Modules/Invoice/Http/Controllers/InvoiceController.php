@@ -27,7 +27,7 @@ class InvoiceController extends Controller
     public function index(Request $request)
     {
         $invoiceStatus = $request->invoice_status ?? 'sent';
-        $filters = $request->except('invoice_status');
+        $filters = $request->all();
 
         if ($invoiceStatus == 'scheduled') {
             return view('invoice::index', [
