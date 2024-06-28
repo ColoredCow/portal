@@ -22,11 +22,11 @@ use Modules\Invoice\Emails\SendPendingInvoiceMail;
 use Modules\Invoice\Entities\Invoice;
 use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Exports\MonthlyGSTTaxReportExport;
-use Modules\Project\Entities\ProjectInvoiceTerm;
 use Modules\Invoice\Exports\TaxReportExport;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
 use Modules\Invoice\Notifications\GoogleChat\SendPaymentReceivedNotification;
 use Modules\Project\Entities\Project;
+use Modules\Project\Entities\ProjectInvoiceTerm;
 
 class InvoiceService implements InvoiceServiceContract
 {
