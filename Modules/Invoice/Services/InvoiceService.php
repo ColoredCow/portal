@@ -38,16 +38,22 @@ class InvoiceService implements InvoiceServiceContract
             'year' => $filters['year'] ?? null,
             'status' => $filters['status'] ?? null,
         ];
+
+        $invoices = [];
+        $clientsReadyToSendInvoicesData = [];
+        $projectsReadyToSendInvoicesData = [];
+        $totalReceivableAmount = 0.00;
+
         if ($invoiceStatus == 'sent') {
             $invoices = Invoice::query()->with('client', 'client.contactPersons', 'client.billingDetails')->applyFilters($filters)->leftjoin('clients', 'invoices.client_id', '=', 'clients.id')
                 ->select('invoices.*', 'clients.name')
                 ->where('clients.is_billable', true)
                 ->orderBy('name', 'asc')->orderBy('sent_on', 'desc')
                 ->get();
-            $clientsReadyToSendInvoicesData = [];
-            $projectsReadyToSendInvoicesData = [];
+            $totalReceivableAmount = $this->getTotalReceivableAmountInINR($invoices);
+        } elseif ($invoiceStatus == 'scheduled') {
+            $invoices = $this->getScheduledInvoices();
         } else {
-            $invoices = [];
             $clientsReadyToSendInvoicesData = Client::status('active')->billable()->invoiceReadyToSend()->orderBy('name')->get();
             $projectsReadyToSendInvoicesData = Project::billable()->whereHas('meta', function ($query) {
                 return $query->where([
@@ -61,7 +67,7 @@ class InvoiceService implements InvoiceServiceContract
             'invoices' => $invoices,
             'clients' => $this->getClientsForInvoice(),
             'currencyService' => $this->currencyService(),
-            'totalReceivableAmount' => $this->getTotalReceivableAmountInINR($invoices),
+            'totalReceivableAmount' => $totalReceivableAmount,
             'filters' => $filters,
             'invoiceStatus' => $invoiceStatus,
             'clientsReadyToSendInvoicesData' => $clientsReadyToSendInvoicesData,
@@ -770,7 +776,7 @@ class InvoiceService implements InvoiceServiceContract
         LedgerAccount::destroy($ledgerAccountsIdToDelete);
     }
 
-    public function getScheduledInvoices($request)
+    public function getScheduledInvoices()
     {
         return ProjectInvoiceTerm::with('project')->get();
     }

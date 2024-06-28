@@ -29,16 +29,13 @@ class InvoiceController extends Controller
         $invoiceStatus = $request->invoice_status ?? 'sent';
         $filters = $request->all();
 
-        if ($invoiceStatus == 'scheduled') {
-            return view('invoice::index', [
-                'invoices' => $this->service->getScheduledInvoices($request),
-                'invoiceStatus' => $invoiceStatus,
-            ]);
-        } elseif ($invoiceStatus == 'sent') {
+        if ($invoiceStatus == 'sent') {
+            $filters = $request->all();
             unset($filters['invoice_status']);
-            $filters = $filters ?: $this->service->defaultFilters();
-        } else {
-            $invoiceStatus = 'ready';
+            if (empty($filters)) {
+                $filters = $this->service->defaultFilters();
+            }
+        } elseif ($invoiceStatus == 'ready') {
             $filters = $request->all();
         }
 
