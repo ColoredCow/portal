@@ -31,9 +31,7 @@ class InvoiceController extends Controller
 
         if ($invoiceStatus == 'sent') {
             unset($filters['invoice_status']);
-            if (empty($filters)) {
-                $filters = $this->service->defaultFilters();
-            }
+            $filters = $this->service->defaultFilters();
         } elseif ($invoiceStatus == 'ready') {
             $filters = $request->all();
         }
