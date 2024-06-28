@@ -221,9 +221,4 @@ class InvoiceController extends Controller
     {
         return view('invoice::create-custom-invoice', $this->service->create());
     }
-
-    public function scheduledInvoicesIndex(Request $request)
-    {
-        return view('invoice::scheduled-invoice.index', $this->service->getScheduledInvoices($request));
-    }
 }
