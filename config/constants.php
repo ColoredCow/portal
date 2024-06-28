@@ -167,6 +167,27 @@ return [
                 'paid' => 'Paid',
             ],
         ],
+        'scheduled-invoice' => [
+            'status' => [
+                'sent' => [
+                    'label' => 'sent',
+                    'title' => 'Sent',
+                    'class' => 'badge badge-info',
+                ],
+                'yet-to-be-created' => [
+                    'label' => 'yet-to-be-created',
+                    'title' => 'Yet To Be Created',
+                    'class' => 'badge badge-warning',
+                ],
+                'paid' => [
+                    'label' => 'paid',
+                    'title' => 'Paid',
+                    'class' => 'badge badge-success',
+                ],
+            ],
+            'email-duration-in-days' => 5,
+            'email'=> 'finance@coloredcow.com',
+        ],
         'gst' => '18',
         'reports' => [
             'list-previous-months' => 6,

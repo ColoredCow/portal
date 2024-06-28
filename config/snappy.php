@@ -34,7 +34,7 @@ return [
 
     'pdf' => [
         'enabled' => true,
-        'binary' => env('PDF_BINARY'),
+        'binary' => env('PDF_BINARY', '/usr/local/bin/wkhtmltopdf'),
         'timeout' => false,
         'options' => [
             'page-size' => 'B4',

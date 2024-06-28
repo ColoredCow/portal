@@ -56,7 +56,7 @@
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="name" class="field-required">Project Type</label>
+                        <label for="name" class="field-required">Billing Cycle</label>
                         <select v-model="projectType" name="project_type" id="project_type" class="form-control"
                             required="required">`
                             @foreach (config('project.type') as $key => $project_type)
@@ -70,7 +70,9 @@
                     </div>
 
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="billing_level" class="field-required">Billing Level</label>
+                        <span data-toggle="tooltip" title="Choose effort calculation method: project-specific hours or client-wide aggregate.">
+                            <label for="billing_level" class="field-required">Billing Level</label>
+                        </span>
                         <select name="billing_level" id="billing_level" class="form-control" required="required">
                             <option value="">{{ __('Select Billing Level') }}</option>
                             @foreach (config('project.meta_keys.billing_level.value') as $key => $billingLevel)
@@ -110,10 +112,14 @@
                                 @endif
                             </div>
                         </div>
+                        <div id="client-financial-detail-link" class="text small d-none">
+                            Click <a href="{{ route('client.edit', [$client, 'billing-details']) }}">here</a> to update monthly billing invoice terms.
+                        </div>
                     </div>
-
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="google_chat_webhook_url">{{ __('Google Chat Webhook URL') }}</label>
+                        <span data-toggle="tooltip" title="Add a webhook URL to receive payment notifications in the project's dedicated Google Chat space.">
+                            <label for="google_chat_webhook_url">{{ __('Google Chat Webhook URL') }}</label>
+                        </span>
                         <input type="url" class="form-control" name="google_chat_webhook_url"
                             id="google_chat_webhook_url" placeholder="Enter Google Chat Webhook URL"
                             value="{{ old('google_chat_webhook_url', $project->google_chat_webhook_url) }}">
@@ -135,6 +141,50 @@
                         <input type="number" class="form-control" name="total_estimated_hours"
                             id="total_estimated_hours" placeholder="Enter total estimated hours"
                             value="{{ old('total_estimated_hours', $project->total_estimated_hours) }}">
+                    </div>
+                </div>
+                <div id="invoice-terms-section" class="mt-3 mb-3 d-none">
+                    <label for="invoice-schedule">Invoice Schedule</label>
+                    <div class="bg-theme-gray-light p-2 rounded">
+                        <div v-if="invoiceTerms.length > 0" class="row mt-2 fz-16 align-items-center">
+                            <div class="col-1 text text-center">
+                                S. No.
+                            </div>
+                            <div class="col-3 text text-center">
+                                Invoice Date
+                            </div>
+                            <div class="col-3 text text-center">
+                                Amount
+                            </div>
+                        </div>
+                        <div class="row mb-3 pt-2" v-for="(invoiceTerm, index) in invoiceTerms" :key="invoiceTerm.id">
+                            <input type="hidden" name="invoiceTerm" value="">
+                            <input type="hidden" :name="`invoiceTerms[${index}][id]`" v-model="invoiceTerm.id">
+                            <div class="col-1 text text-center">
+                                <div>@{{ index + 1 }}</div>
+                            </div>
+                            <div class="col-3">
+                                <input class="form-control" type="date" :name="`invoiceTerms[${index}][invoice_date]`" v-model="invoiceTerm.invoice_date">
+                            </div>
+                            <div class="input-group col-3">
+                                <input v-model="invoiceTerm.amount" :name="`invoiceTerms[${index}][amount]`" type="number" step="0.01" class="form-control" placeholder="amount">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">{{ optional($project->client->country)->currency }}</span>
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <button v-on:click="removeProjectInvoiceTerm(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14">Remove</button>
+                            </div>
+                        </div>
+                        <div class="ml-9">
+                            @if($project->status == 'active')
+                                <span id="add-row-btn" v-on:click="addNewProjectInvoiceTerm()" class="btn btn-light btn-sm text-dark ml-6 mt-2">
+                                    <i class="fa fa-plus"></i> 
+                                    <span v-if="invoiceTerms.length === 0">Schedule An Invoice</span>
+                                    <span v-else>Add Another</span>
+                                </span>
+                            @endif
+                        </div>
                     </div>
                 </div>
                 <div>

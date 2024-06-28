@@ -22,6 +22,7 @@ use Modules\Invoice\Emails\SendPendingInvoiceMail;
 use Modules\Invoice\Entities\Invoice;
 use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Exports\MonthlyGSTTaxReportExport;
+use Modules\Project\Entities\ProjectInvoiceTerm;
 use Modules\Invoice\Exports\TaxReportExport;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
 use Modules\Invoice\Notifications\GoogleChat\SendPaymentReceivedNotification;
@@ -918,5 +919,10 @@ class InvoiceService implements InvoiceServiceContract
                 'Status' => $invoice->status,
             ];
         });
+    }
+
+    public function getScheduledInvoices($request)
+    {
+        return ProjectInvoiceTerm::with('project')->get();;
     }
 }

@@ -12,6 +12,7 @@ use Modules\Client\Entities\Client;
 use Modules\HR\Entities\Employee;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
+use Modules\Project\Entities\ProjectInvoiceTerm;
 use Modules\Project\Entities\ProjectBillingDetail;
 use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Entities\ProjectMeta;
@@ -440,6 +441,8 @@ class ProjectService implements ProjectServiceContract
 
         $project->is_ready_to_renew ? $project->tag('get-renewed') : $project->untag('get-renewed');
 
+        $invoiceTerms = $data['invoiceTerms'];
+        $this->updateInvoiceTerms($invoiceTerms, $project);
         return $isProjectUpdated;
     }
 
@@ -482,6 +485,38 @@ class ProjectService implements ProjectServiceContract
                 ]);
             }
         }
+    }
+
+    private function updateInvoiceTerms($invoiceTerms, $project)
+    {
+        if (empty($invoiceTerms)) {
+            $project->invoiceTerms()->delete();
+            return;
+        }
+
+        $existingTerms = $project->invoiceTerms()->get()->keyBy('id');
+
+        $termIds = [];
+        foreach ($invoiceTerms as $term) {
+            $termId = $term['id'] ?? null;
+    
+            if ($termId && isset($existingTerms[$termId])) {
+                $existingTerm = $existingTerms[$termId];
+                $existingTerm->invoice_date = $term['invoice_date'];
+                $existingTerm->amount = $term['amount'];
+                $existingTerm->save();
+                $termIds[] = $termId;
+            } else {
+                $newTerm = ProjectInvoiceTerm::create([
+                    'project_id' => $project->id,
+                    'invoice_date' => $term['invoice_date'],
+                    'status' => 'yet-to-be-created',
+                    'amount' => $term['amount'],
+                ]);
+                $termIds[] = $newTerm->id;
+            }
+        }
+        $project->invoiceTerms()->whereNotIn('id', $termIds)->delete();
     }
 
     private function updateProjectRepositories($data, $project)
@@ -583,5 +618,10 @@ class ProjectService implements ProjectServiceContract
         }
 
         return $teamMembers;
+    }
+
+    public function getInvoiceTerms($project){
+        $invoiceTerms = ProjectInvoiceTerm::where('project_id', $project->id)->get();
+        return $invoiceTerms;
     }
 }

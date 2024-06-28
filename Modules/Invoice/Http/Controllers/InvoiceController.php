@@ -27,16 +27,16 @@ class InvoiceController extends Controller
     public function index(Request $request)
     {
         $invoiceStatus = $request->invoice_status ?? 'sent';
-        $filters = $request->all();
-
-        if ($invoiceStatus == 'sent') {
-            unset($filters['invoice_status']);
-            $filters = $filters ?: $this->service->defaultFilters();
-        } else {
-            $invoiceStatus = 'ready';
-            $filters = $request->all();
+        $filters = $request->except('invoice_status');
+    
+        if ($invoiceStatus == 'scheduled') {
+            return view('invoice::index', [
+                'invoices' => $this->service->getScheduledInvoices($request),
+                'invoiceStatus' => $invoiceStatus,
+            ]);
         }
-
+        $invoiceStatus = ($invoiceStatus == 'sent') ? 'sent' : 'ready';
+    
         return view('invoice::index', $this->service->index($filters, $invoiceStatus));
     }
 
@@ -221,5 +221,10 @@ class InvoiceController extends Controller
     public function createCustomInvoice()
     {
         return view('invoice::create-custom-invoice', $this->service->create());
+    }
+
+    public function scheduledInvoicesIndex(Request $request)
+    {
+        return view('invoice::scheduled-invoice.index', $this->service->getScheduledInvoices($request));
     }
 }
