@@ -30,10 +30,7 @@
                         </div>
                     </div>
                 </div>
-            @if($project->status == 'active')
-            <span id="add-row-btn" v-on:click="addNewProjectInvoiceTerm()" class="btn btn-outline-muted ml-4 mt-2"><i class="fa fa-plus"></i> Add More</span>
-            @endif
-        </div>
+                <br>
             </div>
             <div class="card-footer">
                 <div type="button" v-on:click="updateProjectForm('updateProjectFinancialDetails')"
