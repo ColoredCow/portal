@@ -26,6 +26,7 @@
             <thead class="thead-dark">
                 <tr class="sticky-top">
                     <th>Employee Name</th>
+                    <th>Description</th>
                     <th>Loan Amount</th>
                     <th>Monthly Deduction</th>
                     <th>Balance</th>
@@ -38,6 +39,7 @@
                 @foreach ($employeeLoans as $loan)
                     <tr>
                         <td>{{ optional($loan->employee->user)->name ?? "User Deleted" }}</td>
+                        <td>{{ strlen($loan->description) <= 20 ? $loan->description : substr($loan->description,0,20).'...' }}</td>
                         <td>{{ $loan->total_amount . " INR"}}</td>
                         <td>{{ $loan->monthly_deduction . " INR"}}</td>
                         <td>{{ $loan->remaining_balance . " INR"}}</td>

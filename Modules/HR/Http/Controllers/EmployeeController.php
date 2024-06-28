@@ -6,7 +6,9 @@ use App\Services\EmployeeService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
+use Modules\HR\Emails\SendPayrollListMail;
 use Modules\HR\Entities\Assessment;
 use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\HrJobDesignation;
@@ -155,6 +157,21 @@ class EmployeeController extends Controller
         $filename = 'ConsultantFee_Computation_' . $currentMonth . '_' . $currentYear . '.xlsx';
 
         return Excel::download(new ContractorFeeExport($employees['employees']), $filename);
+    }
+
+    public function sendPayrollListMail(Request $request)
+    {
+        $toEmail = [
+            'email' => $request->to,
+            'name' => $request->name,
+        ];
+        $ccEmails = explode(',', $request->cc ?? '');
+        Mail::send(new SendPayrollListMail($toEmail, $ccEmails, [
+            'full-time' => $this->service->getEmployeeListForExport('full-time')['employees'],
+            'contractor' => $this->service->getEmployeeListForExport('contractor')['employees'],
+        ]));
+
+        return redirect()->back();
     }
 
     public function hrDetails(Employee $employee)
