@@ -271,7 +271,7 @@
                     </div>
                     <div class="pr-10 project-hour w-33p mb-10">
                         <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold ">Billing Cycle:</label>
+                            <label for="name" class="font-weight-bold">Billing Cycle:</label>
                         </h4>
                         <span class="text-capitalize fz-lg-22">{{ $project->type }}</span>
                     </div>
