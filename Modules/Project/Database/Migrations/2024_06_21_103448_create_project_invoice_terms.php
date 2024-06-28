@@ -20,7 +20,7 @@ class CreateProjectInvoiceTerms extends Migration
             $table->decimal('amount', 10, 2)->nullable();
             $table->string('status')->nullable()->default('yet-to-be-created');
             $table->timestamps();
-        
+
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->index('project_id');
         });

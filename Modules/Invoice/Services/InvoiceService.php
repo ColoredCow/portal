@@ -771,6 +771,11 @@ class InvoiceService implements InvoiceServiceContract
         LedgerAccount::destroy($ledgerAccountsIdToDelete);
     }
 
+    public function getScheduledInvoices($request)
+    {
+        return ProjectInvoiceTerm::with('project')->get();
+    }
+
     private function setInvoiceNumber($invoice, $sent_date)
     {
         $invoice->invoice_number = $this->getInvoiceNumber($invoice->client_id, $invoice->project_id, $sent_date, $invoice->billing_level);
@@ -919,10 +924,5 @@ class InvoiceService implements InvoiceServiceContract
                 'Status' => $invoice->status,
             ];
         });
-    }
-
-    public function getScheduledInvoices($request)
-    {
-        return ProjectInvoiceTerm::with('project')->get();;
     }
 }

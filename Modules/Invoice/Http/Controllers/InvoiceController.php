@@ -28,7 +28,7 @@ class InvoiceController extends Controller
     {
         $invoiceStatus = $request->invoice_status ?? 'sent';
         $filters = $request->except('invoice_status');
-    
+
         if ($invoiceStatus == 'scheduled') {
             return view('invoice::index', [
                 'invoices' => $this->service->getScheduledInvoices($request),
@@ -36,7 +36,7 @@ class InvoiceController extends Controller
             ]);
         }
         $invoiceStatus = ($invoiceStatus == 'sent') ? 'sent' : 'ready';
-    
+
         return view('invoice::index', $this->service->index($filters, $invoiceStatus));
     }
 

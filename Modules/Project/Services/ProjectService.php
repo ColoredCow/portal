@@ -382,6 +382,13 @@ class ProjectService implements ProjectServiceContract
         ];
     }
 
+    public function getInvoiceTerms($project)
+    {
+        $invoiceTerms = ProjectInvoiceTerm::where('project_id', $project->id)->get();
+
+        return $invoiceTerms;
+    }
+
     private function getListTabCounts($filters, $showAllProjects, $userId)
     {
         $counts = [
@@ -443,6 +450,7 @@ class ProjectService implements ProjectServiceContract
 
         $invoiceTerms = $data['invoiceTerms'];
         $this->updateInvoiceTerms($invoiceTerms, $project);
+
         return $isProjectUpdated;
     }
 
@@ -491,6 +499,7 @@ class ProjectService implements ProjectServiceContract
     {
         if (empty($invoiceTerms)) {
             $project->invoiceTerms()->delete();
+
             return;
         }
 
@@ -499,7 +508,7 @@ class ProjectService implements ProjectServiceContract
         $termIds = [];
         foreach ($invoiceTerms as $term) {
             $termId = $term['id'] ?? null;
-    
+
             if ($termId && isset($existingTerms[$termId])) {
                 $existingTerm = $existingTerms[$termId];
                 $existingTerm->invoice_date = $term['invoice_date'];
@@ -618,10 +627,5 @@ class ProjectService implements ProjectServiceContract
         }
 
         return $teamMembers;
-    }
-
-    public function getInvoiceTerms($project){
-        $invoiceTerms = ProjectInvoiceTerm::where('project_id', $project->id)->get();
-        return $invoiceTerms;
     }
 }
