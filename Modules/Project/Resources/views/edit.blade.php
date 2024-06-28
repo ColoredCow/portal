@@ -206,23 +206,24 @@
                         if(! confirm('are you sure you want to enter more than ' + maximumExpectedEfforts + ' hours in expected effort?')) {
                             $event.target.value = value.slice(0, -1)
                             return
-                    }
+                        }
 
-                    if (numberOfDays == 5) {
-                        this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/5;
-                        this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = value;
-                        this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = (value/5) * this.workingDaysInMonth;
-                    } else if (numberOfDays == this.workingDaysInMonth) {
+                        if (numberOfDays == 5) {
+                            this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/5;
+                            this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = value;
+                            this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = (value/5) * this.workingDaysInMonth;
+                        } else if (numberOfDays == this.workingDaysInMonth) {
+                            this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
+                            this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = (value/numberOfDays) * 5;
+                            this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = value;
+                        } else {
+                            this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value;
+                            this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = value * 5;
+                            this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = value * this.workingDaysInMonth;
+                        }
                         this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
-                        this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = (value/numberOfDays) * 5;
-                        this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = value;
-                    } else {
-                        this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value;
-                        this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = value * 5;
-                        this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = value * this.workingDaysInMonth;
+                        this.$forceUpdate()
                     }
-                    this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
-                    this.$forceUpdate()
                 },
 
                 handleFileUpload(event) {
