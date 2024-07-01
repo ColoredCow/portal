@@ -402,9 +402,8 @@
                                 Not required
                             @endif
                         </td>
-                        {{$invoice->delivery_report}}
                         <td>
-                            <a id="contract_file_{{ $index }}" href="{{ route('delivery-report.show', $invoice->id)}}" target="_blank">
+                            <a id="delivery_report_{{ $index }}" href="{{ route('delivery-report.show', $invoice->id)}}" target="_blank">
                                 <span class="mr-1 underline theme-info fz-16">{{ basename($invoice->delivery_report) }}</span>
                             </a>
                         </td>                       

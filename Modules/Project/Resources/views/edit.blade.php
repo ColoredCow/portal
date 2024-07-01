@@ -280,6 +280,12 @@
                         linkDiv.classList.add('d-none');
                         invoiceTermDiv.classList.add('d-none');
                     }
+                },
+                getFileName(filePath) {
+                    return filePath.split('\\').pop().split('/').pop();
+                },
+                getDeliveryReportUrl(invoiceTermId) {
+                    return `{{ route('delivery-report.show', ':id') }}`.replace(':id', invoiceTermId);
                 }
             },
 
