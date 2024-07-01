@@ -499,33 +499,73 @@ class ProjectService implements ProjectServiceContract
     {
         if (empty($invoiceTerms)) {
             $project->invoiceTerms()->delete();
-
             return;
         }
-
+    
         $existingTerms = $project->invoiceTerms()->get()->keyBy('id');
-
+    
         $termIds = [];
-        foreach ($invoiceTerms as $term) {
+        foreach ($invoiceTerms as $index => $term) {
             $termId = $term['id'] ?? null;
-
+    
             if ($termId && isset($existingTerms[$termId])) {
                 $existingTerm = $existingTerms[$termId];
-                $existingTerm->invoice_date = $term['invoice_date'];
-                $existingTerm->amount = $term['amount'];
-                $existingTerm->save();
+                $filePath = $existingTerm->delivery_report;
+                if (isset($data['delivery_report'])) {
+                    $filePath = $this->saveOrUpdateDeliveryReport($term, $project, $index);
+                }
+    
+                $existingTerm->update([
+                    'invoice_date' => $term['invoice_date'],
+                    'amount' => $term['amount'],
+                    'confirmation_required' => $term['confirmation_required'],
+                    'is_confirmed' => $term['is_confirmed'] ?? $existingTerm->is_confirmed,
+                    'delivery_report' => $filePath,
+                ]);
+    
                 $termIds[] = $termId;
             } else {
-                $newTerm = ProjectInvoiceTerm::create([
+                $filePath = $this->saveOrUpdateDeliveryReport($term, $project, $index);
+                $newTerm = $project->invoiceTerms()->create([
                     'project_id' => $project->id,
                     'invoice_date' => $term['invoice_date'],
                     'status' => 'yet-to-be-created',
                     'amount' => $term['amount'],
+                    'confirmation_required' => $term['confirmation_required'],
+                    'is_confirmed' => $term['is_confirmed'] ?? false,
+                    'delivery_report' => $filePath,
                 ]);
+    
                 $termIds[] = $newTerm->id;
             }
         }
+    
         $project->invoiceTerms()->whereNotIn('id', $termIds)->delete();
+    }
+    
+    public function saveOrUpdateDeliveryReport($data, $project, $index)
+    {
+        if ($data['delivery_report'] ?? null) {
+            $file = $data['delivery_report'];
+            $folder = '/delivery_report/' . date('Y') . '/' . date('m');
+            $originalName = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $fileName = $project->name . '_' . $index + 1 . '.' . $extension;
+            return Storage::putFileAs($folder, $file, $fileName);
+        }
+    }
+
+    public function showDeliveryReport($invoiceId)
+    {
+
+        $invoiceTerm = ProjectInvoiceTerm::where('id', $invoiceId)->first();
+        $filePath = storage_path('app/' . $invoiceTerm->delivery_report);
+        $content = file_get_contents($filePath);
+        $deliveryReport = pathinfo($invoiceTerm->delivery_report)['filename'];
+        return response($content)->withHeaders([
+            'content-type' => mime_content_type($filePath),
+            'deliveryReport' => $deliveryReport,
+        ]);
     }
 
     private function updateProjectRepositories($data, $project)

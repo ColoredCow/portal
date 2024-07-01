@@ -19,6 +19,9 @@ class CreateProjectInvoiceTerms extends Migration
             $table->date('invoice_date')->nullable();
             $table->decimal('amount', 10, 2)->nullable();
             $table->string('status')->nullable();
+            $table->boolean('confirmation_required')->nullable();
+            $table->boolean('is_confirmed')->nullable();
+            $table->string('delivery_report')->nullable();
             $table->timestamps();
 
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');

@@ -70,8 +70,9 @@
                     </div>
 
                     <div class="form-group offset-md-1 col-md-5">
-                        <span data-toggle="tooltip" title="Choose effort calculation method: project-specific hours or client-wide aggregate.">
-                            <label for="billing_level" class="field-required">Billing Level</label>
+                        <label for="billing_level" class="field-required">Billing Level</label>
+                        <span class="ml-2" data-toggle="tooltip" title="Choose effort calculation method: project-specific hours or client-wide aggregate.">
+                            <i class="fa fa-info-circle "></i>
                         </span>
                         <select name="billing_level" id="billing_level" class="form-control" required="required">
                             <option value="">{{ __('Select Billing Level') }}</option>
@@ -90,7 +91,6 @@
                 </div>
                 <br>
                 <div class="form-row">
-
                     <div class="form-group col-md-5">
                         <div class="flex-row">
                             <label for="contract_file"> {{ __('Upload Contract File') }}</label>
@@ -117,8 +117,9 @@
                         </div>
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
+                        <label for="google_chat_webhook_url">{{ __('Google Chat Webhook URL') }}</label>
                         <span data-toggle="tooltip" title="Add a webhook URL to receive payment notifications in the project's dedicated Google Chat space.">
-                            <label for="google_chat_webhook_url">{{ __('Google Chat Webhook URL') }}</label>
+                            <i class="fa fa-info-circle "></i>
                         </span>
                         <input type="url" class="form-control" name="google_chat_webhook_url"
                             id="google_chat_webhook_url" placeholder="Enter Google Chat Webhook URL"
@@ -146,34 +147,60 @@
                 <div id="invoice-terms-section" class="mt-3 mb-3 d-none">
                     <label for="invoice-schedule">Invoice Schedule</label>
                     <div class="bg-theme-gray-light p-2 rounded">
-                        <div v-if="invoiceTerms.length > 0" class="row mt-2 fz-16 align-items-center">
-                            <div class="col-1 text text-center">
-                                S. No.
-                            </div>
-                            <div class="col-3 text text-center">
-                                Invoice Date
-                            </div>
-                            <div class="col-3 text text-center">
-                                Amount
-                            </div>
-                        </div>
                         <div class="row mb-3 pt-2" v-for="(invoiceTerm, index) in invoiceTerms" :key="invoiceTerm.id">
                             <input type="hidden" name="invoiceTerm" value="">
                             <input type="hidden" :name="`invoiceTerms[${index}][id]`" v-model="invoiceTerm.id">
-                            <div class="col-1 text text-center">
+                            <div class="col-1 d-flex justify-content-center align-items-center">
                                 <div>@{{ index + 1 }}</div>
                             </div>
-                            <div class="col-3">
-                                <input class="form-control" type="date" :name="`invoiceTerms[${index}][invoice_date]`" v-model="invoiceTerm.invoice_date">
-                            </div>
-                            <div class="input-group col-3">
-                                <input v-model="invoiceTerm.amount" :name="`invoiceTerms[${index}][amount]`" type="number" step="0.01" class="form-control" placeholder="amount">
-                                <div class="input-group-append">
-                                    <span class="input-group-text">{{ optional($project->client->country)->currency }}</span>
+                            <div class="card-body">
+                                <div class="form-row">
+                                    <div class="col-3">
+                                        <label for="invoice_date"> {{__('Invoice Date')}}</label>
+                                        <input id="invoice_date" class="form-control" type="date" :name="`invoiceTerms[${index}][invoice_date]`" v-model="invoiceTerm.invoice_date">
+                                    </div>
+                                    <div class="col-3">
+                                        <label for="invoice_amount"> {{__('Invoice Amount')}}</label>
+                                        <div class="input-group">
+                                            <input id="invoice_amount" v-model="invoiceTerm.amount" :name="`invoiceTerms[${index}][amount]`" type="number" step="0.01" class="form-control" placeholder="Amount">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">{{ optional($project->client->country)->currency }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <label for="confirmation_required"> {{__('Confirmation Required')}}</label>
+                                        <select id="confirmation_required" class="form-control" :name="`invoiceTerms[${index}][confirmation_required]`" v-model="invoiceTerm.confirmation_required">
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-3" v-if="invoiceTerm.confirmation_required == 1">
+                                        <label for="confirmed"> {{__('Confirmed From Client')}}</label>
+                                        <select id="confirmed" class="form-control" :name="`invoiceTerms[${index}][is_confirmed]`" v-model="invoiceTerm.is_confirmed">
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-1">
-                                <button v-on:click="removeProjectInvoiceTerm(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14">Remove</button>
+                                <div class="form-row mt-4">
+                                    <div class="form-group col-5">
+                                        <div class="flex-row">
+                                            <label for="delivery_report"> {{ __('Upload Service Delivery Report') }}</label>
+                                        </div>
+                                        <div class="custom-file mb-3">
+                                            <input type="file" id="delivery_report" :name="`invoiceTerms[${index}][delivery_report]`" class="custom-file-input" @change="handleFileUpload($event, index)">
+                                            <label for="delivery_report" class="custom-file-label overflow-hidden">Upload New Report</label>
+                                            <div v-if="invoiceTerm.delivery_report" class="indicator" style="margin-top: 3px">
+                                                <span class="mr-1 underline theme-info fz-16">File: {{ $project->name }}_invoice_term_@{{ index + 1 }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-1 d-flex align-items-center">
+                                    <button v-on:click="removeProjectInvoiceTerm(index)" type="button" class="btn btn-danger btn-sm text-white fz-14">Remove</button>
+                                </div>
+                                <hr class="my-3 bg-dark">
                             </div>
                         </div>
                         <div class="ml-9">

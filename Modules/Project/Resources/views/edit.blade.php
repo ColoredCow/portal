@@ -115,7 +115,18 @@
                             daily_expected_effort: 0,
                             weekly_expected_effort: 0,
                             monthly_expected_effort: 0,
+                            delivery_report:null, 
                         }
+                    }
+                },
+                defaultProjectInvoiceTerm() {
+                    return {
+                        id: new Date().getTime(),
+                        invoice_date: new Date().getTime(),
+                        amount: '',
+                        confirmation_required: 0,
+                        is_confirmed: 0,
+                        deliveryReport: '',
                     }
                 },
                 defaultProjectRepository() {
@@ -170,11 +181,7 @@
                     this.projectRepositories.push(this.defaultProjectRepository());
                 },
                 addNewProjectInvoiceTerm() {
-                    this.invoiceTerms.push({
-                        id: new Date().getTime(),
-                        invoice_date: new Date().getTime(),
-                        amount: ''
-                    });
+                    this.invoiceTerms.push(this.defaultProjectInvoiceTerm());
                 },
                 removeProjectInvoiceTerm(index) {
                     this.invoiceTerms.splice(index, 1);

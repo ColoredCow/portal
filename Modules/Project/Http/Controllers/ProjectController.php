@@ -212,4 +212,9 @@ class ProjectController extends Controller
             'contractName' => $contractName,
         ];
     }
+
+    public function showDeliveryReport($invoiceId)
+    {
+        return $this->service->showDeliveryReport($invoiceId);
+    }
 }
