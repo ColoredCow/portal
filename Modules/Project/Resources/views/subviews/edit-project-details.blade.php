@@ -149,7 +149,7 @@
                     <div class="bg-theme-gray-light p-2 rounded">
                         <div class="row mb-3 pt-2" v-for="(invoiceTerm, index) in invoiceTerms" :key="invoiceTerm.id">
                             <input type="hidden" name="invoiceTerm" value="">
-                            <input type="hidden" :name="`invoiceTerm.id`" v-model="invoiceTerm.id">
+                            <input type="hidden" :name="`invoiceTerms[${index}][id]`"  v-model="invoiceTerm.id">
                             <div class="col-1 d-flex justify-content-center align-items-center">
                                 <div>@{{ index + 1 }}</div>
                             </div>
@@ -157,12 +157,12 @@
                                 <div class="form-row">
                                     <div class="col-3">
                                         <label for="invoice_date">{{ __('Invoice Date') }}</label>
-                                        <input id="invoice_date" class="form-control" type="date" :name="`invoiceTerm.invoice_date`" v-model="invoiceTerm.invoice_date">
+                                        <input id="invoice_date" class="form-control" type="date" :name="`invoiceTerms[${index}][invoice_date]`"  v-model="invoiceTerm.invoice_date">
                                     </div>
                                     <div class="col-3">
                                         <label for="invoice_amount">{{ __('Invoice Amount') }}</label>
                                         <div class="input-group">
-                                            <input id="invoice_amount" v-model="invoiceTerm.amount" :name="`invoiceTerm.amount`" type="number" step="0.01" class="form-control" placeholder="Amount">
+                                            <input id="invoice_amount" v-model="invoiceTerm.amount" :name="`invoiceTerms[${index}][amount]`"  type="number" step="0.01" class="form-control" placeholder="Amount">
                                             <div class="input-group-append">
                                                 <span class="input-group-text">{{ optional($project->client->country)->currency }}</span>
                                             </div>
@@ -170,14 +170,14 @@
                                     </div>
                                     <div class="col-3">
                                         <label for="confirmation_required">{{ __('Confirmation Required') }}</label>
-                                        <select id="confirmation_required" class="form-control" :name="`invoiceTerm.confirmation_required`" v-model="invoiceTerm.confirmation_required">
+                                        <select id="confirmation_required" class="form-control" :name="`invoiceTerms[${index}][confirmation_required]`" v-model="invoiceTerm.confirmation_required">
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
                                         </select>
                                     </div>
                                     <div class="col-3" v-if="invoiceTerm.confirmation_required == 1">
                                         <label for="confirmed">{{ __('Confirmed From Client') }}</label>
-                                        <select id="confirmed" class="form-control" :name="`invoiceTerm.is_confirmed`" v-model="invoiceTerm.is_confirmed">
+                                        <select id="confirmed" class="form-control" :name="`invoiceTerms[${index}][is_confirmed]`" v-model="invoiceTerm.is_confirmed">
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
                                         </select>
@@ -189,7 +189,7 @@
                                             <label for="delivery_report">{{ __('Upload Service Delivery Report') }}</label>
                                         </div>
                                         <div class="custom-file mb-3">
-                                            <input type="file" id="delivery_report" :name="`invoiceTerm.delivery_report`" class="custom-file-input" @change="handleFileUpload($event, index)">
+                                            <input type="file" id="delivery_report" :name="`invoiceTerms[${index}][delivery_report]`" class="custom-file-input" @change="handleFileUpload($event, index)">
                                             <label for="delivery_report" class="custom-file-label overflow-hidden">Upload New Report</label>
                                             <div v-if="invoiceTerm.delivery_report" class="indicator" style="margin-top: 3px">
                                                 <a :id="`delivery_report_${index}`" :href="getDeliveryReportUrl(invoiceTerm.id)" target="_blank">
@@ -198,7 +198,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>i
+                                </div>
                                 <div class="col-1 d-flex align-items-center">
                                     <button v-on:click="removeProjectInvoiceTerm(index)" type="button" class="btn btn-danger btn-sm text-white fz-14">Remove</button>
                                 </div>

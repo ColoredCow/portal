@@ -511,7 +511,8 @@ class ProjectService implements ProjectServiceContract
             if ($termId && isset($existingTerms[$termId])) {
                 $existingTerm = $existingTerms[$termId];
                 $filePath = $existingTerm->delivery_report;
-                if (isset($data['delivery_report'])) {
+                
+                if (isset($term['delivery_report'])) {
                     $filePath = $this->saveOrUpdateDeliveryReport($term, $project, $index);
                 }
     
