@@ -26,6 +26,7 @@ use Modules\Invoice\Exports\TaxReportExport;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
 use Modules\Invoice\Notifications\GoogleChat\SendPaymentReceivedNotification;
 use Modules\Project\Entities\Project;
+use Illuminate\Support\Facades\DB;
 use Modules\Project\Entities\ProjectInvoiceTerm;
 
 class InvoiceService implements InvoiceServiceContract
@@ -778,9 +779,39 @@ class InvoiceService implements InvoiceServiceContract
 
     public function getScheduledInvoices()
     {
-        return ProjectInvoiceTerm::with('project')->get();
+        return ProjectInvoiceTerm::with(['project' => function ($query) {
+            $query->with(['invoices' => function ($query) {
+                $query->select('id', 'project_id', 'sent_on', 'status');
+            }])->select('id', 'name');
+        }])
+        ->get(['id', 'amount', 'invoice_date', 'confirmation_required', 'delivery_report', 'is_confirmed', 'status', 'project_id'])
+        ->map(function ($term) {
+            $project = $term->project;
+            $termDate = Carbon::parse($term->invoice_date)->toDateString();
+    
+            $invoice = $project->invoices->first(function ($invoice) use ($termDate) {
+                return Carbon::parse($invoice->sent_on)->toDateString() == $termDate;
+            });
+    
+            $status = $invoice ? $invoice->status : $term->status;
+            if ($termDate < Carbon::now()->toDateString()) {
+                $status = "overdue";
+            }
+    
+            return [
+                'amount' => $term->amount,
+                'id' => $term->id,
+                'invoice_date' => $term->invoice_date,
+                'confirmation_required' => $term->confirmation_required,
+                'delivery_report' => $term->delivery_report,
+                'is_confirmed' => $term->is_confirmed,
+                'project_id' => $project->id,
+                'project' => $project->name,
+                'status' => $status,
+            ];
+        });
     }
-
+    
     private function setInvoiceNumber($invoice, $sent_date)
     {
         $invoice->invoice_number = $this->getInvoiceNumber($invoice->client_id, $invoice->project_id, $sent_date, $invoice->billing_level);

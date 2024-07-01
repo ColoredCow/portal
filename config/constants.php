@@ -184,6 +184,11 @@ return [
                     'title' => 'Paid',
                     'class' => 'badge badge-success',
                 ],
+                'overdue' => [
+                    'label' => 'overdue',
+                    'title' => 'Over Due',
+                    'class' => 'badge badge-danger',
+                ],
             ],
             'email-duration-in-days' => 5,
             'email'=> 'finance@coloredcow.com',

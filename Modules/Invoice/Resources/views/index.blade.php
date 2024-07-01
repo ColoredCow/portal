@@ -392,24 +392,26 @@
                 </thead>
                 @foreach ($invoices as $index => $invoice)
                     <tr>
-                        <td><a href="{{ route('project.edit', $invoice->project->id) }}">{{ $invoice->project->name }}</a></td>
-                        <td>{{ $invoice->invoice_date }}</td>
-                        <td>{{ $invoice->amount }}</td>
+                        {{-- @dd($invoices) --}}
+
+                        <td><a href="{{ route('project.edit', $invoice['project_id']) }}">{{ $invoice['project'] }}</a></td>
+                        <td>{{ $invoice['invoice_date'] }}</td>
+                        <td>{{ $invoice['amount'] }}</td>
                         <td>
-                            @if ($invoice->confirmation_required)
-                                {{ $invoice->is_confirmed == 0 ? "NO" : "YES" }}
+                            @if ($invoice['confirmation_required'])
+                                {{ $invoice['is_confirmed'] == 0 ? "NO" : "YES" }}
                             @else
                                 Not required
                             @endif
                         </td>
                         <td>
-                            <a id="delivery_report_{{ $index }}" href="{{ route('delivery-report.show', $invoice->id)}}" target="_blank">
-                                <span class="mr-1 underline theme-info fz-16">{{ basename($invoice->delivery_report) }}</span>
+                            <a id="delivery_report_{{ $index }}" href="{{ route('delivery-report.show', $invoice['id'])}}" target="_blank">
+                                <span class="mr-1 underline theme-info fz-16">{{ basename($invoice['delivery_report']) }}</span>
                             </a>
                         </td>                       
                         <td>
-                            <div class="w-100 text-wrap {{ config("constants.finance.scheduled-invoice.status.$invoice->status.class") }}">
-                                {{ config("constants.finance.scheduled-invoice.status.$invoice->status.title") }}
+                            <div class="w-100 text-wrap {{ config('constants.finance.scheduled-invoice.status.' . $invoice['status'] . '.class') }}">
+                                {{ config('constants.finance.scheduled-invoice.status.' . $invoice['status'] . '.title') }}
                             </div>
                         </td>
                     </tr>          
