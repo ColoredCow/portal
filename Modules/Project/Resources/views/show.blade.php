@@ -339,114 +339,177 @@
                 projectId: "{{ $project->id }}",
                 loaderVisible: false,
                 submitButton: true,
-                editButtonStates: {}
+                editButtonStates: {},
+                dropdownVisibility: {},
+                currentDate: "{{ now()->toDateString() }}"
             };
         },
         methods: {
-            convertDuration(seconds) {
-                const days = Math.floor(seconds / (24 * 3600));
-                seconds %= 24 * 3600;
-                const hours = Math.floor(seconds / 3600);
-                seconds %= 3600;
-                const minutes = Math.floor(seconds / 60);
-                seconds %= 60;
-                return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            convertToDateTime(seconds) {
+                const units = [
+                    { label: 'd', value: 24 * 3600 },
+                    { label: 'h', value: 3600 },
+                    { label: 'm', value: 60 },
+                    { label: 's', value: 1 }
+                ];
+                return units.map(unit => {
+                    const count = Math.floor(seconds / unit.value);
+                    seconds %= unit.value;
+                    return count ? `${count}${unit.label}` : '';
+                }).filter(Boolean).join(' ');
+            },
+            calculateDuration(stage) {
+                const duration = this.convertToDateTime(stage.duration);
+                const delay = this.calculateDelay(stage.end_date, stage.expected_end_date);
+                return delay ? `${duration} (<strong>Delay: </strong>${delay})` : duration;
+            },
+            calculateDelay(endDate, expectedEndDate) {
+                const delaySeconds = Math.floor((new Date(endDate) - new Date(expectedEndDate)) / 1000);
+                return delaySeconds > 0 ? this.convertToDateTime(delaySeconds) : null;
             },
             formattedDate(dateTime) {
-                var date = new Date(dateTime);
-                if (!dateTime) return '';
-                return date.toISOString().split('T')[0];
+                return dateTime ? new Date(dateTime).toISOString().split('T')[0] : '';
+            },
+            formatDisplayDate(date) {
+                return new Date(date).toDateString().split(' ').slice(1).join(' ');
             },
             addStage() {
-                var newIndex = this.stages.length;
+                const newIndex = this.stages.length;
                 this.editStage(newIndex);
                 this.submitButton = false;
-                this.stages.push({ stage_name: '', comments: '', start_date: '', end_date: '', status: 'pending' });
+                this.stages.push({
+                    stage_name: '',
+                    comments: '',
+                    start_date: '',
+                    expected_end_date: '',
+                    end_date: '',
+                    status: 'pending'
+                });
+                this.$nextTick(() => this.initializeRichTextEditor(newIndex));
             },
             editStage(index) {
                 this.submitButton = false;
                 this.$set(this.editButtonStates, index, true);
+                this.initializeRichTextEditor(index);
             },
             isEditing(index) {
                 return this.editButtonStates[index] || false;
             },
             deleteStage(stage) {
                 this.submitButton = false;
-                if (!this.deletedStages.includes(stage) && (stage.id)) {
+                if (!this.deletedStages.includes(stage.id) && stage.id) {
                     this.deletedStages.push(stage.id);
                 }
                 var index = this.stages.indexOf(stage);
                 if (index !== -1) {
                     this.stages.splice(index, 1);
                 }
+                this.$nextTick(() => {
+                    tinymce.remove();
+                    this.stages.forEach((stage, index) => {
+                        if (this.isEditing(index)) {
+                            this.initializeRichTextEditor(index);
+                        }
+                    });
+                });
             },
             markStageAsUpdated(stage) {
-                if (stage.id) {
-                    stage.isUpdated = true;
-                }
+                if (stage.id) stage.isUpdated = true;
             },
             updateStatus(status, index) {
+                const stage = this.stages[index];
+                stage.status = status;
                 if (status === 'started') {
-                    this.stages[index].started = !this.stages[index].started;
-                    if (this.stages[index].started) {
-                        this.stages[index].status = 'started';
-                        this.stages[index].start_date = new Date().toISOString();
-                        this.stages[index].end_date = null;
-                    } else {
-                        this.stages[index].status = 'pending';
-                        this.stages[index].start_date = null;
-                        this.stages[index].end_date = null;
-                    }
+                    stage.start_date = new Date().toISOString();
+                    stage.end_date = null;
                 } else if (status === 'completed') {
-                    this.stages[index].completed = !this.stages[index].completed;
-                    if (this.stages[index].completed) {
-                        this.stages[index].status = 'completed';
-                        this.stages[index].end_date = new Date().toISOString();
-                    } else {
-                        this.stages[index].status = this.stages[index].started ? 'started' : 'pending';
-                        this.stages[index].end_date = null;
-                    }
+                    stage.end_date = new Date().toISOString();
+                } else if (status === 'pending') {
+                    stage.start_date = null;
+                    stage.end_date = null;
                 }
-                this.markStageAsUpdated(this.stages[index]);
+                this.markStageAsUpdated(stage);
             },
             submitForm() {
-                var newStages = this.stages.filter(stage => !stage.id).map(stage => this.cleanStageData(stage));
-                var updatedStages = this.stages.filter(stage => stage.id && stage.isUpdated).map(stage => this.cleanStageData(stage));
+                const newStages = this.stages.filter(stage => !stage.id).map(this.cleanStageData);
+                const updatedStages = this.stages.filter(stage => stage.id && stage.isUpdated).map(this.cleanStageData);
+
                 this.toggleLoader();
                 axios.post('{{ route('projects.manage-stage') }}', {
-                    newStages: newStages,
-                    updatedStages: updatedStages,
+                    newStages,
+                    updatedStages,
                     deletedStages: this.deletedStages,
                     project_id: this.projectId,
                     _token: '{{ csrf_token() }}'
-                }).then(response => {
+                }).then(() => {
                     this.toggleLoader();
                     this.$toast.success('Stages Managed Successfully!');
                     location.reload(true);
                 }).catch(error => {
                     this.toggleLoader();
-                    var errorMessage = error.response.data.message ? error.response.data.message : error.response.data.error;
+                    const errorMessage = error.response?.data?.message || error.response?.data?.error || "An error occurred. Please check console";
+                    this.$toast.error(errorMessage);
                     console.error(error.response.data);
-                    if (errorMessage) {
-                        this.$toast.error(errorMessage);
-                    } else {
-                        this.$toast.error("An error occurred. Please check console");
-                    }
                 });
             },
             toggleLoader() {
                 this.loaderVisible = !this.loaderVisible;
             },
             cleanStageData(stage) {
-                var { comments, duration, start_date, end_date, id, project_id, stage_name, status } = stage;
-                return { comments, duration, start_date, end_date, id, project_id, stage_name, status };
+                const { comments, duration, start_date, expected_end_date, end_date, id, project_id, stage_name, status } = stage;
+                return { comments, duration, start_date, expected_end_date, end_date, id, project_id, stage_name, status };
+            },
+            dropdownClass(status) {
+                const statusClasses = {
+                    pending: 'btn btn-theme-gray',
+                    started: 'btn btn-theme-fog',
+                    completed: 'btn btn-success',
+                    overdue: 'btn btn-danger'
+                };
+                return `dropdown-content ${statusClasses[status] || 'btn btn-theme-gray'}`;
+            },
+            checkOverdueStatus(stage) {
+                if (new Date(stage.expected_end_date) < new Date(this.currentDate) && stage.status !== 'completed') {
+                    stage.status = 'overdue';
+                }
+            },
+            initializeRichTextEditor(index) {
+                if (!tinymce.get(`stage-comments-${index}`)) {
+                    tinymce.init({
+                        selector: `#stage-comments-${index}`,
+                        skin: "lightgray",
+                        toolbar: "undo redo | formatselect | fontselect fontsizeselect bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+                        plugins: ["advlist lists autolink link image"],
+                        font_formats: "Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;AkrutiKndPadmini=Akpdmi-n",
+                        images_upload_url: "postAcceptor.php",
+                        content_style: "body { font-size: 14pt; }",
+                        automatic_uploads: false,
+                        fontsize_formats: "8pt 10pt 12pt 14pt 16pt 18pt 24pt 36pt 48pt",
+                        menubar: false,
+                        statusbar: false,
+                        entity_encoding: "raw",
+                        forced_root_block: "",
+                        force_br_newlines: true,
+                        force_p_newlines: false,
+                        width: 350,
+                        convert_urls: false,
+                        setup: editor => {
+                            editor.on('input change keyup paste', () => {
+                                this.stages[index].comments = editor.getContent();
+                                this.markStageAsUpdated(this.stages[index]);
+                            });
+                        }
+                    });
+                }
             }
         },
         mounted() {
             this.stages = @json($stages) || [];
-            this.stages.forEach(stage => {
-                stage.started = stage.status === 'started' || stage.status === 'completed' ? true : false;
-                stage.completed = stage.status === 'completed' ? true : false;
+            this.stages.forEach((stage, index) => {
+                stage.started = ['started', 'completed'].includes(stage.status);
+                stage.completed = stage.status === 'completed';
+                stage.initialStatus = stage.status;
+                this.checkOverdueStatus(stage);
             });
         }
     });

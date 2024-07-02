@@ -1,11 +1,11 @@
-<?php
+    <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+    use Illuminate\Database\Migrations\Migration;
+    use Illuminate\Database\Schema\Blueprint;
+    use Illuminate\Support\Facades\Schema;
 
-class UpdateProjectOldStageTable extends Migration
-{
+    class UpdateProjectOldStageTable extends Migration
+    {
     /**
      * Run the migrations.
      *
@@ -13,13 +13,14 @@ class UpdateProjectOldStageTable extends Migration
      */
     public function up()
     {
-        Schema::table('project_old_stages', function (Blueprint $table) {
+    Schema::table('project_old_stages', function (Blueprint $table) {
             $table->dropForeign(['project_id']);
 
             $table->dropColumn(['project_id', 'name', 'cost', 'currency_cost', 'type', 'cost_include_gst']);
             $table->text('comments')->nullable();
             $table->datetime('start_date')->nullable()->change();
             $table->datetime('end_date')->nullable()->change();
+            $table->date( 'expected_end_date' )->nullable()->after( 'end_date' );
         });
         Schema::table('project_old_stages', function (Blueprint $table) {
             $table->unsignedBigInteger('project_id')->nullable()->after('id');
@@ -43,6 +44,7 @@ class UpdateProjectOldStageTable extends Migration
             $table->dropColumn('status');
             $table->dropColumn('project_id');
             $table->dropColumn('duration');
+            $table->dropColumn('expected_end_date');
         });
         Schema::table('project_old_stages', function (Blueprint $table) {
             $table->string('name')->nullable();

@@ -210,6 +210,7 @@ class ProjectController extends Controller
             'newStages.*.stage_name' => 'required|string',
             'newStages.*.comments' => 'nullable|string',
             'newStages.*.status' => 'nullable|string',
+            'newStages.*.expected_end_date' => 'required|date',
             'deletedStages' => 'nullable|array',
             'deletedStages.*' => 'required|integer|exists:project_old_stages,id',
             'updatedStages' => 'nullable|array',
