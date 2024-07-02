@@ -115,7 +115,6 @@
                             daily_expected_effort: 0,
                             weekly_expected_effort: 0,
                             monthly_expected_effort: 0,
-                            delivery_report:null, 
                         }
                     }
                 },
