@@ -20,7 +20,7 @@ class UpdateProjectOldStageTable extends Migration
             $table->text('comments')->nullable();
             $table->datetime('start_date')->nullable()->change();
             $table->datetime('end_date')->nullable()->change();
-            $table->date( 'expected_end_date' )->nullable()->after('end_date');
+            $table->date('expected_end_date')->nullable()->after('end_date');
         });
         Schema::table('project_old_stages', function (Blueprint $table) {
             $table->unsignedBigInteger('project_id')->nullable()->after('id');
