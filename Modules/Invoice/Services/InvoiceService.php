@@ -780,8 +780,8 @@ class InvoiceService implements InvoiceServiceContract
     public function getScheduledInvoices()
     {
         return ProjectInvoiceTerm::with(['project.client', 'project.invoices' => function ($query) {
-                $query->select('id', 'project_id', 'sent_on', 'status');
-            }])
+            $query->select('id', 'project_id', 'sent_on', 'status');
+        }])
             ->select('id', 'amount', 'invoice_date', 'confirmation_required', 'delivery_report', 'is_confirmed', 'status', 'project_id')
             ->get()
             ->map(function ($term) {
@@ -812,7 +812,8 @@ class InvoiceService implements InvoiceServiceContract
             });
     }
 
-    public function getScheduledInvoicesForMail(){
+    public function getScheduledInvoicesForMail()
+    {
 
         return ProjectInvoiceTerm::where('invoice_date', '<=', Carbon::now()->addDays(config('constants.finance.scheduled-invoice.email-duration-in-days'))) ->with('project') ->get();
     }

@@ -558,7 +558,6 @@ class ProjectService implements ProjectServiceContract
 
     public function showDeliveryReport($invoiceId)
     {
-
         $invoiceTerm = ProjectInvoiceTerm::where('id', $invoiceId)->first();
         $filePath = storage_path('app/' . $invoiceTerm->delivery_report);
         $content = file_get_contents($filePath);
