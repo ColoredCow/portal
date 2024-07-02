@@ -26,7 +26,6 @@ use Modules\Invoice\Exports\TaxReportExport;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
 use Modules\Invoice\Notifications\GoogleChat\SendPaymentReceivedNotification;
 use Modules\Project\Entities\Project;
-use Illuminate\Support\Facades\DB;
 use Modules\Project\Entities\ProjectInvoiceTerm;
 
 class InvoiceService implements InvoiceServiceContract
