@@ -19,8 +19,9 @@ class CreateProjectInvoiceTerms extends Migration
             $table->date('invoice_date')->nullable();
             $table->decimal('amount', 10, 2)->nullable();
             $table->string('status')->nullable();
-            $table->boolean('confirmation_required')->nullable();
-            $table->boolean('is_confirmed')->nullable();
+            $table->boolean('client_acceptance_required')->nullable();
+            $table->boolean('is_accepted')->nullable();
+            $table->boolean('report_required')->nullable();
             $table->string('delivery_report')->nullable();
             $table->timestamps();
 

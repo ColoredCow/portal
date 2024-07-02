@@ -153,11 +153,27 @@
                             <div class="row col-12">
                                 <div class="card-body ml-4">
                                     <div class="form-row">
-                                        <div class="col-4">
+                                        <div class="form-check">
+                                            <input type="checkbox" id="report_required" :name="`invoiceTerms[${index}][report_required]`" v-model="invoiceTerm.report_required" :value="1">
+                                            <label class="form-check-label" for="report_required">{{ __('Delivery Report Required') }}</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" id="client_acceptance_required" :name="`invoiceTerms[${index}][client_acceptance_required]`" v-model="invoiceTerm.client_acceptance_required" :value="1">
+                                            <label class="form-check-label" for="client_acceptance_required">{{ __('Client Acceptance Required') }}</label>
+                                        </div>
+                                        <div v-if="invoiceTerm.client_acceptance_required == 1">
+                                            <div class="form-check">
+                                                <input type="checkbox" id="is_accepted" :name="`invoiceTerms[${index}][is_accepted]`" v-model="invoiceTerm.is_accepted" :value="1">
+                                                <label class="form-check-label" for="is_confirmed_yes">{{ __('Accepted From Client') }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-4">
+                                        <div class="col-3">
                                             <label class="text-center" for="invoice_date">{{ __('Invoice Date') }}</label>
                                             <input id="invoice_date" class="form-control" type="date" :name="`invoiceTerms[${index}][invoice_date]`"  v-model="invoiceTerm.invoice_date">
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-3">
                                             <label for="invoice_amount">{{ __('Invoice Amount') }}</label>
                                             <div class="input-group">
                                                 <input id="invoice_amount" v-model="invoiceTerm.amount" :name="`invoiceTerms[${index}][amount]`"  type="number" step="0.01" class="form-control" placeholder="Amount">
@@ -166,22 +182,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-4">
-                                            <label for="confirmation_required">{{ __('Confirmation Required') }}</label>
-                                            <select id="confirmation_required" class="form-control" :name="`invoiceTerms[${index}][confirmation_required]`" v-model="invoiceTerm.confirmation_required">
-                                                <option value="1">Yes</option>
-                                                <option value="0">No</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-row mt-4">
-                                        <div class="form-group col-6">
+                                        <div v-if="invoiceTerm.report_required == 1" class="form-group col-4">
                                             <div class="flex-row">
                                                 <label for="delivery_report">{{ __('Upload Service Delivery Report') }}</label>
                                             </div>
                                             <div class="custom-file mb-3">
                                                 <input type="file" id="delivery_report" :name="`invoiceTerms[${index}][delivery_report]`" class="custom-file-input" @change="handleFileUpload($event, index)">
-                                                <label for="delivery_report" class="custom-file-label overflow-hidden">Upload New Report</label>
+                                                <label for="delivery_report" class="custom-file-label overflow-hidden">Upload Report</label>
                                                 <div v-if="invoiceTerm.delivery_report" class="indicator" style="margin-top: 3px">
                                                     <a :id="`delivery_report_${index}`" :href="getDeliveryReportUrl(invoiceTerm.id)" target="_blank">
                                                         <span class="mr-1 underline theme-info fz-16">@{{ getFileName(invoiceTerm.delivery_report) }}</span>
@@ -189,16 +196,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-6" v-if="invoiceTerm.confirmation_required == 1">
-                                            <label for="confirmed">{{ __('Confirmed From Client') }}</label>
-                                            <select id="confirmed" class="form-control" :name="`invoiceTerms[${index}][is_confirmed]`" v-model="invoiceTerm.is_confirmed">
-                                                <option value="1">Yes</option>
-                                                <option value="0">No</option>
-                                            </select>
-                                        </div>
                                     </div>
                                     <hr class="bg-dark border-dark">
-                                    <div class="col-1 d-flex align-items-center">
+                                    <div class="col-1">
                                         <button v-on:click="removeProjectInvoiceTerm(index)" type="button" class="btn btn-danger btn-sm text-white fz-14">Remove</button>
                                     </div>
                                 </div>

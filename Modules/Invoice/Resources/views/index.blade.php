@@ -379,46 +379,54 @@
                 ])
             @endforeach
         @else
-            <table class="table table-bordered table-striped">
-                <thead class="thead-dark">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Project</th>
+                    <th>Invoice Date</th>
+                    <th>Amount</th>
+                    <th>Service Delivery Report</th>
+                    <th class="col-1">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!$invoices->isEmpty())
+                    @foreach ($invoices as $index => $invoice)
+                        @php
+                            $invoiceTerm = $invoice['invoiceTerm']
+                        @endphp
+                        <tr>
+                            <td><a href="{{ route('project.edit', $invoice['project']->id) }}">{{ $invoice['project']->name }}</a></td>
+                            <td>{{ $invoiceTerm->invoice_date }}</td>
+                            <td>{{ $invoiceTerm->amount }} {{ $invoice['client']->country->currency_symbol }}</td>
+                            <td>
+                                @if ($invoiceTerm->report_required)
+                                    @if ($invoiceTerm->delivery_report)
+                                        <a id="delivery_report_{{ $index }}" href="{{ route('delivery-report.show', $invoiceTerm->id) }}" target="_blank">
+                                            <span class="mr-1 underline theme-info fz-16">{{ basename($invoiceTerm->delivery_report) }}</span>
+                                        </a>
+                                    @else
+                                        Not Uploaded Yet.
+                                    @endif
+                                @else
+                                    Not Required.
+                                @endif
+                            </td>
+                            <td>
+                                <div class="w-100 text-wrap {{ config('constants.finance.scheduled-invoice.status.' . $invoice['status'] . '.class') }}">
+                                    {{ config('constants.finance.scheduled-invoice.status.' . $invoice['status'] . '.title') }}
+                                </div>
+                            </td>
+                        </tr>          
+                    @endforeach
+                @else
                     <tr>
-                        <th>Project</th>
-                        <th>Invoice Date</th>
-                        <th>Amount</th>
-                        <th>Confirmed By CLient</th>
-                        <th>Srvice Delivery Report</th>
-                        <th class="col-1">Status</th>
+                        <td colspan="6" class="text-center">No Scheduled Invoices To Show</td>
                     </tr>
-                </thead>
-                @foreach ($invoices as $index => $invoice)
-                    <tr>
-                        <td><a href="{{ route('project.edit', $invoice['project']->id) }}">{{ $invoice['project']->name }}</a></td>
-                        <td>{{ $invoice['invoice_date'] }}</td>
-                        <td>{{ $invoice['amount'] }} {{$invoice['client']->country->currency_symbol}}</td>
-                        <td>
-                            @if ($invoice['confirmation_required'])
-                                {{ $invoice['is_confirmed'] == 0 ? "NO" : "YES" }}
-                            @else
-                                Not required
-                            @endif
-                        </td>
-                        <td>
-                            @if ($invoice['delivery_report'])
-                                <a id="delivery_report_{{ $index }}" href="{{ route('delivery-report.show', $invoice['id'])}}" target="_blank">
-                                    <span class="mr-1 underline theme-info fz-16">{{ basename($invoice['delivery_report']) }}</span>
-                                </a>
-                            @else
-                                Not Uploaded Yet.
-                            @endif
-                        </td>
-                        <td>
-                            <div class="w-100 text-wrap {{ config('constants.finance.scheduled-invoice.status.' . $invoice['status'] . '.class') }}">
-                                {{ config('constants.finance.scheduled-invoice.status.' . $invoice['status'] . '.title') }}
-                            </div>
-                        </td>
-                    </tr>          
-                @endforeach
-            </table>
+                @endif
+            </tbody>
+        </table>
+        
         @endif
     </div>
     @if (request()->invoice_status == 'ready' || $invoiceStatus == 'ready')

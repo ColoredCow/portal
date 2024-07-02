@@ -167,6 +167,7 @@ class InvoiceService implements InvoiceServiceContract
         $invoice = Invoice::create($data);
         $this->saveInvoiceFile($invoice, $data['invoice_file']);
         $this->setInvoiceNumber($invoice, $data['sent_on']);
+        $this->updateScheduledInvoice($invoice);
 
         return $invoice;
     }
@@ -192,6 +193,7 @@ class InvoiceService implements InvoiceServiceContract
             $this->saveInvoiceFile($invoice, $data['invoice_file']);
             $this->setInvoiceNumber($invoice, $data['sent_on']);
         }
+        $this->updateScheduledInvoice($invoice);
 
         return $invoice;
     }
@@ -776,12 +778,27 @@ class InvoiceService implements InvoiceServiceContract
         LedgerAccount::destroy($ledgerAccountsIdToDelete);
     }
 
+    public function updateScheduledInvoice($invoice)
+    {
+        $project = $invoice->project;
+        if (!$project) {
+            return;
+        }
+
+        $invoiceSentOn = Carbon::parse($invoice->sent_on)->toDateString();
+        $invoiceStatus = $invoice->status;
+
+        foreach ($project->invoiceTerms as $scheduledInvoice) {
+            if (Carbon::parse($scheduledInvoice->invoice_date)->toDateString() === $invoiceSentOn) {
+                $scheduledInvoice->update(['status' => $invoiceStatus]);
+            }
+        }
+    }    
+
     public function getScheduledInvoices()
     {
-        return ProjectInvoiceTerm::with(['project.client', 'project.invoices' => function ($query) {
-            $query->select('id', 'project_id', 'sent_on', 'status');
-        }])
-            ->select('id', 'amount', 'invoice_date', 'confirmation_required', 'delivery_report', 'is_confirmed', 'status', 'project_id')
+        return ProjectInvoiceTerm::with(['project.client', 'project.invoices'])
+            ->whereNotIn('status', ['sent', 'paid'])
             ->get()
             ->map(function ($term) {
                 $project = $term->project;
@@ -793,24 +810,20 @@ class InvoiceService implements InvoiceServiceContract
                 });
 
                 $status = $invoice ? $invoice->status : $term->status;
+        
                 if ($termDate < Carbon::now()->toDateString()) {
                     $status = 'overdue';
                 }
 
                 return [
-                    'amount' => $term->amount,
-                    'id' => $term->id,
-                    'invoice_date' => $term->invoice_date,
-                    'confirmation_required' => $term->confirmation_required,
-                    'delivery_report' => $term->delivery_report,
-                    'is_confirmed' => $term->is_confirmed,
+                    'invoiceTerm' => $term,
                     'project' => $project,
-                    'client' => $client ? $client : null,
+                    'client' => $client,
                     'status' => $status,
                 ];
             });
     }
-
+    
     public function getScheduledInvoicesForMail()
     {
         return ProjectInvoiceTerm::where('invoice_date', '<=', Carbon::now()->addDays(config('constants.finance.scheduled-invoice.email-duration-in-days')))->with('project')->get();

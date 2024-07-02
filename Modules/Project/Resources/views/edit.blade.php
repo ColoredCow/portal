@@ -123,8 +123,9 @@
                         id: new Date().getTime(),
                         invoice_date: new Date().getTime(),
                         amount: '',
-                        confirmation_required: 0,
-                        is_confirmed: 0,
+                        client_acceptance_required: 0,
+                        report_required: 0,
+                        is_accepted: 0,
                         deliveryReport: '',
                     }
                 },

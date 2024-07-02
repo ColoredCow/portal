@@ -546,8 +546,9 @@ class ProjectService implements ProjectServiceContract
                 $existingTerm->update([
                     'invoice_date' => $term['invoice_date'],
                     'amount' => $term['amount'],
-                    'confirmation_required' => $term['confirmation_required'],
-                    'is_confirmed' => $term['is_confirmed'] ?? $existingTerm->is_confirmed,
+                    'report_required' => $term['report_required'] ?? $existingTerm->report_required,
+                    'client_acceptance_required' => $term['client_acceptance_required'] ??  $existingTerm->client_acceptance_required,
+                    'is_accepted' => $term['is_accepted'] ?? $existingTerm->is_accepted,
                     'delivery_report' => $filePath,
                 ]);
 
@@ -559,8 +560,9 @@ class ProjectService implements ProjectServiceContract
                     'invoice_date' => $term['invoice_date'],
                     'status' => 'yet-to-be-created',
                     'amount' => $term['amount'],
-                    'confirmation_required' => $term['confirmation_required'],
-                    'is_confirmed' => $term['is_confirmed'] ?? false,
+                    'report_required' => $term['report_required'] ?? false,
+                    'client_acceptance_required' => $term['client_acceptance_required'] ?? false,
+                    'is_accepted' => $term['is_accepted'] ?? false,
                     'delivery_report' => $filePath,
                 ]);
 
