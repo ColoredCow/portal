@@ -199,6 +199,11 @@ class ProjectController extends Controller
             'jobName' => $jobName,
         ]);
     }
+
+    public function showDeliveryReport($invoiceId)
+    {
+        return $this->service->showDeliveryReport($invoiceId);
+    }
     // storing Contract related data here
     private function getContractData(Project $project)
     {
@@ -213,8 +218,4 @@ class ProjectController extends Controller
         ];
     }
 
-    public function showDeliveryReport($invoiceId)
-    {
-        return $this->service->showDeliveryReport($invoiceId);
-    }
 }

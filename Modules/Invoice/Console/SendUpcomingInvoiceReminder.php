@@ -4,8 +4,8 @@ namespace Modules\Invoice\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
-use Modules\Invoice\Services\InvoiceService;
 use Modules\Invoice\Emails\SendInvoiceReminderMail;
+use Modules\Invoice\Services\InvoiceService;
 
 class SendUpcomingInvoiceReminder extends Command
 {

@@ -3,7 +3,6 @@
 namespace Modules\Project\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Modules\Invoice\Entities\Invoice;
 
 class ProjectInvoiceTerm extends Model
 {

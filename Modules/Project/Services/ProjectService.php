@@ -389,6 +389,32 @@ class ProjectService implements ProjectServiceContract
         return $invoiceTerms;
     }
 
+    public function saveOrUpdateDeliveryReport($data, $project, $index)
+    {
+        if ($data['delivery_report'] ?? null) {
+            $file = $data['delivery_report'];
+            $folder = '/delivery_report/' . date('Y') . '/' . date('m');
+            $originalName = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $fileName = $project->name . '_' . $index + 1 . '.' . $extension;
+    
+            return Storage::putFileAs($folder, $file, $fileName);
+        }
+    }
+
+    public function showDeliveryReport($invoiceId)
+    {
+        $invoiceTerm = ProjectInvoiceTerm::where('id', $invoiceId)->first();
+        $filePath = storage_path('app/' . $invoiceTerm->delivery_report);
+        $content = file_get_contents($filePath);
+        $deliveryReport = pathinfo($invoiceTerm->delivery_report)['filename'];
+    
+        return response($content)->withHeaders([
+            'content-type' => mime_content_type($filePath),
+            'deliveryReport' => $deliveryReport,
+        ]);
+    }
+
     private function getListTabCounts($filters, $showAllProjects, $userId)
     {
         $counts = [
@@ -499,11 +525,12 @@ class ProjectService implements ProjectServiceContract
     {
         if (empty($invoiceTerms)) {
             $project->invoiceTerms()->delete();
+
             return;
         }
-    
+
         $existingTerms = $project->invoiceTerms()->get()->keyBy('id');
-    
+
         $termIds = [];
         foreach ($invoiceTerms as $index => $term) {
             $termId = $term['id'] ?? null;
@@ -511,11 +538,11 @@ class ProjectService implements ProjectServiceContract
             if ($termId && isset($existingTerms[$termId])) {
                 $existingTerm = $existingTerms[$termId];
                 $filePath = $existingTerm->delivery_report;
-                
+
                 if (isset($term['delivery_report'])) {
                     $filePath = $this->saveOrUpdateDeliveryReport($term, $project, $index);
                 }
-    
+
                 $existingTerm->update([
                     'invoice_date' => $term['invoice_date'],
                     'amount' => $term['amount'],
@@ -523,7 +550,7 @@ class ProjectService implements ProjectServiceContract
                     'is_confirmed' => $term['is_confirmed'] ?? $existingTerm->is_confirmed,
                     'delivery_report' => $filePath,
                 ]);
-    
+
                 $termIds[] = $termId;
             } else {
                 $filePath = $this->saveOrUpdateDeliveryReport($term, $project, $index);
@@ -536,36 +563,12 @@ class ProjectService implements ProjectServiceContract
                     'is_confirmed' => $term['is_confirmed'] ?? false,
                     'delivery_report' => $filePath,
                 ]);
-    
+
                 $termIds[] = $newTerm->id;
             }
         }
     
         $project->invoiceTerms()->whereNotIn('id', $termIds)->delete();
-    }
-    
-    public function saveOrUpdateDeliveryReport($data, $project, $index)
-    {
-        if ($data['delivery_report'] ?? null) {
-            $file = $data['delivery_report'];
-            $folder = '/delivery_report/' . date('Y') . '/' . date('m');
-            $originalName = $file->getClientOriginalName();
-            $extension = $file->getClientOriginalExtension();
-            $fileName = $project->name . '_' . $index + 1 . '.' . $extension;
-            return Storage::putFileAs($folder, $file, $fileName);
-        }
-    }
-
-    public function showDeliveryReport($invoiceId)
-    {
-        $invoiceTerm = ProjectInvoiceTerm::where('id', $invoiceId)->first();
-        $filePath = storage_path('app/' . $invoiceTerm->delivery_report);
-        $content = file_get_contents($filePath);
-        $deliveryReport = pathinfo($invoiceTerm->delivery_report)['filename'];
-        return response($content)->withHeaders([
-            'content-type' => mime_content_type($filePath),
-            'deliveryReport' => $deliveryReport,
-        ]);
     }
 
     private function updateProjectRepositories($data, $project)
