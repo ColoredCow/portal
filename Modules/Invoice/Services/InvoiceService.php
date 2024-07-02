@@ -781,7 +781,7 @@ class InvoiceService implements InvoiceServiceContract
     public function updateScheduledInvoice($invoice)
     {
         $project = $invoice->project;
-        if (!$project) {
+        if (! $project) {
             return;
         }
 

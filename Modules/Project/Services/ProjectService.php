@@ -435,7 +435,7 @@ class ProjectService implements ProjectServiceContract
             $project = $invoiceTerms->first()->project;
             $user = $project->client->keyAccountManager;
             if ($user) {
-                if (!isset($keyAccountManagersDetails[$user->id])) {
+                if (! isset($keyAccountManagersDetails[$user->id])) {
                     $keyAccountManagersDetails[$user->id] = new \stdClass();
                     $keyAccountManagersDetails[$user->id]->invoiceTerms = collect();
                     $keyAccountManagersDetails[$user->id]->email = $user->email;
