@@ -138,6 +138,7 @@ class InvoiceServiceProvider extends ServiceProvider
         $this->commands([
             \Modules\Invoice\Console\SendUnpaidInvoiceList::class,
             \Modules\Invoice\Console\FixInvoiceAmountsCommand::class,
+            \Modules\Invoice\Console\SendUpcomingInvoiceReminder::class,
         ]);
     }
 

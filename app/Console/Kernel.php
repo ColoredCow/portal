@@ -55,6 +55,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('mapping-of-jobs-and-hr-rounds');
         $schedule->command('project:fixed-budget-project');
         $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');
+        $schedule->command('invoice:send-upcoming-invoice-list')->dailyAt('11:00');
         $schedule->command('project:zero-effort-in-project')->weekly()->mondays()->at('09:00');
         $schedule->command('project:ended-project')->dailyAt('09:00');
         $schedule->command('project:zero-expected-hours-in-project')->weekly()->tuesdays()->at('11:00');
