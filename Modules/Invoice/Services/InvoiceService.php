@@ -793,7 +793,7 @@ class InvoiceService implements InvoiceServiceContract
                 $scheduledInvoice->update(['status' => $invoiceStatus]);
             }
         }
-    }    
+    }
 
     public function getScheduledInvoices()
     {
@@ -810,7 +810,7 @@ class InvoiceService implements InvoiceServiceContract
                 });
 
                 $status = $invoice ? $invoice->status : $term->status;
-        
+
                 if ($termDate < Carbon::now()->toDateString()) {
                     $status = 'overdue';
                 }
@@ -823,7 +823,7 @@ class InvoiceService implements InvoiceServiceContract
                 ];
             });
     }
-    
+
     public function getScheduledInvoicesForMail()
     {
         return ProjectInvoiceTerm::where('invoice_date', '<=', Carbon::now()->addDays(config('constants.finance.scheduled-invoice.email-duration-in-days')))->with('project')->get();
