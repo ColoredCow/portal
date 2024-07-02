@@ -397,7 +397,7 @@ class ProjectService implements ProjectServiceContract
             $originalName = $file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension();
             $fileName = $project->name . '_' . $index + 1 . '.' . $extension;
-    
+
             return Storage::putFileAs($folder, $file, $fileName);
         }
     }
@@ -408,7 +408,7 @@ class ProjectService implements ProjectServiceContract
         $filePath = storage_path('app/' . $invoiceTerm->delivery_report);
         $content = file_get_contents($filePath);
         $deliveryReport = pathinfo($invoiceTerm->delivery_report)['filename'];
-    
+
         return response($content)->withHeaders([
             'content-type' => mime_content_type($filePath),
             'deliveryReport' => $deliveryReport,
@@ -534,7 +534,7 @@ class ProjectService implements ProjectServiceContract
         $termIds = [];
         foreach ($invoiceTerms as $index => $term) {
             $termId = $term['id'] ?? null;
-    
+
             if ($termId && isset($existingTerms[$termId])) {
                 $existingTerm = $existingTerms[$termId];
                 $filePath = $existingTerm->delivery_report;
@@ -567,7 +567,7 @@ class ProjectService implements ProjectServiceContract
                 $termIds[] = $newTerm->id;
             }
         }
-    
+
         $project->invoiceTerms()->whereNotIn('id', $termIds)->delete();
     }
 
