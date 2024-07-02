@@ -424,7 +424,7 @@ class ProjectService implements ProjectServiceContract
             ->where('report_required', true)
             ->where('delivery_report', null)
             ->whereNotIn('status', ['sent', 'paid'])
-            ->whereMonth('invoice_date', '=', $currentDate->month) // Adjusted line
+            ->whereMonth('invoice_date', '=', $currentDate->month)
             ->with('project')
             ->get()
             ->groupBy('project_id');
