@@ -56,7 +56,7 @@
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="name" class="field-required">Project Type</label>
+                        <label for="name" class="field-required">Billing Cycle</label>
                         <select v-model="projectType" name="project_type" id="project_type" class="form-control"
                             required="required">`
                             @foreach (config('project.type') as $key => $project_type)
@@ -71,6 +71,9 @@
 
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="billing_level" class="field-required">Billing Level</label>
+                        <span class="ml-2" data-toggle="tooltip" title="Choose effort calculation method: project-specific hours or client-wide aggregate.">
+                            <i class="fa fa-info-circle "></i>
+                        </span>
                         <select name="billing_level" id="billing_level" class="form-control" required="required">
                             <option value="">{{ __('Select Billing Level') }}</option>
                             @foreach (config('project.meta_keys.billing_level.value') as $key => $billingLevel)
@@ -88,7 +91,6 @@
                 </div>
                 <br>
                 <div class="form-row">
-
                     <div class="form-group col-md-5">
                         <div class="flex-row">
                             <label for="contract_file"> {{ __('Upload Contract File') }}</label>
@@ -110,10 +112,15 @@
                                 @endif
                             </div>
                         </div>
+                        <div id="client-financial-detail-link" class="text small d-none">
+                            Click <a href="{{ route('client.edit', [$client, 'billing-details']) }}">here</a> to update monthly billing invoice terms.
+                        </div>
                     </div>
-
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="google_chat_webhook_url">{{ __('Google Chat Webhook URL') }}</label>
+                        <span data-toggle="tooltip" title="Add a webhook URL to receive payment notifications in the project's dedicated Google Chat space.">
+                            <i class="fa fa-info-circle "></i>
+                        </span>
                         <input type="url" class="form-control" name="google_chat_webhook_url"
                             id="google_chat_webhook_url" placeholder="Enter Google Chat Webhook URL"
                             value="{{ old('google_chat_webhook_url', $project->google_chat_webhook_url) }}">
@@ -135,6 +142,77 @@
                         <input type="number" class="form-control" name="total_estimated_hours"
                             id="total_estimated_hours" placeholder="Enter total estimated hours"
                             value="{{ old('total_estimated_hours', $project->total_estimated_hours) }}">
+                    </div>
+                </div>
+                <div id="invoice-terms-section" class="mt-3 mb-3 d-none">
+                    <label for="invoice-schedule">Invoice Schedule</label>
+                    <div class="bg-theme-gray-light p-2 rounded">
+                        <div class="row" v-for="(invoiceTerm, index) in invoiceTerms" :key="invoiceTerm.id">
+                            <input type="hidden" name="invoiceTerm" value="">
+                            <input type="hidden" :name="`invoiceTerms[${index}][id]`"  v-model="invoiceTerm.id">
+                            <div class="row col-12">
+                                <div class="card-body ml-4">
+                                    <div class="form-row">
+                                        <div class="form-check">
+                                            <input type="checkbox" id="report_required" :name="`invoiceTerms[${index}][report_required]`" v-model="invoiceTerm.report_required" :value="1">
+                                            <label class="form-check-label" for="report_required">{{ __('Delivery Report Required') }}</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" id="client_acceptance_required" :name="`invoiceTerms[${index}][client_acceptance_required]`" v-model="invoiceTerm.client_acceptance_required" :value="1">
+                                            <label class="form-check-label" for="client_acceptance_required">{{ __('Client Acceptance Required') }}</label>
+                                        </div>
+                                        <div v-if="invoiceTerm.client_acceptance_required == 1">
+                                            <div class="form-check">
+                                                <input type="checkbox" id="is_accepted" :name="`invoiceTerms[${index}][is_accepted]`" v-model="invoiceTerm.is_accepted" :value="1">
+                                                <label class="form-check-label" for="is_confirmed_yes">{{ __('Accepted From Client') }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-4">
+                                        <div class="col-3">
+                                            <label class="text-center" for="invoice_date">{{ __('Invoice Date') }}</label>
+                                            <input id="invoice_date" class="form-control" type="date" :name="`invoiceTerms[${index}][invoice_date]`"  v-model="invoiceTerm.invoice_date">
+                                        </div>
+                                        <div class="col-3">
+                                            <label for="invoice_amount">{{ __('Invoice Amount') }}</label>
+                                            <div class="input-group">
+                                                <input id="invoice_amount" v-model="invoiceTerm.amount" :name="`invoiceTerms[${index}][amount]`"  type="number" step="0.01" class="form-control" placeholder="Amount">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">{{ optional($project->client->country)->currency }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div v-if="invoiceTerm.report_required == 1" class="form-group col-4">
+                                            <div class="flex-row">
+                                                <label for="delivery_report">{{ __('Upload Service Delivery Report') }}</label>
+                                            </div>
+                                            <div class="custom-file mb-3">
+                                                <input type="file" id="delivery_report" :name="`invoiceTerms[${index}][delivery_report]`" class="custom-file-input" @change="handleFileUpload($event, index)">
+                                                <label for="delivery_report" class="custom-file-label overflow-hidden">Upload Report</label>
+                                                <div v-if="invoiceTerm.delivery_report" class="indicator" style="margin-top: 3px">
+                                                    <a :id="`delivery_report_${index}`" :href="getDeliveryReportUrl(invoiceTerm.id)" target="_blank">
+                                                        <span class="mr-1 underline theme-info fz-16">@{{ getFileName(invoiceTerm.delivery_report) }}</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="bg-dark border-dark">
+                                    <div class="col-1">
+                                        <button v-on:click="removeProjectInvoiceTerm(index)" type="button" class="btn btn-danger btn-sm text-white fz-14">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ml-9">
+                            @if($project->status == 'active')
+                                <span id="add-row-btn" v-on:click="addNewProjectInvoiceTerm()" class="btn btn-light btn-sm text-dark ml-6 mt-2">
+                                    <i class="fa fa-plus"></i> 
+                                    <span v-if="invoiceTerms.length === 0">Schedule An Invoice</span>
+                                    <span v-else>Add Another</span>
+                                </span>
+                            @endif
+                        </div>
                     </div>
                 </div>
                 <div>

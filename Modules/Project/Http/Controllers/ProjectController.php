@@ -147,6 +147,7 @@ class ProjectController extends Controller
         $designationKeys = array_keys($designations);
         $contractData = $this->getContractData($project);
         $contractName = $contractData['contractName'];
+        $invoiceTerms = $this->service->getInvoiceTerms($project);
 
         return view('project::edit', [
             'project' => $project,
@@ -158,6 +159,7 @@ class ProjectController extends Controller
             'workingDaysInMonth' => $this->service->getWorkingDays($project),
             'designationKeys' => $designationKeys,
             'contractName' => $contractName,
+            'invoiceTerms' => $invoiceTerms,
         ]);
     }
 
@@ -196,6 +198,11 @@ class ProjectController extends Controller
             'domainName' => $domainName,
             'jobName' => $jobName,
         ]);
+    }
+
+    public function showDeliveryReport($invoiceId)
+    {
+        return $this->service->showDeliveryReport($invoiceId);
     }
     // storing Contract related data here
     private function getContractData(Project $project)

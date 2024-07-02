@@ -35,7 +35,7 @@
             <br>
         <div class="form-row">
             <div class="form-group col-md-5">
-                <label for="project_type" class="field-required">{{ __('Project Type') }}</label>
+                <label for="project_type" class="field-required">{{ __('Billing Cycle') }}</label>
                 <select v-model="projectType" name="project_type" id="project_type" class="form-control" required>
                     <option value="">Select project type</option>
                     @foreach (config('project.type') as $key => $project_type)

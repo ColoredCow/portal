@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\HR\Console\JobExpiredEmailToHr;
 use Modules\Invoice\Console\SeedLoanInstallmentForMonth;
+use Modules\Project\Console\DeliveryReportReminder;
 use Modules\Project\Console\EndedProject;
 use Modules\Project\Console\FixedBudgetProject;
 use Modules\Project\Console\GoogleChat\NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat;
@@ -27,6 +28,7 @@ class Kernel extends ConsoleKernel
         ZeroEffortInProject::class,
         ZeroExpectedHourInProject::class,
         EndedProject::class,
+        DeliveryReportReminder::class,
         FixedBudgetProject::class,
         NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat::class,
         JobExpiredEmailToHr::class,
@@ -54,7 +56,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('hr:send-job-expired-email-to-hr')->dailyAt('11:00');
         $schedule->command('mapping-of-jobs-and-hr-rounds');
         $schedule->command('project:fixed-budget-project');
+        $schedule->command('project:send-pending-delivery-report-reminder')->dailyAt('11:00');
         $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');
+        $schedule->command('invoice:send-upcoming-invoice-list')->dailyAt('11:00');
         $schedule->command('project:zero-effort-in-project')->weekly()->mondays()->at('09:00');
         $schedule->command('project:ended-project')->dailyAt('09:00');
         $schedule->command('project:zero-expected-hours-in-project')->weekly()->tuesdays()->at('11:00');

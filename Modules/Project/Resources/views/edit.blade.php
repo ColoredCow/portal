@@ -83,7 +83,8 @@
                     projectRepositories: @json($projectRepositories),
                     workingDaysInMonth: @json($workingDaysInMonth),
                     users: @json($teamMembers->sortBy('name')->values()),
-                    designations: @json($designations)
+                    designations: @json($designations),
+                    invoiceTerms: @json($invoiceTerms)
                 }
             },
 
@@ -114,8 +115,18 @@
                             daily_expected_effort: 0,
                             weekly_expected_effort: 0,
                             monthly_expected_effort: 0,
-
                         }
+                    }
+                },
+                defaultProjectInvoiceTerm() {
+                    return {
+                        id: new Date().getTime(),
+                        invoice_date: new Date().getTime(),
+                        amount: '',
+                        client_acceptance_required: 0,
+                        report_required: 0,
+                        is_accepted: 0,
+                        deliveryReport: '',
                     }
                 },
                 defaultProjectRepository() {
@@ -169,6 +180,12 @@
                 addNewProjectRepository() {
                     this.projectRepositories.push(this.defaultProjectRepository());
                 },
+                addNewProjectInvoiceTerm() {
+                    this.invoiceTerms.push(this.defaultProjectInvoiceTerm());
+                },
+                removeProjectInvoiceTerm(index) {
+                    this.invoiceTerms.splice(index, 1);
+                },
 
                 removeProjectTeamMember(index) {
                     this.projectTeamMembers.splice(index, 1);
@@ -182,8 +199,6 @@
                     this.projectTeamMembers[index]['pivot']['started_on'] = newDate;
                 },
 
-
-                
                 updatedDailyExpectedEffort($event, index, numberOfDays) {
                     value = $event.target.value;
                     maximumExpectedEfforts = 12
@@ -199,37 +214,95 @@
                             $event.target.value = value.slice(0, -1)
                             return
                         }
-                    }
 
-                    if (numberOfDays == 5) {
-                        this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/5;
-                        this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = value;
-                        this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = (value/5) * this.workingDaysInMonth;
-                    } else if (numberOfDays == this.workingDaysInMonth) {
+                        if (numberOfDays == 5) {
+                            this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/5;
+                            this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = value;
+                            this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = (value/5) * this.workingDaysInMonth;
+                        } else if (numberOfDays == this.workingDaysInMonth) {
+                            this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
+                            this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = (value/numberOfDays) * 5;
+                            this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = value;
+                        } else {
+                            this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value;
+                            this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = value * 5;
+                            this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = value * this.workingDaysInMonth;
+                        }
                         this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
-                        this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = (value/numberOfDays) * 5;
-                        this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = value;
+                        this.$forceUpdate()
+                    }
+                },
+
+                handleFileUpload(event) {
+                    const fileInput = event.target;
+                    this.toggleSections(fileInput.files.length > 0);
+                },
+
+                toggleSectionsByContracts() {
+                    const hasContracts = this.project.project_contracts.length > 0;
+                    this.toggleSections(hasContracts);
+                },
+
+                handleBillingCycle(event) {
+                    const projectType = event.target.value;
+                    this.toggleSectionsByProjectType(projectType);
+                },
+
+                toggleSections(condition) {
+                    const linkDiv = document.getElementById('client-financial-detail-link');
+                    const invoiceTermDiv = document.getElementById('invoice-terms-section');
+
+                    if (condition) {
+                        if (this.projectType === 'monthly-billing') {
+                            linkDiv.classList.remove('d-none');
+                            invoiceTermDiv.classList.add('d-none');
+                        } else if (this.projectType === 'fixed-budget') {
+                            linkDiv.classList.add('d-none');
+                            invoiceTermDiv.classList.remove('d-none');
+                        }
                     } else {
-                        this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value;
-                        this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = value * 5;
-                        this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = value * this.workingDaysInMonth;
+                        linkDiv.classList.add('d-none');
+                        invoiceTermDiv.classList.add('d-none');
                     }
-                   
-                         this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
-                         this.$forceUpdate()
+                },
+
+                toggleSectionsByProjectType(projectType) {
+                    const linkDiv = document.getElementById('client-financial-detail-link');
+                    const invoiceTermDiv = document.getElementById('invoice-terms-section');
+
+                    if (projectType === 'monthly-billing') {
+                        linkDiv.classList.remove('d-none');
+                        invoiceTermDiv.classList.add('d-none');
+                    } else if (projectType === 'fixed-budget') {
+                        linkDiv.classList.add('d-none');
+                        invoiceTermDiv.classList.remove('d-none');
+                    } else {
+                        linkDiv.classList.add('d-none');
+                        invoiceTermDiv.classList.add('d-none');
+                    }
+                },
+                getFileName(filePath) {
+                    return filePath.split('\\').pop().split('/').pop();
+                },
+                getDeliveryReportUrl(invoiceTermId) {
+                    return `{{ route('delivery-report.show', ':id') }}`.replace(':id', invoiceTermId);
                 }
             },
 
-                   filters: {
-                       toDate: function(timestamp) {
-                         if (timestamp == null) {
-                            return timestamp;
+            filters: {
+                toDate: function(timestamp) {
+                    if (timestamp == null) {
+                        return timestamp;
                     }
-                         return timestamp.substring(0,10);
+                    return timestamp.substring(0,10);
                 }
             },
 
-            mounted() {},
+            mounted() {
+                document.getElementById('contract_file').addEventListener('change', this.handleFileUpload);
+                document.getElementById('project_type').addEventListener('change', this.handleBillingCycle);
+                this.toggleSectionsByContracts();
+            }
         });
     </script>
 @endsection
