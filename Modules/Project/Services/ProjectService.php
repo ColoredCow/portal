@@ -418,14 +418,13 @@ class ProjectService implements ProjectServiceContract
     public function getPendingDeliveryReportInvoices()
     {
         $currentDate = Carbon::now();
-        $monthString = strval($currentDate->month);
         $futureDate = $currentDate->copy()->addDays(config('constants.finance.scheduled-invoice.email-duration-in-days'));
 
         $groupedInvoices = ProjectInvoiceTerm::where('invoice_date', '<=', $futureDate)
             ->where('report_required', true)
             ->where('delivery_report', null)
             ->whereNotIn('status', ['sent', 'paid'])
-            ->whereMonth('invoice_date', $monthString)
+            ->whereMonth('invoice_date', strval($currentDate->month))
             ->with('project')
             ->get()
             ->groupBy('project_id');
