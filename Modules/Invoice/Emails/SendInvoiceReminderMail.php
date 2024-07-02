@@ -31,8 +31,8 @@ class SendInvoiceReminderMail extends Mailable
     public function build()
     {
         return $this
-        ->to('finance@coloredcow.com')
-        ->from('abhishek.negi@coloredcow.in')
+        ->to(config('constants.finance.scheduled-invoice.email'))
+        ->from(config('mail.from.address'), config('mail.from.name'))
         ->subject('List of upcoming invoices.')
         ->view('invoice::mail.upcoming-invoice-list')
         ->with(['upcomingInvoices' => $this->upcomingInvoices]);
