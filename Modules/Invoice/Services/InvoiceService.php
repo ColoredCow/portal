@@ -814,7 +814,6 @@ class InvoiceService implements InvoiceServiceContract
 
     public function getScheduledInvoicesForMail()
     {
-
         return ProjectInvoiceTerm::where('invoice_date', '<=', Carbon::now()->addDays(config('constants.finance.scheduled-invoice.email-duration-in-days'))) ->with('project') ->get();
     }
 
