@@ -217,5 +217,4 @@ class ProjectController extends Controller
             'contractName' => $contractName,
         ];
     }
-
 }
