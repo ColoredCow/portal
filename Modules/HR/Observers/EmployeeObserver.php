@@ -32,7 +32,6 @@ class EmployeeObserver
             $employee->update([
                 'name' => $gsuiteUser->getName()->fullName,
                 'joined_on' => Carbon::parse($gsuiteUser->getCreationTime())->format(config('constants.date_format')),
-                'designation' => null,
             ]);
         }
     }
