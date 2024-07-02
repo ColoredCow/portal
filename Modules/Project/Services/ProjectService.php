@@ -488,6 +488,39 @@ class ProjectService implements ProjectServiceContract
         );
     }
 
+    public function getPendingDeliveryReportInvoices()
+    {
+        $currentDate = Carbon::now();
+        $futureDate = $currentDate->copy()->addDays(config('constants.finance.scheduled-invoice.email-duration-in-days'));
+
+        $groupedInvoices = ProjectInvoiceTerm::where('invoice_date', '<=', $futureDate)
+            ->where('report_required', true)
+            ->where('delivery_report', null)
+            ->whereNotIn('status', ['sent', 'paid'])
+            ->whereMonth('invoice_date', $currentDate->month)
+            ->with('project')
+            ->get()
+            ->groupBy('project_id');
+
+        $keyAccountManagersDetails = [];
+
+        foreach ($groupedInvoices as $projectId => $invoiceTerms) {
+            $project = $invoiceTerms->first()->project;
+            $user = $project->client->keyAccountManager;
+            if ($user) {
+                if (!isset($keyAccountManagersDetails[$user->id])) {
+                    $keyAccountManagersDetails[$user->id] = new \stdClass();
+                    $keyAccountManagersDetails[$user->id]->invoiceTerms = collect();
+                    $keyAccountManagersDetails[$user->id]->email = $user->email;
+                    $keyAccountManagersDetails[$user->id]->name = $user->name;
+                }
+                $keyAccountManagersDetails[$user->id]->invoiceTerms = $keyAccountManagersDetails[$user->id]->invoiceTerms->merge($invoiceTerms);
+            }
+        }
+
+        return $keyAccountManagersDetails;
+    }
+
     private function updateProjectTeamMembers($data, $project)
     {
         $projectTeamMembers = $project->getTeamMembers;
