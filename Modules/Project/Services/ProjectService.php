@@ -17,6 +17,8 @@ use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectResourceRequirement;
+use Modules\Project\Entities\ProjectStages;
+use Modules\Project\Entities\ProjectStagesListing;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Entities\ProjectTeamMembersEffort;
 use Modules\Project\Exports\ProjectFTEExport;
@@ -378,6 +380,84 @@ class ProjectService implements ProjectServiceContract
             'remainingApprovedPipeline' => $remainingApprovedPipeline,
             'remainingExpectedEffort' => $remainingExpectedEffort,
             'weeklyHoursToCover' => $weeklyHoursToCover,
+        ];
+    }
+
+    public function getProjectStages(Project $project)
+    {
+        $project_id = $project->id;
+        $stages = ProjectStages::where('project_id', $project_id)->orderBy('id')->get();
+
+        return $stages;
+    }
+
+    public function storeStage(array $newStages, int $projectId)
+    {
+        foreach ($newStages as $stage) {
+            $stageData = $this->prepareStageData($stage);
+
+            ProjectStages::create(array_merge($stageData, [
+                'project_id' => $projectId,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]));
+        }
+    }
+
+    public function updateStage(array $updatedStages)
+    {
+        foreach ($updatedStages as $stage) {
+            $stageData = $this->prepareStageData($stage);
+
+            $existingStage = ProjectStages::find($stage['id']);
+            if ($existingStage) {
+                $existingStage->update(array_merge($stageData, [
+                    'updated_at' => now(),
+                ]));
+            }
+        }
+    }
+
+    public function removeStage(array $idArr)
+    {
+        ProjectStages::whereIn('id', $idArr)->delete();
+    }
+
+    public function createProjectStageList(string $stageName)
+    {
+        $formattedStageName = strtolower($stageName);
+        ProjectStagesListing::firstOrCreate(
+            ['name' => $formattedStageName]
+        );
+    }
+
+    private function prepareStageData(array $stage): array
+    {
+        $startDate = null;
+        $endDate = null;
+        $duration = null;
+
+        if ($stage['start_date']) {
+            $formattedStartDate = Carbon::parse($stage['start_date']);
+            $startDate = $formattedStartDate->setTimezone(config('app.timezone'))->format(config('constants.datetime_format'));
+        }
+
+        if ($stage['end_date']) {
+            $formattedEndDate = Carbon::parse($stage['end_date']);
+            $endDate = $formattedEndDate->setTimezone(config('app.timezone'))->format(config('constants.datetime_format'));
+            $duration = Carbon::parse($stage['start_date'])->diffInSeconds($formattedEndDate);
+        }
+
+        $this->createProjectStageList($stage['stage_name']);
+
+        return [
+            'stage_name' => $stage['stage_name'],
+            'comments' => $stage['comments'] ?? null,
+            'status' => $stage['status'] ?? 'pending',
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'expected_end_date' => $stage['expected_end_date'],
+            'duration' => $duration,
         ];
     }
 
