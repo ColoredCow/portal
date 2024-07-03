@@ -448,7 +448,7 @@ class ProjectService implements ProjectServiceContract
 
                 $keyAccountManagersDetails[$userId]->invoiceTerms = $keyAccountManagersDetails[$userId]->invoiceTerms->merge($invoiceTerms);
             }
-        });        
+        });
 
         return $keyAccountManagersDetails;
     }
