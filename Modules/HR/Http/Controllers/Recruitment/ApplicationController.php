@@ -191,6 +191,8 @@ abstract class ApplicationController extends Controller
         $approveMailTemplate = str_replace('|APPLICANT NAME|', $application->applicant->name, $approveMailTemplate);
         $approveMailTemplate = str_replace('|JOB TITLE|', $application->job->title, $approveMailTemplate);
         $approveMailTemplate = str_replace('|LINK|', config('app.url') . '/viewForm/' . $application->applicant->id . '/' . encrypt($application->applicant->email), $approveMailTemplate);
+        dd('approveMailTemplate', $application->applicant->email);
+        dd(config('app.url') . '/viewForm/' . $application->applicant->id . '/' . encrypt($application->applicant->email), $approveMailTemplate);
 
         $offerLetterTemplate = Setting::getOfferLetterTemplate();
         $desiredResume = DB::table('hr_applications')->select(['hr_applications.resume'])->where('hr_applications.hr_job_id', '=', $job->id)->where('is_desired_resume', '=', 1)->get();
@@ -250,17 +252,21 @@ abstract class ApplicationController extends Controller
 
     public function saveOfferLetter(Application $application)
     {
-        $offer_letter_body = Setting::getOfferLetterTemplate()['body'];
-        $job = $application->job;
-        $applicant = $application->applicant;
-        $pdf = Pdf::loadView('hr.application.draft-joining-letter', compact('applicant', 'job', 'offer_letter_body'));
-        $fileName = FileHelper::getOfferLetterFileName($applicant, $pdf);
-        $directory = 'app/public/' . config('constants.hr.offer-letters-dir');
-        if (! is_dir(storage_path($directory)) && ! file_exists(storage_path($directory))) {
-            mkdir(storage_path($directory), 0, true);
+        try {
+            $offer_letter_body = Setting::getOfferLetterTemplate()['body'];
+            $job = $application->job;
+            $applicant = $application->applicant;
+            $pdf = Pdf::loadView('hr.application.draft-joining-letter', compact('applicant', 'job', 'offer_letter_body'));
+            $fileName = FileHelper::getOfferLetterFileName($applicant, $pdf);
+            $directory = 'app/public/' . config('constants.hr.offer-letters-dir');
+            if (! is_dir(storage_path($directory)) && ! file_exists(storage_path($directory))) {
+                mkdir(storage_path($directory), 0, true);
+            }
+            $fullPath = storage_path($directory . '/' . $fileName);
+            $pdf->save($fullPath);
+        } catch (\Exception $e) {
+            dd('$e', $e);
         }
-        $fullPath = storage_path($directory . '/' . $fileName);
-        $pdf->save($fullPath);
     }
 
     public static function getOfferLetter(Application $application)

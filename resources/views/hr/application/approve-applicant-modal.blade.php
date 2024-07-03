@@ -11,7 +11,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form">
+                <!-- <div class="form">
                     @if ($application->offer_letter)
                     <div class="col-md-12">
                         <a target="_blank" href="{{ route("applications.{$application->job->type}.offer-letter", $application) }}" class="d-flex align-items-center">
@@ -22,7 +22,7 @@
                         <a class="btn btn-secondary px-4" id="offerLetter">Generate Offer Letter</a><br>
 
                     @endif
-                </div>
+                </div> -->
                 <div class="form-row mt-4">
                     <div class="form-group col-md-12">
                         <label for="subject" class="field-required">Subject</label>

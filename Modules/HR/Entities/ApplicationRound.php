@@ -217,10 +217,13 @@ class ApplicationRound extends Model
 
                 $subject = $attr['subject'];
                 $body = $attr['body'];
-                if (! $application->offer_letter) {
-                    $application->offer_letter = FileHelper::generateOfferLetter($application);
-                }
+                // if (! $application->offer_letter) {
+                //     dd('idhat sir');
+                //     $application->offer_letter = FileHelper::generateOfferLetter($application);
+                // }
+                // dd('stop');
                 Mail::send(new SendOfferLetter($application, $subject, $body));
+                // dd('ho gya');
                 break;
 
             case 'onboard':

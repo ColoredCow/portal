@@ -40,7 +40,7 @@ class SendOfferLetter extends Mailable
             ->view('mail.plain')
             ->with([
                 'body' => $this->body,
-            ])
-            ->attach(storage_path('app/public/' . $this->application->offer_letter));
+            ]);
+            // ->attach(storage_path('app/public/' . $this->application->offer_letter));
     }
 }
