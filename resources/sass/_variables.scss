@@ -69,6 +69,7 @@ $theme-thunder: #433543;
 $theme-gray-border: #D8D8D8;
 $theme-blue-chalk: #F2EBFE;
 $theme-fog: #DAC4FF;
+$theme-semi-transparent: rgba(0, 0, 0, 0.5);
 
 // Pagination
 $pagination-color: $theme-gray-light;
@@ -126,6 +127,7 @@ $theme-colors: (
     'theme-white-mild': $theme-white-mild,
     'theme-blue-chalk': $theme-blue-chalk,
     'theme-fog': $theme-fog,
+    'theme-semi-transparent': $theme-semi-transparent,
     'Glidden-willow-springs' : $Glidden-willow-springs
 );
 $sizes: (
@@ -250,6 +252,7 @@ $sizes: (
     '600': 600px,
     '660': 660px,
     '696': 696px,
+    '800': 800px,
     '1044': 1044px,
     '1056': 1056px,
 );

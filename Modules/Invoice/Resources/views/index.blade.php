@@ -76,6 +76,7 @@
                             <th>Billable Hours</th>
                         @endif
                         <th>Amount ( + taxes)</th>
+                        @if (request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
                         <th>Deviation
                             <span
                                 data-toggle="tooltip"
@@ -86,6 +87,7 @@
                                 <i class="fa fa-question-circle"></i>&nbsp;
                             </span>
                         </th>
+                        @endif
                         @if (request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
                             <th>Sent on</th>
                             <th>Due on</th>

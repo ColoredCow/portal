@@ -100,10 +100,10 @@
                                     </form>
                                 </div>
                             </li>
-                            <button id="applicant-toggle" class="btn btn-link">
+                            {{-- <button id="applicant-toggle" class="btn btn-link">
                                 <i class="fa fa-bars border-0 text-dark"></i>
-                            </button>
-                            @include('codetrek::sidebar')
+                            </button> --}}
+                            {{-- @include('codetrek::sidebar') --}}
                         @endauth
                     </ul>
                 </div>

@@ -99,8 +99,8 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('settings')->namespace('Settings')->group(function () {
         Route::get('/', 'SettingController@index')->name('settings.index');
-        Route::get('/employee-earning-threshold', 'ProfitabilityController@index')->name('settings.employee-earning-threshold');
-        Route::post('/employee-earning-threshold', 'ProfitabilityController@update')->name('settings.update-employee-earning-threshold');
+        Route::get('/config-variables', 'ConfigurationController@index')->name('settings.config-variables');
+        Route::post('/config-variables', 'ConfigurationController@updateAll')->name('settings.update-config-variables');
 
         Route::prefix('permissions')->group(function () {
             Route::get('/', function () {

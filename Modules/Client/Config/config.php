@@ -23,6 +23,10 @@ return [
         'billing-details' => [
             'display-name' => 'Billing details',
         ],
+
+        'contract' => [
+            'display-name' => 'Contract',
+        ],
     ],
 
     'client-contact-person-type'=>[
@@ -123,6 +127,26 @@ return [
             'slug' => 'overall',
             'label' => 'Overall',
             'short-label' => 'overall',
+        ],
+    ],
+
+    'meta_keys' => [
+        'contract_level' => [
+            'key' => 'contract_level',
+            'value' => [
+                'client' => [
+                    'key' => 'client',
+                    'label' => 'Client level',
+                ],
+                'project' => [
+                    'key' => 'project',
+                    'label' => 'Project level',
+                ],
+            ],
+        ],
+        'last_updated_at' => [
+            'key' => 'last_updated_at',
+            'value' => 'Last refreshed at',
         ],
     ],
 ];

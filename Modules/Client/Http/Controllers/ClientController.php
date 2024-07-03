@@ -4,6 +4,7 @@ namespace Modules\Client\Http\Controllers;
 
 use Modules\Client\Contracts\ClientServiceContract;
 use Modules\Client\Entities\Client;
+use Modules\Client\Entities\ClientContract;
 use Modules\Client\Http\Requests\ClientFormsRequest;
 use Modules\Client\Http\Requests\ClientRequest;
 use Modules\Client\Rules\ClientNameExist;
@@ -77,5 +78,17 @@ class ClientController extends ModuleBaseController
         $data = $this->service->update($request->all(), $client);
 
         return redirect($data['route'])->with('success', 'Client has been created/updated successfully!');
+    }
+
+    public static function showPdf(ClientContract $contract)
+    {
+        $filePath = storage_path('app/' . $contract->contract_file_path);
+        $content = file_get_contents($filePath);
+        $contractFileName = pathinfo($contract->contract_file_path)['filename'];
+
+        return response($content)->withHeaders([
+            'content-type' => mime_content_type($filePath),
+            'contractFileName' => $contractFileName,
+        ]);
     }
 }

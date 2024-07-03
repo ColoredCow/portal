@@ -6,13 +6,16 @@ use App\Services\EmployeeService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
+use Modules\HR\Emails\SendPayrollListMail;
 use Modules\HR\Entities\Assessment;
 use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\HrJobDesignation;
 use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\IndividualAssessment;
 use Modules\HR\Entities\Job;
+use Modules\HR\Exports\ContractorFeeExport;
 use Modules\HR\Exports\EmployeePayrollExport;
 use Modules\Project\Entities\ProjectTeamMember;
 
@@ -138,13 +141,37 @@ class EmployeeController extends Controller
         return redirect()->back();
     }
 
-    public function downloadPayRoll()
+    public function downloadPayRoll(Request $request)
     {
-        $employees = $this->service->getEmployeeListForExport();
-        $today = date('Y-m-d');
-        $filename = 'PayRoll Report-' . $today . '.xlsx';
+        $exportType = $request->export;
+        $currentMonth = date('M');
+        $currentYear = date('Y');
+        $employees = $this->service->getEmployeeListForExport($exportType);
 
-        return Excel::download(new EmployeePayrollExport($employees['employees']), $filename);
+        if ($exportType === 'full-time') {
+            $filename = 'Salary Computations_' . $currentMonth . ' ' . $currentYear . '.xlsx';
+
+            return Excel::download(new EmployeePayrollExport($employees['employees']), $filename);
+        }
+
+        $filename = 'ConsultantFee_Computation_' . $currentMonth . '_' . $currentYear . '.xlsx';
+
+        return Excel::download(new ContractorFeeExport($employees['employees']), $filename);
+    }
+
+    public function sendPayrollListMail(Request $request)
+    {
+        $toEmail = [
+            'email' => $request->to,
+            'name' => $request->name,
+        ];
+        $ccEmails = explode(',', $request->cc ?? '');
+        Mail::send(new SendPayrollListMail($toEmail, $ccEmails, [
+            'full-time' => $this->service->getEmployeeListForExport('full-time')['employees'],
+            'contractor' => $this->service->getEmployeeListForExport('contractor')['employees'],
+        ]));
+
+        return redirect()->back();
     }
 
     public function hrDetails(Employee $employee)

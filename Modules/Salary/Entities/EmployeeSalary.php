@@ -10,11 +10,11 @@ class EmployeeSalary extends Model
 {
     use Encryptable;
 
-    protected $fillable = ['employee_id', 'monthly_gross_salary', 'commencement_date'];
+    protected $fillable = ['employee_id', 'monthly_gross_salary', 'commencement_date', 'tds', 'salary_type', 'monthly_fee'];
 
     protected $dates = ['commencement_date'];
 
-    protected $encryptable = ['monthly_gross_salary', 'tds'];
+    protected $encryptable = ['monthly_gross_salary', 'tds', 'monthly_fee'];
 
     public function employee()
     {
@@ -77,6 +77,10 @@ class EmployeeSalary extends Model
 
     public function getTotalSalaryAttribute()
     {
+        if ($this->salary_type === config('salary.type.contractor_fee.slug')) {
+            return $this->monthly_fee;
+        }
+
         return $this->basic_salary + $this->hra + $this->transport_allowance + $this->food_allowance + $this->other_allowance;
     }
 
@@ -112,6 +116,10 @@ class EmployeeSalary extends Model
 
     public function getTotalDeductionAttribute()
     {
+        if ($this->salary_type === config('salary.type.contractor_fee.slug')) {
+            return $this->employee->loan_deduction_for_month + $this->tds;
+        }
+
         return $this->employee_esi + $this->employee_epf + $this->food_allowance + $this->employee->loan_deduction_for_month + $this->tds;
     }
 
@@ -191,6 +199,10 @@ class EmployeeSalary extends Model
 
     public function getCtcAnnualAttribute()
     {
+        if ($this->salary_type === config('salary.type.contractor_fee.slug')) {
+            return $this->monthly_fee * 12;
+        }
+
         return $this->ctc * 12;
     }
 
@@ -206,8 +218,17 @@ class EmployeeSalary extends Model
         return (int) $healthInsuranceConf->fixed_amount;
     }
 
+    public function getTotalHealthInsuranceAttribute()
+    {
+        return $this->health_insurance * (optional($this->employee->user->profile)->insurance_tenants ?? 1);
+    }
+
     public function getCtcAggregatedAttribute()
     {
-        return $this->ctc_annual + $this->health_insurance;
+        if ($this->salary_type === config('salary.type.contractor_fee.slug')) {
+            return $this->monthly_fee * 12;
+        }
+
+        return $this->ctc_annual + $this->total_health_insurance;
     }
 }

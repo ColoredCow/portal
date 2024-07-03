@@ -53,10 +53,10 @@
       </div>
     </div>
 </div>
-
-  <div class="d-none alert alert-success " id="successMessage" role="alert">
-      <strong>Changes Saved Successfully!</strong>
-  </div>
+@includeWhen(session('success'), 'toast', ['message' => session('success')])
+<div class="d-none alert alert-success " id="successMessage" role="alert">
+    <strong>Changes Saved Successfully!</strong>
+</div>
 
 <div class="d-flex justify-content-between">
     <div class="d-flex">
@@ -101,7 +101,63 @@
             {{-- @includeWhen($user->profile, 'user::profile.subviews.show-user-profile-info') --}}
         </div>
     </div>
-    <div>
-        <button class="btn btn-info" data-toggle="modal" id="editProfileBtn" data-target="#edit">Edit</button>
+   
+    <div class="d-flex">
+        @can('user.delete')
+            @if($user->deleted_at === null)
+                <div>
+                    <button class="btn btn-danger mr-3" data-toggle="modal" data-target="#deleteUserModal">Terminate</button>
+                </div>
+            @else
+                <div>
+                    <button class="btn btn-danger mr-3 c-not-allowed" disabled>Terminate</button>
+                    <div class="text-danger fz-10 mt-0.5 font-weight-bold w-100 leading-10">
+                        User is deleted from system
+                    </div>
+                </div>
+            @endif
+        @endcan
+        <div>
+            <button class="btn btn-info" data-toggle="modal" id="editProfileBtn" data-target="#edit">Edit</button>
+        </div>
     </div>
+    @can('user.delete')
+        @if($user->deleted_at === null)
+            <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                Delete user: <strong> {{ $user->name }}</strong>
+                            </h5>
+                        </div>
+                        <form action="{{route('user.delete', $user->id)}}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <div class="modal-body">
+                                <div>
+                                    Are you sure you want to take this action? It cannot be undone. The
+                                    user will be removed from the system and will not be able to log in.
+                                </div>
+                                <div class="form-row mt-3">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold" for="terminationDate">Termination Date</label>
+                                        <input id="terminationDate" type="date" name="termination_date" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                    Cancel
+                                </button>
+                                <button type="submit" class="btn btn-danger">
+                                    Yes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endif
+    @endcan
 </div>

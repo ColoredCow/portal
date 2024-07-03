@@ -2,6 +2,7 @@
 
 namespace Modules\User\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Modules\User\Contracts\UserServiceContract;
 use Modules\User\Entities\User;
 use Modules\User\Http\Requests\UpdateUserRolesRequest;
@@ -38,11 +39,15 @@ class UserController extends ModuleBaseController
      *
      * @param User $user
      *
-     * @return void
+     * @return mixed
      */
-    public function destroy(User $user)
+    public function destroy(Request $request, User $user)
     {
         $this->authorize('delete', $user);
-        $this->service->delete($user);
+        $this->service->delete($user, $request->all());
+        if (! $request->expectsJson()) {
+            // Redirecting in case of form request
+            return redirect()->back()->with(['success' => 'User Deleted Successfully.']);
+        }
     }
 }

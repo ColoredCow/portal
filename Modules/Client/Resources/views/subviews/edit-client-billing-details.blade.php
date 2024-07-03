@@ -8,7 +8,7 @@
             @if($clientCountry && $clientCountry->id)
             <input type="hidden" name="currency" value="{{ $clientCountry->currency }}">
             <div class="form-row">
-                <div class="col-md-5 ">  
+                <div class="col-md-5 ">
                     <div class="form-group ">
                         <label for="key_account_manager_id" class="field-required">Key Account manager</label>
                         <select name="key_account_manager_id" id="key_account_manager_id" class="form-control" required="required">
@@ -51,7 +51,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5 offset-md-1">  
+                <div class="col-md-5 offset-md-1">
                     <div class="form-group">
                         <label for="billing_frequency" >Billing Frequency</label>
                         <select name="billing_frequency" id="billing_frequency" class="form-control">
@@ -97,11 +97,11 @@
                     Revenue by Client
                     <i class="fa fa-bar-chart"></i>
                 </a>
-            </div> 
+            </div>
             @endcan
         </div>
         <div class="card-footer">
-            @include('client::subviews.edit-client-form-submit-buttons', ['isNext' => false])
+            @include('client::subviews.edit-client-form-submit-buttons')
         </div>
     </div>
 </div>
