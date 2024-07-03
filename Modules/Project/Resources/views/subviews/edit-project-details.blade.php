@@ -171,12 +171,12 @@
                                     <div class="form-row mt-4">
                                         <div class="col-3">
                                             <label class="text-center" for="invoice_date">{{ __('Invoice Date') }}</label>
-                                            <input id="invoice_date" class="form-control" type="date" :name="`invoiceTerms[${index}][invoice_date]`"  v-model="invoiceTerm.invoice_date">
+                                            <input id="invoice_date" class="form-control" type="date" :name="`invoiceTerms[${index}][invoice_date]`" v-model="invoiceTerm.invoice_date">
                                         </div>
                                         <div class="col-3">
                                             <label for="invoice_amount">{{ __('Invoice Amount') }}</label>
                                             <div class="input-group">
-                                                <input id="invoice_amount" v-model="invoiceTerm.amount" :name="`invoiceTerms[${index}][amount]`"  type="number" step="0.01" class="form-control" placeholder="Amount">
+                                                <input id="invoice_amount" v-model="invoiceTerm.amount" :name="`invoiceTerms[${index}][amount]`" type="number" step="0.01" class="form-control" placeholder="Amount">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">{{ optional($project->client->country)->currency }}</span>
                                                 </div>
@@ -195,12 +195,22 @@
                                                     </a>
                                                 </div>
                                             </div>
+                                        </div>                                      
+                                    </div>                                  
+                                    <div class="d-flex flex-row justify-content-between mt-3">
+                                        <div class="col-1">
+                                            <button v-on:click="removeProjectInvoiceTerm(index)" type="button" class="btn btn-danger btn-sm text-white fz-14">Remove</button>
                                         </div>
+                                        <div v-if="['sent', 'paid'].includes(invoiceTerm.status)" class="ml-3 row">
+                                            <span class="text-success">
+                                                <i class="fa fa-check-circle fa-lg"></i>
+                                            </span>
+                                            <div class="text small ml-1">
+                                                Invoice has been proceeded for this term.
+                                            </div>
+                                        </div>                                                                                                                                               
                                     </div>
                                     <hr class="bg-dark border-dark">
-                                    <div class="col-1">
-                                        <button v-on:click="removeProjectInvoiceTerm(index)" type="button" class="btn btn-danger btn-sm text-white fz-14">Remove</button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
