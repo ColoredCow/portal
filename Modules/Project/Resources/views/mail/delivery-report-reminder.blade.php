@@ -28,13 +28,13 @@
         </thead>
         <tbody>
             @foreach ($keyAccountManager->invoiceTerms as $invoiceTerm)
-            <tr>
-                <td>
-                    <a href="{{ route('project.edit', $invoiceTerm->project->id) }}">{{ $invoiceTerm->project->name }}</a>
-                </td>
-                <td>{{ \Carbon\Carbon::parse($invoiceTerm->invoice_date)->format('d-m-Y') }}</td>
-                <td>{{ $invoiceTerm->amount }}</td>
-            </tr>
+                <tr>
+                    <td>
+                        <a href="{{ route('project.edit', $invoiceTerm->project->id) }}">{{ $invoiceTerm->project->name }}</a>
+                    </td>
+                    <td>{{ \Carbon\Carbon::parse($invoiceTerm->invoice_date)->format('d-m-Y') }}</td>
+                    <td>{{ $invoiceTerm->amount }} {{$invoiceTerm->project->client->currency_symbol}}</td>
+                </tr>
             @endforeach
         </tbody>
     </table>

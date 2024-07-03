@@ -418,7 +418,7 @@ class ProjectService implements ProjectServiceContract
     public function getPendingDeliveryReportInvoices()
     {
         $currentDate = Carbon::now();
-        $futureDate = $currentDate->copy()->addDays(config('constants.finance.scheduled-invoice.email-duration-in-days'));
+        $futureDate = $currentDate->copy()->addDays(config('constants.finance.scheduled-invoice.delivery-report-reminder-days'));
 
         $groupedInvoices = ProjectInvoiceTerm::where('invoice_date', '<=', $futureDate)
             ->where('report_required', true)
@@ -431,19 +431,24 @@ class ProjectService implements ProjectServiceContract
 
         $keyAccountManagersDetails = [];
 
-        foreach ($groupedInvoices as $projectId => $invoiceTerms) {
+        $groupedInvoices->each(function ($invoiceTerms, $projectId) use (&$keyAccountManagersDetails) {
             $project = $invoiceTerms->first()->project;
             $user = $project->client->keyAccountManager;
+
             if ($user) {
-                if (! isset($keyAccountManagersDetails[$user->id])) {
-                    $keyAccountManagersDetails[$user->id] = new \stdClass();
-                    $keyAccountManagersDetails[$user->id]->invoiceTerms = collect();
-                    $keyAccountManagersDetails[$user->id]->email = $user->email;
-                    $keyAccountManagersDetails[$user->id]->name = $user->name;
+                $userId = $user->id;
+
+                if (! isset($keyAccountManagersDetails[$userId])) {
+                    $keyAccountManagersDetails[$userId] = (object) [
+                        'invoiceTerms' => collect(),
+                        'email' => $user->email,
+                        'name' => $user->name,
+                    ];
                 }
-                $keyAccountManagersDetails[$user->id]->invoiceTerms = $keyAccountManagersDetails[$user->id]->invoiceTerms->merge($invoiceTerms);
+
+                $keyAccountManagersDetails[$userId]->invoiceTerms = $keyAccountManagersDetails[$userId]->invoiceTerms->merge($invoiceTerms);
             }
-        }
+        });        
 
         return $keyAccountManagersDetails;
     }

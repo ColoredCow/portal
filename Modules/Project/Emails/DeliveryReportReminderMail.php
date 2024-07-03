@@ -30,7 +30,7 @@ class DeliveryReportReminderMail extends Mailable
     public function build()
     {
         return $this->subject('Action Required: Missing Delivery Reports for Scheduled Invoices')
-                    ->from(config('mail.from.address'))
+                    ->from('abhishek.negi@coloredcow.in')
                     ->to($this->keyAccountManager->email)
                     ->view('project::mail.delivery-report-reminder');
     }
