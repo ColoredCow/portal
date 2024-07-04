@@ -387,7 +387,7 @@ class ProjectService implements ProjectServiceContract
 
     public function getInvoiceTerms($project)
     {
-        $invoiceTerms = ProjectInvoiceTerm::where('project_id', $project->id)->with('comments')->get();
+        $invoiceTerms = ProjectInvoiceTerm::where('project_id', $project->id)->with('comment')->get();
 
         return $invoiceTerms;
     }
@@ -649,10 +649,11 @@ class ProjectService implements ProjectServiceContract
         }
 
         $existingTerms = $project->invoiceTerms()->get()->keyBy('id');
-
+        
         $termIds = [];
         foreach ($invoiceTerms as $index => $term) {
             $termId = $term['id'] ?? null;
+            $invoice = $project->invoices()->where('sent_on', $term['invoice_date'])->first();
 
             if ($termId && isset($existingTerms[$termId])) {
                 $existingTerm = $existingTerms[$termId];
@@ -671,16 +672,14 @@ class ProjectService implements ProjectServiceContract
                     'delivery_report' => $filePath,
                 ]);
 
-                if (isset($term['comment'])) {
                     $this->addCommentOnInvoiceTerm($term, $existingTerm);
-                }
                 $termIds[] = $termId;
             } else {
                 $filePath = $this->saveOrUpdateDeliveryReport($term, $project, $index);
                 $newTerm = $project->invoiceTerms()->create([
                     'project_id' => $project->id,
                     'invoice_date' => $term['invoice_date'],
-                    'status' => 'yet-to-be-created',
+                    'status' => $invoice ? $invoice->status: $term['status'],
                     'amount' => $term['amount'],
                     'report_required' => $term['report_required'] ?? false,
                     'client_acceptance_required' => $term['client_acceptance_required'] ?? false,
@@ -697,14 +696,17 @@ class ProjectService implements ProjectServiceContract
 
     public function addCommentOnInvoiceTerm($term, $existingTerm)
     {
-        if ($term['comment']) {
-            $comment = Comment::create([
-                'user_id' => auth()->id(),
-                'body' => $term['comment'],
-                'commentable_id' => $existingTerm->id,
-                'commentable_type' => ProjectInvoiceTerm::class,
-            ]);
-            $existingTerm->comments()->save($comment);
+        if (isset($term['comment'])) {
+            Comment::updateOrCreate(
+                [
+                    'user_id' => auth()->id(),
+                    'commentable_id' => $existingTerm->id,
+                    'commentable_type' => ProjectInvoiceTerm::class,
+                ],
+                [
+                    'body' => $term['comment']['body'],
+                ]
+            );
         }
         return;
     }

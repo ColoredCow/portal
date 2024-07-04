@@ -9,7 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProjectInvoiceTerm extends Model
 {
-    protected $fillable = ['project_id','invoice_id', 'invoice_date', 'status', 'client_acceptance_required', 'amount', 'is_accepted', 'report_required', 'delivery_report'];
+    protected $fillable = [
+        'project_id', 'invoice_id', 'invoice_date', 'status',
+        'client_acceptance_required', 'amount', 'is_accepted',
+        'report_required', 'delivery_report'
+    ];
 
     public function project()
     {
@@ -26,8 +30,8 @@ class ProjectInvoiceTerm extends Model
         return $this->belongsTo(Invoice::class);
     }
 
-    public function comments()
+    public function comment()
     {
-        return $this->morphMany(Comment::class, 'commentable');
+        return $this->morphOne(Comment::class, 'commentable');
     }
 }

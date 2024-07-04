@@ -120,14 +120,19 @@
                 },
                 defaultProjectInvoiceTerm() {
                     return {
-                        id: new Date().getTime(),
+                        id: 'New',
                         invoice_date: new Date().getTime(),
                         amount: '',
+                        status: 'yet-to-be-created',
                         client_acceptance_required: 0,
                         report_required: 0,
                         is_accepted: 0,
                         delivery_report: '',
-                        comment:''
+                        comment:{
+                            id: new Date().getTime(),
+                            body: '',
+                            user: null
+                        }
                     }
                 },
                 defaultProjectRepository() {
@@ -288,10 +293,19 @@
                 getDeliveryReportUrl(invoiceTermId) {
                     return `{{ route('delivery-report.show', ':id') }}`.replace(':id', invoiceTermId);
                 },
-                toggleOverDue(index){
-                    const invoiceDate = new Date(this.invoiceTerms[index].invoice_date);
+                toggleDelayInput(index){
+                    const invoiceTerm = this.invoiceTerms[index]
+                    const invoiceDate = new Date(invoiceTerm.invoice_date);
                     const currentDate = new Date();
-                    return invoiceDate <= currentDate;
+                    return invoiceDate <= currentDate && invoiceTerm.status === 'yet-to-be-created' && invoiceTerm.id !== 'New';
+                },
+                toggleDelayReason(index){
+                    const invoiceTermComment= this.invoiceTerms[index].comment
+                    return invoiceTermComment && invoiceTermComment.body !== "";
+                },
+                formatDate(dateString) {
+                    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+                    return new Date(dateString).toISOString().slice(0, 10);
                 }
             },
 
