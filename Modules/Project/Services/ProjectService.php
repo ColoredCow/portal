@@ -670,7 +670,8 @@ class ProjectService implements ProjectServiceContract
                     'is_accepted' => $term['is_accepted'] ?? $existingTerm->is_accepted,
                     'delivery_report' => $filePath,
                 ]);
-                if(isset($term['comment'])){
+
+                if (isset($term['comment'])){
                     $this->addCommentOnInvoiceTerm($term, $existingTerm);
                 }
                 $termIds[] = $termId;
@@ -694,9 +695,9 @@ class ProjectService implements ProjectServiceContract
         $project->invoiceTerms()->whereNotIn('id', $termIds)->delete();
     }
 
-    public function addCommentOnInvoiceTerm ($term, $existingTerm)
+    public function addCommentOnInvoiceTerm($term, $existingTerm)
     {
-        if($term['comment']){
+        if ($term['comment']){
             $comment = Comment::create([
                 'user_id' => auth()->id(),
                 'body' => $term['comment'],
