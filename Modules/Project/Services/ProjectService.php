@@ -518,7 +518,7 @@ class ProjectService implements ProjectServiceContract
                 ]
             );
         }
-        return;
+
     }
 
     private function prepareStageData(array $stage): array

@@ -4,8 +4,8 @@ namespace Modules\Project\Entities;
 
 use App\Models\Comment;
 use Carbon\Carbon;
-use Modules\Invoice\Entities\Invoice;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Invoice\Entities\Invoice;
 
 class ProjectInvoiceTerm extends Model
 {
