@@ -25,7 +25,7 @@ class CreateProjectInvoiceTerms extends Migration
             $table->boolean('report_required')->nullable();
             $table->string('delivery_report')->nullable();
             $table->timestamps();
-        
+
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->index('project_id');

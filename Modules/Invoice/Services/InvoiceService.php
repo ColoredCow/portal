@@ -789,12 +789,11 @@ class InvoiceService implements InvoiceServiceContract
         $invoiceStatus = $invoice->status;
         $invoiceId = $invoice->id;
 
-
         foreach ($project->invoiceTerms as $scheduledInvoice) {
             if (Carbon::parse($scheduledInvoice->invoice_date)->toDateString() === $invoiceSentOn) {
                 $scheduledInvoice->update([
                     'status' => $invoiceStatus,
-                    'invoice_id' => $invoiceId
+                    'invoice_id' => $invoiceId,
                 ]);
             }
         }

@@ -504,6 +504,23 @@ class ProjectService implements ProjectServiceContract
         );
     }
 
+    public function addCommentOnInvoiceTerm($term, $existingTerm)
+    {
+        if (isset($term['comment'])) {
+            Comment::updateOrCreate(
+                [
+                    'user_id' => auth()->id(),
+                    'commentable_id' => $existingTerm->id,
+                    'commentable_type' => ProjectInvoiceTerm::class,
+                ],
+                [
+                    'body' => $term['comment']['body'],
+                ]
+            );
+        }
+        return;
+    }
+
     private function prepareStageData(array $stage): array
     {
         $startDate = null;
@@ -649,7 +666,7 @@ class ProjectService implements ProjectServiceContract
         }
 
         $existingTerms = $project->invoiceTerms()->get()->keyBy('id');
-        
+
         $termIds = [];
         foreach ($invoiceTerms as $index => $term) {
             $termId = $term['id'] ?? null;
@@ -679,7 +696,7 @@ class ProjectService implements ProjectServiceContract
                 $newTerm = $project->invoiceTerms()->create([
                     'project_id' => $project->id,
                     'invoice_date' => $term['invoice_date'],
-                    'status' => $invoice ? $invoice->status: $term['status'],
+                    'status' => $invoice ? $invoice->status : $term['status'],
                     'amount' => $term['amount'],
                     'report_required' => $term['report_required'] ?? false,
                     'client_acceptance_required' => $term['client_acceptance_required'] ?? false,
@@ -692,23 +709,6 @@ class ProjectService implements ProjectServiceContract
         }
 
         $project->invoiceTerms()->whereNotIn('id', $termIds)->delete();
-    }
-
-    public function addCommentOnInvoiceTerm($term, $existingTerm)
-    {
-        if (isset($term['comment'])) {
-            Comment::updateOrCreate(
-                [
-                    'user_id' => auth()->id(),
-                    'commentable_id' => $existingTerm->id,
-                    'commentable_type' => ProjectInvoiceTerm::class,
-                ],
-                [
-                    'body' => $term['comment']['body'],
-                ]
-            );
-        }
-        return;
     }
 
     private function updateProjectRepositories($data, $project)

@@ -204,7 +204,6 @@ class ProjectController extends Controller
         ]);
     }
 
-
     public function showDeliveryReport($invoiceId)
     {
         return $this->service->showDeliveryReport($invoiceId);
