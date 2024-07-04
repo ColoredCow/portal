@@ -16,7 +16,7 @@ class ProjectInvoiceTerm extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public function getCurrentStatusAttribute() 
+    public function getCurrentStatusAttribute()
     {
         return Carbon::now() > $this->invoice_date ? 'overdue' : $this->status;
     }
