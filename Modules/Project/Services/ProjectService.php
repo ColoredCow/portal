@@ -671,7 +671,7 @@ class ProjectService implements ProjectServiceContract
                     'delivery_report' => $filePath,
                 ]);
 
-                if (isset($term['comment'])){
+                if (isset($term['comment'])) {
                     $this->addCommentOnInvoiceTerm($term, $existingTerm);
                 }
                 $termIds[] = $termId;
@@ -697,7 +697,7 @@ class ProjectService implements ProjectServiceContract
 
     public function addCommentOnInvoiceTerm($term, $existingTerm)
     {
-        if ($term['comment']){
+        if ($term['comment']) {
             $comment = Comment::create([
                 'user_id' => auth()->id(),
                 'body' => $term['comment'],
