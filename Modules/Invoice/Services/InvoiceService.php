@@ -787,41 +787,24 @@ class InvoiceService implements InvoiceServiceContract
 
         $invoiceSentOn = Carbon::parse($invoice->sent_on)->toDateString();
         $invoiceStatus = $invoice->status;
+        $invoiceId = $invoice->id;
+
 
         foreach ($project->invoiceTerms as $scheduledInvoice) {
             if (Carbon::parse($scheduledInvoice->invoice_date)->toDateString() === $invoiceSentOn) {
-                $scheduledInvoice->update(['status' => $invoiceStatus]);
+                $scheduledInvoice->update([
+                    'status' => $invoiceStatus,
+                    'invoice_id' => $invoiceId
+                ]);
             }
         }
     }
 
     public function getScheduledInvoices()
     {
-        return ProjectInvoiceTerm::with(['project.client', 'project.invoices'])
+        return ProjectInvoiceTerm::with('project')
             ->whereNotIn('status', ['sent', 'paid'])
-            ->get()
-            ->map(function ($term) {
-                $project = $term->project;
-                $client = $project->client;
-                $termDate = Carbon::parse($term->invoice_date)->toDateString();
-
-                $invoice = $project->invoices->first(function ($invoice) use ($termDate) {
-                    return Carbon::parse($invoice->sent_on)->toDateString() == $termDate;
-                });
-
-                $status = $invoice ? $invoice->status : $term->status;
-
-                if ($termDate < Carbon::now()->toDateString()) {
-                    $status = 'overdue';
-                }
-
-                return [
-                    'invoiceTerm' => $term,
-                    'project' => $project,
-                    'client' => $client,
-                    'status' => $status,
-                ];
-            });
+            ->get();
     }
 
     public function getScheduledInvoicesForMail()

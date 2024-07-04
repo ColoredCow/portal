@@ -2,6 +2,7 @@
 
 namespace Modules\Project\Services;
 
+use App\Models\Comment;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Arr;
@@ -384,7 +385,7 @@ class ProjectService implements ProjectServiceContract
 
     public function getInvoiceTerms($project)
     {
-        $invoiceTerms = ProjectInvoiceTerm::where('project_id', $project->id)->get();
+        $invoiceTerms = ProjectInvoiceTerm::where('project_id', $project->id)->with('comments')->get();
 
         return $invoiceTerms;
     }
@@ -589,7 +590,9 @@ class ProjectService implements ProjectServiceContract
                     'is_accepted' => $term['is_accepted'] ?? $existingTerm->is_accepted,
                     'delivery_report' => $filePath,
                 ]);
-
+                if(isset($term['comment'])){
+                    $this->addCommentOnInvoiceTerm($term, $existingTerm);
+                }
                 $termIds[] = $termId;
             } else {
                 $filePath = $this->saveOrUpdateDeliveryReport($term, $project, $index);
@@ -609,6 +612,20 @@ class ProjectService implements ProjectServiceContract
         }
 
         $project->invoiceTerms()->whereNotIn('id', $termIds)->delete();
+    }
+
+    public function addCommentOnInvoiceTerm ($term, $existingTerm)
+    {
+        if($term['comment']){
+            $comment = Comment::create([
+                'user_id' => auth()->id(),
+                'body' => $term['comment'],
+                'commentable_id' => $existingTerm->id,
+                'commentable_type' => ProjectInvoiceTerm::class,
+            ]);
+            $existingTerm->comments()->save($comment);
+        }
+        return;
     }
 
     private function updateProjectRepositories($data, $project)

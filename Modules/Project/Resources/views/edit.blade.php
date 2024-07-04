@@ -126,7 +126,8 @@
                         client_acceptance_required: 0,
                         report_required: 0,
                         is_accepted: 0,
-                        deliveryReport: '',
+                        delivery_report: '',
+                        comment:''
                     }
                 },
                 defaultProjectRepository() {
@@ -286,6 +287,11 @@
                 },
                 getDeliveryReportUrl(invoiceTermId) {
                     return `{{ route('delivery-report.show', ':id') }}`.replace(':id', invoiceTermId);
+                },
+                toggleOverDue(index){
+                    const invoiceDate = new Date(this.invoiceTerms[index].invoice_date);
+                    const currentDate = new Date();
+                    return invoiceDate <= currentDate;
                 }
             },
 

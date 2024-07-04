@@ -149,7 +149,7 @@
                     <div class="bg-theme-gray-light p-2 rounded">
                         <div class="row" v-for="(invoiceTerm, index) in invoiceTerms" :key="invoiceTerm.id">
                             <input type="hidden" name="invoiceTerm" value="">
-                            <input type="hidden" :name="`invoiceTerms[${index}][id]`"  v-model="invoiceTerm.id">
+                            <input type="hidden" :name="`invoiceTerms[${index}][id]`" v-model="invoiceTerm.id">
                             <div class="row col-12">
                                 <div class="card-body ml-4">
                                     <div class="form-row">
@@ -188,16 +188,36 @@
                                             </div>
                                             <div class="custom-file mb-3">
                                                 <input type="file" id="delivery_report" :name="`invoiceTerms[${index}][delivery_report]`" class="custom-file-input" @change="handleFileUpload($event, index)">
-                                                <label for="delivery_report" class="custom-file-label overflow-hidden">Upload Report</label>
-                                                <div v-if="invoiceTerm.delivery_report" class="indicator" style="margin-top: 3px">
+                                                <label for="delivery_report" class="custom-file-label overflow-hidden">Upload Report</label> <div v-if="invoiceTerm.delivery_report" class="indicator" style="margin-top: 3px">
                                                     <a :id="`delivery_report_${index}`" :href="getDeliveryReportUrl(invoiceTerm.id)" target="_blank">
                                                         <span class="mr-1 underline theme-info fz-16">@{{ getFileName(invoiceTerm.delivery_report) }}</span>
                                                     </a>
                                                 </div>
                                             </div>
-                                        </div>                                      
-                                    </div>                                  
-                                    <div class="d-flex flex-row justify-content-between mt-3">
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-1" v-if="toggleOverDue(index)">
+                                        <div class="col-6" v-if="invoiceTerm.comments && invoiceTerm.comments.length > 0">
+                                            <label>{{ __('Reasons For Delay') }}</label>
+                                            <div v-for="comment in invoiceTerm.comments" class="bg-light rounded p-1 mb-1">
+                                                <div>@{{ comment.body }}</div>
+                                                <div class="text small text-muted d-flex justify-content-end">
+                                                    <strong>{{ "- " }}@{{ comment.user.name }}</strong> (@{{ comment.created_at }})
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <label>{{ __('Add Reason For Delay') }}</label>
+                                            <textarea id="comment"
+                                                      v-model="invoiceTerm.comment"
+                                                      :name="`invoiceTerms[${index}][comment]`"
+                                                      class="form-control"
+                                                      placeholder="Please submit the reason of delay here.."
+                                            ></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-flex flex-row justify-content-between mr-3 mt-3">
                                         <div class="col-1">
                                             <button v-on:click="removeProjectInvoiceTerm(index)" type="button" class="btn btn-danger btn-sm text-white fz-14">Remove</button>
                                         </div>
@@ -208,7 +228,7 @@
                                             <div class="text small ml-1">
                                                 Invoice has been proceeded for this term.
                                             </div>
-                                        </div>                                                                                                                                               
+                                        </div> 
                                     </div>
                                     <hr class="bg-dark border-dark">
                                 </div>

@@ -16,6 +16,7 @@ class CreateProjectInvoiceTerms extends Migration
         Schema::create('project_invoice_terms', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('project_id');
+            $table->unsignedBigInteger('invoice_id')->nullable();
             $table->date('invoice_date')->nullable();
             $table->decimal('amount', 10, 2)->nullable();
             $table->string('status')->nullable();
@@ -24,9 +25,11 @@ class CreateProjectInvoiceTerms extends Migration
             $table->boolean('report_required')->nullable();
             $table->string('delivery_report')->nullable();
             $table->timestamps();
-
+        
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->index('project_id');
+            $table->index('invoice_id');
         });
     }
 
