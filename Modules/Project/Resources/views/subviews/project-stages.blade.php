@@ -12,24 +12,24 @@
                             <tbody>
                                     <tr class="bg-theme-gray-lightest d-flex justify-content-between flex-wrap">
                                         <td>@{{ index + 1 }}</td>
-                                        <td>
-                                            <p class="fz-16 font-weight-bold">Stage Name</p>
+                                        <td class="w-150">
+                                            <p class="fz-16 font-weight-bold field-required">Stage Name</p>
                                             <input v-if="isEditing(index)" type="text" v-model="stage.stage_name" @input="markStageAsUpdated(stage)" class="form-control fz-16" required :disabled="!isEditing(index)">
                                             <p v-else class="max-w-100">@{{ stage.stage_name }}</p>
                                         </td>
-                                        <td v-if="stage.initialStatus === 'completed' && stage.id">
+                                        <td>
                                             <p class="fz-16 font-weight-bold">Start Date</p>
-                                            <input v-if="isEditing(index)" type="date" :value="formattedDate(stage.start_date)" class="form-control fz-14" disabled>
+                                            <input v-if="isEditing(index)" @input="markStageAsUpdated(stage)" type="datetime-local" v-model="stage.start_date" class="form-control fz-14" :disabled="!isEditing(index)">
                                             <p v-else class="fz-16">@{{ formatDisplayDate(stage.start_date) }}</p>
                                         </td>
                                         <td>
-                                        <p class="fz-16 font-weight-bold">Expected End Date</p>
-                                            <input v-if="isEditing(index)" type="date" v-model="stage.expected_end_date" class="form-control fz-14" required :disabled="!isEditing(index)">
+                                        <p class="fz-16 font-weight-bold field-required">Expected End Date</p>
+                                            <input v-if="isEditing(index)" @input="markStageAsUpdated(stage)" type="date" v-model="stage.expected_end_date" class="form-control fz-14" required :disabled="!isEditing(index)">
                                             <p v-else class="fz-16">@{{ formatDisplayDate(stage.expected_end_date) }}</p>
                                         </td>
-                                        <td v-if="stage.initialStatus === 'completed' && stage.id">
+                                        <td>
                                             <p class="fz-16 font-weight-bold">Actual End Date</p>
-                                            <input v-if="isEditing(index)" type="date" :value="formattedDate(stage.end_date)" class="form-control fz-14" disabled>
+                                            <input v-if="isEditing(index)" @input="markStageAsUpdated(stage)" type="datetime-local" v-model="stage.end_date"  class="form-control fz-14" :disabled="!isEditing(index)">
                                             <p v-else class="fz-16">@{{ formatDisplayDate(stage.end_date) }}</p>
                                         </td>
                                         <td>
@@ -37,19 +37,19 @@
                                             <select @change="updateStatus($event.target.value, index)" v-model="stage.status" :class="[dropdownClass(stage.status), 'fz-14']" :disabled="!isEditing(index)">
                                                 <option value="pending" :disabled="stage.status === 'pending'">Pending</option>
                                                 <option value="started" :disabled="stage.status === 'started'">Started</option>
-                                                <option value="completed" :disabled="stage.status === 'completed'" v-if="stage.status !== 'pending'">Completed</option>
+                                                <option value="completed" :disabled="stage.status === 'completed'">Completed</option>
                                                 <option value="overdue" disabled v-if="new Date(stage.expected_end_date) < new Date(currentDate)">Overdue</option>
                                             </select>
-                                        </td>
-                                        <td>
-                                            <p class="fz-16 font-weight-bold">Comments</p>
-                                            <textarea v-model="stage.comments" @input="markStageAsUpdated(stage)" :class="{'d-none': !isEditing(index), 'form-control': true, 'fz-16': true, 'min-h-100': true }" :id="'stage-comments-' + index" :disabled="!isEditing(index)"></textarea>
-                                            <p :class="{'d-none': isEditing(index), 'max-w-200': true }" @input="markStageAsUpdated(stage)" @change="markStageAsUpdated(stage)" @blur="markStageAsUpdated(stage)" v-html="stage.comments"></p>
                                         </td>
                                         <td>
                                             <p class="fz-16 font-weight-bold">Action</p>
                                             <button type="button" @click="deleteStage(stage)" class="btn btn-danger px-2 py-1 mb-1"><i class="fa fa-trash"></i></button>
                                             <button type="button" @click="editStage(index)" class="btn btn-warning px-2 py-1 mb-1"><i class="fa fa-pencil"></i></button>
+                                        </td>
+                                        <td class="pl-15 pt-5">
+                                            <p class="fz-16 font-weight-bold">Comments</p>
+                                            <textarea v-model="stage.comments" @input="markStageAsUpdated(stage)" :class="{'d-none': !isEditing(index), 'form-control': true, 'fz-16': true, 'min-h-100': true }" :id="'stage-comments-' + index" :disabled="!isEditing(index)"></textarea>
+                                            <p :class="{'d-none': isEditing(index), 'w-full min-w-500': true }" @input="markStageAsUpdated(stage)" @change="markStageAsUpdated(stage)" @blur="markStageAsUpdated(stage)" v-html="stage.comments"></p>
                                         </td>
                                     </tr>
                                     <tr v-if="stage.duration" class="bg-theme-gray-lightest">
