@@ -672,7 +672,7 @@ class ProjectService implements ProjectServiceContract
                     'delivery_report' => $filePath,
                 ]);
 
-                    $this->addCommentOnInvoiceTerm($term, $existingTerm);
+                $this->addCommentOnInvoiceTerm($term, $existingTerm);
                 $termIds[] = $termId;
             } else {
                 $filePath = $this->saveOrUpdateDeliveryReport($term, $project, $index);
