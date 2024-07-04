@@ -454,6 +454,7 @@ class ProjectService implements ProjectServiceContract
         });
 
         return $keyAccountManagersDetails;
+    }
 
     public function getProjectStages(Project $project)
     {
