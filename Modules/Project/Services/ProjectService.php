@@ -457,7 +457,7 @@ class ProjectService implements ProjectServiceContract
             'start_date' => $startDate,
             'end_date' => $endDate,
             'expected_end_date' => $stage['expected_end_date'],
-            'duration' => $duration ?: 1,
+            'duration' => $duration === 0 ? 1 : $duration,
         ];
     }
 
