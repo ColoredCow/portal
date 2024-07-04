@@ -212,9 +212,9 @@ class ProjectController extends Controller
             'newStages.*.status' => 'nullable|string',
             'newStages.*.expected_end_date' => 'required|date',
             'deletedStages' => 'nullable|array',
-            'deletedStages.*' => 'required|integer|exists:project_old_stages,id',
+            'deletedStages.*' => 'required|integer|exists:project_new_stages,id',
             'updatedStages' => 'nullable|array',
-            'updatedStages.*.id' => 'required|integer|exists:project_old_stages,id',
+            'updatedStages.*.id' => 'required|integer|exists:project_new_stages,id',
         ]);
 
         if (empty($validatedData['deletedStages']) && empty($validatedData['newStages']) && empty($validatedData['updatedStages'])) {

@@ -364,8 +364,8 @@
                 return delay ? `${duration} (<strong>Delay: </strong>${delay})` : duration;
             },
             calculateDelay(endDate, expectedEndDate) {
-                const delaySeconds = Math.floor((new Date(endDate) - new Date(expectedEndDate)) / 1000);
-                return delaySeconds > 0 ? this.convertToDateTime(delaySeconds) : null;
+                const delayDays = Math.floor((new Date(endDate).setHours(0, 0, 0, 0) - new Date(expectedEndDate).setHours(0, 0, 0, 0)) / 1000);
+                return delayDays > 0 ? this.convertToDateTime(delayDays) : null;
             },
             formattedDate(dateTime) {
                 return dateTime ? new Date(dateTime).toISOString().split('T')[0] : '';
@@ -420,9 +420,14 @@
                 const stage = this.stages[index];
                 stage.status = status;
                 if (status === 'started') {
-                    stage.start_date = new Date().toISOString();
+                    if (status !== this.stages[index].initialStatus) {
+                        this.stages[index].start_date = new Date().toISOString();
+                    }
                     stage.end_date = null;
                 } else if (status === 'completed') {
+                    if ('started' !== this.stages[index].initialStatus) {
+                        this.stages[index].start_date = new Date().toISOString();
+                    }
                     stage.end_date = new Date().toISOString();
                 } else if (status === 'pending') {
                     stage.start_date = null;
