@@ -6,25 +6,28 @@
         <div class="row col-12">
             <div class="card-body ml-4">
                 <div class="form-row">
-                    <div class="form-check">
-                        <input type="checkbox" id="report_required" :name="`invoiceTerms[${index}][report_required]`" v-model="invoiceTerm.report_required" :value="1" style="width: 15px; height: 15px;">
-                        <label class="form-check-label" for="report_required">{{ __('Delivery Report Required') }}</label>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" :id="`report_required_${index}`" class="custom-control-input section-toggle-checkbox"
+                               :name="`invoiceTerms[${index}][report_required]`" v-model="invoiceTerm.report_required" :value="1">
+                        <label class="custom-control-label" :for="`report_required_${index}`">{{ __('Delivery Report Required') }}</label>
                     </div>
-                    <div class="form-check">
-                        <input type="checkbox" id="client_acceptance_required" :name="`invoiceTerms[${index}][client_acceptance_required]`" v-model="invoiceTerm.client_acceptance_required" :value="1" style="width: 15px; height: 15px;">
-                        <label class="form-check-label" for="client_acceptance_required">{{ __('Client Acceptance Required') }}</label>
+                    <div class="custom-control custom-checkbox ml-2">
+                        <input type="checkbox" :id="`client_acceptance_required_${index}`" class="custom-control-input section-toggle-checkbox"
+                               :name="`invoiceTerms[${index}][client_acceptance_required]`" v-model="invoiceTerm.client_acceptance_required" :value="1">
+                        <label class="custom-control-label" :for="`client_acceptance_required_${index}`">{{ __('Client Acceptance Required') }}</label>
                     </div>
                     <div v-if="invoiceTerm.client_acceptance_required == 1">
-                        <div class="form-check">
-                            <input type="checkbox" id="is_accepted" :name="`invoiceTerms[${index}][is_accepted]`" v-model="invoiceTerm.is_accepted" :value="1" style="width: 15px; height: 15px;">
-                            <label class="form-check-label" for="is_confirmed_yes">{{ __('Accepted From Client') }}</label>
+                        <div class="custom-control custom-checkbox ml-2">
+                            <input type="checkbox" class="custom-control-input section-toggle-checkbox"
+                                   :name="`invoiceTerms[${index}][is_accepted]`" v-model="invoiceTerm.is_accepted" :value="1" :id="`isAccepted_${index}`">
+                            <label class="custom-control-label" :for="`isAccepted_${index}`">{{ __('Accepted From Client') }}</label>
                         </div>
                     </div>
-                </div>
+                </div>                
                 <div class="form-row mt-4">
                     <div class="col-3">
                         <label class="text-center" for="invoice_date">{{ __('Invoice Date') }}</label>
-                        <input id="invoice_date" class="form-control" type="date" :name="`invoiceTerms[${index}][invoice_date]`" v-model="invoiceTerm.invoice_date">
+                        <input id="invoice_date" class="form-control" type="date" :name="`invoiceTerms[${index}][invoice_date]`" v-model="invoiceTerm.invoice_date" @input="isDateChange(index)">
                     </div>
                     <div class="col-3">
                         <label for="invoice_amount">{{ __('Invoice Amount') }}</label>
@@ -50,7 +53,7 @@
                     </div>
                 </div>
                 <div class="form-row mt-1">
-                    <div class="col-6" v-if="toggleDelayInput(index)">
+                    <div class="col-6" v-if="invoiceTerms[index].date_change">
                         <label>{{ __('Add Reason For Delay') }}</label>
                         <textarea id="comment"
                         :name="`invoiceTerms[${index}][comment][body]`"
@@ -63,7 +66,7 @@
                             <div>
                                 <div class="bg-light rounded p-2">
                                     <div class="text small mb-3">
-                                        {{'Last updated at ' }} @{{formatDate(invoiceTerm.updated_at)}}
+                                        {{'Last updated on ' }} @{{formatDate(invoiceTerm.updated_at)}}
                                     </div>
                                     <div>
                                         <strong>{{_('Reaseon for delay')}}</strong>

@@ -128,7 +128,8 @@
                         report_required: 0,
                         is_accepted: 0,
                         delivery_report: '',
-                        comment:{
+                        date_change: false,
+                        comment: {
                             id: new Date().getTime(),
                             body: '',
                             user: null
@@ -293,19 +294,17 @@
                 getDeliveryReportUrl(invoiceTermId) {
                     return `{{ route('delivery-report.show', ':id') }}`.replace(':id', invoiceTermId);
                 },
-                toggleDelayInput(index){
-                    const invoiceTerm = this.invoiceTerms[index]
-                    const invoiceDate = new Date(invoiceTerm.invoice_date);
-                    const currentDate = new Date();
-                    return invoiceDate <= currentDate && invoiceTerm.status === 'yet-to-be-created' && invoiceTerm.id !== 'New';
-                },
                 toggleDelayReason(index){
                     const invoiceTermComment= this.invoiceTerms[index].comment
+                    console.log(this.invoiceTerms[index].invoice_date, index);
                     return invoiceTermComment && invoiceTermComment.body !== "";
                 },
                 formatDate(dateString) {
                     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
                     return new Date(dateString).toISOString().slice(0, 10);
+                },
+                isDateChange(index) {
+                    this.$set(this.invoiceTerms[index], 'date_change', true);
                 }
             },
 
