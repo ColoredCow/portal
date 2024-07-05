@@ -52,10 +52,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-row mt-1">
-                    <div  class="col-6">
+                <div class="form-row">
+                    <div class="col-10" v-if="invoiceTerms[index].date_change">
+                        <label>{{ __('Add Reason for Rescheduling') }}</label>
+                        <textarea id="comment"
+                        :name="`invoiceTerms[${index}][comment][body]`"
+                        class="form-control"
+                        placeholder="Please submit the reason of rescheduling here.."
+                        ></textarea>
+                    </div>
+                    <div class="col-10 mt-2">
                         <div v-if="toggleDelayReason(index)">
-                            <div>
+                            <span class="mb-3" style="text-decoration: underline;" type="button" data-toggle="collapse"
+                                data-target="#scheduleHistory" aria-expanded="false" aria-controls="scheduleHistory">Change Log 
+                                <i class="fa fa-history ml-1" aria-hidden="true"></i></span>
+                            <div class="collapse" id="scheduleHistory">
                                 <div class="bg-light rounded p-2">
                                     <div class="text small mb-3">
                                         {{'Last updated on ' }} @{{formatDate(invoiceTerm.updated_at)}}
@@ -70,14 +81,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-6" v-if="invoiceTerms[index].date_change">
-                        <label>{{ __('Add Reason for Rescheduling') }}</label>
-                        <textarea id="comment"
-                        :name="`invoiceTerms[${index}][comment][body]`"
-                        class="form-control"
-                        placeholder="Please submit the reason of rescheduling here.."
-                        ></textarea>
                     </div>
                 </div>
                 <div class="d-flex flex-row justify-content-between mr-3 mt-3">
