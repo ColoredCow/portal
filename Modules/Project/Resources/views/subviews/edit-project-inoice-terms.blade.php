@@ -61,7 +61,7 @@
                                         {{'Last updated on ' }} @{{formatDate(invoiceTerm.updated_at)}}
                                     </div>
                                     <div>
-                                        <strong>{{_('Reaseon for delay')}}</strong>
+                                        <strong>{{_('Reaseon for rescheduling')}}</strong>
                                     </div>
                                     <div>@{{ invoiceTerm.comment?.body }}</div>
                                     <div class="text small text-muted d-flex justify-content-end">
@@ -72,11 +72,11 @@
                         </div>
                     </div>
                     <div class="col-6" v-if="invoiceTerms[index].date_change">
-                        <label>{{ __('Add Reason For Delay') }}</label>
+                        <label>{{ __('Add Reason for Rescheduling') }}</label>
                         <textarea id="comment"
                         :name="`invoiceTerms[${index}][comment][body]`"
                         class="form-control"
-                        placeholder="Please submit the reason of delay here.."
+                        placeholder="Please submit the reason of rescheduling here.."
                         ></textarea>
                     </div>
                 </div>
