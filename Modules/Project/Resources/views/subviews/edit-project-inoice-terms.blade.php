@@ -53,14 +53,6 @@
                     </div>
                 </div>
                 <div class="form-row mt-1">
-                    <div class="col-6" v-if="invoiceTerms[index].date_change">
-                        <label>{{ __('Add Reason For Delay') }}</label>
-                        <textarea id="comment"
-                        :name="`invoiceTerms[${index}][comment][body]`"
-                        class="form-control"
-                        placeholder="Please submit the reason of delay here.."
-                        ></textarea>
-                    </div>
                     <div  class="col-6">
                         <div v-if="toggleDelayReason(index)">
                             <div>
@@ -78,6 +70,14 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-6" v-if="invoiceTerms[index].date_change">
+                        <label>{{ __('Add Reason For Delay') }}</label>
+                        <textarea id="comment"
+                        :name="`invoiceTerms[${index}][comment][body]`"
+                        class="form-control"
+                        placeholder="Please submit the reason of delay here.."
+                        ></textarea>
                     </div>
                 </div>
                 <div class="d-flex flex-row justify-content-between mr-3 mt-3">
