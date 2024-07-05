@@ -373,6 +373,12 @@
             formatDisplayDate(date) {
                 return new Date(date).toDateString().split(' ').slice(1).join(' ');
             },
+            formatDateTime(dateTime) {
+                var date = new Date(dateTime);
+                var datePart = date.toISOString().split('T')[0];
+                var timePart = date.toTimeString().split(' ')[0].slice(0, 5);
+                return `${datePart}T${timePart}`;
+            },
             addStage() {
                 const newIndex = this.stages.length;
                 this.editStage(newIndex);
@@ -421,14 +427,14 @@
                 stage.status = status;
                 if (status === 'started') {
                     if (status !== this.stages[index].initialStatus) {
-                        this.stages[index].start_date = new Date().toISOString();
+                        this.stages[index].start_date = stage.start_date || this.formatDateTime(new Date());
                     }
                     stage.end_date = null;
                 } else if (status === 'completed') {
                     if ('started' !== this.stages[index].initialStatus) {
-                        this.stages[index].start_date = new Date().toISOString();
+                        this.stages[index].start_date = stage.start_date || this.formatDateTime(new Date());
                     }
-                    stage.end_date = new Date().toISOString();
+                    stage.end_date = stage.end_date || this.formatDateTime(new Date());
                 } else if (status === 'pending') {
                     stage.start_date = null;
                     stage.end_date = null;
