@@ -16,7 +16,7 @@
                                :name="`invoiceTerms[${index}][client_acceptance_required]`" v-model="invoiceTerm.client_acceptance_required" :value="1">
                         <label class="custom-control-label" :for="`client_acceptance_required_${index}`">{{ __('Client Acceptance Required') }}</label>
                     </div>
-                    <div v-if="invoiceTerm.client_acceptance_required == 1">
+                    <div v-if="['sent', 'paid'].includes(invoiceTerm.status) && invoiceTerm.client_acceptance_required == 1">
                         <div class="custom-control custom-checkbox ml-2">
                             <input type="checkbox" class="custom-control-input section-toggle-checkbox"
                                    :name="`invoiceTerms[${index}][is_accepted]`" v-model="invoiceTerm.is_accepted" :value="1" :id="`isAccepted_${index}`">
