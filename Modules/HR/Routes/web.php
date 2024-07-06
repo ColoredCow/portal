@@ -99,6 +99,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/teaminteraction', 'JobApplicationController@generateTeamInteractionEmail');
             Route::get('/finishinterview', 'JobApplicationController@markInterviewFinished')->name('markInterviewFinished');
             Route::get('/onHoldEmail', 'JobApplicationController@generateOnHoldEmail');
+            Route::get('/interviewsIndex', 'JobApplicationController@interviewsIndex')->name('applications.interviewsIndex');
 
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
@@ -152,6 +153,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/delete/{id}', 'HrJobDesignationController@destroy')->name('designation.delete');
         Route::get('/{id}/edit', 'HrJobDesignationController@edit')->name('designation.edit');
         Route::post('/store', 'HrJobDesignationController@storeDesignation')->name('hr-job-designation.storeJobDesignation');
+    });
+
+    Route::prefix('finance')->group(function () {
+        Route::post('payroll-list-mail', 'EmployeeController@sendPayrollListMail')->name('payroll-list-mail');
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');

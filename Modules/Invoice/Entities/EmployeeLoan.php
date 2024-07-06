@@ -20,6 +20,11 @@ class EmployeeLoan extends Model
         return $this->belongsTo(Employee::class);
     }
 
+    public function installments()
+    {
+        return $this->hasMany(LoanInstallment::class, 'loan_id');
+    }
+
     public function getTenureInMonthsAttribute()
     {
         $endDate = $this->end_date;
@@ -34,20 +39,21 @@ class EmployeeLoan extends Model
         $thisMonthDeduction = (float) $this->monthly_deduction;
         $balance = $this->remaining_balance;
 
-        if ($balance < $thisMonthDeduction) {
-            return $balance;
+        if ($balance <= 0) {
+            return 0;
         }
 
-        return (float) $thisMonthDeduction;
+        return min($thisMonthDeduction, (float) $balance);
     }
 
     public function getRemainingBalanceAttribute()
     {
-        $endDate = today();
-        $startDate = $this->start_date;
-        $diffInMonths = ($endDate->year - $startDate->year) * 12 + ($endDate->month - $startDate->month);
-        $balance = (float) $this->total_amount - (($diffInMonths) * (float) $this->monthly_deduction);
+        $lastInstallment = $this->installments()->orderBy('installment_date', 'desc')->first();
 
-        return $balance;
+        if (! $lastInstallment) {
+            return $this->total_amount;
+        }
+
+        return $lastInstallment->remaining_amount;
     }
 }

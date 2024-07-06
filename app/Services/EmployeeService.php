@@ -47,7 +47,11 @@ class EmployeeService
     public function getEmployeeListForExport($exportType)
     {
         $employees = Employee::with('user')->where('payroll_type', $exportType)->whereHas('user', function ($query) {
-            $query->whereNull('deleted_at');
+            $startOfMonth = now()->startOfMonth()->toDateTimeString();
+            $endOfMonth = now()->endOfMonth()->toDateTimeString();
+
+            return $query->withTrashed()->whereNull('deleted_at')
+                ->orWhereBetween('deleted_at', [$startOfMonth, $endOfMonth]);
         })
             ->orderBy('cc_employee_id')
             ->get();

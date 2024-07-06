@@ -13,6 +13,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, WithTitle, WithStyles
 {
     protected $employees;
+    protected $employeesRowCount = 0;
 
     public function __construct($employees)
     {
@@ -30,8 +31,8 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
         $totalFoodAllowance = 0;
         $totalSalary = 0;
         $daysInMonth = Carbon::now()->daysInMonth;
-        $totalDays = $this->employees->count() * $daysInMonth;
-        $totalPaidDays = $this->employees->count() * $daysInMonth;
+        $totalDays = 0;
+        $totalPaidDays = 0;
         $totalEmployeeEsi = 0;
         $totalEmployeeEpf = 0;
         $totalTds = 0;
@@ -54,60 +55,123 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
                 continue;
             }
 
-            $totalGrossSalary += optional($currentSalaryObject)->monthly_gross_salary;
-            $totalBasicSalary += optional($currentSalaryObject)->basic_salary;
-            $totalHra += optional($currentSalaryObject)->hra;
-            $totalTransportAllowance += optional($currentSalaryObject)->transport_allowance;
-            $totalOtherAllowance += optional($currentSalaryObject)->other_allowance;
-            $totalFoodAllowance += optional($currentSalaryObject)->food_allowance;
-            $totalSalary += optional($currentSalaryObject)->total_salary;
-            $totalEmployeeEsi += optional($currentSalaryObject)->employee_esi;
-            $totalEmployeeEpf += optional($currentSalaryObject)->employee_epf;
-            $totalTds += optional($currentSalaryObject)->tds;
-            $totalAdvanceRecovery += $employee->loan_deduction_for_month;
-            $totalDeduction += optional($currentSalaryObject)->total_deduction;
-            $totalNetPay += optional($currentSalaryObject)->net_pay;
-            $totalEmployerEsi += optional($currentSalaryObject)->employer_esi;
-            $totalEmployerEpf += optional($currentSalaryObject)->employer_epf;
-            $totalAdministrationCharges += optional($currentSalaryObject)->administration_charges;
-            $totalEdliCharges += optional($currentSalaryObject)->edli_charges;
-            $totalCtc += optional($currentSalaryObject)->ctc;
-            $totalCtcAnnual += optional($currentSalaryObject)->ctc_annual;
-            $totalHealthInsurance += optional($currentSalaryObject)->total_health_insurance;
-            $totalCtcAgg += optional($currentSalaryObject)->ctc_aggregated;
+            $isEmployeeLeavingThisMonth = optional($employee->termination_date)->isSameMonth(today());
+
+            $totalDays += $daysInMonth;
+            $paidDays = $isEmployeeLeavingThisMonth ? $employee->termination_date->day : $daysInMonth;
+            $totalPaidDays += $paidDays;
+
+            if ($isEmployeeLeavingThisMonth) {
+                $employeeGrossSalary = $currentSalaryObject->monthly_gross_salary * $paidDays / $totalDays;
+                $employeeBasicSalary = $currentSalaryObject->basic_salary * $paidDays / $totalDays;
+                $employeeHra = $currentSalaryObject->hra * $paidDays / $totalDays;
+                $employeeTransportAllowance = $currentSalaryObject->transport_allowance * $paidDays / $totalDays;
+                $employeeOtherAllowance = $currentSalaryObject->other_allowance * $paidDays / $totalDays;
+                $employeeFoodAllowance = $currentSalaryObject->food_allowance * $paidDays / $totalDays;
+                $employeeSalary = $currentSalaryObject->total_salary * $paidDays / $totalDays;
+                $employeeEmployeeEsi = $currentSalaryObject->employee_esi * $paidDays / $totalDays;
+                $employeeEmployeeEpf = $currentSalaryObject->employee_epf * $paidDays / $totalDays;
+                $employeeTds = $currentSalaryObject->tds * $paidDays / $totalDays;
+                $employeeAdvanceRecovery = $employee->loan_deduction_for_month;
+                $employeeDeduction = (($currentSalaryObject->employee_esi + $currentSalaryObject->employee_epf + $currentSalaryObject->food_allowance + $currentSalaryObject->tds) * $paidDays / $totalDays) + $currentSalaryObject->employee->loan_deduction_for_month;
+                $employeeNetPay = $employeeSalary - $employeeDeduction;
+                $employeeEmployerEsi = $currentSalaryObject->employer_esi * $paidDays / $totalDays;
+                $employeeEmployerEpf = $currentSalaryObject->employer_epf * $paidDays / $totalDays;
+                $employeeAdministrationCharges = $currentSalaryObject->administration_charges * $paidDays / $totalDays;
+                $employeeEdliCharges = $currentSalaryObject->edli_charges * $paidDays / $totalDays;
+                $employeeCtc = $currentSalaryObject->ctc * $paidDays / $totalDays;
+                $employeeCtcAnnual = $currentSalaryObject->ctc_annual;
+                $employeeHealthInsurance = $currentSalaryObject->total_health_insurance;
+                $employeeCtcAgg = $currentSalaryObject->ctc_aggregated;
+            } else {
+                $employeeGrossSalary = $currentSalaryObject->monthly_gross_salary;
+                $employeeBasicSalary = $currentSalaryObject->basic_salary;
+                $employeeHra = $currentSalaryObject->hra;
+                $employeeTransportAllowance = $currentSalaryObject->transport_allowance;
+                $employeeOtherAllowance = $currentSalaryObject->other_allowance;
+                $employeeFoodAllowance = $currentSalaryObject->food_allowance;
+                $employeeSalary = $currentSalaryObject->total_salary;
+                $employeeEmployeeEsi = $currentSalaryObject->employee_esi;
+                $employeeEmployeeEpf = $currentSalaryObject->employee_epf;
+                $employeeTds = $currentSalaryObject->tds;
+                $employeeAdvanceRecovery = $employee->loan_deduction_for_month;
+                $employeeDeduction = $currentSalaryObject->total_deduction;
+                $employeeNetPay = $currentSalaryObject->net_pay;
+                $employeeEmployerEsi = $currentSalaryObject->employer_esi;
+                $employeeEmployerEpf = $currentSalaryObject->employer_epf;
+                $employeeAdministrationCharges = $currentSalaryObject->administration_charges;
+                $employeeEdliCharges = $currentSalaryObject->edli_charges;
+                $employeeCtc = $currentSalaryObject->ctc;
+                $employeeCtcAnnual = $currentSalaryObject->ctc_annual;
+                $employeeHealthInsurance = $currentSalaryObject->total_health_insurance;
+                $employeeCtcAgg = $currentSalaryObject->ctc_aggregated;
+            }
+
+            $totalGrossSalary += $employeeGrossSalary;
+            $totalBasicSalary += $employeeBasicSalary;
+            $totalHra += $employeeHra;
+            $totalTransportAllowance += $employeeTransportAllowance;
+            $totalOtherAllowance += $employeeOtherAllowance;
+            $totalFoodAllowance += $employeeFoodAllowance;
+            $totalSalary += $employeeSalary;
+            $totalEmployeeEsi += $employeeEmployeeEsi;
+            $totalEmployeeEpf += $employeeEmployeeEpf;
+            $totalTds += $employeeTds;
+            $totalAdvanceRecovery += $employeeAdvanceRecovery;
+            $totalDeduction += $employeeDeduction;
+            $totalNetPay += $employeeNetPay;
+            $totalEmployerEsi += $employeeEmployerEsi;
+            $totalEmployerEpf += $employeeEmployerEpf;
+            $totalAdministrationCharges += $employeeAdministrationCharges;
+            $totalEdliCharges += $employeeEdliCharges;
+            $totalCtc += $employeeCtc;
+            $totalCtcAnnual += $employeeCtcAnnual;
+            $totalHealthInsurance += $employeeHealthInsurance;
+            $totalCtcAgg += $employeeCtcAgg;
+            $commentMessage = '';
+
+            if ($currentSalaryObject->commencement_date->isSameMonth(today())) {
+                $commentMessage = 'Salary incremented done on ' . optional($currentSalaryObject->commencement_date)->format('d M Y') . '. ';
+            }
+
+            if (optional($employee->termination_date)->isSameMonth(today())) {
+                $commentMessage = 'Employee left on ' . optional($employee->termination_date)->format('d M Y');
+            }
 
             $employeePayrollData = [
                 $employee->user()->withTrashed()->first()->name,
                 $employee->cc_employee_id,
                 optional($employee->hrJobDesignation)->designation,
-                optional($currentSalaryObject)->monthly_gross_salary ?: '-',
-                optional($currentSalaryObject)->basic_salary ?: '-',
-                optional($currentSalaryObject)->hra ?: '-',
-                optional($currentSalaryObject)->transport_allowance ?: '-',
-                optional($currentSalaryObject)->other_allowance ?: '-',
-                optional($currentSalaryObject)->food_allowance ?: '-',
-                optional($currentSalaryObject)->total_salary ?: '-',
+                $employeeGrossSalary ?? '-',
+                $employeeBasicSalary ?? '-',
+                $employeeHra ?? '-',
+                $employeeTransportAllowance ?? '-',
+                $employeeOtherAllowance ?? '-',
+                $employeeFoodAllowance ?? '-',
+                $employeeSalary ?? '-',
                 $daysInMonth,
-                $daysInMonth,
-                optional($currentSalaryObject)->employee_esi,
-                optional($currentSalaryObject)->employee_epf,
-                optional($currentSalaryObject)->tds ?: '-',
-                $employee->loan_deduction_for_month ?: '-',
-                optional($currentSalaryObject)->food_allowance ?: '-',
-                optional($currentSalaryObject)->total_deduction ?: '-',
+                $paidDays,
+                $employeeEmployeeEsi,
+                $employeeEmployeeEpf,
+                $employeeTds ?? '-',
+                $employeeAdvanceRecovery ?? '-',
+                $employeeFoodAllowance ?? '-',
+                $employeeDeduction ?? '-',
                 '-',
-                optional($currentSalaryObject)->net_pay ?: '-',
-                optional($currentSalaryObject)->employer_esi ?: '-',
-                optional($currentSalaryObject)->employer_epf ?: '-',
-                optional($currentSalaryObject)->administration_charges ?: '-',
-                optional($currentSalaryObject)->edli_charges ?: '-',
-                optional($currentSalaryObject)->ctc ?: '-',
-                optional($currentSalaryObject)->ctc_annual ?: '-',
-                optional($currentSalaryObject)->total_health_insurance ?: '-',
-                optional($currentSalaryObject)->ctc_aggregated ?: '-',
+                $employeeNetPay ?? '-',
+                $employeeEmployerEsi ?? '-',
+                $employeeEmployerEpf ?? '-',
+                $employeeAdministrationCharges ?? '-',
+                $employeeEdliCharges ?? '-',
+                $employeeCtc ?? '-',
+                $employeeCtcAnnual ?? '-',
+                $employeeHealthInsurance ?? '-',
+                $employeeCtcAgg ?? '-',
+                $commentMessage,
             ];
 
             array_push($data, $employeePayrollData);
+            $this->employeesRowCount++;
         }
 
         array_push($data, [
@@ -141,8 +205,10 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
                 $totalCtcAnnual ?: '-',
                 $totalHealthInsurance ?: '-',
                 $totalCtcAgg,
+                '',
             ],
         ]);
+        $this->employeesRowCount += 2;
 
         return $data;
     }
@@ -152,7 +218,7 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
         return [
             ['Coloredcow Consulting Private Limited'],
             [Carbon::now()->format('F Y'), 'Paid', Carbon::today()->toDateString()],
-            ['Employee Name', 'Employee ID', 'Designation', 'GROSS', 'Basic Salary', 'HRA', 'Transport allowance', 'Other Allowance', 'Food Allowance', 'Total Salary', 'Total No of Days', 'Paid Days', 'Employee ESI 0.75%', 'Employee EPF 12 %', 'TDS', 'Advance Recovery', 'Food Deduction', 'Total Deduction', 'Advance Salary', ' Net Pay', ' Employer ESI 3.25%', ' EPF EMPLOYER SHARE 12%', ' Administration charges FIXED 0.5%( BASIC SALARY)', ' EDLI Charges FIXED 0.5%(MAXIMUM SALARY LIMIT 15000)', ' CTC', ' CTC Annual', 'Health Insurance', 'CTC Aggreed'],
+            ['Employee Name', 'Employee ID', 'Designation', 'GROSS', 'Basic Salary', 'HRA', 'Transport allowance', 'Other Allowance', 'Food Allowance', 'Total Salary', 'Total No of Days', 'Paid Days', 'Employee ESI 0.75%', 'Employee EPF 12 %', 'TDS', 'Advance Recovery', 'Food Deduction', 'Total Deduction', 'Advance Salary', ' Net Pay', ' Employer ESI 3.25%', ' EPF EMPLOYER SHARE 12%', ' Administration charges FIXED 0.5%( BASIC SALARY)', ' EDLI Charges FIXED 0.5%(MAXIMUM SALARY LIMIT 15000)', ' CTC', ' CTC Annual', 'Health Insurance', 'CTC Aggreed', 'Comment'],
         ];
     }
 
@@ -171,6 +237,8 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
         $sheet->mergeCells('U2:X2');
         $sheet->setCellValue('U2', ' Employer Contribution');
 
+        $lastRow = $this->employeesRowCount + 3;
+
         return [
             1 => [
                 'font' => [
@@ -183,6 +251,11 @@ class EmployeePayrollExport implements FromArray, WithHeadings, ShouldAutoSize, 
                 ],
             ],
             3 => [
+                'font' => [
+                    'bold' => true,
+                ],
+            ],
+            $lastRow => [
                 'font' => [
                     'bold' => true,
                 ],

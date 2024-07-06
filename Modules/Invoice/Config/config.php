@@ -9,6 +9,19 @@ return [
         'disputed' => 'Disputed',
     ],
 
+    'loan' => [
+        'status' => [
+            'active' => [
+                'label' => 'Active',
+                'slug' => 'active',
+            ],
+            'completed' => [
+                'label' => 'Completed',
+                'slug' => 'completed',
+            ],
+        ],
+    ],
+
     'default-date-format' => 'd M Y',
 
     'mail' => [
@@ -186,5 +199,10 @@ return [
         'usd' => 'USD',
         'eur' => 'EUR',
         'swi' => 'SWI',
+    ],
+
+    'ca-email' => [
+        'name' => env('CA_NAME'),
+        'email' => env('CA_EMAIL'),
     ],
 ];

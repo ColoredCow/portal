@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\HR\Console\JobExpiredEmailToHr;
 use Modules\HR\Console\Recruitment\RejectedApplicationFollowUp;
+use Modules\Invoice\Console\SeedLoanInstallmentForMonth;
 use Modules\Project\Console\EndedProject;
 use Modules\Project\Console\FixedBudgetProject;
 use Modules\Project\Console\GoogleChat\NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat;
@@ -31,6 +32,7 @@ class Kernel extends ConsoleKernel
         NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat::class,
         JobExpiredEmailToHr::class,
         RejectedApplicationFollowUp::class,
+        SeedLoanInstallmentForMonth::class,
         // QuarterlyReviewSystemForEmployee::class, //This line will be commented for some time. After the feature is completed, it will be uncommented.
 
     ];
@@ -46,7 +48,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('application:no-show')->dailyAt('21:00');
         $schedule->command('application:send-interview-reminders')->dailyAt('08:00');
-        $schedule->command('sync:effortsheet')->weekdays()->timezone(config('constants.timezone.indian'))->hourlyAt(25);
+        $schedule->command('sync:effortsheet')->timezone(config('constants.timezone.indian'))->hourlyAt(25);
         $schedule->command('effort-summary:send')->weekdays()->timezone(config('constants.timezone.indian'))->at('21:00');
         $schedule->command('hr:check-follow-ups')->daily();
         $schedule->command('hr:send-follow-up-mail')->dailyAt('08:00');
@@ -60,6 +62,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('project:ended-project')->dailyAt('09:00');
         $schedule->command('project:zero-expected-hours-in-project')->weekly()->tuesdays()->at('11:00');
         $schedule->command('project:reminder-for-effortsheet-lock')->dailyAt('21:00');
+        $schedule->command('loan:seed-loan-installment-for-month')->timezone(config('constants.timezone.indian'))->lastDayOfMonth('23:30');
         // $schedule->command('employee:quarterly-review-system-for-employee')->quarterly(); //This command generates assessments corresponding to each employee. Currently this feature is in-progress and will be released shortly.
     }
 

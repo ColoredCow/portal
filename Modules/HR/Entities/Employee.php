@@ -16,7 +16,7 @@ class Employee extends Model
 
     protected $guarded = [];
 
-    protected $dates = ['joined_on'];
+    protected $dates = ['joined_on', 'termination_date'];
 
     public function user()
     {
@@ -99,14 +99,24 @@ class Employee extends Model
         return $this->employeeSalaries()->where('commencement_date', '<=', today())->latest('commencement_date')->first();
     }
 
+    public function scopeContractorSalary($query)
+    {
+        return $query->where('salary_type', config('salary.type.contractor_fee.slug'));
+    }
+
+    public function scopeEmployeeSalary($query)
+    {
+        return $query->where('salary_type', config('salary.type.employee_salary.slug'));
+    }
+
     public function getLatestSalary()
     {
         return $this->employeeSalaries()->latest('commencement_date')->first();
     }
 
-    public function getPreviousSalary()
+    public function getPreviousSalary($salaryType = 'employee-salary')
     {
-        return $this->employeeSalaries()->latest('commencement_date')->skip(1)->first();
+        return $this->employeeSalaries()->where('salary_type', $salaryType)->latest('commencement_date')->skip(1)->first();
     }
 
     public function getLatestSalaryPercentageIncrementAttribute()
@@ -178,6 +188,7 @@ class Employee extends Model
     {
         $currentDate = today();
         $loans = $this->loans()
+            ->where('status', 'active')
             ->whereDate('start_date', '<=', $currentDate)
             ->whereDate('end_date', '>=', $currentDate)
             ->get();

@@ -1,0 +1,1 @@
+<a href="{{ $url }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> {{ $text }}</a>
