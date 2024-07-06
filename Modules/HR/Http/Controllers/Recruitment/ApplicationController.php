@@ -393,7 +393,7 @@ abstract class ApplicationController extends Controller
     public function updateRescheduledApplication()
     {
         $applications = Application::where('is_unresponsive', 1)->get();
-        $reappliedTag = Tag::where('name', 'Reapplied')->first();
+        $reappliedTag = Tag::where('name', 'ReOpened Application')->first();
 
         foreach ($applications as $application) {
             $applicationId = $application->id;
