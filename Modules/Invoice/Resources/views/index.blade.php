@@ -142,7 +142,7 @@
                                         @endif
                                     </a>
                                 </td>
-                                
+
                                 <td class="text-center">
                                     {{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
                                 <td
@@ -167,7 +167,7 @@
                                             <a href="{{ route('invoice.edit', $invoice) }}"><i class="fa fa-history text-dark" aria-hidden="true"></i></a>
                                         </span>
                                     @elseif($invoice->shouldHighlighted())
-                                        <div 
+                                        <div
                                             class="btn py-0 fz-14 btn-sm btn-primary send-reminder"
                                             data-invoice-data="{{ json_encode($invoiceData) }}" data-toggle="modal"
                                             data-target="#invoiceReminder"
@@ -292,7 +292,7 @@
                             @endif
                             @php
                                 $index++;
-                                
+
                                 $currencySymbol = config('constants.currency.' . $project->client->currency . '.symbol');
                                 if ($project->hasCustomInvoiceTemplate()) {
                                     $amount = $currencySymbol . $project->getTotalLedgerAmount($quarter);
