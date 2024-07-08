@@ -53,6 +53,11 @@ class Project extends Model implements Auditable
         return $this->hasMany(ProjectRepository::class);
     }
 
+    public function invoiceTerms()
+    {
+        return $this->hasMany(ProjectInvoiceTerm::class);
+    }
+
     public function resourceRequirement()
     {
         return $this->hasMany(ProjectResourceRequirement::class);

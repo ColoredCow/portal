@@ -18,6 +18,7 @@ Route::prefix('projects')->middleware('auth')->group(function () {
     Route::get('/create', 'ProjectController@create')->name('project.create');
     Route::post('/', 'ProjectController@store')->name('project.store');
     Route::post('/{project}/update', 'ProjectController@update')->name('project.update');
+    Route::get('/delivery-report/{invoice}', 'ProjectController@showDeliveryReport')->name('delivery-report.show');
     Route::get('/contract/pdf/{contract}', 'ProjectController@showPdf')->name('pdf.show');
     Route::delete('client/{project}/edit', 'ProjectController@destroy')->name('project.destroy');
     Route::post('/project-fte-export', 'ProjectController@projectFTEExport')->name('project.fte.export');

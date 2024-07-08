@@ -23,5 +23,7 @@
     "Revenue": true,
     "ProjectContract": true,
     "CodeTrek": true,
-    "Operations": true
+    "Operations": true,
+    "Model": true,
+    "ProjectInvoiceTerms": true
 }

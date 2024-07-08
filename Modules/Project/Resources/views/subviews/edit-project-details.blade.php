@@ -56,7 +56,7 @@
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="name" class="field-required">Project Type</label>
+                        <label for="name" class="field-required">Billing Cycle</label>
                         <select v-model="projectType" name="project_type" id="project_type" class="form-control"
                             required="required">`
                             @foreach (config('project.type') as $key => $project_type)
@@ -71,6 +71,9 @@
 
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="billing_level" class="field-required">Billing Level</label>
+                        <span class="ml-2" data-toggle="tooltip" title="Choose effort calculation method: project-specific hours or client-wide aggregate.">
+                            <i class="fa fa-info-circle "></i>
+                        </span>
                         <select name="billing_level" id="billing_level" class="form-control" required="required">
                             <option value="">{{ __('Select Billing Level') }}</option>
                             @foreach (config('project.meta_keys.billing_level.value') as $key => $billingLevel)
@@ -88,7 +91,6 @@
                 </div>
                 <br>
                 <div class="form-row">
-
                     <div class="form-group col-md-5">
                         <div class="flex-row">
                             <label for="contract_file"> {{ __('Upload Contract File') }}</label>
@@ -110,10 +112,15 @@
                                 @endif
                             </div>
                         </div>
+                        <div id="client-financial-detail-link" class="text small d-none">
+                            Click <a href="{{ route('client.edit', [$client, 'billing-details']) }}">here</a> to update monthly billing invoice terms.
+                        </div>
                     </div>
-
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="google_chat_webhook_url">{{ __('Google Chat Webhook URL') }}</label>
+                        <span data-toggle="tooltip" title="Add a webhook URL to receive payment notifications in the project's dedicated Google Chat space.">
+                            <i class="fa fa-info-circle "></i>
+                        </span>
                         <input type="url" class="form-control" name="google_chat_webhook_url"
                             id="google_chat_webhook_url" placeholder="Enter Google Chat Webhook URL"
                             value="{{ old('google_chat_webhook_url', $project->google_chat_webhook_url) }}">
@@ -136,6 +143,10 @@
                             id="total_estimated_hours" placeholder="Enter total estimated hours"
                             value="{{ old('total_estimated_hours', $project->total_estimated_hours) }}">
                     </div>
+                </div>
+                <div id="invoice-terms-section" class="mt-3 mb-3 d-none">
+                    <label for="invoice-schedule">Invoice Schedule</label>
+                    @include('project::subviews.edit-project-inoice-terms')
                 </div>
                 <div>
                     @if ($project->is_amc == 1)
