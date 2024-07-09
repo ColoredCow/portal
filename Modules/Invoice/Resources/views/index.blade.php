@@ -159,7 +159,7 @@
                                 </td>
                                 <td class="text-center">
                                     @if ($invoice->reminder_mail_count)
-                                        <div class="text-dark font-weight-bold fz-12">{{ __('Reminder - 1') }}</div>
+                                        <div class="text-dark font-weight-bold fz-12">{{ __('Reminder - ') . $invoice->reminder_mail_count }}</div>
                                         <span class="c-pointer" data-toggle="tooltip" data-placement="top" title="Send Reminder">
                                             <i class="fa fa-envelope send-reminder text-theme-red" aria-hidden="true" data-target="#invoiceReminder" data-invoice-data="{{ json_encode($invoiceData) }}" data-toggle="modal"></i>
                                         </span>
