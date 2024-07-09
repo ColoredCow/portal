@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Entities\InvoiceActivity;
 
 class SendPendingInvoiceMail extends Mailable
 {
@@ -77,10 +78,23 @@ class SendPendingInvoiceMail extends Mailable
             $mail->bcc($emailAddress);
         }
 
+        InvoiceActivity::create([
+            'invoice_id' => $this->invoice->id,
+            'type' => 'mail',
+            'subject' => $subject,
+            'content' => $body,
+            'to' => $this->email['to'],
+            'from' => $this->email['from'],
+            'cc' => isset($this->email['cc']) && is_array($this->email['cc']) ? implode(',', $this->email['cc']) : null,
+            'bcc' => isset($this->email['bcc']) && is_array($this->email['bcc']) ? implode(',', $this->email['bcc']) : null,
+            'receiver_name' => $this->email['to_name']
+        ]);
+
         return $mail->subject($subject)
             ->attach($invoiceFile, [
                 'mime' => 'application/pdf',
-            ])->view('mail.plain')->with([
+            ])
+            ->view('mail.plain')->with([
                 'body' => $body,
             ]);
     }
