@@ -141,4 +141,9 @@ class ApplicantController extends Controller
 
         return view('hr.application.verify-details', ['applicantMeta'=> $applicantMeta, 'applicant'=> $applicant]);
     }
+
+    public function showQuestions(Request $request, $application, $round)
+    {
+        return view('');
+    }
 }

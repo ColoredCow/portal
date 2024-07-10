@@ -6,6 +6,7 @@ use App\Helpers\ContentHelper;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
+use Modules\HR\Emails\Recruitment\Applicant\Questions;
 use Modules\HR\Emails\Recruitment\Applicant\RoundReviewed;
 use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Helpers\TemplateHelper;
@@ -98,5 +99,23 @@ class ApplicationRoundController extends Controller
         ]);
 
         return redirect()->back()->with('status', 'Follow up successful!');
+    }
+
+    public function questions(Request $request, $applicationRoundId, $roundId) {
+        $applicationRound = ApplicationRound::find($applicationRoundId);
+
+        $applicant = $applicationRound->application->applicant;
+
+        $applicantData = [
+            'email' => $applicant->email,
+            'name' => $applicant->name,
+            'applicationRoundId'=> $applicationRoundId,
+            'roundId'=> $roundId,
+            'formUrl' => route('hr.applicant.show-questions', ['application' => encrypt($applicationRoundId), 'round' => encrypt($roundId)])
+        ];
+
+        Mail::send(new Questions($applicantData));
+
+        return redirect()->back();
     }
 }

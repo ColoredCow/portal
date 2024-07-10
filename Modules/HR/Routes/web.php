@@ -104,6 +104,8 @@ Route::middleware('auth')->group(function () {
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
                 ->names(['index' => 'applications.internship.index', 'edit' => 'applications.internship.edit']);
+
+            Route::post('{application}/questions/{round}', 'ApplicationRoundController@questions')->name('application.round.questions');
         });
 
         Route::resource('/evaluation', 'EvaluationController')->only(['show', 'update']);
@@ -164,3 +166,4 @@ Route::get('/viewForm/{id}/{email}', 'Recruitment\ApplicantController@viewForm')
 Route::post('/storeApprovedApplicantDetails', 'Recruitment\ApplicantController@storeApprovedApplicantDetails')->name('hr.applicant.store-approved-applicants-details');
 Route::get('/formSubmitted/{id}/{email}', 'Recruitment\ApplicantController@formSubmit')->name('hr.applicant.applicant-onboarding-form');
 Route::get('/showApplicantFormDetails/{id}', 'Recruitment\ApplicantController@showOnboardingFormDetails')->name('hr.applicant.show-onboarding-applicant-form-details');
+Route::get('/questions/{application}/{round}', 'Recruitment\ApplicantController@showQuestions')->name('hr.applicant.show-questions');
