@@ -144,6 +144,6 @@ class ApplicantController extends Controller
 
     public function showQuestions(Request $request, $application, $round)
     {
-        return view('');
+        return view('hr.application.questions', ['application'=> $application, 'round'=> $round]);
     }
 }

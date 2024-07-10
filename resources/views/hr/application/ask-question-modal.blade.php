@@ -8,7 +8,7 @@
                 </div>
                 <div class="modal-body">
                     <input type="hidden"name="applicationRound" value="{{$applicationRound}}" >
-                    hello
+                    Content!!
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
