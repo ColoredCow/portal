@@ -112,7 +112,7 @@ class ApplicationRoundController extends Controller
             'name' => $applicant->name,
             'applicationRoundId'=> $applicationRoundId,
             'roundId'=> $roundId,
-            'formUrl' => route('hr.applicant.show-questions', ['application' => encrypt($applicationRoundId), 'round' => encrypt($roundId)])
+            'formUrl' => route('hr.applicant.show-questions', ['application' => encrypt($applicationRoundId), 'round' => encrypt($roundId)]),
         ];
 
         Mail::send(new Questions($applicantData));
