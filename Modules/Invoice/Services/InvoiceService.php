@@ -26,6 +26,7 @@ use Modules\Invoice\Exports\TaxReportExport;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
 use Modules\Invoice\Notifications\GoogleChat\SendPaymentReceivedNotification;
 use Modules\Project\Entities\Project;
+use Modules\Project\Entities\ProjectInvoiceTerm;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -37,16 +38,22 @@ class InvoiceService implements InvoiceServiceContract
             'year' => $filters['year'] ?? null,
             'status' => $filters['status'] ?? null,
         ];
+
+        $invoices = [];
+        $clientsReadyToSendInvoicesData = [];
+        $projectsReadyToSendInvoicesData = [];
+        $totalReceivableAmount = 0.00;
+
         if ($invoiceStatus == 'sent') {
             $invoices = Invoice::query()->with('client', 'client.contactPersons', 'client.billingDetails')->applyFilters($filters)->leftjoin('clients', 'invoices.client_id', '=', 'clients.id')
                 ->select('invoices.*', 'clients.name')
                 ->where('clients.is_billable', true)
                 ->orderBy('name', 'asc')->orderBy('sent_on', 'desc')
                 ->get();
-            $clientsReadyToSendInvoicesData = [];
-            $projectsReadyToSendInvoicesData = [];
+            $totalReceivableAmount = $this->getTotalReceivableAmountInINR($invoices);
+        } elseif ($invoiceStatus == 'scheduled') {
+            $invoices = $this->getScheduledInvoices();
         } else {
-            $invoices = [];
             $clientsReadyToSendInvoicesData = Client::status('active')->billable()->invoiceReadyToSend()->orderBy('name')->get();
             $projectsReadyToSendInvoicesData = Project::billable()->whereHas('meta', function ($query) {
                 return $query->where([
@@ -60,7 +67,7 @@ class InvoiceService implements InvoiceServiceContract
             'invoices' => $invoices,
             'clients' => $this->getClientsForInvoice(),
             'currencyService' => $this->currencyService(),
-            'totalReceivableAmount' => $this->getTotalReceivableAmountInINR($invoices),
+            'totalReceivableAmount' => $totalReceivableAmount,
             'filters' => $filters,
             'invoiceStatus' => $invoiceStatus,
             'clientsReadyToSendInvoicesData' => $clientsReadyToSendInvoicesData,
@@ -160,6 +167,7 @@ class InvoiceService implements InvoiceServiceContract
         $invoice = Invoice::create($data);
         $this->saveInvoiceFile($invoice, $data['invoice_file']);
         $this->setInvoiceNumber($invoice, $data['sent_on']);
+        $this->updateScheduledInvoice($invoice);
 
         return $invoice;
     }
@@ -185,6 +193,7 @@ class InvoiceService implements InvoiceServiceContract
             $this->saveInvoiceFile($invoice, $data['invoice_file']);
             $this->setInvoiceNumber($invoice, $data['sent_on']);
         }
+        $this->updateScheduledInvoice($invoice);
 
         return $invoice;
     }
@@ -767,6 +776,45 @@ class InvoiceService implements InvoiceServiceContract
         }
 
         LedgerAccount::destroy($ledgerAccountsIdToDelete);
+    }
+
+    public function updateScheduledInvoice($invoice)
+    {
+        $project = $invoice->project;
+        if (! $project) {
+            return;
+        }
+
+        $invoiceSentOn = Carbon::parse($invoice->sent_on)->toDateString();
+        $invoiceStatus = $invoice->status;
+        $invoiceId = $invoice->id;
+
+        foreach ($project->invoiceTerms as $scheduledInvoice) {
+            if (Carbon::parse($scheduledInvoice->invoice_date)->toDateString() === $invoiceSentOn) {
+                $scheduledInvoice->update([
+                    'status' => $invoiceStatus,
+                    'invoice_id' => $invoiceId,
+                ]);
+            }
+        }
+    }
+
+    public function getScheduledInvoices()
+    {
+        return ProjectInvoiceTerm::with('project')
+            ->whereNotIn('status', ['sent', 'paid'])
+            ->get();
+    }
+
+    public function getScheduledInvoicesForMail()
+    {
+        $currentDate = Carbon::now();
+
+        return ProjectInvoiceTerm::where('invoice_date', '<=', Carbon::now()->addDays(config('constants.finance.scheduled-invoice.finance-team-invoice-reminder-days')))
+            ->whereNotIn('status', ['sent', 'paid'])
+            ->whereMonth('invoice_date', strval($currentDate->month))
+            ->with('project')
+            ->get();
     }
 
     private function setInvoiceNumber($invoice, $sent_date)
