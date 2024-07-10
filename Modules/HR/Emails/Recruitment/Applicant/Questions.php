@@ -32,7 +32,7 @@ class Questions extends Mailable
      */
     public function __construct($applicantData)
     {
-       $this->applicant = $applicantData;
+        $this->applicant = $applicantData;
     }
 
     /**

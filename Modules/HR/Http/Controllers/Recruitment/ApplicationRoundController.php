@@ -101,7 +101,8 @@ class ApplicationRoundController extends Controller
         return redirect()->back()->with('status', 'Follow up successful!');
     }
 
-    public function questions(Request $request, $applicationRoundId, $roundId) {
+    public function questions(Request $request, $applicationRoundId, $roundId) 
+    {
         $applicationRound = ApplicationRound::find($applicationRoundId);
 
         $applicant = $applicationRound->application->applicant;
