@@ -175,7 +175,7 @@ class InvoiceController extends Controller
 
     public function sendReminderEmail(Request $request)
     {
-        $invoice = Invoice::find(117);
+        $invoice = Invoice::find($request->invoice_id);
 
         $this->service->sendInvoiceReminder($invoice, $request->all());
 
