@@ -3,7 +3,6 @@
 namespace Modules\Invoice\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Modules\Invoice\Entities\Invoice;
 
 class InvoiceActivity extends Model
 {

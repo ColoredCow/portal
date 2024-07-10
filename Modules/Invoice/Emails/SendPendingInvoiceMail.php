@@ -87,7 +87,7 @@ class SendPendingInvoiceMail extends Mailable
             'from' => $this->email['from'],
             'cc' => isset($this->email['cc']) && is_array($this->email['cc']) ? implode(',', $this->email['cc']) : null,
             'bcc' => isset($this->email['bcc']) && is_array($this->email['bcc']) ? implode(',', $this->email['bcc']) : null,
-            'receiver_name' => $this->email['to_name']
+            'receiver_name' => $this->email['to_name'],
         ]);
 
         return $mail->subject($subject)
