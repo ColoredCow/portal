@@ -168,13 +168,30 @@
                                     </td>
                                     <td class="text-center">
                                         @if ($invoice->reminder_mail_count)
-                                            <div class="text-success">{{ __('Reminder Sent') }}</div>
+                                            <div class="text-dark font-weight-bold fz-12">{{ __('Reminder - ') . $invoice->reminder_mail_count }}</div>
+                                            <span class="c-pointer" data-toggle="tooltip" data-placement="top" title="Send Reminder">
+                                                <i class="fa fa-envelope send-reminder text-theme-red" aria-hidden="true" data-target="#invoiceReminder" data-invoice-data="{{ json_encode($invoiceData) }}" data-toggle="modal"></i>
+                                            </span>
+                                            <span class="c-pointer" data-toggle="tooltip" data-placement="top" title="Invoice Activity">
+                                                <a href="{{ route('invoice.edit', $invoice) }}"><i class="fa fa-history text-dark" aria-hidden="true"></i></a>
+                                            </span>
                                         @elseif($invoice->shouldHighlighted())
-                                            <div class="btn btn-sm btn-primary send-reminder"
+                                            <div
+                                                class="btn py-0 fz-14 btn-sm btn-primary send-reminder"
                                                 data-invoice-data="{{ json_encode($invoiceData) }}" data-toggle="modal"
-                                                data-target="#invoiceReminder">{{ __('Reminder') }}</div>
+                                                data-target="#invoiceReminder"
+                                            >
+                                                {{ __('Reminder') }}
+                                            </div>
                                         @else
                                             <div> - </div>
+                                        @endif
+                                        @if ($invoice->reminder_mail_count && $invoice->shouldHighlighted())
+                                            @if (true)
+                                            <span data-toggle="tooltip" data-placement="top" title="Update on the Invoice">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                            </span>
+                                            @endif
                                         @endif
                                     </td>
                                 </tr>
