@@ -2,6 +2,7 @@
 
 namespace Modules\Project\Services;
 
+use App\Models\Comment;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Arr;
@@ -14,9 +15,12 @@ use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectBillingDetail;
 use Modules\Project\Entities\ProjectContract;
+use Modules\Project\Entities\ProjectInvoiceTerm;
 use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectResourceRequirement;
+use Modules\Project\Entities\ProjectStages;
+use Modules\Project\Entities\ProjectStagesListing;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Entities\ProjectTeamMembersEffort;
 use Modules\Project\Exports\ProjectFTEExport;
@@ -381,6 +385,171 @@ class ProjectService implements ProjectServiceContract
         ];
     }
 
+    public function getInvoiceTerms($project)
+    {
+        $invoiceTerms = ProjectInvoiceTerm::where('project_id', $project->id)->with('comment')->get();
+
+        return $invoiceTerms;
+    }
+
+    public function saveOrUpdateDeliveryReport($data, $project, $index)
+    {
+        if ($data['delivery_report'] ?? null) {
+            $file = $data['delivery_report'];
+            $folder = '/delivery_report/' . date('Y') . '/' . date('m');
+            $originalName = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $fileName = $project->name . '_' . $index + 1 . '.' . $extension;
+
+            return Storage::putFileAs($folder, $file, $fileName);
+        }
+    }
+
+    public function showDeliveryReport($invoiceId)
+    {
+        $invoiceTerm = ProjectInvoiceTerm::where('id', $invoiceId)->first();
+        $filePath = storage_path('app/' . $invoiceTerm->delivery_report);
+        $content = file_get_contents($filePath);
+        $deliveryReport = pathinfo($invoiceTerm->delivery_report)['filename'];
+
+        return response($content)->withHeaders([
+            'content-type' => mime_content_type($filePath),
+            'deliveryReport' => $deliveryReport,
+        ]);
+    }
+
+    public function getPendingDeliveryReportInvoices()
+    {
+        $currentDate = Carbon::now();
+        $futureDate = $currentDate->copy()->addDays(config('constants.finance.scheduled-invoice.delivery-report-reminder-days'));
+
+        $groupedInvoices = ProjectInvoiceTerm::where('invoice_date', '<=', $futureDate)
+            ->where('report_required', true)
+            ->where('delivery_report', null)
+            ->whereNotIn('status', ['sent', 'paid'])
+            ->whereMonth('invoice_date', strval($currentDate->month))
+            ->with('project')
+            ->get()
+            ->groupBy('project_id');
+
+        $keyAccountManagersDetails = [];
+
+        $groupedInvoices->each(function ($invoiceTerms, $projectId) use (&$keyAccountManagersDetails) {
+            $project = $invoiceTerms->first()->project;
+            $user = $project->client->keyAccountManager;
+
+            if ($user) {
+                $userId = $user->id;
+
+                if (! isset($keyAccountManagersDetails[$userId])) {
+                    $keyAccountManagersDetails[$userId] = (object) [
+                        'invoiceTerms' => collect(),
+                        'email' => $user->email,
+                        'name' => $user->name,
+                    ];
+                }
+
+                $keyAccountManagersDetails[$userId]->invoiceTerms = $keyAccountManagersDetails[$userId]->invoiceTerms->merge($invoiceTerms);
+            }
+        });
+
+        return $keyAccountManagersDetails;
+    }
+
+    public function getProjectStages(Project $project)
+    {
+        $project_id = $project->id;
+        $stages = ProjectStages::where('project_id', $project_id)->orderBy('id')->get();
+
+        return $stages;
+    }
+
+    public function storeStage(array $newStages, int $projectId)
+    {
+        foreach ($newStages as $stage) {
+            $stageData = $this->prepareStageData($stage);
+
+            ProjectStages::create(array_merge($stageData, [
+                'project_id' => $projectId,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]));
+        }
+    }
+
+    public function updateStage(array $updatedStages)
+    {
+        foreach ($updatedStages as $stage) {
+            $stageData = $this->prepareStageData($stage);
+
+            $existingStage = ProjectStages::find($stage['id']);
+            if ($existingStage) {
+                $existingStage->update(array_merge($stageData, [
+                    'updated_at' => now(),
+                ]));
+            }
+        }
+    }
+
+    public function removeStage(array $idArr)
+    {
+        ProjectStages::whereIn('id', $idArr)->delete();
+    }
+
+    public function createProjectStageList(string $stageName)
+    {
+        $formattedStageName = strtolower($stageName);
+        ProjectStagesListing::firstOrCreate(
+            ['name' => $formattedStageName]
+        );
+    }
+
+    public function addCommentOnInvoiceTerm($term, $existingTerm)
+    {
+        if (isset($term['comment'])) {
+            Comment::updateOrCreate(
+                [
+                    'user_id' => auth()->id(),
+                    'commentable_id' => $existingTerm->id,
+                    'commentable_type' => ProjectInvoiceTerm::class,
+                ],
+                [
+                    'body' => $term['comment']['body'],
+                ]
+            );
+        }
+    }
+
+    private function prepareStageData(array $stage): array
+    {
+        $startDate = null;
+        $endDate = null;
+        $duration = null;
+
+        if ($stage['start_date']) {
+            $formattedStartDate = Carbon::parse($stage['start_date']);
+            $startDate = $formattedStartDate->setTimezone(config('app.timezone'))->format(config('constants.datetime_format'));
+        }
+
+        if ($stage['end_date']) {
+            $formattedEndDate = Carbon::parse($stage['end_date']);
+            $endDate = $formattedEndDate->setTimezone(config('app.timezone'))->format(config('constants.datetime_format'));
+            $duration = Carbon::parse($stage['start_date'])->diffInSeconds($formattedEndDate);
+        }
+
+        $this->createProjectStageList($stage['stage_name']);
+
+        return [
+            'stage_name' => $stage['stage_name'],
+            'comments' => $stage['comments'] ?? null,
+            'status' => $stage['status'] ?? 'pending',
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'expected_end_date' => $stage['expected_end_date'],
+            'duration' => $duration === 0 ? 1 : $duration,
+        ];
+    }
+
     private function getListTabCounts($filters, $showAllProjects, $userId)
     {
         $counts = [
@@ -440,6 +609,9 @@ class ProjectService implements ProjectServiceContract
 
         $project->is_ready_to_renew ? $project->tag('get-renewed') : $project->untag('get-renewed');
 
+        $invoiceTerms = $data['invoiceTerms'] ?? [];
+        $this->updateInvoiceTerms($invoiceTerms, $project);
+
         return $isProjectUpdated;
     }
 
@@ -482,6 +654,60 @@ class ProjectService implements ProjectServiceContract
                 ]);
             }
         }
+    }
+
+    private function updateInvoiceTerms($invoiceTerms, $project)
+    {
+        if (empty($invoiceTerms)) {
+            $project->invoiceTerms()->delete();
+
+            return;
+        }
+
+        $existingTerms = $project->invoiceTerms()->get()->keyBy('id');
+
+        $termIds = [];
+        foreach ($invoiceTerms as $index => $term) {
+            $termId = $term['id'] ?? null;
+            $invoice = $project->invoices()->where('sent_on', $term['invoice_date'])->first();
+
+            if ($termId && isset($existingTerms[$termId])) {
+                $existingTerm = $existingTerms[$termId];
+                $filePath = $existingTerm->delivery_report;
+
+                if (isset($term['delivery_report'])) {
+                    $filePath = $this->saveOrUpdateDeliveryReport($term, $project, $index);
+                }
+
+                $existingTerm->update([
+                    'invoice_date' => $term['invoice_date'],
+                    'amount' => $term['amount'],
+                    'report_required' => $term['report_required'] ?? $existingTerm->report_required,
+                    'client_acceptance_required' => $term['client_acceptance_required'] ?? $existingTerm->client_acceptance_required,
+                    'is_accepted' => $term['is_accepted'] ?? $existingTerm->is_accepted,
+                    'delivery_report' => $filePath,
+                ]);
+
+                $this->addCommentOnInvoiceTerm($term, $existingTerm);
+                $termIds[] = $termId;
+            } else {
+                $filePath = $this->saveOrUpdateDeliveryReport($term, $project, $index);
+                $newTerm = $project->invoiceTerms()->create([
+                    'project_id' => $project->id,
+                    'invoice_date' => $term['invoice_date'],
+                    'status' => $invoice ? $invoice->status : $term['status'],
+                    'amount' => $term['amount'],
+                    'report_required' => $term['report_required'] ?? false,
+                    'client_acceptance_required' => $term['client_acceptance_required'] ?? false,
+                    'is_accepted' => $term['is_accepted'] ?? false,
+                    'delivery_report' => $filePath,
+                ]);
+
+                $termIds[] = $newTerm->id;
+            }
+        }
+
+        $project->invoiceTerms()->whereNotIn('id', $termIds)->delete();
     }
 
     private function updateProjectRepositories($data, $project)
