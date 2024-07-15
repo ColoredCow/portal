@@ -84,4 +84,9 @@
             </div>
         </div>
     @endforeach
+    @if(!empty($followUpEntries))
+        @foreach($followUpEntries as $entry)
+            <b><u>{{ date(config('constants.display_date_format'), strtotime($entry['created_at'])) }}</u></b><br>
+        @endforeach
+    @endif
 </div>
