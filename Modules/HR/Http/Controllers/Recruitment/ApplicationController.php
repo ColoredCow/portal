@@ -164,6 +164,8 @@ abstract class ApplicationController extends Controller
             $attr['applicantId'][$data->hr_applicant_id] = $data;
         }
 
+        $this->updateRescheduledApplication();
+
         return view('hr.application.index')->with($attr);
     }
 
@@ -386,5 +388,24 @@ abstract class ApplicationController extends Controller
         $status = 'Successful Assigned to ' . $scheduledUser;
 
         return redirect(route('applications.job.index'))->with('status', $status);
+    }
+
+    public function updateRescheduledApplication()
+    {
+        $applications = Application::where('is_unresponsive', 1)->get();
+        $reappliedTag = Tag::where('name', 'ReOpened Application')->first();
+
+        foreach ($applications as $application) {
+            $applicationId = $application->id;
+            $applicationRound = ApplicationRound::where('hr_application_id', $applicationId)
+                ->where('hr_round_id', 3)
+                ->first();
+
+            if ($applicationRound !== null && $applicationRound->scheduled_date !== null) {
+                $application->status = 'in-progress';
+                $application->save();
+                $application->tags()->syncWithoutDetaching([$reappliedTag->id]);
+            }
+        }
     }
 }

@@ -139,9 +139,9 @@
                                         </div>
                                     </label>
                                     @if ($applicationRound['0']->scheduled_date)
-                                        <input type="date" 
-                                            name="scheduled_date" id="scheduled_date" 
-                                            class="form-control form-control-sm" 
+                                        <input type="date"
+                                            name="scheduled_date" id="scheduled_date"
+                                            class="form-control form-control-sm"
                                             value="{{ $applicationRound['0']->scheduled_date->format(config('constants.date_format')) }}">
                                     @else
                                         <div class="fz-16 leading-tight">Pending calendar confirmation</div>
@@ -182,7 +182,7 @@
                                             <img src="{{ $applicationRound['0']->scheduledPerson->avatar }}" alt="{{ $applicationRound['0']->scheduledPerson->name }}" class="w-25 h-25 rounded-circle">
                                             <span>{{ $applicationRound['0']->scheduledPerson->name }}</span>
                                         </div>
-                                    @endif  
+                                    @endif
                                 </div>
                                 @if ($applicationRound['0']->scheduled_date)
                                     <div class="form-group col-md-3 d-flex align-items-end">
@@ -191,7 +191,7 @@
                                 @endif
                             </div>
                         @endif
-                        
+
                     </div>
                 </div>
                 <input type="hidden" name="action" value="schedule-update">

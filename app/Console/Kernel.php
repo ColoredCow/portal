@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\HR\Console\JobExpiredEmailToHr;
+use Modules\HR\Console\Recruitment\RejectedApplicationFollowUp;
 use Modules\Invoice\Console\SeedLoanInstallmentForMonth;
 use Modules\Project\Console\DeliveryReportReminder;
 use Modules\Project\Console\EndedProject;
@@ -32,6 +33,7 @@ class Kernel extends ConsoleKernel
         FixedBudgetProject::class,
         NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat::class,
         JobExpiredEmailToHr::class,
+        RejectedApplicationFollowUp::class,
         SeedLoanInstallmentForMonth::class,
         // QuarterlyReviewSystemForEmployee::class, //This line will be commented for some time. After the feature is completed, it will be uncommented.
 
@@ -48,12 +50,13 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('application:no-show')->dailyAt('21:00');
         $schedule->command('application:send-interview-reminders')->dailyAt('08:00');
-        $schedule->command('sync:effortsheet')->weekdays()->timezone(config('constants.timezone.indian'))->hourlyAt(25);
+        $schedule->command('sync:effortsheet')->timezone(config('constants.timezone.indian'))->hourlyAt(25);
         $schedule->command('effort-summary:send')->weekdays()->timezone(config('constants.timezone.indian'))->at('21:00');
         $schedule->command('hr:check-follow-ups')->daily();
         $schedule->command('hr:send-follow-up-mail')->dailyAt('08:00');
         $schedule->command('hr:message-for-email-verified')->dailyAt('7:00');
         $schedule->command('hr:send-job-expired-email-to-hr')->dailyAt('11:00');
+        $schedule->command('hr:send-application-close-mail-to-candidate')->dailyAt('11:00');
         $schedule->command('mapping-of-jobs-and-hr-rounds');
         $schedule->command('project:fixed-budget-project');
         $schedule->command('project:send-pending-delivery-report-reminder')->dailyAt('11:00');
