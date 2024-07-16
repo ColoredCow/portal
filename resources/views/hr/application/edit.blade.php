@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div :class="[showResumeFrame ? 'container-fluid' : 'container']" id="page_hr_applicant_edit">
         <div class="row">

@@ -240,7 +240,7 @@ abstract class ApplicationController extends Controller
             ],
             'type' => config("constants.hr.opportunities.{$job->type}.type"),
             'universities' => University::orderBy('name')->get(),
-            'followUpEntries' => $followUpEntries
+            'followUpEntries' => $followUpEntries,
         ];
 
         if ($job->type == 'job') {

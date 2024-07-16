@@ -86,7 +86,11 @@
     @endforeach
     @if(!empty($followUpEntries))
         @foreach($followUpEntries as $entry)
-            <b><u>{{ date(config('constants.display_date_format'), strtotime($entry['created_at'])) }}</u></b><br>
+            <div>
+                <b><u>{{ date(config('constants.display_date_format'), strtotime($entry['created_at'])) }}</u></b><br>
+                <div>Followed up by {{ $entry['conducted_by'] }}</div>
+                <span data-toggle="modal" data-target="#autoresponder_mail" class="badge badge-success text-white p-1 modal-toggler-text text-primary c-pointer fz-12">View Feedbacks</span><br></br>
+            </div>
         @endforeach
     @endif
 </div>
