@@ -222,8 +222,7 @@ abstract class ApplicationController extends Controller
         $desiredResume = DB::table('hr_applications')->select(['hr_applications.resume'])->where('hr_applications.hr_job_id', '=', $job->id)->where('is_desired_resume', '=', 1)->get();
 
         $hrApplicationRoundIds = ApplicationRound::where('hr_application_id', $id)->pluck('id');
-        $followUpEntries = Followup::whereIn('hr_application_round_id', $hrApplicationRoundIds)->get()->toArray();
-
+        $followUpEntries = Followup::whereIn('hr_application_round_id', $hrApplicationRoundIds)->get();
         $attr = [
             'applicant' => $application->applicant,
             'application' => $application,
