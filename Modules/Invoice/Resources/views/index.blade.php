@@ -173,8 +173,9 @@
                                                 <i class="fa fa-envelope send-reminder text-theme-red" aria-hidden="true" data-target="#invoiceReminder" data-invoice-data="{{ json_encode($invoiceData) }}" data-toggle="modal"></i>
                                             </span>
                                             <span class="c-pointer" data-toggle="tooltip" data-placement="top" title="Invoice Activity">
-                                                <a href="{{ route('invoice.edit', $invoice) }}"><i class="fa fa-history text-dark" aria-hidden="true"></i></a>
+                                                <a data-toggle="modal" data-target="#invoice{{$invoice->id}}"><i class="fa fa-history text-dark" aria-hidden="true"></i></a>
                                             </span>
+                                            @include('invoice::invoice-activity-modal', ['invoiceActivities' => $invoiceActivities, 'invoice' =>$invoice])
                                         @elseif($invoice->shouldHighlighted())
                                             <div
                                                 class="btn py-0 fz-14 btn-sm btn-primary send-reminder"
