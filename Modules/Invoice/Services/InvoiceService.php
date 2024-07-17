@@ -45,10 +45,15 @@ class InvoiceService implements InvoiceServiceContract
         $totalReceivableAmount = 0.00;
 
         if ($invoiceStatus == 'sent') {
-            $invoices = Invoice::query()->with('client', 'client.contactPersons', 'client.billingDetails')->applyFilters($filters)->leftjoin('clients', 'invoices.client_id', '=', 'clients.id')
-                ->select('invoices.*', 'clients.name')
-                ->where('clients.is_billable', true)
-                ->orderBy('name', 'asc')->orderBy('sent_on', 'desc')
+            $invoices = Invoice::query()
+                ->with(['client', 'client.contactPersons', 'client.billingDetails']) // Eager load relationships
+                ->applyFilters($filters) // Apply custom filters
+                ->leftJoin('clients', 'invoices.client_id', '=', 'clients.id') // Join with clients table
+                ->leftJoin('invoice_activities', 'invoices.id', '=', 'invoice_activities.invoice_id') // Join with invoice_activities table
+                ->select('invoices.*', 'clients.name', 'invoice_activities.type', 'invoice_activities.subject', 'invoice_activities.content', 'invoice_activities.to', 'invoice_activities.from', 'invoice_activities.cc', 'invoice_activities.bcc') // Select specific columns
+                ->where('clients.is_billable', true) // Filter by billable clients
+                ->orderBy('clients.name', 'asc') // Order by client name
+                ->orderBy('invoices.sent_on', 'desc') // Then order by invoice sent date
                 ->get();
             $totalReceivableAmount = $this->getTotalReceivableAmountInINR($invoices);
         } elseif ($invoiceStatus == 'scheduled') {
