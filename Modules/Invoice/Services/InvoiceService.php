@@ -46,16 +46,22 @@ class InvoiceService implements InvoiceServiceContract
 
         if ($invoiceStatus == 'sent') {
             $invoices = Invoice::query()
-                ->with(['client', 'client.contactPersons', 'client.billingDetails']) // Eager load relationships
-                ->applyFilters($filters) // Apply custom filters
-                ->leftJoin('clients', 'invoices.client_id', '=', 'clients.id') // Join with clients table
-                ->leftJoin('invoice_activities', 'invoices.id', '=', 'invoice_activities.invoice_id') // Join with invoice_activities table
-                ->select('invoices.*', 'clients.name', 'invoice_activities.type', 'invoice_activities.subject', 'invoice_activities.content', 'invoice_activities.to', 'invoice_activities.from', 'invoice_activities.cc', 'invoice_activities.bcc') // Select specific columns
-                ->where('clients.is_billable', true) // Filter by billable clients
-                ->orderBy('clients.name', 'asc') // Order by client name
-                ->orderBy('invoices.sent_on', 'desc') // Then order by invoice sent date
+                ->with(['client', 'client.contactPersons', 'client.billingDetails'])
+                ->applyFilters($filters)
+                ->leftJoin('clients', 'invoices.client_id', '=', 'clients.id')
+                ->select('invoices.*', 'clients.name')
+                ->where('clients.is_billable', true)
+                ->orderBy('clients.name', 'asc')
+                ->orderBy('invoices.sent_on', 'desc')
                 ->get();
             $totalReceivableAmount = $this->getTotalReceivableAmountInINR($invoices);
+
+            $invoiceActivities = Invoice::query()
+            ->leftJoin('invoice_activities', 'invoices.id', '=', 'invoice_activities.invoice_id')
+            ->select('invoices.*','invoice_activities.type', 'invoice_activities.subject', 'invoice_activities.content', 'invoice_activities.to', 'invoice_activities.from', 'invoice_activities.cc', 'invoice_activities.bcc')
+            ->orderBy('invoices.sent_on', 'desc')
+            ->get();
+
         } elseif ($invoiceStatus == 'scheduled') {
             $invoices = $this->getScheduledInvoices();
         } else {
@@ -93,6 +99,7 @@ class InvoiceService implements InvoiceServiceContract
                 'module' => 'invoice',
                 'setting_key' => config('invoice.templates.setting-key.invoice-reminder.body'),
             ])->first())->setting_value,
+            'invoiceActivities' => $invoiceActivities,
         ];
     }
 

@@ -1,6 +1,5 @@
 @extends('invoice::layouts.master')
 @section('content')
-{{-- @dd($invoiceActivity) --}}
     <div class="container" id="vueContainer">
         <br>
         @includeWhen(session('success'), 'toast', ['message' => session('success')])
@@ -167,7 +166,6 @@
                                         class="{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger' : '' }}{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }} text-center">
                                         {{ $invoice->shouldHighlighted() ? __('Overdue') : $invoice->status }}
                                     </td>
-                                    {{-- @dd($invoiceactivity) --}}
                                     <td class="text-center">
                                         @if ($invoice->reminder_mail_count)
                                             <div class="text-dark font-weight-bold fz-12">{{ __('Reminder - ') . $invoice->reminder_mail_count }}</div>
