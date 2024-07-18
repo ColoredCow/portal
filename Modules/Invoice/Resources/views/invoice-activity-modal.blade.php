@@ -1,4 +1,4 @@
-<div class="modal fade bd-example-modal-lg" id="invoice{{$invoice->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" id="invoiceactivity{{$invoice->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -15,18 +15,32 @@
                         <div class="card">
                           <div class="card-header" id="headingOne">
                             <h5 class="mb-0">
-                              <button class="btn btn-link" data-toggle="collapse" data-target="#activityaccordion{{$activity->id}}" aria-expanded="true" aria-controls="collapseOne">
-                                {{$activity->created_at}}
+                              <button class="btn" data-toggle="collapse" data-target="#activityaccordion{{$activity->id}}" aria-expanded="true" aria-controls="collapseOne">
+                                Reminder Sent On:{{$activity->created_at}}
                               </button>
                             </h5>
                           </div>
                           <div id="activityaccordion{{$activity->id}}" class="collapse " aria-labelledby="headingOne" data-parent="#accordion">
-                            <div class="card-body">
-                              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                            <div class="card-body text-justify">
+                                <div class="d-flex justify-content-between w-full text-start">
+                                    <div class="w-half"><b>To:</b> {{$activity->to}}</div>
+                                    <div class="w-half"><b>From:</b> {{$activity->from}}</div>
+                                </div>
+                                <div class="d-flex justify-content-between mt-2 w-full text-start">
+                                    <div class="w-half"><b>Receiver's Name:</b> {{$activity->receiver_name}}</div>
+                                    <div class="w-half"><b>CC:</b> {{$activity->cc}}</div>
+                                </div>
+                                <div class="d-flex justify-content-between mt-2 w-full text-start">
+                                    <div class="w-half"><b>Subject:</b> {{$activity->subject}}</div>
+                                    <div class="w-half"><b>BCC:</b> {{$activity->bcc}}</div>
+                                </div>
+                                <div class="w-full mt-2">
+                                    <div><b>Content:</b> {{$activity->content}}</div>
+                                </div>
                             </div>
                           </div>
                         </div>
-                      </div>
+                    </div>
                     @endif
                 @endforeach
             </div>
