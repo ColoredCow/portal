@@ -20,7 +20,7 @@
                         <div class="card">
                           <div class="card-header" id="headingOne">
                             <h5 class="mb-0">
-                              <button class="btn" data-toggle="collapse" data-target="#activityaccordion{{$activity->id}}" aria-expanded="true" aria-controls="collapseOne">
+                              <button class="btn btn-link" data-toggle="collapse" data-target="#activityaccordion{{$activity->id}}" aria-expanded="true" aria-controls="collapseOne">
                                 Reminder Sent On: {{ date(config('constants.display_date_format'), strtotime($activity->created_at)) }}
                               </button>
                             </h5>
