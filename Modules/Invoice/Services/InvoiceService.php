@@ -20,6 +20,7 @@ use Modules\Invoice\Emails\SendInvoiceMail;
 use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Invoice\Emails\SendPendingInvoiceMail;
 use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Entities\InvoiceActivity;
 use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Exports\MonthlyGSTTaxReportExport;
 use Modules\Invoice\Exports\TaxReportExport;
@@ -56,10 +57,9 @@ class InvoiceService implements InvoiceServiceContract
                 ->get();
             $totalReceivableAmount = $this->getTotalReceivableAmountInINR($invoices);
 
-            $invoiceActivities = Invoice::query()
-            ->leftJoin('invoice_activities', 'invoices.id', '=', 'invoice_activities.invoice_id')
-            ->select('invoices.*','invoice_activities.type', 'invoice_activities.subject', 'invoice_activities.content', 'invoice_activities.to', 'invoice_activities.from', 'invoice_activities.cc', 'invoice_activities.bcc')
-            ->orderBy('invoices.sent_on', 'desc')
+            $invoiceActivities = InvoiceActivity::query()
+            ->leftJoin('invoices', 'invoices.id', '=', 'invoice_activities.invoice_id')
+            ->select('invoice_activities.*')
             ->get();
 
         } elseif ($invoiceStatus == 'scheduled') {
