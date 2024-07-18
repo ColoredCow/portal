@@ -61,7 +61,6 @@ class InvoiceService implements InvoiceServiceContract
             ->leftJoin('invoices', 'invoices.id', '=', 'invoice_activities.invoice_id')
             ->select('invoice_activities.*')
             ->get();
-
         } elseif ($invoiceStatus == 'scheduled') {
             $invoices = $this->getScheduledInvoices();
         } else {
