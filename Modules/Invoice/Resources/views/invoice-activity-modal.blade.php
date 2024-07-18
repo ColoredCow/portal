@@ -11,6 +11,11 @@
             <div class="modal-body">
                 @foreach ($invoiceActivities as $activity )
                     @if ($activity->invoice_id == $invoice->id)
+                    <?php
+                        $richText = $activity->content;
+                        $plainText = strip_tags($richText);
+                    ?>
+
                     <div id="accordion">
                         <div class="card">
                           <div class="card-header" id="headingOne">
@@ -35,7 +40,7 @@
                                     <div class="w-half"><b>BCC:</b> {{$activity->bcc}}</div>
                                 </div>
                                 <div class="w-full mt-2">
-                                    <div><b>Content:</b> {{$activity->content}}</div>
+                                    <div><b>Content:</b> {{$plainText}}</div>
                                 </div>
                             </div>
                           </div>
