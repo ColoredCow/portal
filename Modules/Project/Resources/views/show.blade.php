@@ -75,24 +75,27 @@
                                             <div class="fz-lg-28 text-center mt-4">No member in the project</div>
                                         @else
                                             <tbody>
-                                                @foreach($project->getTeamMembers  as $teamMember)
-                                                    <tr>
-                                                        <th class="fz-lg-20 my-2 px-5 font-weight-normal">
-                                                            <span>
-                                                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation] }}">
-                                                                <a href="{{ route('employees.show', $teamMember->user->employee->id) }}">
-                                                                <img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">
-                                                                </a>
-                                                            </span>
-                                                            <a href="{{ route('employees.show', $teamMember->user->employee->id) }}">
-                                                            {{$teamMember->user->name}}
+                                            @foreach($project->getTeamMembers  as $teamMember)
+                                                <tr>
+                                                    <th class="fz-lg-20 my-2 px-5 font-weight-normal">
+                                                        <span>
+                                                            <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation] }}">
+                                                            <a href="{{ route('employees.show', $teamMember->user->id) }}">
+                                                            <img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">
                                                             </a>
-                                                        </th>
-                                                        <td id="projectHours">{{ $teamMember->daily_expected_effort }}</td>
-                                                        <td data-toggle="tooltip" title="Start date: {{ $teamMember->started_on->format('Y-m-d') }}  {{ $teamMember->ended_on != null ? "End date: " . ($teamMember->ended_on->format('Y-m-d')) : "" }}">{{ $effortData['totalWorkingDays'] }} Days | {{ $effortData['daysTillToday'] }} Days</td>
-                                                        <td>{{ $teamMember->current_actual_effort }}hrs | {{ $teamMember->non_billable_effort }}hrs</td>
-                                                    </tr>
-                                                @endforeach
+                                                        </span>
+                                                        <a href="{{ route('employees.show', $teamMember->user->id) }}">
+                                                        {{$teamMember->user->name}}
+                                                        </a>
+                                                    </th>
+                                                    <td id="projectHours">{{$teamMember->daily_expected_effort }}</td>
+                                                    <td data-toggle="tooltip" title="Start date: {{$teamMember->started_on->format('Y-m-d')}}  {{$teamMember->ended_on != null ? "End date: " . ($teamMember->ended_on->format('Y-m-d')) : ""}}">{{$effortData['totalWorkingDays']}} Days | {{$effortData['daysTillToday']}} Days</td>
+                                                    <td>{{$teamMember->current_actual_effort}}hrs
+                                                        {{-- | {{$project->getactualEffortOfTeamMember([$teamMember->id])}}hrs</td> --}}
+                                                    {{-- <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}</td> --}}
+                                                </tr>
+                                            @endforeach
+
                                             </tbody>
                                             </table>
                                         @endif
@@ -267,7 +270,7 @@
                     </div>
                     <div class="pr-10 project-hour w-33p mb-10">
                         <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold ">Project Type:</label>
+                            <label for="name" class="font-weight-bold">Billing Cycle:</label>
                         </h4>
                         <span class="text-capitalize fz-lg-22">{{ $project->type }}</span>
                     </div>
@@ -360,14 +363,20 @@
                 return delay ? `${duration} (<strong>Delay: </strong>${delay})` : duration;
             },
             calculateDelay(endDate, expectedEndDate) {
-                const delaySeconds = Math.floor((new Date(endDate) - new Date(expectedEndDate)) / 1000);
-                return delaySeconds > 0 ? this.convertToDateTime(delaySeconds) : null;
+                const delayDays = Math.floor((new Date(endDate).setHours(0, 0, 0, 0) - new Date(expectedEndDate).setHours(0, 0, 0, 0)) / 1000);
+                return delayDays > 0 ? this.convertToDateTime(delayDays) : null;
             },
             formattedDate(dateTime) {
                 return dateTime ? new Date(dateTime).toISOString().split('T')[0] : '';
             },
             formatDisplayDate(date) {
                 return new Date(date).toDateString().split(' ').slice(1).join(' ');
+            },
+            formatDateTime(dateTime) {
+                var date = new Date(dateTime);
+                var datePart = date.toISOString().split('T')[0];
+                var timePart = date.toTimeString().split(' ')[0].slice(0, 5);
+                return `${datePart}T${timePart}`;
             },
             addStage() {
                 const newIndex = this.stages.length;
@@ -416,10 +425,15 @@
                 const stage = this.stages[index];
                 stage.status = status;
                 if (status === 'started') {
-                    stage.start_date = new Date().toISOString();
+                    if (status !== this.stages[index].initialStatus) {
+                        this.stages[index].start_date = stage.start_date || this.formatDateTime(new Date());
+                    }
                     stage.end_date = null;
                 } else if (status === 'completed') {
-                    stage.end_date = new Date().toISOString();
+                    if ('started' !== this.stages[index].initialStatus) {
+                        this.stages[index].start_date = stage.start_date || this.formatDateTime(new Date());
+                    }
+                    stage.end_date = stage.end_date || this.formatDateTime(new Date());
                 } else if (status === 'pending') {
                     stage.start_date = null;
                     stage.end_date = null;

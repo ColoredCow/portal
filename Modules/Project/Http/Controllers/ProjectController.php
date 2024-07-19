@@ -149,6 +149,7 @@ class ProjectController extends Controller
         $designationKeys = array_keys($designations);
         $contractData = $this->getContractData($project);
         $contractName = $contractData['contractName'];
+        $invoiceTerms = $this->service->getInvoiceTerms($project);
 
         return view('project::edit', [
             'project' => $project,
@@ -160,6 +161,7 @@ class ProjectController extends Controller
             'workingDaysInMonth' => $this->service->getWorkingDays($project),
             'designationKeys' => $designationKeys,
             'contractName' => $contractName,
+            'invoiceTerms' => $invoiceTerms,
         ]);
     }
 
@@ -200,6 +202,11 @@ class ProjectController extends Controller
         ]);
     }
 
+    public function showDeliveryReport($invoiceId)
+    {
+        return $this->service->showDeliveryReport($invoiceId);
+    }
+
     public function manageStage(Request $request)
     {
         $validatedData = $request->validate([
@@ -210,9 +217,9 @@ class ProjectController extends Controller
             'newStages.*.status' => 'nullable|string',
             'newStages.*.expected_end_date' => 'required|date',
             'deletedStages' => 'nullable|array',
-            'deletedStages.*' => 'required|integer|exists:project_old_stages,id',
+            'deletedStages.*' => 'required|integer|exists:project_new_stages,id',
             'updatedStages' => 'nullable|array',
-            'updatedStages.*.id' => 'required|integer|exists:project_old_stages,id',
+            'updatedStages.*.id' => 'required|integer|exists:project_new_stages,id',
         ]);
 
         if (empty($validatedData['deletedStages']) && empty($validatedData['newStages']) && empty($validatedData['updatedStages'])) {
