@@ -108,8 +108,6 @@ class ProjectController extends Controller
             'remainingExpectedEffort' => $remainingExpectedEffort,
             'weeklyHoursToCover' => $weeklyHoursToCover,
             'effortData' => $effortData,
-            'totalEffort' => json_encode($totalEffort),
-            'dailyEffort' => $dailyEffort,
             'stages' => $this->projectService->getProjectStages($project),
         ]);
     }
