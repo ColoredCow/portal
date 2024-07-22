@@ -4,7 +4,7 @@
         <br>
         @include('hr.employees.sub-views.menu')
         <br>
-        @include('salary::employee.grossSalaryModal')
+        @include('salary::employee.gross-salary-modal')
         <form action="{{ route('salary.employee.store', $employee) }}" id="employee_salary_form" method="POST"  enctype="multipart/form-data">
             @csrf
             @if (session('success'))
@@ -24,7 +24,7 @@
                             @endcan
                             @can('employee_salary.create')
                             <span data-toggle="tooltip" data-placement="top" title="Create a new salary entry">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#saveAsIncrementModal">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#appraisalModal">
                                     Create Appraisal
                                 </button>
                             </span>

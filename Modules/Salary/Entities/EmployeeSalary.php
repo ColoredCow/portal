@@ -10,7 +10,7 @@ class EmployeeSalary extends Model
 {
     use Encryptable;
 
-    protected $fillable = ['employee_id', 'monthly_gross_salary', 'commencement_date', 'tds', 'salary_type', 'monthly_fee'];
+    protected $guarded = [];
 
     protected $dates = ['commencement_date'];
 
@@ -72,7 +72,7 @@ class EmployeeSalary extends Model
 
     public function getOtherAllowanceAttribute()
     {
-        return $this->monthly_gross_salary - $this->basic_salary - $this->hra - $this->transport_allowance - $this->food_allowance;
+        return (float) $this->monthly_gross_salary - $this->basic_salary - $this->hra - $this->transport_allowance - $this->food_allowance;
     }
 
     public function getTotalSalaryAttribute()

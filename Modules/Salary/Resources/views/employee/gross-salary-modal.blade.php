@@ -1,10 +1,10 @@
-<div class="modal fade" id="saveAsIncrementModal" tabindex="-1" role="dialog" aria-labelledby="saveAsIncrementModalLabel" aria-hidden="true">
+<div class="modal fade" id="appraisalModal" tabindex="-1" role="dialog" aria-labelledby="appraisalModalLabel" aria-hidden="true">
     <form action="{{ route('salary.employee.store', $employee) }}" id="appraisalForm" method="POST" enctype="multipart/form-data"> 
         @csrf
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 class="modal-title" id="saveAsIncrementModalLabel">Salary Details</h5>
+                <h5 class="modal-title" id="appraisalModalLabel">Salary Details</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -28,7 +28,7 @@
                     :loan-deduction="{{ $employee->loan_deduction_for_month ?: 0 }}"
                     :insurance-tenants="{{ optional($employee->user->profile)->insurance_tenants ?? 1 }}"
                 ></gross-calculation-section>
-                <div class="d-md-flex">
+                <div class="d-md-flex {{ count($ctcSuggestions) > 0 ? '' :  'mt-4' }}">
                     <div class="form-group pl-6 col-md-5">
                         <label class="leading-none fz-24 d-flex align-items-center" for="tds">
                             <span class="mr-1 mb-1">{{ __('TDS') }}</span>
@@ -44,26 +44,33 @@
                         <small class="d-none ml-4 text-danger" id="commencementDateErrorMessage"><strong>Date Required</strong></small>
                     </div>
                 </div>
-                <div class="d-md-flex">
+                @if ($employee->payroll_type === 'contractor')
+                <div class="d-md-flex mt-2">
+                    <div class="form-group pl-6 col-md-5">
+                        <label class="leading-none fz-24 d-flex align-items-center" for="newDesignationId">
+                            <span class="mr-1 mb-1">{{ __('New Designation') }}</span>
+                        </label>
+                        <select name="newDesignationId" id="newDesignationId" class="form-control bg-light">
+                            @foreach ($designations as $designation)
+                                <option value="{{ $designation->id }}" {{ $employee->designation_id === $designation->id ? 'selected' : '' }}> {{ $designation->designation }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                @endif
+                <div class="d-md-flex mt-2">
                     <div class="form-group pl-6 col-md-10">
                         <label class="leading-none fz-24 d-flex align-items-center" for="cc_emails">
                             <span class="mr-1 mb-1">{{ __('CC emails') }}</span>
                         </label>
                         <input type="email" name="ccemails" id="ccemails" class="form-control bg-light" placeholder="Comma separated emails">
                     </div>
-                    <!-- <div class="form-group col-md-5">
-                        <label class="leading-none fz-24 ml-4 d-flex align-items-center" for="signature">
-                            <span class="mr-1 mb-1">{{ __('Upload Stamp') }} <small>(png/jpg only)</small></span>
-                        </label>
-                        <input type="file" accept="image/*" name="signature" id="signature" class="form-control ml-4 bg-light" required>
-                        <small class="d-none ml-4 text-danger" id="signatureErrorMessage"><strong>File Required</strong></small>
-                    </div> -->
                 </div>
 
                 <div class="modal-footer">
                     <input hidden name="submitType" value="send_appraisal_letter"/>
-                    <button id="generatePdfButton" class="btn btn-primary text-white" data-url ="{{route('salary.employee.generate-appraisal-letter', $employee)}} "onclick="generatePdf()">View Appraisal Letter</button>
-                    <input type="submit" id="saveButton" class="btn btn-primary ml-2 px-4" value="Send Appraisal Letter" data-url ="{{ route('salary.employee.store', $employee) }}" onclick="resetPath()"/>
+                    <button id="generatePdfButton" class="btn btn-primary text-white" data-url ="{{route('salary.employee.generate-appraisal-letter', $employee)}} "onclick="generatePdf()">{{ $employee->payroll_type === 'contractor' ? 'View Onboarding Letter' : 'View Appraisal Letter' }}</button>
+                    <input type="submit" id="modalSaveButton" class="btn btn-primary ml-2 px-4" value="{{ $employee->payroll_type === 'contractor' ? 'Send Onboarding Letter' : 'Send Appraisal Letter' }}" data-url ="{{ route('salary.employee.store', $employee) }}" onclick="submitAppraisalForm()"/>
                 </div>
             </div>
         </div>
@@ -102,10 +109,10 @@
             }
         }
 
-        function resetPath() {
+        function submitAppraisalForm() {
             event.preventDefault();
             if (validateForm()) {
-                var button = document.getElementById("saveButton");
+                var button = document.getElementById("modalSaveButton");
                 if(button){
                     var url = button.getAttribute("data-url");
                     var form = document.getElementById("appraisalForm");
@@ -138,12 +145,6 @@
                 proposedCtcErrorMessage.removeClass('d-none')
                 isValid = false;
             }
-
-            // // Validate signature
-            // if (signature.val().trim() === '') {
-            //     signatureErrorMessage.removeClass('d-none')
-            //     isValid = false;
-            // }
 
             return isValid
         }

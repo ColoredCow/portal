@@ -46,4 +46,15 @@ return [
             'slug' => 'contractor-fee',
         ],
     ],
+    
+    'payroll_type' => [
+        'contractor' => [
+            'label' => 'Contractor',
+            'slug' => 'contractor',
+        ],
+        'full_time' => [
+            'label' => 'Full Time',
+            'slug' => 'full-time',
+        ],
+    ],
 ];

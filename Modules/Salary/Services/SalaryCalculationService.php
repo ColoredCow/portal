@@ -195,4 +195,26 @@ class SalaryCalculationService
 
         return $pdf;
     }
+
+    public function getIncrementLetterPdf($data)
+    {
+        $pdf = App::make('snappy.pdf.wrapper');
+        $template = 'contractor-increment-letter-template';
+        $html = view('salary::render.' . $template, compact('data'));
+        $pdf->loadHTML($html);
+
+        return $pdf;
+    }
+    
+    public function getContractorOnboardingLetterPdf($data)
+    {
+        $pdf = App::make('snappy.pdf.wrapper');
+        $template = 'contractor-onboarding-template';
+        $html = view('salary::render.' . $template, compact('data'));
+        $pdf->loadHTML($html);
+
+        return $pdf;
+    }
+
+    
 }
