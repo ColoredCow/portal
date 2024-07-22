@@ -20,6 +20,7 @@ use Modules\Invoice\Emails\SendInvoiceMail;
 use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Invoice\Emails\SendPendingInvoiceMail;
 use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Entities\InvoiceActivity;
 use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Exports\MonthlyGSTTaxReportExport;
 use Modules\Invoice\Exports\TaxReportExport;
@@ -45,12 +46,21 @@ class InvoiceService implements InvoiceServiceContract
         $totalReceivableAmount = 0.00;
 
         if ($invoiceStatus == 'sent') {
-            $invoices = Invoice::query()->with('client', 'client.contactPersons', 'client.billingDetails')->applyFilters($filters)->leftjoin('clients', 'invoices.client_id', '=', 'clients.id')
+            $invoices = Invoice::query()
+                ->with(['client', 'client.contactPersons', 'client.billingDetails'])
+                ->applyFilters($filters)
+                ->leftJoin('clients', 'invoices.client_id', '=', 'clients.id')
                 ->select('invoices.*', 'clients.name')
                 ->where('clients.is_billable', true)
-                ->orderBy('name', 'asc')->orderBy('sent_on', 'desc')
+                ->orderBy('clients.name', 'asc')
+                ->orderBy('invoices.sent_on', 'desc')
                 ->get();
             $totalReceivableAmount = $this->getTotalReceivableAmountInINR($invoices);
+
+            $invoiceActivities = InvoiceActivity::query()
+            ->leftJoin('invoices', 'invoices.id', '=', 'invoice_activities.invoice_id')
+            ->select('invoice_activities.*')
+            ->get();
         } elseif ($invoiceStatus == 'scheduled') {
             $invoices = $this->getScheduledInvoices();
         } else {
@@ -88,6 +98,7 @@ class InvoiceService implements InvoiceServiceContract
                 'module' => 'invoice',
                 'setting_key' => config('invoice.templates.setting-key.invoice-reminder.body'),
             ])->first())->setting_value,
+            'invoiceActivities' => $invoiceActivities,
         ];
     }
 
