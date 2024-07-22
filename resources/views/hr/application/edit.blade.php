@@ -112,7 +112,7 @@
                                                                 value="{{ $applicationRound->id }}"
                                                                 class="btn-sm btn-primary text-decoration-none finish_interview ">Finish
                                                                 Interview</button>
-                                                        </div>        
+                                                        </div>
                                                     @endif
                                                 @endif
                                                 <div class="icon-pencil position-relative ml-3 c-pointer"
@@ -930,7 +930,7 @@
                                                     value="{{ $applicationRound->id }}"
                                                     class="btn-sm btn-primary text-decoration-none finish_interview ">Finish
                                                     Interview</button>
-                                            </div>        
+                                            </div>
                                         @endif
                                         <div class="icon-pencil position-relative ml-3 c-pointer" data-toggle="collapse"
                                             data-target="#collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i>
