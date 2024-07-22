@@ -40,7 +40,7 @@
                                     <div class="w-half"><b>BCC:</b> {{$activity->bcc}}</div>
                                 </div>
                                 <div class="w-full mt-2">
-                                    <div><b>Content:</b> {{$plainText}}</div>
+                                    <div><b>Content:</b> {{$activity->content}}</div>
                                 </div>
                             </div>
                           </div>
