@@ -143,7 +143,7 @@ class SalaryService
                 $pdf = $salaryService->getIncrementLetterPdf($appraisalData);
                 Mail::to($data['employeeEmail'])->send(new SendContractorIncrementLetterMail($data, $pdf->inline($data['employeeName'] . '_Increment Letter_' . $formattedCommencementDate . '.pdf'), $formattedCommencementDate));
             }
-            
+
             EmployeeSalary::create([
                 'employee_id' => $employee->id,
                 'monthly_fee' => $request->contractorFee,

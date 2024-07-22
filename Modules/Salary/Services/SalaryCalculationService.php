@@ -218,6 +218,4 @@ class SalaryCalculationService
 
         return $pdf;
     }
-
-
 }
