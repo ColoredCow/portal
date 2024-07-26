@@ -154,7 +154,7 @@
                 <br>
                 <div class="signature-text">
                     <div><b>To,</b></div>
-                    <div style="display: block; float: right;"> Date: <b>{{$data['commencementDate']}}</b> </div>
+                    <div style="display: block; float: right;"> Date: <b>{{$data['formattedCommencementDate']}}</b> </div>
                 </div>
                 <div class="user-details">
                     <div style="margin-bottom: 5px"><b>User's Name,</b></div>
@@ -233,7 +233,7 @@
                     <p>2. <b>Hardcoded</b> is an Indian national, aged <b>Hardcoded</b> years, holding Permanent Account Number(PAN) <b>Hardcoded</b>, and presently residing at <b>Hardcoded</b>
                     <p>Each of the Company and the Employee is individually referred to as the <b>Party</b> and collectively as the <b>Parties</b>. </p>
                     <p><b>WHEREAS</b></p>
-                    <p>1. The Employee is appointed by the Company through a letter of appointment dated <b>hardcoded</b></p>
+                    <p>1. The Employee is appointed by the Company through a letter of appointment dated<b>{{$data['formattedCommencementDate']}}</b></p>
                     <p>2. The Company wishes to define and set forth the terms and conditions of employment of the Employee with the Company.</p>
                     <p>In consideration of the mutual covenants and agreements set forth in this Agreement, and for other good and valuable consideration, the sufficiency of which is acknowledged by the Parties, the Parties hereby agree as follows:</p>
                     <p><b>1. DEFINITIONS AND INTERPRETATION</b></p>
