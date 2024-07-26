@@ -72,7 +72,7 @@ class SalaryController extends Controller
 
             return $pdf->inline($employee->user->name . '_Increment Letter_' . Carbon::parse($request->commencementDate)->format('jS F Y') . '.pdf');
         } elseif ($employee->payroll_type === 'contractor') {
-            $pdf = $salaryService->getContractorOnboardingLetterPdf($request->all());
+            $pdf = $salaryService->getContractorOnboardingLetterPdf($request->all(), $employee);
 
             return $pdf->inline($employee->user->name . '_Onboarding Letter_' . Carbon::parse($request->commencementDate)->format('jS F Y') . '.pdf');
         }

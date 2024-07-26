@@ -206,10 +206,11 @@ class SalaryCalculationService
         return $pdf;
     }
 
-    public function getContractorOnboardingLetterPdf($data)
+    public function getContractorOnboardingLetterPdf($data, $employee)
     {
         $commencementDate = Carbon::parse($data['commencementDate'])->format('jS F Y');
         $data['formattedCommencementDate'] = $commencementDate;
+        $data['employee'] = $employee;
         $pdf = App::make('snappy.pdf.wrapper');
         $template = 'contractor-onboarding-template';
 
@@ -221,5 +222,4 @@ class SalaryCalculationService
 
         return $pdf;
     }
-
 }

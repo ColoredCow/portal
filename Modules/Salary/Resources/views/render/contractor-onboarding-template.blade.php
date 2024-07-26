@@ -157,7 +157,7 @@
                     <div style="display: block; float: right;"> Date: <b>{{$data['formattedCommencementDate']}}</b> </div>
                 </div>
                 <div class="user-details">
-                    <div style="margin-bottom: 5px"><b>User's Name,</b></div>
+                    <div style="margin-bottom: 5px"><b>{{$data['employee']->name}}</b></div>
                     <div style="margin-bottom: 5px"><b>User's Address,</b></div>
                 </div>
                 <div>Dear <b>FirstName,</b></div>
