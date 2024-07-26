@@ -153,8 +153,8 @@
                 <div class="confidential-text">Confidential</div>
                 <br>
                 <div class="signature-text">
-                    <span><b>To,</b></span>
-                    <span style="display: block; float: right;"> Date: <b>{{$data['commencementDate']}}</b> </span>
+                    <div><b>To,</b></div>
+                    <div style="display: block; float: right;"> Date: <b>{{$data['commencementDate']}}</b> </div>
                 </div>
                 <div class="user-details">
                     <div style="margin-bottom: 5px"><b>User's Name,</b></div>
@@ -420,7 +420,18 @@
         <div class="page">
             <div class="page-body">
                 <div class="spacing-from-top">
-
+                    <p><b>IN WITNESS WHEREOF,</b> this Agreement has been entered into the day and year first above written.</p><br>
+                    <table>
+                        <tr>
+                            <td>For <b>Coloredcow Consulting Private Limited</b></td>
+                            <td><b>(Employee Name)</b></td>
+                        </tr>
+                        <tr>
+                            <td>Name: Mr. Mohit Sharma<br>
+                                (HR, Admin)</td>
+                            <td>Hardcoded Value</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
