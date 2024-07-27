@@ -5,6 +5,7 @@ namespace Modules\HR\Entities\Evaluation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\HR\Database\Factories\HrEvaluationSegmentFactory;
 use Modules\HR\Entities\ApplicationEvaluationSegment;
 use Modules\HR\Entities\Round;
 
@@ -32,5 +33,10 @@ class Segment extends Model
     public function applicationEvaluations()
     {
         return $this->hasMany(ApplicationEvaluationSegment::class, 'evaluation_segment_id');
+    }
+
+    public static function newFactory()
+    {
+        return new HrEvaluationSegmentFactory();
     }
 }
