@@ -76,6 +76,18 @@
                 <label class="font-weight-bold" for="">Nickame:</label>
                 <span>{{ $user->nickname }}</span>
             </div>
+            @php
+                $dateOfBirth = $user->profile->date_of_birth ?? null;
+                $formattedDate = '';
+
+                if ($dateOfBirth) {
+                    $formattedDate = (new DateTime($dateOfBirth))->format(config('constants.display_date_format'));
+                }
+            @endphp
+            <div class="form-group">
+                <label class="font-weight-bold" for="">DOB:</label>
+                <span>{{$formattedDate}}</span>
+            </div>
             <div class="form-group">
                 <label class="font-weight-bold" for="">Designation:</label>
                 <span>{{ $user->employee->designation }}</span>

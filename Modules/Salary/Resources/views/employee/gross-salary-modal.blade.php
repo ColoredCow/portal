@@ -60,13 +60,15 @@
                         $user = $employee->user()->withTrashed()->first();
                         $userProfile = $user ? $user->profile : '';
                     @endphp
-                    <div class="form-group pl-6 col-md-5 {{ $userProfile && $userProfile->date_of_birth !== '0000-00-00' ? 'd-none' : '' }}">
-                        <label class="leading-none fz-24 d-flex align-items-center" for="newDesignationId">
-                            <span class="mr-1 mb-1">{{ __('Date of Birth') }}</span>
-                        </label>
-                        <input type="date" name="date_of_birth" id="date_of_birth" class="form-control bg-light" required value="{{$userProfile ? $userProfile->date_of_birth : '' }}">
-                        <small class="d-none text-danger" id="dateOfBirthErrorMessage"><strong>Date Required</strong></small>
-                    </div>
+                    @if (!$userProfile || $userProfile->date_of_birth === '0000-00-00')
+                        <div class="form-group pl-6 col-md-5">
+                            <label class="leading-none fz-24 d-flex align-items-center" for="newDesignationId">
+                                <span class="mr-1 mb-1">{{ __('Date of Birth') }}</span>
+                            </label>
+                            <input type="date" name="date_of_birth" id="date_of_birth" class="form-control bg-light" required value="{{$userProfile ? $userProfile->date_of_birth : '' }}">
+                            <small class="d-none text-danger" id="dateOfBirthErrorMessage"><strong>Date Required</strong></small>
+                        </div>
+                    @endif
                 </div>
                 @endif
                 <div class="d-md-flex mt-2">
