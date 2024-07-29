@@ -20,7 +20,7 @@
                                         <td>
                                             <p class="fz-16 font-weight-bold">Start Date</p>
                                             <input v-if="isEditing(index)" @input="markStageAsUpdated(stage)" type="datetime-local" v-model="stage.start_date" class="form-control fz-14" :disabled="!isEditing(index)">
-                                            <p v-else class="fz-16">@{{ formatDisplayDate(stage.start_date) }}</p>
+                                            <p v-else-if="stage.start_date" class="fz-16">@{{ formatDisplayDate(stage.start_date) }}</p>
                                         </td>
                                         <td>
                                         <p class="fz-16 font-weight-bold field-required">Expected End Date</p>
@@ -30,7 +30,7 @@
                                         <td>
                                             <p class="fz-16 font-weight-bold">Actual End Date</p>
                                             <input v-if="isEditing(index)" @input="markStageAsUpdated(stage)" type="datetime-local" v-model="stage.end_date"  class="form-control fz-14" :disabled="!isEditing(index)">
-                                            <p v-else class="fz-16">@{{ formatDisplayDate(stage.end_date) }}</p>
+                                            <p v-else-if="stage.end_date" class="fz-16">@{{ formatDisplayDate(stage.end_date) }}</p>
                                         </td>
                                         <td>
                                             <p class="fz-16 font-weight-bold">Status</p>
