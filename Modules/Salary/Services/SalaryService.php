@@ -4,13 +4,13 @@ namespace Modules\Salary\Services;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
-use Modules\User\Entities\UserProfile;
 use Modules\HR\Entities\HrJobDesignation;
 use Modules\Salary\Emails\SendAppraisalLetterMail;
 use Modules\Salary\Emails\SendContractorIncrementLetterMail;
 use Modules\Salary\Emails\SendContractorOnboardingLetterMail;
 use Modules\Salary\Entities\EmployeeSalary;
 use Modules\Salary\Entities\SalaryConfiguration;
+use Modules\User\Entities\UserProfile;
 
 class SalaryService
 {
