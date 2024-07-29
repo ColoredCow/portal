@@ -103,7 +103,7 @@ class SalaryService
                 if (! $userProfile) {
                     $this->createUserProfileAndUpdate($request, $employee);
                 } else {
-                    if ($userProfile && $request->newDesignationId) {
+                    if ($request->newDesignationId) {
                         $userProfile->designation = HrJobDesignation::find($request->newDesignationId)->slug;
                     }
                     $userProfile->date_of_birth = $request->date_of_birth;
