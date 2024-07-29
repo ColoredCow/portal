@@ -100,10 +100,10 @@ class SalaryService
                 ]);
 
                 $userProfile = $employee->user->profile;
-                if(! $userProfile){
+                if(! $userProfile) {
                     $this->createUserProfileAndUpdate($request, $employee);
                 } else {
-                    if($userProfile && $request->newDesignationId) {
+                    if ($userProfile && $request->newDesignationId) {
                         $userProfile->designation = HrJobDesignation::find($request->newDesignationId)->slug;
                     }
                     $userProfile->date_of_birth = $request->date_of_birth;
@@ -149,7 +149,7 @@ class SalaryService
                 $pdf = $salaryService->getIncrementLetterPdf($appraisalData);
                 Mail::to($data['employeeEmail'])->send(new SendContractorIncrementLetterMail($data, $pdf->inline($data['employeeName'] . '_Increment Letter_' . $formattedCommencementDate . '.pdf'), $formattedCommencementDate));
             }
-            
+
             EmployeeSalary::create([
                 'employee_id' => $employee->id,
                 'monthly_fee' => $request->contractorFee,
@@ -176,7 +176,8 @@ class SalaryService
         return 'Contractor fee updated successfully!';
     }
 
-    public function createUserProfileAndUpdate($request, $employee){
+    public function createUserProfileAndUpdate($request, $employee)
+    {
         $userProfile = new UserProfile();
         $userProfile->user_id = $employee->user->id;
 

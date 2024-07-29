@@ -56,7 +56,7 @@ class ProfileController extends ModuleBaseController
             $userProfile->insurance_tenants = $request->insurance_tenants;
             $userProfile->save();
         }
-        
+
         $user->employee->save();
 
         $user->save();
