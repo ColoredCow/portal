@@ -100,7 +100,7 @@ class SalaryService
                 ]);
 
                 $userProfile = $employee->user->profile;
-                if(! $userProfile) {
+                if (! $userProfile) {
                     $this->createUserProfileAndUpdate($request, $employee);
                 } else {
                     if ($userProfile && $request->newDesignationId) {
