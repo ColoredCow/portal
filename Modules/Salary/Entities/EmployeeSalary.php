@@ -21,17 +21,17 @@ class EmployeeSalary extends Model
         return $this->belongsTo(Employee::class);
     }
 
-    public function getMonthlyGrossSalaryAttribute($value)
+    public function getMonthlyGrossSalaryAttribute($monthlyGrossSalary)
     {
-        if (is_null($value) || empty($value)) {
+        if (is_null($monthlyGrossSalary) || empty($monthlyGrossSalary)) {
             return 0;
         }
 
-        if($value){
-            $decryptedValue = $this->decryptValue($value);
+        if ($monthlyGrossSalary){
+            $decryptedMonthlyGrossSalary = $this->decryptValue($monthlyGrossSalary);
         }
 
-        return (float)$decryptedValue;
+        return (float) $decryptedMonthlyGrossSalary;
     }
 
     public function getBasicSalaryAttribute()
