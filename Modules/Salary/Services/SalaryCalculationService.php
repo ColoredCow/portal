@@ -216,12 +216,16 @@ class SalaryCalculationService
 
     public function getEmployeeAge($employee)
     {
+        $age = $employee->user->getUserAge($employee->user_id);
+        return $age;
+    }
+
+    public function getEmployeeDesignation($employee)
+    {
         $user = $employee->user;
         $userProfile = $user->profile;
-        $dateOfBirth = $userProfile->date_of_birth;
-        $dob = Carbon::parse($dateOfBirth);
-        $age = $dob->age;
-        return $age;
+        $designation = $userProfile->designation;
+        return $designation;
     }
 
     public function getContractorOnboardingLetterPdf($data, $employee)
@@ -230,6 +234,9 @@ class SalaryCalculationService
         $data['formattedCommencementDate'] = $commencementDate;
         $data['employeeAddress'] = $this->getEmployeeAddressDetail($employee);
         $data['employeeAge'] = $this->getEmployeeAge($employee);
+        $data['employeeDesignation'] = $this->getEmployeeDesignation($employee);
+        $employeeFirstName = explode(' ', $employee->name)[0];
+        $data['employeeFirstName'] = $employeeFirstName;
         $data['employee'] = $employee;
         $pdf = App::make('snappy.pdf.wrapper');
         $template = 'contractor-onboarding-template';

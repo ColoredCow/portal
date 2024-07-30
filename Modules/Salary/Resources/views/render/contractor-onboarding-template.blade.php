@@ -158,12 +158,12 @@
                 </div>
                 <div class="user-details">
                     <div style="margin-bottom: 5px"><b>{{$data['employee']->name}}</b></div>
-                    <div style="margin-bottom: 5px"><b>User's Address,</b></div>
+                    <div style="margin-bottom: 5px"><b>{{$data['employeeAddress']}},</b></div>
                 </div>
-                <div>Dear <b>FirstName,</b></div>
+                <div>Dear <b>{{$data['employeeFirstName']}},</b></div>
                 <br>
                 <div>
-                    The management of Coloredcow Consulting Private Limited (hereinafter referred to as the "Company") takes pleasure in appointing you as a <b>"Software Developer"</b> based at the Gurugram Office of the Company on a salary package of <b>4.24 L</b> Lakhs per annum.
+                    The management of Coloredcow Consulting Private Limited (hereinafter referred to as the "Company") takes pleasure in appointing you as a <b>"{{$data['employeeDesignation']}}"</b> based at the Gurugram Office of the Company on a salary package of <b>4.24 L</b> Lakhs per annum.
                 </div>
                 <div class="revised-details">
                     Your revised remuneration will be <b>INR 35,138/-</b> per month as per the following breakup.
@@ -227,10 +227,10 @@
         <div class="page">
             <div class="page-body">
                 <div class="confidential-text">Employment Agreement</div> <br>
-                <div>This Employment Agreement is executed at Gurugram on <b>hardcoded value</b> between </div>
+                <div>This Employment Agreement is executed at Gurugram on <b>{{$data['formattedCommencementDate']}}</b> between </div>
                 <div>
                     <p>1. <b>Coloredcow Consulting Private Limited</b>, a company incorporated under the laws of India and having its registered office at F-61, Suncity, Sector 54, Gurugram, Haryana-122003, India <b>("Company")</b>; and </p>
-                    <p>2. <b>Hardcoded</b> is an Indian national, aged <b>Hardcoded</b> years, holding Permanent Account Number(PAN) <b>Hardcoded</b>, and presently residing at <b>Hardcoded</b>
+                    <p>2. <b>{{$data['employeeFirstName']}}</b> is an Indian national, aged <b>{{$data['employeeAge']}}</b> years, holding Permanent Account Number(PAN) <b>Hardcoded</b>, and presently residing at <b>Hardcoded</b>
                     <p>Each of the Company and the Employee is individually referred to as the <b>Party</b> and collectively as the <b>Parties</b>. </p>
                     <p><b>WHEREAS</b></p>
                     <p>1. The Employee is appointed by the Company through a letter of appointment dated<b>{{$data['formattedCommencementDate']}}</b></p>
@@ -264,13 +264,13 @@
                     <p>f. The descriptive headings of clauses are inserted solely for convenience of reference only and shall not be used to interpret the provisions of this Agreement.</p>
                     <p>1.3. In the event of any conflict between the terms of this Agreement and any other document recording or purporting to record the terms of the Employee's employment or engagement by the Company, the terms of this Agreement shall prevail.</p>
                     <p><b>2. APPOINTMENT</b></p>
-                    <p>2.1. Relying upon the representations made by the employee with regard to her/his educational background and work experience, the company is pleased to appoint the employee, and the employee agrees to serve the Company, in the capacity of <b>Hardcoded</b> with effect from <b>Hardcoded ("Effective Date").</b></p>
+                    <p>2.1. Relying upon the representations made by the employee with regard to her/his educational background and work experience, the company is pleased to appoint the employee, and the employee agrees to serve the Company, in the capacity of <b>{{$data['employeeDesignation']}}</b> with effect from <b>{{$data['formattedCommencementDate']}} ("Effective Date").</b></p>
                     <p>2.2. The terms and conditions governing the employment of the Employee with the Company, which may be modified by the Company by issuing a separate written communication which shall be deemed to form part of this Agreement, to the Employee are set out in <b>Schedule I</b> of this Agreement.</p>
                     <p>2.3. The Employee warrants that, by entering this Agreement and performing her/his obligations hereunder, she/he will not be in breach of any terms or obligations under any subsisting agreement, written or oral, with any third party.</p>
                     <p><b>3. DUTIES, POWERS, AND SCOPE OF WORK</b></p>
                     <p>3.1. The scope of the work to be performed by the Employee during her/his term of employment with the Company is set - out in Schedule I hereof which shall be carried out by the Employee with utmost care and diligence and shall at all times be subject to the superintendence, direction, and control of the management of the Company. The Parties agree that the powers under this Clause shall be without prejudice to the powers of the Company to modify the same. The Company may also make such changes to the Employee's job title or position that it considers reasonable.</p>
                     <p>3.2. The Employee shall, at all times, promptly give to the Company and/or to any person to whom she/he operationally reports (in writing, if so requested) all such information, explanations, and assistance as may be required in connection with the Company Business and the due performance of her/his duties under this Agreement.</p>
-                    <p>3.3. The Employee is expected to work with high standards of initiative, efficiency, and economy in a professional manner. The Employee shall perform, observe and confirm, faithfully and loyally and to the best of the Employee’s abilities, the duties assigned to the Employee hereunder and all directions and instructions given to her/his and the Company Policies, and shall devote all the Employee’s attention, knowledge, and experience and give her/his best efforts, skills and abilities to diligently and efficiently serve and promote the business and interests of the Company in a professional manner on a full-time basis and shall act honestly, reasonably and in the best interests of the Company. In discharging her/his duties and responsibilities, the Employee shall implement all management models and operating philosophies adopted by the Company. The Employee shall make best efforts to accomplish all business objectives and goals set for the Company.</p>
+                    <p>3.3. The Employee is expected to work with high standards of initiative, efficiency, and economy in a professional manner. The Employee shall perform, observe and confirm, faithfully and loyally and to the best of the Employee’s abilities, the duties assigned to the Employee hereunder and all directions and instructions given to her/his and the Company Policies, and shall devote all the Employee's attention, knowledge, and experience and give her/his best efforts, skills and abilities to diligently and efficiently serve and promote the business and interests of the Company in a professional manner on a full-time basis and shall act honestly, reasonably and in the best interests of the Company. In discharging her/his duties and responsibilities, the Employee shall implement all management models and operating philosophies adopted by the Company. The Employee shall make best efforts to accomplish all business objectives and goals set for the Company.</p>
                 </div>
             </div>
         </div>
@@ -429,7 +429,7 @@
                         <tr>
                             <td>Name: Mr. Mohit Sharma<br>
                                 (HR, Admin)</td>
-                            <td>Hardcoded Value</td>
+                            <td>{{$data['employee']->name}}</td>
                         </tr>
                     </table>
                 </div>
