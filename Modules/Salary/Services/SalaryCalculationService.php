@@ -214,11 +214,22 @@ class SalaryCalculationService
         return $address;
     }
 
+    public function getEmployeeAge($employee)
+    {
+        $user = $employee->user;
+        $userProfile = $user->profile;
+        $dateOfBirth = $userProfile->date_of_birth;
+        $dob = Carbon::parse($dateOfBirth);
+        $age = $dob->age;
+        return $age;
+    }
+
     public function getContractorOnboardingLetterPdf($data, $employee)
     {
         $commencementDate = Carbon::parse($data['commencementDate'])->format('jS F Y');
         $data['formattedCommencementDate'] = $commencementDate;
         $data['employeeAddress'] = $this->getEmployeeAddressDetail($employee);
+        $data['employeeAge'] = $this->getEmployeeAge($employee);
         $data['employee'] = $employee;
         $pdf = App::make('snappy.pdf.wrapper');
         $template = 'contractor-onboarding-template';
