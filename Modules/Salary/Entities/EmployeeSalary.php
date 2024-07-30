@@ -27,7 +27,7 @@ class EmployeeSalary extends Model
             return 0;
         }
 
-        $decryptedMonthlyGrossSalary = $monthlyGrossSalary ? $this->decryptValue($monthlyGrossSalary) : 0;
+        $decryptedMonthlyGrossSalary = $this->decryptValue($monthlyGrossSalary);
 
         return (float) $decryptedMonthlyGrossSalary;
     }
