@@ -228,6 +228,12 @@ class SalaryCalculationService
         return $designation;
     }
 
+    public function getSalaryPackage($data)
+    {
+        $formattedNumber = $data / 100000;
+        return number_format($formattedNumber, 1);
+    }
+
     public function getContractorOnboardingLetterPdf($data, $employee)
     {
         $commencementDate = Carbon::parse($data['commencementDate'])->format('jS F Y');
@@ -235,15 +241,14 @@ class SalaryCalculationService
         $data['employeeAddress'] = $this->getEmployeeAddressDetail($employee);
         $data['employeeAge'] = $this->getEmployeeAge($employee);
         $data['employeeDesignation'] = $this->getEmployeeDesignation($employee);
+        $data['salaryPackage'] = $this->getSalaryPackage($data['ctcAggregated']);
         $employeeFirstName = explode(' ', $employee->name)[0];
         $data['employeeFirstName'] = $employeeFirstName;
         $data['employee'] = $employee;
         $pdf = App::make('snappy.pdf.wrapper');
         $template = 'contractor-onboarding-template';
-
         $html = view('salary::render.' . $template, compact('data'));
         $pdf->loadHTML($html);
-
         $pdf->setOption('header-html', view('salary::render.header')->render());
         $pdf->setOption('footer-html', view('salary::render.footer')->render());
 

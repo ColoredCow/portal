@@ -163,10 +163,10 @@
                 <div>Dear <b>{{$data['employeeFirstName']}},</b></div>
                 <br>
                 <div>
-                    The management of Coloredcow Consulting Private Limited (hereinafter referred to as the "Company") takes pleasure in appointing you as a <b>"{{$data['employeeDesignation']}}"</b> based at the Gurugram Office of the Company on a salary package of <b>4.24 L</b> Lakhs per annum.
+                    The management of Coloredcow Consulting Private Limited (hereinafter referred to as the "Company") takes pleasure in appointing you as a <b>"{{$data['employeeDesignation']}}"</b> based at the Gurugram Office of the Company on a salary package of <b>{{$data['salaryPackage']}}</b> Lakhs per annum.
                 </div>
                 <div class="revised-details">
-                    Your revised remuneration will be <b>INR 35,138/-</b> per month as per the following breakup.
+                    Your revised remuneration will be <b>INR {{$data['grossSalary']}}/-</b> per month as per the following breakup.
                     <br>
                     <div class="salary-details">
                         <span class="salary-text">Basic Salary</span><span class="salary-number-1">Rs 16,500/-</span>
