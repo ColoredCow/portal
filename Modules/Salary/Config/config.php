@@ -46,7 +46,7 @@ return [
             'slug' => 'contractor-fee',
         ],
     ],
-    
+
     'payroll_type' => [
         'contractor' => [
             'label' => 'Contractor',

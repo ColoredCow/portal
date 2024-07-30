@@ -56,6 +56,19 @@
                             @endforeach
                         </select>
                     </div>
+                    @php
+                        $user = $employee->user()->withTrashed()->first();
+                        $userProfile = $user ? $user->profile : '';
+                    @endphp
+                    @if (!$userProfile || $userProfile->date_of_birth === '0000-00-00')
+                        <div class="form-group pl-6 col-md-5">
+                            <label class="leading-none fz-24 d-flex align-items-center" for="newDesignationId">
+                                <span class="mr-1 mb-1">{{ __('Date of Birth') }}</span>
+                            </label>
+                            <input type="date" name="date_of_birth" id="date_of_birth" class="form-control bg-light" required value="{{$userProfile ? $userProfile->date_of_birth : '' }}">
+                            <small class="d-none text-danger" id="dateOfBirthErrorMessage"><strong>Date Required</strong></small>
+                        </div>
+                    @endif
                 </div>
                 @endif
                 <div class="d-md-flex mt-2">
@@ -126,18 +139,25 @@
         function validateForm() {
             let proposedCtc = $('#proposedCtc');
             let commencementDate = $('#commencementDate');
+            let dateOfBirth = $('#date_of_birth');
             let signature = $('#signature');
             let proposedCtcErrorMessage = $('#proposedCtcErrorMessage');
             let commencementDateErrorMessage = $('#commencementDateErrorMessage');
             let signatureErrorMessage = $('#signatureErrorMessage');
+            let dateOfBirthErrorMessage = $('#dateOfBirthErrorMessage');
             let isValid = true;
 
             commencementDateErrorMessage.addClass('d-none')
             signatureErrorMessage.addClass('d-none')
+            dateOfBirthErrorMessage.addClass('d-none')
             proposedCtcErrorMessage.addClass('d-none')
 
             if (commencementDate.val().trim() === '') {
                 commencementDateErrorMessage.removeClass('d-none')
+                isValid = false;
+            }
+            if (dateOfBirth.val() === '' && dateOfBirth.val().trim() === '') {
+                dateOfBirthErrorMessage.removeClass('d-none')
                 isValid = false;
             }
             
