@@ -27,7 +27,7 @@ class EmployeeSalary extends Model
             return 0;
         }
 
-        if ($monthlyGrossSalary) {
+        if (! is_null($monthlyGrossSalary) && ! empty($monthlyGrossSalary)) {
             $decryptedMonthlyGrossSalary = $this->decryptValue($monthlyGrossSalary);
         }
 
