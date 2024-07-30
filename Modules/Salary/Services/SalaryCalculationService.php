@@ -206,10 +206,19 @@ class SalaryCalculationService
         return $pdf;
     }
 
+    public function getEmployeeAddressDetail($employee)
+    {
+        $user = $employee->user;
+        $userProfile = $user->profile;
+        $address = $userProfile->address;
+        return $address;
+    }
+
     public function getContractorOnboardingLetterPdf($data, $employee)
     {
         $commencementDate = Carbon::parse($data['commencementDate'])->format('jS F Y');
         $data['formattedCommencementDate'] = $commencementDate;
+        $data['employeeAddress'] = $this->getEmployeeAddressDetail($employee);
         $data['employee'] = $employee;
         $pdf = App::make('snappy.pdf.wrapper');
         $template = 'contractor-onboarding-template';
