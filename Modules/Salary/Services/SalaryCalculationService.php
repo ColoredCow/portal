@@ -205,7 +205,7 @@ class SalaryCalculationService
 
         return $pdf;
     }
-    
+
     public function getContractorOnboardingLetterPdf($data)
     {
         $pdf = App::make('snappy.pdf.wrapper');
@@ -215,6 +215,4 @@ class SalaryCalculationService
 
         return $pdf;
     }
-
-    
 }

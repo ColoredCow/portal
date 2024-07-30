@@ -25,6 +25,10 @@
                     <input type="text" class="form-control" id="nickName" name="nickName" required value="{{$user->nickname}}">
                 </div>
                 <div class="form-group">
+                    <label for="date_of_birth">Date of Birth</label>
+                    <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required value="{{$user->profile ? $user->profile->date_of_birth : ''}}">
+                </div>
+                <div class="form-group">
                     <label for="designation">Designation</label>
                     <select class="form-control" name="designationId">
                         @foreach ($designations as $designation )
@@ -71,6 +75,18 @@
             <div class="form-group">
                 <label class="font-weight-bold" for="">Nickame:</label>
                 <span>{{ $user->nickname }}</span>
+            </div>
+            @php
+                $dateOfBirth = $user->profile->date_of_birth ?? null;
+                $formattedDate = '';
+
+                if ($dateOfBirth) {
+                    $formattedDate = (new DateTime($dateOfBirth))->format(config('constants.display_date_format'));
+                }
+            @endphp
+            <div class="form-group">
+                <label class="font-weight-bold" for="">DOB:</label>
+                <span>{{$formattedDate}}</span>
             </div>
             <div class="form-group">
                 <label class="font-weight-bold" for="">Designation:</label>

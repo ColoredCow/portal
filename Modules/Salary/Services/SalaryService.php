@@ -10,6 +10,7 @@ use Modules\Salary\Emails\SendContractorIncrementLetterMail;
 use Modules\Salary\Emails\SendContractorOnboardingLetterMail;
 use Modules\Salary\Entities\EmployeeSalary;
 use Modules\Salary\Entities\SalaryConfiguration;
+use Modules\User\Entities\UserProfile;
 
 class SalaryService
 {
@@ -99,8 +100,13 @@ class SalaryService
                 ]);
 
                 $userProfile = $employee->user->profile;
-                if ($userProfile && $request->newDesignationId) {
-                    $userProfile->designation = HrJobDesignation::find($request->newDesignationId)->slug;
+                if (! $userProfile) {
+                    $this->createUserProfileAndUpdate($request, $employee);
+                } else {
+                    if ($request->newDesignationId) {
+                        $userProfile->designation = HrJobDesignation::find($request->newDesignationId)->slug;
+                    }
+                    $userProfile->date_of_birth = $request->date_of_birth;
                     $userProfile->save();
                 }
             }
@@ -143,7 +149,7 @@ class SalaryService
                 $pdf = $salaryService->getIncrementLetterPdf($appraisalData);
                 Mail::to($data['employeeEmail'])->send(new SendContractorIncrementLetterMail($data, $pdf->inline($data['employeeName'] . '_Increment Letter_' . $formattedCommencementDate . '.pdf'), $formattedCommencementDate));
             }
-            
+
             EmployeeSalary::create([
                 'employee_id' => $employee->id,
                 'monthly_fee' => $request->contractorFee,
@@ -162,6 +168,26 @@ class SalaryService
         $currentSalaryObject->tds = $request->tds;
         $currentSalaryObject->save();
 
+        $userProfile = $employee->user->profile;
+        if (! $userProfile) {
+            $this->createUserProfileAndUpdate($request, $employee);
+        }
+
         return 'Contractor fee updated successfully!';
+    }
+
+    public function createUserProfileAndUpdate($request, $employee)
+    {
+        $userProfile = new UserProfile();
+        $userProfile->user_id = $employee->user->id;
+
+        if ($request->date_of_birth) {
+            $userProfile->date_of_birth = $request->date_of_birth;
+        }
+        if ($request->newDesignationId) {
+            $userProfile->designation = HrJobDesignation::find($request->newDesignationId)->slug;
+        }
+
+        $userProfile->save();
     }
 }
