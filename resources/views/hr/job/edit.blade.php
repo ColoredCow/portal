@@ -126,7 +126,7 @@
                 </div>
             </div>
         </div>
-        <!-- New AI Prompts Section -->
+        <!-- AI Prompts Section -->
         <div class="card mb-3">
             <div class="card-header">
                 <h5 class="mb-0">AI Prompts</h5>
