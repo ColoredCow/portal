@@ -960,6 +960,7 @@
                                                                         @endif
                                                                         {{ $tag->name }}
                                                                     </div>
+                                                                    <div></div> 
                                                                 @endforeach
                                                                 @if (!in_array($application->status, ['in-progress', 'new']))
                                                                     <div
@@ -1151,6 +1152,10 @@
                                                                         </div>
                                                                     @endforeach
                                                                 @endif
+                                                            <button type="button" class="btn btn-primary p-0 px-1 py-1 ml-1"
+                                                                        data-toggle="modal" data-target="#ModalCenter">
+                                                                        Analyze Resume
+                                                            </button>
                                                             </div>
                                                         </div>
                                                     </div>
