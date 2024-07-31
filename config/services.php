@@ -45,4 +45,7 @@ return [
         'access_key' => env('CURRENCYLAYER_API_KEY'),
         'default_rate' => env('DEFAULT_RATE_USDINR'),
     ],
+    'openai' => [
+        'api_key' => env('OPENAI_API_KEY'),
+    ],
 ];
