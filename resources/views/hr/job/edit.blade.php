@@ -126,7 +126,25 @@
                 </div>
             </div>
         </div>
-    </form>
+        <!-- New AI Prompts Section -->
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="mb-0">AI Prompts</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="col-md-6 form-group">
+                        <label for="ai_prompt_1" class="fz-14 leading-none text-secondary mb-1">Instruction</label>
+                        <input type="text" class="form-control" id="ai_prompt_1" name="ai_prompt_1" placeholder="Enter AI Instruction..." value="{{ old('ai_prompt_1', $job->ai_prompt_1) }}">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="ai_prompt_2" class="fz-14 leading-none text-secondary mb-1">Prompt</label>
+                        <input type="text" class="form-control" id="ai_prompt_2" name="ai_prompt_2" placeholder="Enter AI Prompt..." value="{{ old('ai_prompt_2', $job->ai_prompt_2) }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     <div class="d-flex">
         <button type="submit" class="btn btn-primary  ml-2" form="update-form">Update</button>
         <a href="{{ $job->link }}" target="_blank" class="btn btn-info  ml-2" role="button">Preview job</a>
