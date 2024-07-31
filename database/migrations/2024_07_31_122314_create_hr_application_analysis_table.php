@@ -21,7 +21,6 @@ class CreateHrApplicationAnalysisTable extends Migration
             $table->string('resume_link');
             $table->text('analysis');
             $table->timestamps();
-            
             $table->foreign('application_id')->references('id')->on('hr_applications')->onDelete('cascade');
         });
     }
