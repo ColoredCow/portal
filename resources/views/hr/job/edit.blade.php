@@ -135,11 +135,11 @@
                 <div class="form-row">
                     <div class="col-md-6 form-group">
                         <label for="ai_prompt_1" class="fz-14 leading-none text-secondary mb-1">Instruction</label>
-                        <input type="text" class="form-control" id="ai_prompt_1" name="ai_prompt_1" placeholder="Enter AI Instruction..." value="{{ old('ai_prompt_1', $job->ai_prompt_1) }}">
+                        <textarea id="ai_instruction" class="form-control richeditor" name="ai_instruction" rows="4" placeholder="Enter OpenAI Instruction...">{{ old('ai_instruction', $job->ai_instruction) }}</textarea>
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="ai_prompt_2" class="fz-14 leading-none text-secondary mb-1">Prompt</label>
-                        <input type="text" class="form-control" id="ai_prompt_2" name="ai_prompt_2" placeholder="Enter AI Prompt..." value="{{ old('ai_prompt_2', $job->ai_prompt_2) }}">
+                        <textarea id="ai_prompt" class="form-control richeditor" name="ai_prompt" rows="4" placeholder="Enter OpenAI Prompt...">{{ old('ai_prompt', $job->ai_prompt) }}</textarea>
                     </div>
                 </div>
             </div>
