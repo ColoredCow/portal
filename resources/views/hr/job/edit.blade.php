@@ -134,10 +134,6 @@
             <div class="card-body">
                 <div class="form-row">
                     <div class="col-md-6 form-group">
-                        <label for="ai_prompt_1" class="fz-14 leading-none text-secondary mb-1">Instruction</label>
-                        <textarea id="ai_instruction" class="form-control richeditor" name="ai_instruction" rows="4" placeholder="Enter OpenAI Instruction...">{{ old('ai_instruction', $job->ai_instruction) }}</textarea>
-                    </div>
-                    <div class="col-md-6 form-group">
                         <label for="ai_prompt_2" class="fz-14 leading-none text-secondary mb-1">Prompt</label>
                         <textarea id="ai_prompt" class="form-control richeditor" name="ai_prompt" rows="4" placeholder="Enter OpenAI Prompt...">{{ old('ai_prompt', $job->ai_prompt) }}</textarea>
                     </div>
