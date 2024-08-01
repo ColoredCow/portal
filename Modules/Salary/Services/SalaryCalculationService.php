@@ -160,7 +160,6 @@ class SalaryCalculationService
 
     public function salaryIncreasePercentage($employeeDetails)
     {
-        dd($employeeDetails);
         $employeeIncreasePercentage = (int) $employeeDetails->getLatestSalaryPercentageIncrementAttribute();
 
         return $employeeIncreasePercentage;
