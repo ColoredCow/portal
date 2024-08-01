@@ -76,7 +76,7 @@
                                 :salary-configs="{{ json_encode($salaryConfigs) }}"
                                 :insurance-tenants="{{ optional($employee->user->profile)->insurance_tenants ?: 1 }}"
                                 :gross-salary="grossSalary"
-                                :tds="{{ optional($employee->getLatestSalary())->tds ?: 0  }}"
+                                :tds="{{ optional($employee->getLatestSalary($employee->payroll_type))->tds ?: 0  }}"
                                 :commencement-date="commencementDate"
                                 :loan-deduction="{{ $employee->loan_deduction_for_month ?: 0 }}"
                             ></salary-breakdown>
@@ -94,9 +94,9 @@
             el: '#employee_salary_form',
             data() {
                 return {
-                    tds: "{{ optional($employee->getLatestSalary())->tds ?: 0 }}",
-                    grossSalary: "{{ optional($employee->getLatestSalary())->monthly_gross_salary }}",
-                    commencementDate: "{{ optional(optional($employee->getLatestSalary())->commencement_date)->format('Y-m-d') }}",
+                    tds: "{{ optional($employee->getLatestSalary($employee->payroll_type))->tds ?: 0 }}",
+                    grossSalary: "{{ optional($employee->getLatestSalary($employee->payroll_type))->monthly_gross_salary }}",
+                    commencementDate: "{{ optional(optional($employee->getLatestSalary($employee->payroll_type))->commencement_date)->format('Y-m-d') }}",
                 }
             }
         });

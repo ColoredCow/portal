@@ -109,8 +109,25 @@ class Employee extends Model
         return $query->where('salary_type', config('salary.type.employee_salary.slug'));
     }
 
-    public function getLatestSalary()
+    public function getLatestSalary($payRollType = null)
     {
+        // dump($payRollType);
+        // dump($payRollType);
+        if($payRollType){
+            $latestEmployeeSalary = $this->employeeSalaries()->latest('commencement_date')->first();
+            if($latestEmployeeSalary){
+                // dump($latestEmployeeSalary->salary_type,$payRollType);
+                if ($payRollType === 'full-time' && $latestEmployeeSalary->salary_type === 'employee-salary') {
+                    return $latestEmployeeSalary;
+                } elseif ($payRollType === 'contractor' && $latestEmployeeSalary->salary_type === 'contractor-fee'){
+                    return $latestEmployeeSalary;
+                } else {
+                    return 0;
+                }
+            } else {
+                return 0;
+            }
+        }
         return $this->employeeSalaries()->latest('commencement_date')->first();
     }
 

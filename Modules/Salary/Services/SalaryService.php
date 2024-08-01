@@ -67,7 +67,7 @@ class SalaryService
         ];
 
         if ($employee->payroll_type === 'contractor') {
-            $data['salary'] = $employee->getLatestSalary();
+            $data['salary'] = $employee->getLatestSalary($employee->payroll_type);
         }
 
         return $data;
@@ -75,7 +75,7 @@ class SalaryService
 
     public function storeOrUpdateSalary($request, $employee)
     {
-        $currentSalaryObject = $employee->getLatestSalary();
+        $currentSalaryObject = $employee->getLatestSalary($employee->payroll_type);
 
         if ((! $currentSalaryObject) || $request->submitType == 'send_appraisal_letter') {
             if ($currentSalaryObject) {
@@ -138,7 +138,7 @@ class SalaryService
 
     public function storeOrUpdateContractorSalary($request, $employee)
     {
-        $currentSalaryObject = $employee->getLatestSalary();
+        $currentSalaryObject = $employee->getLatestSalary($employee->payroll_type);
         if ((! $currentSalaryObject) || $request->submitType == 'send_contractor_increment_letter') {
             if ($currentSalaryObject) {
                 $salaryService = new SalaryCalculationService($request->grossSalary);
