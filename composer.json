@@ -14,7 +14,7 @@
     }
   ],
   "require": {
-    "php": "^7.4",
+    "php": "^8.1",
     "ext-gd": "*",
     "aws/aws-sdk-php": "^3.121",
     "barryvdh/laravel-snappy": "^0.4.7",
@@ -25,7 +25,7 @@
     "google/apiclient": "^2.4",
     "h4cc/wkhtmltopdf-amd64": "0.12.x",
     "jgrossi/corcel": "^5.0",
-    "jordikroon/google-vision": "^1.8",
+    "google/cloud-vision": "^1.8",
     "laravel-notification-channels/google-chat": "^1.0",
     "laravel/framework": "^8.0",
     "laravel/helpers": "^1.1",
@@ -59,7 +59,10 @@
     "preferred-install": "dist",
     "sort-packages": true,
     "platform": {
-      "php": "7.5"
+      "php": "8.1"
+    },
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
   "extra": {
