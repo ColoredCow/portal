@@ -23,11 +23,11 @@
     "fruitcake/laravel-cors": "^2.0.5",
     "fzaninotto/faker": "^1.5",
     "google/apiclient": "^2.4",
+    "google/cloud-vision": "^1.8",
     "guzzlehttp/guzzle": "^7.2",
     "h4cc/wkhtmltopdf-amd64": "0.12.x",
-    "google/cloud-vision": "^1.8",
     "laravel-notification-channels/google-chat": "^3.2",
-    "laravel/framework": "^9.0",
+    "laravel/framework": "^9.46.0",
     "laravel/helpers": "^1.1",
     "laravel/legacy-factories": "^1.1",
     "laravel/sanctum": "^2.14",
@@ -39,9 +39,11 @@
     "nesbot/carbon": "^2.61",
     "niklasravnsborg/laravel-pdf": "^4.1",
     "nwidart/laravel-modules": "^7.0",
+    "openai-php/laravel": "^0.10.1",
     "owen-it/laravel-auditing": "^13.0",
     "revolution/laravel-google-sheets": "^5.6",
-    "spatie/laravel-permission": "^6.9"
+    "spatie/laravel-permission": "^6.9",
+    "symfony/http-client": "^6.4"
   },
     "require-dev": {
     "barryvdh/laravel-debugbar": "^3.13",
@@ -60,7 +62,8 @@
       "php": "8.2"
     },
     "allow-plugins": {
-      "dealerdirect/phpcodesniffer-composer-installer": true
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "php-http/discovery": true
     }
   },
   "extra": {
