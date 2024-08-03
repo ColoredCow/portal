@@ -106,7 +106,12 @@ class SalaryService
                     if ($request->newDesignationId) {
                         $userProfile->designation = HrJobDesignation::find($request->newDesignationId)->slug;
                     }
-                    $userProfile->date_of_birth = $request->date_of_birth;
+                    if ($request->date_of_birth) {
+                        $userProfile->date_of_birth = $request->date_of_birth;
+                    }
+                    if ($request->pan_details) {
+                        $userProfile->pan_details = $request->pan_details;
+                    }
                     $userProfile->save();
                 }
             }
@@ -186,6 +191,9 @@ class SalaryService
         }
         if ($request->newDesignationId) {
             $userProfile->designation = HrJobDesignation::find($request->newDesignationId)->slug;
+        }
+        if ($request->pan_details) {
+            $userProfile->pan_details = $request->pan_details;
         }
 
         $userProfile->save();
