@@ -28,6 +28,12 @@
                     </div>
                 </div>
                 <div class="form-row">
+                    <div class="form-group col-md-9">
+                        <label class="field-required">Description</label>
+                        <textarea class="form-control" name="description" required="required">{{ old('description') }}</textarea>
+                    </div>
+                </div>
+                <div class="form-row">
                     <div class="form-group col-md-5">
                         <label class="field-required">Loan Start Month</label>
                         <input type="month" class="form-control" name="start_date" required="required" value="{{ now()->format('Y-m') }}">
