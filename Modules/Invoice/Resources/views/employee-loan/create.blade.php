@@ -27,9 +27,11 @@
                             required="required" step=".01" min="0" value="{{ old('total_amount') }}">
                     </div>
                 </div>
-                <div class="form-group offset-md-1 col-md-5">
-                    <label>Description</label>
-                    <textarea class="form-control" name="description" value="{{ old('description') }}"></textarea>
+                <div class="form-row">
+                    <div class="form-group col-md-9">
+                        <label class="field-required">Description</label>
+                        <textarea class="form-control" name="description" required="required">{{ old('description') }}</textarea>
+                    </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-5">
