@@ -234,6 +234,20 @@ class SalaryCalculationService
         return number_format($formattedNumber, 1);
     }
 
+    public function getTransportAllowance()
+    {
+        return (int) $this->salaryConfig->get('transport_allowance')->fixed_amount;
+    }
+
+    public function epfShare($basicSalary)
+    {
+        $basicSalaryConfig = $this->salaryConfig->get('basic_salary');
+
+        $epfShare =($basicSalaryConfig->percentage_rate / 100) * $basicSalary;
+
+        return $epfShare;
+    }
+
     public function getContractorOnboardingLetterPdf($data, $employee)
     {
         $commencementDate = Carbon::parse($data['commencementDate'])->format('jS F Y');
@@ -245,6 +259,11 @@ class SalaryCalculationService
         $employeeFirstName = explode(' ', $employee->name)[0];
         $data['employeeFirstName'] = $employeeFirstName;
         $data['employee'] = $employee;
+        $data['basicSalary'] = $this->basicSalary();
+        $data['otherAllowance'] = $this->employeeOtherAllowance($data['grossSalary']);
+        $data['hra'] = $this-> hra();
+        $data['transportAllowance'] = $this->getTransportAllowance();
+        $data['epfShare'] = $this->epfShare($this->basicSalary());
         $pdf = App::make('snappy.pdf.wrapper');
         $template = 'contractor-onboarding-template';
         $html = view('salary::render.' . $template, compact('data'));

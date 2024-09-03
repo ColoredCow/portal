@@ -169,16 +169,16 @@
                     Your revised remuneration will be <b>INR {{$data['grossSalary']}}/-</b> per month as per the following breakup.
                     <br>
                     <div class="salary-details">
-                        <span class="salary-text">Basic Salary</span><span class="salary-number-1">Rs 16,500/-</span>
+                        <span class="salary-text">Basic Salary</span><span class="salary-number-1">Rs {{$data['basicSalary']}}/-</span>
                     </div>
                     <div class="salary-details">
-                        <span class="salary-text">HRA. Allowance</span><span class="salary-number-2">Rs 8350/-</span>
+                        <span class="salary-text">HRA. Allowance</span><span class="salary-number-2">Rs {{$data['hra']}}/-</span>
                     </div>
                     <div class="salary-details">
                         <span class="salary-text">Conveyance Allowance</span><span class="salary-number-3">Rs 1600/-</span>
                     </div>
                     <div class="salary-details">
-                        <span class="salary-text">Other Allowance</span><span class="salary-number-4">Rs 6350/-</span>
+                        <span class="salary-text">Other Allowance</span><span class="salary-number-4">Rs {{$data['otherAllowance']}}/-</span>
                     </div>
                     <div class="salary-details">
                         <span class="salary-text">P.F. and Charges (Employer share)</span><span class="salary-number-5">Rs 2138/-</span>
