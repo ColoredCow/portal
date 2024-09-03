@@ -34,6 +34,7 @@
     "maatwebsite/excel": "^3.1",
     "nesbot/carbon": "^2.61",
     "nwidart/laravel-modules": "^7.0",
+    "openai-php/laravel": "^0.10.1",
     "owen-it/laravel-auditing": "^13.0",
     "revolution/laravel-google-sheets": "^6.0",
     "spatie/laravel-permission": "^6.9"
