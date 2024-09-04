@@ -17,19 +17,20 @@
     "barryvdh/laravel-snappy": "dev-master",
     "bordoni/phpass": "0.3.0",
     "codegreencreative/laravel-samlidp": "^5.0",
-    "doctrine/dbal": "^2.10",
+    "doctrine/dbal": "^3.6",
+    "fakerphp/faker": "^1.23",
     "filp/whoops": "^2.15",
     "google/apiclient": "^2.4",
     "google/cloud-vision": "^1.8",
     "guzzlehttp/guzzle": "^7.2",
     "h4cc/wkhtmltopdf-amd64": "0.12.x",
     "laravel-notification-channels/google-chat": "^3.2",
-    "laravel/framework": "^10.48",
+    "laravel/framework": "^11.0",
     "laravel/helpers": "^1.1",
     "laravel/legacy-factories": "^1.1",
-    "laravel/sanctum": "^3.2",
+    "laravel/sanctum": "^4.0",
     "laravel/socialite": "^5.0.1",
-    "laravel/tinker": "^2.8",
+    "laravel/tinker": "^2.9",
     "laravel/ui": "^4.5.2",
     "maatwebsite/excel": "^3.1",
     "nesbot/carbon": "^2.61",
@@ -37,15 +38,16 @@
     "openai-php/laravel": "^0.10.1",
     "owen-it/laravel-auditing": "^13.0",
     "revolution/laravel-google-sheets": "^6.0",
-    "spatie/laravel-permission": "^6.9"
+    "spatie/laravel-permission": "^6.9",
+    "symfony/http-client": "^7.1"
   },
     "require-dev": {
     "barryvdh/laravel-debugbar": "^3.13",
     "friendsofphp/php-cs-fixer": "^3.61",
-    "nunomaduro/collision": "^7.10",
+    "nunomaduro/collision": "^8.0",
     "nunomaduro/phpinsights": "^2.5",
-    "phpunit/phpunit": "^10.0",
-    "spatie/laravel-ignition": "^2.0"
+    "phpunit/phpunit": "^10.5",
+    "spatie/laravel-ignition": "^2.4"
   },
   "config": {
     "optimize-autoloader": true,
@@ -56,12 +58,13 @@
     },
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true,
-      "pestphp/pest-plugin": true
+      "pestphp/pest-plugin": true,
+      "php-http/discovery": true
     }
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "10.x-dev"
+      "dev-master": "11.x-dev"
     },
     "laravel": {
       "dont-discover": []
@@ -91,7 +94,9 @@
       "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
     ],
     "post-create-project-cmd": [
-      "@php artisan key:generate --ansi"
+      "@php artisan key:generate --ansi",
+      "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
+      "@php artisan migrate --ansi"
     ]
   }
 }
