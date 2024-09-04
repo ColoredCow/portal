@@ -3,6 +3,7 @@
     <div class="container">
         <br>
         @include('hr.employees.sub-views.menu')
+        @include('salary::employee.salaryConfirmationModal')
         <br>
         @include('salary::employee.grossSalaryModal')
         <form action="{{ route('salary.employee.store', $employee) }}" id="employee_salary_form" method="POST"  enctype="multipart/form-data">
@@ -19,7 +20,10 @@
                         <div>
                             @can('employee_salary.update')
                             <span data-toggle="tooltip" data-placement="top" title="Update the existing entry">
-                                <input name="submitType" type="submit" class="btn btn-primary ml-7 px-4" value="Update"/>
+                                {{-- <input name="submitType" type="submit" class="btn btn-primary ml-7 px-4" value="Update"/> --}}
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                    Update
+                                </button>
                             </span>
                             @endcan
                             @can('employee_salary.create')
