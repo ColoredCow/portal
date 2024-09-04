@@ -29,6 +29,10 @@
                     <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required value="{{$user->profile ? $user->profile->date_of_birth : ''}}">
                 </div>
                 <div class="form-group">
+                    <label for="email">PAN Number</label>
+                    <input type="text" class="form-control" id="pan_details" name="pan_details" value="{{$user->pan_details}}">
+                </div>
+                <div class="form-group">
                     <label for="designation">Designation</label>
                     <select class="form-control" name="designationId">
                         @foreach ($designations as $designation )
@@ -80,13 +84,17 @@
                 $dateOfBirth = $user->profile->date_of_birth ?? null;
                 $formattedDate = '';
 
-                if ($dateOfBirth) {
+                if ($dateOfBirth && $dateOfBirth !== '0000-00-00') {
                     $formattedDate = (new DateTime($dateOfBirth))->format(config('constants.display_date_format'));
                 }
             @endphp
             <div class="form-group">
-                <label class="font-weight-bold" for="">DOB:</label>
+                <label class="font-weight-bold">DOB:</label>
                 <span>{{$formattedDate}}</span>
+            </div>
+            <div class="form-group d-flex">
+                <label class="font-weight-bold" for="">PAN No.:</label>
+                <span class="ml-2">{!! optional($user->profile)->pan_details !!}</span>
             </div>
             <div class="form-group">
                 <label class="font-weight-bold" for="">Designation:</label>
