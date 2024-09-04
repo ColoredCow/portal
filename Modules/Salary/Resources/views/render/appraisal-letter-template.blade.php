@@ -52,11 +52,11 @@
             }
         .address{
                 font-weight: bold;
-               
+
         }
         .address  span {
             font-size: 14px !important
-                    
+
         }
         .pay-details{
             font-size: 14px;

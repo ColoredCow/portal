@@ -86,7 +86,7 @@ class SalaryService
 
                 $appraisalData = $salaryService->appraisalLetterData($request, $employee);
                 if ($employee->staff_type === 'Contractor') {
-                    $pdf = $salaryService->getContractorOnboardingLetterPdf($appraisalData);
+                    $pdf = $salaryService->getContractorOnboardingLetterPdf($appraisalData, $employee);
                     Mail::to($data['employeeEmail'])->send(new SendContractorOnboardingLetterMail($data, $pdf->inline($data['employeeName'] . '_Onboarding Letter_' . $formattedCommencementDate . '.pdf'), $formattedCommencementDate));
                 } else {
                     $pdf = $salaryService->getAppraisalLetterPdf($appraisalData);
@@ -172,11 +172,6 @@ class SalaryService
         $currentSalaryObject->commencement_date = $request->commencementDate;
         $currentSalaryObject->tds = $request->tds;
         $currentSalaryObject->save();
-
-        $userProfile = $employee->user->profile;
-        if (! $userProfile) {
-            $this->createUserProfileAndUpdate($request, $employee);
-        }
 
         return 'Contractor fee updated successfully!';
     }
