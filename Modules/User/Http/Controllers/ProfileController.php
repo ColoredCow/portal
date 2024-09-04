@@ -38,6 +38,8 @@ class ProfileController extends ModuleBaseController
             $user->profile->marital_status = $request->marital_status;
             $user->profile->current_location = $request->current_location;
             $user->profile->designation = $designation;
+            $user->profile->date_of_birth = $request->date_of_birth;
+            $user->profile->pan_details = $request->pan_details;
             $user->profile->address = $request->address;
             $user->profile->insurance_tenants = $request->insurance_tenants;
             $user->profile->save();
@@ -50,11 +52,13 @@ class ProfileController extends ModuleBaseController
             $userProfile->spouse_name = $request->spouse_name;
             $userProfile->current_location = $request->current_location;
             $userProfile->designation = $designation;
+            $userProfile->date_of_birth = $request->date_of_birth;
+            $userProfile->pan_details = $request->pan_details;
             $userProfile->address = $request->address;
             $userProfile->insurance_tenants = $request->insurance_tenants;
             $userProfile->save();
         }
-        
+
         $user->employee->save();
 
         $user->save();

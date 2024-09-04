@@ -10,6 +10,7 @@ use Modules\Salary\Emails\SendContractorIncrementLetterMail;
 use Modules\Salary\Emails\SendContractorOnboardingLetterMail;
 use Modules\Salary\Entities\EmployeeSalary;
 use Modules\Salary\Entities\SalaryConfiguration;
+use Modules\User\Entities\UserProfile;
 
 class SalaryService
 {
@@ -66,7 +67,7 @@ class SalaryService
         ];
 
         if ($employee->payroll_type === 'contractor') {
-            $data['salary'] = $employee->getLatestSalary();
+            $data['salary'] = $employee->getLatestSalary($employee->payroll_type);
         }
 
         return $data;
@@ -74,7 +75,7 @@ class SalaryService
 
     public function storeOrUpdateSalary($request, $employee)
     {
-        $currentSalaryObject = $employee->getLatestSalary();
+        $currentSalaryObject = $employee->getLatestSalary($employee->payroll_type);
 
         if ((! $currentSalaryObject) || $request->submitType == 'send_appraisal_letter') {
             if ($currentSalaryObject) {
@@ -85,7 +86,7 @@ class SalaryService
 
                 $appraisalData = $salaryService->appraisalLetterData($request, $employee);
                 if ($employee->staff_type === 'Contractor') {
-                    $pdf = $salaryService->getContractorOnboardingLetterPdf($appraisalData);
+                    $pdf = $salaryService->getContractorOnboardingLetterPdf($appraisalData, $employee);
                     Mail::to($data['employeeEmail'])->send(new SendContractorOnboardingLetterMail($data, $pdf->inline($data['employeeName'] . '_Onboarding Letter_' . $formattedCommencementDate . '.pdf'), $formattedCommencementDate));
                 } else {
                     $pdf = $salaryService->getAppraisalLetterPdf($appraisalData);
@@ -99,8 +100,18 @@ class SalaryService
                 ]);
 
                 $userProfile = $employee->user->profile;
-                if ($userProfile && $request->newDesignationId) {
-                    $userProfile->designation = HrJobDesignation::find($request->newDesignationId)->slug;
+                if (! $userProfile) {
+                    $this->createUserProfileAndUpdate($request, $employee);
+                } else {
+                    if ($request->newDesignationId) {
+                        $userProfile->designation = HrJobDesignation::find($request->newDesignationId)->slug;
+                    }
+                    if ($request->date_of_birth) {
+                        $userProfile->date_of_birth = $request->date_of_birth;
+                    }
+                    if ($request->pan_details) {
+                        $userProfile->pan_details = $request->pan_details;
+                    }
                     $userProfile->save();
                 }
             }
@@ -132,7 +143,7 @@ class SalaryService
 
     public function storeOrUpdateContractorSalary($request, $employee)
     {
-        $currentSalaryObject = $employee->getLatestSalary();
+        $currentSalaryObject = $employee->getLatestSalary($employee->payroll_type);
         if ((! $currentSalaryObject) || $request->submitType == 'send_contractor_increment_letter') {
             if ($currentSalaryObject) {
                 $salaryService = new SalaryCalculationService($request->grossSalary);
@@ -143,7 +154,7 @@ class SalaryService
                 $pdf = $salaryService->getIncrementLetterPdf($appraisalData);
                 Mail::to($data['employeeEmail'])->send(new SendContractorIncrementLetterMail($data, $pdf->inline($data['employeeName'] . '_Increment Letter_' . $formattedCommencementDate . '.pdf'), $formattedCommencementDate));
             }
-            
+
             EmployeeSalary::create([
                 'employee_id' => $employee->id,
                 'monthly_fee' => $request->contractorFee,
@@ -163,5 +174,23 @@ class SalaryService
         $currentSalaryObject->save();
 
         return 'Contractor fee updated successfully!';
+    }
+
+    public function createUserProfileAndUpdate($request, $employee)
+    {
+        $userProfile = new UserProfile();
+        $userProfile->user_id = $employee->user->id;
+
+        if ($request->date_of_birth) {
+            $userProfile->date_of_birth = $request->date_of_birth;
+        }
+        if ($request->newDesignationId) {
+            $userProfile->designation = HrJobDesignation::find($request->newDesignationId)->slug;
+        }
+        if ($request->pan_details) {
+            $userProfile->pan_details = $request->pan_details;
+        }
+
+        $userProfile->save();
     }
 }

@@ -64,6 +64,7 @@ class SalaryController extends Controller
         return redirect()->back()->with('success', $message);
     }
 
+
     public function generateAppraisalLetter(Request $request, Employee $employee)
     {
         $salaryService = new SalaryCalculationService($request->grossSalary);
@@ -71,9 +72,8 @@ class SalaryController extends Controller
             $pdf = $salaryService->getIncrementLetterPdf($request->all());
 
             return $pdf->inline($employee->user->name . '_Increment Letter_' . Carbon::parse($request->commencementDate)->format('jS F Y') . '.pdf');
-        } else if ($employee->payroll_type === 'contractor') {
-            $pdf = $salaryService->getContractorOnboardingLetterPdf($request->all());
-
+        } elseif ($employee->payroll_type === 'contractor') {
+            $pdf = $salaryService->getContractorOnboardingLetterPdf($request->all(), $employee);
             return $pdf->inline($employee->user->name . '_Onboarding Letter_' . Carbon::parse($request->commencementDate)->format('jS F Y') . '.pdf');
         }
 
