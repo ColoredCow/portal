@@ -91,7 +91,7 @@ class SalaryController extends Controller
         $ctcIncreaseSuggestions = [];
         foreach ($ctcSuggestions as $index => $ctcSuggestion) {
             $ctcPercentage = $ctcPercentages[$index];
-            $ctcIncreaseSuggestions[] = $ctcSuggestion . '(' . $ctcPercentage . ')';
+            $ctcIncreaseSuggestions[] = $ctcSuggestion . '(' . $ctcPercentage . '%'.')';
         }
 
         return view('salary::employee.index')->with([
