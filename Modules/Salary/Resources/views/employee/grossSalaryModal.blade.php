@@ -19,7 +19,9 @@
                     <small class="d-none text-danger" id="proposedCtcErrorMessage"><strong >CTC Required</strong></small>
                 </div>
                 <gross-calculation-section
+                    :ctc-increase-suggestions="{{ json_encode($ctcIncreaseSuggestions)}}"
                     :ctc-suggestions="{{ json_encode($ctcSuggestions) }}"
+                    :ctc-percentages="{{ json_encode($ctcPercentages)}}"
                     :salary-configs="{{ json_encode($salaryConfigs) }}"
                     :gross-calculation-data="{{ $grossCalculationData }}"
                     :proposed-ctc="proposedCtc"

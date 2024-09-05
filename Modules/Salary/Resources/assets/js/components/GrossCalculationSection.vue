@@ -4,11 +4,10 @@
 			<small v-if="ctcSuggestions.length > 0" class="font-weight-bold"> Suggestions: </small>
 			<span
 				v-on:click="insertCTC(ctc)"
-				v-for="(ctc, index) in ctcSuggestions"
+				v-for="(ctc, index) in ctcIncreaseSuggestions"
 				:key="index"
 				:class="['badge', 'mt-1', 'mr-2', 'p-1.5', 'badge-pill', ctc === proposedCtc ? 'badge-theme-gray-darker text-light' : 'badge-theme-gray-lightest', 'c-pointer']">
 				{{ ctc }}
-
 			</span>
 		</div>
 		<div class="row pl-2 my-3">
@@ -34,7 +33,7 @@
 
 <script>
 export default {
-	props:["ctcSuggestions", "salaryConfigs", "grossCalculationData", "tds", "loanDeduction", "proposedCtc", "insuranceTenants"],
+	props:["ctcSuggestions", "salaryConfigs", "grossCalculationData", "tds", "loanDeduction", "proposedCtc", "insuranceTenants", "ctcPercentages", "ctcIncreaseSuggestions"],
 	computed: {
 		grossSalary() {
 			if (!Number.isFinite(parseInt(this.proposedCtc)) || parseInt(this.proposedCtc) === 0) {
@@ -50,7 +49,7 @@ export default {
 			}
 
 			grossSalary = Math.ceil(grossSalary - ((parseFloat(this.grossCalculationData.insuranceAmount) * this.insuranceTenants)/ 12))
-
+			console.log(this.ctcPercentages);
 			return grossSalary + (100 - (grossSalary % 100))
 		},
 		monthlyLoanDeduction() {
