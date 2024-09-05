@@ -81,10 +81,11 @@ class SalaryController extends Controller
             $tempSalaryObject->monthly_gross_salary = $grossSalary;
             array_push($ctcSuggestions, $tempSalaryObject->ctc_aggregated);
         }
+        $yearlyGrossSalary = $currentGrossSalary * 12;
 
         $ctcPercentages = [];
         foreach ($ctcSuggestions as $ctcSuggestion) {
-            $increase = (($ctcSuggestion - $currentGrossSalary) / $currentGrossSalary);
+            $increase = (($ctcSuggestion - $yearlyGrossSalary) / ($yearlyGrossSalary)) * 100;
             array_push($ctcPercentages, round($increase, 2));
         }
 

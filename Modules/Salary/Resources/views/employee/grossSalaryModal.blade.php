@@ -9,14 +9,22 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 </div>
-                <div class="form-group pl-6 mb-0 col-md-6 mt-4">
-                    <label class="leading-none fz-24 d-flex align-items-center" for="proposedCtc">
-                        <span class="mr-1">{{ __('New CTC') }}</span>
-                        <span><i class="fa fa-rupee"></i></span>
-                        <small class="fz-12 ml-2">{{ __(' (including Health Insurance)') }}</small>
-                    </label>
-                    <input v-model="proposedCtc" type="number" step="0.01" id="proposedCtc" class="form-control bg-light" placeholder="Enter CTC" min="0" required>
-                    <small class="d-none text-danger" id="proposedCtcErrorMessage"><strong >CTC Required</strong></small>
+                <div class="d-flex">
+                    <div class="form-group pl-6 mb-0 col-md-6 mt-4">
+                        <label class="leading-none fz-24 d-flex align-items-center" for="proposedCtc">
+                            <span class="mr-1">{{ __('New CTC') }}</span>
+                            <span><i class="fa fa-rupee"></i></span>
+                            <small class="fz-12 ml-2">{{ __(' (including Health Insurance)') }}</small>
+                        </label>
+                        <input v-model="proposedCtc" type="number" step="0.01" id="proposedCtc" class="form-control bg-light" placeholder="Enter CTC" min="0" required>
+                        <small class="d-none text-danger" id="proposedCtcErrorMessage"><strong >CTC Required</strong></small>
+                    </div>
+                    <div class="form-group pl-6 mb-0 col-md-6 mt-4">
+                        <label class="leading-none fz-24 d-flex align-items-center" for="proposedCtc">
+                            <span class="mr-1">{{ __('Percentage') }}</span>
+                        </label>
+                        <input v-model="proposedCtc" type="number" step="0.01" id="proposedCtc" class="form-control bg-light" placeholder="Enter CTC" min="0" required>
+                    </div>
                 </div>
                 <gross-calculation-section
                     :ctc-increase-suggestions="{{ json_encode($ctcIncreaseSuggestions)}}"
