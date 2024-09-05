@@ -1,13 +1,14 @@
 <template>
 	<div>
 		<div class="pl-6">
-			<small v-if="ctcSuggestions.length > 0" class="font-weight-bold">Suggestions: </small>
+			<small v-if="ctcSuggestions.length > 0" class="font-weight-bold"> Suggestions: </small>
 			<span
 				v-on:click="insertCTC(ctc)"
 				v-for="(ctc, index) in ctcSuggestions"
 				:key="index"
 				:class="['badge', 'mt-1', 'mr-2', 'p-1.5', 'badge-pill', ctc === proposedCtc ? 'badge-theme-gray-darker text-light' : 'badge-theme-gray-lightest', 'c-pointer']">
 				{{ ctc }}
+
 			</span>
 		</div>
 		<div class="row pl-2 my-3">
@@ -49,6 +50,7 @@ export default {
 			}
 
 			grossSalary = Math.ceil(grossSalary - ((parseFloat(this.grossCalculationData.insuranceAmount) * this.insuranceTenants)/ 12))
+
 			return grossSalary + (100 - (grossSalary % 100))
 		},
 		monthlyLoanDeduction() {
