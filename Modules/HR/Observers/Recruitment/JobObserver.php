@@ -14,7 +14,7 @@ class JobObserver
     /**
      * Listen to the Job create event.
      *
-     * @param  \Modules\HR\Entities\Job  $job
+     * @param  Job  $job
      * @return void
      */
     public function created(Job $job)
@@ -49,7 +49,7 @@ class JobObserver
     /**
      * Listen to the Job update event.
      *
-     * @param  \Modules\HR\Entities\Job  $job
+     * @param Job  $job
      * @return void
      */
     public function updated(Job $job)
@@ -78,7 +78,7 @@ class JobObserver
     /**
      * Listen to the Job delete event.
      *
-     * @param  \Modules\HR\Entities\Job  $job
+     * @param  Job  $job
      * @return void
      */
     public function deleted(Job $job)

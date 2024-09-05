@@ -12,7 +12,7 @@ class EmployeeSalaryPolicy
     /**
      * Determine whether the user can view the salary.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      *
      * @return mixed
      */
@@ -24,7 +24,7 @@ class EmployeeSalaryPolicy
     /**
      * Determine whether the user can create salaries.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      *
      * @return mixed
      */
@@ -36,7 +36,7 @@ class EmployeeSalaryPolicy
     /**
      * Determine whether the user can update the salary.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      *
      * @return mixed
      */
@@ -48,7 +48,7 @@ class EmployeeSalaryPolicy
     /**
      * Determine whether the user can delete the salary.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      *
      * @return mixed
      */
@@ -60,7 +60,7 @@ class EmployeeSalaryPolicy
     /**
      * Determine whether the user can list salary.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      *
      * @return mixed
      */

@@ -12,7 +12,7 @@ class WeeklyDosePolicy
     /**
      * Determine whether the user can view the weekly dose.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      *
      * @return mixed
      */
@@ -24,7 +24,7 @@ class WeeklyDosePolicy
     /**
      * Determine whether the user can list weeklydoses.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      *
      * @return mixed
      */
