@@ -79,7 +79,7 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     * @param  Book  $book
      *
      * @return \Illuminate\View\View
      */
@@ -98,8 +98,8 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\KnowledgeCafe\Library\BookRequest  $request
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     * @param  BookRequest  $request
+     * @param  Book  $book
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -125,7 +125,7 @@ class BookController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     * @param  Book  $book
      */
     public function destroy(Book $book)
     {

@@ -72,7 +72,7 @@ class PaymentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Finance\PaymentRequest  $request
+     * @param  PaymentRequest  $request
      * @param  Payment  $payment
      *
      * @return \Illuminate\Http\RedirectResponse

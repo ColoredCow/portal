@@ -125,11 +125,11 @@ return [
             'title' => 'The usage of private methods is not idiomatic in Laravel.',
         ],
 
-        \SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff::class => [
+        SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff::class => [
             'maxLinesLength' => 28,
         ],
 
-        \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class => [
+        PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class => [
             'lineLimit' => 140,
             'absoluteLineLimit' => 160,
         ],
