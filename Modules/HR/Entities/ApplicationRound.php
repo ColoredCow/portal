@@ -266,7 +266,7 @@ class ApplicationRound extends Model
 
     public function updateOrCreateEvaluation($evaluations = [])
     {
-        foreach ($evaluations as  $evaluation) {
+        foreach ($evaluations as $evaluation) {
             if (array_key_exists('option_id', $evaluation)) {
                 $this->evaluations()->updateOrCreate(
                     [

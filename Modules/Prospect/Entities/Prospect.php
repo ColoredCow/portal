@@ -111,7 +111,7 @@ class Prospect extends Model
             ->get();
 
         foreach ($moduleChecklist as $checklist) {
-            foreach ($checklist->tasks ?: []  as $task) {
+            foreach ($checklist->tasks ?: [] as $task) {
                 ProspectChecklistStatus::create([
                     'prospect_id' => $this->id,
                     'module_checklist_id' => $checklist->id,

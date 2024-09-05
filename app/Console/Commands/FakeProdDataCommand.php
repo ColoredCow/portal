@@ -89,7 +89,7 @@ class FakeProdDataCommand extends Command
             $clientAddress->update();
         }
 
-        foreach (ClientContactPerson::all()  as $clientContactPerson) {
+        foreach (ClientContactPerson::all() as $clientContactPerson) {
             $clientContactPerson->name = $this->faker->name;
             $clientContactPerson->email = $this->faker->email;
             $clientContactPerson->phone = $this->faker->phoneNumber;
@@ -99,7 +99,7 @@ class FakeProdDataCommand extends Command
 
     private function fakeCodetrekTablesData()
     {
-        foreach (CodeTrekApplicant::all()  as $codeTrekApplicant) {
+        foreach (CodeTrekApplicant::all() as $codeTrekApplicant) {
             $codeTrekApplicant->first_name = $this->faker->firstName;
             $codeTrekApplicant->last_name = $this->faker->lastName;
             $codeTrekApplicant->email = $this->faker->email;
@@ -151,7 +151,7 @@ class FakeProdDataCommand extends Command
             $application->update();
         }
 
-        foreach (UniversityContact::all()  as $universityContact) {
+        foreach (UniversityContact::all() as $universityContact) {
             $universityContact->name = $this->faker->name;
             $universityContact->email = $this->faker->email;
             $universityContact->phone = $this->faker->phoneNumber;
