@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('home', 'HomeController@index')->name('home');
+Route::get('home', [HomeController::class, 'index'])->name('home');
 Route::post('/current-employee-location', 'HomeController@storeEmployeeLocation')->name('update.employee.location');
 
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
