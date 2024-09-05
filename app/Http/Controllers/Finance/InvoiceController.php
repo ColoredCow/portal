@@ -63,7 +63,7 @@ class InvoiceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Finance\InvoiceRequest  $request
+     * @param  InvoiceRequest  $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -84,7 +84,7 @@ class InvoiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Finance\Invoice  $invoice
+     * @param  Invoice  $invoice
      *
      * @return void
      */
@@ -96,8 +96,8 @@ class InvoiceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Finance\InvoiceRequest  $request
-     * @param  \App\Models\Finance\Invoice  $invoice
+     * @param  InvoiceRequest  $request
+     * @param  Invoice  $invoice
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -141,7 +141,7 @@ class InvoiceController extends Controller
     /**
      * Upload the invoice file.
      *
-     * @param  \Illuminate\Http\UploadedFile  $file
+     * @param  UploadedFile  $file
      *
      * @return string    path of the uploaded file
      */
