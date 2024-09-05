@@ -1,5 +1,5 @@
 <div class="modal fade" id="saveAsIncrementModal" tabindex="-1" role="dialog" aria-labelledby="saveAsIncrementModalLabel" aria-hidden="true">
-    <form action="{{ route('salary.employee.store', $employee) }}" id="appraisalForm" method="POST" enctype="multipart/form-data"> 
+    <form action="{{ route('salary.employee.store', $employee) }}" id="appraisalForm" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -133,7 +133,7 @@
                 commencementDateErrorMessage.removeClass('d-none')
                 isValid = false;
             }
-            
+
             if (proposedCtc.val().trim() === '') {
                 proposedCtcErrorMessage.removeClass('d-none')
                 isValid = false;
