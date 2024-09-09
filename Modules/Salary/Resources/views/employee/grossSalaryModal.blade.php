@@ -19,18 +19,16 @@
                         <input v-model="proposedCtc" type="number" step="0.01" id="proposedCtc" class="form-control bg-light" placeholder="Enter CTC" min="0" @input="onEnteringCtc" required>
                         <small class="d-none text-danger" id="proposedCtcErrorMessage"><strong >CTC Required</strong></small>
                     </div>
-                    <div class="form-group pl-6 mb-0 col-md-6 mt-4">
+                    <div class="form-group mb-0 col-md-5 mt-4">
                         <label class="leading-none fz-24 d-flex align-items-center" for="proposedCtc">
                             <span class="mr-1">{{ __('Percentage') }}</span>
                         </label>
-                        <input v-model="percentage" type="text" id="percentage" class="form-control bg-light" placeholder="Enter Increased Percentage" @input="calculateCtcFromPercentage" >
+                        <input v-model="percentage" type="number" id="percentage" class="form-control bg-light" placeholder="Enter Increased Percentage" @input="calculateCtcFromPercentage" >
                     </div>
                 </div>
                 <gross-calculation-section
-                    :ctc-increase-suggestions="{{ json_encode($ctcIncreaseSuggestions)}}"
                     :ctc-suggestions="{{ json_encode($ctcSuggestions) }}"
-                    :ctc-percentages="{{ json_encode($ctcPercentages)}}"
-                    :yearly-gross-salary="{{json_encode($yearlyGrossSalary)}}"
+                    :current-agg-ctc="{{$currentAggCTC}}"
                     :salary-configs="{{ json_encode($salaryConfigs) }}"
                     :gross-calculation-data="{{ $grossCalculationData }}"
                     :proposed-ctc="proposedCtc"
@@ -84,14 +82,14 @@
 @section('js_scripts')
     @parent
     <script>
-        var yearlyGrossSalary = @json($yearlyGrossSalary);
+        var currentAggCtc = @json($currentAggCTC);
         new Vue({
             el: '#appraisalForm',
             data() {
                 return {
                     proposedCtc: "{{ 0 }}",
-                    yearlyGrossSalary: yearlyGrossSalary,
-                    percentage: '0'
+                    currentAggCtc: currentAggCtc,
+                    percentage: "{{ 0 }}"
                 }
             },
             methods: {
@@ -100,7 +98,7 @@
                 },
                 onEnteringCtc() {
                     const ctcValue = parseFloat(this.proposedCtc);
-                    const currentCtc = parseFloat(this.yearlyGrossSalary);
+                    const currentCtc = parseFloat(this.currentAggCtc);
 
                     if (currentCtc !== 0) {
                         const increasePercentage = ((ctcValue - currentCtc) / currentCtc) * 100;
@@ -111,10 +109,11 @@
                 },
                 calculateCtcFromPercentage() {
                     const percentageIncrease = parseFloat(this.percentage);
-                    const currentCtc = parseFloat(this.yearlyGrossSalary);
+                    const currentCtc = parseFloat(this.currentAggCtc);
 
-                    if (!isNaN(percentageIncrease) && currentCtc !== 0) {
+                    if (Number.isFinite(percentageIncrease)) {
                         const ctcValue = currentCtc * (1 + percentageIncrease / 100);
+                        console.log(ctcValue)
                         this.proposedCtc = Math.round(ctcValue);
                     } else {
                         this.proposedCtc = '';
