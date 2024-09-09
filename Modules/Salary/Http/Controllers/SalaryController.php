@@ -12,7 +12,6 @@ use Modules\Salary\Emails\SendAppraisalLetterMail;
 use Modules\Salary\Entities\EmployeeSalary;
 use Modules\Salary\Entities\SalaryConfiguration;
 use Modules\Salary\Services\SalaryCalculationService;
-use PhpParser\Node\Expr\Empty_;
 
 class SalaryController extends Controller
 {
