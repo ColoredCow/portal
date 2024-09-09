@@ -30,6 +30,7 @@
                     :ctc-increase-suggestions="{{ json_encode($ctcIncreaseSuggestions)}}"
                     :ctc-suggestions="{{ json_encode($ctcSuggestions) }}"
                     :ctc-percentages="{{ json_encode($ctcPercentages)}}"
+                    :yearly-gross-salary="{{json_encode($yearlyGrossSalary)}}"
                     :salary-configs="{{ json_encode($salaryConfigs) }}"
                     :gross-calculation-data="{{ $grossCalculationData }}"
                     :proposed-ctc="proposedCtc"
