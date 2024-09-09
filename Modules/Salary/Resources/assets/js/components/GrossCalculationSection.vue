@@ -1,14 +1,14 @@
 <template>
 	<div>
 		<div class="pl-6">
-			<small v-if="ctcSuggestions.length > 0" class="font-weight-bold">Suggestions: </small>
-			<span 
-				v-on:click="insertCTC(ctc)" 
-				v-for="(ctc, index) in ctcSuggestions" 
+			<small v-if="ctcSuggestions.length > 0" class="font-weight-bold"> Suggestions: </small>
+			<span
+				v-on:click="insertCTC(ctc);"
+				v-for="(ctc, index) in ctcIncreaseSuggestions"
 				:key="index"
 				:class="['badge', 'mt-1', 'mr-2', 'p-1.5', 'badge-pill', ctc === proposedCtc ? 'badge-theme-gray-darker text-light' : 'badge-theme-gray-lightest', 'c-pointer']">
 				{{ ctc }}
-			</span>		
+			</span>
 		</div>
 		<div class="row pl-2 my-3">
 			<input hidden type="number" step="0.01" v-model="grossSalary" name="grossSalary" class="form-control bg-light" placeholder="Monthly Gross Salary" min="0" required>
@@ -17,7 +17,7 @@
 				<div class="leading-none fz-24 d-flex align-items-center text-nowrap">Applicable CTC <small class="fz-12 ml-2">(Due to financial calculation)</small></div>
 				<div class="fz-24 mt-2">
 					<i class="fa fa-rupee"></i>
-					<span>{{ this.formatCurrency(ctcAggregated) }}</span>
+					<span>{{ this.formatCurrency(ctcAggregated) }}({{ this.percentage(ctcAggregated)}})</span>
 				</div>
 			</div>
 			<div class="form-group pl-6 col-md-5">
@@ -33,24 +33,22 @@
 
 <script>
 export default {
-	props:["ctcSuggestions", "salaryConfigs", "grossCalculationData", "tds", "loanDeduction", "proposedCtc", "insuranceTenants"],
-
+	props:["ctcSuggestions", "salaryConfigs", "grossCalculationData", "tds", "loanDeduction", "proposedCtc", "insuranceTenants", "ctcPercentages", "ctcIncreaseSuggestions", "yearlyGrossSalary"],
 	computed: {
 		grossSalary() {
 			if (!Number.isFinite(parseInt(this.proposedCtc)) || parseInt(this.proposedCtc) === 0) {
 				return 0
 			}
-			let grossSalary = 
-            (100 * parseFloat(this.proposedCtc) - (12 * parseFloat(this.grossCalculationData.edliChargesPercentageRate) * parseFloat(this.grossCalculationData.edliChargesLimit))) / 
+			let grossSalary =
+            (100 * parseFloat(this.proposedCtc) - (12 * parseFloat(this.grossCalculationData.edliChargesPercentageRate) * parseFloat(this.grossCalculationData.edliChargesLimit))) /
             (12 * (100 + (parseFloat(this.grossCalculationData.epfPercentageRate) * parseFloat(this.grossCalculationData.basicSalaryPercentageFactor)) + (parseFloat(this.grossCalculationData.adminChargesPercentageRate) * parseFloat(this.grossCalculationData.basicSalaryPercentageFactor))));
 
 			if((grossSalary * parseFloat(this.grossCalculationData.basicSalaryPercentageFactor)) < parseFloat(this.grossCalculationData.edliChargesLimit)) {
-				grossSalary = 
+				grossSalary =
 					(100 * parseFloat(this.proposedCtc)) / (1200 + (12 * parseFloat(this.grossCalculationData.basicSalaryPercentageFactor) * (parseFloat(this.grossCalculationData.epfPercentageRate) + parseFloat(this.grossCalculationData.edliChargesPercentageRate) + parseFloat(this.grossCalculationData.adminChargesPercentageRate))));
 			}
-			
-			grossSalary = Math.ceil(grossSalary - ((parseFloat(this.grossCalculationData.insuranceAmount) * this.insuranceTenants)/ 12))
 
+			grossSalary = Math.ceil(grossSalary - ((parseFloat(this.grossCalculationData.insuranceAmount) * this.insuranceTenants)/ 12))
 			return grossSalary + (100 - (grossSalary % 100))
 		},
 		monthlyLoanDeduction() {
@@ -105,7 +103,7 @@ export default {
 			return this.employeeEsi + this.employeeEpf + this.foodAllowance + this.loanDeduction + this.tds;
 		},
 		netPay() {
-			return this.totalSalary - this.totalDeduction;		
+			return this.totalSalary - this.totalDeduction;
 		},
 		employerEsi() {
 			if(this.grossSalary < parseInt(this.salaryConfigs.employer_esi_limit.fixed_amount)) {
@@ -145,7 +143,7 @@ export default {
 			return Math.ceil(parseInt(this.grossSalary) + parseInt(this.employerEsi) + parseInt(this.employerEpf) + parseInt(this.administrationCharges) + parseInt(this.edliCharges));
 		},
 		ctcAnnual() {
-			return this.ctc * 12;		
+			return this.ctc * 12;
 		},
 		healthInsurance() {
 			if (this.grossSalary === "" || this.employerEsi !== 0 || this.employeeEsi !== 0) {
@@ -157,7 +155,7 @@ export default {
 			if (!Number.isFinite(this.grossSalary) || parseInt(this.grossSalary) === 0) {
 				return 0
 			}
-			return this.ctcAnnual + this.healthInsurance;		
+			return this.ctcAnnual + this.healthInsurance;
 		},
 	},
 	methods: {
@@ -168,9 +166,17 @@ export default {
 			return amount.toLocaleString("en-IN");
 		},
 		insertCTC(amount) {
-            var proposedCtcField = document.getElementById("proposedCtc");
-            proposedCtcField.value = amount;
-			this.$emit('update-ctc', amount)
+			var updatedAmount = amount.split('(')[0].trim();
+			var proposedCtcField = document.getElementById("proposedCtc");
+			proposedCtcField.value = updatedAmount;
+			this.$emit('update-ctc', updatedAmount);
+		},
+		percentage(amount) {
+			var currentAggregatedCTC = amount;
+			var yearlyGrossCTC = this.yearlyGrossSalary;
+			var ctcPercentage = ((currentAggregatedCTC - yearlyGrossCTC)/yearlyGrossCTC)*100;
+			var formattedPercentage = ctcPercentage.toFixed(2);
+			return formattedPercentage;
 		}
 	}
 };

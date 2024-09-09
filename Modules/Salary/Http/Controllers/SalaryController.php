@@ -73,14 +73,25 @@ class SalaryController extends Controller
             ->values()
             ->take(7);
         }
-
         $ctcSuggestions = [];
-
         foreach ($grossSalariesList as $grossSalary) {
             $tempSalaryObject = new EmployeeSalary;
             $tempSalaryObject->employee_id = $employee->id;
             $tempSalaryObject->monthly_gross_salary = $grossSalary;
             array_push($ctcSuggestions, $tempSalaryObject->ctc_aggregated);
+        }
+        $yearlyGrossSalary = $employee->getLatestSalary()->ctc_aggregated;
+
+        $ctcPercentages = [];
+        foreach ($ctcSuggestions as $ctcSuggestion) {
+            $increase = (($ctcSuggestion - $yearlyGrossSalary) / ($yearlyGrossSalary)) * 100;
+            array_push($ctcPercentages, round($increase, 2));
+        }
+
+        $ctcIncreaseSuggestions = [];
+        foreach ($ctcSuggestions as $index => $ctcSuggestion) {
+            $ctcPercentage = $ctcPercentages[$index];
+            $ctcIncreaseSuggestions[] = $ctcSuggestion . '(' . $ctcPercentage . '%' . ')';
         }
 
         return view('salary::employee.index')->with([
@@ -88,6 +99,9 @@ class SalaryController extends Controller
             'salaryConfigs' => $salaryConf::formatAll(),
             'grossCalculationData' => json_encode($calculationData),
             'ctcSuggestions' => $ctcSuggestions,
+            'ctcPercentages' => $ctcPercentages,
+            'ctcIncreaseSuggestions' => $ctcIncreaseSuggestions,
+            'yearlyGrossSalary' => $yearlyGrossSalary,
         ]);
     }
 
