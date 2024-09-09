@@ -91,7 +91,7 @@
                 return {
                     proposedCtc: "{{ 0 }}",
                     yearlyGrossSalary: yearlyGrossSalary,
-                    percentage: ''
+                    percentage: '0'
                 }
             },
             methods: {

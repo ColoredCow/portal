@@ -17,7 +17,7 @@
 				<div class="leading-none fz-24 d-flex align-items-center text-nowrap">Applicable CTC <small class="fz-12 ml-2">(Due to financial calculation)</small></div>
 				<div class="fz-24 mt-2">
 					<i class="fa fa-rupee"></i>
-					<span>{{ this.formatCurrency(ctcAggregated) }}({{ this.percentage(ctcAggregated)}})</span>
+					<span>{{ this.formatCurrency(ctcAggregated) }} ({{ this.percentage(ctcAggregated)}}%)</span>
 				</div>
 			</div>
 			<div class="form-group pl-6 col-md-5">
