@@ -19,7 +19,7 @@
                         <input v-model="proposedCtc" type="number" step="0.01" id="proposedCtc" class="form-control bg-light" placeholder="Enter CTC" min="0" @input="onEnteringCtc" required>
                         <small class="d-none text-danger" id="proposedCtcErrorMessage"><strong >CTC Required</strong></small>
                     </div>
-                    <div class="form-group pl-6 mb-0 col-md-6 mt-4">
+                    <div class="form-group mb-0 col-md-5 mt-4">
                         <label class="leading-none fz-24 d-flex align-items-center" for="proposedCtc">
                             <span class="mr-1">{{ __('Percentage') }}</span>
                         </label>
