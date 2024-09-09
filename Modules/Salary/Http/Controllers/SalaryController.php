@@ -12,6 +12,7 @@ use Modules\Salary\Emails\SendAppraisalLetterMail;
 use Modules\Salary\Entities\EmployeeSalary;
 use Modules\Salary\Entities\SalaryConfiguration;
 use Modules\Salary\Services\SalaryCalculationService;
+use PhpParser\Node\Expr\Empty_;
 
 class SalaryController extends Controller
 {
@@ -74,14 +75,13 @@ class SalaryController extends Controller
             ->take(7);
         }
         $ctcSuggestions = [];
-
         foreach ($grossSalariesList as $grossSalary) {
             $tempSalaryObject = new EmployeeSalary;
             $tempSalaryObject->employee_id = $employee->id;
             $tempSalaryObject->monthly_gross_salary = $grossSalary;
             array_push($ctcSuggestions, $tempSalaryObject->ctc_aggregated);
         }
-        $yearlyGrossSalary = $currentGrossSalary * 12;
+        $yearlyGrossSalary = $employee->getLatestSalary()->ctc_aggregated;
 
         $ctcPercentages = [];
         foreach ($ctcSuggestions as $ctcSuggestion) {
@@ -102,6 +102,7 @@ class SalaryController extends Controller
             'ctcSuggestions' => $ctcSuggestions,
             'ctcPercentages' => $ctcPercentages,
             'ctcIncreaseSuggestions' => $ctcIncreaseSuggestions,
+            'yearlyGrossSalary' => $yearlyGrossSalary,
         ]);
     }
 
