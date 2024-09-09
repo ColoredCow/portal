@@ -23,7 +23,7 @@
                         <label class="leading-none fz-24 d-flex align-items-center" for="proposedCtc">
                             <span class="mr-1">{{ __('Percentage') }}</span>
                         </label>
-                        <input v-model="proposedCtc" type="number" step="0.01" id="proposedCtc" class="form-control bg-light" placeholder="Enter CTC" min="0" required>
+                        <input v-model="percentage" type="number" id="percentage" class="form-control bg-light" placeholder="Enter Increased Percentage" >
                     </div>
                 </div>
                 <gross-calculation-section
@@ -128,6 +128,7 @@
 
         function validateForm() {
             let proposedCtc = $('#proposedCtc');
+            let percentage = $('#percentage');
             let commencementDate = $('#commencementDate');
             let signature = $('#signature');
             let proposedCtcErrorMessage = $('#proposedCtcErrorMessage');

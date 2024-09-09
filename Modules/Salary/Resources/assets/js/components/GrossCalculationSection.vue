@@ -3,7 +3,7 @@
 		<div class="pl-6">
 			<small v-if="ctcSuggestions.length > 0" class="font-weight-bold"> Suggestions: </small>
 			<span
-				v-on:click="insertCTC(ctc)"
+				v-on:click="insertCTC(ctc);"
 				v-for="(ctc, index) in ctcIncreaseSuggestions"
 				:key="index"
 				:class="['badge', 'mt-1', 'mr-2', 'p-1.5', 'badge-pill', ctc === proposedCtc ? 'badge-theme-gray-darker text-light' : 'badge-theme-gray-lightest', 'c-pointer']">
@@ -49,7 +49,6 @@ export default {
 			}
 
 			grossSalary = Math.ceil(grossSalary - ((parseFloat(this.grossCalculationData.insuranceAmount) * this.insuranceTenants)/ 12))
-			console.log(this.ctcPercentages);
 			return grossSalary + (100 - (grossSalary % 100))
 		},
 		monthlyLoanDeduction() {
@@ -158,6 +157,10 @@ export default {
 			}
 			return this.ctcAnnual + this.healthInsurance;
 		},
+		percentage() {
+			console.log(this.ctc);
+			return "hello";
+		}
 	},
 	methods: {
 		formatCurrency(amount) {
@@ -167,10 +170,12 @@ export default {
 			return amount.toLocaleString("en-IN");
 		},
 		insertCTC(amount) {
-            var proposedCtcField = document.getElementById("proposedCtc");
-            proposedCtcField.value = amount;
-			this.$emit('update-ctc', amount)
-		}
+			var updatedAmount = amount.split('(')[0].trim();
+			console.log(amount, "amount")
+			var proposedCtcField = document.getElementById("proposedCtc");
+			proposedCtcField.value = updatedAmount;
+			this.$emit('update-ctc', updatedAmount);
+		},
 	}
 };
 </script>
