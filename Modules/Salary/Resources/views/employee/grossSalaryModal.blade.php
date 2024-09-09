@@ -23,7 +23,7 @@
                         <label class="leading-none fz-24 d-flex align-items-center" for="proposedCtc">
                             <span class="mr-1">{{ __('Percentage') }}</span>
                         </label>
-                        <input v-model="percentage" type="text" id="percentage" class="form-control bg-light" placeholder="Enter Increased Percentage" >
+                        <input v-model="percentage" type="text" id="percentage" class="form-control bg-light" placeholder="Enter Increased Percentage" @input="calculateCtcFromPercentage" >
                     </div>
                 </div>
                 <gross-calculation-section
@@ -106,6 +106,17 @@
                         this.percentage = increasePercentage.toFixed(2);
                     } else {
                         this.percentage = '';
+                    }
+                },
+                calculateCtcFromPercentage() {
+                    const percentageIncrease = parseFloat(this.percentage);
+                    const currentCtc = parseFloat(this.yearlyGrossSalary);
+
+                    if (!isNaN(percentageIncrease) && currentCtc !== 0) {
+                        const ctcValue = currentCtc * (1 + percentageIncrease / 100);
+                        this.proposedCtc = Math.round(ctcValue);
+                    } else {
+                        this.proposedCtc = '';
                     }
                 }
             }
