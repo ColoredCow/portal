@@ -63,16 +63,14 @@ class SalaryController extends Controller
         $calculationData['insuranceAmount'] = (float) $healthInsuranceConf->fixed_amount;
         $grossSalariesList = [];
 
-        $currentGrossSalary = optional($employee->getCurrentSalary())->monthly_gross_salary;
-        if ($currentGrossSalary) {
-            $grossSalariesList = EmployeeSalary::all()->filter(function ($salary) use ($currentGrossSalary) {
-                return $salary->monthly_gross_salary >= $currentGrossSalary;
-            })->pluck('monthly_gross_salary')
-            ->unique()
-            ->sort()
-            ->values()
-            ->take(7);
-        }
+        $currentGrossSalary = optional($employee->getCurrentSalary())->monthly_gross_salary ?? 0;
+        $grossSalariesList = EmployeeSalary::all()->filter(function ($salary) use ($currentGrossSalary) {
+            return $salary->monthly_gross_salary >= $currentGrossSalary;
+        })->pluck('monthly_gross_salary')
+        ->unique()
+        ->sort()
+        ->values()
+        ->take(7);
         $ctcSuggestions = [];
         foreach ($grossSalariesList as $grossSalary) {
             $tempSalaryObject = new EmployeeSalary;
@@ -80,28 +78,14 @@ class SalaryController extends Controller
             $tempSalaryObject->monthly_gross_salary = $grossSalary;
             array_push($ctcSuggestions, $tempSalaryObject->ctc_aggregated);
         }
-        $yearlyGrossSalary = $employee->getLatestSalary()->ctc_aggregated;
-
-        $ctcPercentages = [];
-        foreach ($ctcSuggestions as $ctcSuggestion) {
-            $increase = (($ctcSuggestion - $yearlyGrossSalary) / ($yearlyGrossSalary)) * 100;
-            array_push($ctcPercentages, round($increase, 2));
-        }
-
-        $ctcIncreaseSuggestions = [];
-        foreach ($ctcSuggestions as $index => $ctcSuggestion) {
-            $ctcPercentage = $ctcPercentages[$index];
-            $ctcIncreaseSuggestions[] = $ctcSuggestion . ' ' . '(' . $ctcPercentage . '%' . ')';
-        }
+        $currentAggCTC = optional($employee->getLatestSalary())->ctc_aggregated ?? 0;
 
         return view('salary::employee.index')->with([
             'employee' => $employee,
             'salaryConfigs' => $salaryConf::formatAll(),
             'grossCalculationData' => json_encode($calculationData),
             'ctcSuggestions' => $ctcSuggestions,
-            'ctcPercentages' => $ctcPercentages,
-            'ctcIncreaseSuggestions' => $ctcIncreaseSuggestions,
-            'yearlyGrossSalary' => $yearlyGrossSalary,
+            'currentAggCTC' => $currentAggCTC,
         ]);
     }
 

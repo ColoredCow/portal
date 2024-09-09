@@ -4,10 +4,11 @@
 			<small v-if="ctcSuggestions.length > 0" class="font-weight-bold"> Suggestions: </small>
 			<span
 				v-on:click="insertCTC(ctc);"
-				v-for="(ctc, index) in ctcIncreaseSuggestions"
+				v-for="(ctc, index) in ctcSuggestions"
 				:key="index"
-				:class="['badge', 'mt-1', 'mr-2', 'p-1.5', 'badge-pill', ctc === proposedCtc ? 'badge-theme-gray-darker text-light' : 'badge-theme-gray-lightest', 'c-pointer']">
-				{{ ctc }}
+				:class="['badge', 'mt-1', 'mr-4', 'p-1.5', 'badge-pill', ctc === proposedCtc ? 'badge-theme-gray-darker text-light' : 'badge-theme-gray-lightest', 'c-pointer']"
+			>
+				{{ ctc }} ({{ percentage(ctc)}}%)
 			</span>
 		</div>
 		<div class="row pl-2 my-3">
@@ -33,7 +34,7 @@
 
 <script>
 export default {
-	props:["ctcSuggestions", "salaryConfigs", "grossCalculationData", "tds", "loanDeduction", "proposedCtc", "insuranceTenants", "ctcPercentages", "ctcIncreaseSuggestions", "yearlyGrossSalary"],
+	props:["ctcSuggestions", "salaryConfigs", "grossCalculationData", "tds", "loanDeduction", "proposedCtc", "insuranceTenants", "currentAggCtc"],
 	computed: {
 		grossSalary() {
 			if (!Number.isFinite(parseInt(this.proposedCtc)) || parseInt(this.proposedCtc) === 0) {
@@ -166,15 +167,18 @@ export default {
 			return amount.toLocaleString("en-IN");
 		},
 		insertCTC(amount) {
-			var updatedAmount = amount.split('(')[0].trim();
+			var updatedAmount = amount
 			var proposedCtcField = document.getElementById("proposedCtc");
 			proposedCtcField.value = updatedAmount;
 			this.$emit('update-ctc', updatedAmount);
 		},
 		percentage(amount) {
-			var currentAggregatedCTC = amount;
-			var yearlyGrossCTC = this.yearlyGrossSalary;
-			var ctcPercentage = ((currentAggregatedCTC - yearlyGrossCTC)/yearlyGrossCTC)*100;
+			var currentAggCtc = this.currentAggCtc;
+			if (!currentAggCtc) {
+				return '-'
+			}
+			console.log(currentAggCtc, amount)
+			var ctcPercentage = ((amount - currentAggCtc)/currentAggCtc)*100;
 			var formattedPercentage = ctcPercentage.toFixed(2);
 			return formattedPercentage;
 		}
