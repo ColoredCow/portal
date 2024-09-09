@@ -17,7 +17,7 @@
 				<div class="leading-none fz-24 d-flex align-items-center text-nowrap">Applicable CTC <small class="fz-12 ml-2">(Due to financial calculation)</small></div>
 				<div class="fz-24 mt-2">
 					<i class="fa fa-rupee"></i>
-					<span>{{ this.formatCurrency(ctcAggregated) }}</span>
+					<span>{{ this.formatCurrency(ctcAggregated) }}({{ this.percentage(ctcAggregated)}})</span>
 				</div>
 			</div>
 			<div class="form-group pl-6 col-md-5">
@@ -33,7 +33,7 @@
 
 <script>
 export default {
-	props:["ctcSuggestions", "salaryConfigs", "grossCalculationData", "tds", "loanDeduction", "proposedCtc", "insuranceTenants", "ctcPercentages", "ctcIncreaseSuggestions"],
+	props:["ctcSuggestions", "salaryConfigs", "grossCalculationData", "tds", "loanDeduction", "proposedCtc", "insuranceTenants", "ctcPercentages", "ctcIncreaseSuggestions", "yearlyGrossSalary"],
 	computed: {
 		grossSalary() {
 			if (!Number.isFinite(parseInt(this.proposedCtc)) || parseInt(this.proposedCtc) === 0) {
@@ -157,10 +157,6 @@ export default {
 			}
 			return this.ctcAnnual + this.healthInsurance;
 		},
-		percentage() {
-			console.log(this.ctc);
-			return "hello";
-		}
 	},
 	methods: {
 		formatCurrency(amount) {
@@ -171,11 +167,17 @@ export default {
 		},
 		insertCTC(amount) {
 			var updatedAmount = amount.split('(')[0].trim();
-			console.log(amount, "amount")
 			var proposedCtcField = document.getElementById("proposedCtc");
 			proposedCtcField.value = updatedAmount;
 			this.$emit('update-ctc', updatedAmount);
 		},
+		percentage(amount) {
+			var currentAggregatedCTC = amount;
+			var yearlyGrossCTC = this.yearlyGrossSalary;
+			var ctcPercentage = ((currentAggregatedCTC - yearlyGrossCTC)/yearlyGrossCTC)*100;
+			var formattedPercentage = ctcPercentage.toFixed(2);
+			return formattedPercentage;
+		}
 	}
 };
 </script>

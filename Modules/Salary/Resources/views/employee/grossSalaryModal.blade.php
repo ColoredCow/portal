@@ -16,20 +16,21 @@
                             <span><i class="fa fa-rupee"></i></span>
                             <small class="fz-12 ml-2">{{ __(' (including Health Insurance)') }}</small>
                         </label>
-                        <input v-model="proposedCtc" type="number" step="0.01" id="proposedCtc" class="form-control bg-light" placeholder="Enter CTC" min="0" required>
+                        <input v-model="proposedCtc" type="number" step="0.01" id="proposedCtc" class="form-control bg-light" placeholder="Enter CTC" min="0" @input="onEnteringCtc" required>
                         <small class="d-none text-danger" id="proposedCtcErrorMessage"><strong >CTC Required</strong></small>
                     </div>
                     <div class="form-group pl-6 mb-0 col-md-6 mt-4">
                         <label class="leading-none fz-24 d-flex align-items-center" for="proposedCtc">
                             <span class="mr-1">{{ __('Percentage') }}</span>
                         </label>
-                        <input v-model="percentage" type="number" id="percentage" class="form-control bg-light" placeholder="Enter Increased Percentage" >
+                        <input v-model="percentage" type="text" id="percentage" class="form-control bg-light" placeholder="Enter Increased Percentage" @input="calculateCtcFromPercentage" >
                     </div>
                 </div>
                 <gross-calculation-section
                     :ctc-increase-suggestions="{{ json_encode($ctcIncreaseSuggestions)}}"
                     :ctc-suggestions="{{ json_encode($ctcSuggestions) }}"
                     :ctc-percentages="{{ json_encode($ctcPercentages)}}"
+                    :yearly-gross-salary="{{json_encode($yearlyGrossSalary)}}"
                     :salary-configs="{{ json_encode($salaryConfigs) }}"
                     :gross-calculation-data="{{ $grossCalculationData }}"
                     :proposed-ctc="proposedCtc"
@@ -83,16 +84,41 @@
 @section('js_scripts')
     @parent
     <script>
+        var yearlyGrossSalary = @json($yearlyGrossSalary);
         new Vue({
             el: '#appraisalForm',
             data() {
                 return {
                     proposedCtc: "{{ 0 }}",
+                    yearlyGrossSalary: yearlyGrossSalary,
+                    percentage: ''
                 }
             },
             methods: {
                 updateProposedCtc(newProposedCtc) {
                     this.proposedCtc = newProposedCtc;
+                },
+                onEnteringCtc() {
+                    const ctcValue = parseFloat(this.proposedCtc);
+                    const currentCtc = parseFloat(this.yearlyGrossSalary);
+
+                    if (currentCtc !== 0) {
+                        const increasePercentage = ((ctcValue - currentCtc) / currentCtc) * 100;
+                        this.percentage = increasePercentage.toFixed(2);
+                    } else {
+                        this.percentage = '';
+                    }
+                },
+                calculateCtcFromPercentage() {
+                    const percentageIncrease = parseFloat(this.percentage);
+                    const currentCtc = parseFloat(this.yearlyGrossSalary);
+
+                    if (!isNaN(percentageIncrease) && currentCtc !== 0) {
+                        const ctcValue = currentCtc * (1 + percentageIncrease / 100);
+                        this.proposedCtc = Math.round(ctcValue);
+                    } else {
+                        this.proposedCtc = '';
+                    }
                 }
             }
         });
