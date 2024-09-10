@@ -16,9 +16,12 @@
 			<input hidden type="number" step="0.01" v-model="ctcAggregated" name="ctcAggregated" class="form-control bg-light" min="0" required>
 			<div class="pl-6 col-md-5">
 				<div class="leading-none fz-24 d-flex align-items-center text-nowrap">Applicable CTC <small class="fz-12 ml-2">(Due to financial calculation)</small></div>
-				<div class="fz-24 mt-2">
-					<i class="fa fa-rupee"></i>
-					<span>{{ this.formatCurrency(ctcAggregated) }} ({{ this.percentage(ctcAggregated)}}%)</span>
+				<div class="fz-24 mt-2 d-flex align-items-center">
+					<div>
+						<i class="fa fa-rupee"></i>
+						<span>{{ this.formatCurrency(ctcAggregated) }} </span> 
+					</div>
+					<span class="fz-16 ml-1"> ({{ this.percentage(ctcAggregated)}}%)</span>
 				</div>
 			</div>
 			<div class="form-group pl-6 col-md-5">
