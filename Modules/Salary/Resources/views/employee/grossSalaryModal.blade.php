@@ -94,6 +94,7 @@
             },
             methods: {
                 updateProposedCtc(newProposedCtc) {
+                    this.percentage = this.calculatePercentageIncement(newProposedCtc)
                     this.proposedCtc = newProposedCtc;
                 },
                 onEnteringCtc() {
@@ -113,11 +114,19 @@
 
                     if (Number.isFinite(percentageIncrease)) {
                         const ctcValue = currentCtc * (1 + percentageIncrease / 100);
-                        console.log(ctcValue)
                         this.proposedCtc = Math.round(ctcValue);
                     } else {
                         this.proposedCtc = '';
                     }
+                },
+                calculatePercentageIncement(amount) {
+                    var currentAggCtc = this.currentAggCtc;
+                    if (!currentAggCtc) {
+                        return '-'
+                    }
+                    var ctcPercentage = ((amount - currentAggCtc)/currentAggCtc)*100;
+                    var formattedPercentage = ctcPercentage.toFixed(2);
+                    return formattedPercentage;
                 }
             }
         });

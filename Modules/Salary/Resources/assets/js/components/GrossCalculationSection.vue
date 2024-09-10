@@ -177,7 +177,6 @@ export default {
 			if (!currentAggCtc) {
 				return '-'
 			}
-			console.log(currentAggCtc, amount)
 			var ctcPercentage = ((amount - currentAggCtc)/currentAggCtc)*100;
 			var formattedPercentage = ctcPercentage.toFixed(2);
 			return formattedPercentage;
