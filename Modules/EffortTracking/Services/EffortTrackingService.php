@@ -176,7 +176,7 @@ class EffortTrackingService
         ];
     }
 
-    public function getEffortForProject($project, $syncParams=[])
+    public function getEffortForProject($project, $syncParams = [])
     {
         $users = User::with('projectTeamMembers');
         $sheetColumnsName = config('efforttracking.columns_name');
@@ -287,9 +287,9 @@ class EffortTrackingService
 
                     $billingStartDate = Carbon::create($sheetUser[$sheetIndexForStartDate]);
                     $billingEndDate = Carbon::create($sheetUser[$sheetIndexForEndDate]);
-                    if(! empty($syncParams) && $syncParams['isBackDateSync']){
+                    if (! empty($syncParams) && $syncParams['isBackDateSync']) {
                         $currentDate = Carbon::parse($syncParams['backDate'], config('constants.timezone.indian'));
-                    } else{
+                    } else {
                         $currentDate = now(config('constants.timezone.indian'))->today();
                     }
 
@@ -360,9 +360,9 @@ class EffortTrackingService
         );
     }
 
-    public function updateEffort(array $effortData, $forDate=null)
+    public function updateEffort(array $effortData, $forDate = null)
     {
-        if(! $forDate){
+        if (! $forDate) {
             $forDate = now(config('constants.timezone.indian'))->today();
         }
         $projectTeamMember = $effortData['portal_user']->projectTeamMembers()->active()->where('project_id', $effortData['sheet_project']['id'])->first();
