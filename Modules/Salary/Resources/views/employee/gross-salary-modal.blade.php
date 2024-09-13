@@ -9,17 +9,26 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 </div>
-                <div class="form-group pl-6 mb-0 col-md-6 mt-4">
-                    <label class="leading-none fz-24 d-flex align-items-center" for="proposedCtc">
-                        <span class="mr-1">{{ __('New CTC') }}</span>
-                        <span><i class="fa fa-rupee"></i></span>
-                        <small class="fz-12 ml-2">{{ __(' (including Health Insurance)') }}</small>
-                    </label>
-                    <input v-model="proposedCtc" type="number" step="0.01" id="proposedCtc" class="form-control bg-light" placeholder="Enter CTC" min="0" required>
-                    <small class="d-none text-danger" id="proposedCtcErrorMessage"><strong >CTC Required</strong></small>
+                <div class="d-flex">
+                    <div class="form-group pl-6 mb-0 col-md-6 mt-4">
+                        <label class="leading-none fz-24 d-flex align-items-center" for="proposedCtc">
+                            <span class="mr-1">{{ __('New CTC') }}</span>
+                            <span><i class="fa fa-rupee"></i></span>
+                            <small class="fz-12 ml-2">{{ __(' (including Health Insurance)') }}</small>
+                        </label>
+                        <input v-model="proposedCtc" type="number" step="0.01" id="proposedCtc" class="form-control bg-light" placeholder="Enter CTC" min="0" @input="onEnteringCtc" required>
+                        <small class="d-none text-danger" id="proposedCtcErrorMessage"><strong >CTC Required</strong></small>
+                    </div>
+                    <div class="form-group mb-0 col-md-5 mt-4">
+                        <label class="leading-none fz-24 d-flex align-items-center" for="proposedCtc">
+                            <span class="mr-1">{{ __('Percentage') }}</span>
+                        </label>
+                        <input v-model="percentage" type="number" id="percentage" class="form-control bg-light" placeholder="Enter Increased Percentage" @input="calculateCtcFromPercentage" >
+                    </div>
                 </div>
                 <gross-calculation-section
                     :ctc-suggestions="{{ json_encode($ctcSuggestions) }}"
+                    :current-agg-ctc="{{$currentAggCTC}}"
                     :salary-configs="{{ json_encode($salaryConfigs) }}"
                     :gross-calculation-data="{{ $grossCalculationData }}"
                     :proposed-ctc="proposedCtc"
@@ -105,16 +114,51 @@
 @section('js_scripts')
     @parent
     <script>
+        var currentAggCtc = @json($currentAggCTC);
         new Vue({
             el: '#appraisalForm',
             data() {
                 return {
                     proposedCtc: "{{ 0 }}",
+                    currentAggCtc: currentAggCtc,
+                    percentage: "{{ 0 }}"
                 }
             },
             methods: {
                 updateProposedCtc(newProposedCtc) {
+                    this.percentage = this.calculatePercentageIncement(newProposedCtc)
                     this.proposedCtc = newProposedCtc;
+                },
+                onEnteringCtc() {
+                    const ctcValue = parseFloat(this.proposedCtc);
+                    const currentCtc = parseFloat(this.currentAggCtc);
+
+                    if (currentCtc !== 0) {
+                        const increasePercentage = ((ctcValue - currentCtc) / currentCtc) * 100;
+                        this.percentage = increasePercentage.toFixed(2);
+                    } else {
+                        this.percentage = '';
+                    }
+                },
+                calculateCtcFromPercentage() {
+                    const percentageIncrease = parseFloat(this.percentage);
+                    const currentCtc = parseFloat(this.currentAggCtc);
+
+                    if (Number.isFinite(percentageIncrease)) {
+                        const ctcValue = currentCtc * (1 + percentageIncrease / 100);
+                        this.proposedCtc = Math.round(ctcValue);
+                    } else {
+                        this.proposedCtc = '';
+                    }
+                },
+                calculatePercentageIncement(amount) {
+                    var currentAggCtc = this.currentAggCtc;
+                    if (!currentAggCtc) {
+                        return '-'
+                    }
+                    var ctcPercentage = ((amount - currentAggCtc)/currentAggCtc)*100;
+                    var formattedPercentage = ctcPercentage.toFixed(2);
+                    return formattedPercentage;
                 }
             }
         });
@@ -150,6 +194,7 @@
 
         function validateForm() {
             let proposedCtc = $('#proposedCtc');
+            let percentage = $('#percentage');
             let commencementDate = $('#commencementDate');
             let dateOfBirth = $('#date_of_birth');
             let signature = $('#signature');
