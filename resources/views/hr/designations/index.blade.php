@@ -13,7 +13,7 @@
             </form>
         </div>
         <div>
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#designationformModal"><i class="fa fa-plus mr-1"></i> Add Desingnation</button>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#designationformModal"><i class="fa fa-plus mr-1"></i> Add Designation</button>
         </div>
     </div>
     <div class="d-none alert alert-success " id="successMessage" role="alert">

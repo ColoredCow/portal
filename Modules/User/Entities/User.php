@@ -235,4 +235,16 @@ class User extends Authenticatable
     {
         return new UserFactory();
     }
+
+    public function getUserAge($userId)
+    {
+        $userProfile = UserProfile::where('user_id', $userId)->first();
+
+        if ($userProfile) {
+            $age = $userProfile->age;
+            return $age;
+        }
+
+        return null;
+    }
 }

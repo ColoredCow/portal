@@ -421,6 +421,11 @@
             },
             markStageAsUpdated(stage) {
                 if (stage.id) stage.isUpdated = true;
+                if(stage.start_date && ! stage.end_date){
+                    stage.status = 'started';
+                } else if (stage.end_date){
+                    stage.status = 'completed';
+                }
             },
             updateStatus(status, index) {
                 const stage = this.stages[index];

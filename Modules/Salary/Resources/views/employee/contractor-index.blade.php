@@ -3,6 +3,8 @@
     <div class="container">
         <br>
         @include('hr.employees.sub-views.menu')
+        @include('salary::employee.gross-salary-modal')
+        @include('salary::employee.contractor-increment-modal')
         <br>
         <form action="{{ route('salary.contractor.store', $employee) }}" id="contractor_salary_form" method="POST"  enctype="multipart/form-data">
             @csrf
@@ -19,6 +21,16 @@
                             @can('employee_salary.update')
                             <span data-toggle="tooltip" data-placement="top" title="Update the existing entry">
                                 <input name="submitType" type="submit" class="btn btn-primary ml-7 px-4" value="Update"/>
+                            </span>
+                            <span data-toggle="tooltip" data-placement="top" title="Increase Fee">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#incrementModal">
+                                    Increment
+                                </button>
+                            </span>
+                            <span data-toggle="tooltip" data-placement="top" title="Onboard as Employee">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#appraisalModal">
+                                    Onboard
+                                </button>
                             </span>
                             @endcan
                         </div>
@@ -43,7 +55,7 @@
                                 <span class="mr-1 mb-1">{{ __('Monthly Fee') }}</span>
                                 <span><i class="fa fa-rupee"></i></span>
                             </label>
-                            <input type="number" step="0.01" value="{{ optional($salary)->monthly_fee }}" name="contractorFee" id="contractorFee" onkeyup="onUpdateMonthlyFee(this.value)" class="form-control ml-4 bg-light" placeholder="Enter Contractor Fee" min="0" required>
+                            <input type="number" step="0.01" value="{{ optional($salary)->monthly_fee }}" name="contractorFee" id="contractorFee" class="form-control ml-4 bg-light" placeholder="Enter Contractor Fee" min="0" required>
                         </div>
                         <div class="form-group col-md-5">
                             <label class="leading-none fz-24 ml-4 d-flex align-items-center" for="commencementDate">
@@ -54,11 +66,11 @@
                     </div>
                     <div class="d-md-flex">
                         <div class="form-group col-md-5">
-                            <label class="leading-none fz-24 ml-4 d-flex align-items-center" for="tds">
+                            <label class="leading-none fz-24 ml-4 d-flex align-items-center" for="contractorTds">
                                 <span class="mr-1 mb-1">{{ __('TDS') }}</span>
                                 <span><i class="fa fa-rupee"></i></span>
                             </label>
-                            <input v-model="tds" value="{{ optional($salary)->tds }}" type="number" step="0.01" name="tds" id="tds" class="form-control ml-4 bg-light" placeholder="Enter TDS" min="0" required>
+                            <input value="{{ optional($salary)->tds }}" type="number" step="0.01" name="tds" id="contractorTds" class="form-control ml-4 bg-light" placeholder="Enter TDS" min="0" required>
                         </div>
                     </div>
                 </div>
@@ -67,11 +79,11 @@
     </div>
 @endsection
 
-@section('js_scripts')
+{{-- @section('js_scripts')
     <script>
         function onUpdateMonthlyFee(value) {
-            var tds = document.getElementById('tds')
+            var tds = document.getElementById('contractorTds')
             tds.value = Math.floor(value * 0.02)
         }
     </script>
-@endsection
+@endsection --}}

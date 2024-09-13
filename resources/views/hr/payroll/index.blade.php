@@ -84,7 +84,7 @@
                 <tr>
                     @php
                         $user = $employee->user()->withTrashed()->first();
-                        $employeeCurrentSalaryObject = $employee->getLatestSalary();
+                        $employeeCurrentSalaryObject = $employee->getLatestSalary($employee->payroll_type);
                         $employeePreviousSalaryObject = $employee->getPreviousSalary(optional($employeeCurrentSalaryObject)->salary_type);
                     @endphp
                     <td>
