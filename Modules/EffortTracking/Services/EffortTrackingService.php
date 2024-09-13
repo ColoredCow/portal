@@ -360,7 +360,7 @@ class EffortTrackingService
         );
     }
 
-    public function updateEffort(array $effortData, $forDate = null)
+    public function updateEffort(array $effortData, Carbon $forDate = null)
     {
         if (! $forDate) {
             $forDate = now(config('constants.timezone.indian'))->today();
