@@ -176,7 +176,7 @@ class EffortTrackingService
         ];
     }
 
-    public function getEffortForProject($project)
+    public function getEffortForProject($project, $syncParams=[])
     {
         $users = User::with('projectTeamMembers');
         $sheetColumnsName = config('efforttracking.columns_name');
@@ -287,7 +287,11 @@ class EffortTrackingService
 
                     $billingStartDate = Carbon::create($sheetUser[$sheetIndexForStartDate]);
                     $billingEndDate = Carbon::create($sheetUser[$sheetIndexForEndDate]);
-                    $currentDate = now(config('constants.timezone.indian'))->today();
+                    if(! empty($syncParams) && $syncParams['isBackDateSync']){
+                        $currentDate = Carbon::parse($syncParams['backDate'], config('constants.timezone.indian'));
+                    } else{
+                        $currentDate = now(config('constants.timezone.indian'))->today();
+                    }
 
                     if ($currentDate < $billingStartDate || $currentDate > $billingEndDate) {
                         continue;
@@ -306,7 +310,7 @@ class EffortTrackingService
                     foreach ($projectsInSheet as $sheetProject) {
                         try {
                             $effortData['sheet_project'] = $sheetProject;
-                            $this->updateEffort($effortData);
+                            $this->updateEffort($effortData, $currentDate);
                             $approvedPipelineSheetEffort = ! empty($approvedPipelineSheet[0][0]) ? $approvedPipelineSheet[0][0] : 0;
                             $this->updateApprovedPipelineEffort($approvedPipelineSheetEffort, $effortData);
                             ProjectMeta::updateOrCreate(
@@ -356,16 +360,18 @@ class EffortTrackingService
         );
     }
 
-    public function updateEffort(array $effortData)
+    public function updateEffort(array $effortData, $forDate=null)
     {
-        $currentDate = now(config('constants.timezone.indian'))->today();
+        if(! $forDate){
+            $forDate = now(config('constants.timezone.indian'))->today();
+        }
         $projectTeamMember = $effortData['portal_user']->projectTeamMembers()->active()->where('project_id', $effortData['sheet_project']['id'])->first();
 
         if (! $projectTeamMember) {
             return;
         }
         $latestProjectTeamMemberEffort = $projectTeamMember->projectTeamMemberEffort()
-            ->where('added_on', '<', $currentDate)
+            ->where('added_on', '<', $forDate)
             ->orderBy('added_on', 'DESC')->first();
 
         $billableEffort = $effortData['sheet_user'][$effortData['sheet_project']['sheetIndex']];
@@ -381,7 +387,7 @@ class EffortTrackingService
         ProjectTeamMemberEffort::updateOrCreate(
             [
                 'project_team_member_id' => $projectTeamMember->id,
-                'added_on' => $currentDate,
+                'added_on' => $forDate,
             ],
             [
                 'actual_effort' => $billableEffort,
