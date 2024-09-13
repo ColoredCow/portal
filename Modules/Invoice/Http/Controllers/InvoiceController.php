@@ -175,6 +175,7 @@ class InvoiceController extends Controller
     public function sendReminderEmail(Request $request)
     {
         $invoice = Invoice::find($request->invoice_id);
+
         $this->service->sendInvoiceReminder($invoice, $request->all());
 
         return redirect()->back()->with('status', 'Invoice saved successfully.');
