@@ -32,6 +32,8 @@ class SendUpcomingInvoiceReminder extends Command
     {
         $service = app(InvoiceService::class);
         $upcomingInvoices = $service->getScheduledInvoicesForMail();
-        Mail::send(new SendInvoiceReminderMail($upcomingInvoices));
+        if ($upcomingInvoices->count()) {
+            Mail::send(new SendInvoiceReminderMail($upcomingInvoices));
+        }
     }
 }
