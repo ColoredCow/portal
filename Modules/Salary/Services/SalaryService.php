@@ -58,12 +58,15 @@ class SalaryService
             array_push($ctcSuggestions, $tempSalaryObject->ctc_aggregated);
         }
 
+        $currentAggCTC = optional($employee->getLatestSalary())->ctc_aggregated ?? 0;
+
         $data = [
             'employee' => $employee,
             'designations' => HrJobDesignation::all(),
             'ctcSuggestions' => $ctcSuggestions,
             'salaryConfigs' => $salaryConf::formatAll(),
             'grossCalculationData' => json_encode($calculationData),
+            'currentAggCTC' => $currentAggCTC,
         ];
 
         if ($employee->payroll_type === 'contractor') {
