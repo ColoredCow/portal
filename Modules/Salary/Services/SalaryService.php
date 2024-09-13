@@ -88,7 +88,7 @@ class SalaryService
                 $formattedCommencementDate = Carbon::parse($commencementDate)->format('F Y');
 
                 $appraisalData = $salaryService->appraisalLetterData($request, $employee);
-                if ($employee->staff_type === 'Contractor') {
+                if ($employee->staff_type === config('salary.staff_type.contractor.slug')) {
                     $pdf = $salaryService->getContractorOnboardingLetterPdf($appraisalData, $employee);
                     Mail::to($data['employeeEmail'])->send(new SendContractorOnboardingLetterMail($data, $pdf->inline($data['employeeName'] . '_Onboarding Letter_' . $formattedCommencementDate . '.pdf'), $formattedCommencementDate));
                 } else {

@@ -181,10 +181,10 @@
                         <span class="salary-text">Other Allowance</span><span class="salary-number-4">Rs {{$data['otherAllowance']}}/-</span>
                     </div>
                     <div class="salary-details">
-                        <span class="salary-text">P.F. and Charges (Employer share)</span><span class="salary-number-5">Rs 2138/-</span>
+                        <span class="salary-text">P.F. and Charges (Employer share)</span><span class="salary-number-5">Rs {{ $data['epfShare'] }}/-</span>
                     </div>
                     <div class="salary-details">
-                        <span class="salary-text">Medical Insurance (per month)</span><span class="salary-number-6">Rs 250/-</span>
+                        <span class="salary-text">Medical Insurance (per month)</span><span class="salary-number-6">Rs {{ $data['medicalInsurance'] }}/-</span>
                     </div>
                 </div>
                 <br>
@@ -443,25 +443,25 @@
                     <p><b>Schedule II</b></p>
                     <p><b>Remuneration</b></p>
                     <div class="revised-details">
-                        Your revised remuneration will be <b>INR 35,138/-</b> per month as per the following breakup.
+                        Your revised remuneration will be <b>{{$data['grossSalary']}}/-</b> per month as per the following breakup.
                         <br>
                         <div class="salary-details">
-                            <span class="salary-text">Basic Salary</span><span class="salary-number-1">Rs 16,500/-</span>
+                            <span class="salary-text">Basic Salary</span><span class="salary-number-1">Rs {{$data['basicSalary']}}/-</span>
                         </div>
                         <div class="salary-details">
-                            <span class="salary-text">HRA. Allowance</span><span class="salary-number-2">Rs 8350/-</span>
+                            <span class="salary-text">HRA. Allowance</span><span class="salary-number-2">Rs {{$data['hra']}}/-</span>
                         </div>
                         <div class="salary-details">
                             <span class="salary-text">Conveyance Allowance</span><span class="salary-number-3">Rs 1600/-</span>
                         </div>
                         <div class="salary-details">
-                            <span class="salary-text">Other Allowance</span><span class="salary-number-4">Rs 6350/-</span>
+                            <span class="salary-text">Other Allowance</span><span class="salary-number-4">Rs {{$data['otherAllowance']}}/-</span>
                         </div>
                         <div class="salary-details">
-                            <span class="salary-text">P.F. and Charges (Employer share)</span><span class="salary-number-5">Rs 2138/-</span>
+                            <span class="salary-text">P.F. and Charges (Employer share)</span><span class="salary-number-5">Rs {{ $data['epfShare'] }}/-</span>
                         </div>
                         <div class="salary-details">
-                            <span class="salary-text">Medical Insurance (per month)</span><span class="salary-number-6">Rs 250/-</span>
+                            <span class="salary-text">Medical Insurance (per month)</span><span class="salary-number-6">Rs {{ $data['medicalInsurance'] }}/-</span>
                         </div>
                     </div>
                     <p><b>*Conveyance Allowance is 1600/-</b> which is fixed but you need to submit Conveyance Logs to claim more than this</p>

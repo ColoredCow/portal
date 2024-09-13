@@ -57,4 +57,23 @@ return [
             'slug' => 'full-time',
         ],
     ],
+
+    'staff_type' => [
+        'employee' => [
+            'label' => 'Employee',
+            'slug' => 'Employee',
+        ],
+        'contractor' => [
+            'label' => 'Contractor',
+            'slug' => 'Contractor',
+        ],
+        'support_staff' => [
+            'label' => 'Support Staff',
+            'slug' => 'Support Staff',
+        ],
+        'intern' => [
+            'label' => 'Intern',
+            'slug' => 'Intern',
+        ],
+    ]
 ];

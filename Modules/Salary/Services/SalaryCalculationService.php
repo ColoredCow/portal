@@ -210,7 +210,7 @@ class SalaryCalculationService
     {
         $user = $employee->user;
         $userProfile = $user->profile;
-        $address = $userProfile->address;
+        $address = optional($userProfile)->address ?? "";
         return $address;
     }
 
@@ -224,7 +224,7 @@ class SalaryCalculationService
     {
         $user = $employee->user;
         $userProfile = $user->profile;
-        $designation = $userProfile->designation;
+        $designation = optional($userProfile)->designation ?? "";
         return $designation;
     }
 
@@ -251,6 +251,12 @@ class SalaryCalculationService
     public function getContractorOnboardingLetterPdf($data, $employee)
     {
         $commencementDate = Carbon::parse($data['commencementDate'])->format('jS F Y');
+        $newSalaryObject = new EmployeeSalary();
+        $newSalaryObject->monthly_gross_salary = $data['grossSalary'];
+
+
+        $totalHealthInsurance = $newSalaryObject->health_insurance * (optional($employee->user->profile)->insurance_tenants ?? 1);
+        $monthlyHealthInsurance = $totalHealthInsurance / 12;
         $data['formattedCommencementDate'] = $commencementDate;
         $data['employeeAddress'] = $this->getEmployeeAddressDetail($employee);
         $data['employeeAge'] = $this->getEmployeeAge($employee);
@@ -259,11 +265,12 @@ class SalaryCalculationService
         $employeeFirstName = explode(' ', $employee->name)[0];
         $data['employeeFirstName'] = $employeeFirstName;
         $data['employee'] = $employee;
-        $data['basicSalary'] = $this->basicSalary();
-        $data['otherAllowance'] = $this->employeeOtherAllowance($data['grossSalary']);
-        $data['hra'] = $this-> hra();
-        $data['transportAllowance'] = $this->getTransportAllowance();
-        $data['epfShare'] = $this->epfShare($this->basicSalary());
+        $data['basicSalary'] = $newSalaryObject->basic_salary;
+        $data['otherAllowance'] = $newSalaryObject->other_allowance;
+        $data['hra'] = $newSalaryObject->hra;
+        $data['transportAllowance'] = $newSalaryObject->transport_allowance;
+        $data['medicalInsurance'] = $monthlyHealthInsurance;
+        $data['epfShare'] = $newSalaryObject->employer_epf + $newSalaryObject->employee_epf;
         $pdf = App::make('snappy.pdf.wrapper');
         $template = 'contractor-onboarding-template';
         $html = view('salary::render.' . $template, compact('data'));
