@@ -39,8 +39,6 @@ class SalaryCalculationService
 
     public function appraisalLetterData($request, $employee)
     {
-        $fetchEmployeeSalarydetails = $this->employeeSalaryDetails($request, $employee);
-        $fetchEmployeeDetails = $this->employeeDetails($employee);
         $commencementDate = Carbon::parse($request->commencementDate)->format('jS F Y');
         $employeeName = $employee->name;
         $employeeFirstName = explode(' ', $employeeName)[0];
@@ -58,18 +56,17 @@ class SalaryCalculationService
         $totalHealthInsurance = $newSalaryObject->health_insurance * (optional($employee->user->profile)->insurance_tenants ?? 1);
         $monthlyHealthInsurance = $totalHealthInsurance / 12;
         $newAggregateCTC = $newSalaryObject->ctc_annual + $totalHealthInsurance;
-        $currentAnnualCTC = $employee->getLatestSalary($employee->payroll_type)->ctc_annual;
+        $currentAnnualCTC = $employee->getLatestSalary($employee->payroll_type)->ctc_aggregated;
         $salaryIncreasePercentage = $this->getLatestSalaryPercentageIncrementAttribute($currentAnnualCTC, $newAggregateCTC);
         $employeeUserId = $employee->user_id;
-        // if ($request->signature) {
-        //     $imageData = file_get_contents($request->signature);
-        // }
         $userProfile = UserProfile::where('user_id', $employeeUserId)->first();
         if ($userProfile) {
             $address = $userProfile->address;
         }
 
-        $data = (object) [
+        $data = [
+            'pan_details' => $request->pan_details,
+            'date_of_birth' => $request->date_of_birth,
             'employeeName' => $employeeName,
             'employeeFirstName' => $employeeFirstName,
             'date' => $currentDate,
@@ -86,7 +83,6 @@ class SalaryCalculationService
             'previousSalary' => $currentAnnualCTC,
             'salaryIncreasePercentage' => $salaryIncreasePercentage,
             'address' => isset($address) ? $address : null, // Handle the case where $address might not be set
-            // 'imageData' => isset($imageData) ? $imageData : null,
         ];
 
         return $data;
@@ -214,12 +210,6 @@ class SalaryCalculationService
         return $address;
     }
 
-    public function getEmployeeAge($employee)
-    {
-        $age = $employee->user->getUserAge($employee->user_id);
-        return $age;
-    }
-
     public function getEmployeeDesignation($employee)
     {
         $user = $employee->user;
@@ -254,12 +244,14 @@ class SalaryCalculationService
         $newSalaryObject = new EmployeeSalary();
         $newSalaryObject->monthly_gross_salary = $data['grossSalary'];
 
-
         $totalHealthInsurance = $newSalaryObject->health_insurance * (optional($employee->user->profile)->insurance_tenants ?? 1);
         $monthlyHealthInsurance = $totalHealthInsurance / 12;
+
+        $dob = isset($data['date_of_birth']) ? Carbon::parse($data['date_of_birth']) : Carbon::parse(optional($employee->user->profile)->date_of_birth);
+        $data['pan_details'] = $data['pan_details'] ?? Carbon::parse(optional($employee->user->profile)->pan_details);
         $data['formattedCommencementDate'] = $commencementDate;
         $data['employeeAddress'] = $this->getEmployeeAddressDetail($employee);
-        $data['employeeAge'] = $this->getEmployeeAge($employee);
+        $data['employeeAge'] = $dob->age;
         $data['employeeDesignation'] = $this->getEmployeeDesignation($employee);
         $data['salaryPackage'] = $this->getSalaryPackage($data['ctcAggregated']);
         $employeeFirstName = explode(' ', $employee->name)[0];
@@ -270,7 +262,7 @@ class SalaryCalculationService
         $data['hra'] = $newSalaryObject->hra;
         $data['transportAllowance'] = $newSalaryObject->transport_allowance;
         $data['medicalInsurance'] = $monthlyHealthInsurance;
-        $data['epfShare'] = $newSalaryObject->employer_epf + $newSalaryObject->employee_epf;
+        $data['epfShare'] = $newSalaryObject->employee_epf + $newSalaryObject->edli_charges + $newSalaryObject->administration_charges;
         $pdf = App::make('snappy.pdf.wrapper');
         $template = 'contractor-onboarding-template';
         $html = view('salary::render.' . $template, compact('data'));

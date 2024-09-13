@@ -78,8 +78,8 @@ class SalaryController extends Controller
         }
 
         $data = $salaryService->appraisalLetterData($request, $employee);
-        $employeeName = $data->employeeName;
-        $commencementDate = $data->commencementDate;
+        $employeeName = $data["employeeName"];
+        $commencementDate = $data["commencementDate"];
         $date = Carbon::parse($commencementDate);
         $commencementDateFormat = $date->format('F Y');
         $pdf = $salaryService->getAppraisalLetterPdf($data);

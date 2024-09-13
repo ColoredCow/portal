@@ -230,7 +230,7 @@
                 <div>This Employment Agreement is executed at Gurugram on <b>{{$data['formattedCommencementDate']}}</b> between </div>
                 <div>
                     <p>1. <b>Coloredcow Consulting Private Limited</b>, a company incorporated under the laws of India and having its registered office at F-61, Suncity, Sector 54, Gurugram, Haryana-122003, India <b>("Company")</b>; and </p>
-                    <p>2. <b>{{$data['employeeFirstName']}}</b> is an Indian national, aged <b>{{$data['employeeAge']}}</b> years, holding Permanent Account Number(PAN) <b></b>, and presently residing at <b>hardcoded</b>
+                    <p>2. <b>{{$data['employeeFirstName']}}</b> is an Indian national, aged <b>{{$data['employeeAge']}}</b> years, holding Permanent Account Number(PAN) <b>{{ $data['pan_details'] }}</b>, and presently residing at <b>{{ $data['employeeAddress'] }}</b>
                     <p>Each of the Company and the Employee is individually referred to as the <b>Party</b> and collectively as the <b>Parties</b>. </p>
                     <p><b>WHEREAS</b></p>
                     <p>1. The Employee is appointed by the Company through a letter of appointment dated<b>{{$data['formattedCommencementDate']}}</b></p>
