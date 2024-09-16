@@ -151,6 +151,7 @@ class Client extends Model
     public function getTaxAmountForTerm(int $monthsToSubtract, $projects, $periodStartDate = null, $periodEndDate = null)
     {
         $monthsToSubtract = $monthsToSubtract ?? 1;
+
         // Todo: Implement tax calculation correctly as per the IGST rules
         return round($this->getBillableAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) * ($this->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
     }

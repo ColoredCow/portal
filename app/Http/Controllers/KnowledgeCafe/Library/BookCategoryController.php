@@ -70,7 +70,7 @@ class BookCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
+     * @param  BookCategory  $bookCategory
      */
     public function destroy(BookCategory $bookCategory)
     {

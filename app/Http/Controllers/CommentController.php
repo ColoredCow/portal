@@ -10,8 +10,8 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Comment  $comment
+     * @param  Request  $request
+     * @param  Comment  $comment
      *
      * @return \Illuminate\Http\Response
      */
@@ -27,7 +27,7 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Comment  $comment
+     * @param  Comment  $comment
      */
     public function destroy(Comment $comment)
     {

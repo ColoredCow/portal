@@ -60,7 +60,7 @@ class ProjectContractController extends Controller
     }
     public function viewForm()
     {
-        $clients = client::all();
+        $clients = Client::all();
 
         return view('projectcontract::add-new-client')->with('clients', $clients)->with('countries', Country::all());
     }

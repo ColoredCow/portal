@@ -50,7 +50,7 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\ProjectRequest  $request
+     * @param  ProjectRequest  $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -71,7 +71,7 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Project  $project
+     * @param  Project  $project
      */
     public function show(Project $project)
     {
@@ -87,7 +87,7 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Project  $project
+     * @param  Project  $project
      *
      * @return \Illuminate\View\View
      */
@@ -104,8 +104,8 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\ProjectRequest  $request
-     * @param  \App\Models\Project  $project
+     * @param  ProjectRequest  $request
+     * @param  Project  $project
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -127,8 +127,8 @@ class ProjectController extends Controller
     /**
      * Add Employees to this Project.
      *
-     * @param  \App\Models\Project  $project
-     * @param  \App\Http\Requests\ProjectRequest  $request
+     * @param  Project  $project
+     * @param  ProjectRequest  $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -142,8 +142,8 @@ class ProjectController extends Controller
     /**
      * Remove Employees from this Project.
      *
-     * @param  \App\Models\Project  $project
-     * @param  \App\Http\Requests\ProjectRequest  $request
+     * @param  Project  $project
+     * @param  ProjectRequest  $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */

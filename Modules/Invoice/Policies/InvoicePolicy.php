@@ -18,7 +18,7 @@ class InvoicePolicy
     /**
      * Determine whether the user can view the invoice.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      *
      * @return mixed
      */
@@ -30,7 +30,7 @@ class InvoicePolicy
     /**
      * Determine whether the user can create invoices.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      *
      * @return mixed
      */
@@ -42,7 +42,7 @@ class InvoicePolicy
     /**
      * Determine whether the user can update the invoice.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      *
      * @return mixed
      */
@@ -54,7 +54,7 @@ class InvoicePolicy
     /**
      * Determine whether the user can delete the invoice.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      *
      * @return mixed
      */

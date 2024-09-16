@@ -11,7 +11,7 @@ class EmployeeLoanObserver
     /**
      * Handle the EmployeeLoan "created" event.
      *
-     * @param  \Modules\Invoice\Entities\EmployeeLoan  $loan
+     * @param  EmployeeLoan  $loan
      * @return void
      */
     public function created(EmployeeLoan $loan)
@@ -28,7 +28,7 @@ class EmployeeLoanObserver
     /**
      * Handle the EmployeeLoan "updated" event.
      *
-     * @param  \Modules\Invoice\Entities\EmployeeLoan  $loan
+     * @param  EmployeeLoan  $loan
      * @return void
      */
     public function updated(EmployeeLoan $loan)
@@ -50,7 +50,7 @@ class EmployeeLoanObserver
     /**
      * Handle the EmployeeLoan "deleted" event.
      *
-     * @param  \Modules\Invoice\Entities\EmployeeLoan  $loan
+     * @param  EmployeeLoan  $loan
      * @return void
      */
     public function deleted(EmployeeLoan $loan)
@@ -67,7 +67,7 @@ class EmployeeLoanObserver
     /**
      * Handle the EmployeeLoan "restored" event.
      *
-     * @param  \Modules\Invoice\Entities\EmployeeLoan  $loan
+     * @param  EmployeeLoan  $loan
      * @return void
      */
     public function restored(EmployeeLoan $loan)
@@ -78,7 +78,7 @@ class EmployeeLoanObserver
     /**
      * Handle the EmployeeLoan "force deleted" event.
      *
-     * @param  \Modules\Invoice\Entities\EmployeeLoan  $loan
+     * @param  EmployeeLoan  $loan
      * @return void
      */
     public function forceDeleted(EmployeeLoan $loan)

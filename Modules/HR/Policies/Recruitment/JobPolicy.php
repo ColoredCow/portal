@@ -13,8 +13,8 @@ class JobPolicy
     /**
      * Determine whether the user can view the job.
      *
-     * @param  \Modules\User\Entities\User  $user
-     * @param  \Modules\HR\Entities\Job  $job
+     * @param  User  $user
+     * @param  Job  $job
      *
      * @return mixed
      */
@@ -30,7 +30,7 @@ class JobPolicy
     /**
      * Determine whether the user can create jobs.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      *
      * @return mixed
      */
@@ -46,8 +46,8 @@ class JobPolicy
     /**
      * Determine whether the user can update the job.
      *
-     * @param  \Modules\User\Entities\User  $user
-     * @param  \Modules\HR\Entities\Job  $job
+     * @param  User  $user
+     * @param  Job  $job
      *
      * @return mixed
      */
@@ -63,8 +63,8 @@ class JobPolicy
     /**
      * Determine whether the user can delete the job.
      *
-     * @param  \Modules\User\Entities\User  $user
-     * @param  \Modules\HR\Entities\Job  $job
+     * @param  User  $user
+     * @param  Job  $job
      *
      * @return mixed
      */
@@ -80,7 +80,7 @@ class JobPolicy
     /**
      * Determine whether the user can list jobs.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      *
      * @return mixed
      */

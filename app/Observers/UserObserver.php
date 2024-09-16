@@ -11,7 +11,7 @@ class UserObserver
     /**
      * Handle to the user "created" event.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      * @return void
      */
     public function created(User $user)
