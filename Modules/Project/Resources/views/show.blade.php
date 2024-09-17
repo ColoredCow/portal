@@ -1,5 +1,10 @@
 @extends('project::layouts.master')
 @section('content')
+<div class="efforts-sync-loader text-center bg-theme-semi-transparent position-fixed w-full h-full d-none" style="top: 0%; right: 0%; z-index: 9999" id="preloader">
+	<div class="spinner-border position-relative" style="top: 40%; border: 0.25em solid #ffff; border-right-color: transparent;" id="spinner">
+		<span class="sr-only">Loading...</span>
+	</div>
+</div>
 <div class="container" id="vueContainer">
     <br>
     <div class=" d-flex">
@@ -47,7 +52,12 @@
                             <h4 class="mr-5">
                                 <i class="fa fa-spinner fa-spin ml-2 d-none"></i>
                                 <i class="ml-2 font-weight-bold fa fa-refresh c-pointer" aria-hidden="true"
-                                data-url="{{ route('effort-tracking.refresh', $project) }}"></i>
+                                    @if(auth()->user()->can('finance_reports.view'))
+                                        data-toggle="modal" data-target="#syncEffortsModal"
+                                    @else
+                                        data-url="{{ route('effort-tracking.refresh', $project) }}"
+                                    @endif>
+                                </i>
                             </h4>
                                 <strong>Timeline:</strong>{{ (Carbon\Carbon::parse($project->client->month_start_date)->format('dS M')) }}
                                 -{{ (Carbon\Carbon::parse($project->client->month_end_date)->format('dS M')) }}
@@ -324,6 +334,9 @@
 </div>
 <div class="container" id="stages_app">
     @include('project::subviews.project-stages')
+</div>
+<div>
+    @include('project::modals.efforts-sync-modal')
 </div>
 <br>
 <br>

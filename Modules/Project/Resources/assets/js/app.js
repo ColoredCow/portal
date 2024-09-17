@@ -25,31 +25,51 @@ $(document).ready(function () {
 	}, 6000);
 });
 
-$(function () {
-	$(".fa-refresh").on("click", function () {
-		let button = $(this).prop("disabled", true);
-		button.toggleClass("d-none");
-		button.siblings(".fa-spinner").toggleClass("d-none");
+$(document).ready(function () {
+    function toggleButtonAndSpinner(button) {
+        button.toggleClass("d-none");
+        button.siblings(".fa-spinner").toggleClass("d-none");
+    }
 
-		$.ajax({
-			url: button.data("url"),
-			type: "POST",
-			success: function(response) {
-				setTimeout(() => {
-					button.prop("disabled", false);
-					button.toggleClass("d-none");
-					button.siblings(".fa-spinner").toggleClass("d-none");
-					location.reload();
-				}, 3000);
-			},
-			error: function(response) {
-				Vue.$toast.error("Something went wrong!\nPlease check if the effortsheet formatting is correct.");
-				button.prop("disabled", true);
-				button.toggleClass("d-none");
-				button.siblings(".fa-spinner").toggleClass("d-none");
-			},
+    function handleAjaxRequest(url, data, button, loader) {
+        button.prop("disabled", true);
+        if (loader) loader.removeClass('d-none');
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: data,
+            success: function (response) {
+                setTimeout(() => {
+                    button.prop("disabled", false);
+                    toggleButtonAndSpinner(button);
+                    location.reload();
+                }, 3000);
+            },
+            error: function (response) {
+                Vue.$toast.error("Something went wrong!\nPlease check if the effortsheet formatting is correct.");
+                toggleButtonAndSpinner(button);
+            },
+            complete: function () {
+                if (loader) loader.addClass('d-none');
+            }
+        });
+    }
+	if ($(".fa-refresh").is('[data-url]')) {
+		$(".fa-refresh").on("click", function () {
+			let button = $(this);
+			toggleButtonAndSpinner(button);
+			handleAjaxRequest(button.data("url"), {}, button, null);
 		});
-	});
+	} else {
+		$("#select-month-form").on("submit", function (event) {
+			event.preventDefault();
+			let form = $(this);
+			let button = $("#submit-effort-month");
+			let effortSyncLoader = $('.efforts-sync-loader');
+			handleAjaxRequest(form.attr('action'), form.serialize(), button, effortSyncLoader);
+		});
+	}
 });
 
 if ($("#effortTrackingGraph").length) {
