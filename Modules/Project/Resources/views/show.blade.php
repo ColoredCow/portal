@@ -52,7 +52,7 @@
                             <h4 class="mr-5">
                                 <i class="fa fa-spinner fa-spin ml-2 d-none"></i>
                                 <i class="ml-2 font-weight-bold fa fa-refresh c-pointer" aria-hidden="true"
-                                    @if(auth()->user()->can('finance_reports.view'))
+                                    @if(auth()->user()->can('finance_invoices.create'))
                                         data-toggle="modal" data-target="#syncEffortsModal"
                                     @else
                                         data-url="{{ route('effort-tracking.refresh', $project) }}"

@@ -40,18 +40,20 @@ $(document).ready(function () {
             type: "POST",
             data: data,
             success: function (response) {
+				Vue.$toast.success(response.message);
                 setTimeout(() => {
                     button.prop("disabled", false);
-                    toggleButtonAndSpinner(button);
+                    if (! loader) toggleButtonAndSpinner(button);
                     location.reload();
                 }, 3000);
             },
             error: function (response) {
                 Vue.$toast.error("Something went wrong!\nPlease check if the effortsheet formatting is correct.");
-                toggleButtonAndSpinner(button);
+                if (! loader) toggleButtonAndSpinner(button);
             },
             complete: function () {
                 if (loader) loader.addClass('d-none');
+				button.prop("disabled", false);
             }
         });
     }
@@ -59,14 +61,26 @@ $(document).ready(function () {
 		$(".fa-refresh").on("click", function () {
 			let button = $(this);
 			toggleButtonAndSpinner(button);
-			handleAjaxRequest(button.data("url"), {}, button, null);
+			handleAjaxRequest(button.data("url"), {'isBackDateSync': 'off'}, button, null);
 		});
 	} else {
-		$("#select-month-form").on("submit", function (event) {
+		$("#backDateEffortsSyncForm").on("submit", function (event) {
 			event.preventDefault();
 			let form = $(this);
-			let button = $("#submit-effort-month");
+			let button = $("#confirmBackDateSync");
 			let effortSyncLoader = $('.efforts-sync-loader');
+			let isBackDateSync = $('#isBackDateSync');
+
+			$('#hiddenIsBackDateSync').remove();
+
+			if (!isBackDateSync.is(':checked')) {
+				$('<input>').attr({
+					type: 'hidden',
+					id: 'hiddenIsBackDateSync',
+					name: 'isBackDateSync',
+					value: 'off'
+				}).appendTo(form);
+			}
 			handleAjaxRequest(form.attr('action'), form.serialize(), button, effortSyncLoader);
 		});
 	}

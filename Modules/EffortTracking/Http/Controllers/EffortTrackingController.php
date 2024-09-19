@@ -35,8 +35,10 @@ class EffortTrackingController extends Controller
      */
     public function getEffortForProject(Request $request, Project $project)
     {
-        // TO DO: ADD VALIDATION
-        $syncParams = $request->all();
+        $syncParams = $request->validate([
+            'isBackDateSync' => 'required'
+        ]);
+
         if ($this->service->getEffortForProject($project, $syncParams)) {
             return response()->json(['message' => 'Effort updated successfully'], 200);
         }
