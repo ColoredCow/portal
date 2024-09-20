@@ -45,7 +45,7 @@ $(document).ready(function () {
                     button.prop("disabled", false);
                     if (! loader) toggleButtonAndSpinner(button);
                     location.reload();
-                }, 3000);
+                }, 1000);
             },
             error: function (response) {
                 Vue.$toast.error("Something went wrong!\nPlease check if the effortsheet formatting is correct.");
