@@ -4,7 +4,7 @@
             @{{ book.title }}
         </h1>
         <div class="row">
-            <div class="col-6">
+            <div class="col-12">
                 <div class="ml-1 mb-1">
                     <div class="row">
                         <div class="col-3">
@@ -42,13 +42,23 @@
                         <div class="col-3 pr-0 font-weight-bold">
                             <label for="number_of_copies" class="mb-0">Copies available:</label>
                         </div>
-                        <div class="col-6">
-                            <input type="number" v-model="number_of_copies" class="form-control" id="number_of_copies" placeholder="Number of copies">
-                        </div>
+                        @if($officeLocations)
+                            @foreach ($officeLocations as $officeLocation)
+                                <div class="pl-3">
+                                    {{ $officeLocation['centre_name'] }}
+                                    <!-- Hidden input is not needed for Vue binding -->
+                                    <input type="number"
+                                        v-model="copies[{{ $officeLocation['center_id'] }}]"
+                                        class="form-control"
+                                        :id="'number-of-copies-' + {{ $officeLocation['center_id'] }}"
+                                        placeholder="Number of copies" />
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-4">
                 <div class="row">
                     <div class="col-6">
                         <img v-bind:src="book.thumbnail" />

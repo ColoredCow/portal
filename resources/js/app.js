@@ -748,6 +748,8 @@ if (document.getElementById("show_and_save_book")) {
 			addMethod: "from_isbn",
 			showInfo: false,
 			book: {},
+			copies: {},
+			// officeLocations: @json($officeLocations),
 			number_of_copies: 1,
 			routes: {
 				index: document.getElementById("show_book").dataset.indexRoute || "",
@@ -806,6 +808,7 @@ if (document.getElementById("show_and_save_book")) {
 			},
 
 			saveBookToRecords: function() {
+				console.log(this.copies, "officeLocations");
 				if (!this.book) {
 					alert("Error in saving records");
 				}

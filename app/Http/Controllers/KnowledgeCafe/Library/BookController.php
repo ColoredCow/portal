@@ -7,6 +7,8 @@ use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
 use App\Models\KnowledgeCafe\Library\Book;
 use App\Models\KnowledgeCafe\Library\BookAMonth;
 use App\Models\KnowledgeCafe\Library\BookCategory;
+use App\Models\KnowledgeCafe\Library\BookLocation;
+use Modules\Operations\Entities\OfficeLocation;
 use App\Services\BookServices;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -59,8 +61,18 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('knowledgecafe.library.books.create');
+        $officeLocations = OfficeLocation::all();
+        $officeLocationsData = $officeLocations->map(function ($officeLocation) {
+            return [
+                'center_id' => $officeLocation->id,
+                'centre_name' => $officeLocation->centre_name,
+            ];
+        });
+        return view('knowledgecafe.library.books.create', [
+            'officeLocations' => $officeLocationsData,
+        ]);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -72,7 +84,6 @@ class BookController extends Controller
         $validatedData = $request->validated();
         $ISBN = $validatedData['isbn'] ?? null;
         Book::firstOrCreate(['isbn' => $ISBN], $validatedData);
-
         return response()->json(['error' => false]);
     }
 
@@ -341,5 +352,21 @@ class BookController extends Controller
             'wishlistedBooksCount' => $wishlistedBooksCount,
             'booksBorrowedCount' => $booksBorrowedCount,
         ]);
+    }
+
+    public function storeBookLocationWise()
+    {
+        $locationCopiesData = [
+            1 => "7",
+            2 => "8"
+        ];
+
+        foreach ($locationCopiesData as $locationId => $copies) {
+            BookLocation::create([
+                'book_id'      => 1,
+                'office_location_id'  => $locationId,
+                'number_of_copies' => $copies
+            ]);
+        }
     }
 }
