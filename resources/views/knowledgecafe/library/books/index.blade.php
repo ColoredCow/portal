@@ -5,7 +5,7 @@
         <span class="sr-only">Loading...</span>
     </div>
 </div>
-<div id="books_listing" class="container">
+<div id="books_listing" class="mx-6">
     @include('status', ['errors' => $errors->all()])
     <br>
 
@@ -100,6 +100,15 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="d-flex pt-1 pb-2">
+                    @foreach ($bookLocations as $bookLocation)
+                        <div v-if="book.id==={{ $bookLocation->book_id }}">
+                            @if($bookLocation->number_of_copies!==0 )
+                                <span class="pl-1">{{($bookLocation->location->centre_name)}}: <b>{{$bookLocation->number_of_copies}}</b></span>
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
                 <div v-if="book.readers && book.readers.length">
                     <p class="mb-0 mt-1">Read by</p>

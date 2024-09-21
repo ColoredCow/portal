@@ -17,6 +17,6 @@ class OfficeLocation extends Model
 
     public function locationOfBook()
     {
-        return $this->hasMany(BookLocation::class, 'office_loaction_id');
+        return $this->hasMany(BookLocation::class, 'office_location_id');
     }
 }

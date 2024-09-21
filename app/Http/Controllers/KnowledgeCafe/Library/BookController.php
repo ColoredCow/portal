@@ -31,7 +31,7 @@ class BookController extends Controller
         $searchCategory = $request->category_name ?? false;
         $searchString = request()->has('search') ? request()->input('search') : false;
         $categories = BookCategory::orderBy('name')->get();
-
+        $bookLocations = BookLocation::withTrashed()->with('location')->get();
         switch (request()) {
             case request()->has('wishlist'):
                 $books = auth()->user()->booksInWishlist;
@@ -51,7 +51,7 @@ class BookController extends Controller
         $wishlistedBooksCount = auth()->user()->booksInWishlist->count();
         $booksBorrowedCount = auth()->user()->booksBorrower->count();
 
-        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories', 'wishlistedBooksCount', 'booksBorrowedCount'));
+        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories', 'wishlistedBooksCount', 'booksBorrowedCount', 'bookLocations'));
     }
 
     /**
