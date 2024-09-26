@@ -1,28 +1,62 @@
-$(function () {
-	$(".fa-refresh").on("click", function () {
-		let button = $(this).prop("disabled", true);
+$(document).ready(function () {
+	function toggleButtonAndSpinner(button) {
 		button.toggleClass("d-none");
 		button.siblings(".fa-spinner").toggleClass("d-none");
+	}
+
+	function handleAjaxRequest(url, data, button, loader) {
+		button.prop("disabled", true);
+		if (loader) loader.removeClass('d-none');
 
 		$.ajax({
-			url: button.data("url"),
+			url: url,
 			type: "POST",
-			success: function(response) {
+			data: data,
+			success: function (response) {
+				Vue.$toast.success(response.message);
 				setTimeout(() => {
 					button.prop("disabled", false);
-					button.toggleClass("d-none");
-					button.siblings(".fa-spinner").toggleClass("d-none");
+					if (!loader) toggleButtonAndSpinner(button);
 					location.reload();
-				}, 3000);
+				}, 1000);
 			},
-			error: function(response) {
+			error: function (response) {
 				Vue.$toast.error("Something went wrong!\nPlease check if the effortsheet formatting is correct.");
-				button.prop("disabled", true);
-				button.toggleClass("d-none");
-				button.siblings(".fa-spinner").toggleClass("d-none");
+				if (!loader) toggleButtonAndSpinner(button);
 			},
+			complete: function () {
+				if (loader) loader.addClass('d-none');
+				button.prop("disabled", false);
+			}
 		});
-	});
+	}
+	if ($(".fa-refresh").is('[data-url]')) {
+		$(".fa-refresh").on("click", function () {
+			let button = $(this);
+			toggleButtonAndSpinner(button);
+			handleAjaxRequest(button.data("url"), { 'isBackDateSync': 'off' }, button, null);
+		});
+	} else {
+		$("#backDateEffortsSyncForm").on("submit", function (event) {
+			event.preventDefault();
+			let form = $(this);
+			let button = $("#confirmBackDateSync");
+			let effortSyncLoader = $('.efforts-sync-loader');
+			let isBackDateSync = $('#isBackDateSync');
+
+			$('#hiddenIsBackDateSync').remove();
+
+			if (!isBackDateSync.is(':checked')) {
+				$('<input>').attr({
+					type: 'hidden',
+					id: 'hiddenIsBackDateSync',
+					name: 'isBackDateSync',
+					value: 'off'
+				}).appendTo(form);
+			}
+			handleAjaxRequest(form.attr('action'), form.serialize(), button, effortSyncLoader);
+		});
+	}
 });
 
 $(document).on("click", "#add_task", (e) => {
@@ -78,11 +112,11 @@ $(document).on("submit", ".task-form", (e) => {
 		url: form.attr("action"),
 		type: form.attr("method"),
 		data: form.serialize(),
-		beforeSend: function() {
+		beforeSend: function () {
 			button.prop("disabled", true);
 			loaderAndText.toggleClass("d-none");
 		},
-		success: function(response) {
+		success: function (response) {
 			loaderAndText.addClass("d-none");
 			form.find(".icon").toggleClass("d-none");
 			setTimeout(() => {
@@ -99,7 +133,7 @@ $(document).on("submit", ".task-form", (e) => {
 				}
 			}
 		},
-		error: function(response) {
+		error: function (response) {
 			loaderAndText.toggleClass("d-none");
 			button.prop("disabled", false);
 		},
@@ -115,17 +149,17 @@ $(document).on("click", ".delete-form", (e) => {
 		url: form.attr("action"),
 		type: form.attr("method"),
 		data: form.serialize(),
-		beforeSend: function() {
+		beforeSend: function () {
 			container.prop("disabled", true);
 			$(loaderAndText).toggleClass("d-none");
 		},
-		success: function(response) {
+		success: function (response) {
 			setTimeout(() => {
 				$(loaderAndText).toggleClass("d-none");
 				card.remove();
 			}, 2000);
 		},
-		error: function(response) {
+		error: function (response) {
 			container.prop("disabled", false);
 			$(loaderAndText).toggleClass("d-none");
 		},
@@ -157,8 +191,8 @@ function effortTrackingChart() {
 	for (let i = users.length - 1; i >= 0; i--) {
 		const userId = users[i].id;
 		const userData = effortDetails[userId];
-		let data=[];
-		if(userData){
+		let data = [];
+		if (userData) {
 			const userDataKeys = Object.keys(userData);
 			const userDates = userDataKeys.map((key) => ({
 				effort: userData[key].actual_effort,
@@ -173,7 +207,7 @@ function effortTrackingChart() {
 				return 0;
 			});
 		}
-		const userColor = `rgb(${255-i*35},0,0)`;
+		const userColor = `rgb(${255 - i * 35},0,0)`;
 		datasetValue[i] = {
 			type: "bar",
 			label: users[i].name,

@@ -1,5 +1,10 @@
 @extends('efforttracking::layouts.master')
 @section('content')
+<div class="efforts-sync-loader text-center bg-theme-semi-transparent position-fixed w-full h-full d-none" style="top: 0%; right: 0%; z-index: 9999" id="preloader">
+	<div class="spinner-border position-relative" style="top: 40%; border: 0.25em solid #ffff; border-right-color: transparent;" id="spinner">
+		<span class="sr-only">Loading...</span>
+	</div>
+</div>
 <div class="project-effort-tracking-container container py-10">
     <a href="{{ route('project.index') }}" class="text-theme-body text-decoration-none mb-2 mb-xl-4 align-items-center">
         <span class="mr-1 d-inline-flex w-8 h-8 w-xl-12 h-xl-12">
@@ -79,7 +84,12 @@
                     <h4>{{ $project->name }} - Members
                         <i class="fa fa-spinner fa-spin ml-2 d-none"></i>
                         <i class="ml-2 font-weight-bold fa fa-refresh c-pointer" aria-hidden="true"
-                            data-url="{{ route('effort-tracking.refresh', $project) }}"></i>
+                            @if(auth()->user()->can('finance_invoices.create'))
+                                data-toggle="modal" data-target="#syncEffortsModal"
+                            @else
+                                data-url="{{ route('effort-tracking.refresh', $project) }}"
+                            @endif>
+                        </i>
                         <div class="fz-14 float-right">&nbsp;&nbsp;&nbsp;
                             <strong>Last refreshed
                                 at:</strong>{{ Carbon\Carbon::parse($project->last_updated_at)->setTimezone('Asia/Kolkata')->format(' Y-M-d , D h:i:s A') }}
@@ -165,5 +175,7 @@
     </div>
 @endif
 </div>
-
+<div>
+    @include('project::modals.efforts-sync-modal')
+</div>
 @endsection
