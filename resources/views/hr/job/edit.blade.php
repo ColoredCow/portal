@@ -126,7 +126,21 @@
                 </div>
             </div>
         </div>
-    </form>
+        <!-- AI Prompts Section -->
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="mb-0">OpenAI Prompts</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="col-md-6 form-group">
+                        <label for="ai_prompt_2" class="fz-14 leading-none text-secondary mb-1">Prompt</label>
+                        <textarea id="ai_prompt" class="form-control richeditor" name="ai_prompt" rows="4" placeholder="Enter OpenAI Prompt...">{{ old('ai_prompt', $job->ai_prompt) }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     <div class="d-flex">
         <button type="submit" class="btn btn-primary  ml-2" form="update-form">Update</button>
         <a href="{{ $job->link }}" target="_blank" class="btn btn-info  ml-2" role="button">Preview job</a>

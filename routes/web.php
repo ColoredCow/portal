@@ -101,6 +101,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'SettingController@index')->name('settings.index');
         Route::get('/config-variables', 'ConfigurationController@index')->name('settings.config-variables');
         Route::post('/config-variables', 'ConfigurationController@updateAll')->name('settings.update-config-variables');
+        Route::get('/openai-instruction', 'OpenAiController@index')->name('settings.openai-instruction');
 
         Route::prefix('permissions')->group(function () {
             Route::get('/', function () {
