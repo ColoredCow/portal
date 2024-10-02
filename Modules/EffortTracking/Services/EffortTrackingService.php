@@ -288,8 +288,8 @@ class EffortTrackingService
                     $billingStartDate = Carbon::create($sheetUser[$sheetIndexForStartDate]);
                     $billingEndDate = Carbon::create($sheetUser[$sheetIndexForEndDate]);
                     if (array_key_exists('isBackDateSync', $syncParams) && $syncParams['isBackDateSync'] === 'on') {
-                        $monthlyBillingEndDate = $project->client->month_end_date;
-                        $currentDate = $monthlyBillingEndDate->subMonth();
+                        $monthlyBillingEndDate = $project->client->getMonthEndDateAttribute(1);
+                        $currentDate = $monthlyBillingEndDate;
                     } else {
                         $currentDate = now(config('constants.timezone.indian'))->today();
                     }
