@@ -83,8 +83,13 @@ class BookController extends Controller
     {
         $validatedData = $request->validated();
         $ISBN = $validatedData['isbn'] ?? null;
-        Book::firstOrCreate(['isbn' => $ISBN], $validatedData);
-        return response()->json(['error' => false]);
+        $copiesLocation = $validatedData['copies'];
+        $book = Book::firstOrCreate(['isbn' => $ISBN], $validatedData);
+        $this->storeBookLocationWise($book->id, $copiesLocation);
+        return response()->json([
+            'error' => false,
+            'book_id' => $book->id
+        ]);
     }
 
     /**
@@ -354,16 +359,12 @@ class BookController extends Controller
         ]);
     }
 
-    public function storeBookLocationWise()
+    public function storeBookLocationWise($bookId, $copiesLocation)
     {
-        $locationCopiesData = [
-            1 => "7",
-            2 => "8"
-        ];
-
+        $locationCopiesData = $copiesLocation;
         foreach ($locationCopiesData as $locationId => $copies) {
             BookLocation::create([
-                'book_id'      => 1,
+                'book_id'      => $bookId,
                 'office_location_id'  => $locationId,
                 'number_of_copies' => $copies
             ]);

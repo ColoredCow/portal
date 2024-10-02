@@ -749,8 +749,6 @@ if (document.getElementById("show_and_save_book")) {
 			showInfo: false,
 			book: {},
 			copies: {},
-			// officeLocations: @json($officeLocations),
-			number_of_copies: 1,
 			routes: {
 				index: document.getElementById("show_book").dataset.indexRoute || "",
 				fetch: document.getElementById("book_form").dataset.actionRoute || "",
@@ -808,7 +806,6 @@ if (document.getElementById("show_and_save_book")) {
 			},
 
 			saveBookToRecords: function() {
-				console.log(this.copies, "officeLocations");
 				if (!this.book) {
 					alert("Error in saving records");
 				}
@@ -817,6 +814,7 @@ if (document.getElementById("show_and_save_book")) {
 				this.book["on_kindle"] = document.getElementById("on_kindle").checked
 					? 1
 					: 0;
+				this.book.copies = this.copies;
 				axios.post(this.routes.store, this.book).then((response) => {
 					this.buttons.disableSaveButton = false;
 
