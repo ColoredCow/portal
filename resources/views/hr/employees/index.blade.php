@@ -37,6 +37,7 @@
                     <th>Name</th>
                     @if($routeName === "employees")
                     <th>Active Projects Count</th>
+                    <th>Active Clients Count</th>
                     <th>
                         Overall FTE
                         <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="Total FTE for the current month">
@@ -86,6 +87,13 @@
                                 0
                             @else
                                 {{ $employee->active_project_count }}
+                            @endif
+                        </td>
+                        <td>
+                            @if ($employee->user == null)
+                                0
+                            @else
+                                {{ $employee->active_clients_count }}
                             @endif
                         </td>
                         @if(today()==today()->startOfMonth())
