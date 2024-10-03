@@ -50,8 +50,9 @@ class BookController extends Controller
         $books->load('borrowers');
         $wishlistedBooksCount = auth()->user()->booksInWishlist->count();
         $booksBorrowedCount = auth()->user()->booksBorrower->count();
+        $officeLocations = $this->officeLocationData();
 
-        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories', 'wishlistedBooksCount', 'booksBorrowedCount', 'bookLocations'));
+        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories', 'wishlistedBooksCount', 'booksBorrowedCount', 'bookLocations', 'officeLocations'));
     }
 
     /**
@@ -61,15 +62,8 @@ class BookController extends Controller
      */
     public function create()
     {
-        $officeLocations = OfficeLocation::all();
-        $officeLocationsData = $officeLocations->map(function ($officeLocation) {
-            return [
-                'center_id' => $officeLocation->id,
-                'centre_name' => $officeLocation->centre_name,
-            ];
-        });
         return view('knowledgecafe.library.books.create', [
-            'officeLocations' => $officeLocationsData,
+            'officeLocations' => $this->officeLocationData(),
         ]);
     }
 
@@ -369,5 +363,17 @@ class BookController extends Controller
                 'number_of_copies' => $copies
             ]);
         }
+    }
+
+    public function officeLocationData()
+    {
+        $officeLocations = OfficeLocation::all();
+        $officeLocationsData = $officeLocations->map(function ($officeLocation) {
+            return [
+                'center_id' => $officeLocation->id,
+                'centre_name' => $officeLocation->centre_name,
+            ];
+        });
+        return $officeLocationsData;
     }
 }
