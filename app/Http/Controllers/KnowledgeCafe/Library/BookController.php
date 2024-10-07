@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\KnowledgeCafe\Library;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
 use App\Models\KnowledgeCafe\Library\Book;
 use App\Models\KnowledgeCafe\Library\BookAMonth;
@@ -119,6 +120,13 @@ class BookController extends Controller
         if (isset($validatedData['number_of_copies'])) {
             $book->number_of_copies = $validatedData['number_of_copies'];
             $book->save();
+
+            $copiesLocation = [
+                1 => '8',
+                2 => '3',
+                3 => '10',
+            ];
+            $this->updatedBookLocationWise($book->id, $copiesLocation);
 
             return response()->json(['isUpdated' => $book]);
         }
@@ -375,5 +383,14 @@ class BookController extends Controller
             ];
         });
         return $officeLocationsData;
+    }
+
+    public function updatedBookLocationWise($bookId, $copiesLocation) {
+        foreach ($copiesLocation as $locationId => $copies) {
+            DB::table('library_book_location')
+                ->where('book_id', $bookId) // Correct column for book ID
+                ->where('office_location_id', $locationId) // Correct column for location ID
+                ->update(['number_of_copies' => $copies]); // Update with the correct data array
+        }
     }
 }
