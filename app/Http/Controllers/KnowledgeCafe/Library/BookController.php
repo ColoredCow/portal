@@ -117,17 +117,10 @@ class BookController extends Controller
     public function update(BookRequest $request, Book $book)
     {
         $validatedData = $request->validated();
-        if (isset($validatedData['number_of_copies'])) {
-            $book->number_of_copies = $validatedData['number_of_copies'];
+        if (isset($validatedData['copies'])) {
+            $copiesLocation = $request['copies'];
             $book->save();
-
-            $copiesLocation = [
-                1 => '8',
-                2 => '3',
-                3 => '10',
-            ];
             $this->updatedBookLocationWise($book->id, $copiesLocation);
-
             return response()->json(['isUpdated' => $book]);
         }
         if (isset($validatedData['categories'])) {
@@ -388,9 +381,9 @@ class BookController extends Controller
     public function updatedBookLocationWise($bookId, $copiesLocation) {
         foreach ($copiesLocation as $locationId => $copies) {
             DB::table('library_book_location')
-                ->where('book_id', $bookId) // Correct column for book ID
-                ->where('office_location_id', $locationId) // Correct column for location ID
-                ->update(['number_of_copies' => $copies]); // Update with the correct data array
+            ->where('book_id', $bookId)
+            ->where('office_location_id', $locationId)
+            ->update(['number_of_copies' => $copies]);
         }
     }
 }

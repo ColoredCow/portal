@@ -93,18 +93,28 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">Number of copies of this book: <br> <input type="text" name="copiesofbooks" :id="'copiesOfBooks'+index" :value="book.number_of_copies"> </div>
-                            {{-- <div class="modal-body">
+                            {{-- <div class="modal-body">Number of copies of this book: <br> <input type="text" name="copiesofbooks" :id="'copiesOfBooks'+index" :value="book.number_of_copies"> </div> --}}
+                            <div class="modal-body">
                                 @if($officeLocations)
                                     @foreach ($bookLocations as $bookLocation)
                                         <div v-if="book.id==={{ $bookLocation->book_id }}">
                                             @if($bookLocation->number_of_copies!==0 )
-                                                <span class="pl-1">{{($bookLocation->location->centre_name)}}: <b><input type="number" name="copiesofbooks" :id="'number-of-copies-'+{{$bookLocation->location->id}}" :value="{{$bookLocation->number_of_copies}}"></b></span>
+                                            <span class="pl-1">
+                                                {{ $bookLocation->location->centre_name }}:
+                                                <b>
+                                                    <input
+                                                        type="number"
+                                                        name="copiesofbooks[{{ $bookLocation->location->id }}]"
+                                                        :id="'number-of-copies-'+{{$bookLocation->location->id}}"
+                                                        v-model="copies[{{ $bookLocation->location->id }}]"
+                                                    >
+                                                </b>
+                                            </span>
                                             @endif
                                         </div>
                                     @endforeach
                                 @endif
-                            </div> --}}
+                            </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                 <button type="button" class="btn btn-primary" @click="updateCopiesCount(index)" data-dismiss="modal">OK</button>
