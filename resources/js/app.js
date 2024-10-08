@@ -837,6 +837,9 @@ if (document.getElementById("books_listing")) {
 			books: document.getElementById("books_table").dataset.books
 				? JSON.parse(document.getElementById("books_table").dataset.books)
 				: {},
+			bookLocations: document.getElementById("books_table").dataset.locations
+				? JSON.parse(document.getElementById("books_table").dataset.locations)
+				: [],
 			bookCategories: document.getElementById("books_table").dataset.categories
 				? JSON.parse(document.getElementById("books_table").dataset.categories)
 				: [],
@@ -858,7 +861,7 @@ if (document.getElementById("books_listing")) {
 			sortKeys: document.getElementById("category_input")
 				? document.getElementById("category_input").dataset.value
 				: "",
-			copies:{}
+			copies:{},
 		},
 		methods: {
 			updateCategoryMode: function(index) {
@@ -941,8 +944,17 @@ if (document.getElementById("books_listing")) {
 				return str.length > length ? str.substring(0, length) + "..." : str;
 			},
 
+			getTotalCopies: function(bookId) {
+				let totalCopies = 0;
+				this.bookLocations.forEach((location) => {
+					if (location.book_id === bookId) {
+						totalCopies += location.number_of_copies;
+					}
+				});
+				return totalCopies;
+			},
+
 			updateCopiesCount: function(index) {
-				console.log(this.copies, index, "hello");
 				axios.put(this.updateRoute + "/" + this.books[index].id, {
 					copies: this.copies,
 				});

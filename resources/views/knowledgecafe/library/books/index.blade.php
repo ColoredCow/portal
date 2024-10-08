@@ -55,7 +55,7 @@
         </div>
     </div>
     @endif
-    <div class="d-flex justify-content-start flex-wrap" id="books_table" data-books="{{ json_encode($books) }}" data-categories="{{ json_encode($categories) }}" data-index-route="{{ route('books.index') }}" data-category-index-route="{{ route('books.category.index') }}" data-logged-in-user="{{ json_encode(auth()->user()) }}">
+    <div class="d-flex justify-content-start flex-wrap" id="books_table" data-books="{{ json_encode($books) }}" data-locations ="{{ json_encode($bookLocations) }}" data-categories="{{ json_encode($categories) }}" data-index-route="{{ route('books.index') }}" data-category-index-route="{{ route('books.category.index') }}" data-logged-in-user="{{ json_encode(auth()->user()) }}">
         <div class="d-flex flex-wrap w-full">
             <div v-for="(book, index) in books" class="col-lg-4 col-md-5 col-8 card book_card  mr-1 mb-3 p-2 mr-lg-4">
                 <div class="d-flex">
@@ -68,7 +68,8 @@
 
                         <p class="text-info" v-if="book.on_kindle == 1" :title="book.author">On Kindle</p>
 
-                        <h3><span class="badge badge-primary position-absolute copies-count" v-if="book.number_of_copies > 1" :title="book.number_of_copies + ' copies'">@{{ book.number_of_copies }}</span></h3>
+                        <h3><span class="badge badge-primary position-absolute copies-count">@{{ getTotalCopies(book.id) }}</span></h3>
+
                     </div>
                     @can('library_books.delete')
                     <div class="p-0 position-absolute action_buttons">
