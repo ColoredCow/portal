@@ -971,6 +971,10 @@ if (document.getElementById("books_listing")) {
 			allCategoryInputs.forEach(
 				(checkbox) => (this.categoryInputs[checkbox.value] = checkbox)
 			);
+			let locationsData = document.getElementById("books_table").dataset.locationData;
+			if (locationsData) {
+                this.copies = JSON.parse(locationsData);
+            }
 		},
 	});
 }
