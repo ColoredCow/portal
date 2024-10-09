@@ -971,7 +971,7 @@ if (document.getElementById("books_listing")) {
 			allCategoryInputs.forEach(
 				(checkbox) => (this.categoryInputs[checkbox.value] = checkbox)
 			);
-			let locationsData = document.getElementById("books_table").dataset.locationData;
+			let locationsData = document.getElementById("books-data").dataset.locationData;
 			if (locationsData) {
                 this.copies = JSON.parse(locationsData);
             }

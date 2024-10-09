@@ -55,7 +55,11 @@
         </div>
     </div>
     @endif
-    <div class="d-flex justify-content-start flex-wrap" id="books_table" data-books="{{ json_encode($books) }}" data-locations ="{{ json_encode($bookLocations) }}" data-categories="{{ json_encode($categories) }}" data-index-route="{{ route('books.index') }}" data-category-index-route="{{ route('books.category.index') }}" data-logged-in-user="{{ json_encode(auth()->user()) }}" data-location-data='@json($bookLocations->where("book_id", 2)->pluck("number_of_copies", "location.id"))'>
+    @foreach ( $books as $book )
+        <div id="books-data" data-location-data='@json($bookLocations->where("book_id", $book->id)->pluck("number_of_copies", "location.id"))' >
+        </div>
+    @endforeach
+    <div class="d-flex justify-content-start flex-wrap" id="books_table" data-books="{{ json_encode($books) }}" data-locations ="{{ json_encode($bookLocations) }}" data-categories="{{ json_encode($categories) }}" data-index-route="{{ route('books.index') }}" data-category-index-route="{{ route('books.category.index') }}" data-logged-in-user="{{ json_encode(auth()->user()) }}">
         <div class="d-flex flex-wrap w-full">
             <div v-for="(book, index) in books"
             class="col-lg-4 col-md-5 col-8 card book_card mr-1 mb-3 p-2 mr-lg-4">
