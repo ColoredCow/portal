@@ -53,8 +53,16 @@ class BookController extends Controller
         $booksBorrowedCount = auth()->user()->booksBorrower->count();
         $officeLocations = $this->officeLocationData();
 
-        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories', 'wishlistedBooksCount', 'booksBorrowedCount', 'bookLocations', 'officeLocations'));
-    }
+        $books = $books->map(function ($book) use ($bookLocations) {
+            $locations = $bookLocations->where('book_id', $book->id);
+            $copies = [];
+            foreach ($locations as $location) {
+                $copies[$location->office_location_id] = $location->number_of_copies;
+            }
+            $book->copies = $copies;
+            return $book;
+        });
+        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories', 'wishlistedBooksCount', 'booksBorrowedCount', 'bookLocations', 'officeLocations'));    }
 
     /**
      * Show the form for creating a new resource.

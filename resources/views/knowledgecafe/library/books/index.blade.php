@@ -56,7 +56,7 @@
     </div>
     @endif
     @foreach ( $books as $book )
-        <div id="books-data" data-location-data='@json($bookLocations->where("book_id", $book->id)->pluck("number_of_copies", "location.id"))' >
+        <div id="books-data-{{ $book->id }}"  data-location-data='@json($bookLocations->where("book_id", $book->id)->pluck("number_of_copies", "location.id"))' >
         </div>
     @endforeach
     <div class="d-flex justify-content-start flex-wrap" id="books_table" data-books="{{ json_encode($books) }}" data-locations ="{{ json_encode($bookLocations) }}" data-categories="{{ json_encode($categories) }}" data-index-route="{{ route('books.index') }}" data-category-index-route="{{ route('books.category.index') }}" data-logged-in-user="{{ json_encode(auth()->user()) }}">
@@ -101,7 +101,7 @@
                             </div>
                             {{-- <div class="modal-body">Number of copies of this book: <br> <input type="text" name="copiesofbooks" :id="'copiesOfBooks'+index" :value="book.number_of_copies"> </div> --}}
                             <div class="modal-body" >
-                                @if($officeLocations)
+                                {{-- @if($officeLocations) --}}
                                     @foreach ($bookLocations as $bookLocation)
                                         <div v-if="book.id==={{ $bookLocation->book_id }}">
                                             @if($bookLocation->number_of_copies!==0 )
@@ -119,7 +119,7 @@
                                             @endif
                                         </div>
                                     @endforeach
-                                @endif
+                                {{-- @endif --}}
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -169,16 +169,3 @@
     @include('knowledgecafe.library.books.update-category-modal')
 </div>
 @endsection
-
-<script>
-    export default {
-        data() {
-            return {
-                copies: @json($bookLocations->pluck('number_of_copies', 'location.id'))
-            }
-        },
-        mounted() {
-            console.log(this.copies);
-        }
-    }
-</script>

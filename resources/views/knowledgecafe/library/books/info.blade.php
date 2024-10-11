@@ -46,12 +46,12 @@
                             @foreach ($officeLocations as $officeLocation)
                                 <div class="pl-3">
                                     {{ $officeLocation['centre_name'] }}
-                                    <!-- Hidden input is not needed for Vue binding -->
                                     <input type="number"
                                         v-model="copies[{{ $officeLocation['center_id'] }}]"
                                         class="form-control"
                                         :id="'number-of-copies-' + {{ $officeLocation['center_id'] }}"
-                                        placeholder="Number of copies" />
+                                        placeholder="Number of copies"
+                                    />
                                 </div>
                             @endforeach
                         @endif

@@ -814,7 +814,7 @@ if (document.getElementById("show_and_save_book")) {
 				this.book["on_kindle"] = document.getElementById("on_kindle").checked
 					? 1
 					: 0;
-				this.book.copies = this.copies;
+				this.$set(this.book, 'copies', this.copies);
 				axios.post(this.routes.store, this.book).then((response) => {
 					this.buttons.disableSaveButton = false;
 
@@ -971,10 +971,17 @@ if (document.getElementById("books_listing")) {
 			allCategoryInputs.forEach(
 				(checkbox) => (this.categoryInputs[checkbox.value] = checkbox)
 			);
-			let locationsData = document.getElementById("books-data").dataset.locationData;
-			if (locationsData) {
-                this.copies = JSON.parse(locationsData);
-            }
+			let booksDataElements = document.querySelectorAll("[id^='books-data-']");
+				booksDataElements.forEach((element) => {
+					let locationsData = element.dataset.locationData;
+					if (locationsData) {
+						let locationCopies = JSON.parse(locationsData);
+						Object.keys(locationCopies).forEach((locationId) => {
+							this.$set(this.copies, locationId, locationCopies[locationId]);
+					});
+				}
+			});
+			console.log(this.books, "books");
 		},
 	});
 }
