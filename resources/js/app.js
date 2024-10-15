@@ -971,17 +971,15 @@ if (document.getElementById("books_listing")) {
 			allCategoryInputs.forEach(
 				(checkbox) => (this.categoryInputs[checkbox.value] = checkbox)
 			);
-			let booksDataElements = document.querySelectorAll("[id^='books-data-']");
-				booksDataElements.forEach((element) => {
-					let locationsData = element.dataset.locationData;
-					if (locationsData) {
-						let locationCopies = JSON.parse(locationsData);
-						Object.keys(locationCopies).forEach((locationId) => {
-							this.$set(this.copies, locationId, locationCopies[locationId]);
-					});
+			console.log(this.books);
+			this.books.forEach(book => {
+				this.$set(this.copies, book.id, {});
+				if (book.copies) {
+				  Object.keys(book.copies).forEach(locationId => {
+					this.$set(this.copies[book.id], locationId, book.copies[locationId]);
+				  });
 				}
 			});
-			console.log(this.books, "books");
 		},
 	});
 }
