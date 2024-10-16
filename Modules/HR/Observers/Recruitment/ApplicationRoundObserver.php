@@ -6,14 +6,13 @@ use App\Services\CalendarEventService;
 use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Events\ApplicationMovedToNewRound;
 use Modules\HR\Events\CustomMailTriggeredForApplication;
-use Modules\HR\Jobs\Recruitment\SendApplicationRoundScheduled;
 
 class ApplicationRoundObserver
 {
     /**
      * Listen to the ApplicationRound created event.
      *
-     * @param  \Modules\HR\Entities\ApplicationRound  $applicationRound
+     * @param  ApplicationRound  $applicationRound
      * @return void
      */
     public function created(ApplicationRound $applicationRound)
@@ -45,7 +44,7 @@ class ApplicationRoundObserver
     /**
      * Listen to the ApplicationRound updated event.
      *
-     * @param  \Modules\HR\Entities\ApplicationRound  $applicationRound
+     * @param  ApplicationRound  $applicationRound
      * @return void
      */
     public function updated(ApplicationRound $applicationRound)

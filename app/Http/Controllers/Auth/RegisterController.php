@@ -61,7 +61,7 @@ class RegisterController extends Controller
      *
      * @param  array  $data
      *
-     * @return \Modules\User\Entities\User
+     * @return User
      */
     protected function create(array $data)
     {

@@ -181,7 +181,7 @@ class ClientService implements ClientServiceContract
         $data['is_billable'] = $data['is_billable'] ?? false;
 
         $newClient = Client::create($data);
-        $clientAddress = new clientAddress();
+        $clientAddress = new ClientAddress();
         $clientAddress->country_id = $data['country_id'];
         $clientAddress->client_id = $newClient->id;
         $clientAddress->save();

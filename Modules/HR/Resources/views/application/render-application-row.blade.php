@@ -128,7 +128,7 @@
                 @if ($application->latestApplicationRound->scheduled_date &&
                     $application->latestApplicationRound->round->name != 'Resume Screening')
                     <p class="ml-3">
-                        {{ $application->latestApplicationRound->scheduled_date->format(config('constants.display_daydatetime_format')) }}
+                        {{ $application ?? $application->latestApplicationRound->scheduled_date->format(config('constants.display_daydatetime_format')) }}
                     </p>
                 @endif
             </span>
