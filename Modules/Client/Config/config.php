@@ -95,6 +95,9 @@ return [
         [
             'swiss-franc' => '₣',
         ],
+        [
+            'gbp' => '£',
+        ],
     ],
 
     'service-rate-terms' => [
