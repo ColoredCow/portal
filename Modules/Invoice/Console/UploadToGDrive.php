@@ -57,10 +57,6 @@ class UploadToGDrive extends Command
             ? Carbon::parse($this->argument('endDate'))
             : Carbon::now()->endOfMonth();
 
-        if (! $startDate || ! $endDate) {
-            return;
-        }
-
         $this->info('Uploading invoices from {$startDate->toDateString()} to {$endDate->toDateString()}');
 
         $invoices = Invoice::whereBetween('sent_on', [$startDate, $endDate])->get();
