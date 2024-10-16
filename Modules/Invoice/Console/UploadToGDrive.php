@@ -3,10 +3,10 @@
 namespace Modules\Invoice\Console;
 
 use Carbon\Carbon;
-use Illuminate\Console\Command;
 use Google\Client as GoogleClient;
 use Google\Service\Drive;
 use Google\Service\Drive\DriveFile;
+use Illuminate\Console\Command;
 use Modules\Invoice\Entities\Invoice;
 
 class UploadToGDrive extends Command
@@ -61,7 +61,7 @@ class UploadToGDrive extends Command
             return;
         }
 
-        $this->info("Uploading invoices from {$startDate->toDateString()} to {$endDate->toDateString()}");
+        $this->info('Uploading invoices from {$startDate->toDateString()} to {$endDate->toDateString()}');
 
         $invoices = Invoice::whereBetween('sent_on', [$startDate, $endDate])->get();
         foreach ($invoices as $invoice) {
@@ -108,7 +108,7 @@ class UploadToGDrive extends Command
             'fields' => 'id, webViewLink, webContentLink',
         ]);
 
-        $this->info("Uploaded invoice: " . $fileName . " to folder: " . $countryFolderName . "/" . $monthFolderName);
+        $this->info('Uploaded invoice: ' . $fileName . ' to folder: ' . $countryFolderName . '/' . $monthFolderName);
 
         return $uploadedFile->webViewLink;
     }
