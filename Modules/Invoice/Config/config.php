@@ -205,5 +205,5 @@ return [
         'name' => env('CA_NAME'),
         'email' => env('CA_EMAIL'),
     ],
-    'invoice-google-drive-folder-id' => env('INVOICE_GDRIVE_FOLDER_ID')
+    'invoice-google-drive-folder-id' => env('INVOICE_GDRIVE_FOLDER_ID'),
 ];

@@ -66,7 +66,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('project:zero-expected-hours-in-project')->weekly()->tuesdays()->at('11:00');
         $schedule->command('project:reminder-for-effortsheet-lock')->dailyAt('21:00');
         $schedule->command('loan:seed-loan-installment-for-month')->timezone(config('constants.timezone.indian'))->lastDayOfMonth('23:30');
-        
+
         if (env('APP_ENV') == 'production') {
             $schedule->command('invoice:upload-to-gdrive')->timezone(config('constants.timezone.indian'))->monthlyOn(1, '01:00');
         }
