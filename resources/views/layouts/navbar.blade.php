@@ -131,7 +131,7 @@
         </a>
         <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_operations">
             <a class="dropdown-item"  href="{{route('office-location.index')}}" >Office location</a>
-           
+
         </div>
     </li>
     @endcan
@@ -196,4 +196,10 @@
             </div>
         </li>
     @endcanany
+    <li class="nav-item">
+        <a class="nav-item nav-link d-flex justify-content-center align-items-center" href="{{config('constants.analytics_dashboard_url')}}" target="_blank">
+            <span>Analytics</span>
+            <span><i class="fa fa-external-link fz-14 pl-0.5"></i></span>
+        </a>
+    </li>
 </ul>
