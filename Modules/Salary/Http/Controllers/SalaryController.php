@@ -6,19 +6,21 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Mail;
 use Modules\HR\Entities\Employee;
-use Modules\Salary\Emails\SendAppraisalLetterMail;
 use Modules\Salary\Entities\EmployeeSalary;
-use Modules\Salary\Entities\SalaryConfiguration;
 use Modules\Salary\Services\SalaryCalculationService;
+use Modules\Salary\Services\SalaryService;
 
 class SalaryController extends Controller
 {
     use AuthorizesRequests;
+
+    protected $service;
+
     public function __construct()
     {
         $this->authorizeResource(EmployeeSalary::class);
+        $this->service = new SalaryService;
     }
     /**
      * Display a listing of the resource.
@@ -39,122 +41,45 @@ class SalaryController extends Controller
     {
         $this->authorize('view', EmployeeSalary::class);
 
+        $data = $this->service->getDataForEmployeeSalaryPage($employee);
+
         if ($employee->payroll_type === 'contractor') {
-            return view('salary::employee.contractor-index')->with([
-                'employee' => $employee,
-                'salary' => $employee->getLatestSalary(),
-            ]);
+            return view('salary::employee.contractor-index')->with($data);
         }
 
-        $salaryConf = new SalaryConfiguration();
-        $calculationData = [];
-        $employerEpfConf = $salaryConf->formatAll()->get('employer_epf');
-        $administrationChargesConf = $salaryConf->formatAll()->get('administration_charges');
-        $edliChargesConf = $salaryConf->formatAll()->get('edli_charges');
-        $edliChargesLimitConfig = $salaryConf->formatAll()->get('edli_charges_limit');
-        $edliChargesLimitConfig = $salaryConf->formatAll()->get('edli_charges_limit');
-        $healthInsuranceConf = $salaryConf->formatAll()->get('health_insurance');
-
-        $calculationData['basicSalaryPercentageFactor'] = $salaryConf->basicSalary();
-        $calculationData['epfPercentageRate'] = (float) $employerEpfConf->percentage_rate;
-        $calculationData['adminChargesPercentageRate'] = (float) $administrationChargesConf->percentage_rate;
-        $calculationData['edliChargesPercentageRate'] = (float) $edliChargesConf->percentage_rate;
-        $calculationData['edliChargesLimit'] = (float) $edliChargesLimitConfig->fixed_amount;
-        $calculationData['insuranceAmount'] = (float) $healthInsuranceConf->fixed_amount;
-        $grossSalariesList = [];
-
-        $currentGrossSalary = optional($employee->getCurrentSalary())->monthly_gross_salary ?? 0;
-        $grossSalariesList = EmployeeSalary::all()->filter(function ($salary) use ($currentGrossSalary) {
-            return $salary->monthly_gross_salary >= $currentGrossSalary;
-        })->pluck('monthly_gross_salary')
-        ->unique()
-        ->sort()
-        ->values()
-        ->take(7);
-        $ctcSuggestions = [];
-        foreach ($grossSalariesList as $grossSalary) {
-            $tempSalaryObject = new EmployeeSalary;
-            $tempSalaryObject->employee_id = $employee->id;
-            $tempSalaryObject->monthly_gross_salary = $grossSalary;
-            array_push($ctcSuggestions, $tempSalaryObject->ctc_aggregated);
-        }
-        $currentAggCTC = optional($employee->getLatestSalary())->ctc_aggregated ?? 0;
-
-        return view('salary::employee.index')->with([
-            'employee' => $employee,
-            'salaryConfigs' => $salaryConf::formatAll(),
-            'grossCalculationData' => json_encode($calculationData),
-            'ctcSuggestions' => $ctcSuggestions,
-            'currentAggCTC' => $currentAggCTC,
-        ]);
+        return view('salary::employee.index')->with($data);
     }
 
     public function storeOrUpdateSalary(Request $request, Employee $employee)
     {
-        $currentSalaryObject = $employee->getLatestSalary();
-        if ((! $currentSalaryObject) || $request->submitType == 'send_appraisal_letter') {
-            if ($currentSalaryObject) {
-                $salaryService = new SalaryCalculationService($request->grossSalary);
-                $data = $salaryService->getMailDataForAppraisalLetter($request, $employee);
-                $commencementDate = $data['commencementDate'];
-                $formattedCommencementDate = Carbon::parse($commencementDate)->format('F Y');
+        $message = $this->service->storeOrUpdateSalary($request, $employee);
 
-                $appraisalData = $salaryService->appraisalLetterData($request, $employee);
-                $pdf = $salaryService->getAppraisalLetterPdf($appraisalData);
-                Mail::to($data['employeeEmail'])->send(new SendAppraisalLetterMail($data, $pdf->inline($data['employeeName'] . '_Appraisal Letter_' . $formattedCommencementDate . '.pdf'), $formattedCommencementDate));
-            }
-
-            EmployeeSalary::create([
-                'employee_id' => $employee->id,
-                'monthly_gross_salary' => $request->grossSalary,
-                'tds' => $request->tds,
-                'commencement_date' => $request->commencementDate,
-            ]);
-
-            return redirect()->back()->with('success', 'Salary added successfully!');
-        }
-
-        if ($currentSalaryObject == null) {
-            return redirect()->back();
-        }
-
-        $currentSalaryObject->monthly_gross_salary = $request->grossSalary;
-        $currentSalaryObject->commencement_date = $request->commencementDate;
-        $currentSalaryObject->tds = $request->tds;
-        $currentSalaryObject->save();
-
-        return redirect()->back()->with('success', 'Salary updated successfully!');
+        return redirect()->back()->with('success', $message);
     }
 
     public function storeOrUpdateContractorSalary(Request $request, Employee $employee)
     {
-        $currentSalaryObject = $employee->getLatestSalary();
-        if (! $currentSalaryObject) {
-            EmployeeSalary::create([
-                'employee_id' => $employee->id,
-                'monthly_fee' => $request->contractorFee,
-                'tds' => $request->tds,
-                'commencement_date' => $request->commencementDate,
-                'salary_type' => config('salary.type.contractor_fee.slug'),
-            ]);
+        $message = $this->service->storeOrUpdateContractorSalary($request, $employee);
 
-            return redirect()->back()->with('success', 'Contractor fee added successfully!');
-        }
-
-        $currentSalaryObject->monthly_fee = $request->contractorFee;
-        $currentSalaryObject->commencement_date = $request->commencementDate;
-        $currentSalaryObject->tds = $request->tds;
-        $currentSalaryObject->save();
-
-        return redirect()->back()->with('success', 'Contractor fee updated successfully!');
+        return redirect()->back()->with('success', $message);
     }
+
 
     public function generateAppraisalLetter(Request $request, Employee $employee)
     {
         $salaryService = new SalaryCalculationService($request->grossSalary);
+        if ($request->submitType === 'send_contractor_increment_letter') {
+            $pdf = $salaryService->getIncrementLetterPdf($request->all());
+
+            return $pdf->inline($employee->user->name . '_Increment Letter_' . Carbon::parse($request->commencementDate)->format('jS F Y') . '.pdf');
+        } elseif ($employee->payroll_type === 'contractor') {
+            $pdf = $salaryService->getContractorOnboardingLetterPdf($request->all(), $employee);
+            return $pdf->inline($employee->user->name . '_Onboarding Letter_' . Carbon::parse($request->commencementDate)->format('jS F Y') . '.pdf');
+        }
+
         $data = $salaryService->appraisalLetterData($request, $employee);
-        $employeeName = $data->employeeName;
-        $commencementDate = $data->commencementDate;
+        $employeeName = $data["employeeName"];
+        $commencementDate = $data["commencementDate"];
         $date = Carbon::parse($commencementDate);
         $commencementDateFormat = $date->format('F Y');
         $pdf = $salaryService->getAppraisalLetterPdf($data);

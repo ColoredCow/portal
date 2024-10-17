@@ -96,7 +96,8 @@ class Employee extends Model
 
     public function getCurrentSalary()
     {
-        return $this->employeeSalaries()->where('commencement_date', '<=', today())->latest('commencement_date')->first();
+        $salaryType = $this->payroll_type == config('salary.payroll_type.full_time.slug') ? config('salary.type.employee_salary.slug') : config('salary.type.contractor_fee.slug');
+        return $this->employeeSalaries()->where('salary_type', $salaryType)->where('commencement_date', '<=', today())->latest('commencement_date')->first();
     }
 
     public function scopeContractorSalary($query)
@@ -109,9 +110,27 @@ class Employee extends Model
         return $query->where('salary_type', config('salary.type.employee_salary.slug'));
     }
 
-    public function getLatestSalary()
+    public function getLatestSalary($payRollType = null)
     {
-        return $this->employeeSalaries()->latest('commencement_date')->first();
+        $latestEmployeeSalary = $this->employeeSalaries()->latest('commencement_date')->first();
+
+        if (! $latestEmployeeSalary) {
+            return 0;
+        }
+
+        if ($payRollType) {
+            if ($payRollType === config('salary.payroll_type.full_time.slug') && $latestEmployeeSalary->salary_type === 'employee-salary') {
+                return $latestEmployeeSalary;
+            }
+
+            if ($payRollType === config('salary.payroll_type.contractor.slug') && $latestEmployeeSalary->salary_type === 'contractor-fee') {
+                return $latestEmployeeSalary;
+            }
+
+            return 0;
+        }
+
+        return $latestEmployeeSalary;
     }
 
     public function getPreviousSalary($salaryType = 'employee-salary')

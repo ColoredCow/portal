@@ -91,4 +91,10 @@ mix
 		"Modules/AppointmentSlots/Resources/assets/sass/app.scss", 
 		"public/css/appointmentslots.css"
 	);
+mix
+	.js("Modules/Salary/Resources/assets/js/app.js", "public/js/salary.js")
+	.sass(
+		"Modules/Salary/Resources/assets/sass/app.scss", 
+		"public/css/salary.css"
+	);
 mix.version();
