@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\KnowledgeCafe\Library;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
 use App\Models\KnowledgeCafe\Library\Book;
 use App\Models\KnowledgeCafe\Library\BookAMonth;
 use App\Models\KnowledgeCafe\Library\BookCategory;
+use App\Models\KnowledgeCafe\Library\BookLocation;
+use Modules\Operations\Entities\OfficeLocation;
 use App\Services\BookServices;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -29,7 +32,7 @@ class BookController extends Controller
         $searchCategory = $request->category_name ?? false;
         $searchString = request()->has('search') ? request()->input('search') : false;
         $categories = BookCategory::orderBy('name')->get();
-
+        $bookLocations = BookLocation::withTrashed()->with('location')->get();
         switch (request()) {
             case request()->has('wishlist'):
                 $books = auth()->user()->booksInWishlist;
@@ -48,9 +51,18 @@ class BookController extends Controller
         $books->load('borrowers');
         $wishlistedBooksCount = auth()->user()->booksInWishlist->count();
         $booksBorrowedCount = auth()->user()->booksBorrower->count();
+        $officeLocations = $this->officeLocationData();
 
-        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories', 'wishlistedBooksCount', 'booksBorrowedCount'));
-    }
+        $books = $books->map(function ($book) use ($bookLocations) {
+            $locations = $bookLocations->where('book_id', $book->id);
+            $copies = [];
+            foreach ($locations as $location) {
+                $copies[$location->office_location_id] = $location->number_of_copies;
+            }
+            $book->copies = $copies;
+            return $book;
+        });
+        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories', 'wishlistedBooksCount', 'booksBorrowedCount', 'bookLocations', 'officeLocations'));    }
 
     /**
      * Show the form for creating a new resource.
@@ -59,8 +71,11 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('knowledgecafe.library.books.create');
+        return view('knowledgecafe.library.books.create', [
+            'officeLocations' => $this->officeLocationData(),
+        ]);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -71,9 +86,13 @@ class BookController extends Controller
     {
         $validatedData = $request->validated();
         $ISBN = $validatedData['isbn'] ?? null;
-        Book::firstOrCreate(['isbn' => $ISBN], $validatedData);
-
-        return response()->json(['error' => false]);
+        $copiesLocation = $validatedData['copies'];
+        $book = Book::firstOrCreate(['isbn' => $ISBN], $validatedData);
+        $this->storeBookLocationWise($book->id, $copiesLocation);
+        return response()->json([
+            'error' => false,
+            'book_id' => $book->id
+        ]);
     }
 
     /**
@@ -106,10 +125,10 @@ class BookController extends Controller
     public function update(BookRequest $request, Book $book)
     {
         $validatedData = $request->validated();
-        if (isset($validatedData['number_of_copies'])) {
-            $book->number_of_copies = $validatedData['number_of_copies'];
+        if (isset($validatedData['copies'])) {
+            $copiesLocation = $request['copies'];
             $book->save();
-
+            $this->updatedBookLocationWise($book->id, $copiesLocation);
             return response()->json(['isUpdated' => $book]);
         }
         if (isset($validatedData['categories'])) {
@@ -341,5 +360,38 @@ class BookController extends Controller
             'wishlistedBooksCount' => $wishlistedBooksCount,
             'booksBorrowedCount' => $booksBorrowedCount,
         ]);
+    }
+
+    public function storeBookLocationWise($bookId, $copiesLocation)
+    {
+        $locationCopiesData = $copiesLocation;
+        foreach ($locationCopiesData as $locationId => $copies) {
+            BookLocation::create([
+                'book_id'      => $bookId,
+                'office_location_id'  => $locationId,
+                'number_of_copies' => $copies
+            ]);
+        }
+    }
+
+    public function officeLocationData()
+    {
+        $officeLocations = OfficeLocation::all();
+        $officeLocationsData = $officeLocations->map(function ($officeLocation) {
+            return [
+                'center_id' => $officeLocation->id,
+                'centre_name' => $officeLocation->centre_name,
+            ];
+        });
+        return $officeLocationsData;
+    }
+
+    public function updatedBookLocationWise($bookId, $copiesLocation) {
+        foreach ($copiesLocation as $locationId => $copies) {
+            DB::table('library_book_location')
+            ->where('book_id', $bookId)
+            ->where('office_location_id', $locationId)
+            ->update(['number_of_copies' => $copies]);
+        }
     }
 }
