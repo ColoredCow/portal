@@ -20,7 +20,7 @@ class OperationsController extends Controller
     public function index()
     {
         $centres = OfficeLocation::with('centreHead')->get();
-        
+
         $users = User::orderBy('name', 'asc')->get();
 
         return view('operations::office-location.index', compact('users', 'centres'));
