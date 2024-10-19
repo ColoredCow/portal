@@ -17,7 +17,7 @@
                     </h4>
                 </div>
                 <div class="d-flex align-items-center">
-                    <a href="" class="btn btn-success text-white"><i class="fa fa-plus"></i>
+                    <a href="{{ route('prospect.create') }}" class="btn btn-success text-white"><i class="fa fa-plus"></i>
                         {{ __('Add new prospect') }}</a>
                 </div>
             </form>
@@ -45,66 +45,53 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @can('projects.view')
-                        <tr>
-                            <td class="w-20p">
-                                <div>
-                                    <a href="">BAT, ATMA, ISDM</a>
-                                </div>
-                            </td>
-                            <td class="w-10p">
-                                <span>
-                                    Vaibhav
-                                </span>
-                            </td>
-                            <td class="w-20p">
-                                <span>
-                                    Aug 7, 2024
-                                </span>
-                            </td>
-                            <td class="w-20p">
-                                <span>
-                                    Social Sector
-                                </span>
-                            </td>
-                            <td class="w-20p">
-                                <span>
-                                    New
-                                </span>
-                            </td>
-                            <td class="w-20p">
-                                <span>
-                                    ₹19,50,000
-                                </span>
-                            </td>
-                            <td class="w-20p">
-                                <span>
-                                    Rejected
-                                </span>
-                            </td>
-                            <td class="w-20p">
-                                <span>
-                                    September 3, 2024
-                                </span>
-                            </td>
-                            <td class="w-20p">
-                                <span>
-                                    Aug 7, 2024
-                                </span>
-                            </td>
-                        </tr>
-                    @else
-                        <tr>
-                            <td colspan="3">
-                                <p class="my-4 text-left"> No
-                                    {{ config('project.status')[request()->input('status', 'active')] }}
-                                    {{ ' ' }}
-                                    {{ request()->input('is_amc', '0') == '1' ? 'AMC' : 'Main' }}
-                                    projects found.
-                                </p>
-                            <td>
-                        </tr>
-                    @endcan
+                    <tr>
+                        <td class="w-20p">
+                            <div>
+                                <a href="">BAT, ATMA, ISDM</a>
+                            </div>
+                        </td>
+                        <td class="w-10p">
+                            <span>
+                                Vaibhav
+                            </span>
+                        </td>
+                        <td class="w-20p">
+                            <span>
+                                Aug 7, 2024
+                            </span>
+                        </td>
+                        <td class="w-20p">
+                            <span>
+                                Social Sector
+                            </span>
+                        </td>
+                        <td class="w-20p">
+                            <span>
+                                New
+                            </span>
+                        </td>
+                        <td class="w-20p">
+                            <span>
+                                ₹19,50,000
+                            </span>
+                        </td>
+                        <td class="w-20p">
+                            <span>
+                                Rejected
+                            </span>
+                        </td>
+                        <td class="w-20p">
+                            <span>
+                                September 3, 2024
+                            </span>
+                        </td>
+                        <td class="w-20p">
+                            <span>
+                                Aug 7, 2024
+                            </span>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

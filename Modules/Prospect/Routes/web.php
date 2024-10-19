@@ -11,6 +11,7 @@
 |
 */
 
-Route::prefix('prospect')->group(function() {
+Route::prefix('prospect')->middleware('auth')->group(function() {
     Route::get('/', 'ProspectController@index');
+    Route::get('/create','ProspectController@create')->name('prospect.create');
 });
