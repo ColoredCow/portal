@@ -22,6 +22,8 @@ class RemoveProspectsReletedTable extends Migration
         Schema::dropIfExists('prospect_requirements');
         Schema::dropIfExists('prospect_calendar_meeting');
         Schema::dropIfExists('prospect_stages');
+        Schema::dropIfExists('client_crm_details');
+        Schema::dropIfExists('prospects');
     }
 
     /**
