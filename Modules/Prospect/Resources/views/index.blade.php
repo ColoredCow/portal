@@ -34,61 +34,61 @@
                 <thead class="thead-dark">
                     <tr>
                         <th class="sticky-top">Organization Name</th>
-                        <th class="sticky-top">ColoredCow POC</th>
+                        <th class="sticky-top">POC</th>
                         <th class="sticky-top">Proposal sent Date</th>
                         <th class="sticky-top">Domain</th>
                         <th class="sticky-top">Customer Type</th>
                         <th class="sticky-top">Budget</th>
-                        <th class="sticky-top">Proposal Status</th>
-                        <th class="sticky-top">Last followup sent Date</th>
-                        <th class="sticky-top">Last followup response</th>
+                        <th class="sticky-top">Status</th>
+                        <th class="sticky-top">Followup sent Date</th>
+                        <th class="sticky-top">Followup response</th>
                     </tr>
                 </thead>
                 <tbody>
                     @can('projects.view')
                         <tr>
-                            <td>
-                                <div class="pl-1 pl-xl-2">
+                            <td class="w-20p">
+                                <div>
                                     <a href="">BAT, ATMA, ISDM</a>
                                 </div>
                             </td>
-                            <td>
-                                <span class="pl-1 pl-xl-2">
+                            <td class="w-10p">
+                                <span>
                                     Vaibhav
                                 </span>
                             </td>
-                            <td class="text-center">
-                                <span class="pl-1 pl-xl-2">
+                            <td class="w-20p">
+                                <span>
                                     Aug 7, 2024
                                 </span>
                             </td>
-                            <td>
-                                <span class="pl-1 pl-xl-2">
+                            <td class="w-20p">
+                                <span>
                                     Social Sector
                                 </span>
                             </td>
-                            <td>
-                                <span class="pl-1 pl-xl-2">
+                            <td class="w-20p">
+                                <span>
                                     New
                                 </span>
                             </td>
-                            <td>
-                                <span class="pl-1 pl-xl-2">
+                            <td class="w-20p">
+                                <span>
                                     ₹19,50,000
                                 </span>
                             </td>
-                            <td>
-                                <span class="pl-1 pl-xl-2">
+                            <td class="w-20p">
+                                <span>
                                     Rejected
                                 </span>
                             </td>
-                            <td>
-                                <span class="pl-1 pl-xl-2">
+                            <td class="w-20p">
+                                <span>
                                     September 3, 2024
                                 </span>
                             </td>
-                            <td>
-                                <span class="pl-1 pl-xl-2">
+                            <td class="w-20p">
+                                <span>
                                     Aug 7, 2024
                                 </span>
                             </td>
