@@ -91,4 +91,11 @@ mix
 		"Modules/AppointmentSlots/Resources/assets/sass/app.scss", 
 		"public/css/appointmentslots.css"
 	);
+
+mix
+	.js("Modules/Prospect/Resources/assets/js/app.js", "public/js/prospect.js")
+	.sass(
+		"Modules/Prospect/Resources/assets/sass/app.scss",
+		"public/css/prospect.css"
+	);
 mix.version();
