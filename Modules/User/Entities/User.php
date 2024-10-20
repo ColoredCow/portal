@@ -12,11 +12,11 @@ use Modules\AppointmentSlots\Entities\AppointmentSlot;
 use Modules\HR\Entities\Employee;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectTeamMember;
+use Modules\Prospect\Entities\Prospect;
 use Modules\User\Database\Factories\UserFactory;
 use Modules\User\Traits\CanBeExtended;
 use Modules\User\Traits\HasWebsiteUser;
 use Spatie\Permission\Traits\HasRoles;
-use Modules\Prospect\Entities\Prospect;
 
 class User extends Authenticatable
 {

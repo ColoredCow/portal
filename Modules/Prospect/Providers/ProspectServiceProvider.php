@@ -2,18 +2,18 @@
 
 namespace Modules\Prospect\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\ServiceProvider;
 
 class ProspectServiceProvider extends ServiceProvider
 {
     /**
-     * @var string $moduleName
+     * @var string
      */
     protected $moduleName = 'Prospect';
 
     /**
-     * @var string $moduleNameLower
+     * @var string
      */
     protected $moduleNameLower = 'prospect';
 

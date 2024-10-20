@@ -5,6 +5,6 @@ return [
     'customer-types' => [
         'new' => 'New',
         'existing' => 'Existing',
-        'dormant' => 'Dormant'
+        'dormant' => 'Dormant',
     ]
 ];
