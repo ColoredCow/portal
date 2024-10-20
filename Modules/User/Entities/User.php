@@ -237,7 +237,8 @@ class User extends Authenticatable
         return new UserFactory();
     }
 
-    public function prospects() {
+    public function prospects() 
+    {
         return $this->hasMany(Prospect::class, 'poc_user_id');
     }
 }
