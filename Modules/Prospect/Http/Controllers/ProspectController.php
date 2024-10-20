@@ -5,6 +5,7 @@ namespace Modules\Prospect\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\User\Entities\User;
 
 class ProspectController extends Controller
 {
@@ -23,7 +24,10 @@ class ProspectController extends Controller
      */
     public function create()
     {
-        return view('prospect::create');
+        $users = User::all();
+        return view('prospect::create', [
+            'users' => $users,
+        ]);
     }
 
     /**
