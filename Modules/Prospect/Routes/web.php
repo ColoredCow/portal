@@ -16,4 +16,5 @@ Route::prefix('prospect')->middleware('auth')->group(function () {
     Route::get('/create', 'ProspectController@create')->name('prospect.create');
     Route::post('/store', 'ProspectController@store')->name('prospect.store');
     Route::get('/{prospect}/edit', 'ProspectController@edit')->name('prospect.edit');
+    Route::get('/{prospect}/show', 'ProspectController@show')->name('prospect.show');
 });

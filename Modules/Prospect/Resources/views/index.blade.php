@@ -51,7 +51,7 @@
                             <td class="w-20p">
                                 <div>
                                     <a
-                                        href="{{ route('prospect.create', $prospect->id) }}">{{ $prospect->organization_name }}</a>
+                                        href="{{ route('prospect.show', $prospect->id) }}">{{ $prospect->organization_name }}</a>
                                 </div>
                             </td>
                             <td class="w-10p">

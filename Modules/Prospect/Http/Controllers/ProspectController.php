@@ -62,7 +62,7 @@ class ProspectController extends Controller
         $prospect->rfp_link = $validated['rfp_url'];
         $prospect->proposal_link = $validated['proposal_url'];
         $prospect->save();
-        return redirect()->route('prospect.index')->with('status', 'Prospect created succesfully!');
+        return redirect()->route('prospect.index')->with('status', 'Prospect created successfully!');
     }
 
     /**
@@ -72,7 +72,10 @@ class ProspectController extends Controller
      */
     public function show($id)
     {
-        return view('prospect::show');
+        $prospect = Prospect::with('pocUser')->find($id);
+        return view('prospect::subviews.show', [
+            'prospect' => $prospect,
+        ]);
     }
 
     /**
