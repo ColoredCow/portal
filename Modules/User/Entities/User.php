@@ -16,6 +16,7 @@ use Modules\User\Database\Factories\UserFactory;
 use Modules\User\Traits\CanBeExtended;
 use Modules\User\Traits\HasWebsiteUser;
 use Spatie\Permission\Traits\HasRoles;
+use Modules\Prospect\Entities\Prospect;
 
 class User extends Authenticatable
 {
@@ -234,5 +235,9 @@ class User extends Authenticatable
     protected static function newFactory()
     {
         return new UserFactory();
+    }
+
+    public function prospects() {
+        return $this->hasMany(Prospect::class, 'poc_user_id');
     }
 }

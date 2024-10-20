@@ -1,5 +1,10 @@
 <?php
 
 return [
-    'name' => 'Prospect'
+    'name' => 'Prospect',
+    'customer-types' => [
+        'new' => 'New',
+        'existing' => 'Existing',
+        'dormant' => 'Dormant'
+    ]
 ];

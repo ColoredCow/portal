@@ -10,7 +10,7 @@ class CreateProspectsTable extends Migration
      * Run the migrations.
      *
      * @return void
-     */
+    */
     public function up()
     {
         Schema::create('prospects', function (Blueprint $table) {
@@ -23,9 +23,9 @@ class CreateProspectsTable extends Migration
             $table->string('domain');
             $table->string('customer_type');
             $table->decimal('budget', 15, 2);
-            $table->enum('proposal_status', ['existing', 'new', 'dormant'])->default('new');
-            $table->date('introductory_call');
-            $table->date('last_followup_date');
+            $table->string('proposal_status');
+            $table->date('introductory_call')->nullable();
+            $table->date('last_followup_date')->nullable();
             $table->string('rfp_link');
             $table->string('proposal_link');
             

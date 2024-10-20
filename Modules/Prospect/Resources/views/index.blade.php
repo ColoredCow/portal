@@ -1,5 +1,6 @@
 @extends('prospect::layouts.master')
 @section('content')
+    @includeWhen(session('status'), 'toast', ['message' => session('status')])
     <div class="container">
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -23,9 +24,9 @@
             </form>
         </div>
         <div class='d-md-none mb-2'>
-            @can('projects.create')
+            @can('prospect.create')
                 <div class="d-flex flex-row-reverse">
-                    <a href="" class="btn btn-info text-white">{{ __('Add new prospect') }}</a>
+                    <a href="{{ route('prospect.create') }}" class="btn btn-info text-white">{{ __('Add new prospect') }}</a>
                 </div>
             @endcan
         </div>
@@ -45,53 +46,40 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="w-20p">
-                            <div>
-                                <a href="">BAT, ATMA, ISDM</a>
-                            </div>
-                        </td>
-                        <td class="w-10p">
-                            <span>
-                                Vaibhav
-                            </span>
-                        </td>
-                        <td class="w-20p">
-                            <span>
-                                Aug 7, 2024
-                            </span>
-                        </td>
-                        <td class="w-20p">
-                            <span>
-                                Social Sector
-                            </span>
-                        </td>
-                        <td class="w-20p">
-                            <span>
-                                New
-                            </span>
-                        </td>
-                        <td class="w-20p">
-                            <span>
-                                ₹19,50,000
-                            </span>
-                        </td>
-                        <td class="w-20p">
-                            <span>
-                                Rejected
-                            </span>
-                        </td>
-                        <td class="w-20p">
-                            <span>
-                                September 3, 2024
-                            </span>
-                        </td>
-                        <td class="w-20p">
-                            <span>
-                                Aug 7, 2024
-                            </span>
-                        </td>
-                    </tr>
+                    @foreach ($prospects as $prospect)
+                        <tr>
+                            <td class="w-20p">
+                                <div>
+                                    <a
+                                        href="{{ route('prospect.create', $prospect->id) }}">{{ $prospect->organization_name }}</a>
+                                </div>
+                            </td>
+                            <td class="w-10p">
+                                <span>{{ $prospect->pocUser->name ?? 'N/A' }}</span>
+                            </td>
+                            <td class="w-20p">
+                                <span>{{ \Carbon\Carbon::parse($prospect->proposal_sent_date)->format('M d, Y') }}</span>
+                            </td>
+                            <td class="w-20p">
+                                <span>{{ $prospect->domain }}</span>
+                            </td>
+                            <td class="w-20p">
+                                <span>{{ ucfirst($prospect->customer_type) }}</span>
+                            </td>
+                            <td class="w-20p">
+                                <span>₹{{ number_format($prospect->budget, 2) }}</span>
+                            </td>
+                            <td class="w-20p">
+                                <span>{{ $prospect->proposal_status ?: 'Pending' }}</span>
+                            </td>
+                            <td class="w-20p">
+                                <span>{{ \Carbon\Carbon::parse($prospect->last_followup_date)->format('M d, Y') }}</span>
+                            </td>
+                            <td class="w-20p">
+                                <span>{{ \Carbon\Carbon::parse($prospect->introductory_call)->format('M d, Y') }}</span>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
