@@ -5,9 +5,9 @@ namespace Modules\Prospect\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Prospect\Entities\Prospect;
 use Modules\Prospect\Http\Requests\ProspectRequest;
 use Modules\User\Entities\User;
-use Modules\Prospect\Entities\Prospect;
 
 class ProspectController extends Controller
 {
@@ -32,7 +32,7 @@ class ProspectController extends Controller
         $users = User::all();
         $activeUser = [];
         foreach ($users as $user) {
-            if (!$user->isActiveEmployee) {
+            if (! $user->isActiveEmployee) {
                 continue;
             }
             $activeUser[] = $user;
@@ -62,6 +62,7 @@ class ProspectController extends Controller
         $prospect->rfp_link = $validated['rfp_url'];
         $prospect->proposal_link = $validated['proposal_url'];
         $prospect->save();
+
         return redirect()->route('prospect.index')->with('status', 'Prospect created successfully!');
     }
 
@@ -73,6 +74,7 @@ class ProspectController extends Controller
     public function show($id)
     {
         $prospect = Prospect::with('pocUser')->find($id);
+
         return view('prospect::subviews.show', [
             'prospect' => $prospect,
         ]);

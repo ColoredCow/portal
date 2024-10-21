@@ -6,5 +6,5 @@ return [
         'new' => 'New',
         'existing' => 'Existing',
         'dormant' => 'Dormant',
-    ]
+    ],
 ];
