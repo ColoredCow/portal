@@ -18,6 +18,7 @@ class ProspectController extends Controller
     public function index()
     {
         $prospects = Prospect::with('pocUser')->get();
+
         return view('prospect::index', [
             'prospects' => $prospects,
         ]);
@@ -37,6 +38,7 @@ class ProspectController extends Controller
             }
             $activeUser[] = $user;
         }
+
         return view('prospect::create', [
             'users' => $activeUser,
         ]);
