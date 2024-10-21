@@ -75,12 +75,6 @@
             </li>
         @endif
 
-        @can('task.view')
-            <li class="nav-item">
-                <a class="nav-item nav-link" href="/task">Task</a>
-            </li>
-        @endcan
-
         @can('finance_invoices.view')
             <li class="nav-item dropdown">
                 <a id="navbarDropdown_finance" class="nav-link dropdown-toggle" href="#" role="button"
@@ -173,11 +167,6 @@
         @can('codetrek.view')
             <li class="nav-item">
                 <a class="nav-item nav-link" href="{{ route('codetrek.index') }}">CodeTrek</a>
-            </li>
-        @endcan
-        @can('media.view')
-            <li class="nav-item">
-                <a class="nav-item nav-link" href="{{ route('media.index') }}">Media</a>
             </li>
         @endcan
 
