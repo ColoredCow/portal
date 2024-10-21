@@ -17,7 +17,7 @@
                                 <label for="name" class="field-required">Organization Name</label>
                                 <input type="text" class="form-control" name="org_name" id="org_name"
                                     placeholder="Enter Organization Name" required="required"
-                                    value="{{ $prospect->org_name }}" readonly>
+                                    value="{{ $prospect->organization_name }}" readonly>
                             </div>
                             <div class="form-group
                                 offset-md-1 col-md-5">
@@ -48,25 +48,10 @@
                                 <input type="text" class="form-control" name="customer_type" id="customer_type"
                                     value="{{ config('prospect.customer-types')[$prospect->customer_type] }}" readonly>
                             </div>
-                            <div class="form-group
-                                offset-md-1 col-md-5">
-                                <label for="status" class="field-required">{{ __('Status') }}</label>
-                                <input type="text" class="form-control" name="status" id="status"
-                                    value="{{ $prospect->status }}" readonly>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="form-row">
-                            <div class="form-group col-md-5">
-                                <label for="created_at" class="field-required">Created At</label>
-                                <input type="text" class="form-control" name="created_at" id="created_at"
-                                    value="{{ $prospect->created_at }}" readonly>
-                            </div>
-                            <div class="form-group
-                                offset-md-1 col-md-5">
-                                <label for="updated_at" class="field-required">Updated At</label>
-                                <input type="text" class="form-control" name="updated_at" id="updated_at"
-                                    value="{{ $prospect->updated_at }}" readonly>
+                            <div class="form-group offset-md-1 col-md-5">
+                                <label for="budget" class="field-required">{{ __('Budget') }}</label>
+                                <input type="text" class="form-control" name="budget" id="budget"
+                                    value="{{ $prospect->budget }}" readonly>
                             </div>
                         </div>
                         <br>
@@ -86,16 +71,20 @@
                         </div>
                         <br>
                         <div class="form-row">
-                            <div class="form-group col-md-5">
-                                <label for="rfp_url">{{ __('RFP URL') }}</label>
-                                <input type="url" class="form-control" name="rfp_url" id="rfp_url"
-                                    value="{{ $prospect->rfp_link }}" readonly>
-                            </div>
                             <div class="form-group
-                                offset-md-1 col-md-5">
+                                col-md-5">
                                 <label for="proposal_url">{{ __('Proposal URL') }}</label>
+                                <a href="{{ $prospect->proposal_link }}" target="_blank"><span><i
+                                            class="fa fa-external-link fz-14 pl-0.5"></i></span></a>
                                 <input type="url" class="form-control" name="proposal_url" id="proposal_url"
                                     value="{{ $prospect->proposal_link }}" readonly>
+                            </div>
+                            <div class="form-group offset-md-1 col-md-5">
+                                <label for="rfp_url">{{ __('RFP URL') }}</label>
+                                <a href="{{ $prospect->rfp_link }}" target="_blank"><span><i
+                                            class="fa fa-external-link fz-14 pl-0.5"></i></span></a>
+                                <input type="url" class="form-control" name="rfp_url" id="rfp_url"
+                                    value="{{ $prospect->rfp_link }}" readonly>
                             </div>
                         </div>
                     </div>
