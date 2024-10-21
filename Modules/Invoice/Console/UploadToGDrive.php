@@ -139,7 +139,8 @@ class UploadToGDrive extends Command
         return $folder->id;  // Return the newly created folder ID
     }
 
-    private function getFinancialYear(Carbon $date) {
+    private function getFinancialYear(Carbon $date)
+    {
         $year = $date->year;
 
         // If the date is between January and March, it belongs to the previous financial year.
