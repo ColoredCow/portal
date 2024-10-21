@@ -12,6 +12,7 @@ use Modules\AppointmentSlots\Entities\AppointmentSlot;
 use Modules\HR\Entities\Employee;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectTeamMember;
+use Modules\Prospect\Entities\Prospect;
 use Modules\User\Database\Factories\UserFactory;
 use Modules\User\Traits\CanBeExtended;
 use Modules\User\Traits\HasWebsiteUser;
@@ -234,5 +235,10 @@ class User extends Authenticatable
     protected static function newFactory()
     {
         return new UserFactory();
+    }
+
+    public function prospects()
+    {
+        return $this->hasMany(Prospect::class, 'poc_user_id');
     }
 }
