@@ -89,7 +89,19 @@ class ProspectController extends Controller
      */
     public function edit($id)
     {
-        return view('prospect::edit');
+        $prospect = Prospect::find($id);
+        $users = User::all();
+        $activeUser = [];
+        foreach ($users as $user) {
+            if (! $user->isActiveEmployee) {
+                continue;
+            }
+            $activeUser[] = $user;
+        }
+        return view('prospect::edit', [
+            'prospect' => $prospect,
+            'users' => $activeUser,
+        ]);
     }
 
     /**

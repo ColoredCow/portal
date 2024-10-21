@@ -2,12 +2,14 @@
 @section('content')
     <div class="container">
         <br>
-        <h4>Add New Prospect</h4>
+        <h4>Edit Prospect</h4>
         <div class="mt-5">
             @include('status', ['errors' => $errors->all()])
             <div class="card">
-                <form action={{ route('prospect.store') }} method="POST" enctype="multipart/form-data" id="form_project">
+                <form action={{ route('prospect.edit', $prospect->id) }} method="POST" enctype="multipart/form-data"
+                    id="form_project">
                     @csrf
+                    @method('PUT')
                     <div class="card-header">
                         <span>Prospect Details</span>
                     </div>
@@ -15,11 +17,11 @@
                         <div class="card-body">
                             <input type="hidden" name="create_prospect" value="create_prospect">
                             <div class="form-row">
-                                <div class="form-group col-md-5">
+                                <div class="form-group form-group col-md-5">
                                     <label for="name" class="field-required">Organization Name</label>
                                     <input type="text" class="form-control" name="org_name" id="org_name"
                                         placeholder="Enter Organization Name" required="required"
-                                        value="{{ old('org_name') }}">
+                                        value="{{ $prospect->organization_name }}">
                                 </div>
                                 <div class="form-group offset-md-1 col-md-5">
                                     <label for="client_id" class="field-required">ColoredCow POC</label>
@@ -27,7 +29,7 @@
                                         <option value="">Select POC User</option>
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}"
-                                                {{ old('poc_user_id') == $user->id ? 'selected' : '' }}>
+                                                {{ $prospect->poc_user_id == $user->id ? 'selected' : '' }}>
                                                 {{ $user->name }}</option>
                                         @endforeach
                                     </select>
@@ -35,15 +37,18 @@
                             </div>
                             <br>
                             <div class="form-row">
-                                <div class="form-group col-md-5">
+                                <div class="form-group
+                                    col-md-5">
                                     <label for="proposal_sent_date" class="field-required">Proposal Sent Date</label>
                                     <input type="date" class="form-control" name="proposal_sent_date"
-                                        id="proposal_sent_date" value="{{ old('proposal_sent_date') }}" required="required">
+                                        id="proposal_sent_date" value="{{ $prospect->proposal_sent_date }}"
+                                        required="required">
                                 </div>
-                                <div class="form-group offset-md-1 col-md-5">
+                                <div class="form-group
+                                    offset-md-1 col-md-5">
                                     <label for="domain" class="field-required">{{ __('Domain') }}</label>
                                     <input type="text" class="form-control" name="domain" id="domain"
-                                        placeholder="Enter Domain" value="{{ old('domain') }}" required="required">
+                                        placeholder="Enter Domain" value="{{ $prospect->domain }}" required="required">
                                 </div>
                             </div>
                             <br>
@@ -55,15 +60,16 @@
                                         <option value="">Select Customer Type</option>
                                         @foreach (config('prospect.customer-types') as $key => $customer_type)
                                             <option value="{{ $key }}"
-                                                {{ old('customer_type') == $key ? 'selected' : '' }}>
+                                                {{ $prospect->customer_type == $key ? 'selected' : '' }}>
                                                 {{ $customer_type }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group offset-md-1 col-md-5">
+                                <div class="form-group
+                                    offset-md-1 col-md-5">
                                     <label for="budget" class="field-required">{{ __('Budget') }}</label>
                                     <input type="text" class="form-control" name="budget" id="budget"
-                                        placeholder="Enter Budget" required="required" value="{{ old('budget') }}">
+                                        placeholder="Enter Budget" required="required" value="{{ $prospect->budget }}">
                                 </div>
                             </div>
                             <br>
@@ -72,26 +78,13 @@
                                     <label for="proposal_status" class="field-required">{{ __('Proposal Status') }}</label>
                                     <input type="text" class="form-control" name="proposal_status" id="proposal_status"
                                         placeholder="Enter Proposal Status" required="required"
-                                        value="{{ old('proposal_status') }}">
-                                </div>
-                                <div class="form-group offset-md-1 col-md-5">
-                                    <label for="rfp_url">{{ __('RFP URL') }}</label>
-                                    <input type="url" class="form-control" name="rfp_url" id="rfp_url"
-                                        placeholder="Enter RFP URL" value="{{ old('rfp_url') }}">
-                                </div>
-                            </div>
-                            <br />
-                            <div class="form-row">
-                                <div class="form-group col-md-5">
-                                    <label for="proposal_url">{{ __('Proposal URL') }}</label>
-                                    <input type="url" class="form-control" name="proposal_url" id="proposal_url"
-                                        placeholder="Enter Proposal URL" value="{{ old('proposal_url') }}">
+                                        value="{{ $prospect->proposal_status }}">
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <button type="button" class="btn btn-primary" id="save-btn-action">Create</button>
-                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                 </form>
             </div>
