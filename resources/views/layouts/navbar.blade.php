@@ -75,12 +75,6 @@
             </li>
         @endif
 
-        @can('task.view')
-            <li class="nav-item">
-                <a class="nav-item nav-link" href="/task">Task</a>
-            </li>
-        @endcan
-
         @can('finance_invoices.view')
             <li class="nav-item dropdown">
                 <a id="navbarDropdown_finance" class="nav-link dropdown-toggle" href="#" role="button"
@@ -109,8 +103,8 @@
                 </a>
                 <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_sales">
                     {{-- @can('prospect.view')
-                    <a class="dropdown-item" href="{{ '/prospect' }}">Prospects</a>
-                @endcan --}}
+                        <a class="dropdown-item" href="{{ '/prospect' }}">Prospects</a>
+                    @endcan --}}
                     @can('lead.view')
                         <a class="dropdown-item" href="{{ '/lead' }}">Leads</a>
                     @endcan
@@ -173,11 +167,6 @@
         @can('codetrek.view')
             <li class="nav-item">
                 <a class="nav-item nav-link" href="{{ route('codetrek.index') }}">CodeTrek</a>
-            </li>
-        @endcan
-        @can('media.view')
-            <li class="nav-item">
-                <a class="nav-item nav-link" href="{{ route('media.index') }}">Media</a>
             </li>
         @endcan
 
