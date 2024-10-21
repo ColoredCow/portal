@@ -2,90 +2,81 @@
 @section('content')
     <div class="container">
         <br>
-        <h4>View Prospect</h4>
-        <div class="mt-5">
-            @include('status', ['errors' => $errors->all()])
-            <div class="card">
-                <div class="card-header">
-                    <span>Prospect Details</span>
+        <h4 class="mb-5 font-weight-bold">Prospect Name:- {{ $prospect->organization_name }}</h4>
+        <div class="card-header d-flex" data-toggle="collapse" data-target="#prospect-details">
+            <h5 class="font-weight-bold">Prospect Details</h5>
+            <span class="arrow ml-auto">&#9660;</span>
+        </div>
+        <div id="prospect-details" class="collapse card mt-3">
+            <div class="panel-body">
+                <br>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group col-md-12">
+                            <label for="org_name" class="font-weight-bold">Organization Name:</label>
+                            <span class="ml-2">{{ $prospect->organization_name }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group col-md-12">
+                            <label for="poc_user_id" class="font-weight-bold">ColoredCow POC:</label>
+                            <span class="ml-2">{{ $prospect->pocUser->name }}</span>
+                        </div>
+                    </div>
                 </div>
-                <div id="create_prospect_details_form">
-                    <div class="card-body">
-                        <div class="form-row">
-                            <div class="form-group
-                                col-md-5">
-                                <label for="name" class="field-required">Organization Name</label>
-                                <input type="text" class="form-control" name="org_name" id="org_name"
-                                    placeholder="Enter Organization Name" required="required"
-                                    value="{{ $prospect->organization_name }}" readonly>
-                            </div>
-                            <div class="form-group
-                                offset-md-1 col-md-5">
-                                <label for="client_id" class="field-required">ColoredCow POC</label>
-                                <input type="text" class="form-control" name="poc_user_id" id="poc_user_id"
-                                    value="{{ $prospect->pocUser->name }}" readonly>
-                            </div>
+
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group col-md-12">
+                            <label for="proposal_sent_date" class="font-weight-bold">Proposal Sent Date:</label>
+                            <span class="ml-2">{{ $prospect->proposal_sent_date }}</span>
                         </div>
-                        <br>
-                        <div class="form-row">
-                            <div class="form-group col-md-5">
-                                <label for="proposal_sent_date" class="field-required">Proposal Sent Date</label>
-                                <input type="date" class="form-control" name="proposal_sent_date" id="proposal_sent_date"
-                                    value="{{ $prospect->proposal_sent_date }}" readonly>
-                            </div>
-                            <div class="form-group
-                                offset-md-1 col-md-5">
-                                <label for="domain" class="field-required">{{ __('Domain') }}</label>
-                                <input type="text" class="form-control" name="domain" id="domain"
-                                    value="{{ $prospect->domain }}" readonly>
-                            </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group col-md-12">
+                            <label for="domain" class="font-weight-bold">Domain:</label>
+                            <span class="ml-2">{{ $prospect->domain }}</span>
                         </div>
-                        <br>
-                        <div class="form-row">
-                            <div class="form-group
-                                col-md-5">
-                                <label for="customer_type" class="field-required">{{ __('Customer Type') }}</label>
-                                <input type="text" class="form-control" name="customer_type" id="customer_type"
-                                    value="{{ config('prospect.customer-types')[$prospect->customer_type] }}" readonly>
-                            </div>
-                            <div class="form-group offset-md-1 col-md-5">
-                                <label for="budget" class="field-required">{{ __('Budget') }}</label>
-                                <input type="text" class="form-control" name="budget" id="budget"
-                                    value="{{ $prospect->budget }}" readonly>
-                            </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group col-md-12">
+                            <label for="customer_type" class="font-weight-bold">Customer Type:</label>
+                            <span class="ml-2">{{ config('prospect.customer-types')[$prospect->customer_type] }}</span>
                         </div>
-                        <br>
-                        <div class="form-row">
-                            <div class="form-group
-                                col-md-5">
-                                <label for="budget" class="field-required">{{ __('Budget') }}</label>
-                                <input type="text" class="form-control" name="budget" id="budget"
-                                    value="{{ $prospect->budget }}" readonly>
-                            </div>
-                            <div class="form-group
-                                offset-md-1 col-md-5">
-                                <label for="proposal_status" class="field-required">{{ __('Proposal Status') }}</label>
-                                <input type="text" class="form-control" name="proposal_status" id="proposal_status"
-                                    value="{{ $prospect->proposal_status }}" readonly>
-                            </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group col-md-12">
+                            <label for="budget" class="font-weight-bold">Budget:</label>
+                            <span class="ml-2">{{ $prospect->budget }}</span>
                         </div>
-                        <br>
-                        <div class="form-row">
-                            <div class="form-group
-                                col-md-5">
-                                <label for="proposal_url">{{ __('Proposal URL') }}</label>
-                                <a href="{{ $prospect->proposal_link }}" target="_blank"><span><i
-                                            class="fa fa-external-link fz-14 pl-0.5"></i></span></a>
-                                <input type="url" class="form-control" name="proposal_url" id="proposal_url"
-                                    value="{{ $prospect->proposal_link }}" readonly>
-                            </div>
-                            <div class="form-group offset-md-1 col-md-5">
-                                <label for="rfp_url">{{ __('RFP URL') }}</label>
-                                <a href="{{ $prospect->rfp_link }}" target="_blank"><span><i
-                                            class="fa fa-external-link fz-14 pl-0.5"></i></span></a>
-                                <input type="url" class="form-control" name="rfp_url" id="rfp_url"
-                                    value="{{ $prospect->rfp_link }}" readonly>
-                            </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group col-md-12">
+                            <label for="proposal_status" class="font-weight-bold">Proposal Status:</label>
+                            <span class="ml-2">{{ $prospect->proposal_status }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group col-md-12">
+                            <label for="proposal_url" class="font-weight-bold">Proposal URL:</label>
+                            <a href="{{ $prospect->proposal_link }}" target="_blank" class="ml-2"><i
+                                    class="fa fa-external-link"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group col-md-12">
+                            <label for="rfp_url" class="font-weight-bold">RFP URL:</label>
+                            <a href="{{ $prospect->rfp_link }}" target="_blank" class="ml-2"><i
+                                    class="fa fa-external-link"></i></a>
                         </div>
                     </div>
                 </div>
