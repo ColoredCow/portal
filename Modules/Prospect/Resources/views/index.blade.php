@@ -41,42 +41,34 @@
                         <th class="sticky-top">Customer Type</th>
                         <th class="sticky-top">Budget</th>
                         <th class="sticky-top">Status</th>
-                        <th class="sticky-top">Followup sent Date</th>
-                        <th class="sticky-top">Followup response</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($prospects as $prospect)
                         <tr>
-                            <td class="w-20p">
+                            <td class="w-30p">
                                 <div>
                                     <a
                                         href="{{ route('prospect.show', $prospect->id) }}">{{ $prospect->organization_name }}</a>
                                 </div>
                             </td>
-                            <td class="w-10p">
+                            <td class="w-20p">
                                 <span>{{ $prospect->pocUser->name ?? 'N/A' }}</span>
                             </td>
-                            <td class="w-20p">
+                            <td class="w-30p">
                                 <span>{{ \Carbon\Carbon::parse($prospect->proposal_sent_date)->format('M d, Y') }}</span>
                             </td>
                             <td class="w-20p">
                                 <span>{{ $prospect->domain }}</span>
                             </td>
-                            <td class="w-20p">
+                            <td class="w-30p">
                                 <span>{{ ucfirst($prospect->customer_type) }}</span>
                             </td>
                             <td class="w-20p">
                                 <span>₹{{ number_format($prospect->budget, 2) }}</span>
                             </td>
                             <td class="w-20p">
-                                <span>{{ $prospect->proposal_status ?: 'Pending' }}</span>
-                            </td>
-                            <td class="w-20p">
-                                <span>{{ \Carbon\Carbon::parse($prospect->last_followup_date)->format('M d, Y') }}</span>
-                            </td>
-                            <td class="w-20p">
-                                <span>{{ \Carbon\Carbon::parse($prospect->introductory_call)->format('M d, Y') }}</span>
+                                <span class="">{{ $prospect->proposal_status ?: 'Pending' }}</span>
                             </td>
                         </tr>
                     @endforeach

@@ -58,6 +58,21 @@
                 <div class="form-row">
                     <div class="col-md-6">
                         <div class="form-group col-md-12">
+                            <label for="last_followup_date" class="font-weight-bold">Last Followup Date</label>
+                            <span class="ml-2">{{ $prospect->last_followup_date ?? 'NA' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group col-md-12">
+                            <label for="introductory_call" class="font-weight-bold">Introductory Date:</label>
+                            <span class="ml-2">{{ $prospect->introductory_call ?? 'NA' }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group col-md-12">
                             <label for="proposal_status" class="font-weight-bold">Proposal Status:</label>
                             <span class="ml-2">{{ $prospect->proposal_status }}</span>
                         </div>
