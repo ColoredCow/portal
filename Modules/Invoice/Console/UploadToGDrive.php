@@ -88,7 +88,7 @@ class UploadToGDrive extends Command
         $client->setAccessType('offline');
         $service = new Drive($client);
         $countryFolderName = $isIndianInvoice ? 'Invoices - IN (Indian)' : 'Invoices - Ex (International)';
-        
+
         $invoiceCountryFolderId = $this->getOrCreateFolder($service, $countryFolderName, $googleDriveParentFolderId);
         $financialYearFolderId = $this->getOrCreateFolder($service, $financialYearFolderName, $invoiceCountryFolderId);
         $monthFolderId = $this->getOrCreateFolder($service, $monthFolderName, $financialYearFolderId);
@@ -141,7 +141,7 @@ class UploadToGDrive extends Command
 
     private function getFinancialYear(Carbon $date) {
         $year = $date->year;
-    
+
         // If the date is between January and March, it belongs to the previous financial year.
         if ($date->month < 4) {
             $startYear = $year - 1;
@@ -151,7 +151,7 @@ class UploadToGDrive extends Command
             $startYear = $year;
             $endYear = $year + 1;
         }
-    
+
         return "$startYear-" . substr($endYear, -2);
     }
 }
