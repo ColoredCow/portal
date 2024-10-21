@@ -18,8 +18,6 @@ use Modules\HR\Entities\UniversityContact;
 use Modules\Invoice\Entities\Invoice;
 use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Project\Entities\Project;
-use Modules\Prospect\Entities\Prospect;
-use Modules\Prospect\Entities\ProspectContactPerson;
 use Modules\Salary\Entities\EmployeeSalary;
 
 class FakeProdDataCommand extends Command
@@ -64,7 +62,6 @@ class FakeProdDataCommand extends Command
         $this->fakeHRTablesData();
         $this->fakeFinanceTablesData();
         $this->fakeProjectTablesData();
-        $this->fakeProspectTablesData();
 
         return 0;
     }
@@ -214,22 +211,6 @@ class FakeProdDataCommand extends Command
         foreach (Project::all() as $project) {
             $project->name = $this->faker->words(3, true);
             $project->update();
-        }
-    }
-
-    private function fakeProspectTablesData()
-    {
-        foreach (ProspectContactPerson::all() as $prospectContactPerson) {
-            $prospectContactPerson->name = $this->faker->name;
-            $prospectContactPerson->email = $this->faker->email;
-            $prospectContactPerson->phone = $this->faker->phoneNumber;
-            $prospectContactPerson->update();
-        }
-
-        foreach (Prospect::all() as $prospect) {
-            $prospect->name = $this->faker->words(3, true);
-            $prospect->brief_info = $this->faker->sentences(4, true);
-            $prospect->update();
         }
     }
 }
