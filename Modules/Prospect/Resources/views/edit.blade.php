@@ -6,7 +6,7 @@
         <div class="mt-5">
             @include('status', ['errors' => $errors->all()])
             <div class="card">
-                <form action={{ route('prospect.edit', $prospect->id) }} method="POST" enctype="multipart/form-data"
+                <form action={{ route('prospect.update', $prospect->id) }} method="POST" enctype="multipart/form-data"
                     id="form_project">
                     @csrf
                     @method('PUT')

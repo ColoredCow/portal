@@ -108,11 +108,24 @@ class ProspectController extends Controller
      * Update the specified resource in storage.
      * @param Request $request
      * @param int $id
-     * @return Renderable
      */
     public function update(Request $request, $id)
     {
-        //
+        $prospect = Prospect::find($id);
+        $prospect->organization_name = $request->org_name;
+        $prospect->poc_user_id = $request->poc_user_id;
+        $prospect->proposal_sent_date = $request->proposal_sent_date;
+        $prospect->domain = $request->domain;
+        $prospect->customer_type = $request->customer_type;
+        $prospect->budget = $request->budget;
+        $prospect->proposal_status = $request->proposal_status;
+        $prospect->introductory_call = $request->introductory_call;
+        $prospect->last_followup_date = $request->last_followup_date;
+        $prospect->rfp_link = $request->rfp_link;
+        $prospect->proposal_link = $request->proposal_link;
+        $prospect->save();
+
+        return redirect()->route('prospect.index')->with('status', 'Prospect updated successfully!');
     }
 
     /**
