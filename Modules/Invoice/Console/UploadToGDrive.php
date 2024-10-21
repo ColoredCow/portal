@@ -156,6 +156,6 @@ class UploadToGDrive extends Command
         $endYear = (string) $endYear;
         $shortEndYear = substr($endYear, -2);
 
-        return $startYear . "-". $shortEndYear;
+        return $startYear . '-' . $shortEndYear;
     }
 }
