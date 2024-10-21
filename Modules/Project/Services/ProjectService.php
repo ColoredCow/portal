@@ -309,7 +309,11 @@ class ProjectService implements ProjectServiceContract
             $designationKeys = array_keys($designations);
 
             foreach ($designationKeys as $designationName) {
-                $totalResourceRequirementCount = $project->getResourceRequirementByDesignation($designationName)->total_requirement;
+                $resourceRequirement = $project->getResourceRequirementByDesignation($designationName);
+                $totalResourceRequirementCount = 0;
+                if ($resourceRequirement) {
+                    $totalResourceRequirementCount = $resourceRequirement->total_requirement;
+                }
                 if ($totalResourceRequirementCount > 0) {
                     $projectData['teamMemberNeededByDesignation'][$designations[$designationName]] = $totalResourceRequirementCount;
                 }
