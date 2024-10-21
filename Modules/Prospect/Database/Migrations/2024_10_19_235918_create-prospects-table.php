@@ -14,7 +14,7 @@ class CreateProspectsTable extends Migration
     public function up()
     {
         Schema::create('prospects', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('organization_name');
 
             $table->integer('poc_user_id')->unsigned();
