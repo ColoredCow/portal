@@ -75,6 +75,7 @@ class UploadToGDrive extends Command
             $invoice->save();
 
             $this->info("Updated google_drive_link for invoice ID {$invoice->id}");
+            sleep(1);
         }
     }
 
