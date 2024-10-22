@@ -241,4 +241,18 @@ class User extends Authenticatable
     {
         return $this->hasMany(Prospect::class, 'poc_user_id');
     }
+
+    public function getActiveUsersAttribute()
+    {
+        $users = User::all();
+        $activeUser = [];
+        foreach ($users as $user) {
+            if (! $user->isActiveEmployee) {
+                continue;
+            }
+            $activeUser[] = $user;
+        }
+
+        return $activeUser;
+    }
 }

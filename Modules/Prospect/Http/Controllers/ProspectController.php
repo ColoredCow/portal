@@ -7,10 +7,19 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Prospect\Entities\Prospect;
 use Modules\Prospect\Http\Requests\ProspectRequest;
+use Modules\Prospect\Services\ProspectService;
 use Modules\User\Entities\User;
 
 class ProspectController extends Controller
 {
+
+    protected $service;
+
+    public function __construct(ProspectService $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -30,17 +39,11 @@ class ProspectController extends Controller
      */
     public function create()
     {
-        $users = User::all();
-        $activeUser = [];
-        foreach ($users as $user) {
-            if (! $user->isActiveEmployee) {
-                continue;
-            }
-            $activeUser[] = $user;
-        }
+        $user = new User();
+        $activeUsers = $user->active_users;
 
         return view('prospect::create', [
-            'users' => $activeUser,
+            'users' => $activeUsers,
         ]);
     }
 
@@ -50,22 +53,10 @@ class ProspectController extends Controller
      */
     public function store(ProspectRequest $request)
     {
-        $prospect = new Prospect();
         $validated = $request->validated();
-        $prospect->organization_name = $validated['org_name'];
-        $prospect->poc_user_id = $validated['poc_user_id'];
-        $prospect->proposal_sent_date = $validated['proposal_sent_date'];
-        $prospect->domain = $validated['domain'];
-        $prospect->customer_type = $validated['customer_type'];
-        $prospect->budget = $validated['budget'];
-        $prospect->proposal_status = $validated['proposal_status'];
-        $prospect->introductory_call = $validated['proposal_sent_date'];
-        $prospect->last_followup_date = $validated['proposal_sent_date'];
-        $prospect->rfp_link = $validated['rfp_url'];
-        $prospect->proposal_link = $validated['proposal_url'];
-        $prospect->save();
+        $data = $this->service->store($validated);
 
-        return redirect()->route('prospect.index')->with('status', 'Prospect created successfully!');
+        return $data;
     }
 
     /**
@@ -90,17 +81,11 @@ class ProspectController extends Controller
     public function edit($id)
     {
         $prospect = Prospect::find($id);
-        $users = User::all();
-        $activeUser = [];
-        foreach ($users as $user) {
-            if (! $user->isActiveEmployee) {
-                continue;
-            }
-            $activeUser[] = $user;
-        }
+        $user = new User();
+        $activeUsers = $user->active_users;
         return view('prospect::edit', [
             'prospect' => $prospect,
-            'users' => $activeUser,
+            'users' => $activeUsers,
         ]);
     }
 
@@ -111,20 +96,8 @@ class ProspectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $prospect = Prospect::find($id);
-        $prospect->organization_name = $request->org_name;
-        $prospect->poc_user_id = $request->poc_user_id;
-        $prospect->proposal_sent_date = $request->proposal_sent_date;
-        $prospect->domain = $request->domain;
-        $prospect->customer_type = $request->customer_type;
-        $prospect->budget = $request->budget;
-        $prospect->proposal_status = $request->proposal_status;
-        $prospect->introductory_call = $request->introductory_call;
-        $prospect->last_followup_date = $request->last_followup_date;
-        $prospect->rfp_link = $request->rfp_link;
-        $prospect->proposal_link = $request->proposal_link;
-        $prospect->save();
-
+        $validated = $request->validated();
+        $this->service->update($validated, $id);
         return redirect()->route('prospect.index')->with('status', 'Prospect updated successfully!');
     }
 
