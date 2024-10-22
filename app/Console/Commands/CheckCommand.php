@@ -78,6 +78,7 @@ class CheckCommand extends Command
             'fix',
             '--config',
             '.php-cs-fixer.php',
+            '--dry-run',
             '--verbose',
             '--diff',
         ];
