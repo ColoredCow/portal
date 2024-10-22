@@ -2,7 +2,7 @@
 
 namespace Modules\Prospect\Http\Controllers;
 
-use App\Models\Country;
+use Modules\Client\Entities\Country;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -27,9 +27,12 @@ class ProspectController extends Controller
     public function index()
     {
         $prospects = Prospect::with('pocUser')->get();
+        $countries = Country::all();
+        $currencySymbols = $countries->pluck('currency_symbol', 'currency');
 
         return view('prospect::index', [
             'prospects' => $prospects,
+            'currencySymbols' => $currencySymbols,
         ]);
     }
 
@@ -68,9 +71,12 @@ class ProspectController extends Controller
     public function show($id)
     {
         $prospect = Prospect::with(['pocUser', 'comments', 'comments.user'])->find($id);
+        $countries = Country::all();
+        $currencySymbols = $countries->pluck('currency_symbol', 'currency');
 
         return view('prospect::subviews.show', [
             'prospect' => $prospect,
+            'currencySymbols' => $currencySymbols,
         ]);
     }
 

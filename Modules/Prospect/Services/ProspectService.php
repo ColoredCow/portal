@@ -29,6 +29,7 @@ class ProspectService
         $prospect->last_followup_date = $request->introductory_call;
         $prospect->rfp_link = $request->rfp_link;
         $prospect->proposal_link = $request->proposal_link;
+        $prospect->currency = $request->currency;
         $prospect->save();
 
         return redirect()->route('prospect.edit', $prospect->id)->with('status', 'Prospect updated successfully!');
@@ -58,6 +59,7 @@ class ProspectService
         $prospect->last_followup_date = $validated['last_followup_date'] ?? $validated['proposal_sent_date'];
         $prospect->rfp_link = $validated['rfp_link'];
         $prospect->proposal_link = $validated['proposal_link'];
+        $prospect->currency = $validated['currency'];
         $prospect->save();
     }
 }

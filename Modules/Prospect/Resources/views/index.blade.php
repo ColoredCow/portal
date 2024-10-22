@@ -67,7 +67,10 @@
                                 <span>{{ ucfirst($prospect->customer_type) }}</span>
                             </td>
                             <td class="w-20p">
-                                <span>₹{{ number_format($prospect->budget) }}</span>
+                                <span>
+                                    {{ $currencySymbols[$prospect->currency] ?? '' }}
+                                    {{ number_format($prospect->budget ?? 0, 2) }}
+                                </span>
                             </td>
                             <td class="w-20p">
                                 <span class="">{{ $prospect->proposal_status }}</span>

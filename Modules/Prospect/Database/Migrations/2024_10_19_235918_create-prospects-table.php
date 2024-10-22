@@ -28,6 +28,7 @@ class CreateProspectsTable extends Migration
             $table->date('last_followup_date')->nullable();
             $table->string('rfp_link');
             $table->string('proposal_link');
+            $table->string('currency');
 
             $table->foreign('poc_user_id')->references('id')->on('users')->onDelete('cascade');
 
