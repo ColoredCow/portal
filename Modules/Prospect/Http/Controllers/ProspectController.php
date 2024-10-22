@@ -108,6 +108,6 @@ class ProspectController extends Controller
     {
         $this->service->commentUpdate($request, $id);
 
-        return redirect()->route('prospect.index')->with('status', 'Comment updated successfully!');
+        return redirect()->route('prospect.show', $id)->with('status', 'Comment updated successfully!');
     }
 }
