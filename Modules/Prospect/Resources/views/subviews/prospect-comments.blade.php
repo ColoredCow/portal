@@ -13,7 +13,11 @@
                     <div class="d-flex align-items-center">
                         <img src="{{ $comment->user->avatar }}" alt="User" class="rounded-circle mr-5"
                             width="50" data-toggle="tooltip" data-placement="top" title={{ $comment->user->name }}>
-                        <h5>{{ $comment->comment }}</h5>
+                        <div>
+                            <span
+                                class="fz-16 font-weight-bold text-muted">{{ \Carbon\Carbon::parse($comment->created_at)->format('M d, Y') }}</span>
+                            <h5>{{ $comment->comment }}</h5>
+                        </div>
                     </div>
                 </div>
             @endforeach

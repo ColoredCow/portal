@@ -52,8 +52,10 @@
                                         href="{{ route('prospect.show', $prospect->id) }}">{{ $prospect->organization_name }}</a>
                                 </div>
                             </td>
-                            <td class="w-25p">
-                                <span>{{ $prospect->pocUser->name ?? 'N/A' }}</span>
+                            <td class="w-15p">
+                                <img src="{{ $prospect->pocUser->avatar }}" class="rounded-circle" width="30"
+                                    height="30" alt="{{ $prospect->pocUser->name }}"data-toggle="tooltip"
+                                    data-placement="top" title={{ $prospect->pocUser->name }}>
                             </td>
                             <td class="w-25p">
                                 <span>{{ \Carbon\Carbon::parse($prospect->proposal_sent_date)->format('M d, Y') }}</span>
