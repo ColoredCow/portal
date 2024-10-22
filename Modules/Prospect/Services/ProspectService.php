@@ -34,12 +34,12 @@ class ProspectService
         return redirect()->route('prospect.edit', $prospect->id)->with('status', 'Prospect updated successfully!');
     }
 
-    public function commentUpdate($request, $id)
+    public function commentUpdate($validated, $id)
     {
         $prospectComment = new ProspectComment();
         $prospectComment->prospect_id = $id;
         $prospectComment->user_id = auth()->user()->id;
-        $prospectComment->comment = $request->prospect_comment;
+        $prospectComment->comment = $validated['prospect_comment'];
         $prospectComment->save();
 
         return $prospectComment;

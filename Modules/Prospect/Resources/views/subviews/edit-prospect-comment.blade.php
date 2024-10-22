@@ -6,7 +6,7 @@
             <div class="form-group">
                 <label for="comment" class="mb-4">Comment</label>
                 <textarea class="form-control" id="prospect_comment" name="prospect_comment" rows="3"
-                    placeholder="Add your comment here"></textarea>
+                    placeholder="Add your comment here" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>

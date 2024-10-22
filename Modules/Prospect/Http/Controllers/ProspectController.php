@@ -111,7 +111,10 @@ class ProspectController extends Controller
      */
     public function commentUpdate(Request $request, $id)
     {
-        $this->service->commentUpdate($request, $id);
+        $validated = $request->validate([
+            'prospect_comment' => 'required',
+        ]);
+        $this->service->commentUpdate($validated, $id);
 
         return redirect()->route('prospect.show', $id)->with('status', 'Comment updated successfully!');
     }
