@@ -2,10 +2,10 @@
 
 namespace Modules\Prospect\Http\Controllers;
 
-use Modules\Client\Entities\Country;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Client\Entities\Country;
 use Modules\Prospect\Entities\Prospect;
 use Modules\Prospect\Http\Requests\ProspectRequest;
 use Modules\Prospect\Services\ProspectService;
