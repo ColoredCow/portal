@@ -245,7 +245,7 @@ class User extends Authenticatable
 
     public function getActiveUsersAttribute()
     {
-        $users = User::all();
+        $users = self::all();
         $activeUser = [];
         foreach ($users as $user) {
             if (! $user->isActiveEmployee) {

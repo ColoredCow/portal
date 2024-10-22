@@ -1,6 +1,7 @@
 <?php
 
 namespace Modules\Prospect\Services;
+
 use Modules\Prospect\Entities\Prospect;
 use Modules\Prospect\Entities\ProspectComment;
 
@@ -59,5 +60,4 @@ class ProspectService
 
         return $prospect;
     }
-
 }

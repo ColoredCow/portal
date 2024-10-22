@@ -12,7 +12,6 @@ use Modules\User\Entities\User;
 
 class ProspectController extends Controller
 {
-
     protected $service;
 
     public function __construct(ProspectService $service)
@@ -82,6 +81,7 @@ class ProspectController extends Controller
         $prospect = Prospect::with(['pocUser', 'comments'])->find($id);
         $user = new User();
         $activeUsers = $user->active_users;
+
         return view('prospect::edit', [
             'prospect' => $prospect,
             'users' => $activeUsers,
@@ -96,6 +96,7 @@ class ProspectController extends Controller
     public function update(Request $request, $id)
     {
         $this->service->update($request, $id);
+
         return redirect()->route('prospect.index')->with('status', 'Prospect updated successfully!');
     }
 
@@ -106,6 +107,7 @@ class ProspectController extends Controller
     public function commentUpdate(Request $request, $id)
     {
         $this->service->commentUpdate($request, $id);
+
         return redirect()->route('prospect.index')->with('status', 'Comment updated successfully!');
     }
 }
