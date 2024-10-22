@@ -68,7 +68,7 @@
                                 <span>₹{{ number_format($prospect->budget) }}</span>
                             </td>
                             <td class="w-20p">
-                                <span class="">{{ $prospect->proposal_status ?: 'Pending' }}</span>
+                                <span class="">{{ $prospect->proposal_status }}</span>
                             </td>
                         </tr>
                     @endforeach
