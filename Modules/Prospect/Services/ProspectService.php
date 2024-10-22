@@ -13,10 +13,21 @@ class ProspectService
         return redirect()->route('prospect.index')->with('status', 'Prospect created successfully!');
     }
 
-    public function update($validated, $id)
+    public function update($request, $id)
     {
         $prospect = Prospect::find($id);
-        $this->saveProspectData($prospect, $validated);
+        $prospect->organization_name = $request->org_name;
+        $prospect->poc_user_id = $request->poc_user_id;
+        $prospect->proposal_sent_date = $request->proposal_sent_date;
+        $prospect->domain = $request->domain;
+        $prospect->customer_type = $request->customer_type;
+        $prospect->budget = $request->budget;
+        $prospect->proposal_status = $request->proposal_status;
+        $prospect->introductory_call = $request->introductory_call;
+        $prospect->last_followup_date = $request->introductory_call;
+        $prospect->rfp_link = $request->introductory_call;
+        $prospect->proposal_link = $request->proposal_link;
+        $prospect->save();
 
         return redirect()->route('prospect.index')->with('status', 'Prospect updated successfully!');
     }

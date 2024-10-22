@@ -96,8 +96,7 @@ class ProspectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validated();
-        $this->service->update($validated, $id);
+        $this->service->update($request, $id);
         return redirect()->route('prospect.index')->with('status', 'Prospect updated successfully!');
     }
 

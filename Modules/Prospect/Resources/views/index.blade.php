@@ -40,7 +40,7 @@
                         <th class="sticky-top">Domain</th>
                         <th class="sticky-top">Customer Type</th>
                         <th class="sticky-top">Budget</th>
-                        <th class="sticky-top">Status</th>
+                        <th class="sticky-top">Prospect Status</th>
                     </tr>
                 </thead>
                 <tbody>
