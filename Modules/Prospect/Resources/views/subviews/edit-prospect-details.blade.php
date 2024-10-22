@@ -74,6 +74,18 @@
                             placeholder="Enter Proposal Status" required="required"
                             value="{{ $prospect->proposal_status }}">
                     </div>
+                    <div class="form-group offset-md-1 col-md-5">
+                        <label for="rfp_link">{{ __('RFP Link') }}</label>
+                        <input type="url" class="form-control" name="rfp_link" id="rfp_link"
+                            placeholder="Enter RFP URL" value="{{ $prospect->rfp_link }}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="proposal_link">{{ __('Proposal Link') }}</label>
+                        <input type="url" class="form-control" name="proposal_link" id="proposal_link"
+                            placeholder="Enter Proposal URL" value="{{ $prospect->proposal_link }}">
+                    </div>
                 </div>
             </div>
         </div>

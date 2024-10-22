@@ -27,7 +27,7 @@ class ProspectService
         $prospect->proposal_status = $request->proposal_status;
         $prospect->introductory_call = $request->introductory_call;
         $prospect->last_followup_date = $request->introductory_call;
-        $prospect->rfp_link = $request->introductory_call;
+        $prospect->rfp_link = $request->rfp_link;
         $prospect->proposal_link = $request->proposal_link;
         $prospect->save();
 
@@ -56,8 +56,8 @@ class ProspectService
         $prospect->proposal_status = $validated['proposal_status'];
         $prospect->introductory_call = $validated['introductory_call'] ?? $validated['proposal_sent_date'];
         $prospect->last_followup_date = $validated['last_followup_date'] ?? $validated['proposal_sent_date'];
-        $prospect->rfp_link = $validated['rfp_link'] ?? $validated['rfp_url'];
-        $prospect->proposal_link = $validated['proposal_link'] ?? $validated['proposal_url'];
+        $prospect->rfp_link = $validated['rfp_link'];
+        $prospect->proposal_link = $validated['proposal_link'];
         $prospect->save();
     }
 }

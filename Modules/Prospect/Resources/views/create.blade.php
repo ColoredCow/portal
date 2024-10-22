@@ -86,17 +86,17 @@
                                         value="{{ old('proposal_status') }}">
                                 </div>
                                 <div class="form-group offset-md-1 col-md-5">
-                                    <label for="rfp_url">{{ __('RFP URL') }}</label>
-                                    <input type="url" class="form-control" name="rfp_url" id="rfp_url"
-                                        placeholder="Enter RFP URL" value="{{ old('rfp_url') }}">
+                                    <label for="rfp_link">{{ __('RFP Link') }}</label>
+                                    <input type="url" class="form-control" name="rfp_link" id="rfp_link"
+                                        placeholder="Enter RFP URL" value="{{ old('rfp_link') }}">
                                 </div>
                             </div>
                             <br />
                             <div class="form-row">
                                 <div class="form-group col-md-5">
-                                    <label for="proposal_url">{{ __('Proposal URL') }}</label>
-                                    <input type="url" class="form-control" name="proposal_url" id="proposal_url"
-                                        placeholder="Enter Proposal URL" value="{{ old('proposal_url') }}">
+                                    <label for="proposal_link">{{ __('Proposal Link') }}</label>
+                                    <input type="url" class="form-control" name="proposal_link" id="proposal_link"
+                                        placeholder="Enter Proposal URL" value="{{ old('proposal_link') }}">
                                 </div>
                             </div>
                         </div>
