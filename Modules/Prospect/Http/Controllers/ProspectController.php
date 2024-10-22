@@ -95,9 +95,9 @@ class ProspectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->service->update($request, $id);
+        $data = $this->service->update($request, $id);
 
-        return redirect()->route('prospect.index')->with('status', 'Prospect updated successfully!');
+        return $data;
     }
 
     /**

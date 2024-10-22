@@ -9,13 +9,11 @@
                 <h5 class="font-weight-bold">Comments</h5>
             </div>
             @foreach ($prospect->comments as $comment)
-                <div class="card mb-3">
-                    <div class="card-header d-flex">
-                        <h5 class="font-weight-bold">{{ $comment->comment }}</h5>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">Commented By: {{ $comment->user->name }}</p>
-                        <p class="card-text">Commented At: {{ $comment->created_at }}</p>
+                <div class="mb-3">
+                    <div class="d-flex align-items-center">
+                        <img src="{{ $comment->user->avatar }}" alt="User" class="rounded-circle mr-5"
+                            width="50" data-toggle="tooltip" data-placement="top" title={{ $comment->user->name }}>
+                        <h5>{{ $comment->comment }}</h5>
                     </div>
                 </div>
             @endforeach

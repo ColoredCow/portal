@@ -36,7 +36,7 @@
                     <tr>
                         <th class="sticky-top">Organization Name</th>
                         <th class="sticky-top">POC</th>
-                        <th class="sticky-top">Proposal sent Date</th>
+                        <th class="sticky-top">Proposal Sent Date</th>
                         <th class="sticky-top">Domain</th>
                         <th class="sticky-top">Customer Type</th>
                         <th class="sticky-top">Budget</th>
@@ -52,10 +52,10 @@
                                         href="{{ route('prospect.show', $prospect->id) }}">{{ $prospect->organization_name }}</a>
                                 </div>
                             </td>
-                            <td class="w-20p">
+                            <td class="w-25p">
                                 <span>{{ $prospect->pocUser->name ?? 'N/A' }}</span>
                             </td>
-                            <td class="w-30p">
+                            <td class="w-25p">
                                 <span>{{ \Carbon\Carbon::parse($prospect->proposal_sent_date)->format('M d, Y') }}</span>
                             </td>
                             <td class="w-20p">

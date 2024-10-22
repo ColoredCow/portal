@@ -31,7 +31,7 @@ class ProspectService
         $prospect->proposal_link = $request->proposal_link;
         $prospect->save();
 
-        return redirect()->route('prospect.index')->with('status', 'Prospect updated successfully!');
+        return redirect()->route( 'prospect.edit', $prospect->id)->with('status', 'Prospect updated successfully!');
     }
 
     public function commentUpdate($request, $id)
