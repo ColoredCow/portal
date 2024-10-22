@@ -233,11 +233,6 @@ class User extends Authenticatable
         return optional($this->meta()->where('meta_key', 'office_location')->first())->meta_value;
     }
 
-    protected static function newFactory()
-    {
-        return new UserFactory();
-    }
-
     public function prospects()
     {
         return $this->hasMany(Prospect::class, 'poc_user_id');
@@ -260,5 +255,10 @@ class User extends Authenticatable
     public function prospectsComments()
     {
         return $this->hasMany(ProspectComment::class);
+    }
+
+    protected static function newFactory()
+    {
+        return new UserFactory();
     }
 }

@@ -34,6 +34,17 @@ class ProspectService
         return redirect()->route('prospect.index')->with('status', 'Prospect updated successfully!');
     }
 
+    public function commentUpdate($request, $id)
+    {
+        $prospectComment = new ProspectComment();
+        $prospectComment->prospect_id = $id;
+        $prospectComment->user_id = auth()->user()->id;
+        $prospectComment->comment = $request->prospect_comment;
+        $prospectComment->save();
+
+        return $prospectComment;
+    }
+
     private function saveProspectData($prospect, $validated)
     {
         $prospect->organization_name = $validated['org_name'];
@@ -48,16 +59,5 @@ class ProspectService
         $prospect->rfp_link = $validated['rfp_link'] ?? $validated['rfp_url'];
         $prospect->proposal_link = $validated['proposal_link'] ?? $validated['proposal_url'];
         $prospect->save();
-    }
-
-    public function commentUpdate($request, $id)
-    {
-        $prospect = new ProspectComment();
-        $prospect->prospect_id = $id;
-        $prospect->user_id = auth()->user()->id;
-        $prospect->comment = $request->prospect_comment;
-        $prospect->save();
-
-        return $prospect;
     }
 }
