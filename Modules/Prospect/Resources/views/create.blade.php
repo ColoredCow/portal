@@ -62,8 +62,19 @@
                                 </div>
                                 <div class="form-group offset-md-1 col-md-5">
                                     <label for="budget" class="field-required">{{ __('Budget') }}</label>
-                                    <input type="text" class="form-control" name="budget" id="budget"
-                                        placeholder="Enter Budget" required="required" value="{{ old('budget') }}">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <select name="currency" v-model="currency" id="currency"
+                                                class="input-group-text" required="required">
+                                                @foreach ($countries as $country)
+                                                    <option value="{{ $country->currency }}">{{ $country->currency }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <input type="number" class="form-control" name="budget" placeholder="Enter Budget"
+                                            required="required" step=".01" min="0" value="{{ old('budget') }}">
+                                    </div>
                                 </div>
                             </div>
                             <br>

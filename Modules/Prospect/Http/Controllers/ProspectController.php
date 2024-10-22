@@ -2,6 +2,7 @@
 
 namespace Modules\Prospect\Http\Controllers;
 
+use App\Models\Country;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -40,9 +41,11 @@ class ProspectController extends Controller
     {
         $user = new User();
         $activeUsers = $user->active_users;
+        $countries = Country::all();
 
         return view('prospect::create', [
             'users' => $activeUsers,
+            'countries' => $countries,
         ]);
     }
 
@@ -81,10 +84,12 @@ class ProspectController extends Controller
         $prospect = Prospect::with(['pocUser', 'comments'])->find($id);
         $user = new User();
         $activeUsers = $user->active_users;
+        $countries = Country::all();
 
         return view('prospect::edit', [
             'prospect' => $prospect,
             'users' => $activeUsers,
+            'countries' => $countries,
         ]);
     }
 

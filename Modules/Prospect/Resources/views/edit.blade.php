@@ -1,5 +1,6 @@
 @extends('prospect::layouts.master')
 @section('content')
+    @includeWhen(session('status'), 'toast', ['message' => session('status')])
     <div class="container">
         <br>
         <h4 class="mb-5">Edit Prospect</h4>
