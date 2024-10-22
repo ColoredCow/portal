@@ -62,11 +62,10 @@ class ProspectController extends Controller
     /**
      * Show the specified resource.
      * @param int $id
-     * @return Renderable
      */
     public function show($id)
     {
-        $prospect = Prospect::with('pocUser')->find($id);
+        $prospect = Prospect::with(['pocUser', 'comments', 'comments.user'])->find($id);
 
         return view('prospect::subviews.show', [
             'prospect' => $prospect,
@@ -80,7 +79,7 @@ class ProspectController extends Controller
      */
     public function edit($id)
     {
-        $prospect = Prospect::find($id);
+        $prospect = Prospect::with(['pocUser', 'comments'])->find($id);
         $user = new User();
         $activeUsers = $user->active_users;
         return view('prospect::edit', [
@@ -103,10 +102,10 @@ class ProspectController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param int $id
-     * @return Renderable
      */
-    public function destroy($id)
+    public function commentUpdate(Request $request, $id)
     {
-        //
+        $this->service->commentUpdate($request, $id);
+        return redirect()->route('prospect.index')->with('status', 'Comment updated successfully!');
     }
 }

@@ -13,6 +13,7 @@ use Modules\HR\Entities\Employee;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Prospect\Entities\Prospect;
+use Modules\Prospect\Entities\ProspectComment;
 use Modules\User\Database\Factories\UserFactory;
 use Modules\User\Traits\CanBeExtended;
 use Modules\User\Traits\HasWebsiteUser;
@@ -254,5 +255,10 @@ class User extends Authenticatable
         }
 
         return $activeUser;
+    }
+
+    public function prospectsComments()
+    {
+        return $this->hasMany(ProspectComment::class);
     }
 }

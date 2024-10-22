@@ -2,6 +2,7 @@
 
 namespace Modules\Prospect\Services;
 use Modules\Prospect\Entities\Prospect;
+use Modules\Prospect\Entities\ProspectComment;
 
 class ProspectService
 {
@@ -46,6 +47,17 @@ class ProspectService
         $prospect->rfp_link = $validated['rfp_link'] ?? $validated['rfp_url'];
         $prospect->proposal_link = $validated['proposal_link'] ?? $validated['proposal_url'];
         $prospect->save();
+    }
+
+    public function commentUpdate($request, $id)
+    {
+        $prospect = new ProspectComment();
+        $prospect->prospect_id = $id;
+        $prospect->user_id = auth()->user()->id;
+        $prospect->comment = $request->prospect_comment;
+        $prospect->save();
+
+        return $prospect;
     }
 
 }

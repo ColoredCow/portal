@@ -18,4 +18,5 @@ Route::prefix('prospect')->middleware('auth')->group(function () {
     Route::get('/{prospect}/edit', 'ProspectController@edit')->name('prospect.edit');
     Route::get('/{prospect}/show', 'ProspectController@show')->name('prospect.show');
     Route::put('/{prospect}/update', 'ProspectController@update')->name('prospect.update');
+    Route::put('/{prospect}/comment/update', 'ProspectController@commentUpdate')->name('prospect.comment.update');
 });

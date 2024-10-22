@@ -14,4 +14,9 @@ class Prospect extends Model
     {
         return $this->belongsTo(User::class, 'poc_user_id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(ProspectComment::class);
+    }
 }
