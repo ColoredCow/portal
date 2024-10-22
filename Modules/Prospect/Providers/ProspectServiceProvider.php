@@ -49,7 +49,6 @@ class ProspectServiceProvider extends ServiceProvider
     public function registerViews()
     {
         $viewPath = resource_path('views/modules/' . $this->moduleNameLower);
-
         $sourcePath = module_path($this->moduleName, 'Resources/views');
 
         $this->publishes([
@@ -88,6 +87,16 @@ class ProspectServiceProvider extends ServiceProvider
     }
 
     /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return [];
+    }
+
+    /**
      * Register config.
      *
      * @return void
@@ -101,16 +110,6 @@ class ProspectServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Config/config.php'),
             $this->moduleNameLower
         );
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return [];
     }
 
     private function getPublishableViewPaths(): array
