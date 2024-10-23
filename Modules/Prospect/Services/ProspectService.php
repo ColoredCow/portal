@@ -26,7 +26,7 @@ class ProspectService
         $prospect->budget = $request->budget;
         $prospect->proposal_status = $request->proposal_status;
         $prospect->introductory_call = $request->introductory_call;
-        $prospect->last_followup_date = $request->introductory_call;
+        $prospect->last_followup_date = $request->last_followup_date;
         $prospect->rfp_link = $request->rfp_link;
         $prospect->proposal_link = $request->proposal_link;
         $prospect->currency = $request->currency;

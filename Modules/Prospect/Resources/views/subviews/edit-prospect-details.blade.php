@@ -75,6 +75,18 @@
                             value="{{ $prospect->proposal_status }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
+                        <label for="introductory_call">{{ __('Introductory Call') }}</label>
+                        <input type="date" class="form-control" name="introductory_call" id="introductory_call"
+                            value="{{ $prospect->introductory_call }}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="last_followup_date">{{ __('Last Followup Date') }}</label>
+                        <input type="date" class="form-control" name="last_followup_date" id="last_followup_date"
+                            value="{{ $prospect->last_followup_date }}">
+                    </div>
+                    <div class="form-group offset-md-1 col-md-5">
                         <label for="rfp_link">{{ __('RFP Link') }}</label>
                         <input type="url" class="form-control" name="rfp_link" id="rfp_link"
                             placeholder="Enter RFP URL" value="{{ $prospect->rfp_link }}">
