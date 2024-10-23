@@ -57,16 +57,16 @@
                                     height="30" alt="{{ $prospect->pocUser->name }}"data-toggle="tooltip"
                                     data-placement="top" title={{ $prospect->pocUser->name }}>
                             </td>
-                            <td class="w-25p">
+                            <td class="w-30p">
                                 <span>{{ \Carbon\Carbon::parse($prospect->proposal_sent_date)->format('M d, Y') }}</span>
                             </td>
                             <td class="w-20p">
                                 <span>{{ $prospect->domain }}</span>
                             </td>
-                            <td class="w-30p">
+                            <td class="w-20p">
                                 <span>{{ ucfirst($prospect->customer_type) }}</span>
                             </td>
-                            <td class="w-20p">
+                            <td class="w-30p">
                                 <span>
                                     {{ $currencySymbols[$prospect->currency] ?? '' }}
                                     {{ number_format($prospect->budget ?? 0, 2) }}
