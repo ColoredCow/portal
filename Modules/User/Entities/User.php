@@ -12,6 +12,8 @@ use Modules\AppointmentSlots\Entities\AppointmentSlot;
 use Modules\HR\Entities\Employee;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectTeamMember;
+use Modules\Prospect\Entities\Prospect;
+use Modules\Prospect\Entities\ProspectComment;
 use Modules\User\Database\Factories\UserFactory;
 use Modules\User\Traits\CanBeExtended;
 use Modules\User\Traits\HasWebsiteUser;
@@ -229,6 +231,30 @@ class User extends Authenticatable
     public function getOfficeLocationAttribute()
     {
         return optional($this->meta()->where('meta_key', 'office_location')->first())->meta_value;
+    }
+
+    public function prospects()
+    {
+        return $this->hasMany(Prospect::class, 'poc_user_id');
+    }
+
+    public function getActiveUsersAttribute()
+    {
+        $users = self::all();
+        $activeUser = [];
+        foreach ($users as $user) {
+            if (! $user->isActiveEmployee) {
+                continue;
+            }
+            $activeUser[] = $user;
+        }
+
+        return $activeUser;
+    }
+
+    public function prospectsComments()
+    {
+        return $this->hasMany(ProspectComment::class);
     }
 
     protected static function newFactory()
