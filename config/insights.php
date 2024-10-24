@@ -101,7 +101,6 @@ return [
         SlevomatCodingStandard\Sniffs\ControlStructures\DisallowShortTernaryOperatorSniff::class,
         SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff::class,
         SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff::class,
-        SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff::class,
         SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff::class,
 
         PhpCsFixer\Fixer\Operator\NewWithBracesFixer::class,
