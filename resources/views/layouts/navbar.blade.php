@@ -102,9 +102,9 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Sales <span class="caret"></span>
                 </a>
                 <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_sales">
-                    @can('prospect.view')
+                    {{-- @can('prospect.view')
                         <a class="dropdown-item" href="{{ '/prospect' }}">Prospects</a>
-                    @endcan
+                    @endcan --}}
                     @can('lead.view')
                         <a class="dropdown-item" href="{{ '/lead' }}">Leads</a>
                     @endcan
