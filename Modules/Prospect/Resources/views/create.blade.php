@@ -86,7 +86,7 @@
                                         value="{{ old('proposal_status') }}">
                                 </div>
                                 <div class="form-group offset-md-1 col-md-5">
-                                    <label for="rfp_link">{{ __('RFP Link') }}</label>
+                                    <label for="rfp_link" class="field-required">{{ __('RFP Link') }}</label>
                                     <input type="url" class="form-control" name="rfp_link" id="rfp_link"
                                         placeholder="Enter RFP URL" value="{{ old('rfp_link') }}">
                                 </div>
@@ -94,7 +94,7 @@
                             <br />
                             <div class="form-row">
                                 <div class="form-group col-md-5">
-                                    <label for="proposal_link">{{ __('Proposal Link') }}</label>
+                                    <label for="proposal_link" class="field-required">{{ __('Proposal Link') }}</label>
                                     <input type="url" class="form-control" name="proposal_link" id="proposal_link"
                                         placeholder="Enter Proposal URL" value="{{ old('proposal_link') }}">
                                 </div>

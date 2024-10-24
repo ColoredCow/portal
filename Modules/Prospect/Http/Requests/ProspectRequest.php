@@ -21,6 +21,7 @@ class ProspectRequest extends FormRequest
             'customer_type' => 'required',
             'budget' => 'required',
             'proposal_status' => 'required',
+            'currency' => 'required',
             'rfp_link' => 'required',
             'proposal_link' => 'required',
         ];
