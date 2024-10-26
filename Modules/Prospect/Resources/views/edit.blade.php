@@ -31,7 +31,7 @@
             </div>
 
             <div class="tab-pane fade" id="prospectInsights" role="tabpanel" aria-labelledby="prospectInsights-tab">
-                @include('prospect::subviews.edit-prospect-comment')
+                @include('prospect::subviews.edit-prospect-insights')
             </div>
         </div>
     </div>
