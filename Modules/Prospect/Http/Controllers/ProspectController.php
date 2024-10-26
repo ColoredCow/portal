@@ -2,104 +2,126 @@
 
 namespace Modules\Prospect\Http\Controllers;
 
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Storage;
-use Modules\Prospect\Contracts\ProspectServiceContract;
+use Modules\Client\Entities\Country;
 use Modules\Prospect\Entities\Prospect;
-use Modules\Prospect\Entities\ProspectDocument;
+use Modules\Prospect\Http\Requests\ProspectRequest;
+use Modules\Prospect\Services\ProspectService;
+use Modules\User\Entities\User;
 
 class ProspectController extends Controller
 {
     protected $service;
 
-    public function __construct(ProspectServiceContract $service)
+    public function __construct(ProspectService $service)
     {
         $this->service = $service;
     }
 
     /**
      * Display a listing of the resource.
+     * @return Renderable
      */
     public function index()
     {
-        return view('prospect::index', $this->service->index());
+        $prospects = Prospect::with('pocUser')->get();
+        $countries = Country::all();
+        $currencySymbols = $countries->pluck('currency_symbol', 'currency');
+
+        return view('prospect::index', [
+            'prospects' => $prospects,
+            'currencySymbols' => $currencySymbols,
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
+     * @return Renderable
      */
     public function create()
     {
-        return view('prospect::create', $this->service->create());
+        $user = new User();
+        $activeUsers = $user->active_users;
+        $countries = Country::all();
+
+        return view('prospect::create', [
+            'users' => $activeUsers,
+            'countries' => $countries,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param Request $request
+     * @param \Modules\Prospect\Http\Requests\ProspectRequest $request
      */
-    public function store(Request $request)
+    public function store(ProspectRequest $request)
     {
-        $prospect = $this->service->store($request->all());
+        $validated = $request->validated();
+        $data = $this->service->store($validated);
 
-        return redirect(route('prospect.edit', [$prospect, 'contact-persons']));
+        return $data;
     }
 
     /**
      * Show the specified resource.
-     *
      * @param int $id
      */
     public function show($id)
     {
-        return redirect(route('prospect.edit', [$id, 'overview']));
+        $prospect = Prospect::with(['pocUser', 'comments', 'comments.user'])->find($id);
+        $countries = Country::all();
+        $currencySymbols = $countries->pluck('currency_symbol', 'currency');
 
-        // return view('prospect::show', $this->service->show($id, $section));
+        return view('prospect::subviews.show', [
+            'prospect' => $prospect,
+            'currencySymbols' => $currencySymbols,
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param Prospect $prospect
+     * @param int $id
+     * @return Renderable
      */
-    public function edit(Prospect $prospect, $section = null)
+    public function edit($id)
     {
-        return view('prospect::edit', $this->service->edit($prospect, $section));
+        $prospect = Prospect::with(['pocUser', 'comments'])->find($id);
+        $user = new User();
+        $activeUsers = $user->active_users;
+        $countries = Country::all();
+
+        return view('prospect::edit', [
+            'prospect' => $prospect,
+            'users' => $activeUsers,
+            'countries' => $countries,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
-     *
      * @param Request $request
      * @param int $id
      */
     public function update(Request $request, $id)
     {
-        $data = $this->service->update($request->all(), $id);
+        $data = $this->service->update($request, $id);
 
-        return redirect($data['route'])->with('status', 'Prospect created/updated successfully!');
-    }
-
-    public function newProgressStage(Request $request)
-    {
-        return $this->service->addNewProgressStage($request->all());
-    }
-
-    public function openDocument($documentID)
-    {
-        $prospectDocument = ProspectDocument::find($documentID);
-
-        return Storage::download($prospectDocument->file_path);
+        return $data;
     }
 
     /**
-     * soft delete prospect.
+     * Remove the specified resource from storage.
+     * @param int $id
      */
-    public function delete($id)
+    public function commentUpdate(Request $request, $id)
     {
-        Prospect::find($id)->delete();
+        $validated = $request->validate([
+            'prospect_comment' => 'required',
+        ]);
+        $this->service->commentUpdate($validated, $id);
 
-        return redirect()->back();
+        return redirect()->route('prospect.show', $id)->with('status', 'Comment updated successfully!');
     }
 }

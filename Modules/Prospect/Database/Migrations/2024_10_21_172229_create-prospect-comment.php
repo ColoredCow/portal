@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProspectNdaMetaTable extends Migration
+class CreateProspectComment extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,14 @@ class CreateProspectNdaMetaTable extends Migration
      */
     public function up()
     {
-        Schema::create('prospect_nda_meta', function (Blueprint $table) {
+        Schema::create('prospect_comments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('prospect_id');
-            $table->unsignedBigInteger('nda_meta_id');
+            $table->integer('user_id')->unsigned();
+            $table->text('comment');
             $table->timestamps();
-        });
-
-        Schema::table('prospect_nda_meta', function (Blueprint $table) {
             $table->foreign('prospect_id')->references('id')->on('prospects');
-            $table->foreign('nda_meta_id')->references('id')->on('nda_meta');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -33,10 +31,6 @@ class CreateProspectNdaMetaTable extends Migration
      */
     public function down()
     {
-        Schema::table('prospect_nda_meta', function (Blueprint $table) {
-            $table->dropForeign(['prospect_id']);
-            $table->dropForeign(['nda_meta_id']);
-        });
-        Schema::dropIfExists('prospect_nda_meta');
+        Schema::dropIfExists('prospect_comments');
     }
 }
