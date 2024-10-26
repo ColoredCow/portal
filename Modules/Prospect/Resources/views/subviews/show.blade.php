@@ -8,5 +8,6 @@
         </div>
         @include('prospect::subviews.prospect-details')
         @include('prospect::subviews.prospect-comments')
+        @include('prospect::subviews.prospect-insights')
     </div>
 @endsection
