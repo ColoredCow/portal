@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\CodeTrek\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;

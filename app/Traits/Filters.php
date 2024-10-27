@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Traits;
 
 trait Filters

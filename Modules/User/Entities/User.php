@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\User\Entities;
 
 use App\Models\KnowledgeCafe\Library\Book;

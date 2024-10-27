@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\LegalDocument\Emails\NDA;
 
 use Illuminate\Bus\Queueable;

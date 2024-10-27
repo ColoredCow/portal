@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\ProjectContract\Services;
 
 use Illuminate\Support\Facades\Auth;

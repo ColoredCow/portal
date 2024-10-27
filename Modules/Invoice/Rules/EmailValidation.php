@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Invoice\Rules;
 
 use Illuminate\Contracts\Validation\Rule;

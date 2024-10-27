@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Prospect\Entities\Scopes;
 
 use Illuminate\Database\Eloquent\Builder;

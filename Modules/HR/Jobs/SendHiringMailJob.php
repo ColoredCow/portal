@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\HR\Jobs;
 
 use Illuminate\Bus\Queueable;

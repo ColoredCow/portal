@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\HR\Listeners\Recruitment;
 
 use Modules\HR\Entities\ApplicationRound;

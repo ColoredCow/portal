@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\HR\Notifications;
 
 use Illuminate\Bus\Queueable;

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Listeners;
 
 use Corcel\Model\Post as WPPost;

@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\HR\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;

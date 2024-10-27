@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Infrastructure\Services;
 
 use Aws\Credentials\Credentials;

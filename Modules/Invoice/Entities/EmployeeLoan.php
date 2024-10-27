@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Invoice\Entities;
 
 use App\Traits\Encryptable;

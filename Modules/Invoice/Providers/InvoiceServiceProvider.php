@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Invoice\Providers;
 
 use Illuminate\Database\Eloquent\Factory;

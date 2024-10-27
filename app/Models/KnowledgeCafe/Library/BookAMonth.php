@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models\KnowledgeCafe\Library;
 
 use Carbon\Carbon;

@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\HR\Helpers;
 
 class TemplateHelper

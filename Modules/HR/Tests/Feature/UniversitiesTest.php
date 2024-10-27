@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\HR\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;

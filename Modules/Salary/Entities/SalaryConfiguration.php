@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Salary\Entities;
 
 use Illuminate\Database\Eloquent\Model;

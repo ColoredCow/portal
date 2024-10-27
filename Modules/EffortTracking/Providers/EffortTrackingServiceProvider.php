@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\EffortTracking\Providers;
 
 use Illuminate\Database\Eloquent\Factory;

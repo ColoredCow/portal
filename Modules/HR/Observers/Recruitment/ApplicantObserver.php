@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\HR\Observers\Recruitment;
 
 use Modules\HR\Entities\Applicant;

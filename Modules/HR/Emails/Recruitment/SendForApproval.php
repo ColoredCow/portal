@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\HR\Emails\Recruitment;
 
 use App\Models\Setting;

@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Salary\Http\Controllers;
 
 use Illuminate\Routing\Controller;

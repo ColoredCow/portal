@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Project\Notifications\GoogleChat;
 
 use Illuminate\Bus\Queueable;

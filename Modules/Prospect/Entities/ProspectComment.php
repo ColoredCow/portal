@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Prospect\Entities;
 
 use Illuminate\Database\Eloquent\Model;

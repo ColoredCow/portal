@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\User\Http\Controllers;
 
 use Modules\HR\Http\Requests\ProfileEditRequest;

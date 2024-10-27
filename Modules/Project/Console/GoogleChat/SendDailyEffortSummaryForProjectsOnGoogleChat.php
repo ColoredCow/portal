@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Project\Console\GoogleChat;
 
 use Illuminate\Console\Command;

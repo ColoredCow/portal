@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\CodeTrek\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider;

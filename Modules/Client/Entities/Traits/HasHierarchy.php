@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Client\Entities\Traits;
 
 trait HasHierarchy

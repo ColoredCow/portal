@@ -1,5 +1,4 @@
 <?php
-
 namespace OfficeSuite\GSuite;
 
 use OfficeSuite\Contracts\OfficeSuiteServiceContract;

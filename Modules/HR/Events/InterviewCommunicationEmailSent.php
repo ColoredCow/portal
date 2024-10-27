@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\HR\Events;
 
 use Illuminate\Queue\SerializesModels;

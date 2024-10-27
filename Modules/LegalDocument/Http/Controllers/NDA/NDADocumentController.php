@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\LegalDocument\Http\Controllers\NDA;
 
 use Illuminate\Routing\Controller;

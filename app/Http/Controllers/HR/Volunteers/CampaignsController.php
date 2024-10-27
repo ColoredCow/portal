@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\HR\Volunteers;
 
 use App\Http\Controllers\Controller;

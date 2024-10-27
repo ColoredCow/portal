@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\HR\Observers;
 
 use App\Services\GSuiteUserService;

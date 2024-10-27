@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Lead\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;

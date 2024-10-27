@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\AppointmentSlots\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;

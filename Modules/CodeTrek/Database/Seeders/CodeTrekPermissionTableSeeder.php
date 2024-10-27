@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\CodeTrek\Database\Seeders;
 
 use Illuminate\Database\Eloquent\Model;

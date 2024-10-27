@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Project\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;

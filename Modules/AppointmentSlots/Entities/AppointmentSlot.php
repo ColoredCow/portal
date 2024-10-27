@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\AppointmentSlots\Entities;
 
 use Illuminate\Database\Eloquent\Model;

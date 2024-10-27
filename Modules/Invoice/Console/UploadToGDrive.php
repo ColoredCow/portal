@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Invoice\Console;
 
 use Carbon\Carbon;

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Policies\Finance;
 
 use Illuminate\Auth\Access\HandlesAuthorization;

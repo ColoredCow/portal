@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\User\Services;
 
 use Modules\HR\Entities\HrJobDesignation;

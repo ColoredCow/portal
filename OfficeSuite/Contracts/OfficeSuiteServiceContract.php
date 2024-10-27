@@ -1,5 +1,4 @@
 <?php
-
 namespace OfficeSuite\Contracts;
 
 interface OfficeSuiteServiceContract

@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\HR\Observers\Recruitment;
 
 use App\Services\CalendarEventService;

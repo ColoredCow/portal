@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\AppointmentSlots\Http\Controllers;
 
 use Auth;

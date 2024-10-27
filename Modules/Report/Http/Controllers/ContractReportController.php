@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Report\Http\Controllers;
 
 use App\Models\Setting;

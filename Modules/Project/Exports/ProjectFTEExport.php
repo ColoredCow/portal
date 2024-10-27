@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Project\Exports;
 
 use Maatwebsite\Excel\Concerns\FromArray;

@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\EffortTracking\Http\Controllers;
 
 use Illuminate\Http\Request;

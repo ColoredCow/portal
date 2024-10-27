@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\SalesAutomation\Services;
 
 use Modules\SalesAutomation\Entities\SalesCharacteristic;

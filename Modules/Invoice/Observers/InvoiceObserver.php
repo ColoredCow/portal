@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Invoice\Observers;
 
 use Illuminate\Support\Facades\DB;

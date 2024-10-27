@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Expense\Services;
 
 use Modules\Expense\Entities\Expense;

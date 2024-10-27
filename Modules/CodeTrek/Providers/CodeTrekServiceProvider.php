@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\CodeTrek\Providers;
 
 use Illuminate\Database\Eloquent\Factory;

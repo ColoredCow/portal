@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\HR\Services;
 
 use Modules\HR\Entities\JobRequisition;

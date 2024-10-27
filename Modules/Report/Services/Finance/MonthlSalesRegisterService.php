@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Report\Services\Finance;
 
 use Maatwebsite\Excel\Facades\Excel;

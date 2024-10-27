@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\SalesAutomation\Database\Seeders;
 
 use Illuminate\Database\Eloquent\Model;

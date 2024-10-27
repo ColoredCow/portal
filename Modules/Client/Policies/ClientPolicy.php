@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Client\Policies;
 
 use Modules\Client\Entities\Client;

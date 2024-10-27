@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\KnowledgeCafe;
 
 use App\Http\Controllers\Controller;

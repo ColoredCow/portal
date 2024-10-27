@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\CodeTrek\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;

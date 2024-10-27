@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Settings;
 
 use App\Helpers\ContentHelper;

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Policies\Infrastructure;
 
 use Illuminate\Auth\Access\HandlesAuthorization;

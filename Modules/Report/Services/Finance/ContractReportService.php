@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Report\Services\Finance;
 
 use Modules\Client\Entities\Client;

@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Salary\Services;
 
 use Carbon\Carbon;

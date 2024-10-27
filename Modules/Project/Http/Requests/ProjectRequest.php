@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Project\Http\Requests;
 
 use App\Rules\TeamMemberDesignationRule;

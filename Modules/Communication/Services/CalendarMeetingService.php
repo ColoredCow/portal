@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Communication\Services;
 
 use Carbon\Carbon;

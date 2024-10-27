@@ -1,5 +1,4 @@
 <?php
-
 namespace Database\Seeders;
 
 use App\Models\KnowledgeCafe\Library\BookCategory;

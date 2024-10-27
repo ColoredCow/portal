@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\HR\Volunteers;
 
 use Illuminate\Support\Facades\Request;

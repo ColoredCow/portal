@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Imports;
 
 use Illuminate\Support\Collection;

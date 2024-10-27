@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Invoice\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;

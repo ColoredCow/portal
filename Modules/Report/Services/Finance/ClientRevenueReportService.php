@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Report\Services\Finance;
 
 use Carbon\Carbon;

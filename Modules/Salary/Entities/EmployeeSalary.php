@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Salary\Entities;
 
 use App\Traits\Encryptable;

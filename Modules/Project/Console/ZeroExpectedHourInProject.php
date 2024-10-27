@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Project\Console;
 
 use Illuminate\Console\Command;

@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\ProjectContract\Entities;
 
 use App\Models\Client;

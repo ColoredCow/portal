@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Salary\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;

@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\AppointmentSlots\Services;
 
 use App\Services\CalendarEventService;

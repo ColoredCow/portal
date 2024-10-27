@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\HR\Database\Seeders;
 
 use App\Models\Category;

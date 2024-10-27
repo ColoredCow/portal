@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\EffortTracking\Services;
 
 use Carbon\Carbon;

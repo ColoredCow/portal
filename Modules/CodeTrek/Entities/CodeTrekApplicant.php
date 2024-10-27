@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\CodeTrek\Entities;
 
 use Carbon\Carbon;

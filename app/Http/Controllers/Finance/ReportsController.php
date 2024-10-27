@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Finance;
 
 use App\Helpers\DateHelper;

@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\SalesAutomation\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;

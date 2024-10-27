@@ -1,5 +1,4 @@
 <?php
-
 namespace OfficeSuite;
 
 use Exception;

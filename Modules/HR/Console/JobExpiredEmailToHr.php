@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\HR\Console;
 
 use Illuminate\Console\Command;

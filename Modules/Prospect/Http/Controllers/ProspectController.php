@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Prospect\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;

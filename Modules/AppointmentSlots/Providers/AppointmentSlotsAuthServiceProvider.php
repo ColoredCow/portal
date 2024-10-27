@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\AppointmentSlots\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;

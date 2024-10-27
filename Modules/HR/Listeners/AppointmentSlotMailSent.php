@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\HR\Listeners;
 
 use Modules\HR\Entities\ApplicationMeta;

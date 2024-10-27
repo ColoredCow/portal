@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\Salary\Database\Seeders;
 
 use Illuminate\Database\Eloquent\Model;

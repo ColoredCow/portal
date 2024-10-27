@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\HR\Events\Recruitment;
 
 use Illuminate\Broadcasting\InteractsWithSockets;

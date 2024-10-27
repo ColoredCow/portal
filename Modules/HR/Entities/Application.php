@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\HR\Entities;
 
 use App\Helpers\ContentHelper;

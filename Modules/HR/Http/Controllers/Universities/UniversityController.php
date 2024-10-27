@@ -1,5 +1,4 @@
 <?php
-
 namespace Modules\HR\Http\Controllers\Universities;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
