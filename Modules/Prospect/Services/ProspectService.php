@@ -44,6 +44,15 @@ class ProspectService
         return $prospectComment;
     }
 
+    public function insightsUpdate($validated, $id)
+    {
+        $prospectInsights = new ProspectInsight();
+        $prospectInsights->prospect_id = $id;
+        $prospectInsights->user_id = auth()->user()->id;
+        $prospectInsights->insight_learning = $validated['insight_learning'];
+        $prospectInsights->save();
+    }
+
     private function saveProspectData($prospect, $validated)
     {
         $prospect->organization_name = $validated['org_name'];
@@ -59,14 +68,5 @@ class ProspectService
         $prospect->proposal_link = $validated['proposal_link'];
         $prospect->currency = $validated['currency'];
         $prospect->save();
-    }
-
-    public function insightsUpdate($validated, $id)
-    {
-        $prospectInsights = new ProspectInsight();
-        $prospectInsights->prospect_id = $id;
-        $prospectInsights->user_id = auth()->user()->id;
-        $prospectInsights->insight_learning = $validated['insight_learning'];
-        $prospectInsights->save();
     }
 }
