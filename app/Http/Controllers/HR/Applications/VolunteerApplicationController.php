@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\HR\Applications;
 
 use Illuminate\Support\Facades\Request;

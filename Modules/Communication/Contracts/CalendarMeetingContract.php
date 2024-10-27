@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Communication\Contracts;
 
 interface CalendarMeetingContract

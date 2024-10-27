@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Project\Entities;
 
 use App\Traits\Filters;

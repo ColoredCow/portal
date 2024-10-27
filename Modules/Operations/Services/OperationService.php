@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Operations\Services;
 
 use Modules\Operations\Entities\OfficeLocation;

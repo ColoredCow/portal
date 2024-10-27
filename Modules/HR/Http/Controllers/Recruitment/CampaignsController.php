@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\HR\Http\Controllers\Recruitment;
 
 use Illuminate\Routing\Controller;

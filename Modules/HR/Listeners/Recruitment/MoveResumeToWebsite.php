@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\HR\Listeners\Recruitment;
 
 use Illuminate\Support\Facades\Artisan;

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Requests\KnowledgeCafe;
 
 use Illuminate\Foundation\Http\FormRequest;

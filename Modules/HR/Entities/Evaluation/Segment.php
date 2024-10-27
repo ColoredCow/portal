@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\HR\Entities\Evaluation;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;

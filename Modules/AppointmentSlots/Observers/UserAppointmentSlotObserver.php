@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\AppointmentSlots\Observers;
 
 use Carbon\Carbon;

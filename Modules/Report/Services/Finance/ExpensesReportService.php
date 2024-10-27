@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Report\Services\Finance;
 
 class ExpenseReportService

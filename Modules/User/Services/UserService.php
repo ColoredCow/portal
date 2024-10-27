@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\User\Services;
 
 use Modules\User\Contracts\UserServiceContract;

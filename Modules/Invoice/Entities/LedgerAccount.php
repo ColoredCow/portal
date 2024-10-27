@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Invoice\Entities;
 
 use App\Casts\Decrypted;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Invoice\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;

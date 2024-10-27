@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Invoice\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;

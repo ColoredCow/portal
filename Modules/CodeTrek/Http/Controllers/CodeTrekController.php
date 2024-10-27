@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\CodeTrek\Http\Controllers;
 
 use Carbon\Carbon;

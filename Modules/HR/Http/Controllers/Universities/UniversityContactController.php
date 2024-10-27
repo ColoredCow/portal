@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\HR\Http\Controllers\Universities;
 
 use Illuminate\Routing\Controller;

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Policies\KnowledgeCafe;
 
 use Illuminate\Auth\Access\HandlesAuthorization;

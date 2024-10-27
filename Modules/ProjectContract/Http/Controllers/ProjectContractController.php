@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\ProjectContract\Http\Controllers;
 
 use App\Models\Client;

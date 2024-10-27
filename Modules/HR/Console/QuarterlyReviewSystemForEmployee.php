@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\HR\Console;
 
 use Carbon\Carbon;

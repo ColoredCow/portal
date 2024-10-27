@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Communication\Http\Controllers;
 
 use Illuminate\Routing\Controller;

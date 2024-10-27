@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\User\Policies;
 
 use Modules\User\Entities\User;

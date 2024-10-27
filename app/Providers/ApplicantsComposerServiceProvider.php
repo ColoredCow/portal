@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Providers;
 
 use App\Http\View\Composers\CodeTrekApplicantsComposer;

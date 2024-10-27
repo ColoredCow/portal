@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Invoice\Services;
 
 use Carbon\Carbon;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\HR\Providers;
 
 use Illuminate\Database\Eloquent\Factory;

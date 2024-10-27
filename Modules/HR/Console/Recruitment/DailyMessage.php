@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\HR\Console\Recruitment;
 
 use App\Mail\SendEmail;

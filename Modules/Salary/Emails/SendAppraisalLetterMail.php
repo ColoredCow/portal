@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Salary\Emails;
 
 use Illuminate\Bus\Queueable;

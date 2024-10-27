@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\HR\Http\Controllers;
 
 use App\Models\Category;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Invoice\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;

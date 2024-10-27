@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Report\Services\User;
 
 use Modules\Project\Entities\Project;

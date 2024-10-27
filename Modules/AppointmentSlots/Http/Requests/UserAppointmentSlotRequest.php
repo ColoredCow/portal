@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\AppointmentSlots\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;

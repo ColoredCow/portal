@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\HR\Observers\Recruitment;
 
 use Illuminate\Support\Facades\Mail;

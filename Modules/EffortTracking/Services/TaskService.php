@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\EffortTracking\Services;
 
 use Modules\EffortTracking\Contracts\TaskServiceContract;

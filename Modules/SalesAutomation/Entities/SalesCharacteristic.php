@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\SalesAutomation\Entities;
 
 use Illuminate\Database\Eloquent\Model;

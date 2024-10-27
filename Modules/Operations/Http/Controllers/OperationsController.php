@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Operations\Http\Controllers;
 
 use Illuminate\Http\Request;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\HR\Listeners;
 
 use App\Models\Setting;

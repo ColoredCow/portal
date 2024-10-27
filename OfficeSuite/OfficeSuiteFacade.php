@@ -1,4 +1,5 @@
 <?php
+
 namespace OfficeSuite;
 
 use Illuminate\Support\Facades\Facade;

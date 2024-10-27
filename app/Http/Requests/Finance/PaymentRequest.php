@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Requests\Finance;
 
 use Illuminate\Foundation\Http\FormRequest;

@@ -1,4 +1,5 @@
 <?php
+
 namespace OfficeSuite\Office365;
 
 use OfficeSuite\Contracts\OfficeSuiteServiceContract;

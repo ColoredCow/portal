@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\HR\Policies\Recruitment;
 
 use Illuminate\Auth\Access\HandlesAuthorization;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\HR\Observers\Recruitment;
 
 use Corcel\Model\Option as Option;

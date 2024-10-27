@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\AppointmentSlots\Database\Seeders;
 
 use Illuminate\Database\Seeder;

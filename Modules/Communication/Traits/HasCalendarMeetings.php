@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Communication\Traits;
 
 use Modules\Communication\Entities\CalendarMeeting;

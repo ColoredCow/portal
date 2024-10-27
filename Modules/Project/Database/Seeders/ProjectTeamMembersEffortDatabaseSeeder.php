@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Project\Database\Seeders;
 
 use Carbon\Carbon;

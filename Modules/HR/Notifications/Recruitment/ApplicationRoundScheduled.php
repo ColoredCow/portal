@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\HR\Notifications\Recruitment;
 
 use Illuminate\Bus\Queueable;

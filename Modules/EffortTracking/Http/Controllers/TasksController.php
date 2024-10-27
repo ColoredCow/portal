@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\EffortTracking\Http\Controllers;
 
 use Illuminate\Routing\Controller;

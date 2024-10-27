@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\SalesAutomation\Traits;
 
 trait HasFilters

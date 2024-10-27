@@ -43,7 +43,7 @@
   },
     "require-dev": {
     "barryvdh/laravel-debugbar": "^3.13",
-    "friendsofphp/php-cs-fixer": "^3.61",
+    "friendsofphp/php-cs-fixer": "^3.0",
     "nunomaduro/collision": "^8.0",
     "nunomaduro/phpinsights": "^2.5",
     "phpunit/phpunit": "^10.5",

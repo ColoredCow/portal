@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models\Finance;
 
 use App\Models\ProjectStageBilling;

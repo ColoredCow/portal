@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Prospect\Services;
 
 use Modules\Prospect\Entities\Prospect;

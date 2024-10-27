@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\SalesAutomation\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;

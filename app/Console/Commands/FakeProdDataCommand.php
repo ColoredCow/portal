@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Console\Commands;
 
 use Faker\Factory as Faker;

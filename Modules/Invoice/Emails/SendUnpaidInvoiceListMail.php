@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Invoice\Emails;
 
 use Illuminate\Bus\Queueable;

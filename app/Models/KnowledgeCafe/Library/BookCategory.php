@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models\KnowledgeCafe\Library;
 
 use Illuminate\Database\Eloquent\Model;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\User\Traits;
 
 use Illuminate\Support\Str;

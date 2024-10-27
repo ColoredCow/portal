@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Salary\Providers;
 
 use Illuminate\Database\Eloquent\Factory;

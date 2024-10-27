@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Payment\Http\Controllers;
 
 use Illuminate\Http\Request;

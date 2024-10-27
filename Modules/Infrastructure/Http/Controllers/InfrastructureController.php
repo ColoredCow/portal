@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Infrastructure\Http\Controllers;
 
 use Aws\Sdk;

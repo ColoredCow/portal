@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\User\Http\Controllers;
 
 use Auth;

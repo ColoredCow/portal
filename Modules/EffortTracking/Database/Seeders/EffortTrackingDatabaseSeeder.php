@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\EffortTracking\Database\Seeders;
 
 use Illuminate\Database\Eloquent\Model;

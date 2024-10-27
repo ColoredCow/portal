@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\ModuleChecklist\Entities;
 
 use Illuminate\Database\Eloquent\Model;

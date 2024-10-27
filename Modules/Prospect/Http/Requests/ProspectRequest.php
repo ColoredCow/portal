@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Prospect\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;

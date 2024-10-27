@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\EffortTracking\Entities;
 
 use Illuminate\Database\Eloquent\Model;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\CodeTrek\Emails;
 
 use Illuminate\Bus\Queueable;

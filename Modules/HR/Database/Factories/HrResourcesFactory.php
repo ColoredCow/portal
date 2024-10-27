@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\HR\Database\Factories;
 
 use App\Models\Category;

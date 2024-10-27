@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Report\Http\Controllers;
 
 use Illuminate\Http\Request;

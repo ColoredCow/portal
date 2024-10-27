@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Client\Http\Controllers;
 
 use Modules\Client\Contracts\ClientServiceContract;

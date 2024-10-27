@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models\Finance\PaymentModes;
 
 use App\Models\Finance\Payment;
