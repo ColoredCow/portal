@@ -4,6 +4,7 @@ namespace Modules\Prospect\Services;
 
 use Modules\Prospect\Entities\Prospect;
 use Modules\Prospect\Entities\ProspectComment;
+use Modules\Prospect\Entities\ProspectInsight;
 
 class ProspectService
 {
@@ -11,13 +12,10 @@ class ProspectService
     {
         $prospect = new Prospect();
         $this->saveProspectData($prospect, $validated);
-
-        return redirect()->route('prospect.index')->with('status', 'Prospect created successfully!');
     }
 
-    public function update($request, $id)
+    public function update($request, $prospect)
     {
-        $prospect = Prospect::find($id);
         $prospect->organization_name = $request->org_name;
         $prospect->poc_user_id = $request->poc_user_id;
         $prospect->proposal_sent_date = $request->proposal_sent_date;
@@ -32,7 +30,7 @@ class ProspectService
         $prospect->currency = $request->currency;
         $prospect->save();
 
-        return redirect()->route('prospect.edit', $prospect->id)->with('status', 'Prospect updated successfully!');
+        return redirect()->route('prospect.show', $prospect->id)->with('status', 'Prospect updated successfully!');
     }
 
     public function commentUpdate($validated, $id)
@@ -61,5 +59,14 @@ class ProspectService
         $prospect->proposal_link = $validated['proposal_link'];
         $prospect->currency = $validated['currency'];
         $prospect->save();
+    }
+
+    public function insightsUpdate($validated, $id)
+    {
+        $prospectInsights = new ProspectInsight();
+        $prospectInsights->prospect_id = $id;
+        $prospectInsights->user_id = auth()->user()->id;
+        $prospectInsights->insight_learning = $validated['insight_learning'];
+        $prospectInsights->save();
     }
 }

@@ -19,4 +19,9 @@ class Prospect extends Model
     {
         return $this->hasMany(ProspectComment::class);
     }
+
+    public function insights()
+    {
+        return $this->hasMany(ProspectInsight::class);
+    }
 }

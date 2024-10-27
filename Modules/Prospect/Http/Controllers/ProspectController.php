@@ -59,9 +59,9 @@ class ProspectController extends Controller
     public function store(ProspectRequest $request)
     {
         $validated = $request->validated();
-        $data = $this->service->store($validated);
+        $this->service->store($validated);
 
-        return $data;
+        return redirect()->route('prospect.index')->with('status', 'Prospect created successfully!');
     }
 
     /**
@@ -70,7 +70,7 @@ class ProspectController extends Controller
      */
     public function show($id)
     {
-        $prospect = Prospect::with(['pocUser', 'comments', 'comments.user'])->find($id);
+        $prospect = Prospect::with(['pocUser', 'comments', 'comments.user', 'insights', 'insights.user'])->find($id);
         $countries = Country::all();
         $currencySymbols = $countries->pluck('currency_symbol', 'currency');
 
@@ -104,9 +104,9 @@ class ProspectController extends Controller
      * @param Request $request
      * @param int $id
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Prospect $prospect)
     {
-        $data = $this->service->update($request, $id);
+        $data = $this->service->update($request, $prospect);
 
         return $data;
     }
@@ -123,5 +123,15 @@ class ProspectController extends Controller
         $this->service->commentUpdate($validated, $id);
 
         return redirect()->route('prospect.show', $id)->with('status', 'Comment updated successfully!');
+    }
+
+    public function insightsUpdate(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'insight_learning' => 'required',
+        ]);
+        $this->service->insightsUpdate($validated, $id);
+
+        return redirect()->route('prospect.show', $id)->with('status', 'Prospect Insights updated successfully!');
     }
 }

@@ -6,12 +6,25 @@
     <div class="panel-body">
         <div class="card-body">
             <div class="d-flex justify-content-between mb-3">
-                <h5 class="font-weight-bold">Comments</h5>
+                <h5 class="font-weight-bold">Prospect Insights</h5>
             </div>
-            @if (true)
+            @foreach ($prospect->insights as $key => $insight)
+                <div class="mb-3">
+                    <div class="d-flex align-items-center">
+                        <img src="{{ $insight->user->avatar }}" alt="User" class="rounded-circle mr-5"
+                            width="50" data-toggle="tooltip" data-placement="top" title={{ $insight->user->name }}>
+                        <div>
+                            <span
+                                class="fz-16 font-weight-bold text-muted">{{ \Carbon\Carbon::parse($insight->created_at)->format('M d, Y') }}</span>
+                            <h5>{{ $insight->insight_learning }}</h5>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+            @if (count($prospect->insights) == 0)
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="font-weight-bold">No Comments</h5>
+                        <h5 class="font-weight-bold">No Insights</h5>
                     </div>
                 </div>
             @endif
