@@ -52,6 +52,9 @@ class ProfileController extends ModuleBaseController
             $userProfile->save();
         }
 
+        $user->save();
+        $user->employee->save();
+
         return back();
     }
 }

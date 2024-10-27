@@ -1,34 +1,30 @@
-@extends('client::layouts.master')
+@extends('prospect::layouts.master')
 @section('content')
+    @includeWhen(session('status'), 'toast', ['message' => session('status')])
+    <div class="container">
+        <br>
+        <h4 class="mb-5">Edit Prospect</h4>
+        <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="prospectDetails-tab" data-toggle="pill" href="#prospectDetails" role="tab"
+                    aria-controls="prospectDetails" aria-selected="true">Prospect Details</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="prospectComments-tab" data-toggle="pill" href="#prospectComments" role="tab"
+                    aria-controls="prospectComments" aria-selected="false">Prospect Comments</a>
+            </li>
+        </ul>
 
-<div class="container">
-    <br> 
-    
-    @if($section == 'overview')
-      <h4 class="mb-5">{{ $prospect->name }}</h4>
-    @else
-    <h4 class="mb-5">{{ 'Edit Prospect' }}</h4>
-    @endif
-  
-    @include('prospect::subviews.edit.edit-prospect-form-header')
-    <div>
         @include('status', ['errors' => $errors->all()])
-        <div class="card">
+        <div class="tab-content mt-5" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="prospectDetails" role="tabpanel"
+                aria-labelledby="prospectDetails-tab">
+                @include('prospect::subviews.edit-prospect-details')
+            </div>
 
-            @includeWhen($section == 'overview', 'prospect::subviews.show.prospect-progress')
-
-
-            <form id="edit_prospect_info_form" action="{{ route('prospect.update', $prospect) }}" method="POST" >
-                <input type="hidden" name="section" value="{{ $section }}">
-                <input type="hidden" id="submit_action_input" name="submit_action" value="save-an-exit">
-                @csrf 
-                @includeWhen( $section == 'prospect-details' ,'prospect::subviews.edit.edit-prospect-details')
-                @includeWhen( $section == 'contact-persons' , 'prospect::subviews.edit.edit-prospect-contact-persons')
-                @includeWhen( $section == 'prospect-requirements' , 'prospect::subviews.edit.edit-prospect-requirements')
-            </form>
+            <div class="tab-pane fade" id="prospectComments" role="tabpanel" aria-labelledby="prospectComments-tab">
+                @include('prospect::subviews.edit-prospect-comment')
+            </div>
         </div>
     </div>
-    
-</div>
-
 @endsection

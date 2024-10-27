@@ -15,6 +15,18 @@ class RouteServiceProvider extends ServiceProvider
     protected $moduleNamespace = 'Modules\Prospect\Http\Controllers';
 
     /**
+     * Called before routes are registered.
+     *
+     * Register any model bindings or pattern based filters.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        parent::boot();
+    }
+
+    /**
      * Define the routes for the application.
      *
      * @return void

@@ -255,6 +255,7 @@ return [
     'google_application_credentials' => env('GOOGLE_APPLICATION_CREDENTIALS'),
 
     'website_url' => env('WEBSITE_URL', 'https://coloredcow.com'),
+    'analytics_dashboard_url' => env('ANALYTICS_DASHBOARD_URL', 'https://coloredcow.com'),
     'cube_js_url' => env('CUBE_JS_URL', 'http://localhost:4000/cubejs-api/v1'),
     'website_upload_dir' => env('WEBSITE_UPLOAD_DIR'),
     'timezone' => [

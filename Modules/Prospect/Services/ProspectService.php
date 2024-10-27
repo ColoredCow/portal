@@ -2,218 +2,64 @@
 
 namespace Modules\Prospect\Services;
 
-use App\Models\SkillSet;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Modules\Client\Entities\ClientContactPerson;
-use Modules\ModuleChecklist\Entities\ModuleChecklist;
-use Modules\Prospect\Contracts\ProspectServiceContract;
 use Modules\Prospect\Entities\Prospect;
-use Modules\Prospect\Entities\ProspectContactPerson;
-use Modules\Prospect\Entities\ProspectDocument;
-use Modules\Prospect\Entities\ProspectRequirement;
-use Modules\Prospect\Entities\ProspectStage;
-use Modules\User\Entities\User;
+use Modules\Prospect\Entities\ProspectComment;
 
-class ProspectService implements ProspectServiceContract
+class ProspectService
 {
-    public function index()
+    public function store($validated)
     {
-        $prospects = Prospect::all();
+        $prospect = new Prospect();
+        $this->saveProspectData($prospect, $validated);
 
-        return ['prospects' => Prospect::all(), 'count' => $prospects->count()];
+        return redirect()->route('prospect.index')->with('status', 'Prospect created successfully!');
     }
 
-    public function create()
+    public function update($request, $id)
     {
-        return ['clientContactPersons' => $this->getAllClientContactPersons(), 'assigneeData' => $this->getAssignee()];
+        $prospect = Prospect::find($id);
+        $prospect->organization_name = $request->org_name;
+        $prospect->poc_user_id = $request->poc_user_id;
+        $prospect->proposal_sent_date = $request->proposal_sent_date;
+        $prospect->domain = $request->domain;
+        $prospect->customer_type = $request->customer_type;
+        $prospect->budget = $request->budget;
+        $prospect->proposal_status = $request->proposal_status;
+        $prospect->introductory_call = $request->introductory_call;
+        $prospect->last_followup_date = $request->last_followup_date;
+        $prospect->rfp_link = $request->rfp_link;
+        $prospect->proposal_link = $request->proposal_link;
+        $prospect->currency = $request->currency;
+        $prospect->save();
+
+        return redirect()->route('prospect.edit', $prospect->id)->with('status', 'Prospect updated successfully!');
     }
 
-    public function edit($prospect, $section)
+    public function commentUpdate($validated, $id)
     {
-        $data = [
-            'prospect' => $prospect,
-            'section' => $section ?? 'prospect-details',
-            'contactPersons' => $prospect->contactPersons,
-            'clientContactPersons' => $this->getAllClientContactPersons(),
-            'assigneeData' => $this->getAssignee(),
-        ];
+        $prospectComment = new ProspectComment();
+        $prospectComment->prospect_id = $id;
+        $prospectComment->user_id = auth()->user()->id;
+        $prospectComment->comment = $validated['prospect_comment'];
+        $prospectComment->save();
 
-        if ($section == 'prospect-requirements') {
-            $data['prospectRequirements'] = $prospect->requirements;
-            $data['skills'] = SkillSet::orderBy('name')->get();
-        }
-
-        if ($section == 'overview') {
-            $data['prospectStages'] = ProspectStage::orderBy('name')->get();
-            $data['prospectChecklist'] = $this->getProspectChecklist($prospect);
-        }
-
-        return $data;
+        return $prospectComment;
     }
 
-    public function store($data)
+    private function saveProspectData($prospect, $validated)
     {
-        $data['created_by'] = Auth::id();
-
-        return Prospect::create($data);
-    }
-
-    public function show($prospectId, $section)
-    {
-        $prospect = Prospect::where('id', $prospectId)
-            ->with('histories')
-            ->first();
-
-        return [
-            'prospect' => $prospect,
-            'section' => $section ?: config('prospect.default-prospect-show-tab'),
-            'prospectStages' => ProspectStage::orderBy('name')->get(),
-            'prospectChecklist' => $this->getProspectChecklist($prospect),
-        ];
-    }
-
-    public function update($data, $prospectID)
-    {
-        $data['section'] = $data['section'] ?? null;
-        $section = $data['section'];
-        $nextStage = route('prospect.index');
-        $defaultRoute = route('prospect.index');
-        $prospect = Prospect::find($prospectID);
-
-        switch ($section) {
-            case 'prospect-details':
-                $this->updateProspectDetails($data, $prospect);
-                $nextStage = route('prospect.edit', [$prospect, 'contact-persons']);
-                break;
-            case 'contact-persons':
-                $this->updateProspectContactPersons($data, $prospect);
-                $nextStage = route('prospect.edit', [$prospect, 'prospect-requirements']);
-                break;
-
-            case 'prospect-requirements':
-                $this->updateProspectRequirements($data, $prospect);
-                break;
-        }
-
-        return [
-            'route' => $data['submit_action'] == 'next' ? $nextStage : $defaultRoute,
-        ];
-    }
-
-    public function addNewProgressStage($data)
-    {
-        $stageName = $data['stageName'] ?? '';
-        $stageName = trim($stageName);
-
-        if (! $stageName) {
-            return false;
-        }
-
-        $prospectStage = ProspectStage::firstOrNew(['name' => $stageName]);
-        $prospectStage->created_by = Auth::id();
-        $prospectStage->slug = Str::slug($stageName);
-        $prospectStage->save();
-
-        return $prospectStage;
-    }
-
-    public function uploadDocuments($documents, $prospect, $prospectHistory)
-    {
-        foreach ($documents as $document) {
-            $fileName = $prospectHistory->id . '-' . $document->getClientOriginalName();
-            $file = Storage::putFileAs('/prospect', $document, $fileName, ['visibility' => 'public']);
-            $prospectDocument = new ProspectDocument;
-
-            $prospectDocument->prospect_id = $prospect->id;
-            $prospectDocument->prospect_history_id = optional($prospectHistory)->id;
-            $prospectDocument->name = $fileName;
-            $prospectDocument->file_path = $file;
-            $prospectDocument->save();
-        }
-    }
-
-    public function getProspectChecklist($prospect)
-    {
-        $moduleChecklist = ModuleChecklist::whereIn('slug', config('prospect.checklist'))
-            ->get();
-        $results = [];
-
-        foreach ($moduleChecklist as $checklist) {
-            $data = $checklist->toArray();
-            $data['status'] = $prospect->getCheckListStatus($checklist->id);
-            $results[] = $data;
-        }
-
-        return collect($results)->reverse();
-    }
-
-    private function getAssignee()
-    {
-        return User::orderBy('name')->get();
-    }
-
-    private function updateProspectContactPersons($data, $prospect)
-    {
-        $contactPersons = $data['prospect_contact_persons'] ?? [];
-        $prospectContactPersons = collect([]);
-        foreach ($contactPersons as $contactPersonData) {
-            $contactPersonID = $contactPersonData['id'] ?? null;
-            if ($contactPersonID) {
-                $contactPerson = ProspectContactPerson::find($contactPersonID);
-                $contactPerson->update($contactPersonData);
-                $prospectContactPersons->push($contactPerson);
-                continue;
-            }
-            $contactPerson = new ProspectContactPerson($contactPersonData);
-            $prospect->contactPersons()->save($contactPerson);
-            $prospectContactPersons->push($contactPerson);
-        }
-
-        $prospect->contactPersons
-            ->diff($prospectContactPersons)
-            ->each(function ($contactPerson) {
-                $contactPerson->delete();
-            });
-
-        return true;
-    }
-
-    private function updateProspectDetails($data, $prospect)
-    {
-        return $prospect->update($data);
-    }
-
-    private function updateProspectRequirements($data, $prospect)
-    {
-        $requirements = $data['requirements'] ?? [];
-        $prospectRequirements = collect([]);
-
-        foreach ($requirements as $requirementData) {
-            $requirementID = $requirementData['id'] ?? null;
-            if ($requirementID) {
-                $prospectRequirement = ProspectRequirement::find($requirementID);
-                $prospectRequirement->update($requirementData);
-                $prospectRequirements->push($prospectRequirement);
-                continue;
-            }
-            $prospectRequirement = new ProspectRequirement($requirementData);
-            $prospect->requirements()->save($prospectRequirement);
-            $prospectRequirements->push($prospectRequirement);
-        }
-
-        $prospect->requirements
-            ->diff($prospectRequirements)
-            ->each(function ($requirement) {
-                $requirement->delete();
-            });
-
-        return true;
-    }
-
-    private function getAllClientContactPersons()
-    {
-        return ClientContactPerson::with('client')->orderBy('name')->get();
+        $prospect->organization_name = $validated['org_name'];
+        $prospect->poc_user_id = $validated['poc_user_id'];
+        $prospect->proposal_sent_date = $validated['proposal_sent_date'];
+        $prospect->domain = $validated['domain'];
+        $prospect->customer_type = $validated['customer_type'];
+        $prospect->budget = $validated['budget'];
+        $prospect->proposal_status = $validated['proposal_status'];
+        $prospect->introductory_call = $validated['introductory_call'] ?? $validated['proposal_sent_date'];
+        $prospect->last_followup_date = $validated['last_followup_date'] ?? $validated['proposal_sent_date'];
+        $prospect->rfp_link = $validated['rfp_link'];
+        $prospect->proposal_link = $validated['proposal_link'];
+        $prospect->currency = $validated['currency'];
+        $prospect->save();
     }
 }
