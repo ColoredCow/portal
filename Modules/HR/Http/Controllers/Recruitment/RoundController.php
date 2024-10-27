@@ -13,7 +13,7 @@ class RoundController extends Controller
      * Update the specified resource in storage.
      *
      * @param  RoundRequest  $request
-     * @param  \Modules\HR\Entities\Round  $round
+     * @param  Round  $round
      *
      * @return string
      */

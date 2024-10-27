@@ -12,7 +12,7 @@ class ProjectStageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\ProjectStageRequest  $request
+     * @param  ProjectStageRequest  $request
      */
     public function store(ProjectStageRequest $request)
     {
@@ -51,8 +51,8 @@ class ProjectStageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\ProjectStageRequest  $request
-     * @param  \App\Models\ProjectStage  $stage
+     * @param  ProjectStageRequest  $request
+     * @param  ProjectStage  $stage
      */
     public function update(ProjectStageRequest $request, ProjectStage $stage)
     {

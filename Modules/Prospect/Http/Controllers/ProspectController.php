@@ -54,7 +54,7 @@ class ProspectController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param \Modules\Prospect\Http\Requests\ProspectRequest $request
+     * @param ProspectRequest $request
      */
     public function store(ProspectRequest $request)
     {

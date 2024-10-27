@@ -11,7 +11,7 @@ class BillingsPolicy
     /**
      * Determine whether the user can view the .
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      *
      * @return mixed
      */

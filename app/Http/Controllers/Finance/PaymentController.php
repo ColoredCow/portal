@@ -55,7 +55,7 @@ class PaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Finance\Payment  $payment
+     * @param  Payment  $payment
      *
      * @return \Illuminate\View\View
      */
@@ -72,8 +72,8 @@ class PaymentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Finance\PaymentRequest  $request
-     * @param  \App\Models\Finance\Payment  $payment
+     * @param  PaymentRequest  $request
+     * @param  Payment  $payment
      *
      * @return \Illuminate\Http\RedirectResponse
      */

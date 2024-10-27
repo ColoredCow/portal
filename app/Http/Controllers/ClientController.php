@@ -39,7 +39,7 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\ClientRequest  $request
+     * @param  ClientRequest  $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -58,7 +58,7 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Client  $client
+     * @param  Client  $client
      *
      * @return \Illuminate\View\View
      */
@@ -72,8 +72,8 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\ClientRequest  $request
-     * @param  \App\Models\Client  $client
+     * @param  ClientRequest  $request
+     * @param  Client  $client
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -92,7 +92,7 @@ class ClientController extends Controller
     /**
      * Get all the projects for a client.
      *
-     * @param  \App\Models\Client $client
+     * @param  Client $client
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */

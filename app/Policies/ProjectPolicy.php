@@ -12,7 +12,7 @@ class ProjectPolicy
     /**
      * Determine whether the user can view the project.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      *
      * @return mixed
      */
@@ -24,7 +24,7 @@ class ProjectPolicy
     /**
      * Determine whether the user can create projects.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      *
      * @return mixed
      */
@@ -36,7 +36,7 @@ class ProjectPolicy
     /**
      * Determine whether the user can update the project.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      *
      * @return mixed
      */
@@ -48,7 +48,7 @@ class ProjectPolicy
     /**
      * Determine whether the user can delete the project.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      *
      * @return mixed
      */
@@ -60,7 +60,7 @@ class ProjectPolicy
     /**
      * Determine whether the user can list projects.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param  User  $user
      *
      * @return mixed
      */
