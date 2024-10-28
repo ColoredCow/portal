@@ -240,7 +240,7 @@ class User extends Authenticatable
 
     public function getActiveUsersAttribute()
     {
-        $users = self::all();
+        $users = self::all()->sortBy('name');
         $activeUsers = [];
 
         foreach ($users as $user) {
@@ -249,10 +249,6 @@ class User extends Authenticatable
             }
             $activeUsers[] = $user;
         }
-
-        usort($activeUsers, function ($a, $b) {
-            return strcmp($a->name, $b->name);
-        });
 
         return $activeUsers;
     }
