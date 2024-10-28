@@ -50,16 +50,16 @@ class ProspectService
     {
         $prospect->organization_name = $validated['org_name'];
         $prospect->poc_user_id = $validated['poc_user_id'];
-        $prospect->proposal_sent_date = $validated['proposal_sent_date'];
-        $prospect->domain = $validated['domain'];
-        $prospect->customer_type = $validated['customer_type'];
-        $prospect->budget = $validated['budget'];
-        $prospect->proposal_status = $validated['proposal_status'];
-        $prospect->introductory_call = $validated['introductory_call'] ?? $validated['proposal_sent_date'];
-        $prospect->last_followup_date = $validated['last_followup_date'] ?? $validated['proposal_sent_date'];
-        $prospect->rfp_link = $validated['rfp_link'];
-        $prospect->proposal_link = $validated['proposal_link'];
-        $prospect->currency = $validated['currency'];
+        $prospect->proposal_sent_date = $validated['proposal_sent_date'] ?? null;
+        $prospect->domain = $validated['domain'] ?? null;
+        $prospect->customer_type = $validated['customer_type'] ?? null;
+        $prospect->budget = $validated['budget'] ?? null;
+        $prospect->proposal_status = $validated['proposal_status'] ?? null;
+        $prospect->introductory_call = $validated['introductory_call'] ?? null;
+        $prospect->last_followup_date = $validated['last_followup_date'] ?? null;
+        $prospect->rfp_link = $validated['rfp_link'] ?? null;
+        $prospect->proposal_link = $validated['proposal_link'] ?? null;
+        $prospect->currency = $validated['currency'] ?? null;
         $prospect->save();
     }
 }

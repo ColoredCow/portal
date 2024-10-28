@@ -8,14 +8,13 @@
                 <input type="hidden" name="create_prospect" value="create_prospect">
                 <div class="form-row">
                     <div class="form-group form-group col-md-5">
-                        <label for="name" class="field-required">Organization Name</label>
+                        <label for="name">Organization Name</label>
                         <input type="text" class="form-control" name="org_name" id="org_name"
-                            placeholder="Enter Organization Name" required="required"
-                            value="{{ $prospect->organization_name }}">
+                            placeholder="Enter Organization Name" value="{{ $prospect->organization_name }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="client_id" class="field-required">ColoredCow POC</label>
-                        <select name="poc_user_id" id="poc_user_id" class="form-control" required="required">
+                        <label for="client_id">ColoredCow POC</label>
+                        <select name="poc_user_id" id="poc_user_id" class="form-control">
                             <option value="">Select POC User</option>
                             @foreach ($users as $user)
                                 <option value="{{ $user->id }}"
@@ -27,20 +26,20 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="proposal_sent_date" class="field-required">Proposal Sent Date</label>
+                        <label for="proposal_sent_date">Proposal Sent Date</label>
                         <input type="date" class="form-control" name="proposal_sent_date" id="proposal_sent_date"
-                            value="{{ $prospect->proposal_sent_date }}" required="required">
+                            value="{{ $prospect->proposal_sent_date }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="domain" class="field-required">{{ __('Domain') }}</label>
+                        <label for="domain">{{ __('Domain') }}</label>
                         <input type="text" class="form-control" name="domain" id="domain"
-                            placeholder="Enter Domain" value="{{ $prospect->domain }}" required="required">
+                            placeholder="Enter Domain" value="{{ $prospect->domain }}">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="customer_type" class="field-required">{{ __('Customer Type') }}</label>
-                        <select name="customer_type" id="customer_type" class="form-control" required="required">
+                        <label for="customer_type">{{ __('Customer Type') }}</label>
+                        <select name="customer_type" id="customer_type" class="form-control">
                             <option value="">Select Customer Type</option>
                             @foreach (config('prospect.customer-types') as $key => $customer_type)
                                 <option value="{{ $key }}"
@@ -50,11 +49,10 @@
                         </select>
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="budget" class="field-required">{{ __('Budget') }}</label>
+                        <label for="budget">{{ __('Budget') }}</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <select name="currency" v-model="currency" id="currency" class="input-group-text"
-                                    required="required">
+                                <select name="currency" v-model="currency" id="currency" class="input-group-text">
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->currency }}">{{ $country->currency }}
                                         </option>
@@ -62,17 +60,15 @@
                                 </select>
                             </div>
                             <input type="number" class="form-control" name="budget" placeholder="Enter Budget"
-                                required="required" id="budget" step=".01" min="0"
-                                value="{{ $prospect->budget }}">
+                                id="budget" step=".01" min="0" value="{{ $prospect->budget }}">
                         </div>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="proposal_status" class="field-required">{{ __('Proposal Status') }}</label>
+                        <label for="proposal_status">{{ __('Proposal Status') }}</label>
                         <input type="text" class="form-control" name="proposal_status" id="proposal_status"
-                            placeholder="Enter Proposal Status" required="required"
-                            value="{{ $prospect->proposal_status }}">
+                            placeholder="Enter Proposal Status" value="{{ $prospect->proposal_status }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="introductory_call">{{ __('Introductory Call') }}</label>

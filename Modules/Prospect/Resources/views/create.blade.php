@@ -36,22 +36,21 @@
                             <br>
                             <div class="form-row">
                                 <div class="form-group col-md-5">
-                                    <label for="proposal_sent_date" class="field-required">Proposal Sent Date</label>
+                                    <label for="proposal_sent_date">Proposal Sent Date</label>
                                     <input type="date" class="form-control" name="proposal_sent_date"
-                                        id="proposal_sent_date" value="{{ old('proposal_sent_date') }}" required="required">
+                                        id="proposal_sent_date" value="{{ old('proposal_sent_date') }}">
                                 </div>
                                 <div class="form-group offset-md-1 col-md-5">
-                                    <label for="domain" class="field-required">{{ __('Domain') }}</label>
+                                    <label for="domain">{{ __('Domain') }}</label>
                                     <input type="text" class="form-control" name="domain" id="domain"
-                                        placeholder="Enter Domain" value="{{ old('domain') }}" required="required">
+                                        placeholder="Enter Domain" value="{{ old('domain') }}">
                                 </div>
                             </div>
                             <br>
                             <div class="form-row">
                                 <div class="form-group col-md-5">
-                                    <label for="customer_type" class="field-required">{{ __('Customer Type') }}</label>
-                                    <select name="customer_type" id="customer_type" class="form-control"
-                                        required="required">
+                                    <label for="customer_type">{{ __('Customer Type') }}</label>
+                                    <select name="customer_type" id="customer_type" class="form-control">
                                         <option value="">Select Customer Type</option>
                                         @foreach (config('prospect.customer-types') as $key => $customer_type)
                                             <option value="{{ $key }}"
@@ -61,11 +60,11 @@
                                     </select>
                                 </div>
                                 <div class="form-group offset-md-1 col-md-5">
-                                    <label for="budget" class="field-required">{{ __('Budget') }}</label>
+                                    <label for="budget">{{ __('Budget') }}</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <select name="currency" v-model="currency" id="currency"
-                                                class="input-group-text" required="required">
+                                                class="input-group-text">
                                                 @foreach ($countries as $country)
                                                     <option value="{{ $country->currency }}">{{ $country->currency }}
                                                     </option>
@@ -73,20 +72,19 @@
                                             </select>
                                         </div>
                                         <input type="number" class="form-control" name="budget" placeholder="Enter Budget"
-                                            required="required" step=".01" min="0" value="{{ old('budget') }}">
+                                            value="{{ old('budget') }}">
                                     </div>
                                 </div>
                             </div>
                             <br>
                             <div class="form-row">
                                 <div class="form-group col-md-5">
-                                    <label for="proposal_status" class="field-required">{{ __('Proposal Status') }}</label>
+                                    <label for="proposal_status">{{ __('Proposal Status') }}</label>
                                     <input type="text" class="form-control" name="proposal_status" id="proposal_status"
-                                        placeholder="Enter Proposal Status" required="required"
-                                        value="{{ old('proposal_status') }}">
+                                        placeholder="Enter Proposal Status" value="{{ old('proposal_status') }}">
                                 </div>
                                 <div class="form-group offset-md-1 col-md-5">
-                                    <label for="rfp_link" class="field-required">{{ __('RFP Link') }}</label>
+                                    <label for="rfp_link">{{ __('RFP Link') }}</label>
                                     <input type="url" class="form-control" name="rfp_link" id="rfp_link"
                                         placeholder="Enter RFP URL" value="{{ old('rfp_link') }}">
                                 </div>
@@ -94,7 +92,7 @@
                             <br />
                             <div class="form-row">
                                 <div class="form-group col-md-5">
-                                    <label for="proposal_link" class="field-required">{{ __('Proposal Link') }}</label>
+                                    <label for="proposal_link">{{ __('Proposal Link') }}</label>
                                     <input type="url" class="form-control" name="proposal_link" id="proposal_link"
                                         placeholder="Enter Proposal URL" value="{{ old('proposal_link') }}">
                                 </div>
