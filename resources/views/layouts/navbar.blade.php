@@ -105,9 +105,6 @@
                     @can('prospect.view')
                         <a class="dropdown-item" href="{{ '/prospect' }}">Prospects</a>
                     @endcan
-                    @can('lead.view')
-                        <a class="dropdown-item" href="{{ '/lead' }}">Leads</a>
-                    @endcan
                     @can('sales_automation.view')
                         <a class="dropdown-item" href="{{ route('salesautomation.index') }}">Sales Automation</a>
                     @endcan
