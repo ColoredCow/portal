@@ -16,6 +16,7 @@ class AddedClientIdProjectName extends Migration
         Schema::table('prospects', function (Blueprint $table) {
             $table->unsignedBigInteger('client_id')->nullable();
             $table->string('project_name')->nullable();
+            $table->string('organization_name')->nullable()->change();
 
             $table->foreign('client_id')->references('id')->on('clients');
         });
@@ -32,6 +33,7 @@ class AddedClientIdProjectName extends Migration
             $table->dropForeign(['client_id']);
             $table->dropColumn('client_id');
             $table->dropColumn('project_name');
+            $table->string('organization_name')->nullable(false)->change();
         });
     }
 }

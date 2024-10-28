@@ -33,8 +33,8 @@
                                 </div>
 
                                 <div class="form-group offset-md-1 col-md-5 d-none" id="org_name_select_field">
-                                    <label for="org_name" class="field-required">Organization Name</label>
-                                    <select class="form-control" name="org_name" id="org_name_select" required="required">
+                                    <label for="client" class="field-required">Organization Name</label>
+                                    <select class="form-control" name="client_id" id="org_name_select" required="required">
                                         <option value="">Select Organization Name</option>
                                         @foreach ($clients as $client)
                                             <option value="{{ $client->id }}">{{ $client->name }}</option>

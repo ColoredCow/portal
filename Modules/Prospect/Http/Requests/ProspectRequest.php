@@ -14,7 +14,7 @@ class ProspectRequest extends FormRequest
     public function rules()
     {
         return [
-            'org_name' => 'required',
+            'org_name' => 'nullable',
             'poc_user_id' => 'required',
             'proposal_sent_date' => 'nullable|date',
             'domain' => 'nullable',
@@ -26,7 +26,27 @@ class ProspectRequest extends FormRequest
             'rfp_link' => 'nullable|url',
             'proposal_link' => 'nullable|url',
             'currency' => 'nullable',
+            'client_id' => 'nullable',
         ];
+    }
+
+    /**
+     * Configure the validator instance.
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
+     * @return void
+     */
+    public function withValidator($validator)
+    {
+        if ($this->customer_type === 'new') {
+            $validator->addRules([
+                'org_name' => 'required',
+            ]);
+        } else if ($this->customer_type === 'existing') {
+            $validator->addRules([
+                'client_id' => 'required',
+            ]);
+        }
     }
 
     /**
@@ -47,7 +67,8 @@ class ProspectRequest extends FormRequest
     public function messages()
     {
         return [
-            'org_name.required' => 'Organization name is required',
+            'org_name.required' => 'Organization name is required when customer type is new.',
+            'client_id.required' => 'Please select an organization when customer type is existing.',
             'poc_user_id.required' => 'Point of contact user ID is required',
         ];
     }
