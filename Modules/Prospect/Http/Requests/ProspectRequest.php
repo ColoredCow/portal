@@ -42,7 +42,7 @@ class ProspectRequest extends FormRequest
             $validator->addRules([
                 'org_name' => 'required',
             ]);
-        } else if ($this->customer_type === 'existing') {
+        } elseif ($this->customer_type === 'existing') {
             $validator->addRules([
                 'client_id' => 'required',
             ]);
