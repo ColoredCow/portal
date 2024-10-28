@@ -38,7 +38,7 @@ class ProspectRequest extends FormRequest
     {
         return [
             'org_name.required' => 'Organization name is required',
-            'poc_user_id.required' => 'Point of contract user ID is required',
+            'poc_user_id.required' => 'Point of contact user ID is required',
         ];
     }
 }

@@ -56,7 +56,7 @@
                                     data-placement="top" title="{{ $prospect->pocUser->name ?? '-' }}">
                             </td>
                             <td class="w-30p">
-                                <span>{{ $prospect->proposal_sent_date ? \Carbon\Carbon::parse($prospect->proposal_sent_date)->format('M d, Y') : '-' }}</span>
+                                <span>{{ $prospect->getFormattedDate($prospect->proposal_sent_date) }}</span>
                             </td>
                             <td class="w-20p">
                                 <span>{{ $prospect->domain ?? '-' }}</span>
