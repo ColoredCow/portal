@@ -16,12 +16,33 @@
                             <input type="hidden" name="create_prospect" value="create_prospect">
                             <div class="form-row">
                                 <div class="form-group col-md-5">
+                                    <label for="customer_type">{{ __('Customer Type') }}</label>
+                                    <select name="customer_type" id="customer_type" class="form-control">
+                                        <option value="">Select Customer Type</option>
+                                        @foreach (config('prospect.customer-types') as $key => $customer_type)
+                                            <option value="{{ $key }}"
+                                                {{ old('customer_type') == $key ? 'selected' : '' }}>
+                                                {{ $customer_type }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group offset-md-1 col-md-5" id="org_name_text_field">
                                     <label for="name" class="field-required">Organization Name</label>
                                     <input type="text" class="form-control" name="org_name" id="org_name"
-                                        placeholder="Enter Organization Name" required="required"
-                                        value="{{ old('org_name') }}">
+                                        placeholder="Enter Organization Name" value="{{ old('org_name') }}">
                                 </div>
-                                <div class="form-group offset-md-1 col-md-5">
+
+                                <div class="form-group offset-md-1 col-md-5 d-none" id="org_name_select_field">
+                                    <label for="org_name_select">Organization Name</label>
+                                    <select class="form-control" name="org_name_select" id="org_name_select">
+                                        @foreach ($clients as $client)
+                                            <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
                                     <label for="client_id" class="field-required">ColoredCow POC</label>
                                     <select name="poc_user_id" id="poc_user_id" class="form-control" required="required">
                                         <option value="">Select POC User</option>
@@ -32,32 +53,17 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
-                            <br>
-                            <div class="form-row">
-                                <div class="form-group col-md-5">
+                                <div class="form-group offset-md-1  col-md-5">
                                     <label for="proposal_sent_date">Proposal Sent Date</label>
                                     <input type="date" class="form-control" name="proposal_sent_date"
                                         id="proposal_sent_date" value="{{ old('proposal_sent_date') }}">
                                 </div>
-                                <div class="form-group offset-md-1 col-md-5">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
                                     <label for="domain">{{ __('Domain') }}</label>
                                     <input type="text" class="form-control" name="domain" id="domain"
                                         placeholder="Enter Domain" value="{{ old('domain') }}">
-                                </div>
-                            </div>
-                            <br>
-                            <div class="form-row">
-                                <div class="form-group col-md-5">
-                                    <label for="customer_type">{{ __('Customer Type') }}</label>
-                                    <select name="customer_type" id="customer_type" class="form-control">
-                                        <option value="">Select Customer Type</option>
-                                        @foreach (config('prospect.customer-types') as $key => $customer_type)
-                                            <option value="{{ $key }}"
-                                                {{ old('customer_type') == $key ? 'selected' : '' }}>
-                                                {{ $customer_type }}</option>
-                                        @endforeach
-                                    </select>
                                 </div>
                                 <div class="form-group offset-md-1 col-md-5">
                                     <label for="budget">{{ __('Budget') }}</label>
@@ -77,7 +83,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <br>
                             <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label for="proposal_status">{{ __('Proposal Status') }}</label>
@@ -90,7 +95,6 @@
                                         placeholder="Enter RFP URL" value="{{ old('rfp_link') }}">
                                 </div>
                             </div>
-                            <br />
                             <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label for="proposal_link">{{ __('Proposal Link') }}</label>

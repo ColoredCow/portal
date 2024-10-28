@@ -13,6 +13,7 @@ use Modules\Invoice\Entities\Invoice;
 use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Services\InvoiceService;
 use Modules\Project\Entities\Project;
+use Modules\Prospect\Entities\Prospect;
 use Modules\User\Entities\User;
 
 class Client extends Model
@@ -404,5 +405,14 @@ class Client extends Model
     protected static function newFactory()
     {
         return new ClientFactory();
+    }
+
+    public function prospect() {
+        return $this->belongsTo(Prospect::class);
+    }
+
+    public function getClientsAttribute()
+    {
+        return $this->query()->orderBy('name')->get();
     }
 }

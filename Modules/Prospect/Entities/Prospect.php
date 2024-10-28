@@ -4,6 +4,7 @@ namespace Modules\Prospect\Entities;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Client\Entities\Client;
 use Modules\User\Entities\User;
 
 class Prospect extends Model
@@ -25,5 +26,15 @@ class Prospect extends Model
     {
         return $date ? Carbon::parse($date)->format('M d, Y')
             : '-';
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'client_id');
+    }
+
+    public function getClientAttribute()
+    {
+        return $this->client()->first();
     }
 }

@@ -5,6 +5,7 @@ namespace Modules\Prospect\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Client\Entities\Client;
 use Modules\Client\Entities\Country;
 use Modules\Prospect\Entities\Prospect;
 use Modules\Prospect\Http\Requests\ProspectRequest;
@@ -44,11 +45,13 @@ class ProspectController extends Controller
     {
         $countries = Country::all();
         $user = new User();
+        $client = new Client();
         $activeUsers = $user->active_users;
 
         return view('prospect::create', [
             'users' => $activeUsers,
             'countries' => $countries,
+            'clients' => $client->clients,
         ]);
     }
 
@@ -91,11 +94,13 @@ class ProspectController extends Controller
         $countries = Country::all();
         $user = new User();
         $activeUsers = $user->active_users;
+        $client = new Client();;
 
         return view('prospect::edit', [
             'prospect' => $prospect,
             'users' => $activeUsers,
             'countries' => $countries,
+            'clients' => $client->clients
         ]);
     }
 
