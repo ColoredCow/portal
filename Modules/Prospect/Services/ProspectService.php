@@ -15,10 +15,9 @@ class ProspectService
         return redirect()->route('prospect.index')->with('status', 'Prospect created successfully!');
     }
 
-    public function update($request, $id)
+    public function update($request, $prospect)
     {
         $budget = $request->budget ?? null;
-        $prospect = Prospect::find($id);
         $prospect->organization_name = $request->org_name;
         $prospect->poc_user_id = $request->poc_user_id;
         $prospect->proposal_sent_date = $request->proposal_sent_date;
@@ -31,6 +30,7 @@ class ProspectService
         $prospect->rfp_link = $request->rfp_link;
         $prospect->proposal_link = $request->proposal_link;
         $prospect->currency = $budget ? $request->currency : null;
+        $prospect->client_id = $request->client_id ?? null;
         $prospect->save();
 
         return redirect()->route('prospect.show', $prospect->id)->with('status', 'Prospect updated successfully!');

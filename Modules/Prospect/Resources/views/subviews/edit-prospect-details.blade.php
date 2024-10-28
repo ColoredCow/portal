@@ -7,36 +7,6 @@
             <div class="card-body">
                 <input type="hidden" name="create_prospect" value="create_prospect">
                 <div class="form-row">
-                    <div class="form-group form-group col-md-5">
-                        <label for="name">Organization Name</label>
-                        <input type="text" class="form-control" name="org_name" id="org_name"
-                            placeholder="Enter Organization Name" value="{{ $prospect->organization_name }}">
-                    </div>
-                    <div class="form-group offset-md-1 col-md-5">
-                        <label for="client_id">ColoredCow POC</label>
-                        <select name="poc_user_id" id="poc_user_id" class="form-control">
-                            <option value="">Select POC User</option>
-                            @foreach ($users as $user)
-                                <option value="{{ $user->id }}"
-                                    {{ $prospect->pocUser->id == $user->id ? 'selected' : '' }}>
-                                    {{ $user->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <label for="proposal_sent_date">Proposal Sent Date</label>
-                        <input type="date" class="form-control" name="proposal_sent_date" id="proposal_sent_date"
-                            value="{{ $prospect->proposal_sent_date }}">
-                    </div>
-                    <div class="form-group offset-md-1 col-md-5">
-                        <label for="domain">{{ __('Domain') }}</label>
-                        <input type="text" class="form-control" name="domain" id="domain"
-                            placeholder="Enter Domain" value="{{ $prospect->domain }}">
-                    </div>
-                </div>
-                <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="customer_type">{{ __('Customer Type') }}</label>
                         <select name="customer_type" id="customer_type" class="form-control">
@@ -47,6 +17,48 @@
                                     {{ $customer_type }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group offset-md-1 col-md-5" id="org_name_text_field">
+                        <label for="org_name" class="field-required">Organization Name</label>
+                        <input type="text" class="form-control" name="org_name" id="org_name"
+                            placeholder="Enter Organization Name" value="{{ $prospect->organization_name }}" required>
+                    </div>
+
+                    <div class="form-group offset-md-1 col-md-5 d-none" id="org_name_select_field">
+                        <label for="client" class="field-required">Organization Name</label>
+                        <select class="form-control" name="client_id" id="org_name_select" required="required">
+                            <option value="">Select Organization Name</option>
+                            @foreach ($clients as $client)
+                                <option value="{{ $client->id }}"
+                                    {{ $prospect->client ? ($prospect->client->id == $client->id ? 'selected' : '') : '' }}>
+                                    {{ $client->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="client_id">ColoredCow POC</label>
+                        <select name="poc_user_id" id="poc_user_id" class="form-control">
+                            <option value="">Select POC User</option>
+                            @foreach ($users as $user)
+                                <option value="{{ $user->id }}"
+                                    {{ $prospect->pocUser->id == $user->id ? 'selected' : '' }}>
+                                    {{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group offset-md-1 col-md-5">
+                        <label for="proposal_sent_date">Proposal Sent Date</label>
+                        <input type="date" class="form-control" name="proposal_sent_date" id="proposal_sent_date"
+                            value="{{ $prospect->proposal_sent_date }}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="domain">{{ __('Domain') }}</label>
+                        <input type="text" class="form-control" name="domain" id="domain"
+                            placeholder="Enter Domain" value="{{ $prospect->domain }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="budget">{{ __('Budget') }}</label>

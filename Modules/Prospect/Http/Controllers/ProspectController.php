@@ -107,11 +107,11 @@ class ProspectController extends Controller
     /**
      * Update the specified resource in storage.
      * @param Request $request
-     * @param int $id
+     * @param Prospect $prospect
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Prospect $prospect)
     {
-        $data = $this->service->update($request, $id);
+        $data = $this->service->update($request, $prospect);
 
         return $data;
     }
