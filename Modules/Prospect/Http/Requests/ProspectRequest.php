@@ -16,6 +16,16 @@ class ProspectRequest extends FormRequest
         return [
             'org_name' => 'required',
             'poc_user_id' => 'required',
+            'proposal_sent_date' => 'nullable|date',
+            'domain' => 'nullable',
+            'customer_type' => 'nullable',
+            'budget' => 'nullable',
+            'proposal_status' => 'nullable',
+            'introductory_call' => 'nullable',
+            'last_followup_date' => 'nullable|date',
+            'rfp_link' => 'nullable|url',
+            'proposal_link' => 'nullable|url',
+            'currency' => 'nullable',
         ];
     }
 

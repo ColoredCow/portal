@@ -64,9 +64,10 @@
                             <td class="w-20p">
                                 <span>{{ ucfirst($prospect->customer_type) ?? '-' }}</span>
                             </td>
+
                             <td class="w-30p">
                                 <span>
-                                    {{ $prospect->budget ? $currencySymbols[$prospect->currency] : '' }}
+                                    {{ isset($prospect->currency) && isset($currencySymbols[$prospect->currency]) ? $currencySymbols[$prospect->currency] : '' }}
                                     {{ $prospect->budget ? round($prospect->budget, 2) : '-' }}
                                 </span>
                             </td>

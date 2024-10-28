@@ -47,8 +47,10 @@
             <div class="col-md-6">
                 <div class="form-group col-md-12">
                     <label for="budget" class="font-weight-bold">Budget:</label>
-                    <span class="ml-2">{{ $currencySymbols[$prospect->currency] ?? '' }}
-                        {{ $prospect->budget ? round($prospect->budget, 2) : 'N/A' }}</span>
+                    <span class="ml-2">
+                        {{ isset($prospect->currency) && isset($currencySymbols[$prospect->currency]) ? $currencySymbols[$prospect->currency] : '' }}
+                        {{ $prospect->budget ? round($prospect->budget, 2) : 'N/A' }}
+                    </span>
                 </div>
             </div>
         </div>
