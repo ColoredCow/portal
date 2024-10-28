@@ -25,7 +25,7 @@
                 <div class="form-group col-md-12">
                     <label for="proposal_sent_date" class="font-weight-bold">Proposal Sent Date:</label>
                     <span
-                        class="ml-2">{{ $prospect->proposal_sent_date ? \Carbon\Carbon::parse($prospect->proposal_sent_date)->format('M d, Y') : 'N/A' }}</span>
+                        class="ml-2">{{ $prospect->proposal_sent_date ? $prospect->getFormattedDate($prospect->proposal_sent_date) : 'N/A' }}</span>
                 </div>
             </div>
             <div class="col-md-6">
@@ -47,8 +47,10 @@
             <div class="col-md-6">
                 <div class="form-group col-md-12">
                     <label for="budget" class="font-weight-bold">Budget:</label>
-                    <span class="ml-2">{{ $currencySymbols[$prospect->currency] ?? '' }}
-                        {{ $prospect->budget ? round($prospect->budget, 2) : 'N/A' }}</span>
+                    <span class="ml-2">
+                        {{ isset($prospect->currency) && isset($currencySymbols[$prospect->currency]) ? $currencySymbols[$prospect->currency] : '' }}
+                        {{ $prospect->budget ? round($prospect->budget, 2) : 'N/A' }}
+                    </span>
                 </div>
             </div>
         </div>
@@ -58,14 +60,14 @@
                 <div class="form-group col-md-12">
                     <label for="last_followup_date" class="font-weight-bold">Last Followup Date:</label>
                     <span
-                        class="ml-2">{{ $prospect->last_followup_date ? \Carbon\Carbon::parse($prospect->last_followup_date)->format('M d, Y') : 'N/A' }}</span>
+                        class="ml-2">{{ $prospect->last_followup_date ? $prospect->getFormattedDate($prospect->last_followup_date) : 'N/A' }}</span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group col-md-12">
                     <label for="introductory_call" class="font-weight-bold">Introductory Date:</label>
                     <span
-                        class="ml-2">{{ $prospect->introductory_call ? \Carbon\Carbon::parse($prospect->introductory_call)->format('M d, Y') : 'N/A' }}</span>
+                        class="ml-2">{{ $prospect->introductory_call ? $prospect->getFormattedDate($prospect->introductory_call) : 'N/A' }}</span>
                 </div>
             </div>
         </div>

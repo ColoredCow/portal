@@ -2,6 +2,7 @@
 
 namespace Modules\Prospect\Entities;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Modules\User\Entities\User;
 
@@ -18,5 +19,11 @@ class Prospect extends Model
     public function comments()
     {
         return $this->hasMany(ProspectComment::class);
+    }
+
+    public function getFormattedDate($date)
+    {
+        return $date ? Carbon::parse($date)->format('M d, Y')
+            : '-';
     }
 }

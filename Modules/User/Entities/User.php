@@ -240,9 +240,8 @@ class User extends Authenticatable
 
     public function getActiveUsersAttribute()
     {
-        $users = self::all()->sortBy('name');
+        $users = self::query()->orderBy('name')->get();
         $activeUsers = [];
-
         foreach ($users as $user) {
             if (! $user->isActiveEmployee) {
                 continue;

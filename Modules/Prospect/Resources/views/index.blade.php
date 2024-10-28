@@ -56,7 +56,7 @@
                                     data-placement="top" title="{{ $prospect->pocUser->name ?? '-' }}">
                             </td>
                             <td class="w-30p">
-                                <span>{{ $prospect->proposal_sent_date ? \Carbon\Carbon::parse($prospect->proposal_sent_date)->format('M d, Y') : '-' }}</span>
+                                <span>{{ $prospect->getFormattedDate($prospect->proposal_sent_date) }}</span>
                             </td>
                             <td class="w-20p">
                                 <span>{{ $prospect->domain ?? '-' }}</span>
@@ -64,9 +64,10 @@
                             <td class="w-20p">
                                 <span>{{ ucfirst($prospect->customer_type) ?? '-' }}</span>
                             </td>
+
                             <td class="w-30p">
                                 <span>
-                                    {{ $prospect->budget ? $currencySymbols[$prospect->currency] : '' }}
+                                    {{ isset($prospect->currency) && isset($currencySymbols[$prospect->currency]) ? $currencySymbols[$prospect->currency] : '' }}
                                     {{ $prospect->budget ? round($prospect->budget, 2) : '-' }}
                                 </span>
                             </td>
