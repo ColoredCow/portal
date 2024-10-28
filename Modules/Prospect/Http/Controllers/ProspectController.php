@@ -43,9 +43,11 @@ class ProspectController extends Controller
     public function create()
     {
         $countries = Country::all();
+        $user = new User();
+        $activeUsers = $user->active_users;
 
         return view('prospect::create', [
-            'users' => $this->activeUsers(),
+            'users' => $activeUsers,
             'countries' => $countries,
         ]);
     }
@@ -87,10 +89,12 @@ class ProspectController extends Controller
     {
         $prospect = Prospect::with(['pocUser', 'comments'])->find($id);
         $countries = Country::all();
+        $user = new User();
+        $activeUsers = $user->active_users;
 
         return view('prospect::edit', [
             'prospect' => $prospect,
-            'users' => $this->activeUsers(),
+            'users' => $activeUsers,
             'countries' => $countries,
         ]);
     }
@@ -119,16 +123,5 @@ class ProspectController extends Controller
         $this->service->commentUpdate($validated, $id);
 
         return redirect()->route('prospect.show', $id)->with('status', 'Comment updated successfully!');
-    }
-
-    private function activeUsers()
-    {
-        $user = new User();
-        $activeUsers = $user->active_users;
-        usort($activeUsers, function ($a, $b) {
-            return strcmp($a->name, $b->name);
-        });
-
-        return $activeUsers;
     }
 }

@@ -241,15 +241,20 @@ class User extends Authenticatable
     public function getActiveUsersAttribute()
     {
         $users = self::all();
-        $activeUser = [];
+        $activeUsers = [];
+
         foreach ($users as $user) {
             if (! $user->isActiveEmployee) {
                 continue;
             }
-            $activeUser[] = $user;
+            $activeUsers[] = $user;
         }
 
-        return $activeUser;
+        usort($activeUsers, function ($a, $b) {
+            return strcmp($a->name, $b->name);
+        });
+
+        return $activeUsers;
     }
 
     public function prospectsComments()
