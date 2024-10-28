@@ -62,7 +62,7 @@
                                 </select>
                             </div>
                             <input type="number" class="form-control" name="budget" placeholder="Enter Budget"
-                                id="budget" step=".01" min="0" value="{{ $prospect->budget }}">
+                                id="budget" value="{{ $prospect->budget }}">
                         </div>
                     </div>
                 </div>
