@@ -1,5 +1,6 @@
 @extends('prospect::layouts.master')
 @section('content')
+    @includeWhen(session('status'), 'toast', ['message' => session('status')])
     <div class="container">
         <br>
         <div class="d-flex justify-content-between mb-5">

@@ -16,14 +16,6 @@ class ProspectRequest extends FormRequest
         return [
             'org_name' => 'required',
             'poc_user_id' => 'required',
-            'proposal_sent_date' => 'required',
-            'domain' => 'required',
-            'customer_type' => 'required',
-            'budget' => 'required',
-            'proposal_status' => 'required',
-            'currency' => 'required',
-            'rfp_link' => 'required',
-            'proposal_link' => 'required',
         ];
     }
 
@@ -47,13 +39,6 @@ class ProspectRequest extends FormRequest
         return [
             'org_name.required' => 'Organization name is required',
             'poc_user_id.required' => 'Point of contact user ID is required',
-            'proposal_sent_date.required' => 'Proposal sent date is required',
-            'domain.required' => 'Domain is required',
-            'customer_type.required' => 'Customer type is required',
-            'budget.required' => 'Budget is required',
-            'proposal_status.required' => 'Proposal status is required',
-            'rfp_url.required' => 'RFP URL is required',
-            'proposal_url.required' => 'Proposal URL is required',
         ];
     }
 }

@@ -10,18 +10,16 @@
                 </button>
             </div>
         @endif
-        <div class="mb-2">
-            <form class="d-md-flex justify-content-between mt-5 mb-5" action="">
-                <div class='d-flex justify-content-between align-items-md-center mb-2 mb-xl-0'>
-                    <h4 class="">
-                        Active Prospect
-                    </h4>
-                </div>
-                <div class="d-flex align-items-center">
-                    <a href="{{ route('prospect.create') }}" class="btn btn-success text-white"><i class="fa fa-plus"></i>
-                        {{ __('Add new prospect') }}</a>
-                </div>
-            </form>
+        <div class="mb-2 d-md-flex justify-content-between">
+            <div class='d-flex justify-content-between align-items-md-center mt-5 mb-5 mb-xl-0'>
+                <h4 class="">
+                    Active Prospect
+                </h4>
+            </div>
+            <div class="d-flex align-items-center">
+                <a href="{{ route('prospect.create') }}" class="btn btn-success text-white"><i class="fa fa-plus"></i>
+                    {{ __('Add new prospect') }}</a>
+            </div>
         </div>
         <div class='d-md-none mb-2'>
             @can('prospect.create')
@@ -49,31 +47,31 @@
                             <td class="w-30p">
                                 <div>
                                     <a
-                                        href="{{ route('prospect.show', $prospect->id) }}">{{ $prospect->organization_name }}</a>
+                                        href="{{ route('prospect.show', $prospect->id) }}">{{ $prospect->organization_name ?? '-' }}</a>
                                 </div>
                             </td>
                             <td class="w-15p">
-                                <img src="{{ $prospect->pocUser->avatar }}" class="rounded-circle" width="30"
-                                    height="30" alt="{{ $prospect->pocUser->name }}"data-toggle="tooltip"
-                                    data-placement="top" title={{ $prospect->pocUser->name }}>
+                                <img src="{{ $prospect->pocUser->avatar ?? '' }}" class="rounded-circle" width="30"
+                                    height="30" alt="{{ $prospect->pocUser->name ?? '-' }}" data-toggle="tooltip"
+                                    data-placement="top" title="{{ $prospect->pocUser->name ?? '-' }}">
                             </td>
                             <td class="w-30p">
-                                <span>{{ \Carbon\Carbon::parse($prospect->proposal_sent_date)->format('M d, Y') }}</span>
+                                <span>{{ $prospect->getFormattedDate($prospect->proposal_sent_date) }}</span>
                             </td>
                             <td class="w-20p">
-                                <span>{{ $prospect->domain }}</span>
+                                <span>{{ $prospect->domain ?? '-' }}</span>
                             </td>
                             <td class="w-20p">
-                                <span>{{ ucfirst($prospect->customer_type) }}</span>
+                                <span>{{ ucfirst($prospect->customer_type) ?? '-' }}</span>
                             </td>
                             <td class="w-30p">
                                 <span>
-                                    {{ $currencySymbols[$prospect->currency] ?? '' }}
-                                    {{ number_format($prospect->budget ?? 0, 2) }}
+                                    {{ $prospect->budget ? $currencySymbols[$prospect->currency] : '' }}
+                                    {{ $prospect->budget ? round($prospect->budget, 2) : '-' }}
                                 </span>
                             </td>
                             <td class="w-20p">
-                                <span class="">{{ $prospect->proposal_status }}</span>
+                                <span class="">{{ $prospect->proposal_status ?? '-' }}</span>
                             </td>
                         </tr>
                     @endforeach

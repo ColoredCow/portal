@@ -42,9 +42,9 @@ class ProspectController extends Controller
      */
     public function create()
     {
+        $countries = Country::all();
         $user = new User();
         $activeUsers = $user->active_users;
-        $countries = Country::all();
 
         return view('prospect::create', [
             'users' => $activeUsers,
@@ -88,9 +88,9 @@ class ProspectController extends Controller
     public function edit($id)
     {
         $prospect = Prospect::with(['pocUser', 'comments'])->find($id);
+        $countries = Country::all();
         $user = new User();
         $activeUsers = $user->active_users;
-        $countries = Country::all();
 
         return view('prospect::edit', [
             'prospect' => $prospect,
