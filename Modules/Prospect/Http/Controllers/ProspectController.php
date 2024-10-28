@@ -27,7 +27,7 @@ class ProspectController extends Controller
      */
     public function index()
     {
-        $prospects = Prospect::with('pocUser')->get();
+        $prospects = Prospect::all();
         $countries = Country::all();
         $currencySymbols = $countries->pluck('currency_symbol', 'currency');
 
@@ -73,7 +73,7 @@ class ProspectController extends Controller
      */
     public function show($id)
     {
-        $prospect = Prospect::with(['pocUser', 'comments', 'comments.user'])->find($id);
+        $prospect = Prospect::with(['comments'])->find($id);
         $countries = Country::all();
         $currencySymbols = $countries->pluck('currency_symbol', 'currency');
 
@@ -90,7 +90,7 @@ class ProspectController extends Controller
      */
     public function edit($id)
     {
-        $prospect = Prospect::with(['pocUser', 'comments'])->find($id);
+        $prospect = Prospect::with(['comments'])->find($id);
         $countries = Country::all();
         $user = new User();
         $activeUsers = $user->active_users;

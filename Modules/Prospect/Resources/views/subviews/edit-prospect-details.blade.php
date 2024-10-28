@@ -18,7 +18,7 @@
                             <option value="">Select POC User</option>
                             @foreach ($users as $user)
                                 <option value="{{ $user->id }}"
-                                    {{ $prospect->poc_user_id == $user->id ? 'selected' : '' }}>
+                                    {{ $prospect->pocUser->id == $user->id ? 'selected' : '' }}>
                                     {{ $user->name }}</option>
                             @endforeach
                         </select>

@@ -47,7 +47,7 @@
                             <td class="w-30p">
                                 <div>
                                     <a
-                                        href="{{ route('prospect.show', $prospect->id) }}">{{ $prospect->organization_name ?? '-' }}</a>
+                                        href="{{ route('prospect.show', $prospect->id) }}">{{ $prospect->organization_name ?? $prospect->client->name }}</a>
                                 </div>
                             </td>
                             <td class="w-15p">

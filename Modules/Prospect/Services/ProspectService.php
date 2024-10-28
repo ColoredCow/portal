@@ -61,6 +61,7 @@ class ProspectService
         $prospect->last_followup_date = $validated['last_followup_date'] ?? null;
         $prospect->rfp_link = $validated['rfp_link'] ?? null;
         $prospect->proposal_link = $validated['proposal_link'] ?? null;
+        $prospect->client_id = $validated['client_id'] ?? null;
         $prospect->currency = $budget ? $validated['currency'] : null;
         $prospect->save();
     }
