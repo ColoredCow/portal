@@ -26,7 +26,7 @@ class ProspectRequest extends FormRequest
             'rfp_link' => 'nullable|url',
             'proposal_link' => 'nullable|url',
             'currency' => 'nullable',
-            'client_id' => 'nullable|exists:clients,id',,
+            'client_id' => 'nullable|exists:clients,id', ,
         ];
     }
 
