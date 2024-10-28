@@ -27,14 +27,15 @@
                                     </select>
                                 </div>
                                 <div class="form-group offset-md-1 col-md-5" id="org_name_text_field">
-                                    <label for="name" class="field-required">Organization Name</label>
+                                    <label for="org_name" class="field-required">Organization Name</label>
                                     <input type="text" class="form-control" name="org_name" id="org_name"
-                                        placeholder="Enter Organization Name" value="{{ old('org_name') }}">
+                                        placeholder="Enter Organization Name" value="{{ old('org_name') }}" required>
                                 </div>
 
                                 <div class="form-group offset-md-1 col-md-5 d-none" id="org_name_select_field">
-                                    <label for="org_name_select">Organization Name</label>
-                                    <select class="form-control" name="org_name_select" id="org_name_select">
+                                    <label for="org_name" class="field-required">Organization Name</label>
+                                    <select class="form-control" name="org_name" id="org_name_select" required="required">
+                                        <option value="">Select Organization Name</option>
                                         @foreach ($clients as $client)
                                             <option value="{{ $client->id }}">{{ $client->name }}</option>
                                         @endforeach
