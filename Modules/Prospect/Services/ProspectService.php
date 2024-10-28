@@ -17,22 +17,23 @@ class ProspectService
 
     public function update($request, $id)
     {
+        $budget = $request->budget ?? null;
         $prospect = Prospect::find($id);
         $prospect->organization_name = $request->org_name;
         $prospect->poc_user_id = $request->poc_user_id;
         $prospect->proposal_sent_date = $request->proposal_sent_date;
         $prospect->domain = $request->domain;
         $prospect->customer_type = $request->customer_type;
-        $prospect->budget = $request->budget;
+        $prospect->budget = $budget;
         $prospect->proposal_status = $request->proposal_status;
         $prospect->introductory_call = $request->introductory_call;
         $prospect->last_followup_date = $request->last_followup_date;
         $prospect->rfp_link = $request->rfp_link;
         $prospect->proposal_link = $request->proposal_link;
-        $prospect->currency = $request->currency;
+        $prospect->currency = $budget ? $request->currency : null;
         $prospect->save();
 
-        return redirect()->route('prospect.edit', $prospect->id)->with('status', 'Prospect updated successfully!');
+        return redirect()->route('prospect.show', $prospect->id)->with('status', 'Prospect updated successfully!');
     }
 
     public function commentUpdate($validated, $id)
@@ -48,18 +49,19 @@ class ProspectService
 
     private function saveProspectData($prospect, $validated)
     {
+        $budget = $validated['budget'] ?? null;
         $prospect->organization_name = $validated['org_name'];
         $prospect->poc_user_id = $validated['poc_user_id'];
         $prospect->proposal_sent_date = $validated['proposal_sent_date'] ?? null;
         $prospect->domain = $validated['domain'] ?? null;
         $prospect->customer_type = $validated['customer_type'] ?? null;
-        $prospect->budget = $validated['budget'] ?? null;
+        $prospect->budget = $budget;
         $prospect->proposal_status = $validated['proposal_status'] ?? null;
         $prospect->introductory_call = $validated['introductory_call'] ?? null;
         $prospect->last_followup_date = $validated['last_followup_date'] ?? null;
         $prospect->rfp_link = $validated['rfp_link'] ?? null;
         $prospect->proposal_link = $validated['proposal_link'] ?? null;
-        $prospect->currency = $validated['currency'] ?? null;
+        $prospect->currency = $budget ? $validated['currency'] : null;
         $prospect->save();
     }
 }
