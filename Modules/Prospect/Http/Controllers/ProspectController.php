@@ -94,13 +94,13 @@ class ProspectController extends Controller
         $countries = Country::all();
         $user = new User();
         $activeUsers = $user->active_users;
-        $client = new Client();;
+        $client = new Client();
 
         return view('prospect::edit', [
             'prospect' => $prospect,
             'users' => $activeUsers,
             'countries' => $countries,
-            'clients' => $client->clients
+            'clients' => $client->clients,
         ]);
     }
 

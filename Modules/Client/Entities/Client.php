@@ -397,6 +397,16 @@ class Client extends Model
         return false;
     }
 
+    public function prospect()
+    {
+        return $this->belongsTo(Prospect::class);
+    }
+
+    public function getClientsAttribute()
+    {
+        return $this->query()->orderBy('name')->get();
+    }
+
     protected static function booted()
     {
         static::addGlobalScope(new ClientGlobalScope);
@@ -405,14 +415,5 @@ class Client extends Model
     protected static function newFactory()
     {
         return new ClientFactory();
-    }
-
-    public function prospect() {
-        return $this->belongsTo(Prospect::class);
-    }
-
-    public function getClientsAttribute()
-    {
-        return $this->query()->orderBy('name')->get();
     }
 }
