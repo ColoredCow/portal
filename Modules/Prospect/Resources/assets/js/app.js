@@ -15,16 +15,19 @@ document.addEventListener('DOMContentLoaded', function () {
             orgNameTextField.classList.remove('d-none');
             orgNameSelectField.classList.add('d-none');
             orgNameTextInput.required = true;
+            orgNameSelectInput.value = null;
             orgNameSelectInput.required = false;
         } else if (customerTypeField.value === CUSTOMER_TYPES.EXISTING) {
             orgNameTextField.classList.add('d-none');
             orgNameSelectField.classList.remove('d-none');
-            orgNameTextInput.required = false;
             orgNameSelectInput.required = true;
+            orgNameTextInput.required = false;
+            orgNameTextInput.value = null;
         } else {
             orgNameTextField.classList.remove('d-none');
             orgNameSelectField.classList.add('d-none');
             orgNameTextInput.required = true;
+            orgNameSelectInput.value = null;
             orgNameSelectInput.required = false;
         }
     }
