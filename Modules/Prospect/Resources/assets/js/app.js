@@ -1,3 +1,8 @@
+const CUSTOMER_TYPES = {
+    NEW: 'new',
+    EXISTING: 'existing',
+    DORMANT: 'dormant'
+};
 document.addEventListener('DOMContentLoaded', function () {
     const customerTypeField = document.getElementById('customer_type');
     const orgNameTextField = document.getElementById('org_name_text_field');
@@ -6,12 +11,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const orgNameSelectInput = document.getElementById('org_name_select');
 
     function toggleOrgNameField() {
-        if (customerTypeField.value === 'new') {
+        if (customerTypeField.value === CUSTOMER_TYPES.NEW) {
             orgNameTextField.classList.remove('d-none');
             orgNameSelectField.classList.add('d-none');
             orgNameTextInput.required = true;
             orgNameSelectInput.required = false;
-        } else if (customerTypeField.value === 'existing') {
+        } else if (customerTypeField.value === CUSTOMER_TYPES.EXISTING) {
             orgNameTextField.classList.add('d-none');
             orgNameSelectField.classList.remove('d-none');
             orgNameTextInput.required = false;
