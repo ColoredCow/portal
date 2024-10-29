@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
             orgNameTextField.classList.remove('d-none');
             orgNameSelectField.classList.add('d-none');
             orgNameTextInput.required = true;
-            orgNameSelectInput.value = null;
+            orgNameSelectInput.value = '';
             orgNameSelectInput.required = false;
         } else if (customerTypeField.value === CUSTOMER_TYPES.EXISTING) {
             orgNameTextField.classList.add('d-none');
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
             orgNameTextField.classList.remove('d-none');
             orgNameSelectField.classList.add('d-none');
             orgNameTextInput.required = true;
-            orgNameSelectInput.value = null;
+            orgNameSelectInput.value = '';
             orgNameSelectInput.required = false;
         }
     }

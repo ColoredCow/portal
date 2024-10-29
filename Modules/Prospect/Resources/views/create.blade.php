@@ -54,19 +54,27 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group offset-md-1  col-md-5">
-                                    <label for="proposal_sent_date">Proposal Sent Date</label>
-                                    <input type="date" class="form-control" name="proposal_sent_date"
-                                        id="proposal_sent_date" value="{{ old('proposal_sent_date') }}">
+
+                                <div class="form-group offset-md-1 col-md-5" id="org_name_text_field">
+                                    <label for="project_name">Project Name</label>
+                                    <input type="text" class="form-control" name="project_name" id="project_name"
+                                        placeholder="Enter Project Name" value="{{ old('project_name') }}">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-5">
+                                    <label for="proposal_sent_date">Proposal Sent Date</label>
+                                    <input type="date" class="form-control" name="proposal_sent_date"
+                                        id="proposal_sent_date" value="{{ old('proposal_sent_date') }}">
+                                </div>
+                                <div class="form-group offset-md-1 col-md-5">
                                     <label for="domain">{{ __('Domain') }}</label>
                                     <input type="text" class="form-control" name="domain" id="domain"
                                         placeholder="Enter Domain" value="{{ old('domain') }}">
                                 </div>
-                                <div class="form-group offset-md-1 col-md-5">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
                                     <label for="budget">{{ __('Budget') }}</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -83,21 +91,19 @@
                                             value="{{ old('budget') }}">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-5">
+                                <div class="form-group offset-md-1 col-md-5">
                                     <label for="proposal_status">{{ __('Proposal Status') }}</label>
                                     <input type="text" class="form-control" name="proposal_status" id="proposal_status"
                                         placeholder="Enter Proposal Status" value="{{ old('proposal_status') }}">
                                 </div>
-                                <div class="form-group offset-md-1 col-md-5">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
                                     <label for="rfp_link">{{ __('RFP Link') }}</label>
                                     <input type="url" class="form-control" name="rfp_link" id="rfp_link"
                                         placeholder="Enter RFP URL" value="{{ old('rfp_link') }}">
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-5">
+                                <div class="form-group offset-md-1 col-md-5">
                                     <label for="proposal_link">{{ __('Proposal Link') }}</label>
                                     <input type="url" class="form-control" name="proposal_link" id="proposal_link"
                                         placeholder="Enter Proposal URL" value="{{ old('proposal_link') }}">

@@ -31,6 +31,7 @@ class ProspectService
         $prospect->proposal_link = $request->proposal_link;
         $prospect->currency = $budget ? $request->currency : null;
         $prospect->client_id = $request->client_id ?? null;
+        $prospect->project_name = $request->project_name;
         $prospect->save();
 
         return redirect()->route('prospect.show', $prospect->id)->with('status', 'Prospect updated successfully!');
@@ -63,6 +64,7 @@ class ProspectService
         $prospect->proposal_link = $validated['proposal_link'] ?? null;
         $prospect->client_id = $validated['client_id'] ?? null;
         $prospect->currency = $budget ? $validated['currency'] : null;
+        $prospect->project_name = $validated['project_name'] ?? null;
         $prospect->save();
     }
 }
