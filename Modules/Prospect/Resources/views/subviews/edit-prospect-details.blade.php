@@ -72,7 +72,6 @@
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <select name="currency" v-model="currency" id="currency" class="input-group-text">
-                                    <option value="">Select Currency</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->currency }}"
                                             {{ $prospect->currency == $country->currency ? 'selected' : '' }}>
