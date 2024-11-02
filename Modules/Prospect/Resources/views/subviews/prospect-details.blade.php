@@ -9,7 +9,7 @@
             <div class="col-md-6">
                 <div class="form-group col-md-12">
                     <label for="org_name" class="font-weight-bold">Organization Name:</label>
-                    <span class="ml-2">{{ $prospect->organization_name ?? ($prospect->client->name ?? 'N/A') }}</span>
+                    <span class="ml-2">{{ $prospect->getProspectDisplayName() }}</span>
                 </div>
             </div>
             <div class="col-md-6">
@@ -82,7 +82,7 @@
             <div class="col-md-6">
                 <div class="form-group col-md-12">
                     <label for="proposal_status" class="font-weight-bold">Proposal Status:</label>
-                    <span class="ml-2">{{ $prospect->proposal_status ?? 'N/A' }}</span>
+                    <span class="ml-2">{{ config('prospect.status')[$prospect->proposal_status] ?? 'N/A' }}</span>
                 </div>
             </div>
         </div>

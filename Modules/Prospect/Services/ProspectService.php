@@ -4,9 +4,34 @@ namespace Modules\Prospect\Services;
 
 use Modules\Prospect\Entities\Prospect;
 use Modules\Prospect\Entities\ProspectComment;
+use Modules\Client\Entities\Country;
 
 class ProspectService
 {
+
+    public function index(array $requestData = [])
+    {
+        $filter = $requestData['status'] ?? 'open';
+        
+        $prospects = Prospect::query()
+            ->when($filter === 'open', function ($query) {
+                $query->whereNotIn('proposal_status', ['rejected', 'converted']);
+            }, function ($query) use ($filter) {
+                $query->where('proposal_status', $filter);
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(config('constants.pagination_size'))
+            ->appends($requestData);
+
+        $countries = Country::all();
+        $currencySymbols = $countries->pluck('currency_symbol', 'currency');
+
+        return [
+            'prospects' => $prospects,
+            'currencySymbols' => $currencySymbols,
+        ];
+    }
+
     public function store($validated)
     {
         $prospect = new Prospect();
@@ -57,7 +82,7 @@ class ProspectService
         $prospect->domain = $validated['domain'] ?? null;
         $prospect->customer_type = $validated['customer_type'] ?? null;
         $prospect->budget = $budget;
-        $prospect->proposal_status = $validated['proposal_status'] ?? null;
+        $prospect->proposal_status = $validated['proposal_status'] ?? 'open';
         $prospect->introductory_call = $validated['introductory_call'] ?? null;
         $prospect->last_followup_date = $validated['last_followup_date'] ?? null;
         $prospect->rfp_link = $validated['rfp_link'] ?? null;

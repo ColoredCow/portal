@@ -2,6 +2,7 @@
 @section('content')
     @includeWhen(session('status'), 'toast', ['message' => session('status')])
     <div class="container">
+        @include('prospect::menu-header')
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
@@ -79,5 +80,9 @@
                 </tbody>
             </table>
         </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        {{ $prospects->appends(request()->query())->links() }}
     </div>
 @endsection

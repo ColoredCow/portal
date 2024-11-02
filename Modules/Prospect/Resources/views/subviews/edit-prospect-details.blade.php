@@ -85,8 +85,14 @@
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="proposal_status">{{ __('Proposal Status') }}</label>
-                        <input type="text" class="form-control" name="proposal_status" id="proposal_status"
-                            placeholder="Enter Proposal Status" value="{{ $prospect->proposal_status }}">
+                        <select name="proposal_status" id="proposal_status" class="form-control">
+                            <option value="">Select Prospect Status</option>
+                            @foreach (config('prospect.status') as $key => $status)
+                                <option value="{{ $key }}"
+                                    {{ $prospect->proposal_status == $key ? 'selected' : '' }}>
+                                    {{ $status }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="form-row">

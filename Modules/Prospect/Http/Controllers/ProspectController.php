@@ -27,15 +27,12 @@ class ProspectController extends Controller
      */
     public function index()
     {
-        $prospects = Prospect::all();
-        $countries = Country::all();
-        $currencySymbols = $countries->pluck('currency_symbol', 'currency');
+        $requestData = request()->all();
+        $data  = $this->service->index($requestData);
 
-        return view('prospect::index', [
-            'prospects' => $prospects,
-            'currencySymbols' => $currencySymbols,
-        ]);
+        return view('prospect::index', $data);
     }
+
 
     /**
      * Show the form for creating a new resource.
