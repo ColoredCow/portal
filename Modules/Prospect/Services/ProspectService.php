@@ -81,7 +81,7 @@ class ProspectService
         $prospect->domain = $validated['domain'] ?? null;
         $prospect->customer_type = $validated['customer_type'] ?? null;
         $prospect->budget = $budget;
-        $prospect->proposal_status = $validated['proposal_status'] ?? 'open';
+        $prospect->proposal_status = $validated['proposal_status'] ?? null;
         $prospect->introductory_call = $validated['introductory_call'] ?? null;
         $prospect->last_followup_date = $validated['last_followup_date'] ?? null;
         $prospect->rfp_link = $validated['rfp_link'] ?? null;
