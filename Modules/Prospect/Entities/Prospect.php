@@ -33,8 +33,8 @@ class Prospect extends Model
         return $this->belongsTo(Client::class, 'client_id');
     }
 
-    public function getProspectDisplayName()  
-    {  
-        return $this->organization_name ?? optional($this->client)->name ?? 'N/A';  
+    public function getProspectDisplayName()
+    {
+        return $this->organization_name ?? optional($this->client)->name ?? 'N/A';
     }
 }

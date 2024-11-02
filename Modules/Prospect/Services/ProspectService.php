@@ -2,17 +2,16 @@
 
 namespace Modules\Prospect\Services;
 
+use Modules\Client\Entities\Country;
 use Modules\Prospect\Entities\Prospect;
 use Modules\Prospect\Entities\ProspectComment;
-use Modules\Client\Entities\Country;
 
 class ProspectService
 {
-
     public function index(array $requestData = [])
     {
         $filter = $requestData['status'] ?? 'open';
-        
+
         $prospects = Prospect::query()
             ->when($filter === 'open', function ($query) {
                 $query->whereNotIn('proposal_status', ['rejected', 'converted']);

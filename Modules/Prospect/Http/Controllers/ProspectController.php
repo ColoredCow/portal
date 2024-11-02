@@ -28,11 +28,10 @@ class ProspectController extends Controller
     public function index()
     {
         $requestData = request()->all();
-        $data  = $this->service->index($requestData);
+        $data = $this->service->index($requestData);
 
         return view('prospect::index', $data);
     }
-
 
     /**
      * Show the form for creating a new resource.
