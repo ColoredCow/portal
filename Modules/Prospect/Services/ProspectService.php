@@ -10,24 +10,9 @@ class ProspectService
 {
     public function index(array $requestData = [])
     {
-        $filter = $requestData['status'] ?? 'open';
-
-        $prospects = Prospect::query()
-            ->when($filter === 'open', function ($query) {
-                $query->whereNotIn('proposal_status', ['rejected', 'converted']);
-            }, function ($query) use ($filter) {
-                $query->where('proposal_status', $filter);
-            })
-            ->orderBy('created_at', 'desc')
-            ->paginate(config('constants.pagination_size'))
-            ->appends($requestData);
-
-        $countries = Country::all();
-        $currencySymbols = $countries->pluck('currency_symbol', 'currency');
-
         return [
-            'prospects' => $prospects,
-            'currencySymbols' => $currencySymbols,
+            'prospects' => $this->getFilteredProspects($requestData),
+            'currencySymbols' => $this->getCurrencySymbols(),
         ];
     }
 
@@ -70,6 +55,26 @@ class ProspectService
         $prospectComment->save();
 
         return $prospectComment;
+    }
+
+    private function getFilteredProspects(array $requestData = [])
+    {
+        $filter = $requestData['status'] ?? 'open';
+
+        return Prospect::query()
+            ->when($filter === 'open', function ($query) {
+                $query->whereNotIn('proposal_status', ['rejected', 'converted']);
+            }, function ($query) use ($filter) {
+                $query->where('proposal_status', $filter);
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(config('constants.pagination_size'))
+            ->appends($requestData);
+    }
+
+    private function getCurrencySymbols()
+    {
+        return Country::all()->pluck('currency_symbol', 'currency');
     }
 
     private function saveProspectData($prospect, $validated)
