@@ -61,20 +61,23 @@ class ProspectService
     {
         $filter = $requestData['status'] ?? 'open';
 
-        return Prospect::query()
-            ->when($filter === 'open', function ($query) {
-                $query->whereNotIn('proposal_status', ['rejected', 'converted']);
-            }, function ($query) use ($filter) {
-                $query->where('proposal_status', $filter);
-            })
-            ->orderBy('created_at', 'desc')
-            ->paginate(config('constants.pagination_size'))
-            ->appends($requestData);
+        return Prospect::query()->when(
+            $filter === 'open',
+            fn ($query) => $query->where(function ($query) {
+                $query->whereNotIn('proposal_status', ['rejected', 'converted'])
+                    ->orWhereNull('proposal_status')
+                    ->orWhere('proposal_status', '');
+            }),
+            fn ($query) => $query->where('proposal_status', $filter)
+        )
+        ->orderBy('created_at', 'desc')
+        ->paginate(config('constants.pagination_size'))
+        ->appends($requestData);
     }
 
     private function getCurrencySymbols()
     {
-        return Country::all()->pluck('currency_symbol', 'currency');
+        return Country::pluck('currency_symbol', 'currency');
     }
 
     private function saveProspectData($prospect, $validated)
