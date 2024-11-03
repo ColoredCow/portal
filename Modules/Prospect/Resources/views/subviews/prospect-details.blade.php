@@ -58,7 +58,7 @@
                     <label for="budget" class="font-weight-bold">Budget:</label>
                     <span class="ml-2">
                         {{ isset($prospect->currency) && isset($currencySymbols[$prospect->currency]) ? $currencySymbols[$prospect->currency] : '' }}
-                        {{ $prospect->budget ? $prospect->formattedAmount($prospect->budget) : '-' }}
+                        {{ $prospect->budget ? $prospect->formattedAmount($prospect->budget) : 'N/A' }}
                     </span>
                 </div>
             </div>
