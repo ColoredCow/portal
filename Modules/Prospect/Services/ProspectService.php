@@ -5,6 +5,7 @@ namespace Modules\Prospect\Services;
 use Modules\Client\Entities\Country;
 use Modules\Prospect\Entities\Prospect;
 use Modules\Prospect\Entities\ProspectComment;
+use Modules\Prospect\Entities\ProspectInsight;
 
 class ProspectService
 {
@@ -20,8 +21,6 @@ class ProspectService
     {
         $prospect = new Prospect();
         $this->saveProspectData($prospect, $validated);
-
-        return redirect()->route('prospect.index')->with('status', 'Prospect created successfully!');
     }
 
     public function update($request, $prospect)
@@ -55,6 +54,15 @@ class ProspectService
         $prospectComment->save();
 
         return $prospectComment;
+    }
+
+    public function insightsUpdate($validated, $id)
+    {
+        $prospectInsights = new ProspectInsight();
+        $prospectInsights->prospect_id = $id;
+        $prospectInsights->user_id = auth()->user()->id;
+        $prospectInsights->insight_learning = $validated['insight_learning'];
+        $prospectInsights->save();
     }
 
     private function getFilteredProspects(array $requestData = [])

@@ -15,7 +15,7 @@
                             width="50" data-toggle="tooltip" data-placement="top" title={{ $comment->user->name }}>
                         <div>
                             <span
-                                class="fz-16 font-weight-bold text-muted">{{ \Carbon\Carbon::parse($comment->created_at)->format('M d, Y') }}</span>
+                                class="fz-16 font-weight-bold text-muted">{{ $prospect->getFormattedDate($comment->created_at) }}</span>
                             <h5>{{ $comment->comment }}</h5>
                         </div>
                     </div>

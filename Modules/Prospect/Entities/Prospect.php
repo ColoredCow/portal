@@ -45,4 +45,9 @@ class Prospect extends Model
 
         return $formattedAmount;
     }
+
+    public function insights()
+    {
+        return $this->hasMany(ProspectInsight::class);
+    }
 }

@@ -13,6 +13,10 @@
                 <a class="nav-link" id="prospectComments-tab" data-toggle="pill" href="#prospectComments" role="tab"
                     aria-controls="prospectComments" aria-selected="false">Comments</a>
             </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="prospectInsights-tab" data-toggle="pill" href="#prospectInsights" role="tab"
+                    aria-controls="prospectInsights" aria-selected="false">Insights / Learning</a>
+            </li>
         </ul>
 
         @include('status', ['errors' => $errors->all()])
@@ -24,6 +28,10 @@
 
             <div class="tab-pane fade" id="prospectComments" role="tabpanel" aria-labelledby="prospectComments-tab">
                 @include('prospect::subviews.edit-prospect-comment')
+            </div>
+
+            <div class="tab-pane fade" id="prospectInsights" role="tabpanel" aria-labelledby="prospectInsights-tab">
+                @include('prospect::subviews.edit-prospect-insights')
             </div>
         </div>
     </div>
