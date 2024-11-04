@@ -15,7 +15,7 @@
             </li>
             <li class="nav-item" role="presentation">
                 <a class="nav-link" id="prospectInsights-tab" data-toggle="pill" href="#prospectInsights" role="tab"
-                    aria-controls="prospectInsights" aria-selected="false">Prospect Insights / Learning</a>
+                    aria-controls="prospectInsights" aria-selected="false">Insights / Learning</a>
             </li>
         </ul>
 
