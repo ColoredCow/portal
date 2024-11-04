@@ -16,7 +16,7 @@
                             width="50" data-toggle="tooltip" data-placement="top" title={{ $insight->user->name }}>
                         <div>
                             <span
-                                class="fz-16 font-weight-bold text-muted">{{ \Carbon\Carbon::parse($insight->created_at)->format('M d, Y') }}</span>
+                                class="fz-16 font-weight-bold text-muted">{{ $prospect->getFormattedDate($insight->created_at) }}</span>
                             <h5>{{ $insight->insight_learning }}</h5>
                         </div>
                     </div>
