@@ -1,5 +1,6 @@
-<div class="card-header d-flex mt-5" data-toggle="collapse" data-target="#prospect-insights">
-    <h5 class="font-weight-bold">Prospect Insights / Learning</h5>
+<div class="card-header d-flex mt-5" data-toggle="collapse" data-target="#prospect-insights" role="button"
+    aria-expanded="false" aria-controls="prospect-insights">
+    <h5 class="font-weight-bold">Prospect Insights / Learning ({{ count($prospect->insights) }})</h5>
     <span class ="arrow ml-auto">&#9660;</span>
 </div>
 <div id="prospect-insights" class="collapse card mt-3">
