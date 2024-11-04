@@ -953,12 +953,19 @@ if (document.getElementById("books_listing")) {
 				});
 				return totalCopies;
 			},
-
-			updateCopiesCount: function(index) {
-				axios.put(this.updateRoute + "/" + this.books[index].id, {
-					copies: this.copies,
+			updateCopiesCount(index) {
+				let updatedCopies = this.books[index].copies;
+				axios.put(`${this.updateRoute}/${this.books[index].id}`, {
+					copies: updatedCopies,
+				})
+				.then(response => {
+					console.log("Copies updated successfully", response);
+					this.$set(this.books, index, { ...this.books[index], copies: updatedCopies });
+				})
+				.catch(error => {
+					console.error("Error updating copies", error);
 				});
-			},
+			}
 		},
 
 		mounted: function() {
@@ -971,7 +978,6 @@ if (document.getElementById("books_listing")) {
 			allCategoryInputs.forEach(
 				(checkbox) => (this.categoryInputs[checkbox.value] = checkbox)
 			);
-			console.log(this.books);
 			this.books.forEach(book => {
 				this.$set(this.copies, book.id, {});
 				if (book.copies) {
