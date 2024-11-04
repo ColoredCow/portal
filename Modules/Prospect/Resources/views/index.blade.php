@@ -2,6 +2,7 @@
 @section('content')
     @includeWhen(session('status'), 'toast', ['message' => session('status')])
     <div class="container">
+        @include('prospect::menu-header')
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
@@ -47,7 +48,7 @@
                             <td class="w-30p">
                                 <div>
                                     <a
-                                        href="{{ route('prospect.show', $prospect->id) }}">{{ $prospect->organization_name ?? '-' }}</a>
+                                        href="{{ route('prospect.show', $prospect->id) }}">{{ $prospect->organization_name ?? ($prospect->client->name ?? '-') }}</a>
                                 </div>
                             </td>
                             <td class="w-15p">
@@ -68,7 +69,7 @@
                             <td class="w-30p">
                                 <span>
                                     {{ isset($prospect->currency) && isset($currencySymbols[$prospect->currency]) ? $currencySymbols[$prospect->currency] : '' }}
-                                    {{ $prospect->budget ? round($prospect->budget, 2) : '-' }}
+                                    {{ $prospect->budget ? $prospect->formattedAmount($prospect->budget) : '-' }}
                                 </span>
                             </td>
                             <td class="w-20p">
@@ -79,5 +80,9 @@
                 </tbody>
             </table>
         </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        {{ $prospects->appends(request()->query())->links() }}
     </div>
 @endsection

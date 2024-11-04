@@ -2,23 +2,30 @@
 
 namespace Modules\Prospect\Services;
 
+use Modules\Client\Entities\Country;
 use Modules\Prospect\Entities\Prospect;
 use Modules\Prospect\Entities\ProspectComment;
+use Modules\Prospect\Entities\ProspectInsight;
 
 class ProspectService
 {
+    public function index(array $requestData = [])
+    {
+        return [
+            'prospects' => $this->getFilteredProspects($requestData),
+            'currencySymbols' => $this->getCurrencySymbols(),
+        ];
+    }
+
     public function store($validated)
     {
         $prospect = new Prospect();
         $this->saveProspectData($prospect, $validated);
-
-        return redirect()->route('prospect.index')->with('status', 'Prospect created successfully!');
     }
 
-    public function update($request, $id)
+    public function update($request, $prospect)
     {
         $budget = $request->budget ?? null;
-        $prospect = Prospect::find($id);
         $prospect->organization_name = $request->org_name;
         $prospect->poc_user_id = $request->poc_user_id;
         $prospect->proposal_sent_date = $request->proposal_sent_date;
@@ -31,6 +38,8 @@ class ProspectService
         $prospect->rfp_link = $request->rfp_link;
         $prospect->proposal_link = $request->proposal_link;
         $prospect->currency = $budget ? $request->currency : null;
+        $prospect->client_id = $request->client_id ?? null;
+        $prospect->project_name = $request->project_name;
         $prospect->save();
 
         return redirect()->route('prospect.show', $prospect->id)->with('status', 'Prospect updated successfully!');
@@ -47,6 +56,38 @@ class ProspectService
         return $prospectComment;
     }
 
+    public function insightsUpdate($validated, $id)
+    {
+        $prospectInsights = new ProspectInsight();
+        $prospectInsights->prospect_id = $id;
+        $prospectInsights->user_id = auth()->user()->id;
+        $prospectInsights->insight_learning = $validated['insight_learning'];
+        $prospectInsights->save();
+    }
+
+    private function getFilteredProspects(array $requestData = [])
+    {
+        $filter = $requestData['status'] ?? 'open';
+
+        return Prospect::query()->when(
+            $filter === 'open',
+            fn ($query) => $query->where(function ($query) {
+                $query->whereNotIn('proposal_status', ['rejected', 'converted'])
+                    ->orWhereNull('proposal_status')
+                    ->orWhere('proposal_status', '');
+            }),
+            fn ($query) => $query->where('proposal_status', $filter)
+        )
+        ->orderBy('created_at', 'desc')
+        ->paginate(config('constants.pagination_size'))
+        ->appends($requestData);
+    }
+
+    private function getCurrencySymbols()
+    {
+        return Country::pluck('currency_symbol', 'currency');
+    }
+
     private function saveProspectData($prospect, $validated)
     {
         $budget = $validated['budget'] ?? null;
@@ -61,7 +102,9 @@ class ProspectService
         $prospect->last_followup_date = $validated['last_followup_date'] ?? null;
         $prospect->rfp_link = $validated['rfp_link'] ?? null;
         $prospect->proposal_link = $validated['proposal_link'] ?? null;
+        $prospect->client_id = $validated['client_id'] ?? null;
         $prospect->currency = $budget ? $validated['currency'] : null;
+        $prospect->project_name = $validated['project_name'] ?? null;
         $prospect->save();
     }
 }

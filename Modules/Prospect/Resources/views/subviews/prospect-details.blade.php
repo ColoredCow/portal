@@ -9,7 +9,7 @@
             <div class="col-md-6">
                 <div class="form-group col-md-12">
                     <label for="org_name" class="font-weight-bold">Organization Name:</label>
-                    <span class="ml-2">{{ $prospect->organization_name ?? 'N/A' }}</span>
+                    <span class="ml-2">{{ $prospect->getProspectDisplayName() }}</span>
                 </div>
             </div>
             <div class="col-md-6">
@@ -23,20 +23,26 @@
         <div class="form-row">
             <div class="col-md-6">
                 <div class="form-group col-md-12">
+                    <label for="org_name" class="font-weight-bold">Project Name:</label>
+                    <span class="ml-2">{{ $prospect->project_name ?? 'N/A' }}</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group col-md-12">
                     <label for="proposal_sent_date" class="font-weight-bold">Proposal Sent Date:</label>
                     <span
                         class="ml-2">{{ $prospect->proposal_sent_date ? $prospect->getFormattedDate($prospect->proposal_sent_date) : 'N/A' }}</span>
                 </div>
             </div>
+        </div>
+
+        <div class="form-row">
             <div class="col-md-6">
                 <div class="form-group col-md-12">
                     <label for="domain" class="font-weight-bold">Domain:</label>
                     <span class="ml-2">{{ $prospect->domain ?? 'N/A' }}</span>
                 </div>
             </div>
-        </div>
-
-        <div class="form-row">
             <div class="col-md-6">
                 <div class="form-group col-md-12">
                     <label for="customer_type" class="font-weight-bold">Customer Type:</label>
@@ -44,18 +50,18 @@
                         class="ml-2">{{ config('prospect.customer-types')[$prospect->customer_type] ?? 'N/A' }}</span>
                 </div>
             </div>
+        </div>
+
+        <div class="form-row">
             <div class="col-md-6">
                 <div class="form-group col-md-12">
                     <label for="budget" class="font-weight-bold">Budget:</label>
                     <span class="ml-2">
                         {{ isset($prospect->currency) && isset($currencySymbols[$prospect->currency]) ? $currencySymbols[$prospect->currency] : '' }}
-                        {{ $prospect->budget ? round($prospect->budget, 2) : 'N/A' }}
+                        {{ $prospect->budget ? $prospect->formattedAmount($prospect->budget) : 'N/A' }}
                     </span>
                 </div>
             </div>
-        </div>
-
-        <div class="form-row">
             <div class="col-md-6">
                 <div class="form-group col-md-12">
                     <label for="last_followup_date" class="font-weight-bold">Last Followup Date:</label>
@@ -63,6 +69,9 @@
                         class="ml-2">{{ $prospect->last_followup_date ? $prospect->getFormattedDate($prospect->last_followup_date) : 'N/A' }}</span>
                 </div>
             </div>
+        </div>
+
+        <div class="form-row">
             <div class="col-md-6">
                 <div class="form-group col-md-12">
                     <label for="introductory_call" class="font-weight-bold">Introductory Date:</label>
@@ -70,15 +79,15 @@
                         class="ml-2">{{ $prospect->introductory_call ? $prospect->getFormattedDate($prospect->introductory_call) : 'N/A' }}</span>
                 </div>
             </div>
-        </div>
-
-        <div class="form-row">
             <div class="col-md-6">
                 <div class="form-group col-md-12">
                     <label for="proposal_status" class="font-weight-bold">Proposal Status:</label>
-                    <span class="ml-2">{{ $prospect->proposal_status ?? 'N/A' }}</span>
+                    <span class="ml-2">{{ config('prospect.status')[$prospect->proposal_status] ?? 'N/A' }}</span>
                 </div>
             </div>
+        </div>
+
+        <div class="form-row">
             <div class="col-md-6">
                 <div class="form-group col-md-12">
                     <label for="proposal_url" class="font-weight-bold">Proposal Link:</label>
@@ -90,9 +99,6 @@
                     @endif
                 </div>
             </div>
-        </div>
-
-        <div class="form-row">
             <div class="col-md-6">
                 <div class="form-group col-md-12">
                     <label for="rfp_url" class="font-weight-bold">RFP Link:</label>

@@ -16,12 +16,34 @@
                             <input type="hidden" name="create_prospect" value="create_prospect">
                             <div class="form-row">
                                 <div class="form-group col-md-5">
-                                    <label for="name" class="field-required">Organization Name</label>
-                                    <input type="text" class="form-control" name="org_name" id="org_name"
-                                        placeholder="Enter Organization Name" required="required"
-                                        value="{{ old('org_name') }}">
+                                    <label for="customer_type">{{ __('Customer Type') }}</label>
+                                    <select name="customer_type" id="customer_type" class="form-control">
+                                        <option value="">Select Customer Type</option>
+                                        @foreach (config('prospect.customer-types') as $key => $customer_type)
+                                            <option value="{{ $key }}"
+                                                {{ old('customer_type') == $key ? 'selected' : '' }}>
+                                                {{ $customer_type }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="form-group offset-md-1 col-md-5">
+                                <div class="form-group offset-md-1 col-md-5" id="org_name_text_field">
+                                    <label for="org_name" class="field-required">Organization Name</label>
+                                    <input type="text" class="form-control" name="org_name" id="org_name"
+                                        placeholder="Enter Organization Name" value="{{ old('org_name') }}" required>
+                                </div>
+
+                                <div class="form-group offset-md-1 col-md-5 d-none" id="org_name_select_field">
+                                    <label for="client" class="field-required">Organization Name</label>
+                                    <select class="form-control" name="client_id" id="org_name_select" required="required">
+                                        <option value="">Select Organization Name</option>
+                                        @foreach ($clients as $client)
+                                            <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
                                     <label for="client_id" class="field-required">ColoredCow POC</label>
                                     <select name="poc_user_id" id="poc_user_id" class="form-control" required="required">
                                         <option value="">Select POC User</option>
@@ -32,8 +54,13 @@
                                         @endforeach
                                     </select>
                                 </div>
+
+                                <div class="form-group offset-md-1 col-md-5" id="org_name_text_field">
+                                    <label for="project_name">Project Name</label>
+                                    <input type="text" class="form-control" name="project_name" id="project_name"
+                                        placeholder="Enter Project Name" value="{{ old('project_name') }}">
+                                </div>
                             </div>
-                            <br>
                             <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label for="proposal_sent_date">Proposal Sent Date</label>
@@ -46,26 +73,13 @@
                                         placeholder="Enter Domain" value="{{ old('domain') }}">
                                 </div>
                             </div>
-                            <br>
                             <div class="form-row">
                                 <div class="form-group col-md-5">
-                                    <label for="customer_type">{{ __('Customer Type') }}</label>
-                                    <select name="customer_type" id="customer_type" class="form-control">
-                                        <option value="">Select Customer Type</option>
-                                        @foreach (config('prospect.customer-types') as $key => $customer_type)
-                                            <option value="{{ $key }}"
-                                                {{ old('customer_type') == $key ? 'selected' : '' }}>
-                                                {{ $customer_type }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group offset-md-1 col-md-5">
                                     <label for="budget">{{ __('Budget') }}</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <select name="currency" v-model="currency" id="currency"
                                                 class="input-group-text">
-                                                <option value="">Select Currency</option>
                                                 @foreach ($countries as $country)
                                                     <option value="{{ $country->currency }}">{{ $country->currency }}
                                                     </option>
@@ -76,23 +90,25 @@
                                             value="{{ old('budget') }}">
                                     </div>
                                 </div>
+                                <div class="form-group offset-md-1 col-md-5">
+                                    <label for="proposal_status">{{ __('Proposal Status') }}</label>
+                                    <select name="proposal_status" id="proposal_status" class="form-control">
+                                        <option value="">Select Prospect Status</option>
+                                        @foreach (config('prospect.status') as $key => $status)
+                                            <option value="{{ $key }}"
+                                                {{ old('proposal_status') == $key ? 'selected' : '' }}>
+                                                {{ $status }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                            <br>
                             <div class="form-row">
                                 <div class="form-group col-md-5">
-                                    <label for="proposal_status">{{ __('Proposal Status') }}</label>
-                                    <input type="text" class="form-control" name="proposal_status" id="proposal_status"
-                                        placeholder="Enter Proposal Status" value="{{ old('proposal_status') }}">
-                                </div>
-                                <div class="form-group offset-md-1 col-md-5">
                                     <label for="rfp_link">{{ __('RFP Link') }}</label>
                                     <input type="url" class="form-control" name="rfp_link" id="rfp_link"
                                         placeholder="Enter RFP URL" value="{{ old('rfp_link') }}">
                                 </div>
-                            </div>
-                            <br />
-                            <div class="form-row">
-                                <div class="form-group col-md-5">
+                                <div class="form-group offset-md-1 col-md-5">
                                     <label for="proposal_link">{{ __('Proposal Link') }}</label>
                                     <input type="url" class="form-control" name="proposal_link" id="proposal_link"
                                         placeholder="Enter Proposal URL" value="{{ old('proposal_link') }}">

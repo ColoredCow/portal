@@ -1,5 +1,5 @@
 <div class="card-header d-flex mt-5" data-toggle="collapse" data-target="#prospect-comments">
-    <h5 class="font-weight-bold">Prospect Comments</h5>
+    <h5 class="font-weight-bold">Prospect Comments ({{ count($prospect->comments) }})</h5>
     <span class ="arrow ml-auto">&#9660;</span>
 </div>
 <div id="prospect-comments" class="collapse card mt-3">
@@ -15,7 +15,7 @@
                             width="50" data-toggle="tooltip" data-placement="top" title={{ $comment->user->name }}>
                         <div>
                             <span
-                                class="fz-16 font-weight-bold text-muted">{{ \Carbon\Carbon::parse($comment->created_at)->format('M d, Y') }}</span>
+                                class="fz-16 font-weight-bold text-muted">{{ $prospect->getFormattedDate($comment->created_at) }}</span>
                             <h5>{{ $comment->comment }}</h5>
                         </div>
                     </div>
