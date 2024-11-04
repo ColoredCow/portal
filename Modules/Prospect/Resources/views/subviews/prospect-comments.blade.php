@@ -1,5 +1,5 @@
 <div class="card-header d-flex mt-5" data-toggle="collapse" data-target="#prospect-comments">
-    <h5 class="font-weight-bold">Prospect Comments</h5>
+    <h5 class="font-weight-bold">Prospect Comments ({{ count($prospect->comments) }})</h5>
     <span class ="arrow ml-auto">&#9660;</span>
 </div>
 <div id="prospect-comments" class="collapse card mt-3">

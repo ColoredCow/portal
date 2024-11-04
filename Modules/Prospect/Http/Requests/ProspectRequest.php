@@ -14,17 +14,40 @@ class ProspectRequest extends FormRequest
     public function rules()
     {
         return [
-            'org_name' => 'required',
+            'org_name' => 'nullable',
             'poc_user_id' => 'required',
-            'proposal_sent_date' => 'required',
-            'domain' => 'required',
-            'customer_type' => 'required',
-            'budget' => 'required',
-            'proposal_status' => 'required',
-            'currency' => 'required',
-            'rfp_link' => 'required',
-            'proposal_link' => 'required',
+            'proposal_sent_date' => 'nullable|date',
+            'domain' => 'nullable',
+            'customer_type' => 'nullable',
+            'budget' => 'nullable',
+            'proposal_status' => 'nullable',
+            'introductory_call' => 'nullable',
+            'last_followup_date' => 'nullable|date',
+            'rfp_link' => 'nullable|url',
+            'proposal_link' => 'nullable|url',
+            'currency' => 'nullable',
+            'client_id' => 'nullable|exists:clients,id',
+            'project_name' => 'nullable',
         ];
+    }
+
+    /**
+     * Configure the validator instance.
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
+     * @return void
+     */
+    public function withValidator($validator)
+    {
+        if ($this->customer_type === 'new') {
+            $validator->addRules([
+                'org_name' => 'required',
+            ]);
+        } elseif ($this->customer_type === 'existing') {
+            $validator->addRules([
+                'client_id' => 'required',
+            ]);
+        }
     }
 
     /**
@@ -45,15 +68,9 @@ class ProspectRequest extends FormRequest
     public function messages()
     {
         return [
-            'org_name.required' => 'Organization name is required',
+            'org_name.required' => 'Organization name is required when customer type is new.',
+            'client_id.required' => 'Please select an organization when customer type is existing.',
             'poc_user_id.required' => 'Point of contact user ID is required',
-            'proposal_sent_date.required' => 'Proposal sent date is required',
-            'domain.required' => 'Domain is required',
-            'customer_type.required' => 'Customer type is required',
-            'budget.required' => 'Budget is required',
-            'proposal_status.required' => 'Proposal status is required',
-            'rfp_url.required' => 'RFP URL is required',
-            'proposal_url.required' => 'Proposal URL is required',
         ];
     }
 }
