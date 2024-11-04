@@ -73,7 +73,8 @@
                                 </span>
                             </td>
                             <td class="w-20p">
-                                <span class="">{{ $prospect->proposal_status ?? '-' }}</span>
+                                <span
+                                    class="">{{ config('prospect.status')[$prospect->proposal_status] ?? '-' }}</span>
                             </td>
                         </tr>
                     @endforeach
