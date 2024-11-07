@@ -5,6 +5,7 @@ namespace Modules\Prospect\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Client\Entities\Client;
 use Modules\Client\Entities\Country;
 use Modules\Prospect\Entities\Prospect;
 use Modules\Prospect\Http\Requests\ProspectRequest;
@@ -26,14 +27,10 @@ class ProspectController extends Controller
      */
     public function index()
     {
-        $prospects = Prospect::with('pocUser')->get();
-        $countries = Country::all();
-        $currencySymbols = $countries->pluck('currency_symbol', 'currency');
+        $requestData = request()->all();
+        $data = $this->service->index($requestData);
 
-        return view('prospect::index', [
-            'prospects' => $prospects,
-            'currencySymbols' => $currencySymbols,
-        ]);
+        return view('prospect::index', $data);
     }
 
     /**
@@ -44,11 +41,13 @@ class ProspectController extends Controller
     {
         $countries = Country::all();
         $user = new User();
+        $client = new Client();
         $activeUsers = $user->active_users;
 
         return view('prospect::create', [
             'users' => $activeUsers,
             'countries' => $countries,
+            'clients' => $client->clients,
         ]);
     }
 
@@ -59,9 +58,9 @@ class ProspectController extends Controller
     public function store(ProspectRequest $request)
     {
         $validated = $request->validated();
-        $data = $this->service->store($validated);
+        $this->service->store($validated);
 
-        return $data;
+        return redirect()->route('prospect.index')->with('status', 'Prospect created successfully!');
     }
 
     /**
@@ -70,7 +69,7 @@ class ProspectController extends Controller
      */
     public function show($id)
     {
-        $prospect = Prospect::with(['pocUser', 'comments', 'comments.user'])->find($id);
+        $prospect = Prospect::with(['comments', 'insights'])->find($id);
         $countries = Country::all();
         $currencySymbols = $countries->pluck('currency_symbol', 'currency');
 
@@ -87,26 +86,28 @@ class ProspectController extends Controller
      */
     public function edit($id)
     {
-        $prospect = Prospect::with(['pocUser', 'comments'])->find($id);
+        $prospect = Prospect::with(['comments'])->find($id);
         $countries = Country::all();
         $user = new User();
         $activeUsers = $user->active_users;
+        $client = new Client();
 
         return view('prospect::edit', [
             'prospect' => $prospect,
             'users' => $activeUsers,
             'countries' => $countries,
+            'clients' => $client->clients,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      * @param Request $request
-     * @param int $id
+     * @param Prospect $prospect
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Prospect $prospect)
     {
-        $data = $this->service->update($request, $id);
+        $data = $this->service->update($request, $prospect);
 
         return $data;
     }
@@ -123,5 +124,15 @@ class ProspectController extends Controller
         $this->service->commentUpdate($validated, $id);
 
         return redirect()->route('prospect.show', $id)->with('status', 'Comment updated successfully!');
+    }
+
+    public function insightsUpdate(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'insight_learning' => 'required',
+        ]);
+        $this->service->insightsUpdate($validated, $id);
+
+        return redirect()->route('prospect.show', $id)->with('status', 'Prospect Insights updated successfully!');
     }
 }

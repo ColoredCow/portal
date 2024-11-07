@@ -14,6 +14,7 @@ use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Prospect\Entities\Prospect;
 use Modules\Prospect\Entities\ProspectComment;
+use Modules\Prospect\Entities\ProspectInsight;
 use Modules\User\Database\Factories\UserFactory;
 use Modules\User\Traits\CanBeExtended;
 use Modules\User\Traits\HasWebsiteUser;
@@ -255,6 +256,11 @@ class User extends Authenticatable
     public function prospectsComments()
     {
         return $this->hasMany(ProspectComment::class);
+    }
+
+    public function prospectInsights()
+    {
+        return $this->hasMany(ProspectInsight::class);
     }
 
     protected static function newFactory()

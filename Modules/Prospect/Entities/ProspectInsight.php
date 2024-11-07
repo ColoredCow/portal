@@ -5,11 +5,11 @@ namespace Modules\Prospect\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Modules\User\Entities\User;
 
-class ProspectComment extends Model
+class ProspectInsight extends Model
 {
     protected $fillable = [];
 
-    protected $table = 'prospect_comments';
+    protected $table = 'prospect_insights';
 
     public function prospect()
     {
@@ -18,6 +18,6 @@ class ProspectComment extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 }
