@@ -6,6 +6,7 @@ use App\Models\Comment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\User\Entities\User;
+use App\Models\KnowledgeCafe\Library\BookLocation;
 
 class Book extends Model
 {
@@ -173,5 +174,10 @@ class Book extends Model
     public function bookAMonths()
     {
         return $this->hasMany(BookAMonth::class, 'library_book_id');
+    }
+
+    public function bookLocations()
+    {
+        return $this->hasMany(BookLocation::class, 'book_id');
     }
 }

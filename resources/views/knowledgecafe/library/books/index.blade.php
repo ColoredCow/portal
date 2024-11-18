@@ -5,7 +5,7 @@
         <span class="sr-only">Loading...</span>
     </div>
 </div>
-<div id="books_listing" class="container">
+<div id="books_listing" class="mx-6">
     @include('status', ['errors' => $errors->all()])
     <br>
 
@@ -55,9 +55,14 @@
         </div>
     </div>
     @endif
-    <div class="d-flex justify-content-start flex-wrap" id="books_table" data-books="{{ json_encode($books) }}" data-categories="{{ json_encode($categories) }}" data-index-route="{{ route('books.index') }}" data-category-index-route="{{ route('books.category.index') }}" data-logged-in-user="{{ json_encode(auth()->user()) }}">
+    @foreach ( $books as $book )
+        <div id="books-data-{{ $book->id }}"  data-location-data='@json($bookLocations->where("book_id", $book->id)->pluck("number_of_copies", "location.id"))' >
+        </div>
+    @endforeach
+    <div class="d-flex justify-content-start flex-wrap" id="books_table" data-books="{{ json_encode($books) }}" data-locations ="{{ json_encode($bookLocations) }}" data-categories="{{ json_encode($categories) }}" data-index-route="{{ route('books.index') }}" data-category-index-route="{{ route('books.category.index') }}" data-logged-in-user="{{ json_encode(auth()->user()) }}">
         <div class="d-flex flex-wrap w-full">
-            <div v-for="(book, index) in books" class="col-lg-3 col-md-5 col-8 card book_card  mr-1 mb-3 p-2 mr-lg-4">
+            <div v-for="(book, index) in books"
+            class="col-lg-4 col-md-5 col-8 card book_card mr-1 mb-3 p-2 mr-lg-4">
                 <div class="d-flex">
                     <a :href="updateRoute+ '/'+ book.id">
                         <img :src="book.thumbnail" class="cover_image">
@@ -68,7 +73,8 @@
 
                         <p class="text-info" v-if="book.on_kindle == 1" :title="book.author">On Kindle</p>
 
-                        <h3><span class="badge badge-primary position-absolute copies-count" v-if="book.number_of_copies > 1" :title="book.number_of_copies + ' copies'">@{{ book.number_of_copies }}</span></h3>
+                        <h3><span class="badge badge-primary position-absolute copies-count">@{{ getTotalCopies(book.id) }}</span></h3>
+
                     </div>
                     @can('library_books.delete')
                     <div class="p-0 position-absolute action_buttons">
@@ -93,13 +99,40 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">Number of copies of this book: <br> <input type="text" name="copiesofbooks" :id="'copiesOfBooks'+index" :value="book.number_of_copies"> </div>
+                            <div class="modal-body" >
+                                    @foreach ($bookLocations as $bookLocation)
+                                        <div v-if="book.id==={{ $bookLocation->book_id }}">
+                                            @if($bookLocation->number_of_copies!==0 )
+                                            <span class="pl-1">
+                                                {{ $bookLocation->location->centre_name }}:
+                                                <b>
+                                                    <input
+                                                        type="number"
+                                                        v-model="book.copies[{{$bookLocation->location->id}}]"
+                                                        name="copiesofbooks['book.id'][{{ $bookLocation->location->id }}]"
+                                                        :id="'number-of-copies-'+{{ $bookLocation->location->id }}"
+                                                    >
+                                                </b>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    @endforeach
+                            </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                 <button type="button" class="btn btn-primary" @click="updateCopiesCount(index)" data-dismiss="modal">OK</button>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="d-flex pt-1 pb-2">
+                    @foreach ($bookLocations as $bookLocation)
+                        <div v-if="book.id==={{ $bookLocation->book_id }}">
+                            @if($bookLocation->number_of_copies!==0 )
+                                <span class="pl-1">{{($bookLocation->location->centre_name)}}: <b>{{$bookLocation->number_of_copies}}</b></span>
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
                 <div v-if="book.readers && book.readers.length">
                     <p class="mb-0 mt-1">Read by</p>

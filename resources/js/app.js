@@ -748,7 +748,7 @@ if (document.getElementById("show_and_save_book")) {
 			addMethod: "from_isbn",
 			showInfo: false,
 			book: {},
-			number_of_copies: 1,
+			copies: {},
 			routes: {
 				index: document.getElementById("show_book").dataset.indexRoute || "",
 				fetch: document.getElementById("book_form").dataset.actionRoute || "",
@@ -814,6 +814,7 @@ if (document.getElementById("show_and_save_book")) {
 				this.book["on_kindle"] = document.getElementById("on_kindle").checked
 					? 1
 					: 0;
+				this.$set(this.book, 'copies', this.copies);
 				axios.post(this.routes.store, this.book).then((response) => {
 					this.buttons.disableSaveButton = false;
 
@@ -836,6 +837,9 @@ if (document.getElementById("books_listing")) {
 			books: document.getElementById("books_table").dataset.books
 				? JSON.parse(document.getElementById("books_table").dataset.books)
 				: {},
+			bookLocations: document.getElementById("books_table").dataset.locations
+				? JSON.parse(document.getElementById("books_table").dataset.locations)
+				: [],
 			bookCategories: document.getElementById("books_table").dataset.categories
 				? JSON.parse(document.getElementById("books_table").dataset.categories)
 				: [],
@@ -857,6 +861,7 @@ if (document.getElementById("books_listing")) {
 			sortKeys: document.getElementById("category_input")
 				? document.getElementById("category_input").dataset.value
 				: "",
+			copies:{},
 		},
 		methods: {
 			updateCategoryMode: function(index) {
@@ -939,20 +944,28 @@ if (document.getElementById("books_listing")) {
 				return str.length > length ? str.substring(0, length) + "..." : str;
 			},
 
-			updateCopiesCount: function(index) {
-				var new_count = parseInt(
-					prompt(
-						"Number of copies of this book",
-						this.books[index].number_of_copies
-					)
-				);
-				if (new_count && isFinite(new_count)) {
-					this.books[index].number_of_copies = new_count;
-					axios.put(this.updateRoute + "/" + this.books[index].id, {
-						number_of_copies: new_count,
-					});
-				}
+			getTotalCopies: function(bookId) {
+				let totalCopies = 0;
+				this.bookLocations.forEach((location) => {
+					if (location.book_id === bookId) {
+						totalCopies += location.number_of_copies;
+					}
+				});
+				return totalCopies;
 			},
+			updateCopiesCount(index) {
+				let updatedCopies = this.books[index].copies;
+				axios.put(`${this.updateRoute}/${this.books[index].id}`, {
+					copies: updatedCopies,
+				})
+				.then(response => {
+					console.log("Copies updated successfully", response);
+					this.$set(this.books, index, { ...this.books[index], copies: updatedCopies });
+				})
+				.catch(error => {
+					console.error("Error updating copies", error);
+				});
+			}
 		},
 
 		mounted: function() {
@@ -965,6 +978,14 @@ if (document.getElementById("books_listing")) {
 			allCategoryInputs.forEach(
 				(checkbox) => (this.categoryInputs[checkbox.value] = checkbox)
 			);
+			this.books.forEach(book => {
+				this.$set(this.copies, book.id, {});
+				if (book.copies) {
+				  Object.keys(book.copies).forEach(locationId => {
+					this.$set(this.copies[book.id], locationId, book.copies[locationId]);
+				  });
+				}
+			});
 		},
 	});
 }
