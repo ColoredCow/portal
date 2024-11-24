@@ -38,8 +38,14 @@ class Prospect extends Model
         return $this->organization_name ?? optional($this->client)->name ?? 'N/A';
     }
 
-    public function formattedAmount($amount)
+    public function formattedIndianAmount($amount)
     {
+        $amount = (string) $amount;
+
+        if (strlen($amount) <= 3) {
+            return $amount;
+        }
+
         $formattedAmount = preg_replace('/\B(?=(\d{2})+(?!\d))/', ',', substr($amount, 0, -3)) .
                     ',' . substr($amount, -3);
 

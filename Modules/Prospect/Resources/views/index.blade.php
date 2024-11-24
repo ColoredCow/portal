@@ -69,7 +69,7 @@
                             <td class="w-30p">
                                 <span>
                                     {{ isset($prospect->currency) && isset($currencySymbols[$prospect->currency]) ? $currencySymbols[$prospect->currency] : '' }}
-                                    {{ $prospect->budget ? $prospect->formattedAmount($prospect->budget) : '-' }}
+                                    {{ $prospect->budget ? $prospect->formattedIndianAmount($prospect->budget) : '-' }}
                                 </span>
                             </td>
                             <td class="w-20p">
