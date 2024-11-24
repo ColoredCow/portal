@@ -33,7 +33,7 @@
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
                     <tr>
-                        <th class="sticky-top">Organization Name</th>
+                        <th class="sticky-top">Name</th>
                         <th class="sticky-top">POC</th>
                         <th class="sticky-top">Proposal Sent Date</th>
                         <th class="sticky-top">Domain</th>
@@ -47,8 +47,13 @@
                         <tr>
                             <td class="w-30p">
                                 <div>
-                                    <a
-                                        href="{{ route('prospect.show', $prospect->id) }}">{{ $prospect->organization_name ?? ($prospect->client->name ?? '-') }}</a>
+                                    <a href="{{ route('prospect.show', $prospect->id) }}" class="text-decoration-none">
+                                        {{ $prospect->project_name ?? $prospect->organization_name }}
+                                    </a>
+                                    <br>
+                                    <span class="theme-gray-dark fz-12">
+                                        {{ $prospect->organization_name ?? ($prospect->client->name ?? '-') }}
+                                    </span>
                                 </div>
                             </td>
                             <td class="w-15p">
