@@ -52,14 +52,14 @@
                                     </a>
                                     <br>
                                     <span class="theme-gray-dark fz-12">
-                                        {{ $prospect->organization_name ?? ($prospect->client->name ?? '-') }}
+                                        {{ $prospect->project_name ? $prospect->organization_name : $prospect->client->name ?? '' }}
                                     </span>
                                 </div>
                             </td>
                             <td class="w-15p">
                                 <img src="{{ $prospect->pocUser->avatar ?? '' }}" class="rounded-circle" width="30"
                                     height="30" alt="{{ $prospect->pocUser->name ?? '-' }}" data-toggle="tooltip"
-                                    data-placement="top" title="{{ $prospect->pocUser->name ?? '-' }}">
+                                    data-placement="top" title="{{ $prospect->pocUser->name ?? '' }}">
                             </td>
                             <td class="w-30p">
                                 <span>{{ $prospect->getFormattedDate($prospect->proposal_sent_date) }}</span>
