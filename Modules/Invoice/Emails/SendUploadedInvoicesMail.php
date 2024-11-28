@@ -38,7 +38,7 @@ class SendUploadedInvoicesMail extends Mailable
             ->view('invoice::mail.uploaded-invoice-folder-details-mail')
             ->with([
                 'invoicesFolderDetails' => $this->invoicesFolderDetails,
-                'monthYear' => $monthYear
+                'monthYear' => $monthYear,
             ]);
     }
 }

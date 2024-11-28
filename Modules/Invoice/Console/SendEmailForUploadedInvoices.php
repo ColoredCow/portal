@@ -52,7 +52,7 @@ class SendEmailForUploadedInvoices extends Command
             'international' => [
                 'folderName' => 'Invoices - Ex (International)',
                 'folderLink' => null,
-            ]
+            ],
         ];
         foreach ($invoiceFolderNames as $key => $folderDetail) {
             $countryFolderName = $folderDetail['folderName'];
