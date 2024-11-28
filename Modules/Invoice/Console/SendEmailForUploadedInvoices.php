@@ -48,7 +48,7 @@ class SendEmailForUploadedInvoices extends Command
             'indian' => [
                 'folderName' => 'Invoices - IN (Indian)',
                 'folderLink' => null,
-            ], 
+            ],
             'international' => [
                 'folderName' => 'Invoices - Ex (International)',
                 'folderLink' => null,
@@ -78,7 +78,7 @@ class SendEmailForUploadedInvoices extends Command
         $invoiceCountryFolderId = $this->getOrCreateFolder($service, $countryFolderName, $googleDriveParentFolderId);
         $financialYearFolderId = $this->getOrCreateFolder($service, $financialYearFolderName, $invoiceCountryFolderId);
         $monthFolderId = $this->getOrCreateFolder($service, $monthFolderName, $financialYearFolderId);
-        
+
         return "https://drive.google.com/drive/folders/{$monthFolderId}";
     }
 
