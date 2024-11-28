@@ -17,7 +17,7 @@ class SendUploadedInvoicesMail extends Mailable
      *
      * @return void
      */
-    public function __construct(Array $invoicesFolderDetails)
+    public function __construct(array $invoicesFolderDetails)
     {
         $this->invoicesFolderDetails = $invoicesFolderDetails;
     }
