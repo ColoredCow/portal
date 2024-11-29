@@ -7,30 +7,24 @@ use Google\Client as GoogleClient;
 use Google\Service\Drive;
 use Google\Service\Drive\DriveFile;
 use Illuminate\Console\Command;
-use Modules\Invoice\Entities\Invoice;
+use Illuminate\Support\Facades\Mail;
+use Modules\Invoice\Emails\SendUploadedInvoicesMail;
 
-class UploadToGDrive extends Command
+class SendEmailForUploadedInvoices extends Command
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'invoice:upload-to-gdrive';
+    protected $name = 'invoice:email-for-uploaded-invoices';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This command will upload the invoices to GDrive.';
-
-    /**
-     * The console command signature for arguments.
-     *
-     * @var string
-     */
-    protected $signature = 'invoice:upload-to-gdrive {startDate?} {endDate?}';
+    protected $description = 'This command will send email to CA for the last month uploaded invoices';
 
     /**
      * Create a new command instance.
@@ -49,37 +43,29 @@ class UploadToGDrive extends Command
      */
     public function handle()
     {
-        $startDate = $this->argument('startDate')
-            ? Carbon::parse($this->argument('startDate'))
-            : Carbon::now()->subMonth()->startOfMonth();
-
-        $endDate = $this->argument('endDate')
-            ? Carbon::parse($this->argument('endDate'))
-            : Carbon::now()->subMonth()->endOfMonth();
-
-        $this->info('Uploading invoices from ' . $startDate->toDateString() . ' to ' . $endDate->toDateString());
-
-        $invoices = Invoice::whereBetween('sent_on', [$startDate, $endDate])->get();
-        foreach ($invoices as $invoice) {
-            if (! $invoice->file_path) {
-                continue;
-            }
-            $monthFolderName = $invoice->sent_on->format('M Y');
-            $financialYear = $this->getFinancialYear($invoice->sent_on);
-            $fileLocalPath = storage_path('app/' . $invoice->file_path);
-            $isIndianInvoice = substr($invoice->invoice_number, 0, 2) == 'IN';
-            $googleDriveLink = $this->uploadFileToGoogleDrive($fileLocalPath, $monthFolderName, $financialYear, $isIndianInvoice);
-
-            // Update the google_drive_link column of the invoice
-            $invoice->google_drive_link = $googleDriveLink;
-            $invoice->save();
-
-            $this->info("Updated google_drive_link for invoice ID {$invoice->id}");
-            sleep(1);
+        $previousMonthDate = Carbon::now()->subMonth()->startOfMonth();
+        $invoiceFolderNames = [
+            'indian' => [
+                'folderName' => 'Invoices - IN (Indian)',
+                'folderLink' => null,
+            ],
+            'international' => [
+                'folderName' => 'Invoices - Ex (International)',
+                'folderLink' => null,
+            ],
+        ];
+        foreach ($invoiceFolderNames as $key => $folderDetail) {
+            $countryFolderName = $folderDetail['folderName'];
+            $monthFolderName = $previousMonthDate->format('M Y');
+            $financialYear = $this->getFinancialYear($previousMonthDate);
+            $googleDriveLink = $this->getFolderLink($monthFolderName, $financialYear, $countryFolderName);
+            $invoiceFolderNames[$key]['folderLink'] = $googleDriveLink;
         }
+
+        Mail::send(new SendUploadedInvoicesMail($invoiceFolderNames));
     }
 
-    private function uploadFileToGoogleDrive($filePath, $monthFolderName, $financialYearFolderName, $isIndianInvoice)
+    private function getFolderLink($monthFolderName, $financialYearFolderName, $countryFolderName)
     {
         $googleDriveParentFolderId = config('invoice.invoice-google-drive-folder-id');
 
@@ -88,28 +74,12 @@ class UploadToGDrive extends Command
         $client->addScope(Drive::DRIVE);
         $client->setAccessType('offline');
         $service = new Drive($client);
-        $countryFolderName = $isIndianInvoice ? 'Invoices - IN (Indian)' : 'Invoices - Ex (International)';
 
         $invoiceCountryFolderId = $this->getOrCreateFolder($service, $countryFolderName, $googleDriveParentFolderId);
         $financialYearFolderId = $this->getOrCreateFolder($service, $financialYearFolderName, $invoiceCountryFolderId);
         $monthFolderId = $this->getOrCreateFolder($service, $monthFolderName, $financialYearFolderId);
-        $content = file_get_contents($filePath);
-        $fileName = basename($filePath);
-        $fileMetadata = new DriveFile([
-            'name' => $fileName,
-            'parents' => [$monthFolderId],
-        ]);
 
-        $uploadedFile = $service->files->create($fileMetadata, [
-            'data' => $content,
-            'mimeType' => mime_content_type($filePath),
-            'uploadType' => 'multipart',
-            'fields' => 'id, webViewLink, webContentLink',
-        ]);
-
-        $this->info('Uploaded invoice: ' . $fileName . ' to folder: ' . $countryFolderName . '/' . $monthFolderName);
-
-        return $uploadedFile->webViewLink;
+        return "https://drive.google.com/drive/folders/{$monthFolderId}";
     }
 
     private function getOrCreateFolder($service, $folderName, $parentFolderId)

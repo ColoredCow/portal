@@ -33,6 +33,10 @@ return [
             'email' => env('INVOICE_UNPAID_LIST_EMAIL', 'finance@coloredcow.com'),
             'name' => env('INVOICE_UNPAID_LIST_NAME', 'ColoredCow Finance'),
         ],
+        'finance-team' => [
+            'email' => env('FINANCE_TEAM_EMAIL', 'finance@coloredcow.com'),
+            'name' => env('FINANCE_TEAM_EMAIL_NAME', 'ColoredCow Finance'),
+        ],
     ],
 
     'pending-invoice-mail' => [
@@ -202,8 +206,8 @@ return [
     ],
 
     'ca-email' => [
-        'name' => env('CA_NAME'),
-        'email' => env('CA_EMAIL'),
+        'name' => env('CA_NAME', 'ColoredCow CA'),
+        'email' => env('CA_EMAIL', 'finance@coloredcow.com'),
     ],
     'invoice-google-drive-folder-id' => env('INVOICE_GDRIVE_FOLDER_ID'),
 ];

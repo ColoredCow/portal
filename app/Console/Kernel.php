@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\HR\Console\JobExpiredEmailToHr;
 use Modules\Invoice\Console\SeedLoanInstallmentForMonth;
+use Modules\Invoice\Console\SendEmailForUploadedInvoices;
 use Modules\Invoice\Console\UploadToGDrive;
 use Modules\Project\Console\DeliveryReportReminder;
 use Modules\Project\Console\EndedProject;
@@ -35,6 +36,7 @@ class Kernel extends ConsoleKernel
         JobExpiredEmailToHr::class,
         SeedLoanInstallmentForMonth::class,
         UploadToGDrive::class,
+        SendEmailForUploadedInvoices::class,
         // QuarterlyReviewSystemForEmployee::class, //This line will be commented for some time. After the feature is completed, it will be uncommented.
 
     ];
@@ -69,6 +71,7 @@ class Kernel extends ConsoleKernel
 
         if (env('APP_ENV') == 'production') {
             $schedule->command('invoice:upload-to-gdrive')->timezone(config('constants.timezone.indian'))->monthlyOn(1, '01:00');
+            $schedule->command('invoice:email-for-uploaded-invoices')->timezone(config('constants.timezone.indian'))->monthlyOn(1, '08:00');
         }
     }
 
