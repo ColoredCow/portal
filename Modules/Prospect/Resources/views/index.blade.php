@@ -33,7 +33,7 @@
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
                     <tr>
-                        <th class="sticky-top">Organization Name</th>
+                        <th class="sticky-top">Name</th>
                         <th class="sticky-top">POC</th>
                         <th class="sticky-top">Proposal Sent Date</th>
                         <th class="sticky-top">Domain</th>
@@ -47,14 +47,19 @@
                         <tr>
                             <td class="w-30p">
                                 <div>
-                                    <a
-                                        href="{{ route('prospect.show', $prospect->id) }}">{{ $prospect->organization_name ?? ($prospect->client->name ?? '-') }}</a>
+                                    <a href="{{ route('prospect.show', $prospect->id) }}" class="text-decoration-none">
+                                        {{ $prospect->project_name ?? $prospect->organization_name }}
+                                    </a>
+                                    <br>
+                                    <span class="theme-gray-dark fz-12">
+                                        {{ $prospect->project_name ? $prospect->organization_name : $prospect->client->name ?? '' }}
+                                    </span>
                                 </div>
                             </td>
                             <td class="w-15p">
                                 <img src="{{ $prospect->pocUser->avatar ?? '' }}" class="rounded-circle" width="30"
                                     height="30" alt="{{ $prospect->pocUser->name ?? '-' }}" data-toggle="tooltip"
-                                    data-placement="top" title="{{ $prospect->pocUser->name ?? '-' }}">
+                                    data-placement="top" title="{{ $prospect->pocUser->name ?? '' }}">
                             </td>
                             <td class="w-30p">
                                 <span>{{ $prospect->getFormattedDate($prospect->proposal_sent_date) }}</span>
@@ -69,7 +74,7 @@
                             <td class="w-30p">
                                 <span>
                                     {{ isset($prospect->currency) && isset($currencySymbols[$prospect->currency]) ? $currencySymbols[$prospect->currency] : '' }}
-                                    {{ $prospect->budget ? $prospect->formattedAmount($prospect->budget) : '-' }}
+                                    {{ $prospect->budget ? $prospect->formattedIndianAmount($prospect->budget) : '-' }}
                                 </span>
                             </td>
                             <td class="w-20p">
