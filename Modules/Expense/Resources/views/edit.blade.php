@@ -62,17 +62,6 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group offset-md-1 col-md-5">
-                            <label for="location" class="field-required">Location</label>
-                            <select class="form-control" value="{{ $expense->location }}" name="location">
-                                <option value="disabled">Select Location</option>
-                                @foreach (config('constants.office_locations') as $office => $location)
-                                    <option
-                                        value="{{ $office }}"{{ $expense->location == $office ? 'selected' : '' }}>
-                                        {{ $location }}</option>
-                                @endforeach
-                            </select>
-                        </div>
                     </div>
                     <hr>
                     @foreach ($expenseFile as $document)

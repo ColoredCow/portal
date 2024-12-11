@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="container" id="update_details">
-    <div  class="card-body">
+    <div class="card-body">
         <form action="{{route('codetrek.update', $applicant)}}" method="POST" id='updateForm' enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="codetrek" value="applicant->id">
@@ -69,15 +69,6 @@
                                 @for ($i=$endYear; $i>=1990; $i--)
                                 <option value="{{$i}}" {{ $applicant->graduation_year == $i ? 'selected' : '' }}>{{$i}} </option>
                                 @endfor
-                            </select>
-                        </div>
-                        <div class="form-group offset-md-1 col-md-5">
-                            <label for="centre" class="field-required">Centre Name</label>
-                            <select name="centre" id="centreId" class="form-control" required>
-                                <option value="">Select Centre Name</option>
-                                @foreach($centres as $centre)
-                                    <option value="{{ $centre->id }}" {{ $applicant->centre_id == $centre->id ? 'selected' : '' }}>{{ $centre->centre_name }}</option>
-                                @endforeach
                             </select>
                         </div>
                     </div>

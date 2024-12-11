@@ -80,7 +80,7 @@ class CodeTrekService
         $applicant->start_date = $data['start_date'];
         $applicant->graduation_year = $data['graduation_year'] ?? null;
         $applicant->university = $data['university_name'] ?? null;
-        $applicant->centre_id = $data['centre'];
+        // $applicant->centre_id = $data['centre'];
         $applicant->mentor_id = $data['mentorId'];
         $applicant->domain_name = $data['domain'];
         $applicant->latest_round_name = config('codetrek.rounds.introductory-call.slug');

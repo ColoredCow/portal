@@ -61,15 +61,6 @@
                             </select>
 
                         </div>
-                        <div class="form-group offset-md-1 col-md-5">
-                            <label for="location" class="field-required">Location</label>
-                            <select class="form-control" name="location">
-                                <option value="">Select Location</option>
-                                @foreach (config('constants.office_locations') as $office => $location)
-                                    <option value="{{ $office }}">{{ $location }}</option>
-                                @endforeach
-                            </select>
-                        </div>
                     </div>
                     <hr> 
                     <div class="parent">

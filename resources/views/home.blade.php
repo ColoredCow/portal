@@ -21,21 +21,6 @@
         <span>Your FTE: <b class="{{ auth()->user()->ftes['main'] < 1 ? 'text-danger' : 'text-success' }}">{{auth()->user()->ftes['main'] }}</b> </span>
     </div>
 
-    <form method="POST" action="{{ route('update.employee.location') }}">
-        @csrf
-        <div class="dropdown">
-            <span>Your office location</span>
-            <select class="btn bg-light text-left" name="centre_name" onchange="this.form.submit()">
-                <option value="" selected="selected">Select Location</option>
-                @foreach($centres as $centre)
-                    <option value="{{ $centre->centre_name }}" {{ $centre->centre_name == $selectedLocation ? 'selected' : '' }}>
-                        {{ $centre->centre_name }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-    </form>    
-
     <br>
     
     <div class="card-deck dashboard_view d-flex flex-wrap justify-content-start">

@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\CodeTrek\Database\factories\CodeTrekApplicantFactory;
-use Modules\Operations\Entities\OfficeLocation;
 use Modules\User\Entities\User;
 
 class CodeTrekApplicant extends Model
@@ -25,10 +24,10 @@ class CodeTrekApplicant extends Model
         return new CodeTrekApplicantFactory();
     }
 
-    public function center()
-    {
-        return $this->belongsTo(OfficeLocation::class, 'center_id');
-    }
+    // public function center()
+    // {
+    //     return $this->belongsTo(OfficeLocation::class, 'center_id');
+    // }
 
     public function getDaysInCodetrekAttribute()
     {

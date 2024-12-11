@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCentreIdToCodeTrekApplicantTable extends Migration
+class RemoveCentreIdFromCodeTrekApplicants extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,8 @@ class AddCentreIdToCodeTrekApplicantTable extends Migration
     public function up()
     {
         Schema::table('code_trek_applicants', function (Blueprint $table) {
-            // $table->unsignedBigInteger('centre_id')->nullable();
-            // $table->foreign('centre_id')->references('id')->on('office_locations');
+            $table->dropForeign(['centre_id']); // Drops the foreign key constraint
+            $table->dropColumn('centre_id');   // Drops the column
         });
     }
 
@@ -27,8 +27,8 @@ class AddCentreIdToCodeTrekApplicantTable extends Migration
     public function down()
     {
         Schema::table('code_trek_applicants', function (Blueprint $table) {
-            // $table->dropForeign('centre_id');
-            // $table->dropColumn('centre_id');
+            $table->unsignedBigInteger('centre_id')->nullable();
+            $table->foreign('centre_id')->references('id')->on('office_locations');
         });
     }
 }
