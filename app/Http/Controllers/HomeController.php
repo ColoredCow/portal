@@ -35,7 +35,6 @@ class HomeController extends Controller
         ]);
     }
 
-
     /**
      * Fetch a user's groups from GSuite API.
      *
@@ -43,7 +42,6 @@ class HomeController extends Controller
      *
      * @return array         List of groups
      */
-
 
     // public function getUserGroups($email)
     // {
