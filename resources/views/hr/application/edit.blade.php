@@ -212,6 +212,11 @@
                                                                         Schedule</button>
                                                                 </div>
                                                             @endif
+                                                            <div class="form-group col-md-6 justify-content-end">
+                                                                <span class="btn btn-theme-fog btn-sm" data-toggle="modal" data-target="#ask_questions" >
+                                                                    Ask Question
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     @endif
                                                     <div class="form-row" id="durations">
@@ -717,6 +722,11 @@
                                                                         Schedule</button>
                                                                 </div>
                                                             @endif
+                                                            <div class="form-group col-md-6 justify-content-end">
+                                                                <span class="btn btn-theme-fog btn-sm" data-toggle="modal" data-target="#ask_questions" >
+                                                                    Ask Question
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                         <div class="form-row" id="durations">
                                                             @if ($applicationRound->actual_end_time != null)
@@ -1252,10 +1262,15 @@
                                                 @endif
                                                 @if ($applicationRound->round->name == 'Resume Screening')
                                                     <div class="form-row">
-                                                        <div class="form-group col-md-12">
+                                                        <div class="form-group col-md-6">
                                                             <button type="button" class="btn btn-theme-fog btn-sm"
                                                                 @click="getApplicationEvaluation({{ $applicationRound->id }}, {{ $applicationRound->hr_round_id }})">Application
                                                                 Evaluation</button>
+                                                        </div>
+                                                        <div class="form-group col-md-6 justify-content-end">
+                                                            <span class="btn btn-theme-fog btn-sm" data-toggle="modal" data-target="#ask_questions" >
+                                                                Ask Question
+                                                            </span>
                                                         </div>
                                                         @if (session('status') || ($application->marks && $application->latestApplicationRound->hr_round_id == 1))
                                                             <div class="form-row">
@@ -1275,10 +1290,15 @@
                                                 @endif
                                                 @if ($applicationRound->round->name == 'Telephonic Interview')
                                                     <div class="form-row">
-                                                        <div class="form-group col-md-12">
+                                                        <div class="form-group col-md-6">
                                                             <button type="button" class="btn btn-theme-fog btn-sm"
                                                                 @click="getApplicationEvaluation({{ $applicationRound->id }}, {{ $applicationRound->hr_round_id }})">Application
                                                                 Evaluation</button>
+                                                        </div>
+                                                        <div class="form-group col-md-6 justify-content-end">
+                                                            <span class="btn btn-theme-fog btn-sm" data-toggle="modal" data-target="#ask_questions" >
+                                                                Ask Question
+                                                            </span>
                                                         </div>
                                                         @if (session('status') || ($application->marks && $application->latestApplicationRound->hr_round_id == 14))
                                                             <div class="form-row">
@@ -1407,4 +1427,5 @@
         </div>
     </div>
     @include('hr.application.desired-resume')
+    @include('hr.application.ask-question-modal')
 @endsection
