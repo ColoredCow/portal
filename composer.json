@@ -22,7 +22,7 @@
     "codegreencreative/laravel-samlidp": "^5.0",
     "doctrine/dbal": "^2.10",
     "fideloper/proxy": "^4.0",
-    "google/apiclient": "^2.4",
+    "google/apiclient": "^2.10",
     "h4cc/wkhtmltopdf-amd64": "0.12.x",
     "jgrossi/corcel": "^5.0",
     "jordikroon/google-vision": "^1.8",
@@ -60,6 +60,9 @@
     "sort-packages": true,
     "platform": {
       "php": "7.5"
+    },
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
   "extra": {
