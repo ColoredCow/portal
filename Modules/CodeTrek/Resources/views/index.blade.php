@@ -36,7 +36,6 @@
                     <input type="text" name="name" class="form-control" id="name"
                         placeholder="Enter the Applicant name" value= "{{ request()->get('name') }}">
                     <input type="hidden" name="status" value="{{ $request['status'] ?? '' }}">
-                    <input type="hidden" name="centre" value="{{ request()->get('centre') }}">
                     <input type="hidden" name="roundSlug" value="{{ request()->input('roundSlug') }}">
                     <button class="btn btn-info h-40 ml-2 text-white">Search</button>
                 </div>

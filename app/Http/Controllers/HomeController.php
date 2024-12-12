@@ -24,26 +24,16 @@ class HomeController extends Controller
      * Show the application dashboard.
      */
     public function index()
-{
-    // Book suggestion logic remains unchanged
+    {
     $unreadBook = session('disable_book_suggestion') ? null : Book::getRandomUnreadBook();
 
-    // Replace OfficeLocation dependency with a static list or alternative logic
-    $centres = collect([
-        ['id' => 1, 'centre_name' => 'Center 1'],
-        ['id' => 2, 'centre_name' => 'Center 2'],
-        ['id' => 3, 'centre_name' => 'Center 3'],
-    ])->sortBy('centre_name');
-
-    // Handle the selected location for the user
     $selectedLocation = auth()->user()->office_location ?? 'Default Location';
 
     return view('home')->with([
         'book' => $unreadBook,
-        'centres' => $centres,
         'selectedLocation' => $selectedLocation,
     ]);
-}
+    }
 
 
     /**
@@ -81,9 +71,9 @@ class HomeController extends Controller
 
     public function storeEmployeeLocation(Request $request)
     {
-        // $request->validate([
-        //     'centre_name' => 'required|exists:office_locations,centre_name',
-        // ]);
+       $request->validate([
+            'centre_name' => 'required|string',
+        ]);
 
         UserMeta::updateOrCreate(
             ['user_id' => auth()->user()->id, 'meta_key' => 'office_location'],

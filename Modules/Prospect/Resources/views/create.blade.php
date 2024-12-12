@@ -45,14 +45,13 @@
                             <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label for="client_id" class="field-required">ColoredCow POC</label>
-                                    <select name="poc_user_id" id="poc_user_id" class="form-control" required >
+                                    <select name="poc_user_id" id="poc_user_id" class="form-control" required="required">
                                         <option value="">Select POC User</option>
-                                        <option value="1">User</option>
-                                        <!-- @foreach ($users as $user)
+                                        @foreach ($users as $user)
                                             <option value="{{ $user->id }}"
                                                 {{ old('poc_user_id') == $user->id ? 'selected' : '' }}>
                                                 {{ $user->name }}</option>
-                                        @endforeach -->
+                                        @endforeach
                                     </select>
                                 </div>
 
