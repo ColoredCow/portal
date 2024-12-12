@@ -25,14 +25,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-    $unreadBook = session('disable_book_suggestion') ? null : Book::getRandomUnreadBook();
+        $unreadBook = session('disable_book_suggestion') ? null : Book::getRandomUnreadBook();
 
-    $selectedLocation = auth()->user()->office_location ?? 'Default Location';
+        $selectedLocation = auth()->user()->office_location ?? 'Default Location';
 
-    return view('home')->with([
-        'book' => $unreadBook,
-        'selectedLocation' => $selectedLocation,
-    ]);
+        return view('home')->with([
+            'book' => $unreadBook,
+            'selectedLocation' => $selectedLocation,
+        ]);
     }
 
 
@@ -44,7 +44,7 @@ class HomeController extends Controller
      * @return array         List of groups
      */
 
-    
+
     // public function getUserGroups($email)
     // {
     //     $client = new Google_Client();
@@ -73,7 +73,7 @@ class HomeController extends Controller
 
     public function storeEmployeeLocation(Request $request)
     {
-       $request->validate([
+        $request->validate([
             'centre_name' => 'required|string',
         ]);
 
