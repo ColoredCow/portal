@@ -35,13 +35,13 @@ class HomeController extends Controller
         ]);
     }
 
-    /**
-     * Fetch a user's groups from GSuite API.
-     *
-     * @param  string $email Email of the user
-     *
-     * @return array         List of groups
-     */
+    // /**
+    //  * Fetch a user's groups from GSuite API.
+    //  *
+    //  * @param  string $email Email of the user
+    //  *
+    //  * @return array         List of groups
+    //  */
 
     // public function getUserGroups($email)
     // {
