@@ -7,7 +7,7 @@
             @csrf
             <input type="hidden" name="codetrek" value="applicant->id">
             <div class="card-body">
-                <h4 class="mb-3 font-weight-bold">Edit Applicant information</h4>
+                <h4 class="mb-3 font-weight-bold">Edit Applicant Information</h4>
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
