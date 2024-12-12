@@ -31,11 +31,33 @@
                         href="{{ route('codetrek.index', $request) }}"><i class="fa fa-pie-chart"></i> Reports</a>
                 </li>
             </div>
+            <div>
+                <form action="{{ route('codetrek.index') }}" id="centreFilterForm">
+                    <div class="form-group ml-25 w-180">
+                        @can('codetrek_applicant.create')     
+                            <select class="form-control bg-light" name="centre" id="centre" onchange="document.getElementById('centreFilterForm').submit();">
+                                <option value="" {{ !request()->has('centre') || empty(request()->get('centre')) ? 'selected' : '' }}>
+                                    {!! __('All Centres') !!}
+                                </option>
+                                @foreach ($centres as $centre)
+                                    <option value="{{ $centre->id }}" {{ request()->get('centre') == $centre->id ? 'selected' : '' }}>
+                                        {{ $centre->centre_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        @endcan
+                        <input type="hidden" name="status" value="{{ $request['status'] ?? '' }}">
+                        <input type="hidden" name="name" value="{{ request()->get('name') }}">
+                        <input type="hidden" name="roundSlug" value="{{ request()->input('roundSlug') }}">
+                    </div>
+                </form>
+            </div>
             <form class="d-md-flex justify-content-between ml-md-3" action="{{ route('codetrek.index') }}">
                 <div class="d-flex justify-content-end">
                     <input type="text" name="name" class="form-control" id="name"
                         placeholder="Enter the Applicant name" value= "{{ request()->get('name') }}">
                     <input type="hidden" name="status" value="{{ $request['status'] ?? '' }}">
+                    <input type="hidden" name="centre" value="{{ request()->get('centre') }}">
                     <input type="hidden" name="roundSlug" value="{{ request()->input('roundSlug') }}">
                     <button class="btn btn-info h-40 ml-2 text-white">Search</button>
                 </div>
@@ -232,49 +254,52 @@
     </div>
 @endsection
 @section('vue_scripts')
-    <script>
-        new Vue({
-            el: '#applicant',
-            data() {
-                return {
-                    first_name: '',
-                    last_name: '',
-                    email: '',
-                    phone: '',
-                    github_username: '',
-                    start_date: '',
-                    university: '',
-                    course: '',
-                    graduationyear: ''
-                }
-            },
-            methods: {
-                submitForm: async function(formId) {
-                    $('.save-btn').attr('disabled', true);
-                    let formData = new FormData(document.getElementById(formId));
-                    await axios.post('{{ route('codetrek.store') }}', formData)
-                        .then((response) => {
-                            $('.save-btn').removeClass('btn-dark').addClass('btn-primary');
-                            $('.save-btn').attr('disabled', false);
-                            this.$toast.success("Applicant added successfully", {
-                                duration: 5000
-                            });
-                            $("#photoGallery").modal('hide');
-                            location.reload();
-                        })
-                        .catch((error) => {
-                            let errors = error.response.data.errors;
-                            $('.save-btn').attr('disabled', false);
-                            if (errors) {
-                                Object.keys(errors).forEach(function(key) {
-                                    this.$toast.error(errors[key][0]);
-                                });
-                            } else {
-                                this.$toast.error("Error submitting form, please fill required fields");
-                            }
-                        });
-                }
+<script>
+    const storeUrl = "{{ route('codetrek.store') }}";
+
+    new Vue({
+        el: '#applicant',
+        data() {
+            return {
+                first_name: '',
+                last_name: '',
+                email: '',
+                phone: '',
+                github_username: '',
+                start_date: '',
+                university: '',
+                course: '',
+                graduationyear: ''
             }
-        });
-    </script>
+        },
+        methods: {
+            submitForm: async function(formId) {
+                $('.save-btn').attr('disabled', true);
+                let formData = new FormData(document.getElementById(formId));
+                await axios.post(storeUrl, formData) // Use the variable here
+                    .then((response) => {
+                        $('.save-btn').removeClass('btn-dark').addClass('btn-primary');
+                        $('.save-btn').attr('disabled', false);
+                        this.$toast.success("Applicant added successfully", {
+                            duration: 5000
+                        });
+                        $("#photoGallery").modal('hide');
+                        location.reload();
+                    })
+                    .catch((error) => {
+                        let errors = error.response.data.errors;
+                        $('.save-btn').attr('disabled', false);
+                        if (errors) {
+                            Object.keys(errors).forEach(function(key) {
+                                this.$toast.error(errors[key][0]);
+                            }.bind(this)); // Fix scope issue with `this`
+                        } else {
+                            this.$toast.error("Error submitting form, please fill required fields");
+                        }
+                    });
+            }
+        }
+    });
+</script>
+
 @endsection

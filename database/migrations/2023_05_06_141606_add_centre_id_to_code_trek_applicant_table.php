@@ -14,8 +14,8 @@ class AddCentreIdToCodeTrekApplicantTable extends Migration
     public function up()
     {
         Schema::table('code_trek_applicants', function (Blueprint $table) {
-            // $table->unsignedBigInteger('centre_id')->nullable();
-            // $table->foreign('centre_id')->references('id')->on('office_locations');
+            $table->unsignedBigInteger('centre_id')->nullable();
+            $table->foreign('centre_id')->references('id')->on('office_locations');
         });
     }
 
@@ -27,8 +27,8 @@ class AddCentreIdToCodeTrekApplicantTable extends Migration
     public function down()
     {
         Schema::table('code_trek_applicants', function (Blueprint $table) {
-            // $table->dropForeign('centre_id');
-            // $table->dropColumn('centre_id');
+            $table->dropForeign('centre_id');
+            $table->dropColumn('centre_id');
         });
     }
 }

@@ -43,31 +43,33 @@ class HomeController extends Controller
      *
      * @return array         List of groups
      */
-    public function getUserGroups($email)
-    {
-        $client = new Google_Client();
-        $client->useApplicationDefaultCredentials();
-        $client->setSubject(env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'));
-        $client->addScope([
-            Google_Service_Directory::ADMIN_DIRECTORY_GROUP,
-            Google_Service_Directory::ADMIN_DIRECTORY_GROUP_READONLY,
-        ]);
 
-        $dir = new Google_Service_Directory($client);
-        $googleGroups = $dir->groups->listGroups([
-            'userKey' => $email,
-        ]);
-        $groups = $googleGroups->getGroups();
+    
+    // public function getUserGroups($email)
+    // {
+    //     $client = new Google_Client();
+    //     $client->useApplicationDefaultCredentials();
+    //     $client->setSubject(env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'));
+    //     $client->addScope([
+    //         Google_Service_Directory::ADMIN_DIRECTORY_GROUP,
+    //         Google_Service_Directory::ADMIN_DIRECTORY_GROUP_READONLY,
+    //     ]);
 
-        $userGroups = [];
-        if (count($groups)) {
-            foreach ($groups as $group) {
-                $userGroups[$group->email] = $group->name;
-            }
-        }
+    //     $dir = new Google_Service_Directory($client);
+    //     $googleGroups = $dir->groups->listGroups([
+    //         'userKey' => $email,
+    //     ]);
+    //     $groups = $googleGroups->getGroups();
 
-        return $userGroups;
-    }
+    //     $userGroups = [];
+    //     if (count($groups)) {
+    //         foreach ($groups as $group) {
+    //             $userGroups[$group->email] = $group->name;
+    //         }
+    //     }
+
+    //     return $userGroups;
+    // }
 
     public function storeEmployeeLocation(Request $request)
     {
