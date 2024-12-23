@@ -40,14 +40,13 @@ class ProspectController extends Controller
     public function create()
     {
         $countries = Country::all();
-        $user = new User();
-        $client = new Client();
-        $activeUsers = $user->active_users;
+        $activeUsers = User::orderBy('name')->get();
+        $clients = Client::orderBy('name')->get();
 
         return view('prospect::create', [
             'users' => $activeUsers,
             'countries' => $countries,
-            'clients' => $client->clients,
+            'clients' => $clients,
         ]);
     }
 
@@ -88,15 +87,14 @@ class ProspectController extends Controller
     {
         $prospect = Prospect::with(['comments'])->find($id);
         $countries = Country::all();
-        $user = new User();
-        $activeUsers = $user->active_users;
-        $client = new Client();
+        $activeUsers = User::orderBy('name')->get();
+        $clients = Client::orderBy('name')->get();
 
         return view('prospect::edit', [
             'prospect' => $prospect,
             'users' => $activeUsers,
             'countries' => $countries,
-            'clients' => $client->clients,
+            'clients' => $clients,
         ]);
     }
 

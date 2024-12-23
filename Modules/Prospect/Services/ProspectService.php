@@ -72,7 +72,7 @@ class ProspectService
         return Prospect::query()->when(
             $filter === 'open',
             fn ($query) => $query->where(function ($query) {
-                $query->whereNotIn('proposal_status', ['rejected', 'converted'])
+                $query->whereNotIn('proposal_status', ['rejected', 'converted', 'client-unresponsive'])
                     ->orWhereNull('proposal_status')
                     ->orWhere('proposal_status', '');
             }),
