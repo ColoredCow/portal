@@ -11,15 +11,13 @@
                 </button>
             </div>
         @endif
-        <div class="mb-2 d-md-flex justify-content-between">
-            <div class='d-flex justify-content-between align-items-md-center mt-5 mb-5 mb-xl-0'>
-                <h4 class="">
-                    Active Prospect
-                </h4>
+        <div class="my-4 d-md-flex justify-content-between">
+            <div class='d-flex justify-content-between align-items-md-center'>
+                <h4 class="mb-0">Prospects</h4>
             </div>
             <div class="d-flex align-items-center">
                 <a href="{{ route('prospect.create') }}" class="btn btn-success text-white"><i class="fa fa-plus"></i>
-                    {{ __('Add new prospect') }}</a>
+                    {{ __('Add prospect') }}</a>
             </div>
         </div>
         <div class='d-md-none mb-2'>
@@ -36,10 +34,8 @@
                         <th class="sticky-top">Name</th>
                         <th class="sticky-top">POC</th>
                         <th class="sticky-top">Proposal Sent Date</th>
-                        <th class="sticky-top">Domain</th>
-                        <th class="sticky-top">Customer Type</th>
                         <th class="sticky-top">Budget</th>
-                        <th class="sticky-top">Prospect Status</th>
+                        <th class="sticky-top">Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,33 +47,26 @@
                                         {{ $prospect->project_name ?? $prospect->organization_name }}
                                     </a>
                                     <br>
-                                    <span class="theme-gray-dark fz-12">
-                                        {{ $prospect->project_name ? $prospect->organization_name : $prospect->client->name ?? '' }}
+                                    <span class="text-secondary fz-14">
+                                        {{ $prospect->organization_name ?? $prospect->client->name }}
                                     </span>
                                 </div>
                             </td>
-                            <td class="w-15p">
+                            <td class="w-10p">
                                 <img src="{{ $prospect->pocUser->avatar ?? '' }}" class="rounded-circle" width="30"
                                     height="30" alt="{{ $prospect->pocUser->name ?? '-' }}" data-toggle="tooltip"
-                                    data-placement="top" title="{{ $prospect->pocUser->name ?? '' }}">
+                                    data-placement="top" title="{{ $prospect->pocUser->name ?? '' }}" />
                             </td>
-                            <td class="w-30p">
+                            <td class="w-20p">
                                 <span>{{ $prospect->getFormattedDate($prospect->proposal_sent_date) }}</span>
                             </td>
-                            <td class="w-20p">
-                                <span>{{ $prospect->domain ?? '-' }}</span>
-                            </td>
-                            <td class="w-20p">
-                                <span>{{ ucfirst($prospect->customer_type) ?? '-' }}</span>
-                            </td>
-
-                            <td class="w-30p">
+                            <td class="w-25p">
                                 <span>
                                     {{ isset($prospect->currency) && isset($currencySymbols[$prospect->currency]) ? $currencySymbols[$prospect->currency] : '' }}
                                     {{ $prospect->budget ? $prospect->formattedIndianAmount($prospect->budget) : '-' }}
                                 </span>
                             </td>
-                            <td class="w-20p">
+                            <td class="w-15p">
                                 <span
                                     class="">{{ config('prospect.status')[$prospect->proposal_status] ?? '-' }}</span>
                             </td>
