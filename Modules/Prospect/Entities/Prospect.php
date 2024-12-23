@@ -48,12 +48,9 @@ class Prospect extends Model
             return $budget;
         }
 
-        if ($currency == 'INR') {
-            $formattedBudget = preg_replace('/\B(?=(\d{2})+(?!\d))/', ',', substr($budget, 0, -3)) .
-                    ',' . substr($budget, -3);
-        } else {
-            $formattedBudget = number_format($this->budget, 0);
-        }
+        $numberFormat = $currency == 'INR' ? 'en_IN' : 'en_US';
+        $formatter = new \NumberFormatter($numberFormat, \NumberFormatter::DECIMAL);
+        $formattedBudget = $formatter->format($budget);
 
         return $formattedBudget;
     }
