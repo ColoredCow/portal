@@ -38,18 +38,24 @@ class Prospect extends Model
         return $this->organization_name ?? optional($this->client)->name ?? 'N/A';
     }
 
-    public function formattedIndianAmount($amount)
+    public function getFormattedBudgetAttribute()
     {
-        $amount = (string) $amount;
+        $budget = (string) $this->budget;
+        $currency = $this->currency;
 
-        if (strlen($amount) <= 3) {
-            return $amount;
+        // if currency is less than one thousand
+        if (strlen($budget) <= 3) {
+            return $budget;
         }
 
-        $formattedAmount = preg_replace('/\B(?=(\d{2})+(?!\d))/', ',', substr($amount, 0, -3)) .
-                    ',' . substr($amount, -3);
+        if ($currency == 'INR') {
+            $formattedBudget = preg_replace('/\B(?=(\d{2})+(?!\d))/', ',', substr($budget, 0, -3)) .
+                    ',' . substr($budget, -3);
+        } else {
+            $formattedBudget = number_format($budget, 0);
+        }
 
-        return $formattedAmount;
+        return $formattedBudget;
     }
 
     public function insights()
