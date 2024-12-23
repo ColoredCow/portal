@@ -52,7 +52,7 @@ class Prospect extends Model
             $formattedBudget = preg_replace('/\B(?=(\d{2})+(?!\d))/', ',', substr($budget, 0, -3)) .
                     ',' . substr($budget, -3);
         } else {
-            $formattedBudget = number_format($budget, 0);
+            $formattedBudget = number_format($this->budget, 0);
         }
 
         return $formattedBudget;
