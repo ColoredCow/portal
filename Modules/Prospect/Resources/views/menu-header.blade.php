@@ -1,27 +1,16 @@
-<ul class="nav nav-pills mt-3 mb-2">
+<ul class="nav nav-pills mt-3 mb-2" role="navigation" aria-label="Prospect statuses">
     @php
         $filters = request()->except('page');
-        $currentStatus = request()->input('status') ?? 'open';
+        $currentStatus = request('status', 'open');
+        $prospectStatuses = ['open' => 'Open', 'converted' => 'Converted', 'rejected' => 'Rejected', 'client-unresponsive' => 'Unresponsive'];
     @endphp
 
-    <li class="nav-item mr-3">
-        <a class="nav-link {{ $currentStatus == 'open' ? 'active' : '' }}"
-            href="{{ route('prospect.index', array_merge($filters, ['status' => 'open'])) }}">
-            Open Prospects
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link {{ $currentStatus == 'converted' ? 'active' : '' }}"
-            href="{{ route('prospect.index', array_merge($filters, ['status' => 'converted'])) }}">
-            Converted Prospects
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link {{ $currentStatus == 'rejected' ? 'active' : '' }}"
-            href="{{ route('prospect.index', array_merge($filters, ['status' => 'rejected'])) }}">
-            Rejected Prospects
-        </a>
-    </li>
+    @foreach($prospectStatuses as $status => $label)
+        <li class="nav-item {{ $loop->iteration ? 'mx-1' : 'mr-1' }}">
+            <a class="nav-link {{ $currentStatus == $status ? 'active' : '' }}"
+                href="{{ route('prospect.index', array_merge($filters, ['status' => $status])) }}" aria-current="{{ $currentStatus == $status ? 'page' : 'false'}}">
+                {{ $label }}
+            </a>
+        </li>
+    @endforeach
 </ul>
