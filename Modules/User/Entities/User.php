@@ -229,11 +229,6 @@ class User extends Authenticatable
         return Project::linkedToTeamMember($this->id)->get();
     }
 
-    public function getOfficeLocationAttribute()
-    {
-        return optional($this->meta()->where('meta_key', 'office_location')->first())->meta_value;
-    }
-
     public function prospects()
     {
         return $this->hasMany(Prospect::class, 'poc_user_id');

@@ -27,11 +27,8 @@ class HomeController extends Controller
     {
         $unreadBook = session('disable_book_suggestion') ? null : Book::getRandomUnreadBook();
 
-        $selectedLocation = auth()->user()->office_location ?? 'Default Location';
-
         return view('home')->with([
             'book' => $unreadBook,
-            'selectedLocation' => $selectedLocation,
         ]);
     }
 
@@ -68,18 +65,4 @@ class HomeController extends Controller
 
     //     return $userGroups;
     // }
-
-    public function storeEmployeeLocation(Request $request)
-    {
-        $request->validate([
-            'centre_name' => 'required|string',
-        ]);
-
-        UserMeta::updateOrCreate(
-            ['user_id' => auth()->user()->id, 'meta_key' => 'office_location'],
-            ['meta_value' => $request->centre_name]
-        );
-
-        return redirect('home');
-    }
 }
