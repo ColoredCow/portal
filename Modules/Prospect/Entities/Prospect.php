@@ -12,6 +12,10 @@ class Prospect extends Model
     protected $fillable = [];
     protected $table = 'prospects';
 
+    protected $casts = [
+        'proposal_sent_date' => 'datetime:Y-m-d',
+    ];
+
     public function pocUser()
     {
         return $this->belongsTo(User::class, 'poc_user_id');
