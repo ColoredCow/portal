@@ -38,12 +38,21 @@ class Prospect extends Model
         return $this->organization_name ?? optional($this->client)->name ?? 'N/A';
     }
 
-    public function formattedAmount($amount)
+    public function getFormattedBudgetAttribute()
     {
-        $formattedAmount = preg_replace('/\B(?=(\d{2})+(?!\d))/', ',', substr($amount, 0, -3)) .
-                    ',' . substr($amount, -3);
+        $budget = (string) $this->budget;
+        $currency = $this->currency;
 
-        return $formattedAmount;
+        // if currency is less than one thousand
+        if (strlen($budget) <= 3) {
+            return $budget;
+        }
+
+        $numberFormat = $currency == 'INR' ? 'en_IN' : 'en_US';
+        $formatter = new \NumberFormatter($numberFormat, \NumberFormatter::DECIMAL);
+        $formattedBudget = $formatter->format($budget);
+
+        return $formattedBudget;
     }
 
     public function insights()
