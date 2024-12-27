@@ -31,38 +31,4 @@ class HomeController extends Controller
             'book' => $unreadBook,
         ]);
     }
-
-    // /**
-    //  * Fetch a user's groups from GSuite API.
-    //  *
-    //  * @param  string $email Email of the user
-    //  *
-    //  * @return array         List of groups
-    //  */
-
-    // public function getUserGroups($email)
-    // {
-    //     $client = new Google_Client();
-    //     $client->useApplicationDefaultCredentials();
-    //     $client->setSubject(env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'));
-    //     $client->addScope([
-    //         Google_Service_Directory::ADMIN_DIRECTORY_GROUP,
-    //         Google_Service_Directory::ADMIN_DIRECTORY_GROUP_READONLY,
-    //     ]);
-
-    //     $dir = new Google_Service_Directory($client);
-    //     $googleGroups = $dir->groups->listGroups([
-    //         'userKey' => $email,
-    //     ]);
-    //     $groups = $googleGroups->getGroups();
-
-    //     $userGroups = [];
-    //     if (count($groups)) {
-    //         foreach ($groups as $group) {
-    //             $userGroups[$group->email] = $group->name;
-    //         }
-    //     }
-
-    //     return $userGroups;
-    // }
 }

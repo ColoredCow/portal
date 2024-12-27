@@ -115,8 +115,6 @@
             </li>
         @endcan
 
-  <!-- Deleted By Sagar -->
-
         @if (auth()->user()->canAny(['weeklydoses.view', 'library_books.view']))
             <li class="nav-item dropdown">
                 <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
