@@ -46,10 +46,16 @@
                                     <a href="{{ route('prospect.show', $prospect->id) }}" class="text-decoration-none">
                                         {{ $prospect->project_name ?? $prospect->organization_name }}
                                     </a>
-                                    <br>
-                                    <span class="text-secondary fz-14">
-                                        {{ $prospect->organization_name ?? $prospect->client->name }}
-                                    </span>
+                                    <div>
+                                        @if($prospect->customer_type == 'new')
+                                            <span class="w-10 h-10 rounded-circle bg-theme-warning d-inline-block" data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="New Customer"></span>
+                                        @endif
+                                        <span class="text-secondary fz-14">
+                                            {{ $prospect->organization_name ?? $prospect->client->name }}
+                                        </span>
+                                    </div>
                                 </div>
                             </td>
                             <td class="w-10p">
@@ -58,7 +64,10 @@
                                     data-placement="top" title="{{ $prospect->pocUser->name ?? '' }}" />
                             </td>
                             <td class="w-20p">
-                                <span>{{ $prospect->getFormattedDate($prospect->proposal_sent_date) }}</span>
+                                <div>{{ $prospect->getFormattedDate($prospect->proposal_sent_date) }}</div>
+                                @if ($prospect->proposal_sent_date)
+                                    <div class="fz-14 {{ $prospect->proposal_sent_date->lt(now()->subMonths(3)) ? 'text-danger' : 'text-secondary' }}">{{ $prospect->proposal_sent_date->diffForHumans() }}</div>
+                                @endif
                             </td>
                             <td class="w-25p">
                                 <span>
