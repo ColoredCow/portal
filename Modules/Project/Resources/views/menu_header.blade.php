@@ -1,6 +1,7 @@
 <ul class="nav nav-pills mt-3 mb-2">
     @php
         $filters = request()->except('page');
+        $isUserAdmin = auth()->user()->isAdmin() || auth()->user()->isSuperAdmin();
     @endphp
 
     <li class="nav-item mr-3">
@@ -26,4 +27,14 @@
             href="{{ route('project.index', array_merge($filters, ['status' => 'inactive', 'is_amc' => '0'])) }}">Inactive
             Projects({{ $inactiveProjectsCount }})</a>
     </li>
+
+    @if ($isUserAdmin)
+        <li class="nav-item">
+            <a class="nav-link {{ request()->input('status', 'active') == 'visitors_log' ? 'active' : '' }}"
+                href="{{ route('project.index', array_merge($filters, ['status' => 'visitors_log', 'visit_interval' => 'daily'])) }}"
+            >
+                Visitors Log
+            </a>
+        </li>
+    @endif
 </ul>
