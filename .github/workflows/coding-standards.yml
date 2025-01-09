@@ -25,4 +25,4 @@ jobs:
       - name: clear cache
         run: php artisan cache:clear
       - name: ColoredCowLaravelCI
-        run: "php artisan check:ci --with-tty"
+        run: php artisan check:ci --with-tty

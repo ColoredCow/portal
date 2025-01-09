@@ -82,6 +82,10 @@ $rules = [
     'normalize_index_brace' => true,
     'not_operator_with_successor_space' => true,
     'object_operator_without_whitespace' => true,
+    'phpdoc_no_alias_tag' => true,
+    'phpdoc_align' => [
+        'tags' => ['param', 'return', 'throws', 'type'],
+    ],
     'phpdoc_indent' => true,
     'phpdoc_no_access' => true,
     'phpdoc_no_package' => true,
