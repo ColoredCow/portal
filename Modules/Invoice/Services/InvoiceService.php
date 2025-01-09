@@ -20,7 +20,6 @@ use Modules\Invoice\Emails\SendInvoiceMail;
 use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Invoice\Emails\SendPendingInvoiceMail;
 use Modules\Invoice\Entities\Invoice;
-use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Exports\MonthlyGSTTaxReportExport;
 use Modules\Invoice\Exports\TaxReportExport;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
@@ -629,14 +628,14 @@ class InvoiceService implements InvoiceServiceContract
 
         if ($project) {
             if (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
-                $amount = $project->getResourceBillableAmount() + $project->getTotalLedgerAmount();
+                $amount = $project->getResourceBillableAmount();
             } else {
                 $amount = $project->getBillableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate) + optional($project->client->billingDetails)->bank_charges;
                 $gst = $project->getTaxAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate);
             }
         } else {
             if (optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
-                $amount = $client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount();
+                $amount = $client->getResourceBasedTotalAmount();
             } else {
                 $amount = $client->getBillableAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate) + optional($client->billingDetails)->bank_charges;
                 $gst = $client->getTaxAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate);
@@ -732,50 +731,6 @@ class InvoiceService implements InvoiceServiceContract
         }
 
         return Client::find($clientId, 'id')->currency;
-    }
-
-    public function getLedgerAccountData(array $data)
-    {
-        $clients = Client::with('projects')->orderBy('name')->get();
-        $client = Client::find($data['client_id'] ?? null);
-        $project = Project::find($data['project_id'] ?? null);
-
-        return [
-            'clients' => $clients,
-            'client' => $client,
-            'project' => $project,
-            'ledgerAccountData' => $project ? $project->ledgerAccounts->toArray() : ($client ? $client->ledgerAccounts->toArray() : []),
-        ];
-    }
-
-    public function storeLedgerAccountData(array $data)
-    {
-        $project = Project::find($data['project_id'] ?? null);
-        $client = Client::find($data['client_id'] ?? null);
-
-        if (! $client) {
-            return;
-        }
-
-        if ($project) {
-            $ledgerAccountsIdToDelete = LedgerAccount::where('project_id', $project->id)->pluck('id')->toArray();
-        } else {
-            $ledgerAccountsIdToDelete = LedgerAccount::where('client_id', $client->id)->pluck('id')->toArray();
-        }
-
-        foreach ($data['ledger_account_data'] as $ledgerAccountData) {
-            if ($ledgerAccountData['id'] == null) {
-                LedgerAccount::create($ledgerAccountData);
-                continue;
-            }
-
-            $ledgerAccount = LedgerAccount::find($ledgerAccountData['id']);
-            $ledgerAccount->update($ledgerAccountData);
-            $index = array_search($ledgerAccount->id, $ledgerAccountsIdToDelete);
-            unset($ledgerAccountsIdToDelete[$index]);
-        }
-
-        LedgerAccount::destroy($ledgerAccountsIdToDelete);
     }
 
     public function updateScheduledInvoice($invoice)

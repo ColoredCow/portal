@@ -16,7 +16,6 @@ use Modules\HR\Entities\ApplicationRoundReview;
 use Modules\HR\Entities\HRRejectionReason;
 use Modules\HR\Entities\UniversityContact;
 use Modules\Invoice\Entities\Invoice;
-use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Project\Entities\Project;
 use Modules\Salary\Entities\EmployeeSalary;
 
@@ -183,26 +182,6 @@ class FakeProdDataCommand extends Command
             }
 
             $invoice->update();
-        }
-
-        foreach (LedgerAccount::all() as $ledgerAccount) {
-            if ($ledgerAccount->particulars) {
-                $ledgerAccount->particulars = $this->faker->sentences(2, true);
-            }
-
-            if ($ledgerAccount->credit) {
-                $ledgerAccount->credit = $this->faker->numberBetween(100, 100000);
-            }
-
-            if ($ledgerAccount->debit) {
-                $ledgerAccount->debit = $this->faker->numberBetween(100, 100000);
-            }
-
-            if ($ledgerAccount->balance) {
-                $ledgerAccount->balance = $ledgerAccount->credit - $ledgerAccount->debit;
-            }
-
-            $ledgerAccount->update();
         }
     }
 

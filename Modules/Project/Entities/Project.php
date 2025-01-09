@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\DB;
 use Modules\Client\Entities\Client;
 use Modules\EffortTracking\Entities\Task;
 use Modules\Invoice\Entities\Invoice;
-use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Services\InvoiceService;
 use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
@@ -426,29 +425,6 @@ class Project extends Model implements Auditable
     public function scopeBillable($query, $billable = true)
     {
         return $query->where('type', $billable ? '<>' : '=', 'non-billable');
-    }
-
-    public function ledgerAccounts()
-    {
-        return $this->hasMany(LedgerAccount::class);
-    }
-
-    public function ledgerAccountsOnlyCredit()
-    {
-        return $this->ledgerAccounts()->whereNotNull('credit');
-    }
-
-    public function ledgerAccountsOnlyDebit()
-    {
-        return $this->ledgerAccounts()->whereNotNull('debit');
-    }
-
-    public function getTotalLedgerAmount($quarter = null)
-    {
-        $amount = 0;
-        $amount += optional($this->ledgerAccountsOnlyCredit()->quarter($quarter))->get()->sum('credit') - optional($this->ledgerAccountsOnlyDebit()->quarter($quarter))->get()->sum('debit');
-
-        return $amount;
     }
 
     public function hasCustomInvoiceTemplate()

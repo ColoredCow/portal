@@ -83,7 +83,6 @@
                 <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_finance">
                     <a class="dropdown-item" href="{{ route('reports.finance.dashboard') }}">Reports</a>
                     <a class="dropdown-item" href="{{ route('invoice.index') }}">Invoices</a>
-                    <a class="dropdown-item" href="{{ route('ledger-accounts.index') }}">Ledger Accounts</a>
                     @can('employee_loan.view')
                         <a class="dropdown-item" href="{{ route('employee-loan.index') }}">Employee Loans</a>
                     @endcan
