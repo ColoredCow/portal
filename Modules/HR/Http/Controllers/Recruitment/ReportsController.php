@@ -24,9 +24,10 @@ class ReportsController extends Controller
         return view('hr.recruitment.reportcard');
     }
 
-    public function searchBydate(Request $req)
+    public function searchBydate(Request $request)
     {
-        $req->report_start_date = $req->report_start_date ?? Carbon::now()->startOfMonth() == $req->report_end_date = $req->report_end_date ?? Carbon::today();
+        $reportStartDate = $request->get('report_start_date', Carbon::now()->startOfMonth());
+        $reportEndDate = $request->get('report_end_date', Carbon::today());
 
         $todayCount = Applicant::whereDate('created_at', '=', Carbon::today())
         ->count();
@@ -36,8 +37,8 @@ class ReportsController extends Controller
             \DB::raw('MONTHNAME(created_at) as month_created_at'),
             \DB::raw('DATE(created_at) as date_created_at'),
         )
-            ->wheredate('created_at', '>=', $req->report_start_date)
-            ->wheredate('created_at', '<=', $req->report_end_date)
+            ->wheredate('created_at', '>=', $reportStartDate)
+            ->wheredate('created_at', '<=', $reportEndDate)
             ->groupBy('date_created_at', 'month_created_at')
             ->orderBy('date_created_at', 'ASC')
             ->get();
