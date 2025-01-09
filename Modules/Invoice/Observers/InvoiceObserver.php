@@ -12,7 +12,7 @@ class InvoiceObserver
     /**
      * Handle the Invoice "created" event.
      *
-     * @param  \Modules\Invoice\Entities\Invoice  $invoice
+     * @param  \Modules\Invoice\Entities\Invoice $invoice
      * @return void
      */
     public function created(Invoice $invoice)
@@ -96,7 +96,7 @@ class InvoiceObserver
     /**
      * Handle the Invoice "restored" event.
      *
-     * @param  \Modules\Invoice\Entities\Invoice  $invoice
+     * @param  \Modules\Invoice\Entities\Invoice $invoice
      * @return void
      */
     public function restored(Invoice $invoice)
@@ -107,7 +107,7 @@ class InvoiceObserver
     /**
      * Handle the Invoice "force deleted" event.
      *
-     * @param  \Modules\Invoice\Entities\Invoice  $invoice
+     * @param  \Modules\Invoice\Entities\Invoice $invoice
      * @return void
      */
     public function forceDeleted(Invoice $invoice)

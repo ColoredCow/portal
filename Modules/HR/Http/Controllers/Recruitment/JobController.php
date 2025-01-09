@@ -68,7 +68,7 @@ class JobController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  JobRequest  $request
+     * @param JobRequest $request
      */
     public function store(JobRequest $request)
     {
@@ -92,7 +92,7 @@ class JobController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \Modules\HR\Entities\Job  $opportunity
+     * @param \Modules\HR\Entities\Job $opportunity
      *
      * @return \Illuminate\View\View
      */
@@ -110,8 +110,8 @@ class JobController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  JobRequest  $request
-     * @param  Job  $opportunity
+     * @param JobRequest $request
+     * @param Job        $opportunity
      */
     public function update(JobRequest $request, Job $opportunity)
     {
@@ -126,7 +126,7 @@ class JobController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Modules\HR\Entities\Job  $opportunity
+     * @param \Modules\HR\Entities\Job $opportunity
      */
     public function destroy(Job $opportunity)
     {
@@ -139,7 +139,7 @@ class JobController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Modules\HR\Http\Requests\Recruitment\JobDomainRequest  $request
+     * @param \Modules\HR\Http\Requests\Recruitment\JobDomainRequest $request
      */
     public function storeJobdomain(JobDomainRequest $request)
     {

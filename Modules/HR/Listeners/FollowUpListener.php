@@ -23,7 +23,7 @@ class FollowUpListener
     /**
      * Handle the event.
      *
-     * @param  object  $event
+     * @param object $event
      *
      * @return void
      */

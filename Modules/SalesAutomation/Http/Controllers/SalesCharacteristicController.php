@@ -67,7 +67,7 @@ class SalesCharacteristicController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param Request             $request
      * @param SalesCharacteristic $salesCharacteristic
      */
     public function update(Request $request, SalesCharacteristic $salesCharacteristic)

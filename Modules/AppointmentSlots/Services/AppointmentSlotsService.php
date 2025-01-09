@@ -199,7 +199,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         $applicationLink = URL::route($route, $applicationRound->application->id);
         $description = "<a href='{$applicationLink}'>Application Link</a> for Job role: <a href='{$applicationRound->application->job->link}'>{$applicationRound->application->job->title}</a>";
 
-        $event = new CalendarEventService;
+        $event = new CalendarEventService();
 
         $event->create([
             'summary' => $summary,

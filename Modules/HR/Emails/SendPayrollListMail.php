@@ -11,7 +11,8 @@ use Modules\HR\Exports\EmployeePayrollExport;
 
 class SendPayrollListMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
     public $toEmail;
     public $employeesData;
 

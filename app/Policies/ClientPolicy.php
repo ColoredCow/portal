@@ -13,7 +13,7 @@ class ClientPolicy
     /**
      * Determine whether the user can view the client.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param \Modules\User\Entities\User $user
      *
      * @return mixed
      */
@@ -25,7 +25,7 @@ class ClientPolicy
     /**
      * Determine whether the user can create clients.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param \Modules\User\Entities\User $user
      *
      * @return mixed
      */
@@ -37,7 +37,7 @@ class ClientPolicy
     /**
      * Determine whether the user can update the client.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param \Modules\User\Entities\User $user
      *
      * @return mixed
      */
@@ -49,7 +49,7 @@ class ClientPolicy
     /**
      * Determine whether the user can delete the client.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param \Modules\User\Entities\User $user
      *
      * @return mixed
      */
@@ -61,7 +61,7 @@ class ClientPolicy
     /**
      * Determine whether the user can list clients.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param \Modules\User\Entities\User $user
      *
      * @return mixed
      */

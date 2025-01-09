@@ -139,7 +139,7 @@ abstract class ApplicationController extends Controller
         $attr['universities'] = University::all();
         $attr['tags'] = Tag::orderBy('name')->get();
         $attr['rounds'] = $hrRoundsCounts;
-        $attr['roundFilters'] = round::orderBy('name')->get();
+        $attr['roundFilters'] = Round::orderBy('name')->get();
         $attr['assignees'] = User::whereHas('roles', function ($query) {
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         })->orderby('name', 'asc')->get();
@@ -173,7 +173,7 @@ abstract class ApplicationController extends Controller
     public function interviewsIndex(Request $request)
     {
         $today = today()->toDateString();
-        $applicationService = new ApplicationService;
+        $applicationService = new ApplicationService();
 
         $parsedData = $request->query();
         $searchCategory = $parsedData['searchValue'] ?? null;
@@ -196,7 +196,7 @@ abstract class ApplicationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  string  $id
+     * @param string $id
      */
     public function edit($id)
     {
@@ -301,7 +301,7 @@ abstract class ApplicationController extends Controller
      * Update the specified resource.
      *
      * @param ApplicationRequest $request
-     * @param int $id
+     * @param int                $id
      *
      * @return \Illuminate\Http\RedirectResponse
      */

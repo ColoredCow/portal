@@ -67,10 +67,10 @@ class EffortTrackingService
     /**
      * Calculate FTE.
      *
-     * @param  int $currentHours  Current Hours.
-     * @param  int $expectedHours Expected Hours.
+     * @param int $currentHours  Current Hours.
+     * @param int $expectedHours Expected Hours.
      *
-     * @return float              FTE
+     * @return float FTE
      */
     public function getFTE($currentHours, $expectedHours)
     {
@@ -84,10 +84,10 @@ class EffortTrackingService
     /**
      * Get expected hours.
      *
-     * @param  int $numberOfDays Number of days.
+     * @param int   $numberOfDays       Number of days.
      * @param float $expectedDailyHours Expected daily hours.
      *
-     * @return int|float         Expected hours.
+     * @return int|float Expected hours.
      */
     public function getExpectedHours($expectedDailyHours, $numberOfDays)
     {
@@ -97,10 +97,10 @@ class EffortTrackingService
     /**
      * Get working days.
      *
-     * @param  object $startDate Start Date.
-     * @param  object $endDate   End Date.
+     * @param object $startDate Start Date.
+     * @param object $endDate   End Date.
      *
-     * @return array             Working Days dates.
+     * @return array Working Days dates.
      */
     public function getWorkingDays($startDate, $endDate)
     {
@@ -119,7 +119,7 @@ class EffortTrackingService
     /**
      * Get Team members details.
      *
-     * @param  array $teamMembers Team Members.
+     * @param array $teamMembers Team Members.
      *
      * @return array
      */

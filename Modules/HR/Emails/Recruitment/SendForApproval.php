@@ -11,7 +11,8 @@ use Modules\User\Entities\User;
 
 class SendForApproval extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $approver;
     public $application;

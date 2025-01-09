@@ -9,7 +9,8 @@ use Modules\User\Entities\User;
 
 class DailyEffortSummary extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $user;
 

@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class ErrorReport extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
     public $userDetails;
     public $timeOfException;
     public $exception;

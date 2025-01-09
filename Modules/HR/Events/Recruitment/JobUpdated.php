@@ -9,7 +9,9 @@ use Modules\HR\Entities\Job;
 
 class JobUpdated
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     public $job;
     public $attr;

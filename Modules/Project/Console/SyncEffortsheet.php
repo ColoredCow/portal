@@ -32,7 +32,7 @@ class SyncEffortsheet extends Command
         $projects = Project::where('status', 'active')->get();
 
         foreach ($projects as $project) {
-            $effortTracking = new EffortTrackingService;
+            $effortTracking = new EffortTrackingService();
             $effortTracking->getEffortForProject($project);
         }
     }

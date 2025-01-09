@@ -22,7 +22,7 @@
     "codegreencreative/laravel-samlidp": "^5.0",
     "doctrine/dbal": "^2.10",
     "fideloper/proxy": "^4.0",
-    "google/apiclient": "^2.4",
+    "google/apiclient": "^2.10",
     "h4cc/wkhtmltopdf-amd64": "0.12.x",
     "jgrossi/corcel": "^5.0",
     "jordikroon/google-vision": "^1.8",
@@ -44,6 +44,7 @@
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.2",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
     "facade/ignition": "^2.3.6",
     "filp/whoops": "^2.5",
     "friendsofphp/php-cs-fixer": "^3.13",
@@ -59,7 +60,10 @@
     "preferred-install": "dist",
     "sort-packages": true,
     "platform": {
-      "php": "7.5"
+      "php": "7.4"
+    },
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
   "extra": {

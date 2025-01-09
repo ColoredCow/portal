@@ -10,8 +10,8 @@ class EmailValidation implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $values
+     * @param string $attribute
+     * @param mixed  $values
      *
      * @return bool
      */

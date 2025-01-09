@@ -8,7 +8,8 @@ use Illuminate\Queue\SerializesModels;
 
 class InterviewerScheduledRoundsReminder extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Application rounds scheduled for the user.

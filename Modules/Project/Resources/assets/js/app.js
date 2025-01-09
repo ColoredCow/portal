@@ -1,17 +1,17 @@
 $(document).ready(function() {
-    // Attach click event handler to elements with class 'card-header'
-    $('.card-header').on('click', function() {
-        var sectionId = $(this).data('target'); // Get the section ID from data-target attribute
-        var arrowElement = $(this).find('.arrow'); // Find the arrow element within the clicked card-header
+	// Attach click event handler to elements with class 'card-header'
+	$(".card-header").on("click", function() {
+		var sectionId = $(this).data("target"); // Get the section ID from data-target attribute
+		var arrowElement = $(this).find(".arrow"); // Find the arrow element within the clicked card-header
 
-        // Close all sections except the clicked one
-        $('.collapse').not(sectionId).removeClass('show');
+		// Close all sections except the clicked one
+		$(".collapse").not(sectionId).removeClass("show");
 
-        // Rotate the arrow of the clicked section
-        $('.arrow').not(arrowElement).removeClass('rotate180');
-        arrowElement.toggleClass('rotate180');
-    });
-})
+		// Rotate the arrow of the clicked section
+		$(".arrow").not(arrowElement).removeClass("rotate180");
+		arrowElement.toggleClass("rotate180");
+	});
+});
 
 $(document).ready(function () {
 	$("input").on("change", function () {
@@ -26,62 +26,62 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    function toggleButtonAndSpinner(button) {
-        button.toggleClass("d-none");
-        button.siblings(".fa-spinner").toggleClass("d-none");
-    }
+	function toggleButtonAndSpinner(button) {
+		button.toggleClass("d-none");
+		button.siblings(".fa-spinner").toggleClass("d-none");
+	}
 
-    function handleAjaxRequest(url, data, button, loader) {
-        button.prop("disabled", true);
-        if (loader) loader.removeClass('d-none');
+	function handleAjaxRequest(url, data, button, loader) {
+		button.prop("disabled", true);
+		if (loader) loader.removeClass("d-none");
 
-        $.ajax({
-            url: url,
-            type: "POST",
-            data: data,
-            success: function (response) {
+		$.ajax({
+			url: url,
+			type: "POST",
+			data: data,
+			success: function (response) {
 				Vue.$toast.success(response.message);
-                setTimeout(() => {
-                    button.prop("disabled", false);
-                    if (! loader) toggleButtonAndSpinner(button);
-                    location.reload();
-                }, 1000);
-            },
-            error: function (response) {
-                Vue.$toast.error("Something went wrong!\nPlease check if the effortsheet formatting is correct.");
-                if (! loader) toggleButtonAndSpinner(button);
-            },
-            complete: function () {
-                if (loader) loader.addClass('d-none');
+				setTimeout(() => {
+					button.prop("disabled", false);
+					if (! loader) toggleButtonAndSpinner(button);
+					location.reload();
+				}, 1000);
+			},
+			error: function (response) {
+				Vue.$toast.error("Something went wrong!\nPlease check if the effortsheet formatting is correct.");
+				if (! loader) toggleButtonAndSpinner(button);
+			},
+			complete: function () {
+				if (loader) loader.addClass("d-none");
 				button.prop("disabled", false);
-            }
-        });
-    }
-	if ($(".fa-refresh").is('[data-url]')) {
+			}
+		});
+	}
+	if ($(".fa-refresh").is("[data-url]")) {
 		$(".fa-refresh").on("click", function () {
 			let button = $(this);
 			toggleButtonAndSpinner(button);
-			handleAjaxRequest(button.data("url"), {'isBackDateSync': 'off'}, button, null);
+			handleAjaxRequest(button.data("url"), {"isBackDateSync": "off"}, button, null);
 		});
 	} else {
 		$("#backDateEffortsSyncForm").on("submit", function (event) {
 			event.preventDefault();
 			let form = $(this);
 			let button = $("#confirmBackDateSync");
-			let effortSyncLoader = $('.efforts-sync-loader');
-			let isBackDateSync = $('#isBackDateSync');
+			let effortSyncLoader = $(".efforts-sync-loader");
+			let isBackDateSync = $("#isBackDateSync");
 
-			$('#hiddenIsBackDateSync').remove();
+			$("#hiddenIsBackDateSync").remove();
 
-			if (!isBackDateSync.is(':checked')) {
-				$('<input>').attr({
-					type: 'hidden',
-					id: 'hiddenIsBackDateSync',
-					name: 'isBackDateSync',
-					value: 'off'
+			if (!isBackDateSync.is(":checked")) {
+				$("<input>").attr({
+					type: "hidden",
+					id: "hiddenIsBackDateSync",
+					name: "isBackDateSync",
+					value: "off"
 				}).appendTo(form);
 			}
-			handleAjaxRequest(form.attr('action'), form.serialize(), button, effortSyncLoader);
+			handleAjaxRequest(form.attr("action"), form.serialize(), button, effortSyncLoader);
 		});
 	}
 });
@@ -98,7 +98,7 @@ function effortTrackingChart() {
 		estimatedHours = $("input[name='dailyEffort']").val(),
 		datasetValue = [],
 		hoursPerDay = [];
-		hoursdIncrement = 0;
+	hoursdIncrement = 0;
 
 	for (var i = 1; i <= totalWorkingDays; i++) {
 		hoursdIncrement += parseFloat(estimatedHours);
@@ -116,8 +116,8 @@ function effortTrackingChart() {
 			const userDates = [];
 			for (const key in userData) {
 				userDates.push({
-					addedOn: userData[key]['added_on'],
-					effort: userData[key]['total_effort_in_effortsheet'],
+					addedOn: userData[key]["added_on"],
+					effort: userData[key]["total_effort_in_effortsheet"],
 				});
 			}
 			console.log(userDates);

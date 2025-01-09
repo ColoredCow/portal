@@ -9,7 +9,8 @@ use Illuminate\Queue\SerializesModels;
 
 class SendInvoiceReminderMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     protected $upcomingInvoices;
 

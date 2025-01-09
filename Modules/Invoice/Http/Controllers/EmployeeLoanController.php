@@ -69,7 +69,7 @@ class EmployeeLoanController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param Request      $request
      * @param EmployeeLoan $employeeLoan
      */
     public function update(Request $request, EmployeeLoan $employeeLoan)

@@ -9,7 +9,8 @@ use Modules\HR\Entities\ApplicationMeta;
 
 class NoShow extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Instance of the ApplicationMeta.

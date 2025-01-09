@@ -40,7 +40,7 @@ class UserReportService
                 $monthEndDate = today()->subDay();
             }
             $months[$index] = $monthStartDate->format('Y-m');
-            $project = new Project;
+            $project = new Project();
             $workingDaysInAMonth = count($project->getWorkingDaysList($monthStartDate, $monthEndDate));
             $totalEffortInMonth = 0;
 

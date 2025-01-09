@@ -8,7 +8,8 @@ use Illuminate\Queue\SerializesModels;
 
 class OnHold extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * The mail subject.

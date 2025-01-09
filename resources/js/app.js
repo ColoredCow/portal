@@ -1966,9 +1966,9 @@ $(document).ready(function() {
 $("#editform").on("submit", function(e) {
 	e.preventDefault();
 	let form = $("#editform");
-	let editor = tinymce.get('address');
+	let editor = tinymce.get("address");
 	let addressFieldValue = editor.getContent();
-	$('#address').val(addressFieldValue)
+	$("#address").val(addressFieldValue);
 
 	$.ajax({
 		url: form.attr("action"),

@@ -12,7 +12,8 @@ use Modules\User\Entities\User;
 
 class Job extends Model
 {
-    use SoftDeletes, HasFactory;
+    use SoftDeletes;
+    use HasFactory;
 
     protected $fillable = ['opportunity_id', 'title', 'type', 'domain', 'start_date', 'description', 'posted_by', 'link', 'end_date', 'status', 'facebook_post', 'instagram_post', 'twitter_post', 'linkedin_post', 'hr_resource_category_id', 'job_id'];
 
@@ -56,9 +57,9 @@ class Job extends Model
     /**
      * Custom update method that updates a job and fires specific events.
      *
-     * @param  array $attr      fillables to be updated
+     * @param array $attr fillables to be updated
      *
-     * @return bool|mixed    true if update is successful, error object if update fails
+     * @return bool|mixed true if update is successful, error object if update fails
      */
     public function _update($attr)
     {

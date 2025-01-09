@@ -12,7 +12,10 @@ use Modules\HR\Emails\SendHiringMail;
 
 class SendHiringMailJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     public $jobHiring;
     /**
@@ -32,6 +35,6 @@ class SendHiringMailJob implements ShouldQueue
      */
     public function handle()
     {
-        Mail::queue(new sendHiringMail($this->jobHiring));
+        Mail::queue(new SendHiringMail($this->jobHiring));
     }
 }

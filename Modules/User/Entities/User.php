@@ -22,7 +22,12 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable, SoftDeletes, HasRoles, HasWebsiteUser, CanBeExtended, HasFactory;
+    use Notifiable;
+    use SoftDeletes;
+    use HasRoles;
+    use HasWebsiteUser;
+    use CanBeExtended;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -227,11 +232,6 @@ class User extends Authenticatable
     public function activeProjects()
     {
         return Project::linkedToTeamMember($this->id)->get();
-    }
-
-    public function getOfficeLocationAttribute()
-    {
-        return optional($this->meta()->where('meta_key', 'office_location')->first())->meta_value;
     }
 
     public function prospects()

@@ -10,7 +10,8 @@ use Modules\HR\Entities\ApplicationRound;
 
 class ScheduledInterviewReminder extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Instance of the application round for which the applicant needs to be reminded.

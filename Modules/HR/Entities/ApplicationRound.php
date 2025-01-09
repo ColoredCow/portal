@@ -18,7 +18,8 @@ use Modules\User\Entities\User;
 
 class ApplicationRound extends Model
 {
-    use HasTags, HasCalendarMeetings;
+    use HasTags;
+    use HasCalendarMeetings;
 
     public $timestamps = false;
 
@@ -266,7 +267,7 @@ class ApplicationRound extends Model
 
     public function updateOrCreateEvaluation($evaluations = [])
     {
-        foreach ($evaluations as  $evaluation) {
+        foreach ($evaluations as $evaluation) {
             if (array_key_exists('option_id', $evaluation)) {
                 $this->evaluations()->updateOrCreate(
                     [

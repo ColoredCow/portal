@@ -37,7 +37,7 @@ class ApplicationRoundScheduled extends Notification
         $applicant = $application->applicant;
         $job = $application->job;
 
-        return (new MailMessage)
+        return (new MailMessage())
             ->subject(config('app.name') . ": {$this->applicationRound->round->name} scheduled")
             ->line('You have been assigned an application round.')
             ->line("Candidate name: {$applicant->name}")

@@ -12,7 +12,7 @@ class EmployeeObserver
     /**
      * Handle to the employee "created" event.
      *
-     * @param  Employee  $employee
+     * @param  Employee $employee
      * @return void
      */
     public function created(Employee $employee)
@@ -21,7 +21,7 @@ class EmployeeObserver
             return;
         }
 
-        $gsuiteUserService = new GSuiteUserService;
+        $gsuiteUserService = new GSuiteUserService();
         $gsuiteUserService->fetch($employee->user->email);
 
         foreach ($gsuiteUserService->getUsers() as $gsuiteUser) {

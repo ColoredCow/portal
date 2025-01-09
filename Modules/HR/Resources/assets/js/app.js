@@ -46,21 +46,21 @@ $(document).on("submit", ".contact-form", (e) => {
 			.find("input")
 			.map((key, val) => {
 				switch (val.name) {
-					case "name":
-						val.value = contact.name;
-						return val;
-					case "email":
-						val.value = contact.email;
-						return val;
-					case "phone":
-						val.value = contact.phone;
-						return val;
-					case "designation":
-						val.value = contact.designation;
-						return val;
-					case "hr_university_id":
-						val.value = contact.hr_university_id;
-						return val;
+				case "name":
+					val.value = contact.name;
+					return val;
+				case "email":
+					val.value = contact.email;
+					return val;
+				case "phone":
+					val.value = contact.phone;
+					return val;
+				case "designation":
+					val.value = contact.designation;
+					return val;
+				case "hr_university_id":
+					val.value = contact.hr_university_id;
+					return val;
 				}
 			});
 		$("#update_form_list").append(form);
@@ -162,9 +162,9 @@ $(document).on("submit", ".alias-form", (e) => {
 			.find("input")
 			.map((key, val) => {
 				switch (val.name) {
-					case "name":
-						val.value = alias.name;
-						return val;
+				case "name":
+					val.value = alias.name;
+					return val;
 				}
 			});
 		$("#update_alias_form_list").append(form);
@@ -272,38 +272,38 @@ $(document).ready(function () {
 
 	function updateDisplay(category, value, displayValue) {
 		var categoryElement = $(`.selected-${category}-category`);
-		categoryElement.find('span').html(displayValue ? displayValue.replace(/\b\w/g, char => char.toUpperCase()) : '');
-		categoryElement.attr('data-value', value);
-		categoryElement.toggleClass('d-none', !displayValue);
+		categoryElement.find("span").html(displayValue ? displayValue.replace(/\b\w/g, char => char.toUpperCase()) : "");
+		categoryElement.attr("data-value", value);
+		categoryElement.toggleClass("d-none", !displayValue);
 	}
 
 	function sendAjaxRequest() {
 		var form = $(".interview-data-fetch");
 		var interviewLoader = $(".interview-loader");
 
-		interviewLoader.removeClass('d-none');
+		interviewLoader.removeClass("d-none");
 
 		$.ajax({
 			url: form.attr("action"),
 			type: form.attr("method"),
-			contentType: 'application/json',
+			contentType: "application/json",
 			data: values,
 			success: function (response) {
-				var selectedInterviews = $(response.html).find('[data-counter]');
-				$('.total-interview-tasks').html(selectedInterviews.length);
+				var selectedInterviews = $(response.html).find("[data-counter]");
+				$(".total-interview-tasks").html(selectedInterviews.length);
 				if (selectedInterviews.length > 0) {
 					form.html(response.html);
 				} else {
-					form.html('<div class="mt-10 fz-24 text-center w-full">No interviews found for this filter.</div>');
+					form.html("<div class=\"mt-10 fz-24 text-center w-full\">No interviews found for this filter.</div>");
 				}
-				interviewLoader.addClass('d-none');
+				interviewLoader.addClass("d-none");
 
-				updateDisplay('job', values.jobValue, jobValueDisplay);
-				updateDisplay('opportunity', values.opportunityValue, opportunityValueDisplay);
-				updateDisplay('round', values.roundValue, roundValueDisplay);
+				updateDisplay("job", values.jobValue, jobValueDisplay);
+				updateDisplay("opportunity", values.opportunityValue, opportunityValueDisplay);
+				updateDisplay("round", values.roundValue, roundValueDisplay);
 
 				// Update pagination links
-				$('.pagination-wrapper').html($(response.html).find('.pagination-wrapper').html());
+				$(".pagination-wrapper").html($(response.html).find(".pagination-wrapper").html());
 			},
 			error: function (xhr, status, error) {
 				console.log("Error:", error);
@@ -315,48 +315,48 @@ $(document).ready(function () {
 		e.preventDefault();
 		var $this = $(this);
 		
-		var elementClass = $this.attr('class').split(' ').find(cls => {
-			return cls === 'interview-data-reset' ||
-				   cls === 'interview-job-filter' ||
-				   cls === 'interview-opportunity-filter' ||
-				   cls === 'interview-round-filter' ||
-				   cls === 'interview-date-filter' ||
-				   cls === 'interview-search';
+		var elementClass = $this.attr("class").split(" ").find(cls => {
+			return cls === "interview-data-reset" ||
+				   cls === "interview-job-filter" ||
+				   cls === "interview-opportunity-filter" ||
+				   cls === "interview-round-filter" ||
+				   cls === "interview-date-filter" ||
+				   cls === "interview-search";
 		});
 	
 		switch (elementClass) {
-			case 'interview-data-reset':
-				resetValues();
-				$('#searchInterviews').val('');
-				break;
+		case "interview-data-reset":
+			resetValues();
+			$("#searchInterviews").val("");
+			break;
 	
-			case 'interview-job-filter':
-				values.jobValue = $this.attr('data-id');
-				jobValueDisplay = $this.attr('value');
-				break;
+		case "interview-job-filter":
+			values.jobValue = $this.attr("data-id");
+			jobValueDisplay = $this.attr("value");
+			break;
 	
-			case 'interview-opportunity-filter':
-				values.opportunityValue = $this.attr('data-id');
-				opportunityValueDisplay = $this.attr('value');
-				break;
+		case "interview-opportunity-filter":
+			values.opportunityValue = $this.attr("data-id");
+			opportunityValueDisplay = $this.attr("value");
+			break;
 	
-			case 'interview-round-filter':
-				values.roundValue = $this.attr('data-id');
-				roundValueDisplay = $this.attr('value');
-				break;
+		case "interview-round-filter":
+			values.roundValue = $this.attr("data-id");
+			roundValueDisplay = $this.attr("value");
+			break;
 	
-			case 'interview-date-filter':
-				values.dateValue = $this.attr('data-id');
-				$('.interview-date-filter').removeClass('active');
-				$this.addClass('active');
-				break;
+		case "interview-date-filter":
+			values.dateValue = $this.attr("data-id");
+			$(".interview-date-filter").removeClass("active");
+			$this.addClass("active");
+			break;
 	
-			case 'interview-search':
-				values.searchValue = $('#searchInterviews').val();
-				break;
+		case "interview-search":
+			values.searchValue = $("#searchInterviews").val();
+			break;
 	
-			default:
-				console.error('Unexpected class');
+		default:
+			console.error("Unexpected class");
 		}
 	
 		values.page = 1; // Reset to the first page when applying new filters
@@ -367,13 +367,13 @@ $(document).ready(function () {
 		e.preventDefault();
 		var $this = $(this);
 
-		if ($this.hasClass('remove-job')) {
+		if ($this.hasClass("remove-job")) {
 			values.jobValue = null;
 			jobValueDisplay = null;
-		} else if ($this.hasClass('remove-opportunity')) {
+		} else if ($this.hasClass("remove-opportunity")) {
 			values.opportunityValue = null;
 			opportunityValueDisplay = null;
-		} else if ($this.hasClass('remove-round')) {
+		} else if ($this.hasClass("remove-round")) {
 			values.roundValue = null;
 			roundValueDisplay = null;
 		}
@@ -382,14 +382,14 @@ $(document).ready(function () {
 		sendAjaxRequest();
 	});
 
-	$(document).on('click', '.pagination-links a', function (e) {
+	$(document).on("click", ".pagination-links a", function (e) {
 		e.preventDefault();
-		var page = $(this).attr('href').split('page=')[1];
+		var page = $(this).attr("href").split("page=")[1];
 		values.page = page;
 		sendAjaxRequest();
 	});
 
-	$(document).on('click', '.finish_interview', function () {
+	$(document).on("click", ".finish_interview", function () {
 		setTimeout(function() {
 			sendAjaxRequest();
 		}.bind(this), 1000);

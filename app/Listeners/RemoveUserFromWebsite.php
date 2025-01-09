@@ -20,7 +20,7 @@ class RemoveUserFromWebsite
     /**
      * Handle the event.
      *
-     * @param  object  $event
+     * @param object $event
      *
      * @return void
      */

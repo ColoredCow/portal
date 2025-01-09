@@ -18,7 +18,9 @@ use Modules\User\Entities\User;
 
 class Client extends Model
 {
-    use HasHierarchy, HasFactory, Filters;
+    use HasHierarchy;
+    use HasFactory;
+    use Filters;
 
     protected $fillable = ['name', 'key_account_manager_id', 'status', 'is_channel_partner', 'has_departments', 'channel_partner_id', 'parent_organisation_id', 'client_id', 'is_billable'];
 
@@ -152,6 +154,7 @@ class Client extends Model
     public function getTaxAmountForTerm(int $monthsToSubtract, $projects, $periodStartDate = null, $periodEndDate = null)
     {
         $monthsToSubtract = $monthsToSubtract ?? 1;
+
         // Todo: Implement tax calculation correctly as per the IGST rules
         return round($this->getBillableAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) * ($this->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
     }
@@ -409,7 +412,7 @@ class Client extends Model
 
     protected static function booted()
     {
-        static::addGlobalScope(new ClientGlobalScope);
+        static::addGlobalScope(new ClientGlobalScope());
     }
 
     protected static function newFactory()

@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\CodeTrek\Database\factories\CodeTrekApplicantFactory;
-use Modules\Operations\Entities\OfficeLocation;
 use Modules\User\Entities\User;
 
 class CodeTrekApplicant extends Model
 {
-    use SoftDeletes, HasFactory;
+    use SoftDeletes;
+    use HasFactory;
     protected $guarded = [];
 
     public function roundDetails()
@@ -23,11 +23,6 @@ class CodeTrekApplicant extends Model
     public static function factory()
     {
         return new CodeTrekApplicantFactory();
-    }
-
-    public function center()
-    {
-        return $this->belongsTo(OfficeLocation::class, 'center_id');
     }
 
     public function getDaysInCodetrekAttribute()
