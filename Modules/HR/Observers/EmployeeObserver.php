@@ -12,7 +12,7 @@ class EmployeeObserver
     /**
      * Handle to the employee "created" event.
      *
-     * @param  Employee  $employee
+     * @param  Employee $employee
      * @return void
      */
     public function created(Employee $employee)

@@ -44,7 +44,7 @@ class NDAMailTemplateController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param int $id
+     * @param int     $id
      */
     public function update(Request $request, $id)
     {

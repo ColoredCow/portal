@@ -29,7 +29,7 @@ class JobChanged extends Mailable
     /**
      * Create a new message instance.
      *
-     * @param Application $application
+     * @param Application     $application
      * @param ApplicationMeta $changeJobMeta
      */
     public function __construct(Application $application, ApplicationMeta $changeJobMeta)

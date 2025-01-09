@@ -17,7 +17,7 @@ class OfficeSuiteManager
     /**
      * Create a new OfficeSuite manager instance.
      *
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @param \Illuminate\Contracts\Foundation\Application $app
      *
      * @return void
      */

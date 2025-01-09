@@ -3,10 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\KnowledgeCafe\Library\Book;
-use Google_Client;
-use Google_Service_Directory;
-use Illuminate\Http\Request;
-use Modules\User\Entities\UserMeta;
 
 class HomeController extends Controller
 {

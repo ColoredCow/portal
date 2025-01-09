@@ -46,8 +46,8 @@ class Invoice extends Model
     /**
      * Get invoices that were sent in the date range.
      *
-     * @param  string $start
-     * @param  string $end
+     * @param string $start
+     * @param string $end
      *
      * @return mixed
      */
@@ -63,9 +63,9 @@ class Invoice extends Model
     /**
      * Get invoices that were sent or paid in the date range.
      *
-     * @param  string  $start
-     * @param  string  $end
-     * @param  bool $paginated
+     * @param string $start
+     * @param string $end
+     * @param bool   $paginated
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */

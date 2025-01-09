@@ -98,7 +98,7 @@ class Application extends Model
      * Apply filters on application.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param array $filters
+     * @param array                                 $filters
      *
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
@@ -148,7 +148,7 @@ class Application extends Model
      * Apply filter on applications based on their show status.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string $status
+     * @param string                                $status
      *
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
@@ -191,7 +191,7 @@ class Application extends Model
      * Apply filter on applications based on their job type.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string $type
+     * @param string                                $type
      *
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
@@ -244,7 +244,7 @@ class Application extends Model
      * Apply filter on applications based on the applied job.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string $id
+     * @param string                                $id
      *
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
@@ -404,7 +404,7 @@ class Application extends Model
     /**
      * Set the application status to sent-for-approval and also set the requested user as pending approval from.
      *
-     * @param  int $userId
+     * @param int $userId
      *
      * @return void
      */

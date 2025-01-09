@@ -75,7 +75,7 @@ class ReportController extends Controller
      * Update the specified resource in storage.
      *
      * @param ReportRequest $request
-     * @param int $id
+     * @param int           $id
      */
     public function update(ReportRequest $request, $id)
     {

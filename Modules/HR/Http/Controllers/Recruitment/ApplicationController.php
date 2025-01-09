@@ -196,7 +196,7 @@ abstract class ApplicationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  string  $id
+     * @param string $id
      */
     public function edit($id)
     {
@@ -301,7 +301,7 @@ abstract class ApplicationController extends Controller
      * Update the specified resource.
      *
      * @param ApplicationRequest $request
-     * @param int $id
+     * @param int                $id
      *
      * @return \Illuminate\Http\RedirectResponse
      */

@@ -145,8 +145,8 @@ class CalendarEventService
     /**
      * Returns an array that is expected by the Google Calendar API.
      *
-     * @param  string $dateTime
-     * @param  string $timeZone
+     * @param string $dateTime
+     * @param string $timeZone
      *
      * @return array
      */
@@ -163,8 +163,8 @@ class CalendarEventService
     /**
      * Returns an array with formats expected by Portal modules.
      *
-     * @param  mixed $eventDateTime
-     * @param  bool $withTimeZone    defines whether to return the calendar event timeZone or not
+     * @param mixed $eventDateTime
+     * @param bool  $withTimeZone  defines whether to return the calendar event timeZone or not
      *
      * @return array
      */

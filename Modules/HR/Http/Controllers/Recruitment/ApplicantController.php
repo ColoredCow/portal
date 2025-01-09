@@ -50,7 +50,7 @@ class ApplicantController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  ApplicantRequest  $request
+     * @param ApplicantRequest $request
      */
     public function store(ApplicantRequest $request)
     {
@@ -65,7 +65,7 @@ class ApplicantController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param Request $request
      */
     public function importExcel(Request $request)
     {

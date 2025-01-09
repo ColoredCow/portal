@@ -81,7 +81,7 @@ class ProspectController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * @param int $id
+     * @param  int        $id
      * @return Renderable
      */
     public function edit($id)
@@ -102,7 +102,7 @@ class ProspectController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param Request $request
+     * @param Request  $request
      * @param Prospect $prospect
      */
     public function update(Request $request, Prospect $prospect)

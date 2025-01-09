@@ -63,7 +63,7 @@ class InvoiceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Finance\InvoiceRequest  $request
+     * @param \App\Http\Requests\Finance\InvoiceRequest $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -84,7 +84,7 @@ class InvoiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Finance\Invoice  $invoice
+     * @param \App\Models\Finance\Invoice $invoice
      *
      * @return void
      */
@@ -96,8 +96,8 @@ class InvoiceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Finance\InvoiceRequest  $request
-     * @param  \App\Models\Finance\Invoice  $invoice
+     * @param \App\Http\Requests\Finance\InvoiceRequest $request
+     * @param \App\Models\Finance\Invoice               $invoice
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -114,10 +114,10 @@ class InvoiceController extends Controller
     /**
      * Download the invoice file.
      *
-     * @param  string $year  uploaded year of the invoice file
-     * @param  string $month uploaded month of the invoice file
-     * @param  string $file  invoice file name
-     * @param  bool|bool $inline download/view invoice file
+     * @param string    $year   uploaded year of the invoice file
+     * @param string    $month  uploaded month of the invoice file
+     * @param string    $file   invoice file name
+     * @param bool|bool $inline download/view invoice file
      *
      * @return mixed
      */
@@ -141,9 +141,9 @@ class InvoiceController extends Controller
     /**
      * Upload the invoice file.
      *
-     * @param  \Illuminate\Http\UploadedFile  $file
+     * @param \Illuminate\Http\UploadedFile $file
      *
-     * @return string    path of the uploaded file
+     * @return string path of the uploaded file
      */
     protected static function upload(UploadedFile $file)
     {
@@ -158,8 +158,8 @@ class InvoiceController extends Controller
     /**
      * Prepare attributes to store or update the resource.
      *
-     * @param  array        $validated
-     * @param  bool|bool $uploadFile
+     * @param array     $validated
+     * @param bool|bool $uploadFile
      *
      * @return array
      */
@@ -188,8 +188,8 @@ class InvoiceController extends Controller
     /**
      * Handles billings for the resource.
      *
-     * @param  array   $billings
-     * @param  Invoice $invoice
+     * @param array   $billings
+     * @param Invoice $invoice
      *
      * @return void
      */
