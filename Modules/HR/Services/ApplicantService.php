@@ -2,7 +2,7 @@
 
 namespace Modules\HR\Services;
 
-use  Modules\HR\Entities\ApplicantMeta;
+use Modules\HR\Entities\ApplicantMeta;
 use Modules\HR\Http\Requests\ApplicantMetaRequest;
 
 class ApplicantService
