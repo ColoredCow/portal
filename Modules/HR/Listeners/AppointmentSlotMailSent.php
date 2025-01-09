@@ -20,7 +20,7 @@ class AppointmentSlotMailSent
     /**
      * Handle the event.
      *
-     * @param  object  $event
+     * @param object $event
      */
     public function handle($event)
     {

@@ -22,7 +22,7 @@ class AutoRespondApplicant
     /**
      * Handle the event.
      *
-     * @param  ApplicantEmailVerified  $event
+     * @param ApplicantEmailVerified $event
      *
      * @return void
      */

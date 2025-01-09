@@ -32,6 +32,6 @@ class SendHiringMailJob implements ShouldQueue
      */
     public function handle()
     {
-        Mail::queue(new sendHiringMail($this->jobHiring));
+        Mail::queue(new SendHiringMail($this->jobHiring));
     }
 }

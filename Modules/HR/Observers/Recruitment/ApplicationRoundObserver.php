@@ -13,7 +13,7 @@ class ApplicationRoundObserver
     /**
      * Listen to the ApplicationRound created event.
      *
-     * @param  \Modules\HR\Entities\ApplicationRound  $applicationRound
+     * @param \Modules\HR\Entities\ApplicationRound $applicationRound
      * @return void
      */
     public function created(ApplicationRound $applicationRound)
@@ -34,18 +34,13 @@ class ApplicationRoundObserver
                 $data['mail_sender_name'] = $data['mail_sender_name'] ?? auth()->user()->name;
             }
             event(new ApplicationMovedToNewRound($applicationRound, $data));
-            // SendApplicationRoundScheduled::dispatch($applicationRound);
         }
-
-        // if (request()->get('create_calendar_event')) {
-        //     self::createCalendarEvent($applicationRound);
-        // }
     }
 
     /**
      * Listen to the ApplicationRound updated event.
      *
-     * @param  \Modules\HR\Entities\ApplicationRound  $applicationRound
+     * @param \Modules\HR\Entities\ApplicationRound $applicationRound
      * @return void
      */
     public function updated(ApplicationRound $applicationRound)

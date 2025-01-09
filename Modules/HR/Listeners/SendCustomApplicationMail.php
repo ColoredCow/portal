@@ -22,7 +22,7 @@ class SendCustomApplicationMail
     /**
      * Handle the event.
      *
-     * @param  object  $event
+     * @param object $event
      *
      * @return void
      */

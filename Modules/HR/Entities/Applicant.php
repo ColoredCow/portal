@@ -20,7 +20,7 @@ class Applicant extends Model
     /**
      * Custom create method that creates an applicant and fires specific events.
      *
-     * @param  array $attr  fillables to be stored
+     * @param array $attr fillables to be stored
      */
     public static function _create($attr)
     {

@@ -73,7 +73,7 @@ class Application extends Model
     /**
      * Custom create method that creates an application and fires necessary events.
      *
-     * @param  array $attr  fillables to be stored
+     * @param array $attr fillables to be stored
      */
     public static function _create($attr)
     {
