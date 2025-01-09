@@ -11,7 +11,8 @@ use Modules\HR\Database\Factories\HrApplicantsFactory;
 
 class Applicant extends Model
 {
-    use Notifiable, HasFactory;
+    use Notifiable;
+    use HasFactory;
 
     protected $guarded = [];
 
@@ -117,7 +118,7 @@ class Applicant extends Model
 
     public function onboard($email, $password, $params = [])
     {
-        $gsuiteUser = new GSuiteUserService;
+        $gsuiteUser = new GSuiteUserService();
         $gsuiteUser->create($this->splitName(), $email, $password, $params);
     }
 

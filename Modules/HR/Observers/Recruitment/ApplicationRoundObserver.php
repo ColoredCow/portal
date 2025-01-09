@@ -67,7 +67,7 @@ class ApplicationRoundObserver
         $applicant = $applicationRound->application->applicant;
         $summary = request()->get('summary_calendar_event');
 
-        $event = new CalendarEventService;
+        $event = new CalendarEventService();
         $event->create([
             'summary' => $summary,
             'start' => $applicationRound->scheduled_date->format(config('constants.datetime_format')),

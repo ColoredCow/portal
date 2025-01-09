@@ -8,7 +8,8 @@ use Illuminate\Queue\SerializesModels;
 
 class SendUploadedInvoicesMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     protected $invoicesFolderDetails;
 

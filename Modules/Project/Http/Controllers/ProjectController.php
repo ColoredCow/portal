@@ -81,7 +81,7 @@ class ProjectController extends Controller
         }
         $daysTillToday = count($project->getWorkingDaysList($project->client->month_start_date, $currentDate));
 
-        $effortTracking = new EffortTrackingService;
+        $effortTracking = new EffortTrackingService();
         $isApprovedWorkPipelineExist = $effortTracking->getIsApprovedWorkPipelineExist($project->effort_sheet_url);
 
         $getProjectHourDeatils = $this->service->getProjectApprovedPipelineHour($project);

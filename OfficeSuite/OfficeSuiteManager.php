@@ -30,7 +30,7 @@ class OfficeSuiteManager
     {
         $default = config('officesuites.default');
         $config = config('officesuites')[$default];
-        $service = new $config['service_class_path'];
+        $service = new $config['service_class_path']();
 
         if ($service instanceof OfficeSuiteServiceContract) {
             return $service;

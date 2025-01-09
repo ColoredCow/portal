@@ -21,7 +21,7 @@ class EmployeeObserver
             return;
         }
 
-        $gsuiteUserService = new GSuiteUserService;
+        $gsuiteUserService = new GSuiteUserService();
         $gsuiteUserService->fetch($employee->user->email);
 
         foreach ($gsuiteUserService->getUsers() as $gsuiteUser) {

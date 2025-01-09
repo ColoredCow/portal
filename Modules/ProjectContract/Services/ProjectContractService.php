@@ -171,7 +171,7 @@ class ProjectContractService
         $name = $request['name'];
         $email = $request['email'];
 
-        $reviewer = new Reviewer;
+        $reviewer = new Reviewer();
         $reviewer->contract_id = $id;
         $reviewer->name = $name;
         $reviewer->email = $email;
@@ -259,7 +259,7 @@ class ProjectContractService
         $id = $request['id'];
         $email = $request['email'];
 
-        $Reviewer = new ContractInternalReview;
+        $Reviewer = new ContractInternalReview();
         $Reviewer->contract_id = $id;
         $Reviewer->email = $email;
         $User = User::findByEmail($email);
@@ -349,7 +349,7 @@ class ProjectContractService
     }
     public function storeUser($id)
     {
-        $reviewer = new ContractInternalReview;
+        $reviewer = new ContractInternalReview();
         $reviewer->contract_id = $id;
         $reviewer->name = Auth::user()->name;
         $reviewer->email = Auth::user()->email;

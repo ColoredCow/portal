@@ -8,7 +8,8 @@ use Illuminate\Queue\SerializesModels;
 
 class SendThreshholdFollowUp extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $applications;
     public $user;

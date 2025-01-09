@@ -173,7 +173,7 @@ abstract class ApplicationController extends Controller
     public function interviewsIndex(Request $request)
     {
         $today = today()->toDateString();
-        $applicationService = new ApplicationService;
+        $applicationService = new ApplicationService();
 
         $parsedData = $request->query();
         $searchCategory = $parsedData['searchValue'] ?? null;

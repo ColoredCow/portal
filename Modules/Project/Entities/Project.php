@@ -20,7 +20,11 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class Project extends Model implements Auditable
 {
-    use HasFactory, HasTags, Filters, SoftDeletes, \OwenIt\Auditing\Auditable;
+    use HasFactory;
+    use HasTags;
+    use Filters;
+    use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'projects';
 

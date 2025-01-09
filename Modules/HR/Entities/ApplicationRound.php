@@ -18,7 +18,8 @@ use Modules\User\Entities\User;
 
 class ApplicationRound extends Model
 {
-    use HasTags, HasCalendarMeetings;
+    use HasTags;
+    use HasCalendarMeetings;
 
     public $timestamps = false;
 

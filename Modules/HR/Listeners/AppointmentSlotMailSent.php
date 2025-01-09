@@ -37,7 +37,7 @@ class AppointmentSlotMailSent
             $applicationRound->scheduledPerson->notify(new RoundMailSentNotification($applicationRound));
         }
 
-        $applicationMeta = new ApplicationMeta;
+        $applicationMeta = new ApplicationMeta();
         $applicationMeta->hr_application_id = $applicationRound->application->id;
         $applicationMeta->key = config('constants.hr.application-meta.keys.custom-mail');
 

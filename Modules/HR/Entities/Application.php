@@ -14,7 +14,8 @@ use Modules\User\Entities\User;
 
 class Application extends Model
 {
-    use HasTags,HasFactory;
+    use HasTags;
+    use HasFactory;
 
     protected $guarded = ['id'];
 

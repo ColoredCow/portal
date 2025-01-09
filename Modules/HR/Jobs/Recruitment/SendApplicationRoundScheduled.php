@@ -12,7 +12,10 @@ use Modules\HR\Notifications\Recruitment\ApplicationRoundScheduled;
 
 class SendApplicationRoundScheduled implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * The number of seconds the job can run before timing out.

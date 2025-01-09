@@ -11,7 +11,8 @@ use Modules\User\Entities\User;
 
 class CodeTrekApplicant extends Model
 {
-    use SoftDeletes, HasFactory;
+    use SoftDeletes;
+    use HasFactory;
     protected $guarded = [];
 
     public function roundDetails()

@@ -8,7 +8,8 @@ use Illuminate\Queue\SerializesModels;
 
 class AppointmentSlotSelectionMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     protected $mailData = null;
 

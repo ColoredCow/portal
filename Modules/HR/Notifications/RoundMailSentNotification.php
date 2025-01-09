@@ -33,7 +33,7 @@ class RoundMailSentNotification extends Notification
         $applicant = $this->applicationRound->application->applicant;
         $conductedPerson = $this->applicationRound->getPreviousApplicationRound()->conductedPerson;
 
-        return (new MailMessage)
+        return (new MailMessage())
                     ->subject(config('app.name') . ' – HR application round assigned to you')
                     ->line("{$conductedPerson->name} has assigned you an HR application for {$this->applicationRound->round->name}.")
                     ->line("Candidate name: {$applicant->name}")

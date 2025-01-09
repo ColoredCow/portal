@@ -73,7 +73,7 @@ class SalaryController extends Controller
         ->take(7);
         $ctcSuggestions = [];
         foreach ($grossSalariesList as $grossSalary) {
-            $tempSalaryObject = new EmployeeSalary;
+            $tempSalaryObject = new EmployeeSalary();
             $tempSalaryObject->employee_id = $employee->id;
             $tempSalaryObject->monthly_gross_salary = $grossSalary;
             array_push($ctcSuggestions, $tempSalaryObject->ctc_aggregated);

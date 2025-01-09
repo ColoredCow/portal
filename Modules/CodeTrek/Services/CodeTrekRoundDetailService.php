@@ -28,7 +28,7 @@ class CodeTrekRoundDetailService
 
     public function takeActionApplicantToRound($applicant)
     {
-        $applicationRound = new CodeTrekApplicantRoundDetail;
+        $applicationRound = new CodeTrekApplicantRoundDetail();
         $applicationRound->applicant_id = $applicant->id;
         $applicationRound->latest_round_name = $applicant->latest_round_name;
         $applicationRound->feedback = null;

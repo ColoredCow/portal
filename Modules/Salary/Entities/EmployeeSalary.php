@@ -23,7 +23,7 @@ class EmployeeSalary extends Model
 
     public function getBasicSalaryAttribute()
     {
-        $salaryConf = new SalaryConfiguration;
+        $salaryConf = new SalaryConfiguration();
         $basicSalaryPercentageFactor = $salaryConf->basicSalary();
         $grossSalary = $this->monthly_gross_salary ?? 0;
 
@@ -32,7 +32,7 @@ class EmployeeSalary extends Model
 
     public function getHraAttribute()
     {
-        $salaryConf = new SalaryConfiguration;
+        $salaryConf = new SalaryConfiguration();
         $hraConf = $salaryConf->formatAll()->get('hra');
         $grossSalary = $this->monthly_gross_salary ?? 0;
 
@@ -53,7 +53,7 @@ class EmployeeSalary extends Model
             return 0;
         }
 
-        $salaryConf = new SalaryConfiguration;
+        $salaryConf = new SalaryConfiguration();
         $transportAllowanceConf = $salaryConf->formatAll()->get('transport_allowance');
 
         return (int) ($transportAllowanceConf->fixed_amount ?? 0);
@@ -64,7 +64,7 @@ class EmployeeSalary extends Model
         if (! $this->monthly_gross_salary) {
             return 0;
         }
-        $salaryConf = new SalaryConfiguration;
+        $salaryConf = new SalaryConfiguration();
         $foodAllowanceConf = $salaryConf->formatAll()->get('food_allowance');
 
         return (int) ($foodAllowanceConf->fixed_amount ?? 0);
@@ -86,7 +86,7 @@ class EmployeeSalary extends Model
 
     public function getEmployeeEsiAttribute()
     {
-        $salaryConf = new SalaryConfiguration;
+        $salaryConf = new SalaryConfiguration();
         $employeeEsiLimitConf = $salaryConf->formatAll()->get('employee_esi_limit');
         $employeeEsiConf = $salaryConf->formatAll()->get('employee_esi');
 
@@ -101,7 +101,7 @@ class EmployeeSalary extends Model
 
     public function getEmployeeEpfAttribute()
     {
-        $salaryConf = new SalaryConfiguration;
+        $salaryConf = new SalaryConfiguration();
         $employeeEpfConf = $salaryConf->formatAll()->get('employee_epf');
 
         $multiplier = $this->monthly_gross_salary;
@@ -130,7 +130,7 @@ class EmployeeSalary extends Model
 
     public function getEmployerEsiAttribute()
     {
-        $salaryConf = new SalaryConfiguration;
+        $salaryConf = new SalaryConfiguration();
         $employerEsiLimitConf = $salaryConf->formatAll()->get('employer_esi_limit');
         $employerEsiConf = $salaryConf->formatAll()->get('employer_esi');
 
@@ -145,7 +145,7 @@ class EmployeeSalary extends Model
 
     public function getEmployerEpfAttribute()
     {
-        $salaryConf = new SalaryConfiguration;
+        $salaryConf = new SalaryConfiguration();
         $employerEpfConf = $salaryConf->formatAll()->get('employer_epf');
 
         $multiplier = $this->monthly_gross_salary;
@@ -160,7 +160,7 @@ class EmployeeSalary extends Model
 
     public function getAdministrationChargesAttribute()
     {
-        $salaryConf = new SalaryConfiguration;
+        $salaryConf = new SalaryConfiguration();
         $administrationChargesConf = $salaryConf->formatAll()->get('administration_charges');
 
         $multiplier = $this->monthly_gross_salary;
@@ -175,7 +175,7 @@ class EmployeeSalary extends Model
 
     public function getEdliChargesAttribute()
     {
-        $salaryConf = new SalaryConfiguration;
+        $salaryConf = new SalaryConfiguration();
         $edliChargesConf = $salaryConf->formatAll()->get('edli_charges');
         $edliChargesLimitConfig = $salaryConf->formatAll()->get('edli_charges_limit');
 
@@ -208,7 +208,7 @@ class EmployeeSalary extends Model
 
     public function getHealthInsuranceAttribute()
     {
-        $salaryConf = new SalaryConfiguration;
+        $salaryConf = new SalaryConfiguration();
         $healthInsuranceConf = $salaryConf->formatAll()->get('health_insurance');
 
         if ($this->monthly_gross_salary === '' || $this->employer_esi !== 0 || $this->employee_esi !== 0) {

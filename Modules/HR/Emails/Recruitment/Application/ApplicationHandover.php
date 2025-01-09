@@ -9,7 +9,8 @@ use Modules\HR\Entities\Application;
 
 class ApplicationHandover extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $application;
     public $userName;
