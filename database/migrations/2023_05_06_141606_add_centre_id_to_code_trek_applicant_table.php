@@ -27,7 +27,7 @@ class AddCentreIdToCodeTrekApplicantTable extends Migration
     public function down()
     {
         Schema::table('code_trek_applicants', function (Blueprint $table) {
-            $table->dropForeign('centre_id');
+            $table->dropForeign(['centre_id']);
             $table->dropColumn('centre_id');
         });
     }

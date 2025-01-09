@@ -14,7 +14,7 @@ class CleanupOfficeLocation extends Migration
     public function up()
     {
         Schema::table('code_trek_applicants', function (Blueprint $table) {
-            $table->dropForeign('centre_id');
+            $table->dropForeign(['centre_id']);
             $table->dropColumn('centre_id');
         });
         Schema::dropIfExists('office_locations');
