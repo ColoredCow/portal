@@ -81,7 +81,6 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Finance <span class="caret"></span>
                 </a>
                 <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_finance">
-                    <a class="dropdown-item" href="{{ route('expense.index') }}">Expenses</a>
                     <a class="dropdown-item" href="{{ route('reports.finance.dashboard') }}">Reports</a>
                     <a class="dropdown-item" href="{{ route('invoice.index') }}">Invoices</a>
                     <a class="dropdown-item" href="{{ route('ledger-accounts.index') }}">Ledger Accounts</a>
