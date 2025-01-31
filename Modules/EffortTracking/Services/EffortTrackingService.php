@@ -225,14 +225,38 @@ class EffortTrackingService
                     if (isset($sheet[0]) && count($sheet[0]) == $columnIndex) {
                         $sheetIndexForTotalActualEffort = $this->getColumnIndex($sheetColumnsName['actual_effort'], $sheet[0]);
                         $subProjectName = $sheet[0][count($sheet[0]) - 1];
+                        $subProjectName = preg_replace('/ \((Billable|Actual)\)$/', '', $subProjectName);
                         $subProject = Project::where(['name' => $subProjectName, 'status' => 'active'])->first();
                         if ($subProject) {
-                            $projectsInSheet[] = [
-                                'id' => $subProject->id,
-                                'name' => $subProjectName,
-                                'sheetIndex' => $columnIndex - 1,
-                                'actualEffortIndex' => $sheetIndexForTotalActualEffort,
-                            ];
+                            $actualEffortName = $subProjectName . ' (Actual)';
+                            $actualEffortIndex = $this->getColumnIndex($actualEffortName, $sheet[0]);
+
+                            if ($actualEffortIndex !== false) {
+                                $projectFound = false;
+                                foreach ($projectsInSheet as &$project) {
+                                    if ($project['name'] === $subProjectName) {
+                                        $project['actualEffortIndex'] = $actualEffortIndex;
+                                        $projectFound = true;
+                                        break;
+                                    }
+                                }
+
+                                if (!$projectFound) {
+                                    $projectsInSheet[] = [
+                                        'id' => $subProject->id,
+                                        'name' => $subProjectName,
+                                        'sheetIndex' => $columnIndex - 1,
+                                        'actualEffortIndex' => $sheetIndexForTotalActualEffort,
+                                    ];
+                                }
+                            } else {
+                                $projectsInSheet[] = [
+                                    'id' => $subProject->id,
+                                    'name' => $subProjectName,
+                                    'sheetIndex' => $columnIndex - 1,
+                                    'actualEffortIndex' => $sheetIndexForTotalActualEffort,
+                                ];
+                            }
                         }
                         continue;
                     }
@@ -341,7 +365,7 @@ class EffortTrackingService
     public function getColumnIndex($columnName, $sheetColumns)
     {
         foreach ($sheetColumns as $columnIndex => $sheetColumn) {
-            if (Str::lower($sheetColumn) == $columnName) {
+            if (Str::lower($sheetColumn) == Str::lower($columnName)) {
                 return $columnIndex;
             }
         }
