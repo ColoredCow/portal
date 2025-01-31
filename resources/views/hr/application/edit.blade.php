@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div :class="[showResumeFrame ? 'container-fluid' : 'container']" id="page_hr_applicant_edit">
         <div class="row">
@@ -15,6 +14,7 @@
                 @include('hr.application.timeline', [
                     'timeline' => $timeline,
                     'currentApplication' => $application,
+                    'followUpEntries' => $followUpEntries,
                 ])
             </div>
             <div v-bind:class="[showResumeFrame ? 'offset-md-2 col-md-7 pl-9' : 'col-md-8']">
@@ -39,26 +39,6 @@
                                         $applicationRoundReview = $applicationRound->applicationRoundReviews->where('review_key', 'feedback')->first();
                                         $applicationRoundReviewValue = $applicationRoundReview ? $applicationRoundReview->review_value : '';
                                     @endphp
-                                    @if (sizeof($applicationRound->followUps))
-                                        <div class="my-2">
-                                            @foreach ($applicationRound->followUps as $followUp)
-                                                <div class="d-flex align-items-center mb-1.5">
-                                                    <i class="fa fa-clock-o fz-20 mr-1" aria-hidden="true"></i>
-                                                    <span class="fz-14 leading-none">
-                                                        <span class="mr-0.5">Followed up by</span>
-                                                        <img src="{{ $followUp->conductedBy->avatar }}"
-                                                            class="w-20 h-20 rounded-circle mr-0.5" data-toggle="tooltip"
-                                                            title="{{ $followUp->conductedBy->name }}">
-                                                        <span class="mr-1.5">on
-                                                            {{ $followUp->created_at->format(config('constants.full_display_date_format')) }}</span>
-                                                        <a href="#" data-toggle="modal"
-                                                            data-target="#followUp{{ $followUp->id }}">View feedback</a>
-                                                        @include('hr::follow-up.modal')
-                                                    </span>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    @endif
                                     @if ($loop->last && $applicationRound->application->hasTag('need-follow-up'))
                                         <div class="d-flex justify-content-start">
                                             <button type="button"
@@ -112,7 +92,7 @@
                                                                 value="{{ $applicationRound->id }}"
                                                                 class="btn-sm btn-primary text-decoration-none finish_interview ">Finish
                                                                 Interview</button>
-                                                        </div>        
+                                                        </div>
                                                     @endif
                                                 @endif
                                                 <div class="icon-pencil position-relative ml-3 c-pointer"
@@ -349,26 +329,6 @@
                                         $applicationRoundReview = $applicationRound->applicationRoundReviews->where('review_key', 'feedback')->first();
                                         $applicationRoundReviewValue = $applicationRoundReview ? $applicationRoundReview->review_value : '';
                                     @endphp
-                                    @if (sizeof($applicationRound->followUps))
-                                        <div class="mt-3">
-                                            @foreach ($applicationRound->followUps as $followUp)
-                                                <div class="d-flex align-items-center mb-1.5">
-                                                    <i class="fa fa-clock-o fz-20 mr-1" aria-hidden="true"></i>
-                                                    <span class="fz-14 leading-none">
-                                                        <span class="mr-0.5">Followed up by</span>
-                                                        <img src="{{ $followUp->conductedBy->avatar }}"
-                                                            class="w-20 h-20 rounded-circle mr-0.5" data-toggle="tooltip"
-                                                            title="{{ $followUp->conductedBy->name }}">
-                                                        <span class="mr-1.5">on
-                                                            {{ $followUp->created_at->format(config('constants.full_display_date_format')) }}</span>
-                                                        <a href="#" data-toggle="modal"
-                                                            data-target="#followUp{{ $followUp->id }}">View feedback</a>
-                                                        @include('hr::follow-up.modal')
-                                                    </span>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    @endif
                                     @if ($loop->last && $applicationRound->application->hasTag('need-follow-up'))
                                         <div class="d-flex justify-content-start">
                                             <button type="button"
@@ -855,26 +815,6 @@
                                 $applicationRoundReviewValue = $applicationRoundReview ? $applicationRoundReview->review_value : '';
                             @endphp
                             <br>
-                            @if (sizeof($applicationRound->followUps))
-                                <div class="mt-3">
-                                    @foreach ($applicationRound->followUps as $followUp)
-                                        <div class="d-flex align-items-center mb-1.5">
-                                            <i class="fa fa-clock-o fz-20 mr-1" aria-hidden="true"></i>
-                                            <span class="fz-14 leading-none">
-                                                <span class="mr-0.5">Followed up by</span>
-                                                <img src="{{ $followUp->conductedBy->avatar }}"
-                                                    class="w-20 h-20 rounded-circle mr-0.5" data-toggle="tooltip"
-                                                    title="{{ $followUp->conductedBy->name }}">
-                                                <span class="mr-1.5">on
-                                                    {{ $followUp->created_at->format(config('constants.full_display_date_format')) }}</span>
-                                                <a href="#" data-toggle="modal"
-                                                    data-target="#followUp{{ $followUp->id }}">View feedback</a>
-                                                @include('hr::follow-up.modal')
-                                            </span>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @endif
                             @if ($loop->last && $applicationRound->application->hasTag('need-follow-up'))
                                 <div class="d-flex justify-content-start">
                                     <button type="button"
@@ -930,7 +870,7 @@
                                                     value="{{ $applicationRound->id }}"
                                                     class="btn-sm btn-primary text-decoration-none finish_interview ">Finish
                                                     Interview</button>
-                                            </div>        
+                                            </div>
                                         @endif
                                         <div class="icon-pencil position-relative ml-3 c-pointer" data-toggle="collapse"
                                             data-target="#collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i>

@@ -84,4 +84,18 @@
             </div>
         </div>
     @endforeach
+    @if(!empty($followUpEntries))
+        @foreach($followUpEntries as $followUp)
+            <div>
+                <b><u>{{ date(config('constants.display_date_format'), strtotime($followUp->created_at)) }}</u></b><br>
+                <span>Followed up by
+                    <img src="{{ $followUp->conductedBy->avatar }}"
+                    class="w-20 h-20 rounded-circle mr-0.5" data-toggle="tooltip"
+                    title="{{ $followUp->conductedBy->name }}">
+                </span><br>
+                <span data-toggle="modal" data-target="#followUp{{ $followUp->id }}" class="badge badge-success text-white p-1 modal-toggler-text text-primary c-pointer fz-12">View mail</span><br></br>
+                @include('hr::follow-up.modal')
+            </div>
+        @endforeach
+    @endif
 </div>

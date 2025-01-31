@@ -19,6 +19,7 @@ use Modules\HR\Entities\ApplicantMeta;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationMeta;
 use Modules\HR\Entities\ApplicationRound;
+use Modules\HR\Entities\FollowUp;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\Round;
 use Modules\HR\Entities\University;
@@ -219,6 +220,9 @@ abstract class ApplicationController extends Controller
 
         $offerLetterTemplate = Setting::getOfferLetterTemplate();
         $desiredResume = DB::table('hr_applications')->select(['hr_applications.resume'])->where('hr_applications.hr_job_id', '=', $job->id)->where('is_desired_resume', '=', 1)->get();
+
+        $hrApplicationRoundIds = ApplicationRound::where('hr_application_id', $id)->pluck('id');
+        $followUpEntries = Followup::whereIn('hr_application_round_id', $hrApplicationRoundIds)->get();
         $attr = [
             'applicant' => $application->applicant,
             'application' => $application,
@@ -235,6 +239,7 @@ abstract class ApplicationController extends Controller
             ],
             'type' => config("constants.hr.opportunities.{$job->type}.type"),
             'universities' => University::orderBy('name')->get(),
+            'followUpEntries' => $followUpEntries,
         ];
 
         if ($job->type == 'job') {
