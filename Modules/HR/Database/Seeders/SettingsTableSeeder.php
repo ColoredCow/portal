@@ -126,5 +126,15 @@ class SettingsTableSeeder extends Seeder
             'setting_key' => 'approved_mail_body',
             'setting_value' => '<div>Dear |APPLICANT NAME|,</div><div><br> </div><div>We are pleased to inform you that you have been selected for the post of |JOB TITLE| with us and your joining with ColoredCow shall stand confirmed with effect after date of signing.</div><div><br> </div><div>The Draft copy of the Offer Letter is enclosed herewith with the details of your appointment with us. We would appreciate it if you go through it and share the acceptance with us within 3 days. Please fill out the form for the personal documents like Aadhar, PAN and bank details in order to raise an offer letter.</div><div><br></div><div>We look forward to a long term association and a rewarding career for you.</div><div><br></div><div>Please Fill your details using the following link</div><div><br></div><div><a href="|LINK|"> Fill Form</a></div><div><br></div><div>Thanks</div><div><br> </div><div>HR, Team.</div>',
         ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'offer_letter_mail_subject',
+            'setting_value' => 'Job Offer Letter',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'offer_letter_template',
+            'setting_value' => '<div><p>Dear <strong>|APPLICANT NAME|</strong>,</p><p>We are glad to offer you the position of <strong>|JOB TITLE|</strong> as full-time employment with us. You are expected to work closely with the Design team and get an understanding of the full-fledged design processes while building an open-source project.</p><p>Please find the following confirmation of the specifics:</p><div><p>Start Date: <strong>START_DATE</strong></p><p>Number of working days in a week: <strong>WORKING_DAYS_IN_A_WEEK</strong></p><p>Salary: <strong>₹ 7.02 L / annum</strong></p><p>Your remuneration will be <strong>INR 58,513</strong> per month as per the following breakup:</p><ul><li>Basic Salary = Rs. 27,500/-</li><li>HRA. Allowance = Rs. 13,750/-</li><li>Conveyance Allowance = Rs. 1,600/-</li><li>Other Allowance = Rs. 12,150/-</li><li>P.F. and Charges (Employer Contribution) = Rs. 3,513/-</li><li>Medical Insurance (per month) = Rs. 250/-</li></ul><p><strong>***Medical insurance of 5 Lakhs, rupees are added to your CTC.</strong></p></div><p>We are pleased to welcome you to the ColoredCow Team. The joining letter will be raised on <strong>COMMENCEMENT_DATE</strong>, upon submission of your documents mentioned in the email communication.</p><p>Office Location: You will work from our Gurugram office where you are expected to work alongside the project team. You are also invited to join the team in Tehri, Uttarakhand (Garhwal hills), and work from there depending on schedule and progress.</p></div><div><p><strong>HR_DESIGNATED_PERSON_NAME</strong><br>Human Resource<br>ColoredCow Consulting Pvt. Ltd.</p></div>',
+        ]);
     }
 }
