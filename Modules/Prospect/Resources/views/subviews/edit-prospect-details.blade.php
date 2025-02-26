@@ -49,8 +49,8 @@
                         </select>
                     </div>
                     <div class="form-group offset-md-1 col-md-5" id="org_name_text_field">
-                        <label class="field-required" for="project_name">Project Name</label>
-                        <input type="text" class="form-control" required="required" name="project_name" id="project_name"
+                        <label for="project_name">Project Name</label>
+                        <input type="text" class="form-control" name="project_name" id="project_name"
                             placeholder="Enter Project Name" value="{{ $prospect->project_name }}">
                     </div>
                 </div>
@@ -123,7 +123,7 @@
         </div>
         <div class="card-footer">
             <button type="submit" name="action" value="update" class="btn btn-primary">Update</button>
-            @if($prospect->customer_type === "exsiting")
+            @if($prospect->customer_type === "existing")
             <button type="submit" name="action" id="update_create_project_button" value="update_create_project" class="btn ml-3 d-none btn-primary">Update and Create Project</button>
             @endif
         </div>

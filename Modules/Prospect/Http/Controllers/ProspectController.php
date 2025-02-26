@@ -109,9 +109,9 @@ class ProspectController extends Controller
         if ($request->input('action') === 'update_create_project') {
             $totalEstimatedHours = $this->getTotalEstimatedHoursForProject($prospect);
             $projectData = [
-                'project_name'      => $prospect->project_name,
-                'client_id'         => $prospect->client_id,
-                'status'            => 'active',
+                'name'                  => $prospect->project_name,
+                'client_id'             => $prospect->client_id,
+                'status'                => 'active',
                 'total_estimated_hours' => $totalEstimatedHours ?? null,
 
             ];
@@ -151,6 +151,6 @@ class ProspectController extends Controller
         $projectBudget = $prospectData->budget;
         $clientServiceRates = Client::find($prospectData->client_id)->billingDetails->service_rates;
 
-        return $projectBudget / $clientServiceRates;
+        return $clientServiceRates ? $projectBudget / $clientServiceRates : '';
     }
 }

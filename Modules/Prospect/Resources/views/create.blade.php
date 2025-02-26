@@ -56,8 +56,8 @@
                                 </div>
 
                                 <div class="form-group offset-md-1 col-md-5" id="org_name_text_field">
-                                    <label class="field-required" for="project_name">Project Name</label>
-                                    <input type="text" required="required" class="form-control" name="project_name" id="project_name"
+                                    <label for="project_name">Project Name</label>
+                                    <input type="text" class="form-control" name="project_name" id="project_name"
                                         placeholder="Enter Project Name" value="{{ old('project_name') }}">
                                 </div>
                             </div>

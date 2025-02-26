@@ -36,7 +36,7 @@ class EffortsheetSetupMail extends Mailable
                     ->from(config('mail.from.address'))
                     ->to($this->emails['infrasupport_email'])
                     ->cc($this->emails['key_account_manager'])
-                    ->view('project::mail.effortsheet-setup-email')
+                    ->view('project::mail.initiate-project-email')
                     ->with([
                         'project' => $this->project,
                     ]);

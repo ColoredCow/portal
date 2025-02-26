@@ -27,7 +27,7 @@ class ProspectRequest extends FormRequest
             'proposal_link' => 'nullable|url',
             'currency' => 'nullable',
             'client_id' => 'nullable|exists:clients,id',
-            'project_name' => 'required',
+            'project_name' => 'nullable',
         ];
     }
 

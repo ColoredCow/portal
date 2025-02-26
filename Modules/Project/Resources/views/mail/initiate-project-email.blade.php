@@ -3,15 +3,15 @@
         .line {
             line-height: 1px;
         }
+        
     </style>
-
     <p>Hi Infrastructure Support Team,</p>
 
     <p>This is to put a request to set up a project folder and its effortsheet. Please find the necessary details below:</p>
 
     <ul>
         <li><strong>Project Name:</strong> {{ $project->name }}</li>
-        <li><strong>Client Name:</strong> {{ $project->client->name ?? 'N/A' }}</li>
+        <li><strong>Client Name:</strong> {{ $project->client->name }}</li>
         <li><strong>Billing Type:</strong> {{ Str::of($project->type)->replace('-', ' ')->title() }}</li>
         <li><strong>Due Date:</strong> {{ now()->format('d M Y') }}</li>
     </ul>

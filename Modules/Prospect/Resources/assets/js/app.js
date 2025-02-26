@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	const updateAndCreateProjectButton = document.getElementById("update_create_project_button");
 
 	function toggleOrgNameField() {
+		console.log("toggle-prospect");
 		if (customerTypeField.value === CUSTOMER_TYPES.NEW) {
 			orgNameTextField.classList.remove("d-none");
 			orgNameSelectField.classList.add("d-none");
@@ -30,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			orgNameSelectInput.value = "";
 			orgNameSelectInput.required = false;
 		} else if (customerTypeField.value === CUSTOMER_TYPES.EXISTING) {
+			console.log("elseif");
 			orgNameTextField.classList.add("d-none");
 			orgNameSelectField.classList.remove("d-none");
 			orgNameSelectInput.required = true;
@@ -45,11 +47,14 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 	function toggleUpdateAndCreateProjectButton() {
-		if(proposalStatus.value === PROPOSAL_STATUS.CONVERTED) {
-			updateAndCreateProjectButton.classList.remove("d-none");
-		} else {
-			updateAndCreateProjectButton.classList.add("d-none");
+		if(updateAndCreateProjectButton) {
+			if(proposalStatus.value === PROPOSAL_STATUS.CONVERTED) {
+				updateAndCreateProjectButton.classList.remove("d-none");
+			} else {
+				updateAndCreateProjectButton.classList.add("d-none");
+			}
 		}
+		
 	}
 
 	toggleOrgNameField();
