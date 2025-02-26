@@ -150,7 +150,7 @@ class ProspectController extends Controller
     {
         $projectBudget = $prospectData->budget;
         $clientServiceRates = Client::find($prospectData->client_id)->billingDetails->service_rates;
-
+        
         return $projectBudget / $clientServiceRates;
     }
 }

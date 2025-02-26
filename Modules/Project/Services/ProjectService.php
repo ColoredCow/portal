@@ -13,6 +13,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Modules\Client\Entities\Client;
 use Modules\HR\Entities\Employee;
 use Modules\Project\Contracts\ProjectServiceContract;
+use Modules\Project\Emails\EffortsheetSetupMail;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectBillingDetail;
 use Modules\Project\Entities\ProjectContract;
@@ -25,7 +26,6 @@ use Modules\Project\Entities\ProjectStagesListing;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Entities\ProjectTeamMembersEffort;
 use Modules\Project\Exports\ProjectFTEExport;
-use Modules\Project\Emails\EffortsheetSetupMail;
 use Modules\User\Entities\User;
 
 class ProjectService implements ProjectServiceContract
@@ -111,7 +111,7 @@ class ProjectService implements ProjectServiceContract
             // ToDo: Make infra email fetched from ENV
             $emails = [
             'key_account_manager' => $project->keyAccountManager->email,
-            'infrasupport_email' => 'infrasupport@coloredcow.in'
+            'infrasupport_email' => 'infrasupport@coloredcow.in',
         ];
 
             Mail::send(new EffortsheetSetupMail($project, $emails));

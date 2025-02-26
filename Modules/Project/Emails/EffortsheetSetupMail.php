@@ -40,7 +40,7 @@ class EffortsheetSetupMail extends Mailable
                     ->with([
                         'project' => $this->project,
                     ]);
-                    
+        
         return $mail;
     }
 }
