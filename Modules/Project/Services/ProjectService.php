@@ -112,7 +112,7 @@ class ProjectService implements ProjectServiceContract
             $emails = [
                 'key_account_manager' => $project->keyAccountManager->email,
                 'infrasupport_email' => 'infrasupport@coloredcow.in',
-        ];
+            ];
 
             Mail::send(new EffortsheetSetupMail($project, $emails));
         }
