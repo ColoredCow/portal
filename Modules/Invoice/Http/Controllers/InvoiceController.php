@@ -202,9 +202,4 @@ class InvoiceController extends Controller
 
         return $this->service->yearlyInvoiceReportExport($filters, $request);
     }
-
-    public function createCustomInvoice()
-    {
-        return view('invoice::create-custom-invoice', $this->service->create());
-    }
 }

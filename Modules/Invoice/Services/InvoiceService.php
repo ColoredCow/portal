@@ -133,30 +133,6 @@ class InvoiceService implements InvoiceServiceContract
         ];
     }
 
-    public function create()
-    {
-        return [
-            'clients' => $this->getClientsForInvoice(),
-            'countries' => Country::all(),
-            'sendInvoiceEmailSubject' => optional(Setting::where([
-                'module' => 'invoice',
-                'setting_key' => config('invoice.templates.setting-key.send-invoice.subject'),
-            ])->first())->setting_value,
-            'sendInvoiceEmailBody' => optional(Setting::where([
-                'module' => 'invoice',
-                'setting_key' => config('invoice.templates.setting-key.send-invoice.body'),
-            ])->first())->setting_value,
-            'invoiceReminderEmailSubject' => optional(Setting::where([
-                'module' => 'invoice',
-                'setting_key' => config('invoice.templates.setting-key.invoice-reminder.subject'),
-            ])->first())->setting_value,
-            'invoiceReminderEmailBody' => optional(Setting::where([
-                'module' => 'invoice',
-                'setting_key' => config('invoice.templates.setting-key.invoice-reminder.body'),
-            ])->first())->setting_value,
-        ];
-    }
-
     public function store($data)
     {
         $data['receivable_date'] = $data['due_on'];
