@@ -44,7 +44,7 @@
                             <td class="w-30p">
                                 <div>
                                     <a href="{{ route('prospect.show', $prospect->id) }}" class="text-decoration-none">
-                                        {{ $prospect->project_name ?? $prospect->organization_name }}
+                                        {{ $prospect->project_name ?? ($prospect->organization_name ?? $prospect->client->name) }}
                                     </a>
                                     <div>
                                         @if($prospect->customer_type == 'new')

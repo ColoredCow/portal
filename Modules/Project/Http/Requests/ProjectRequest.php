@@ -45,6 +45,7 @@ class ProjectRequest extends FormRequest
                     'start_date' => 'nullable|date',
                     'end_date' => 'nullable|date',
                     'is_amc' => 'nullable',
+                    'send_mail_to_infra' => 'nullable',
                 ];
                 break;
 
@@ -64,6 +65,7 @@ class ProjectRequest extends FormRequest
                     'start_date' => 'nullable|date',
                     'end_date' => 'nullable|date',
                     'is_amc' => 'nullable',
+                    'send_mail_to_infra' => 'nullable',
                 ];
                 break;
 
