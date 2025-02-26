@@ -145,7 +145,7 @@ class ProspectController extends Controller
 
         return redirect()->route('prospect.show', $id)->with('status', 'Prospect Insights updated successfully!');
     }
-    
+
     public function getTotalEstimatedHoursForProject($prospectData) 
     {
         $projectBudget = $prospectData->budget;
