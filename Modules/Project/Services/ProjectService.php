@@ -28,8 +28,6 @@ use Modules\Project\Exports\ProjectFTEExport;
 use Modules\Project\Emails\EffortsheetSetupMail;
 use Modules\User\Entities\User;
 
-
-
 class ProjectService implements ProjectServiceContract
 {
     public function index(array $data = [])
@@ -107,7 +105,8 @@ class ProjectService implements ProjectServiceContract
                 ]
             );
         }
-        
+
+
         if(isset($data['send_mail_to_infra']) && $data['send_mail_to_infra']) {
             // ToDo: Make infra email fetched from ENV
             $emails = [
