@@ -46,10 +46,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	function toggleUpdateAndCreateProjectButton() {
 		if(proposalStatus.value === PROPOSAL_STATUS.CONVERTED) {
-			console.log("converted");
 			updateAndCreateProjectButton.classList.remove("d-none");
 		} else {
-			console.log("not converted");
 			updateAndCreateProjectButton.classList.add("d-none");
 		}
 	}
