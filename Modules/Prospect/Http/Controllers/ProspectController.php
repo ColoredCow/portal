@@ -115,7 +115,7 @@ class ProspectController extends Controller
                 'total_estimated_hours' => $totalEstimatedHours ?? null,
 
             ];
-            
+
             return redirect()->route('project.create')->with('projectData', $projectData);
         }
 
@@ -150,7 +150,7 @@ class ProspectController extends Controller
     {
         $projectBudget = $prospectData->budget;
         $clientServiceRates = Client::find($prospectData->client_id)->billingDetails->service_rates;
-        
+
         return $projectBudget / $clientServiceRates;
     }
 }
