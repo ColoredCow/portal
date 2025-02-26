@@ -113,7 +113,6 @@ class ProspectController extends Controller
                 'client_id'             => $prospect->client_id,
                 'status'                => 'active',
                 'total_estimated_hours' => $totalEstimatedHours ?? null,
-
             ];
 
             return redirect()->route('project.create')->with('projectData', $projectData);
