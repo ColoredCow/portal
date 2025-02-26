@@ -1,4 +1,3 @@
-
 <div id="create_project_details_form">
     <div class="card-body">
         <input type="hidden" name="create_project" value="create_project">
@@ -84,7 +83,7 @@
                 <input type="checkbox" id="isamc" name="is_amc" value="true">
                 <label for="is_amc">AMC</label><br>
                 <input type="checkbox" id="send_mail_to_infra" name="send_mail_to_infra" value="true">
-                <label for="send_mail_to_infra">Notify Infrasupport to Create Effortsheet</label><br>
+                <label for="send_mail_to_infra">Send Project Initiation Email to Infrasupport</label><br>
             </div>
         </div>
         <br>
