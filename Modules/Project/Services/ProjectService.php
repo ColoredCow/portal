@@ -108,9 +108,6 @@ class ProjectService implements ProjectServiceContract
             );
         }
         
-
-        
-
         if(isset($data['send_mail_to_infra']) && $data['send_mail_to_infra']) {
             // ToDo: Make infra email fetched from ENV
             $emails = [
