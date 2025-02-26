@@ -106,6 +106,19 @@ class ProspectController extends Controller
     public function update(Request $request, Prospect $prospect)
     {
         $data = $this->service->update($request, $prospect);
+        if ($request->input('action') === 'update_create_project') {
+
+            $totalEstimatedHours = $this->getTotalEstimatedHoursForProject($prospect);
+            $projectData = [
+                'project_name'      => $prospect->project_name,
+                'client_id'         => $prospect->client_id, 
+                'status'            => 'active',
+                'total_estimated_hours' => $totalEstimatedHours ?? null,
+
+            ];
+    
+            return redirect()->route('project.create')->with('projectData', $projectData);
+        }
 
         return $data;
     }
@@ -132,5 +145,13 @@ class ProspectController extends Controller
         $this->service->insightsUpdate($validated, $id);
 
         return redirect()->route('prospect.show', $id)->with('status', 'Prospect Insights updated successfully!');
+    }
+
+    public function getTotalEstimatedHoursForProject($prospectData) 
+    {
+        $projectBudget = $prospectData->budget;
+        $clientServiceRates = Client::find($prospectData->client_id)->billingDetails->service_rates;
+
+        return $projectBudget / $clientServiceRates;
     }
 }

@@ -118,6 +118,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/nda-template', 'NDAAgreementController@index')->name('setting.agreement.nda');
         Route::get('/invoice-template', 'SettingController@invoiceTemplates')->name('setting.invoice');
+        Route::get('/projects-template', 'SettingController@projectTemplates')->name('setting.projects');
         Route::post('/invoice-template', 'SettingController@updateInvoiceTemplates')->name('setting.invoice.update');
         Route::prefix('bank-details')->group(function () {
             Route::get('/', 'BankDetailController@index')->name('settings.bank-details');

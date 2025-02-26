@@ -1,3 +1,4 @@
+
 <div id="create_project_details_form">
     <div class="card-body">
         <input type="hidden" name="create_project" value="create_project">
@@ -5,14 +6,14 @@
             <div class="form-group col-md-5">
                 <label for="name" class="field-required">Name</label>
                 <input type="text" class="form-control" name="name" id="name" placeholder="Enter project name"
-                    required="required" value="{{ old('name') }}">
+                    required="required" value="{{ old('name', $projectData['project_name'] ?? '') }}">
             </div>
             <div class="form-group offset-md-1 col-md-5">
                 <label for="client_id" class="field-required">Client</label>
                 <select name="client_id" id="client_id" class="form-control" required="required">
                     <option value="">Select client</option>
                     @foreach ($clients as $client)
-                        <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
+                        <option value="{{ $client->id }}" {{ old('client_id', $projectData['client_id'] ?? '') == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -22,7 +23,7 @@
                 <label for="status" class="field-required">Status</label>
                 <select name="status" id="status" class="form-control" required="required">
                     @foreach (config('project.status') as $key => $display_name)
-                        <option value="{{ $key }}" {{ old('status') == $key ? 'selected' : '' }}>{{ $display_name }}</option>
+                        <option value="{{ $key }}" {{ old('status', $projectData['status'] ?? '') == $key ? 'selected' : '' }}>{{ $display_name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -82,6 +83,8 @@
             <div class="form-group offset-md-1 col-md-5">
                 <input type="checkbox" id="isamc" name="is_amc" value="true">
                 <label for="is_amc">AMC</label><br>
+                <input type="checkbox" id="send_mail_to_infra" name="send_mail_to_infra" value="true">
+                <label for="is_amc">Notify Infrasupport to Create Effortsheet</label><br>
             </div>
         </div>
         <br>
@@ -89,12 +92,12 @@
             <div class="form-group col-md-5" v-if="projectType !== 'non-billable'">
                 <label for="total_estimated_hours">{{ __('Total Estimated Hours') }}</label>
                 <input type="number" class="form-control" name="total_estimated_hours" id="total_estimated_hours"
-                    placeholder="Enter total estimated hours" value="{{ old('total_estimated_hours') }}">
+                    placeholder="Enter total estimated hours" value="{{ old('total_estimated_hours', $projectData['total_estimated_hours'] ?? '') }}">
             </div>
         </div>
     </div>
     <div class="card-footer">
-        <button type="button" class="btn btn-primary mb-10" id="save-btn-action">Create</button>
+        <button type="button" class="btn btn-primary" id="save-btn-action">Create</button>
     </div>
 </div>
 

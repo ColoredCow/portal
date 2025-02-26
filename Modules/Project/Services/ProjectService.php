@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Client\Entities\Client;
@@ -24,7 +25,10 @@ use Modules\Project\Entities\ProjectStagesListing;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Entities\ProjectTeamMembersEffort;
 use Modules\Project\Exports\ProjectFTEExport;
+use Modules\Project\Emails\EffortsheetSetupMail;
 use Modules\User\Entities\User;
+
+
 
 class ProjectService implements ProjectServiceContract
 {
@@ -102,6 +106,19 @@ class ProjectService implements ProjectServiceContract
                     'value' => $data['billing_level'],
                 ]
             );
+        }
+        
+
+        
+
+        if(isset($data['send_mail_to_infra']) && $data['send_mail_to_infra']) {
+            // ToDo: Make infra email fetched from ENV
+            $emails = [
+            'key_account_manager' => $project->keyAccountManager->email,
+            'infrasupport_email' => 'infrasupport@coloredcow.in' 
+        ];
+
+            Mail::send(new EffortsheetSetupMail($project, $emails));
         }
 
         $project->client->update(['status' => 'active']);

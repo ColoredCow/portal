@@ -45,9 +45,10 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $projectData = session('projectData', []);
         $clients = $this->service->getClients($status = 'all');
 
-        return view('project::create')->with('clients', $clients);
+        return view('project::create')->with(['clients' => $clients, 'projectData' => $projectData]);
     }
 
     /**
