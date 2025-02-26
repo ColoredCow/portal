@@ -107,11 +107,11 @@ class ProjectService implements ProjectServiceContract
         }
 
 
-        if(isset($data['send_mail_to_infra']) && $data['send_mail_to_infra']) {
+        if (isset($data['send_mail_to_infra']) && $data['send_mail_to_infra']) {
             // ToDo: Make infra email fetched from ENV
             $emails = [
             'key_account_manager' => $project->keyAccountManager->email,
-            'infrasupport_email' => 'infrasupport@coloredcow.in' 
+            'infrasupport_email' => 'infrasupport@coloredcow.in'
         ];
 
             Mail::send(new EffortsheetSetupMail($project, $emails));

@@ -110,7 +110,7 @@ class ProspectController extends Controller
             $totalEstimatedHours = $this->getTotalEstimatedHoursForProject($prospect);
             $projectData = [
                 'project_name'      => $prospect->project_name,
-                'client_id'         => $prospect->client_id, 
+                'client_id'         => $prospect->client_id,
                 'status'            => 'active',
                 'total_estimated_hours' => $totalEstimatedHours ?? null,
 
@@ -146,7 +146,7 @@ class ProspectController extends Controller
         return redirect()->route('prospect.show', $id)->with('status', 'Prospect Insights updated successfully!');
     }
 
-    public function getTotalEstimatedHoursForProject($prospectData) 
+    public function getTotalEstimatedHoursForProject($prospectData)
     {
         $projectBudget = $prospectData->budget;
         $clientServiceRates = Client::find($prospectData->client_id)->billingDetails->service_rates;
