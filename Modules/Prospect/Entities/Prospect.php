@@ -53,7 +53,7 @@ class Prospect extends Model
 
         $numberFormat = $this->currency == 'INR' ? 'en_IN' : 'en_US';
         $formatter = new \NumberFormatter($numberFormat, \NumberFormatter::DECIMAL);
-        $formattedBudget = $formatter->format($budget);
+        $formattedBudget = $formatter->format($this->budget);
 
         return $formattedBudget;
     }
