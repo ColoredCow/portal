@@ -10,7 +10,8 @@ use Modules\Invoice\Entities\Invoice;
 
 class SendPaymentReceivedMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $month;
     public $year;

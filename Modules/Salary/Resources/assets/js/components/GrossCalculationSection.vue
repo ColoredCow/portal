@@ -41,7 +41,7 @@ export default {
 	computed: {
 		grossSalary() {
 			if (!Number.isFinite(parseInt(this.proposedCtc)) || parseInt(this.proposedCtc) === 0) {
-				return 0
+				return 0;
 			}
 			let grossSalary =
             (100 * parseFloat(this.proposedCtc) - (12 * parseFloat(this.grossCalculationData.edliChargesPercentageRate) * parseFloat(this.grossCalculationData.edliChargesLimit))) /
@@ -52,11 +52,11 @@ export default {
 					(100 * parseFloat(this.proposedCtc)) / (1200 + (12 * parseFloat(this.grossCalculationData.basicSalaryPercentageFactor) * (parseFloat(this.grossCalculationData.epfPercentageRate) + parseFloat(this.grossCalculationData.edliChargesPercentageRate) + parseFloat(this.grossCalculationData.adminChargesPercentageRate))));
 			}
 
-			grossSalary = Math.ceil(grossSalary - ((parseFloat(this.grossCalculationData.insuranceAmount) * this.insuranceTenants)/ 12))
-			return grossSalary + (100 - (grossSalary % 100))
+			grossSalary = Math.ceil(grossSalary - ((parseFloat(this.grossCalculationData.insuranceAmount) * this.insuranceTenants)/ 12));
+			return grossSalary + (100 - (grossSalary % 100));
 		},
 		monthlyLoanDeduction() {
-			return this.loanDeduction
+			return this.loanDeduction;
 		},
 		basicSalary() {
 			let percentage = parseInt(this.salaryConfigs.basic_salary.percentage_rate);
@@ -157,7 +157,7 @@ export default {
 		},
 		ctcAggregated() {
 			if (!Number.isFinite(this.grossSalary) || parseInt(this.grossSalary) === 0) {
-				return 0
+				return 0;
 			}
 			return this.ctcAnnual + this.healthInsurance;
 		},
@@ -165,20 +165,20 @@ export default {
 	methods: {
 		formatCurrency(amount) {
 			if (!Number.isFinite(amount)) {
-				return ""
+				return "";
 			}
 			return amount.toLocaleString("en-IN");
 		},
 		insertCTC(amount) {
-			var updatedAmount = amount
+			var updatedAmount = amount;
 			var proposedCtcField = document.getElementById("proposedCtc");
 			proposedCtcField.value = updatedAmount;
-			this.$emit('update-ctc', updatedAmount);
+			this.$emit("update-ctc", updatedAmount);
 		},
 		percentage(amount) {
 			var currentAggCtc = this.currentAggCtc;
 			if (!currentAggCtc) {
-				return '-'
+				return "-";
 			}
 			var ctcPercentage = ((amount - currentAggCtc)/currentAggCtc)*100;
 			var formattedPercentage = ctcPercentage.toFixed(2);

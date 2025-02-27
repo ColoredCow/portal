@@ -65,7 +65,7 @@ class BookController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  BookRequest  $request
+     * @param BookRequest $request
      */
     public function store(BookRequest $request)
     {
@@ -79,7 +79,7 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     * @param \App\Models\KnowledgeCafe\Library\Book $book
      *
      * @return \Illuminate\View\View
      */
@@ -98,8 +98,8 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\KnowledgeCafe\Library\BookRequest  $request
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     * @param \App\Http\Requests\KnowledgeCafe\Library\BookRequest $request
+     * @param \App\Models\KnowledgeCafe\Library\Book               $book
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -125,7 +125,7 @@ class BookController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     * @param \App\Models\KnowledgeCafe\Library\Book $book
      */
     public function destroy(Book $book)
     {
@@ -135,7 +135,7 @@ class BookController extends Controller
     /**
      * Fetch the book info.
      *
-     * @param  BookRequest  $request
+     * @param BookRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -187,7 +187,7 @@ class BookController extends Controller
     }
 
     /**
-     * @param  array  $book
+     * @param array $book
      *
      * @return array
      */

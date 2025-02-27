@@ -10,19 +10,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
       - name: Setup PHP v7.4
         uses: shivammathur/setup-php@v2
         with:
           php-version: "7.4"
+
       - name: Install composer dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+
       - name: Setup env file
         run: cp ./.env.example .env
+
       - name: Configure application encryption key
         run: php artisan key:generate
+
       - name: Install NPM Dependencies
         run: npm install
-      - name: clear cache
+
+      - name: Clear cache
         run: php artisan cache:clear
+
       - name: ColoredCowLaravelCI
-        run: "php artisan check:ci --with-tty"
+        run: php artisan check:ci --with-tty

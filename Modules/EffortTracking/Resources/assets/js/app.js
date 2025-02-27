@@ -6,7 +6,7 @@ $(document).ready(function () {
 
 	function handleAjaxRequest(url, data, button, loader) {
 		button.prop("disabled", true);
-		if (loader) loader.removeClass('d-none');
+		if (loader) loader.removeClass("d-none");
 
 		$.ajax({
 			url: url,
@@ -25,36 +25,36 @@ $(document).ready(function () {
 				if (!loader) toggleButtonAndSpinner(button);
 			},
 			complete: function () {
-				if (loader) loader.addClass('d-none');
+				if (loader) loader.addClass("d-none");
 				button.prop("disabled", false);
 			}
 		});
 	}
-	if ($(".fa-refresh").is('[data-url]')) {
+	if ($(".fa-refresh").is("[data-url]")) {
 		$(".fa-refresh").on("click", function () {
 			let button = $(this);
 			toggleButtonAndSpinner(button);
-			handleAjaxRequest(button.data("url"), { 'isBackDateSync': 'off' }, button, null);
+			handleAjaxRequest(button.data("url"), { "isBackDateSync": "off" }, button, null);
 		});
 	} else {
 		$("#backDateEffortsSyncForm").on("submit", function (event) {
 			event.preventDefault();
 			let form = $(this);
 			let button = $("#confirmBackDateSync");
-			let effortSyncLoader = $('.efforts-sync-loader');
-			let isBackDateSync = $('#isBackDateSync');
+			let effortSyncLoader = $(".efforts-sync-loader");
+			let isBackDateSync = $("#isBackDateSync");
 
-			$('#hiddenIsBackDateSync').remove();
+			$("#hiddenIsBackDateSync").remove();
 
-			if (!isBackDateSync.is(':checked')) {
-				$('<input>').attr({
-					type: 'hidden',
-					id: 'hiddenIsBackDateSync',
-					name: 'isBackDateSync',
-					value: 'off'
+			if (!isBackDateSync.is(":checked")) {
+				$("<input>").attr({
+					type: "hidden",
+					id: "hiddenIsBackDateSync",
+					name: "isBackDateSync",
+					value: "off"
 				}).appendTo(form);
 			}
-			handleAjaxRequest(form.attr('action'), form.serialize(), button, effortSyncLoader);
+			handleAjaxRequest(form.attr("action"), form.serialize(), button, effortSyncLoader);
 		});
 	}
 });

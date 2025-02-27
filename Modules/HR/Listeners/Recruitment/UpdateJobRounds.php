@@ -19,7 +19,7 @@ class UpdateJobRounds
     /**
      * Handle the event.
      *
-     * @param  JobUpdated  $event
+     * @param JobUpdated $event
      *
      * @return void
      */

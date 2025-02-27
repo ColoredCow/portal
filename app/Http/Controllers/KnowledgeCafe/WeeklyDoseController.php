@@ -35,7 +35,7 @@ class WeeklyDoseController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  WeeklyDoseRequest  $request
+     * @param WeeklyDoseRequest $request
      *
      * @return WeeklyDose
      */

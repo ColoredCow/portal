@@ -17,7 +17,7 @@ class ReviewNDA extends Notification
 
     public function toMail()
     {
-        return (new MailMessage)
+        return (new MailMessage())
                     ->line('Review NDA.')
                     ->action('Review From Here', url('/'))
                     ->line('Thanks');

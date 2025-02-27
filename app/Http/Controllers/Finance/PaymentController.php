@@ -55,7 +55,7 @@ class PaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Finance\Payment  $payment
+     * @param \App\Models\Finance\Payment $payment
      *
      * @return \Illuminate\View\View
      */
@@ -72,8 +72,8 @@ class PaymentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Finance\PaymentRequest  $request
-     * @param  \App\Models\Finance\Payment  $payment
+     * @param \App\Http\Requests\Finance\PaymentRequest $request
+     * @param \App\Models\Finance\Payment               $payment
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -91,8 +91,8 @@ class PaymentController extends Controller
     /**
      * Prepare attributes to store or update the resource.
      *
-     * @param  array  $validated
-     * @param  mixed $mode      WireTransfer, Cash or Cheque
+     * @param array $validated
+     * @param mixed $mode      WireTransfer, Cash or Cheque
      *
      * @return array
      */
@@ -126,10 +126,10 @@ class PaymentController extends Controller
     /**
      * Handles the payment mode of the resource.
      *
-     * @param  array  $validated
-     * @param  Payment $payment
+     * @param array   $validated
+     * @param Payment $payment
      *
-     * @return mixed            Cash, WireTransfer or Cheque
+     * @return mixed Cash, WireTransfer or Cheque
      */
     protected static function handleMode(array $validated, ?Payment $payment = null)
     {

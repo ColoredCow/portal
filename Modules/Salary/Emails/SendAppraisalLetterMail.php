@@ -8,7 +8,8 @@ use Illuminate\Queue\SerializesModels;
 
 class SendAppraisalLetterMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $employee;
     public $pdf;

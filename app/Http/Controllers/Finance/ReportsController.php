@@ -82,8 +82,8 @@ class ReportsController extends Controller
     /**
      * Get financial calcucations based on sent and paid invoices to be shown in the reports.
      *
-     * @param  \Illuminate\Database\Eloquent\Collection $sentInvoices
-     * @param  \Illuminate\Database\Eloquent\Collection $paidInvoices
+     * @param \Illuminate\Database\Eloquent\Collection $sentInvoices
+     * @param \Illuminate\Database\Eloquent\Collection $paidInvoices
      *
      * @return array
      */
@@ -144,9 +144,9 @@ class ReportsController extends Controller
     /**
      * arrange invoices based on their start and end date.
      *
-     * @param  \Illuminate\Database\Eloquent\Collection $invoices
-     * @param  Carbon $start    Start date
-     * @param  Carbon $end      End date
+     * @param \Illuminate\Database\Eloquent\Collection $invoices
+     * @param Carbon                                   $start    Start date
+     * @param Carbon                                   $end      End date
      *
      * @return array
      */

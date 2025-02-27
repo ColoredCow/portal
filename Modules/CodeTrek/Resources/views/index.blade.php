@@ -34,7 +34,7 @@
             <div>
                 <form action="{{ route('codetrek.index') }}" id="centreFilterForm">
                     <div class="form-group ml-25 w-180">
-                        @can('codetrek_applicant.create')     
+                        @can('codetrek_applicant.create')
                             <select class="form-control bg-light" name="centre" id="centre" onchange="document.getElementById('centreFilterForm').submit();">
                                 <option value="" {{ !request()->has('centre') || empty(request()->get('centre')) ? 'selected' : '' }}>
                                     {!! __('All Centres') !!}
@@ -83,7 +83,7 @@
                         <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/clipboard-check.svg')) !!}</span>
                         Active({{ $statusCounts['active'] }})
                     </a>
-                </li>                
+                </li>
                 <li class="nav-item mr-3">
                     @php
                         $inactiveParams = array_merge(request()->except(['status']), ['status' => 'inactive']);
@@ -96,7 +96,7 @@
                         <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/x-circle.svg')) !!}</span>
                         Inactive({{ $statusCounts['inactive'] }})
                     </a>
-                </li>                
+                </li>
                 <li class="nav-item mr-3">
                     @php
                         $completedParams = ['name' => $name, 'centre' => $centre, 'status' => 'completed'];
@@ -109,7 +109,7 @@
                         <span class="d-inline-block h-18 w-20">{!! file_get_contents(public_path('icons/person-check.svg')) !!}</span>
                         Completed({{ $statusCounts['completed'] }})
                     </a>
-                </li>    
+                </li>
             </div>
             @elseif (request()->tab == 'reports')
             <li class="nav-item mr-3">
@@ -165,7 +165,7 @@
                     <tbody>
                         @forelse ($applicants as $applicant)
                             <tr>
-                                <td>  
+                                <td>
                                     <div class="d-flex align-items-center">
                                         <div class="d-flex align-items-center">
                                             <h4>{{ $applicant->first_name }} {{ $applicant->last_name }}</h4>
@@ -207,15 +207,15 @@
                                         <span class="{{ config('codetrek.rounds.' . $applicant->latest_round_name . '.class') }} badge-pill mr-1 mb-1 fz-16">
                                             {{ config('codetrek.rounds.' . $applicant->latest_round_name . '.label') }}
                                         </span>
-                                    </div>                                    
+                                    </div>
                                 </td>
                                 <td>
-                                    <div class="d-flex align-items-center"> 
+                                    <div class="d-flex align-items-center">
                                         @if ($applicant->mentor)
                                             <div class="col">
-                                                <div class="d-flex align-items-center"> 
+                                                <div class="d-flex align-items-center">
                                                     <img src="{{ $applicant->mentor->avatar }}" class="w-35 h-30 rounded-circle ">
-                                                    <h4 class="ml-2 mb-0">{{ $applicant->mentor->name }}</h4> 
+                                                    <h4 class="ml-2 mb-0">{{ $applicant->mentor->name }}</h4>
                                                 </div>
                                             </div>
                                         @else
@@ -249,7 +249,7 @@
                 </div>
                 <canvas class="w-full" id="CodeTrekApplicationReport"></canvas>
             </div>
-        </div>     
+        </div>
         @endif
     </div>
 @endsection

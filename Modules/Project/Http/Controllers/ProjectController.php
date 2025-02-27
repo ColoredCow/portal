@@ -45,9 +45,10 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $projectData = session('projectData', []);
         $clients = $this->service->getClients($status = 'all');
 
-        return view('project::create')->with('clients', $clients);
+        return view('project::create')->with(['clients' => $clients, 'projectData' => $projectData]);
     }
 
     /**
@@ -81,7 +82,7 @@ class ProjectController extends Controller
         }
         $daysTillToday = count($project->getWorkingDaysList($project->client->month_start_date, $currentDate));
 
-        $effortTracking = new EffortTrackingService;
+        $effortTracking = new EffortTrackingService();
         $isApprovedWorkPipelineExist = $effortTracking->getIsApprovedWorkPipelineExist($project->effort_sheet_url);
 
         $getProjectHourDeatils = $this->service->getProjectApprovedPipelineHour($project);

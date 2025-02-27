@@ -56,7 +56,7 @@ class ProjectTeamMember extends Model
 
     public function getCurrentExpectedEffortAttribute($startDate = null)
     {
-        $project = new Project;
+        $project = new Project();
         $currentDate = today(config('constants.timezone.indian'));
         if ($this->started_on && $this->started_on > $this->project->client->month_start_date) {
             $startDate = $this->started_on;
@@ -74,7 +74,7 @@ class ProjectTeamMember extends Model
 
     public function getExpectedEffortTillTodayAttribute($startDate = null)
     {
-        $project = new Project;
+        $project = new Project();
         $startDate = $startDate ?? $this->project->client->month_start_date;
         $daysTillToday = count($project->getWorkingDaysList($this->project->client->month_start_date, today(config('constants.timezone.indian'))));
 
@@ -89,7 +89,7 @@ class ProjectTeamMember extends Model
     // TO DO: Need to rename this function as getCurrentFteAttribute()
     public function getFteAttribute()
     {
-        $project = new Project;
+        $project = new Project();
         $currentDate = today(config('constants.timezone.indian'));
         $firstDayOfMonth = date('Y-m-01');
 
@@ -130,7 +130,7 @@ class ProjectTeamMember extends Model
 
     public function getFte($startDate, $endDate)
     {
-        $project = new Project;
+        $project = new Project();
 
         $workingDays = count($project->getWorkingDaysList($startDate, $endDate));
         $requiredEffort = $workingDays * config('efforttracking.minimum_expected_hours');

@@ -12,6 +12,10 @@ class Prospect extends Model
     protected $fillable = [];
     protected $table = 'prospects';
 
+    protected $casts = [
+        'proposal_sent_date' => 'datetime:Y-m-d',
+    ];
+
     public function pocUser()
     {
         return $this->belongsTo(User::class, 'poc_user_id');
@@ -41,14 +45,13 @@ class Prospect extends Model
     public function getFormattedBudgetAttribute()
     {
         $budget = (string) $this->budget;
-        $currency = $this->currency;
 
         // if currency is less than one thousand
         if (strlen($budget) <= 3) {
             return $budget;
         }
 
-        $numberFormat = $currency == 'INR' ? 'en_IN' : 'en_US';
+        $numberFormat = $this->currency == 'INR' ? 'en_IN' : 'en_US';
         $formatter = new \NumberFormatter($numberFormat, \NumberFormatter::DECIMAL);
         $formattedBudget = $formatter->format($budget);
 

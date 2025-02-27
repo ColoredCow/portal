@@ -10,7 +10,8 @@ use Modules\HR\Entities\ApplicationMeta;
 
 class RoundNotConducted extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Application instance for which round wasn't conducted.

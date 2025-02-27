@@ -122,7 +122,10 @@
             </div>
         </div>
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="submit" name="action" value="update" class="btn btn-primary">Update</button>
+            @if($prospect->customer_type === "existing")
+            <button type="submit" name="action" id="update_create_project_button" value="update_create_project" class="btn ml-3 d-none btn-primary">Update and Create Project</button>
+            @endif
         </div>
     </form>
 </div>

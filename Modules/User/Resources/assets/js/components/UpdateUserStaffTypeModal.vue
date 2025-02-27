@@ -48,25 +48,25 @@ export default {
 
 	methods: {
 		onChange(e, type) {
-			const value = e.target.value
+			const value = e.target.value;
 			if (type === "staffType") {
 				this.staffType = value;
 			} else {
-				this.payrollType = value
+				this.payrollType = value;
 			}
 		},
 
 		updateStaffType() {
-			const newStaffType = this.staffType || this.user.employee.staff_type
-			const newPayrollType = this.payrollType || this.user.employee.payroll_type
+			const newStaffType = this.staffType || this.user.employee.staff_type;
+			const newPayrollType = this.payrollType || this.user.employee.payroll_type;
 
-			console.log(newStaffType, newPayrollType)
+			console.log(newStaffType, newPayrollType);
 
 			axios.post("/user/add-staff-type", { 
-					typeOfStaff: newStaffType,  
-					id: this.user.id,
-					payrollType: newPayrollType
-				})
+				typeOfStaff: newStaffType,  
+				id: this.user.id,
+				payrollType: newPayrollType
+			})
 				.then((response) => {
 					window.location.reload(); //since we are not using vue-router
 				})

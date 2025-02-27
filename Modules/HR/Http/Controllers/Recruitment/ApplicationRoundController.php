@@ -17,8 +17,8 @@ class ApplicationRoundController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  ApplicationRoundRequest $request
-     * @param  ApplicationRound        $round
+     * @param ApplicationRoundRequest $request
+     * @param ApplicationRound        $round
      */
     public function update(ApplicationRoundRequest $request, ApplicationRound $round)
     {
@@ -39,8 +39,8 @@ class ApplicationRoundController extends Controller
     /**
      * Send email to the applicant for current round.
      *
-     * @param  ApplicantRoundMailRequest $request
-     * @param  ApplicationRound            $applicationRound
+     * @param ApplicantRoundMailRequest $request
+     * @param ApplicationRound          $applicationRound
      *
      * @return \Illuminate\Http\RedirectResponse
      */
