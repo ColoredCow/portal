@@ -10,7 +10,6 @@ use Modules\Client\Database\Factories\ClientFactory;
 use Modules\Client\Entities\Scopes\ClientGlobalScope;
 use Modules\Client\Entities\Traits\HasHierarchy;
 use Modules\Invoice\Entities\Invoice;
-use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Services\InvoiceService;
 use Modules\Project\Entities\Project;
 use Modules\Prospect\Entities\Prospect;
@@ -350,32 +349,6 @@ class Client extends Model
         }
 
         return substr_replace($bccEmails, '', -1);
-    }
-
-    public function ledgerAccounts()
-    {
-        return $this->hasMany(LedgerAccount::class);
-    }
-
-    public function ledgerAccountsOnlyCredit()
-    {
-        return $this->hasMany(LedgerAccount::class)->whereNotNull('credit');
-    }
-
-    public function ledgerAccountsOnlyDebit()
-    {
-        return $this->hasMany(LedgerAccount::class)->whereNotNull('debit');
-    }
-
-    public function getClientProjectsTotalLedgerAmount($quarter = null)
-    {
-        $amount = 0;
-
-        foreach ($this->clientLevelBillingProjects as $project) {
-            $amount += $project->getTotalLedgerAmount($quarter);
-        }
-
-        return $amount;
     }
 
     public function getResourceBasedTotalAmount()
