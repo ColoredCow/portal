@@ -151,6 +151,46 @@ class RevenueReportService
         return $results;
     }
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
+    private function getParticularAmountForDomestic(array $particular, object $startDate, object $endDate): array
+    {
+        $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'indian');
+        $totalAmount = 0;
+        $results = [];
+
+        foreach ($invoices as $invoice) {
+            $dateKey = $invoice->sent_on->format($this->dataKeyFormat);
+            $totalAmount += (int) $invoice->amount;
+            $results[$dateKey] = ($results[$dateKey] ?? 0) + (int) $invoice->amount;
+        }
+
+        $results['total'] = $totalAmount;
+
+        return $results;
+    }
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
+    private function getParticularAmountForExport(array $particular, object $startDate, object $endDate): array
+    {
+        $totalAmount = 0;
+        $results = [];
+        $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'non-indian');
+
+        foreach ($invoices as $invoice) {
+            $dateKey = $invoice->sent_on->format($this->dataKeyFormat);
+            $exchangeRate = $this->avgCurrencyRates[$dateKey][strtolower($invoice->currency)] ?? $this->defaultCurrencyRates;
+            $amount = (float) ($invoice->amount) * (float) ($exchangeRate);
+            $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
+            $totalAmount += $amount;
+        }
+        $results['total'] = $totalAmount;
+
+        return $results;
+    }
+
     private static function handleInvoiceDataForClient($invoice, $amountMonthWise)
     {
         $invoiceAmount = round($invoice->total_amount_in_inr, 2);
