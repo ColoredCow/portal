@@ -46,6 +46,10 @@ class Handler extends ExceptionHandler
             }
         }
 
+        if (app()->bound('sentry') && $this->shouldReport($exception)) {
+            app('sentry')->captureException($exception);
+        }
+
         // @phpstan-ignore-next-line
         return parent::report($exception);
     }
