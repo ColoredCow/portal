@@ -9,7 +9,6 @@ use Modules\Invoice\Entities\CurrencyAvgRate;
 use Modules\Invoice\Entities\Invoice;
 use Modules\Invoice\Services\CurrencyService;
 use Modules\Invoice\Services\InvoiceService;
-use Modules\Revenue\Entities\RevenueProceed;
 
 class RevenueReportService
 {
@@ -187,93 +186,6 @@ class RevenueReportService
             $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
             $totalAmount += $amount;
         }
-        $results['total'] = $totalAmount;
-
-        return $results;
-    }
-    /**
-     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
-     */
-    private function getParticularAmountForCommissionReceived(array $particular, object $startDate, object $endDate): array
-    {
-        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
-    }
-
-    /**
-     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
-     */
-    private function getParticularAmountForCashBack(array $particular, object $startDate, object $endDate): array
-    {
-        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
-    }
-
-    /**
-     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
-     */
-    private function getParticularAmountForDiscountReceived(array $particular, object $startDate, object $endDate): array
-    {
-        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
-    }
-
-    /**
-     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
-     */
-    private function getParticularAmountForInterestOnFd(array $particular, object $startDate, object $endDate): array
-    {
-        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
-    }
-
-    /**
-     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
-     */
-    private function getParticularAmountForForeignExchangeLoss(array $particular, object $startDate, object $endDate): array
-    {
-        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
-    }
-
-    /**
-     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
-     */
-    private function getParticularAmountForStripeIndia(array $particular, object $startDate, object $endDate): array
-    {
-        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
-    }
-
-    /**
-     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
-     */
-    private function getParticularAmountForStripeInternational(array $particular, object $startDate, object $endDate): array
-    {
-        return $this->getAmountsForRevenueProceeds(Str::snake($particular['name']), $startDate, $endDate);
-    }
-
-    private function getAmountsForRevenueProceeds($category, $startDate, $endDate)
-    {
-        $revenues = RevenueProceed::where('category', $category)
-            ->where('received_at', '>=', $startDate)
-            ->where('received_at', '<=', $endDate)
-            ->get();
-
-        $totalAmount = 0;
-        $results = [];
-
-        $exchangeRate = 1; // For INR
-
-        foreach ($revenues as $revenue) {
-            $amount = $revenue->amount;
-            $year = substr($revenue->year, -2);
-            $month = sprintf('%02d', $revenue->month);
-            $dateKey = $month . '-' . $year;
-
-            if (strtolower($revenue->currency) != 'inr') {
-                $exchangeRate = $this->avgCurrencyRates[$dateKey][strtolower($revenue->currency)] ?? $this->defaultCurrencyRates;
-            }
-
-            $amount *= $exchangeRate;
-            $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
-            $totalAmount += $amount;
-        }
-
         $results['total'] = $totalAmount;
 
         return $results;

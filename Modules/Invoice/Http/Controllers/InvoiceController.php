@@ -202,23 +202,4 @@ class InvoiceController extends Controller
 
         return $this->service->yearlyInvoiceReportExport($filters, $request);
     }
-
-    public function ledgerAccountsIndex(Request $request)
-    {
-        $data = $this->service->getLedgerAccountData($request->all());
-
-        return view('invoice::ledger-accounts.index')->with($data);
-    }
-
-    public function storeLedgerAccountData(Request $request)
-    {
-        $this->service->storeLedgerAccountData($request->all());
-
-        return redirect()->back()->with('status', 'Data saved successfully.');
-    }
-
-    public function createCustomInvoice()
-    {
-        return view('invoice::create-custom-invoice', $this->service->create());
-    }
 }

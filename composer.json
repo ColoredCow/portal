@@ -40,6 +40,7 @@
     "nwidart/laravel-modules": "^7.0",
     "owen-it/laravel-auditing": "^13.0",
     "revolution/laravel-google-sheets": "^5.6",
+    "sentry/sentry-laravel": "^4.13",
     "spatie/laravel-permission": "^3.3"
   },
   "require-dev": {

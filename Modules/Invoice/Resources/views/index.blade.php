@@ -32,8 +32,6 @@
         <div class="d-flex justify-content-between">
             <h4 class="m-1 p-1 fz-28">Invoices</h4>
             <span class=d-flex>
-                <a href="{{ route('invoice.create-custom-invoice') }}"
-                    class="btn btn-info text-white m-1 align-self-center">Custom Invoice</a>
                 <a href="{{ route('invoice.create') }}" class="btn btn-success text-white m-1 align-self-center"><i
                         class="fa fa-plus mr-1"></i>Add Invoice</a>
             </span>
@@ -151,7 +149,7 @@
                                             @endif
                                         </a>
                                     </td>
-                                    
+
                                     <td class="text-center">
                                         {{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
                                     <td
@@ -196,7 +194,7 @@
                                     $index++;
                                     $currencySymbol = config('constants.currency.' . $client->currency . '.symbol');
                                     if ($client->hasCustomInvoiceTemplate()) {
-                                        $amount = $currencySymbol . ($client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount($quarter));
+                                        $amount = $currencySymbol . ($client->getResourceBasedTotalAmount());
                                     } else {
                                         $amount = $currencySymbol . $client->getTotalPayableAmountForTerm($monthToSubtract, $client->clientLevelBillingProjects);
                                     }
@@ -284,11 +282,9 @@
                                 @endif
                                 @php
                                     $index++;
-                                    
+
                                     $currencySymbol = config('constants.currency.' . $project->client->currency . '.symbol');
-                                    if ($project->hasCustomInvoiceTemplate()) {
-                                        $amount = $currencySymbol . $project->getTotalLedgerAmount($quarter);
-                                    } elseif (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
+                                    if (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
                                         $amount = $currencySymbol . $project->getResourceBillableAmount();
                                     } else {
                                         $amount = $currencySymbol . $project->getTotalPayableAmountForTerm($monthToSubtract);
@@ -414,7 +410,7 @@
                                     {{ config('constants.finance.scheduled-invoice.status.' . $invoice->currentStatus. '.title') }}
                                 </div>
                             </td>
-                        </tr>          
+                        </tr>
                     @endforeach
                 @else
                     <tr>
@@ -423,7 +419,7 @@
                 @endif
             </tbody>
         </table>
-        
+
         @endif
     </div>
     @if (request()->invoice_status == 'ready' || $invoiceStatus == 'ready')

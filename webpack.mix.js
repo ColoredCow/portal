@@ -39,12 +39,6 @@ mix
 		"public/css/report.css"
 	);
 mix
-	.js("Modules/Revenue/Resources/assets/js/app.js", "public/js/revenue.js")
-	.sass(
-		"Modules/Revenue/Resources/assets/sass/app.scss",
-		"public/css/revenue.css"
-	);
-mix
 	.js(
 		"Modules/EffortTracking/Resources/assets/js/app.js",
 		"public/js/efforttracking.js"
@@ -77,18 +71,10 @@ mix
 		"Modules/CodeTrek/Resources/assets/sass/app.scss",
 		"public/css/codetrek.css"
 	);
-
-mix
-	.js("Modules/Expense/Resources/assets/js/app.js", "public/js/expense.js")
-	.sass(
-		"Modules/Expense/Resources/assets/sass/app.scss",
-		"public/css/expense.css"
-	);
-
 mix
 	.js("Modules/AppointmentSlots/Resources/assets/js/app.js", "public/js/appointmentslots.js")
 	.sass(
-		"Modules/AppointmentSlots/Resources/assets/sass/app.scss", 
+		"Modules/AppointmentSlots/Resources/assets/sass/app.scss",
 		"public/css/appointmentslots.css"
 	);
 

@@ -64,7 +64,7 @@
                 border-collapse: collapse;
             }
             .table-padding {
-                padding-left: 7%; 
+                padding-left: 7%;
                 padding-right: 7%;
             }
             .fz-14 {
@@ -154,7 +154,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    {{ $client->country->currency_symbol . ($project->getResourceBillableAmount() + $project->getTotalLedgerAmount($quarter)) }}
+                                    {{ $client->country->currency_symbol . ($project->getResourceBillableAmount()) }}
                                 </td>
                             </tr>
                             <tr></tr>
@@ -173,7 +173,7 @@
                                 </div>
                             </td>
                             <td>
-                                {{ $client->country->currency_symbol . ($client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount($quarter)) }}
+                                {{ $client->country->currency_symbol . ($client->getResourceBasedTotalAmount()) }}
                             </td>
                         </tr>
                         <tr>
@@ -188,7 +188,7 @@
                         <tr>
                             <td class="font-weight-bold">
                                 <div class="font-weight-bold fz-14">
-                                    {{ '(' . strtoupper(App\Helpers\DecimalToWordsHelper::convertDecimalToWords(($client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount($quarter)), config('constants.currency.' . $client->country->currency . '.name'))) . ')' }}
+                                    {{ '(' . strtoupper(App\Helpers\DecimalToWordsHelper::convertDecimalToWords($client->getResourceBasedTotalAmount(), config('constants.currency.' . $client->country->currency . '.name'))) . ')' }}
                                 </div>
                             </td>
                         </tr>
@@ -251,44 +251,20 @@
                                 </td>
                             </tr>
                         @endforeach
-                        @foreach ($projects as $project)
-                            @foreach ($project->ledgerAccountsOnlyCredit()->quarter($quarter)->get() as $ledgerAccountRow )
-                                <tr>
-                                    <td class="p-5 w-70p">
-                                        {{ $ledgerAccountRow->particulars }}
-                                    </td>
-                                    <td class="p-5 text-right">
-                                        {{ $client->country->currency_symbol . $ledgerAccountRow->credit }}
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endforeach
                         <tr class="font-weight-bold">
                             <td class="p-5 w-70p">
                                 {{ __('Total: ') }}
                             </td>
                             <td class="p-5 text-right">
-                                {{ $client->country->currency_symbol . ($client->getResourceBasedTotalAmount() + $client->ledgerAccountsOnlyCredit->sum('credit')) }}
+                                {{ $client->country->currency_symbol . ($client->getResourceBasedTotalAmount()) }}
                             </td>
                         </tr>
-                        @foreach ($projects as $project)
-                            @foreach ($project->ledgerAccountsOnlyDebit()->quarter($quarter)->get() as $ledgerAccountRow)
-                                <tr>
-                                    <td class="p-5 w-70p">
-                                        {{ $ledgerAccountRow->particulars }}
-                                    </td>
-                                    <td class="p-5 text-right">
-                                        {{ __('-') . $client->country->currency_symbol . $ledgerAccountRow->debit }}
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endforeach
                         <tr class="font-weight-bold">
                             <td class="p-5 w-70p">
                                 {{ __('Balance: ') }}
                             </td>
                             <td class="p-5 text-right">
-                                {{ $client->country->currency_symbol . ($client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount($quarter)) }}
+                                {{ $client->country->currency_symbol . ($client->getResourceBasedTotalAmount()) }}
                             </td>
                         </tr>
                     </tbody>
