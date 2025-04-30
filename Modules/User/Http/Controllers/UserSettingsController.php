@@ -22,7 +22,7 @@ class UserSettingsController extends ModuleBaseController
 
         return redirect()->back()->with('status', 'Saved Successfully!');
     }
-    
+
     public function addStaffType(Request $request)
     {
         $chosenEmployee = User::find($request->id)->employee;
