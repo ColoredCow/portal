@@ -200,4 +200,16 @@ class Employee extends Model
 
         return round($totalLoanDeduction, 2);
     }
+
+    public function updateCurrentSalaryType($newType = null)
+    {
+        $currentSalary = $this->getLatestSalary();
+        if ($currentSalary) {
+            $currentSalary->salary_type = $newType;
+            $currentSalary->save();
+        }
+    }
+
 }
+
+
