@@ -209,4 +209,5 @@ class Employee extends Model
             $currentSalary->update(['salary_type' => $newSalaryType]);
         }
     }
+
 }
