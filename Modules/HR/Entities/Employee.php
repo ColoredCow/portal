@@ -208,6 +208,6 @@ class Employee extends Model
             $newSalaryType = $payrollType === 'contractor' ? 'contractor-fee' : '';
             $currentSalary->update(['salary_type' => $newSalaryType]);
         }
-    }
 
+    }
 }
