@@ -28,6 +28,6 @@ class UserSettingsController extends ModuleBaseController
         $chosenEmployee->staff_type = $request->typeOfStaff;
         $chosenEmployee->payroll_type = $request->payrollType;
         $chosenEmployee->save();
-        $chosenEmployee->updateCurrentSalaryType();
+        $chosenEmployee->updateCurrentSalaryType($chosenEmployee->payroll_type);
     }
 }
