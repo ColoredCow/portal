@@ -18,7 +18,7 @@ class CurrencyService implements CurrencyServiceContract
         $this->setClient();
     }
 
-    protected function setClient(): void
+    public function setClient()
     {
         $headers = [
             'apikey' => config('services.currencylayer.access_key'),
@@ -54,6 +54,7 @@ class CurrencyService implements CurrencyServiceContract
     {
         if (! config('services.currencylayer.access_key')) {
             Log::warning('CurrencyLayer API key missing. Using default rate.');
+
             return round(config('services.currencylayer.default_rate', 83.00), 2);
         }
 
@@ -79,7 +80,7 @@ class CurrencyService implements CurrencyServiceContract
         } catch (\Throwable $e) {
             Log::error('Unexpected error fetching exchange rate: ' . $e->getMessage());
         }
-        
+
         return round(config('services.currencylayer.default_rate', 83.00), 2);
     }
 
