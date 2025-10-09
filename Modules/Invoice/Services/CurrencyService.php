@@ -43,7 +43,7 @@ class CurrencyService implements CurrencyServiceContract
 
     public function getAllCurrentRatesInINR()
     {
-        $seconds =  1 * 60 * 60 * 4;
+        $seconds = 1 * 60 * 60 * 4;
 
         return Cache::remember('all_current_usd_rates', $seconds, function () {
             return $this->fetchAllExchangeRateInINR();
@@ -52,7 +52,7 @@ class CurrencyService implements CurrencyServiceContract
 
     private function fetchExchangeRateInINR()
     {
-        if (!config('services.currencylayer.access_key')) {
+        if (! config('services.currencylayer.access_key')) {
             Log::warning('CurrencyLayer API key missing. Using default rate.');
             return round(config('services.currencylayer.default_rate', 83.00), 2);
         }
@@ -79,17 +79,16 @@ class CurrencyService implements CurrencyServiceContract
         } catch (\Throwable $e) {
             Log::error('Unexpected error fetching exchange rate: ' . $e->getMessage());
         }
-
-        // fallback to default value if everything fails
+        
         return round(config('services.currencylayer.default_rate', 83.00), 2);
     }
 
     private function fetchAllExchangeRateInINR()
     {
-        if (!config('services.currencylayer.access_key')) {
+        if (! config('services.currencylayer.access_key')) {
             Log::warning('CurrencyLayer API key missing. Using default rate.');
             return [
-                'USDINR' => round(config('services.currencylayer.default_rate', 83.00), 2)
+                'USDINR' => round(config('services.currencylayer.default_rate', 83.00), 2),
             ];
         }
 
@@ -117,7 +116,7 @@ class CurrencyService implements CurrencyServiceContract
 
         // fallback if API fails
         return [
-            'USDINR' => round(config('services.currencylayer.default_rate', 83.00), 2)
+            'USDINR' => round(config('services.currencylayer.default_rate', 83.00), 2),
         ];
     }
 }
