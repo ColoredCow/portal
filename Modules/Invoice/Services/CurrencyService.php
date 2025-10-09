@@ -3,7 +3,10 @@
 namespace Modules\Invoice\Services;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
 
 class CurrencyService implements CurrencyServiceContract
@@ -15,21 +18,23 @@ class CurrencyService implements CurrencyServiceContract
         $this->setClient();
     }
 
-    public function setClient()
+    protected function setClient(): void
     {
-        $headers = $headers = [
+        $headers = [
             'apikey' => config('services.currencylayer.access_key'),
         ];
+
         $this->client = new Client([
-            // 'base_uri' => 'http://apilayer.net/api',    //This is old API URL
-            'base_uri' => 'https://api.apilayer.com',  // This is new API created from https://apilayer.com/marketplace/currency_data-api
-            'headers' => $headers,
+            'base_uri' => 'https://api.apilayer.com',
+            'headers'  => $headers,
+            'timeout'  => 10, // seconds
+            'connect_timeout' => 5,
         ]);
     }
 
     public function getCurrentRatesInINR()
     {
-        $seconds = 1 * 60 * 60 * 4;
+        $seconds = 4 * 60 * 60; // 4 hours
 
         return Cache::remember('current_usd_rates', $seconds, function () {
             return $this->fetchExchangeRateInINR();
@@ -38,7 +43,7 @@ class CurrencyService implements CurrencyServiceContract
 
     public function getAllCurrentRatesInINR()
     {
-        $seconds = 1 * 60 * 60 * 4;
+        $seconds = 4 * 60 * 60;
 
         return Cache::remember('all_current_usd_rates', $seconds, function () {
             return $this->fetchAllExchangeRateInINR();
@@ -47,36 +52,72 @@ class CurrencyService implements CurrencyServiceContract
 
     private function fetchExchangeRateInINR()
     {
-        if (! config('services.currencylayer.access_key')) {
-            return round(config('services.currencylayer.default_rate'), 2);
+        if (!config('services.currencylayer.access_key')) {
+            Log::warning('CurrencyLayer API key missing. Using default rate.');
+            return round(config('services.currencylayer.default_rate', 83.00), 2);
         }
 
-        $response = $this->client->get('currency_data/live', [
-            'query' => [
-                'access_key' => config('services.currencylayer.access_key'),
-                'currencies' => 'INR',
-            ],
-        ]);
+        try {
+            $response = $this->client->get('currency_data/live', [
+                'query' => [
+                    'currencies' => 'INR',
+                    'source'     => 'USD',
+                ],
+            ]);
 
-        $data = json_decode($response->getBody()->getContents(), true);
+            $data = json_decode($response->getBody()->getContents(), true);
 
-        return round($data['quotes']['USDINR'], 2);
+            if (empty($data) || empty($data['quotes']['USDINR'])) {
+                throw new \Exception('Invalid API response structure.');
+            }
+
+            return round($data['quotes']['USDINR'], 2);
+        } catch (ConnectException $e) {
+            Log::error('Currency API connection failed: ' . $e->getMessage());
+        } catch (RequestException $e) {
+            Log::error('Currency API request error: ' . $e->getMessage());
+        } catch (\Throwable $e) {
+            Log::error('Unexpected error fetching exchange rate: ' . $e->getMessage());
+        }
+
+        // fallback to default value if everything fails
+        return round(config('services.currencylayer.default_rate', 83.00), 2);
     }
 
     private function fetchAllExchangeRateInINR()
     {
-        if (! config('services.currencylayer.access_key')) {
-            return round(config('services.currencylayer.default_rate'), 2);
+        if (!config('services.currencylayer.access_key')) {
+            Log::warning('CurrencyLayer API key missing. Using default rate.');
+            return [
+                'USDINR' => round(config('services.currencylayer.default_rate', 83.00), 2)
+            ];
         }
 
-        $response = $this->client->get('currency_data/live', [
-            'query' => [
-                'access_key' => config('services.currencylayer.access_key'),
-            ],
-        ]);
+        try {
+            $response = $this->client->get('currency_data/live', [
+                'query' => [
+                    'source' => 'USD',
+                ],
+            ]);
 
-        $data = json_decode($response->getBody()->getContents(), true);
+            $data = json_decode($response->getBody()->getContents(), true);
 
-        return $data['quotes'];
+            if (empty($data) || empty($data['quotes'])) {
+                throw new \Exception('Invalid API response structure.');
+            }
+
+            return $data['quotes'];
+        } catch (ConnectException $e) {
+            Log::error('Currency API connection failed: ' . $e->getMessage());
+        } catch (RequestException $e) {
+            Log::error('Currency API request error: ' . $e->getMessage());
+        } catch (\Throwable $e) {
+            Log::error('Unexpected error fetching all exchange rates: ' . $e->getMessage());
+        }
+
+        // fallback if API fails
+        return [
+            'USDINR' => round(config('services.currencylayer.default_rate', 83.00), 2)
+        ];
     }
 }
