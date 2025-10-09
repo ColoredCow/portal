@@ -87,6 +87,7 @@ class CurrencyService implements CurrencyServiceContract
     {
         if (! config('services.currencylayer.access_key')) {
             Log::warning('CurrencyLayer API key missing. Using default rate.');
+
             return [
                 'USDINR' => round(config('services.currencylayer.default_rate', 83.00), 2),
             ];
@@ -114,7 +115,6 @@ class CurrencyService implements CurrencyServiceContract
             Log::error('Unexpected error fetching all exchange rates: ' . $e->getMessage());
         }
 
-        // fallback if API fails
         return [
             'USDINR' => round(config('services.currencylayer.default_rate', 83.00), 2),
         ];
