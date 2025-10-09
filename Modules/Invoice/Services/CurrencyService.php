@@ -27,14 +27,14 @@ class CurrencyService implements CurrencyServiceContract
         $this->client = new Client([
             'base_uri' => 'https://api.apilayer.com',
             'headers'  => $headers,
-            'timeout'  => 10, // seconds
+            'timeout'  => 10,
             'connect_timeout' => 5,
         ]);
     }
 
     public function getCurrentRatesInINR()
     {
-        $seconds = 4 * 60 * 60; // 4 hours
+        $seconds = 1 * 60 * 60 * 4;
 
         return Cache::remember('current_usd_rates', $seconds, function () {
             return $this->fetchExchangeRateInINR();
@@ -43,7 +43,7 @@ class CurrencyService implements CurrencyServiceContract
 
     public function getAllCurrentRatesInINR()
     {
-        $seconds = 4 * 60 * 60;
+        $seconds =  1 * 60 * 60 * 4;
 
         return Cache::remember('all_current_usd_rates', $seconds, function () {
             return $this->fetchAllExchangeRateInINR();
