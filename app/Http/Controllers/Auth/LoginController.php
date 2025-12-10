@@ -87,7 +87,7 @@ class LoginController extends Controller
                 return redirect('login');
             }
 
-            return redirect(config('constants.website_url') . '/wp/wp-admin/');
+            return redirect(config('constants.website_admin_url'));
         }
 
         return redirect('home');
