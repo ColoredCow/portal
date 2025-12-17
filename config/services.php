@@ -29,7 +29,7 @@ return [
     ],
 
     'stripe' => [
-        'model' => App\User::class,
+        'model' => Modules\User\Entities\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
@@ -38,7 +38,7 @@ return [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_CLIENT_CALLBACK'),
-        'hd' => env('GOOGLE_HD', '*')
+        'hd' => env('GOOGLE_HD', '*'),
     ],
 
     'currencylayer' => [
@@ -60,5 +60,6 @@ return [
             'temperature' => 0.4
         ]
     ]
-
+        'default_rate' => env('DEFAULT_RATE_USDINR'),
+    ],
 ];

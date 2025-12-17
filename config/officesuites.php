@@ -20,12 +20,12 @@ return [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_CLIENT_CALLBACK'),
-        'hd' => env('GOOGLE_HD', '*')
+        'hd' => env('GOOGLE_HD', '*'),
     ],
 
     'office365' => [
         'service_class_path' => 'OfficeSuite\Office365\Office365Service',
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-    ]
+    ],
 ];

@@ -50,7 +50,8 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\ProjectRequest  $request
+     * @param \App\Http\Requests\ProjectRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(ProjectRequest $request)
@@ -70,7 +71,7 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Project  $project
+     * @param \App\Models\Project $project
      */
     public function show(Project $project)
     {
@@ -86,7 +87,8 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Project  $project
+     * @param \App\Models\Project $project
+     *
      * @return \Illuminate\View\View
      */
     public function edit(Project $project)
@@ -102,14 +104,15 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\ProjectRequest  $request
-     * @param  \App\Models\Project  $project
+     * @param \App\Http\Requests\ProjectRequest $request
+     * @param \App\Models\Project               $project
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ProjectRequest $request, Project $project)
     {
         $validated = $request->validated();
-        $updated = $project->update([
+        $project->update([
             'name' => $validated['name'],
             'client_id' => $validated['client_id'],
             'client_project_id' => $validated['client_project_id'],
@@ -122,21 +125,11 @@ class ProjectController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Project  $project
-     * @return void
-     */
-    public function destroy(Project $project)
-    {
-        //
-    }
-
-    /**
      * Add Employees to this Project.
      *
-     * @param  \App\Models\Project  $project
-     * @param  \App\Http\Requests\ProjectRequest  $request
+     * @param \App\Models\Project               $project
+     * @param \App\Http\Requests\ProjectRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function addEmployee(Project $project, Request $request)
@@ -149,8 +142,9 @@ class ProjectController extends Controller
     /**
      * Remove Employees from this Project.
      *
-     * @param  \App\Models\Project  $project
-     * @param  \App\Http\Requests\ProjectRequest  $request
+     * @param \App\Models\Project               $project
+     * @param \App\Http\Requests\ProjectRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function removeEmployee(Project $project, Request $request)

@@ -9,7 +9,9 @@ use Modules\HR\Entities\Application;
 
 class ApplicantEmailVerified
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     public $application;
 

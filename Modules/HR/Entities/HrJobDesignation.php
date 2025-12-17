@@ -14,4 +14,9 @@ class HrJobDesignation extends Model
     {
         return $query->where('slug', $slug);
     }
+
+    public function hrJobDesignationDomain()
+    {
+        return $this->belongsTo(HrJobDomain::class, 'domain_id');
+    }
 }

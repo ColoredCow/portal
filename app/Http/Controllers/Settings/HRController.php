@@ -13,6 +13,7 @@ class HRController extends Controller
     public function index()
     {
         $this->authorize('view', Setting::class);
+        $attr = [];
         $attr['settings'] = Setting::where('module', 'hr')->get()->keyBy('setting_key');
         $attr['rounds'] = Round::all();
         $attr['roundMailTypes'] = [
@@ -27,7 +28,7 @@ class HRController extends Controller
         $this->authorize('update', Setting::class);
         $validated = $request->validated();
         foreach ($validated['setting_key'] as $key => $value) {
-            $setting = Setting::updateOrCreate(
+            Setting::updateOrCreate(
                 ['module' => 'hr', 'setting_key' => $key],
                 ['setting_value' => $value ? ContentHelper::editorFormat($value) : null]
             );

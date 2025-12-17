@@ -7,9 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Finance\PaymentRequest;
 use App\Models\Finance\Invoice;
 use App\Models\Finance\Payment;
-use App\Models\Finance\PaymentModes\Cash;
-use App\Models\Finance\PaymentModes\Cheque;
-use App\Models\Finance\PaymentModes\WireTransfer;
 
 class PaymentController extends Controller
 {
@@ -41,6 +38,7 @@ class PaymentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param PaymentRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(PaymentRequest $request)
@@ -57,7 +55,8 @@ class PaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Finance\Payment  $payment
+     * @param \App\Models\Finance\Payment $payment
+     *
      * @return \Illuminate\View\View
      */
     public function edit(Payment $payment)
@@ -73,8 +72,9 @@ class PaymentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Finance\PaymentRequest  $request
-     * @param  \App\Models\Finance\Payment  $payment
+     * @param \App\Http\Requests\Finance\PaymentRequest $request
+     * @param \App\Models\Finance\Payment               $payment
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(PaymentRequest $request, Payment $payment)
@@ -91,8 +91,9 @@ class PaymentController extends Controller
     /**
      * Prepare attributes to store or update the resource.
      *
-     * @param  array  $validated
-     * @param  mixed $mode      WireTransfer, Cash or Cheque
+     * @param array $validated
+     * @param mixed $mode      WireTransfer, Cash or Cheque
+     *
      * @return array
      */
     protected static function prepareAttributes(array $validated, $mode)
@@ -125,11 +126,12 @@ class PaymentController extends Controller
     /**
      * Handles the payment mode of the resource.
      *
-     * @param  array  $validated
-     * @param  Payment $payment
-     * @return mixed            Cash, WireTransfer or Cheque
+     * @param array   $validated
+     * @param Payment $payment
+     *
+     * @return mixed Cash, WireTransfer or Cheque
      */
-    protected static function handleMode(array $validated, Payment $payment = null)
+    protected static function handleMode(array $validated, ?Payment $payment = null)
     {
         $attr = [];
         switch ($validated['mode']) {
@@ -142,7 +144,7 @@ class PaymentController extends Controller
             case 'cheque':
                 $attr['status'] = $validated['cheque_status'];
                 $dateField = $validated['cheque_status'] . '_on';
-                $attr[$dateField] = DateHelper::formatDateToSave($validated["cheque_$dateField"]);
+                $attr[$dateField] = DateHelper::formatDateToSave($validated["cheque_{$dateField}"]);
                 break;
         }
 
@@ -162,10 +164,10 @@ class PaymentController extends Controller
             $payment->mode->update($attr);
 
             return $payment->mode;
-        } else {
-            $payment->mode->delete();
-
-            return $model::create($attr);
         }
+
+        $payment->mode->delete();
+
+        return $model::create($attr);
     }
 }

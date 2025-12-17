@@ -17,30 +17,44 @@
 <table class="table table-bordered table-striped">
     <thead class="thead-dark">
         <tr>
-            <th class="w-30p sticky-top">Client Name</th>
-            <th class="sticky-top">URL</th>
-            <th class="sticky-top">Authority Name</th>
-            <th class="sticky-top">Contract Date for signing</th>
-            <th class="sticky-top">Contract Date for Effective</th>
-            <th class="sticky-top">Contract Expiry Date</th>
-            <th class="sticky-top">Logo</th>
+            <th class="w-30p sticky-top">Contract Name</th>
+            <th class="sticky-top">Contract Link</th>
+            <th class="sticky-top">Contract status</th>
             <th class="sticky-top">Action</th>
         </tr>
         @foreach ($projects as $project)
         <tr>
-            <td>{{$project->client->name}}</td>
-            <td><a href="{{$project->website_url}}"> <button class="btn btn-success fa fa mr-1  ">URL</button></td>
-            <td>{{$project->authority_name}}</td>
-            <td>{{$project->contract_date_for_signing}}</td>
-            <td>{{$project->contract_date_for_effective}}</td>
-            <td>{{$project->contract_expiry_date}}</td>
-            <td><img src="{{ asset('storage/contractlogo/'.$project->logo_img) }}" class="w-35 h-30 rounded-circle mb-1"></td>
             <td>
-                <a href="{{route('projectcontract.edit', $project->id)}}" class="pl-1 btn btn-link" ><i class="text-success fa fa-edit fa-lg"></i></a>
-                <a href="{{route('projectcontract.delete', $project->id)}}" class="pl-1 btn btn-link" ><i class="text-danger fa fa-trash fa-lg"></i></a>
+                {{$project->contract_name}}
+                <div class="d-flex flex-row">
+                @foreach ($project->internalReviewers()->get() as $internal)
+                    @if ($internal->status == 'approved')
+                    <span class="d-flex flex-column align-items-start">
+                        <span class="badge badge-success badge-pill mr-1 mb-1 fz-12"> {{ $internal->user_type }} - {{$internal->status }}</span>
+                    </span>
+                    @else
+                    <span class="d-flex flex-column align-items-start">
+                        <span class="badge badge-warning badge-pill mr-1 mb-1 fz-12"> {{ $internal->user_type }} - {{$internal->status }}</span>
+                    </span>
+                    @endif
+                @endforeach
+                @foreach ($project->contractReviewers()->get() as $external)
+                    @if ($external->status == 'approved')
+                        <span class="badge badge-success badge-pill mr-1 mb-1 fz-12"> Client - {{ $external->status }}</span>
+                    @else
+                        <span class="badge badge-warning badge-pill mr-1 mb-1 fz-12"> Client - {{ $external->status }}</span>
+                    @endif
+                @endforeach
+                </div>
+            </td>
+            <td>{{$project->contract_link}}</td>
+            <td>{{$project->status}}</td>
+            <td>
+                <a class="btn btn-success btn-sm pl-1" href="{{route('projectcontract.view-contract', $project->id)}}"><i class="fa fa-file-pdf-o mr-1" ></i>View</a>
             </td>
         </tr>
         @endforeach
     </thead>
 </table>
+
 @endsection

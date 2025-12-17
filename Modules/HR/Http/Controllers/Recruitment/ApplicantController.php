@@ -19,6 +19,14 @@ use Modules\HR\Contracts\ApplicationServiceContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\HR\Events\Recruitment\ApplicantEmailVerified;
 use Modules\HR\Http\Requests\Recruitment\ApplicantRequest;
+use Modules\HR\Entities\ApplicantMeta;
+use Modules\HR\Entities\Application;
+use Modules\HR\Entities\Job;
+use Modules\HR\Events\Recruitment\ApplicantEmailVerified;
+use Modules\HR\Http\Requests\ApplicantMetaRequest;
+use Modules\HR\Http\Requests\Recruitment\ApplicantRequest;
+use Modules\HR\Services\ApplicantService;
+use Modules\User\Entities\User;
 
 class ApplicantController extends Controller
 {
@@ -51,12 +59,14 @@ class ApplicantController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  ApplicantRequest  $request
+     * @param ApplicantRequest $request
      */
     public function store(ApplicantRequest $request)
     {
         $validated = $request->validated();
-        $this->service->saveApplication($validated);
+        $job_title = Job::where('opportunity_id', $validated['opportunity_id'])->first();
+
+        $this->service->saveApplication($validated, $job_title->title);
 
         return redirect(route('applications.job.index'));
     }
@@ -64,7 +74,7 @@ class ApplicantController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param Request $request
      */
     public function importExcel(Request $request)
     {
@@ -78,9 +88,8 @@ class ApplicantController extends Controller
      * To update applicant university.
      *
      * @param Applicant $applicant
-     * @param Request $request
      */
-    public function updateUniversity(Applicant $applicant, Request $request)
+    public function updateUniversity(Applicant $applicant)
     {
         $status = $applicant->update([
             'hr_university_id' => request()->university_id,

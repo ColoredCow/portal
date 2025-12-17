@@ -23,29 +23,17 @@ class RoundMailSentNotification extends Notification
         $this->applicationRound = $applicationRound;
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @param mixed $notifiable
-     * @return array
-     */
-    public function via($notifiable)
+    public function via()
     {
         return ['mail'];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param mixed $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
-    public function toMail($notifiable)
+    public function toMail()
     {
         $applicant = $this->applicationRound->application->applicant;
         $conductedPerson = $this->applicationRound->getPreviousApplicationRound()->conductedPerson;
 
-        return (new MailMessage)
+        return (new MailMessage())
                     ->subject(config('app.name') . ' – HR application round assigned to you')
                     ->line("{$conductedPerson->name} has assigned you an HR application for {$this->applicationRound->round->name}.")
                     ->line("Candidate name: {$applicant->name}")
@@ -53,13 +41,7 @@ class RoundMailSentNotification extends Notification
                     ->action('View this application', route('applications.job.edit', $this->applicationRound->application));
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param mixed $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
+    public function toArray()
     {
         return [
             //

@@ -2,10 +2,10 @@
 
 namespace Modules\Project\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
-use Modules\Project\Services\ProjectService;
+use Illuminate\Support\ServiceProvider;
 use Modules\Project\Contracts\ProjectServiceContract;
+use Modules\Project\Services\ProjectService;
 
 class ProjectServiceProvider extends ServiceProvider
 {
@@ -47,22 +47,6 @@ class ProjectServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register config.
-     *
-     * @return void
-     */
-    protected function registerConfig()
-    {
-        $this->publishes([
-            module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
-        ], 'config');
-        $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'),
-            $this->moduleNameLower
-        );
-    }
-
-    /**
      * Register views.
      *
      * @return void
@@ -74,22 +58,10 @@ class ProjectServiceProvider extends ServiceProvider
         $sourcePath = module_path($this->moduleName, 'Resources/views');
 
         $this->publishes([
-            $sourcePath => $viewPath
+            $sourcePath => $viewPath,
         ], ['views', $this->moduleNameLower . '-module-views']);
 
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
-    }
-
-    /**
-     * Register the commands for the module.
-     *
-     * @return void
-     */
-    protected function registerCommands()
-    {
-        $this->commands([
-            \Modules\Project\Console\SyncEffortsheet::class,
-        ]);
     }
 
     /**
@@ -128,6 +100,34 @@ class ProjectServiceProvider extends ServiceProvider
     public function provides()
     {
         return [];
+    }
+
+    /**
+     * Register config.
+     *
+     * @return void
+     */
+    protected function registerConfig()
+    {
+        $this->publishes([
+            module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
+        ], 'config');
+        $this->mergeConfigFrom(
+            module_path($this->moduleName, 'Config/config.php'),
+            $this->moduleNameLower
+        );
+    }
+
+    /**
+     * Register the commands for the module.
+     *
+     * @return void
+     */
+    protected function registerCommands()
+    {
+        $this->commands([
+            \Modules\Project\Console\SyncEffortsheet::class,
+        ]);
     }
 
     private function getPublishableViewPaths(): array

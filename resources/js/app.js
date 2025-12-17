@@ -20,6 +20,7 @@ Vue.use(Laue);
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import moment from "moment";
+import Vue from "vue";
 const options = {
 	timeout: 2000,
 };
@@ -81,6 +82,10 @@ Vue.component(
 Vue.component(
 	"user-dashboard-library",
 	require("./components/Dashboard/UserDashboardLibrary.vue").default
+);
+Vue.component(
+	"employee-profitability-list",
+	require("./components/Dashboard/EmployeeProfitabilityList.vue").default
 );
 Vue.component(
 	"user-dashboard-infrastructure",
@@ -1208,7 +1213,14 @@ if (document.getElementById("show_book_info")) {
 }
 
 if (document.getElementById("home_page")) {
+	setupClickEventsForLibrary();
+}
+
+function setupClickEventsForLibrary() {
 	var el = document.getElementById("markBookAsRead");
+	if (!el) {
+		return;
+	}
 	el.addEventListener("click", markBookAsRead, false);
 	var wishlistBtn = document.getElementById("addBookToWishlist");
 	wishlistBtn.addEventListener("click", addBookToWishlist, false);
@@ -1875,10 +1887,11 @@ $(".status").on("change", function() {
 });
 
 $(document).ready(function() {
-	var multipleSelect = new Choices("#choices-multiple", {
-		removeItemButton: true,
-	});
-});
+  if ($("#choices-multiple").length) {
+    var multipleSelect = new Choices("#choices-multiple", {
+      removeItemButton: true,
+    });
+  }
 
 $(".pending").on("change", function() {
 	$("#completeSpinner").removeClass("d-none");
@@ -1914,11 +1927,10 @@ $(document).ready(function() {
 			data: form.serialize(),
 			success: function(response) {
 				$("#requisitionModal").modal("hide");
-				$("#successMessage").toggleClass("d-none");
-				$("#successMessage").fadeToggle(4000);
+				Vue.$toast.success("Requisition submitted successfully!");
 			},
 			error: function(response) {
-				alert("there is some problem");
+				Vue.$toast.error("there is some problem");
 			},
 			complete: function(response) {
 				$("#formSpinner").addClass("d-none");
@@ -1937,14 +1949,14 @@ $("#job_end_date").on("change", function() {
 	$("#job_start_date").attr("max", endDate);
 });
 
-$(document).ready(function() {
+if ($("#choices-multiple-remove-button").length) {
 	var multipleCancelButton = new Choices("#choices-multiple-remove-button", {
 		removeItemButton: true,
 		maxItemCount: 9,
 		searchResultLimit: 9,
 		renderChoiceLimit: 9,
 	});
-});
+}
 
 /*
  * HR Module JS code end
@@ -1988,7 +2000,9 @@ $(document).ready(function() {
 $("#editform").on("submit", function(e) {
 	e.preventDefault();
 	let form = $("#editform");
-	let button = $("#editBT");
+	let editor = tinymce.get("address");
+	let addressFieldValue = editor.getContent();
+	$("#address").val(addressFieldValue);
 
 	$.ajax({
 		url: form.attr("action"),
@@ -2000,6 +2014,7 @@ $("#editform").on("submit", function(e) {
 				$("#successMessage").toggleClass("d-none");
 				$("#successMessage").fadeToggle(5000);
 			});
+			window.location.reload();
 		},
 		error: function(response) {
 			$("#profile-details-error").removeClass("d-none");
@@ -2093,7 +2108,7 @@ $(".opt").on("click", function() {
 
 $(document).on("click", ".finish_interview", function(e) {
 	e.preventDefault();
-	var actualEndTime = $(".finish_interview").val();
+	var actualEndTime = $(this).val();
 	var duration = moment().format("YYYY/MM/DD H:m:s");
 	$.ajax({
 		type: "GET",
@@ -2120,5 +2135,84 @@ $("#responseModal").on("submit", function(e) {
 			$("#responseModal").modal("hide");
 			Vue.$toast.success("Resume flagged Successfully!");
 		},
+	});
+});
+
+$(function() {
+	$("#applicant-toggle").click(function() {
+		var sidebar = $("#applicant-sidebar");
+		if (sidebar.css("right") === "0px") {
+			sidebar.css("right", "-250px");
+		} else {
+			sidebar.css("right", "0");
+		}
+	});
+
+	$(".applicant-list li").click(function() {
+		var applicantId = $(this).data("id");
+	});
+
+	$(document).click(function(event) {
+		if (
+			!$(event.target).closest("#applicant-toggle, #applicant-sidebar").length
+		) {
+			$("#applicant-sidebar").css("right", "-250px");
+		}
+	});
+});
+
+$(document).ready(function() {
+	$(".thumbs-radio-button").change(function() {
+		$(".thumbs-up").css("color", "");
+		$(".thumbs-down").css("color", "");
+		if ($(this).val() === "positive") {
+			$(this)
+				.siblings(".thumbs-up")
+				.css("color", "green");
+		} else if ($(this).val() === "negative") {
+			$(this)
+				.siblings(".thumbs-down")
+				.css("color", "red");
+		}
+	});
+});
+
+$(document).ready(function() {
+	$(".editBankDetail-btn").click(function() {
+		var bankDetailId = $(this).data("id");
+		var bankDetailLabel = $(this).data("label");
+		var bankDetailValue = $(this).data("value");
+
+		$("#editBankDetailId").val(bankDetailId);
+		$("#editBankDetailLabel").val(bankDetailLabel);
+		$("#editBankDetailValue").val(bankDetailValue);
+
+		var formAction = $("#editBankDetailForm").attr("action");
+		formAction = formAction.replace("__bankDetailId__", bankDetailId);
+		$("#editBankDetailForm").attr("action", formAction);
+
+		$("#editBankDetailModal").modal("show");
+	});
+});
+
+$(document).ready(function() {
+	$("#label").on("input", function() {
+		var label = $(this).val();
+		var key = slugify(label);
+		$("#key").val(key);
+	});
+
+	function slugify(text) {
+		return text
+			.toLowerCase()
+			.replace(/[^\w\s-]/g, "")
+			.replace(/[\s_-]+/g, "-")
+			.trim();
+	}
+
+	$("#bank-details-form").submit(function(event) {
+		event.preventDefault(); // Prevents the form from submitting automatically
+
+		this.submit(); // Manually trigger the form submission
 	});
 });

@@ -2,10 +2,10 @@
 
 namespace Modules\User\Services;
 
-use Modules\User\Entities\User;
-use OfficeSuite\OfficeSuiteFacade;
-use Modules\User\Events\UserRemovedEvent;
 use Modules\User\Contracts\UserServiceContract;
+use Modules\User\Entities\User;
+use Modules\User\Events\UserRemovedEvent;
+use OfficeSuite\OfficeSuiteFacade;
 
 class UserService implements UserServiceContract
 {
@@ -14,13 +14,22 @@ class UserService implements UserServiceContract
      */
     public function index()
     {
-        return User::with('roles')
+        return User::with('roles', 'employee')
+            ->whereNull('deleted_at')
             ->orderBy('name')
             ->get();
     }
 
-    public function delete(User $user)
+    public function delete(User $user, $params = [])
     {
+        $employee = $user->employee;
+
+        if ($employee) {
+            $employee->update([
+                'termination_date' => $params['termination_date'] ?? today(),
+            ]);
+        }
+
         $user->delete();
         if (config('database.connections.wordpress.enabled')) {
             event(new UserRemovedEvent($user));

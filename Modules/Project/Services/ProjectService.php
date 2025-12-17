@@ -2,24 +2,31 @@
 
 namespace Modules\Project\Services;
 
+use App\Models\Comment;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 use Modules\Client\Entities\Client;
 use Modules\HR\Entities\Employee;
 use Modules\Project\Contracts\ProjectServiceContract;
+use Modules\Project\Emails\EffortsheetSetupMail;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectBillingDetail;
 use Modules\Project\Entities\ProjectContract;
+use Modules\Project\Entities\ProjectInvoiceTerm;
 use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectRepository;
-use Modules\Project\Entities\ProjectTeamMember;
-use Modules\User\Entities\User;
-use Maatwebsite\Excel\Facades\Excel;
-use Modules\Project\Exports\ProjectFTEExport;
 use Modules\Project\Entities\ProjectResourceRequirement;
+use Modules\Project\Entities\ProjectStages;
+use Modules\Project\Entities\ProjectStagesListing;
+use Modules\Project\Entities\ProjectTeamMember;
+use Modules\Project\Entities\ProjectTeamMembersEffort;
+use Modules\Project\Exports\ProjectFTEExport;
+use Modules\User\Entities\User;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -30,7 +37,9 @@ class ProjectService implements ProjectServiceContract
             'is_amc' => $data['is_amc'] ?? 0,
         ];
 
-        if ($nameFilter = $data['name'] ?? false) {
+        $nameFilter = $data['name'] ?? false;
+
+        if ($nameFilter) {
             $filters['name'] = $nameFilter;
         }
         $hasAnyRole = false;
@@ -74,7 +83,7 @@ class ProjectService implements ProjectServiceContract
             'name' => $data['name'],
             'client_id' => $data['client_id'],
             'client_project_id' => $this->getClientProjectID($data['client_id']),
-            'status' => 'active',
+            'status' => $data['status'],
             'start_date' => $data['start_date'] ?? null,
             'end_date' => $data['end_date'] ?? null,
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
@@ -97,27 +106,19 @@ class ProjectService implements ProjectServiceContract
             );
         }
 
-        $project->client->update(['status' => 'active']);
-        $this->saveOrUpdateProjectContract($data, $project);
-    }
 
-    private function getListTabCounts($filters, $showAllProjects, $userId)
-    {
-        $counts = [
-            'mainProjectsCount' => array_merge($filters, ['status' => 'active', 'is_amc' => false]),
-            'AMCProjectCount' => array_merge($filters, ['status' => 'active', 'is_amc' => true]),
-            'haltedProjectsCount' => array_merge($filters, ['status' => 'halted']),
-            'inactiveProjectsCount' => array_merge($filters, ['status' => 'inactive']),
-        ];
+        if (isset($data['send_mail_to_infra']) && $data['send_mail_to_infra']) {
+            // ToDo: Make infra email fetched from ENV
+            $emails = [
+                'key_account_manager' => $project->keyAccountManager->email,
+                'infrasupport_email' => 'infrasupport@coloredcow.in',
+            ];
 
-        foreach ($counts as $key => $tabFilters) {
-            $query = Project::query()->applyFilter($tabFilters);
-            $counts[$key] = $showAllProjects
-                ? $query->count()
-                : $query->linkedToTeamMember($userId)->count();
+            Mail::send(new EffortsheetSetupMail($project, $emails));
         }
 
-        return $counts;
+        $project->client->update(['status' => 'active']);
+        $this->saveOrUpdateProjectContract($data, $project);
     }
 
     public function getClients($status = 'active')
@@ -179,6 +180,412 @@ class ProjectService implements ProjectServiceContract
         }
     }
 
+    public function getWorkingDays($project)
+    {
+        $startDate = $project->client->month_start_date;
+        $endDate = $project->client->month_end_date;
+        $period = CarbonPeriod::create($startDate, $endDate);
+        $numberOfWorkingDays = 0;
+        $weekend = ['Saturday', 'Sunday'];
+        foreach ($period as $date) {
+            if (! in_array($date->format('l'), $weekend)) {
+                $numberOfWorkingDays++;
+            }
+        }
+
+        return $numberOfWorkingDays;
+    }
+
+    public function saveOrUpdateProjectContract($data, $project)
+    {
+        if ($data['contract_file'] ?? null) {
+            $file = $data['contract_file'];
+            $folder = '/contract/' . date('Y') . '/' . date('m');
+            $fileName = $file->getClientOriginalName();
+            $filePath = Storage::putFileAs($folder, $file, $fileName);
+            ProjectContract::updateOrCreate(
+                ['project_id' => $project->id],
+                ['contract_file_path' => $filePath]
+            );
+        }
+    }
+
+    public function getMailDetailsForKeyAccountManagers()
+    {
+        $zeroEffortProject = ProjectTeamMember::where('daily_expected_effort', 0)->whereNull('ended_on')->get('project_id');
+        $projects = Project::whereIn('id', $zeroEffortProject)->where('status', 'active')->get();
+        $keyAccountManagersDetails = [];
+        foreach ($projects as $project) {
+            $user = $project->client->keyAccountManager;
+            if ($user) {
+                $keyAccountManagersDetails[$user->id][] = [
+                    'project' => $project,
+                    'email' => $user->email,
+                    'name' => $user->name,
+                ];
+            }
+        }
+
+        return $keyAccountManagersDetails;
+    }
+
+    public function getMailDetailsForProjectKeyAccountManagers()
+    {
+        $currenttime = Carbon::today(config('constants.timezone.indian'));
+        $projects = Project::wheretype('fixed-budget')->wherestatus('active')->where('end_date', '<', $currenttime)->get();
+        $projectsData = [];
+        foreach ($projects as $project) {
+            $user = $project->client->keyAccountManager;
+            if ($user) {
+                $projectsData[$user->id][] = [
+                    'project' => $project,
+                    'email' => $user->email,
+                    'name' => $user->name,
+                ];
+            }
+        }
+
+        return $projectsData;
+    }
+
+    public function getMailDetailsForZeroExpectedHours()
+    {
+        $zeroEffortProjectsIds = ProjectTeamMember::where('daily_expected_effort', 0)->pluck('project_id');
+        $projectsWithZeroEffort = Project::with(['teamMembers'])->whereIn('id', $zeroEffortProjectsIds)->where('status', 'active')->get();
+        $projectDetails = [];
+        foreach ($projectsWithZeroEffort as $project) {
+            foreach ($project->teamMembers as $teamMember) {
+                if ($teamMember->getOriginal('pivot_daily_expected_effort') == 0) {
+                    $projectDetails[] = [
+                        'projects' => $project,
+                        'name' => $teamMember->name,
+                        'email' => $teamMember->email,
+                    ];
+                }
+            }
+        }
+
+        return $projectDetails;
+    }
+
+    public function projectFTEExport($filters)
+    {
+        $year = (int) $filters['year'];
+        $month = (int) $filters['month'];
+        $startDate = Carbon::createFromDate($year, $month, 1);
+        $endDate = date('Y-m-d');
+
+        if ($startDate < date('Y-m-01')) {
+            $endDate = (clone $startDate)->endOfMonth()->toDateString();
+        }
+
+        $startDate = $startDate->toDateString();
+
+        $employees = Employee::applyFilters($filters)
+            ->get();
+
+        $employees = $this->formatProjectFTEFOrExportAll($employees, $startDate, $endDate);
+        $filename = 'FTE_Report-' . $endDate . '.xlsx';
+
+        return Excel::download(new ProjectFTEExport($employees), $filename);
+    }
+
+    public function getProjectsWithTeamMemberRequirementData($request)
+    {
+        $projectsWithTeamMemberRequirement = Project::query()
+        ->with('client')
+        ->status('active')
+        ->withCount('getTeamMembers as team_member_count')
+        ->withSum('resourceRequirement as team_member_needed', 'total_requirement')
+        ->havingRaw('team_member_needed - team_member_count')
+        ->when($request, function ($query, $request) {
+            return $query->where('name', 'like', '%' . $request['name'] . '%');
+        })
+        ->get();
+
+        $totalAdditionalResourceRequired = [];
+        $data = [];
+        $totalAdditionalResourceRequired = 0;
+        foreach ($projectsWithTeamMemberRequirement as $project) {
+            $count = $project->team_member_needed - $project->team_member_count;
+            $totalAdditionalResourceRequired += $count;
+            $projectData = [
+                'totalResourceRequirement' => $project->team_member_needed,
+                'totalResourceDeployed' => $project->team_member_count,
+                'additionalResourceRequired' => $project->team_member_needed - $project->team_member_count,
+                'teamMemberNeededByDesignation' => [],
+                'currentTeamMemberCountByDesignation' => [],
+                'object' => $project,
+            ];
+
+            $designations = $this->getDesignations();
+            $designationKeys = array_keys($designations);
+
+            foreach ($designationKeys as $designationName) {
+                $resourceRequirement = $project->getResourceRequirementByDesignation($designationName);
+                $totalResourceRequirementCount = 0;
+                if ($resourceRequirement) {
+                    $totalResourceRequirementCount = $resourceRequirement->total_requirement;
+                }
+                if ($totalResourceRequirementCount > 0) {
+                    $projectData['teamMemberNeededByDesignation'][$designations[$designationName]] = $totalResourceRequirementCount;
+                }
+                $totalResourceDeployedCount = $project->getDeployedCountForDesignation($designationName);
+                if ($totalResourceDeployedCount > 0) {
+                    $projectData['currentTeamMemberCountByDesignation'][$designations[$designationName]] = $totalResourceDeployedCount;
+                }
+                $count = $totalResourceRequirementCount - $totalResourceDeployedCount;
+                $projectData['countByDesignation'][$designations[$designationName]] = $count;
+            }
+            $data[$project->client->name][$project->name] = $projectData;
+        }
+
+        return [
+            'totalCount' => $totalAdditionalResourceRequired,
+            'data' => $data,
+        ];
+    }
+
+    public function getProjectWorkingDays($startDate, $endDate)
+    {
+        $period = CarbonPeriod::create($startDate, $endDate);
+        $dates = [];
+        $weekend = ['Saturday', 'Sunday'];
+        foreach ($period as $date) {
+            if (! in_array($date->format('l'), $weekend)) {
+                $dates[] = $date->format('Y-m-d');
+            }
+        }
+
+        return $dates;
+    }
+
+    public function getProjectApprovedPipelineHour($project)
+    {
+        $totalDailyExpectedEffort = ProjectTeamMember::where('project_id', $project->id)
+        ->whereNull('ended_on')
+        ->get()
+        ->sum('daily_expected_effort');
+        $workingDaysInMonth = $this->getWorkingDays($project);
+        $totalExpectedHourInMonth = $totalDailyExpectedEffort * $workingDaysInMonth;
+        $monthlyApprovedHour = $project->monthly_approved_pipeline;
+        $totalWeeklyExpectedEffort = $totalDailyExpectedEffort * 5;
+        $remainingApprovedPipeline = 0;
+        if (is_int($monthlyApprovedHour) || is_float($monthlyApprovedHour)) {
+            $remainingApprovedPipeline = $monthlyApprovedHour - $totalWeeklyExpectedEffort;
+        }
+        $currentActualEffort = ProjectTeamMembersEffort::whereIn('project_team_member_id', function ($query) use ($project) {
+            $query->select('id')
+                ->from('project_team_members')
+                ->where('project_id', $project->id)
+                ->whereNull('ended_on');
+        })
+        ->whereDate('created_at', now()->toDateString())
+        ->sum('total_effort_in_effortsheet');
+        $remainingExpectedEffort = $totalExpectedHourInMonth - $currentActualEffort;
+        $currentDate = now(config('constants.timezone.indian'));
+        $daysTillToday = count($this->getProjectWorkingDays($project->client->month_start_date, $currentDate));
+        $remainingDays = $workingDaysInMonth - $daysTillToday;
+        $daysInAWeek = 5;
+        $weeklyHoursToCover = 0;
+        if ($remainingDays !== 0) {
+            $weeklyHoursToCover = $remainingExpectedEffort / $remainingDays * $daysInAWeek;
+        }
+
+        return [
+            'monthlyApprovedHour' => $monthlyApprovedHour,
+            'totalExpectedHourInMonth' => $totalExpectedHourInMonth,
+            'totalWeeklyEffort' => $totalWeeklyExpectedEffort,
+            'remainingApprovedPipeline' => $remainingApprovedPipeline,
+            'remainingExpectedEffort' => $remainingExpectedEffort,
+            'weeklyHoursToCover' => $weeklyHoursToCover,
+        ];
+    }
+
+    public function getInvoiceTerms($project)
+    {
+        $invoiceTerms = ProjectInvoiceTerm::where('project_id', $project->id)->with('comment')->get();
+
+        return $invoiceTerms;
+    }
+
+    public function saveOrUpdateDeliveryReport($data, $project, $index)
+    {
+        if ($data['delivery_report'] ?? null) {
+            $file = $data['delivery_report'];
+            $folder = '/delivery_report/' . date('Y') . '/' . date('m');
+            $originalName = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $fileName = $project->name . '_' . $index + 1 . '.' . $extension;
+
+            return Storage::putFileAs($folder, $file, $fileName);
+        }
+    }
+
+    public function showDeliveryReport($invoiceId)
+    {
+        $invoiceTerm = ProjectInvoiceTerm::where('id', $invoiceId)->first();
+        $filePath = storage_path('app/' . $invoiceTerm->delivery_report);
+        $content = file_get_contents($filePath);
+        $deliveryReport = pathinfo($invoiceTerm->delivery_report)['filename'];
+
+        return response($content)->withHeaders([
+            'content-type' => mime_content_type($filePath),
+            'deliveryReport' => $deliveryReport,
+        ]);
+    }
+
+    public function getPendingDeliveryReportInvoices()
+    {
+        $currentDate = Carbon::now();
+        $futureDate = $currentDate->copy()->addDays(config('constants.finance.scheduled-invoice.delivery-report-reminder-days'));
+
+        $groupedInvoices = ProjectInvoiceTerm::where('invoice_date', '<=', $futureDate)
+            ->where('report_required', true)
+            ->where('delivery_report', null)
+            ->whereNotIn('status', ['sent', 'paid'])
+            ->whereMonth('invoice_date', strval($currentDate->month))
+            ->with('project')
+            ->get()
+            ->groupBy('project_id');
+
+        $keyAccountManagersDetails = [];
+
+        $groupedInvoices->each(function ($invoiceTerms, $projectId) use (&$keyAccountManagersDetails) {
+            $project = $invoiceTerms->first()->project;
+            $user = $project->client->keyAccountManager;
+
+            if ($user) {
+                $userId = $user->id;
+
+                if (! isset($keyAccountManagersDetails[$userId])) {
+                    $keyAccountManagersDetails[$userId] = (object) [
+                        'invoiceTerms' => collect(),
+                        'email' => $user->email,
+                        'name' => $user->name,
+                    ];
+                }
+
+                $keyAccountManagersDetails[$userId]->invoiceTerms = $keyAccountManagersDetails[$userId]->invoiceTerms->merge($invoiceTerms);
+            }
+        });
+
+        return $keyAccountManagersDetails;
+    }
+
+    public function getProjectStages(Project $project)
+    {
+        $project_id = $project->id;
+        $stages = ProjectStages::where('project_id', $project_id)->orderBy('id')->get();
+
+        return $stages;
+    }
+
+    public function storeStage(array $newStages, int $projectId)
+    {
+        foreach ($newStages as $stage) {
+            $stageData = $this->prepareStageData($stage);
+
+            ProjectStages::create(array_merge($stageData, [
+                'project_id' => $projectId,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]));
+        }
+    }
+
+    public function updateStage(array $updatedStages)
+    {
+        foreach ($updatedStages as $stage) {
+            $stageData = $this->prepareStageData($stage);
+
+            $existingStage = ProjectStages::find($stage['id']);
+            if ($existingStage) {
+                $existingStage->update(array_merge($stageData, [
+                    'updated_at' => now(),
+                ]));
+            }
+        }
+    }
+
+    public function removeStage(array $idArr)
+    {
+        ProjectStages::whereIn('id', $idArr)->delete();
+    }
+
+    public function createProjectStageList(string $stageName)
+    {
+        $formattedStageName = strtolower($stageName);
+        ProjectStagesListing::firstOrCreate(
+            ['name' => $formattedStageName]
+        );
+    }
+
+    public function addCommentOnInvoiceTerm($term, $existingTerm)
+    {
+        if (isset($term['comment'])) {
+            Comment::updateOrCreate(
+                [
+                    'user_id' => auth()->id(),
+                    'commentable_id' => $existingTerm->id,
+                    'commentable_type' => ProjectInvoiceTerm::class,
+                ],
+                [
+                    'body' => $term['comment']['body'],
+                ]
+            );
+        }
+    }
+
+    private function prepareStageData(array $stage): array
+    {
+        $startDate = null;
+        $endDate = null;
+        $duration = null;
+
+        if ($stage['start_date']) {
+            $formattedStartDate = Carbon::parse($stage['start_date']);
+            $startDate = $formattedStartDate->setTimezone(config('app.timezone'))->format(config('constants.datetime_format'));
+        }
+
+        if ($stage['end_date']) {
+            $formattedEndDate = Carbon::parse($stage['end_date']);
+            $endDate = $formattedEndDate->setTimezone(config('app.timezone'))->format(config('constants.datetime_format'));
+            $duration = Carbon::parse($stage['start_date'])->diffInSeconds($formattedEndDate);
+        }
+
+        $this->createProjectStageList($stage['stage_name']);
+
+        return [
+            'stage_name' => $stage['stage_name'],
+            'comments' => $stage['comments'] ?? null,
+            'status' => $stage['status'] ?? 'pending',
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'expected_end_date' => $stage['expected_end_date'],
+            'duration' => $duration === 0 ? 1 : $duration,
+        ];
+    }
+
+    private function getListTabCounts($filters, $showAllProjects, $userId)
+    {
+        $counts = [
+            'mainProjectsCount' => array_merge($filters, ['status' => 'active', 'is_amc' => false]),
+            'AMCProjectCount' => array_merge($filters, ['status' => 'active', 'is_amc' => true]),
+            'haltedProjectsCount' => array_merge($filters, ['status' => 'halted', 'is_amc' => false]),
+            'inactiveProjectsCount' => array_merge($filters, ['status' => 'inactive', 'is_amc' => false]),
+        ];
+
+        foreach ($counts as $key => $tabFilters) {
+            $query = Project::query()->applyFilter($tabFilters);
+            $counts[$key] = $showAllProjects
+                ? $query->count()
+                : $query->linkedToTeamMember($userId)->count();
+        }
+
+        return $counts;
+    }
+
     private function updateProjectDetails($data, $project)
     {
         $isProjectUpdated = $project->update([
@@ -218,6 +625,9 @@ class ProjectService implements ProjectServiceContract
         }
 
         $project->is_ready_to_renew ? $project->tag('get-renewed') : $project->untag('get-renewed');
+
+        $invoiceTerms = $data['invoiceTerms'] ?? [];
+        $this->updateInvoiceTerms($invoiceTerms, $project);
 
         return $isProjectUpdated;
     }
@@ -261,6 +671,60 @@ class ProjectService implements ProjectServiceContract
                 ]);
             }
         }
+    }
+
+    private function updateInvoiceTerms($invoiceTerms, $project)
+    {
+        if (empty($invoiceTerms)) {
+            $project->invoiceTerms()->delete();
+
+            return;
+        }
+
+        $existingTerms = $project->invoiceTerms()->get()->keyBy('id');
+
+        $termIds = [];
+        foreach ($invoiceTerms as $index => $term) {
+            $termId = $term['id'] ?? null;
+            $invoice = $project->invoices()->where('sent_on', $term['invoice_date'])->first();
+
+            if ($termId && isset($existingTerms[$termId])) {
+                $existingTerm = $existingTerms[$termId];
+                $filePath = $existingTerm->delivery_report;
+
+                if (isset($term['delivery_report'])) {
+                    $filePath = $this->saveOrUpdateDeliveryReport($term, $project, $index);
+                }
+
+                $existingTerm->update([
+                    'invoice_date' => $term['invoice_date'],
+                    'amount' => $term['amount'],
+                    'report_required' => $term['report_required'] ?? $existingTerm->report_required,
+                    'client_acceptance_required' => $term['client_acceptance_required'] ?? $existingTerm->client_acceptance_required,
+                    'is_accepted' => $term['is_accepted'] ?? $existingTerm->is_accepted,
+                    'delivery_report' => $filePath,
+                ]);
+
+                $this->addCommentOnInvoiceTerm($term, $existingTerm);
+                $termIds[] = $termId;
+            } else {
+                $filePath = $this->saveOrUpdateDeliveryReport($term, $project, $index);
+                $newTerm = $project->invoiceTerms()->create([
+                    'project_id' => $project->id,
+                    'invoice_date' => $term['invoice_date'],
+                    'status' => $invoice ? $invoice->status : $term['status'],
+                    'amount' => $term['amount'],
+                    'report_required' => $term['report_required'] ?? false,
+                    'client_acceptance_required' => $term['client_acceptance_required'] ?? false,
+                    'is_accepted' => $term['is_accepted'] ?? false,
+                    'delivery_report' => $filePath,
+                ]);
+
+                $termIds[] = $newTerm->id;
+            }
+        }
+
+        $project->invoiceTerms()->whereNotIn('id', $termIds)->delete();
     }
 
     private function updateProjectRepositories($data, $project)
@@ -336,112 +800,12 @@ class ProjectService implements ProjectServiceContract
     {
         $client = Client::find($clientID);
         $clientProjectsCount = $client->projects->count() ?: 0;
-        $clientProjectsCount = $clientProjectsCount + 1;
+        $clientProjectsCount += 1;
 
         return sprintf('%03s', $clientProjectsCount);
     }
 
-    public function getWorkingDays($project)
-    {
-        $startDate = $project->client->month_start_date;
-        $endDate = $project->client->month_end_date;
-        $period = CarbonPeriod::create($startDate, $endDate);
-        $numberOfWorkingDays = 0;
-        $weekend = ['Saturday', 'Sunday'];
-        foreach ($period as $date) {
-            if (! in_array($date->format('l'), $weekend)) {
-                $numberOfWorkingDays++;
-            }
-        }
-
-        return $numberOfWorkingDays;
-    }
-
-    public function saveOrUpdateProjectContract($data, $project)
-    {
-        if ($data['contract_file'] ?? null) {
-            $file = $data['contract_file'];
-            $folder = '/contract/' . date('Y') . '/' . date('m');
-            $fileName = $file->getClientOriginalName();
-            $filePath = Storage::putFileAs($folder, $file, $fileName);
-            ProjectContract::updateOrCreate(
-                ['project_id' => $project->id],
-                ['contract_file_path' => $filePath]
-            );
-        }
-    }
-
-    public function getMailDetailsForKeyAccountManagers()
-    {
-        $zeroEffortProject = ProjectTeamMember::where('daily_expected_effort', 0)->get('project_id');
-        $projects = Project::whereIn('id', $zeroEffortProject)->get();
-        $keyAccountManagersDetails = [];
-        foreach ($projects as $project) {
-            $user = $project->client->keyAccountManager;
-            if ($user) {
-                $keyAccountManagersDetails[$user->id][] = [
-                    'project' => $project,
-                    'email' => $user->email,
-                    'name' => $user->name,
-                ];
-            }
-        }
-
-        return $keyAccountManagersDetails;
-    }
-
-    public function getMailDetailsForProjectKeyAccountManagers()
-    {
-        $currenttime = Carbon::today(config('constants.timezone.indian'));
-        $projects = Project::wheretype('fixed-budget')->wherestatus('active')->where('end_date', '<', $currenttime)->get();
-        $projectsData = [];
-        foreach ($projects as $project) {
-            $user = $project->client->keyAccountManager;
-            if ($user) {
-                $projectsData[$user->id][] = [
-                    'project' => $project,
-                    'email' => $user->email,
-                    'name' => $user->name,
-                ];
-            }
-        }
-
-        return $projectsData;
-    }
-
-    public function getMailDetailsForZeroExpectedHours()
-    {
-        $zeroEffortProjectsIds = ProjectTeamMember::where('daily_expected_effort', 0)->pluck('project_id');
-        $projectsWithZeroEffort = Project::with(['teamMembers'])->whereIn('id', $zeroEffortProjectsIds)->where('status', 'active')->get();
-        $projectDetails = [];
-        foreach ($projectsWithZeroEffort as $project) {
-            foreach ($project->teamMembers as $teamMember) {
-                if ($teamMember->getOriginal('pivot_daily_expected_effort') == 0) {
-                    $projectDetails[] = [
-                        'projects' => $project,
-                        'name' => $teamMember->name,
-                        'email' => $teamMember->email,
-                    ];
-                }
-            }
-        }
-
-        return $projectDetails;
-    }
-
-    public function projectFTEExport($filters)
-    {
-        $employees = Employee::applyFilters($filters)
-            ->get();
-
-        $employees = $this->formatProjectFTEFOrExportAll($employees);
-        $currentTimeStamp = now();
-        $filename = "FTE-$currentTimeStamp->year$currentTimeStamp->month$currentTimeStamp->day.xlsx";
-
-        return Excel::download(new ProjectFTEExport($employees), $filename);
-    }
-
-    private function formatProjectFTEFOrExportAll($employees)
+    private function formatProjectFTEFOrExportAll($employees, $startDate, $endDate)
     {
         $teamMembers = [];
         foreach ($employees as $employee) {
@@ -451,58 +815,16 @@ class ProjectService implements ProjectServiceContract
             foreach ($employee->user->activeProjectTeamMembers as $activeProjectTeamMember) {
                 $teamMember = [
                     $employee->name,
-                    number_format($employee->user->ftes['main'], 2),
+                    number_format($employee->getFtes($startDate, $endDate)['main'], 2),
                     $activeProjectTeamMember->project->name,
-                    number_format($activeProjectTeamMember->fte, 2)
+                    number_format($activeProjectTeamMember->getFte($startDate, $endDate), 2),
+                    number_format($activeProjectTeamMember->getCommittedEfforts($startDate, $endDate), 2),
+                    number_format($activeProjectTeamMember->getActualEffortBetween($startDate, $endDate, 'actual_effort'), 2),
                 ];
                 $teamMembers[] = $teamMember;
             }
         }
 
         return $teamMembers;
-    }
-
-    public function getProjectsWithTeamMemberRequirementData()
-    {
-        $projectsWithTeamMemberRequirement = Project::with('client')->status('active')
-            ->withCount('getTeamMembers as team_member_count')
-            ->withSum('resourceRequirement as team_member_needed', 'total_requirement')
-            ->havingRaw('team_member_needed - team_member_count')
-            ->get();
-
-        $totalAdditionalResourceRequired = [];
-        $data = [];
-        $totalAdditionalResourceRequired = 0;
-        foreach ($projectsWithTeamMemberRequirement as $project) {
-            $count = $project->team_member_needed - $project->team_member_count;
-            $totalAdditionalResourceRequired += $count;
-            $projectData = [
-                'totalResourceRequirement' => $project->team_member_needed,
-                'totalResourceDeployed' => $project->team_member_count,
-                'additionalResourceRequired' => $project->team_member_needed - $project->team_member_count,
-                'teamMemberNeededByDesignation' => [],
-                'currentTeamMemberCountByDesignation' => [],
-            ];
-
-            $designations = $this->getDesignations();
-            $designationKeys = array_keys($designations);
-
-            foreach ($designationKeys as $designationName) {
-                $totalResourceRequirementCount = $project->getResourceRequirementByDesignation($designationName)->total_requirement;
-                if ($totalResourceRequirementCount > 0) {
-                    $projectData['teamMemberNeededByDesignation'][$designations[$designationName]] = $totalResourceRequirementCount;
-                }
-                $totalResourceDeployedCount = $project->getDeployedCountForDesignation($designationName);
-                if ($totalResourceDeployedCount > 0) {
-                    $projectData['currentTeamMemberCountByDesignation'][$designations[$designationName]] = $totalResourceDeployedCount;
-                }
-            }
-            $data[$project->client->name][$project->name] = $projectData;
-        }
-
-        return [
-            'totalCount' => $totalAdditionalResourceRequired,
-            'data' => $data,
-        ];
     }
 }

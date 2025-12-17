@@ -2,42 +2,18 @@
 
 return [
     'name' => 'Prospect',
+    'customer-types' => [
+        'new' => 'New',
+        'existing' => 'Existing',
+        'dormant' => 'Dormant',
+    ],
     'status' => [
-        'active' => 'Active',
-        'inactive' => 'Inactive'
+        'pending' => 'Pending',
+        'proposal-sent' => 'Proposal Sent',
+        'discussions-ongoing' => 'Discussions Ongoing',
+        'converted' => 'Converted',
+        'rejected' => 'Rejected',
+        'client-unresponsive' => 'Client Unresponsive',
+        'final-decision-pending' => 'Final Decision Pending',
     ],
-
-    'prospect-form-stages' => [
-        'client-details' => [
-            'display-name' => 'Client Details'
-        ],
-
-        'contact-persons' => [
-            'display-name' => 'Contact Persons'
-        ],
-
-        'prospect-requirements' => [
-            'display-name' => 'Requirements'
-        ]
-    ],
-
-    'prospect-show-tabs' => [
-        'prospect-info' => [
-            'display-name' => 'Prospect info'
-        ],
-
-        'prospect-progress' => [
-            'display-name' => 'Progress'
-        ],
-    ],
-
-    'default-prospect-show-tab' => 'prospect-progress',
-
-    'checklist' => [
-        'convert-into-client',
-        'contract',
-        'proposal',
-        'nda',
-        'introduction'
-    ]
 ];

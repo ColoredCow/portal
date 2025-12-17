@@ -2,9 +2,9 @@
 
 namespace Modules\HR\Database\Factories;
 
-use Modules\HR\Entities\ApplicationRoundReview;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\HR\Entities\ApplicationRound;
+use Modules\HR\Entities\ApplicationRoundReview;
 
 class HrApplicationRoundReviewFactory extends Factory
 {

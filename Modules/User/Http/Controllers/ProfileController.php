@@ -2,10 +2,10 @@
 
 namespace Modules\User\Http\Controllers;
 
+use Modules\HR\Http\Requests\ProfileEditRequest;
 use Modules\User\Contracts\ProfileServiceContract;
 use Modules\User\Entities\User;
 use Modules\User\Entities\UserProfile;
-use Modules\HR\Http\Requests\ProfileEditRequest;
 
 class ProfileController extends ModuleBaseController
 {
@@ -21,12 +21,13 @@ class ProfileController extends ModuleBaseController
         return view('user::profile.index', $this->service->index());
     }
 
-    public function update(ProfileEditRequest $request, User $user)
+    public function update(ProfileEditRequest $request, $userId)
     {
+        $user = User::withTrashed()->find($userId);
         $user->name = $request->name;
         $user->nickname = $request->nickName;
         $user->employee->name = $request->name;
-        $user->employee->domain_id = $request->domainId;
+        $user->employee->designation_id = $request->designationId;
         if ($user->profile != null) {
             $user->profile->mobile = $request->mobile;
             $user->profile->spouse_name = $request->spouse_name;
@@ -34,6 +35,9 @@ class ProfileController extends ModuleBaseController
             $user->profile->marital_status = $request->marital_status;
             $user->profile->current_location = $request->current_location;
             $user->profile->designation = $request->designation;
+            $user->profile->address = $request->address;
+            $user->profile->insurance_tenants = $request->insurance_tenants;
+            $user->profile->save();
         } else {
             $userProfile = new UserProfile();
             $userProfile->user_id = $user->id;
@@ -43,9 +47,13 @@ class ProfileController extends ModuleBaseController
             $userProfile->spouse_name = $request->spouse_name;
             $userProfile->current_location = $request->current_location;
             $userProfile->designation = $request->designation;
+            $userProfile->address = $request->address;
+            $userProfile->insurance_tenants = $request->insurance_tenants;
             $userProfile->save();
         }
-        $user->push();
+
+        $user->save();
+        $user->employee->save();
 
         return back();
     }

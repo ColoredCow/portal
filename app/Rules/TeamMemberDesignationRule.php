@@ -19,16 +19,21 @@ class TeamMemberDesignationRule implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param string $attribute
+     * @param mixed  $value
+     *
      * @return bool
+     */
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
     public function passes($attribute, $value)
     {
         foreach ($value as $memberData) {
             if (isset($memberData['designation']) == false) {
                 return false;
-            } elseif ($memberData['designation'] == null) {
+            }
+            if ($memberData['designation'] == null) {
                 return false;
             }
         }

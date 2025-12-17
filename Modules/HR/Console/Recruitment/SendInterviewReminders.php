@@ -26,16 +26,6 @@ class SendInterviewReminders extends Command
     protected $description = 'Send reminders to the interviewers as well as applicants for the interviews scheduled for today';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed

@@ -4,12 +4,13 @@ namespace Modules\LegalDocument\Emails\NDA;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Modules\User\Entities\User;
 use Illuminate\Queue\SerializesModels;
+use Modules\User\Entities\User;
 
 class SendToApprover extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $approver;
     public $mailTemplate;

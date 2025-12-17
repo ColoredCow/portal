@@ -22,7 +22,7 @@ return [
             'label' => 'Settings',
             'route' => 'sales-characteristic.index',
             'active' => ['sales-characteristic.index', 'sales-characteristic.create', 'sales-characteristic.edit'],
-        ]
+        ],
     ],
     'sales-area' => [
         'paginate' => 10,
@@ -33,6 +33,6 @@ return [
             'int' => 'Numeric',
             'float' => 'Decimal',
             'text' => 'Text',
-        ]
+        ],
     ],
 ];

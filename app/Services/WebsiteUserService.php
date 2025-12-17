@@ -6,12 +6,12 @@ use Corcel\Laravel\Auth\AuthUserProvider;
 
 class WebsiteUserService
 {
-    public $user;
+    protected $user;
 
     public function __construct()
     {
         if (config('database.connections.wordpress.enabled')) {
-            $userProvider = new AuthUserProvider;
+            $userProvider = new AuthUserProvider();
             $this->user = $userProvider->retrieveByCredentials(['email' => auth()->user()->email]);
         }
     }

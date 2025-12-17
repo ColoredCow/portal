@@ -20,17 +20,7 @@ class SyncEffortsheet extends Command
      *
      * @var string
      */
-    protected $description = 'This commands syncs the effortsheets with the projects';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    protected $description = 'This commands syncs the EffortSheets with the projects';
 
     /**
      * Execute the console command.
@@ -42,7 +32,7 @@ class SyncEffortsheet extends Command
         $projects = Project::where('status', 'active')->get();
 
         foreach ($projects as $project) {
-            $effortTracking = new EffortTrackingService;
+            $effortTracking = new EffortTrackingService();
             $effortTracking->getEffortForProject($project);
         }
     }

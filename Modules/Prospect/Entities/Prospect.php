@@ -2,135 +2,64 @@
 
 namespace Modules\Prospect\Entities;
 
-use Modules\User\Entities\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\ModuleChecklist\Entities\NDAMeta;
-use Modules\Communication\Entities\CalendarMeeting;
-use Modules\ModuleChecklist\Entities\ModuleChecklist;
+use Modules\Client\Entities\Client;
+use Modules\User\Entities\User;
 
 class Prospect extends Model
 {
-    use HasFactory, SoftDeletes;
-
+    protected $fillable = [];
     protected $table = 'prospects';
-    protected $dates = ['deleted_at'];
-    protected $fillable = ['created_by', 'status', 'assign_to', 'name', 'coming_from', 'coming_from_id', 'brief_info'];
 
-    protected static function booted()
+    protected $casts = [
+        'proposal_sent_date' => 'datetime:Y-m-d',
+    ];
+
+    public function pocUser()
     {
-        static::created(function ($prospect) {
-            $prospect->syncDefaultChecklist();
-        });
+        return $this->belongsTo(User::class, 'poc_user_id');
     }
 
-    public function contactPersons()
+    public function comments()
     {
-        return $this->hasMany(ProspectContactPerson::class);
+        return $this->hasMany(ProspectComment::class);
     }
 
-    public function requirements()
+    public function getFormattedDate($date)
     {
-        return $this->hasMany(ProspectRequirement::class);
+        return $date ? Carbon::parse($date)->format('M d, Y')
+            : '-';
     }
 
-    public function assignTo()
+    public function client()
     {
-        return $this->belongsTo(User::class, 'assign_to');
+        return $this->belongsTo(Client::class, 'client_id');
     }
 
-    public function createdBy()
+    public function getProspectDisplayName()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->organization_name ?? optional($this->client)->name ?? 'N/A';
     }
 
-    public function histories()
+    public function getFormattedBudgetAttribute()
     {
-        return $this->hasMany(ProspectHistory::class);
-    }
+        $budget = (string) $this->budget;
 
-    public function checklistStatuses()
-    {
-        return $this->hasMany(ProspectChecklistStatus::class);
-    }
-
-    public function getChecklistCurrentTask($checklistID, $checkListTaskID = null)
-    {
-        $checkListStatus = $this->checklistStatuses()
-            ->where('status', 'pending')
-            ->where('module_checklist_id', $checklistID)
-            ->first();
-
-        if (! $checkListStatus) {
-            return '';
+        // if currency is less than one thousand
+        if (strlen($budget) <= 3) {
+            return $budget;
         }
 
-        return $checkListStatus->moduleChecklistTask->name;
+        $numberFormat = $this->currency == 'INR' ? 'en_IN' : 'en_US';
+        $formatter = new \NumberFormatter($numberFormat, \NumberFormatter::DECIMAL);
+        $formattedBudget = $formatter->format($this->budget);
+
+        return $formattedBudget;
     }
 
-    public function isChecklistCompleted($moduleCheckListID)
+    public function insights()
     {
-        $query = $this->checklistStatuses();
-
-        if ($moduleCheckListID) {
-            $query->where('module_checklist_id', $moduleCheckListID);
-        }
-
-        if (! $query->count()) {
-            return false;
-        }
-
-        return (clone $query)->where('status', 'pending')->first() ? false : true;
-    }
-
-    public function isChecklistInProgress($moduleCheckListID = null)
-    {
-        $query = $this->checklistStatuses();
-        if ($moduleCheckListID) {
-            $query->where('module_checklist_id', $moduleCheckListID);
-        }
-
-        return $query->where('status', '!=', 'pending')->first() ? true : false;
-    }
-
-    public function ndaMeta()
-    {
-        return $this->belongsToMany(NDAMeta::class, 'prospect_nda_meta', 'prospect_id', 'nda_meta_id');
-    }
-
-    public function getCheckListStatus($checkListID)
-    {
-        if ($this->isChecklistCompleted($checkListID)) {
-            return 'completed';
-        }
-
-        if ($this->isChecklistInProgress($checkListID)) {
-            return 'in-progress';
-        }
-
-        return 'pending';
-    }
-
-    public function syncDefaultChecklist()
-    {
-        $moduleChecklist = ModuleChecklist::whereIn('slug', config('prospect.checklist'))
-            ->get();
-
-        foreach ($moduleChecklist as $checklist) {
-            foreach ($checklist->tasks ?: []  as $task) {
-                ProspectChecklistStatus::create([
-                    'prospect_id' => $this->id,
-                    'module_checklist_id' => $checklist->id,
-                    'module_checklist_task_id' => $task->id,
-                    'status' => 'pending'
-                ]);
-            }
-        }
-    }
-
-    public function calendarMeetings()
-    {
-        return $this->belongsToMany(CalendarMeeting::class, 'prospect_calendar_meeting', 'prospect_id', 'calendar_meeting_id')->withTimestamps();
+        return $this->hasMany(ProspectInsight::class);
     }
 }

@@ -12,6 +12,9 @@ use Modules\AppointmentSlots\Entities\AppointmentSlot;
 use Modules\HR\Entities\Employee;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectTeamMember;
+use Modules\Prospect\Entities\Prospect;
+use Modules\Prospect\Entities\ProspectComment;
+use Modules\Prospect\Entities\ProspectInsight;
 use Modules\User\Database\Factories\UserFactory;
 use Modules\User\Traits\CanBeExtended;
 use Modules\User\Traits\HasWebsiteUser;
@@ -19,7 +22,12 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable, SoftDeletes, HasRoles, HasWebsiteUser, CanBeExtended, HasFactory;
+    use Notifiable;
+    use SoftDeletes;
+    use HasRoles;
+    use HasWebsiteUser;
+    use CanBeExtended;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -36,7 +44,7 @@ class User extends Authenticatable
      * The attributes that should be hidden for arrays.
      *
      * @var array
-     **/
+     */
     protected $hidden = [
         'password', 'remember_token',
     ];
@@ -44,11 +52,6 @@ class User extends Authenticatable
     public static function findByEmail($email)
     {
         return self::where('email', $email)->first();
-    }
-
-    protected static function newFactory()
-    {
-        return new UserFactory();
     }
 
     /**
@@ -75,7 +78,7 @@ class User extends Authenticatable
 
     public function getAvatarAttribute($value)
     {
-        return ($value) ?: url('/images/default_profile.png');
+        return $value ?: url('/images/default_profile.png');
     }
 
     public function books()
@@ -152,6 +155,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(ProjectTeamMember::class, 'team_member_id');
     }
+
     public function activeProjectTeamMembers()
     {
         return $this->hasMany(ProjectTeamMember::class, 'team_member_id')->where('ended_on', null);
@@ -192,10 +196,75 @@ class User extends Authenticatable
         return ['main' => $fte, 'amc' => $fteAmc];
     }
 
+    public function getTotalHoursAttribute()
+    {
+        return [
+            'billable' => $this->getTotalBillableHours(),
+            'non_billable' => $this->getTotalNonBillableHours(),
+        ];
+    }
+
+    public function getTotalBillableHours($isBillable = true)
+    {
+        return $this->projectTeamMembers()->whereHas('project', function ($query) use ($isBillable) {
+            $query->billable($isBillable);
+        })->get()->sum->getCurrentActualEffort();
+    }
+
+    public function getTotalNonBillableHours($isBillable = false)
+    {
+        $nonBillableActualEffort = $this->projectTeamMembers()->whereHas('project', function ($query) use ($isBillable) {
+            $query->billable($isBillable);
+        })->get()->sum->getNonBillableEffort();
+
+        $isBillable = true;
+
+        $billableActualEffort = $this->projectTeamMembers()->whereHas('project', function ($query) use ($isBillable) {
+            $query->billable($isBillable);
+        })->get()->sum->getNonBillableEffort();
+
+        $nonBillableEffortInBillableProject = $billableActualEffort - $this->getTotalBillableHours();
+        $totalNonBillableEffort = $nonBillableEffortInBillableProject + $nonBillableActualEffort;
+
+        return $totalNonBillableEffort;
+    }
+
     public function activeProjects()
     {
-        $projects = Project::linkedToTeamMember($this->id)->get();
+        return Project::linkedToTeamMember($this->id)->get();
+    }
 
-        return $projects;
+    public function prospects()
+    {
+        return $this->hasMany(Prospect::class, 'poc_user_id');
+    }
+
+    public function getActiveUsersAttribute()
+    {
+        $users = self::query()->orderBy('name')->get();
+        $activeUsers = [];
+        foreach ($users as $user) {
+            if (! $user->isActiveEmployee) {
+                continue;
+            }
+            $activeUsers[] = $user;
+        }
+
+        return $activeUsers;
+    }
+
+    public function prospectsComments()
+    {
+        return $this->hasMany(ProspectComment::class);
+    }
+
+    public function prospectInsights()
+    {
+        return $this->hasMany(ProspectInsight::class);
+    }
+
+    protected static function newFactory()
+    {
+        return new UserFactory();
     }
 }

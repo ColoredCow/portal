@@ -2,8 +2,8 @@
 
 namespace Modules\HR\Database\Factories;
 
-use Modules\HR\Entities\Applicant;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\HR\Entities\Applicant;
 
 class HrApplicantsFactory extends Factory
 {

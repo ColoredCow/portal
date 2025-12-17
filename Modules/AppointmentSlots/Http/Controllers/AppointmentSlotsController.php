@@ -2,6 +2,7 @@
 
 namespace Modules\AppointmentSlots\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\AppointmentSlots\Contracts\AppointmentSlotsServiceContract;
@@ -17,6 +18,7 @@ class AppointmentSlotsController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
      * @return \Illuminate\View\View
      */
     public function index()
@@ -24,17 +26,9 @@ class AppointmentSlotsController extends Controller
         return view('appointmentslots::index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function showAppointments($params)
     {
-        //
-    }
-
-    public function showAppointments(Request $request, $params)
-    {
-        $data = $this->service->showAppointments($request->all(), $params);
+        $data = $this->service->showAppointments($params);
 
         if (! $data) {
             return view('appointmentslots::select_appointments.interview_schedule_error_message');
@@ -47,50 +41,17 @@ class AppointmentSlotsController extends Controller
     {
         return $this->service->appointmentSelected($request->all());
     }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     */
-    public function store(Request $request)
+    public function show()
     {
-        //
+        return view('appointmentslots::user_appointments.show');
     }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     */
-    public function show($id)
+    public function update(Request $request)
     {
-        //
-    }
+        Auth::user()->meta()->updateOrCreate(
+            ['meta_key' => 'max_interviews_per_day'],
+            ['meta_value' => $request->max_interviews_per_day]
+        );
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     */
-    public function destroy($id)
-    {
-        //
+        return redirect()->back()->with('status', 'Saved Successfully!');
     }
 }

@@ -155,6 +155,7 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
+        App\Providers\ApplicantsComposerServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
@@ -164,6 +165,7 @@ return [
         OfficeSuite\OfficeSuitesServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
+        Sentry\Laravel\ServiceProvider::class,
     ],
 
     /*

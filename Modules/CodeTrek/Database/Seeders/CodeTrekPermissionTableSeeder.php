@@ -2,10 +2,10 @@
 
 namespace Modules\CodeTrek\Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class CodeTrekPermissionTableSeeder extends Seeder
 {
@@ -40,6 +40,11 @@ class CodeTrekPermissionTableSeeder extends Seeder
         $superAdminRole = Role::where(['name' => 'super-admin'])->first();
         foreach ($applicantPermissions as $permission) {
             $superAdminRole->givePermissionTo($permission['name']);
+        }
+        //Give permission to employee role
+        $employeeRole = Role::where(['name' => 'employee'])->first();
+        foreach ($applicantPermissions as $permission) {
+            $employeeRole->givePermissionTo($permission['name']);
         }
     }
 }

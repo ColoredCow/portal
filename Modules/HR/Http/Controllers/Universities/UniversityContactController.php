@@ -15,7 +15,7 @@ class UniversityContactController extends Controller
             'email'=>$request['email'],
             'designation'=>$request['designation'] ?? null,
             'phone'=>$request['phone'] ?? null,
-            'hr_university_id'=>$request['hr_university_id']
+            'hr_university_id'=>$request['hr_university_id'],
         ]);
 
         return response()->json(['message'=>'Contact created successfully', 'data' => $contact], 200);
@@ -35,7 +35,6 @@ class UniversityContactController extends Controller
 
     public function destroy(UniversityContact $contact)
     {
-        $university = $contact->university;
         $isDeleted = $contact->delete();
         $status = $isDeleted ? 'Contact Deleted successfully!' : 'Something went wrong! Please try again';
 

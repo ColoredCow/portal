@@ -2,11 +2,11 @@
 
 namespace Modules\HR\Http\Controllers\Universities;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
+use Modules\HR\Contracts\UniversityServiceContract;
 use Modules\HR\Entities\University;
 use Modules\HR\Http\Requests\UniversityRequest;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Modules\HR\Contracts\UniversityServiceContract;
 
 class UniversityController extends Controller
 {
@@ -23,7 +23,7 @@ class UniversityController extends Controller
     public function index()
     {
         $this->authorize('list', University::class);
-        $searchString = (request()->has('search')) ? request()->input('search') : false;
+        $searchString = request()->has('search') ? request()->input('search') : false;
         $universities = $this->service->list($searchString);
 
         return view('hr::universities.index')->with([
@@ -41,7 +41,7 @@ class UniversityController extends Controller
         $university = University::create([
             'name' => $request['name'],
             'address' => $request['address'] ?? null,
-            'rating' => $request['rating'] ?? null
+            'rating' => $request['rating'] ?? null,
         ]);
 
         return redirect(route('universities.edit', $university))->with('status', 'University created successfully!');
@@ -59,7 +59,7 @@ class UniversityController extends Controller
         $university->update([
             'name' => $request['name'],
             'address' => $request['address'] ?? null,
-            'rating' => $request['rating'] ?? null
+            'rating' => $request['rating'] ?? null,
         ]);
 
         return redirect(route('universities.edit', $university))->with('status', 'University updated successfully!');

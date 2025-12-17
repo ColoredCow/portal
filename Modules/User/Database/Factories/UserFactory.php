@@ -23,11 +23,11 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->name . 'Hello ',
             'email' => $this->faker->unique()->email,
             'password' => Hash::make('12345678'),
             'provider' => 'default',
-            'provider_id' => 'default'
+            'provider_id' => 'default',
         ];
     }
 }

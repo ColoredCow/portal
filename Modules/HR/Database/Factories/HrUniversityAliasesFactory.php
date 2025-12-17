@@ -22,10 +22,6 @@ class HrUniversityAliasesFactory extends Factory
      */
     public function definition()
     {
-        return
-        [
-            'hr_university_id' => University::factory()->create()->id,
-            'name'=> $this->faker->name,
-        ];
+        return ['hr_university_id' => University::factory()->create()->id, 'name'=> $this->faker->name];
     }
 }

@@ -24,16 +24,6 @@ class ZeroEffortInProject extends Command
     protected $description = 'Send a list of projects to the project manager when the team member effort is zero.';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed

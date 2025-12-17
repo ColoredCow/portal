@@ -11,7 +11,8 @@ use Modules\Invoice\Entities\Invoice;
 
 class SendPendingInvoiceMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $month;
     public $year;
@@ -49,7 +50,7 @@ class SendPendingInvoiceMail extends Mailable
         if (! $subject) {
             $subject = Setting::where('module', 'invoice')->where('setting_key', 'invoice_reminder_subject')->first();
             $subject = $subject ? $subject->setting_value : '';
-            $subject = str_replace($templateVariablesForSubject['project-name'], optional($this->invoice->project)->name ?: ($this->invoice->client->name . ' Projects'), $subject);
+            $subject = str_replace($templateVariablesForSubject['project-name'], optional($this->invoice->project)->name ?: $this->invoice->client->name . ' Projects', $subject);
             $subject = str_replace($templateVariablesForSubject['term'], $this->monthName, $subject);
             $subject = str_replace($templateVariablesForSubject['year'], $this->year, $subject);
         }

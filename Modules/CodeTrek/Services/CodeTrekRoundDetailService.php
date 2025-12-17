@@ -18,7 +18,7 @@ class CodeTrekRoundDetailService
     public function takeAction($data, $id)
     {
         $applicant = CodeTrekApplicant::findOrFail($id);
-        $applicant->round_name = $data->input('round');
+        $applicant->latest_round_name = $data->input('round');
         $applicant->save();
 
         $this->takeActionApplicantToRound($applicant);
@@ -28,11 +28,12 @@ class CodeTrekRoundDetailService
 
     public function takeActionApplicantToRound($applicant)
     {
-        $applicationRound = new CodeTrekApplicantRoundDetail;
+        $applicationRound = new CodeTrekApplicantRoundDetail();
         $applicationRound->applicant_id = $applicant->id;
-        $applicationRound->round_name = $applicant->round_name;
+        $applicationRound->latest_round_name = $applicant->latest_round_name;
         $applicationRound->feedback = null;
         $applicationRound->start_date = today();
+        CodeTrekApplicant::find($applicant->id);
         $applicationRound->save();
     }
 }

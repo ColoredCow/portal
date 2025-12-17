@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\HR\Employee;
-use App\User;
 use Illuminate\Database\Seeder;
+use Modules\HR\Entities\Employee;
+use Modules\User\Entities\User;
 
 class ExistingEmployeesSeeder extends Seeder
 {
@@ -23,6 +23,7 @@ class ExistingEmployeesSeeder extends Seeder
             Employee::create([
                 'user_id' => $user->id,
                 'name' => $user->name,
+                'staff_type' => 'Employee',
             ]);
         }
     }

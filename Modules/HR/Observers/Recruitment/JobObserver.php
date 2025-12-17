@@ -2,18 +2,19 @@
 
 namespace Modules\HR\Observers\Recruitment;
 
+use Corcel\Model\Option as Option;
+use Corcel\Model\Post as Corcel;
+use Corcel\Model\Term as Term;
+use Corcel\Model\TermRelationship as TermRelationship;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\Round;
-use Corcel\Model\Post as Corcel;
-use Corcel\Model\TermRelationship as TermRelationship;
-use Corcel\Model\Term as Term;
 
 class JobObserver
 {
     /**
      * Listen to the Job create event.
      *
-     * @param  \Modules\HR\Entities\Job  $job
+     * @param  \Modules\HR\Entities\Job $job
      * @return void
      */
     public function created(Job $job)
@@ -31,6 +32,7 @@ class JobObserver
         $corcel->post_status = config('hr.opportunities-status-wp-mapping')[$job_status];
         $corcel->save();
         $corcel->saveMeta('hr_id', $job->id);
+        $corcel->saveMeta(config('hr.slugs.job-form.key'), config('hr.slugs.job-form.value'));
         $post = $corcel->hasMeta('hr_id', $job->id)->first();
         $term = Term::select('term_id')->where(['name' => $job->domain])->first();
         if ($term) {
@@ -40,13 +42,14 @@ class JobObserver
             $relation->save();
         }
         $job->opportunity_id = $post->ID;
+        $job->link = Option::get('siteurl') . $post->post_type . '/' . $post->post_name . '/';
         $job->save();
     }
 
     /**
      * Listen to the Job update event.
      *
-     * @param  \Modules\HR\Entities\Job  $job
+     * @param  \Modules\HR\Entities\Job $job
      * @return void
      */
     public function updated(Job $job)
@@ -75,7 +78,7 @@ class JobObserver
     /**
      * Listen to the Job delete event.
      *
-     * @param  \Modules\HR\Entities\Job  $job
+     * @param  \Modules\HR\Entities\Job $job
      * @return void
      */
     public function deleted(Job $job)

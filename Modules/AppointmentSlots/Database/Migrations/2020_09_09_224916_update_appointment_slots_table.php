@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class UpdateAppointmentSlotsTable extends Migration
 {
@@ -15,8 +15,12 @@ class UpdateAppointmentSlotsTable extends Migration
     {
         Schema::table('appointment_slots', function (Blueprint $table) {
             $table->string('recurrence')->default('none')->after('end_time');
-            $table->bigInteger('parent_appointment_slot_id')->nullable()->unsigned()->after('reserved_for_type');
-            $table->foreign('parent_appointment_slot_id')->references('id')->on('appointment_slots')->onDelete('cascade');
+            $table->bigInteger('parent_appointment_slot_id')->nullable()
+            ->unsigned()
+            ->after('reserved_for_type');
+            $table->foreign('parent_appointment_slot_id')->references('id')
+                ->on('appointment_slots')
+                ->onDelete('cascade');
             $table->softDeletes();
         });
     }

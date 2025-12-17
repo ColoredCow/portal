@@ -19,6 +19,7 @@ class SalesAreaController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
      * @return Renderable
      */
     public function index()
@@ -30,35 +31,20 @@ class SalesAreaController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create()
-    {
-        return view('salesautomation::sales-area.create');
-    }
-
-    /**
      * Store a newly created resource in storage.
+     *
      * @param Request $request
      */
     public function store(Request $request)
     {
-        $salesArea = $this->service->store($request->all());
+        $this->service->store($request->all());
 
         return redirect()->route('sales-area.index')->with('status', 'Sales Area added successfully!');
     }
 
     /**
-     * Show the specified resource.
-     * @param SalesArea $salesArea
-     */
-    public function show(SalesArea $salesArea)
-    {
-    }
-
-    /**
      * Show the form for editing the specified resource.
+     *
      * @param SalesArea $salesArea
      */
     public function edit(SalesArea $salesArea)
@@ -68,7 +54,8 @@ class SalesAreaController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param Request $request
+     *
+     * @param Request   $request
      * @param SalesArea $salesArea
      */
     public function update(Request $request, SalesArea $salesArea)
@@ -80,6 +67,7 @@ class SalesAreaController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
      * @param SalesArea $salesArea
      */
     public function destroy(SalesArea $salesArea)

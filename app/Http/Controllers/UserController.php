@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use Modules\User\Entities\User;
-use Illuminate\Support\Facades\Auth;
 use App\Services\GSuiteUserService;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Modules\User\Entities\User;
 
 class UserController extends Controller
 {
@@ -40,15 +40,12 @@ class UserController extends Controller
             $user->employee->update([
                 'name' => $gsuiteUser->getName()->fullName,
                 'joined_on' => Carbon::parse($gsuiteUser->getCreationTime())->format(config('constants.date_format')),
-                'designation' => $gsuiteUser->getOrganizations()[0]['title'],
             ]);
         }
     }
 
     public function projects()
     {
-        $userProjects = Auth::user()->activeProjects();
-
-        return $userProjects;
+        return Auth::user()->activeProjects();
     }
 }

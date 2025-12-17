@@ -8,16 +8,19 @@ use Illuminate\Queue\SerializesModels;
 
 class InterviewerScheduledRoundsReminder extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Application rounds scheduled for the user.
+     *
      * @var array
      */
     public $applicationRounds;
 
     /**
      * Create a new message instance.
+     *
      * @param array $applicationRounds
      */
     public function __construct($applicationRounds)

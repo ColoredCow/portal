@@ -7,7 +7,7 @@
             <h4 class="alert-heading mb-2">Hello! Great you made it to this page!</h4>
             <p class="fz-16">This is a calendar where you can see available slots to schedule your interview with ColoredCow. Simply click on a slot that suits you best and verify your email id!</p>
             <hr>
-            <p class="mb-0 fz-14"><i class="fa fa-lightbulb-o"></i>&nbsp;Pro tip: You can use month, week, day or list format to view the available slots to navigate easily.</p>
+            <p class="mb-0 fz-14"><i class="fa fa-lightbulb-o"></i>&nbsp;Pro tip: In case you don't find any available slots, please use the navigation arrows to check the available slots in the next month.</p>
         </div>
         @include('appointmentslots::select_appointments.select_appointment_modal')
     </div>
@@ -21,6 +21,24 @@
 @section('js_scripts')
 
     <script type = "text/javascript" src = "/lib/fullcalendar/lib/main.js"> </script>
+    <script>
+        window.onload = function() {
+            checkAndHideRows();
+        };
+        function checkAndHideRows() {
+            var candidateCalendar = document.getElementById("calendar");
+            var rows = candidateCalendar.querySelectorAll('tr');
+            rows.forEach(function (row) {
+                var disabledClasses = row.querySelectorAll('.fc-day-disabled');
+                if (disabledClasses.length == 7) {
+                    row.style.display = 'none';
+                }
+            });
+        }
+        document.addEventListener('click', function(){
+            checkAndHideRows();
+        });
+    </script>
 
     <script >
     new Vue({
@@ -35,6 +53,34 @@
         },
 
         methods: {
+            calculateMinDate(that) {
+                this.minDate = null;
+                this.events.forEach(event => {
+                this.eventStart = new Date(event.start);
+                if (this.minDate === null || this.eventStart < this.minDate) {
+                    this.minDate = this.eventStart;
+                }
+                });
+                this.minDate.setDate(this.minDate.getDate() + 1);
+                this.minDateString = this.minDate.toISOString().split('T')[0];
+                return this.minDateString;
+            },
+
+            calculateMaxDate(that) {
+                this.maxDate = null;
+                this.events.forEach(event => {
+                    this.eventEnd = event.end ? new Date(event.end) : new Date(event.start);
+                if (this.maxDate === null || this.eventEnd > this.maxDate) {
+                    this.maxDate = this.eventEnd;
+                }
+                });
+                this.offset = this.maxDate.getTimezoneOffset();
+                this.maxDate.setDate(this.maxDate.getDate() + 1);
+                this.maxDateWithOneDayAdded = new Date(this.maxDate.getTime() - (this.offset*60*1000));
+                this.maxDateString = this.maxDateWithOneDayAdded.toISOString().split('T')[0];
+                return this.maxDateString;
+            },
+
             selectAppointment(id) {
                 this.selected_appointment_id = id;
                 $('#select_appointment_modal').modal('show');
@@ -64,14 +110,18 @@
                 var calendarEl = document.getElementById('calendar');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     initialView: 'dayGridMonth',
-                    headerToolbar: { left: 'prev,next today', center: 'title', right: 'dayGridMonth'},
+                    headerToolbar: { left: 'prev,next today', center: 'title', right: null},
                     height: 'auto',
                     navLinks: true,
                     editable: true,
                     selectable: true,
                     selectMirror: true,
+                    validRange: {
+                        start: this.startDate,
+                        end: this.endDate
+                    },
                     nowIndicator: true,
-                    events: @json($freeSlots),
+                    events: this.events,
                     eventClick: function(args) {
                         that.selectAppointment(args.event.id);
                     },
@@ -88,6 +138,9 @@
         },
 
         mounted() {
+            this.events = @json($freeSlots);
+            this.startDate = this.calculateMinDate(this);
+            this.endDate = this.calculateMaxDate(this);
             this.renderCalender(this)
         }
     });

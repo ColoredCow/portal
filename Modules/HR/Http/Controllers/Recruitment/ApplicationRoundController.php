@@ -16,8 +16,9 @@ class ApplicationRoundController extends Controller
 {
     /**
      * Update the specified resource in storage.
-     * @param  ApplicationRoundRequest $request
-     * @param  ApplicationRound        $round
+     *
+     * @param ApplicationRoundRequest $request
+     * @param ApplicationRound        $round
      */
     public function update(ApplicationRoundRequest $request, ApplicationRound $round)
     {
@@ -30,16 +31,17 @@ class ApplicationRoundController extends Controller
         $routeName = $round->application->job->type == 'internship' ? 'applications.internship.index' : 'applications.job.index';
         if ($validatedData['action'] == 'update' || $validatedData['action'] == 'schedule-update') {
             return redirect()->back()->with('status', 'success');
-        } else {
-            return redirect()->route($routeName)->with('status', 'Application updated successfully!');
         }
+
+        return redirect()->route($routeName)->with('status', 'Application updated successfully!');
     }
 
     /**
      * Send email to the applicant for current round.
      *
-     * @param  ApplicantRoundMailRequest $request
-     * @param  ApplicationRound            $applicationRound
+     * @param ApplicantRoundMailRequest $request
+     * @param ApplicationRound          $applicationRound
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function sendMail(ApplicantRoundMailRequest $request, ApplicationRound $applicationRound)
@@ -65,8 +67,8 @@ class ApplicationRoundController extends Controller
 
         return redirect()->back()->with(
             'status',
-            "Mail sent successfully to the <b>$applicant->name</b> at <b>$applicant->email</b>.<br>
-            <span data-toggle='modal' data-target='#round_mail_$applicationRound->id' class='modal-toggler-text text-primary'>Click here to see the mail content.</a>"
+            "Mail sent successfully to the <b>{$applicant->name}</b> at <b>{$applicant->email}</b>.<br>
+            <span data-toggle='modal' data-target='#round_mail_{$applicationRound->id}' class='modal-toggler-text text-primary'>Click here to see the mail content.</a>"
         );
     }
 

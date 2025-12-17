@@ -20,6 +20,8 @@
     <div class="mb-2">
         <span>Your FTE: <b class="{{ auth()->user()->ftes['main'] < 1 ? 'text-danger' : 'text-success' }}">{{auth()->user()->ftes['main'] }}</b> </span>
     </div>
+
+    <br>
     
     <div class="card-deck dashboard_view d-flex flex-wrap justify-content-start">
         @can('library_books.view')
@@ -27,6 +29,12 @@
                 <user-dashboard-library />
             </div>
         @endcan
+        
+        {{-- @can('employee_profitability_list.view')
+        <div class="pr-5 mb-4 min-w-389">
+            <employee-profitability-list />
+        </div>
+        @endcan --}}
 
         @can('projects.view')
         <div class="pr-5 mb-4 min-w-389">

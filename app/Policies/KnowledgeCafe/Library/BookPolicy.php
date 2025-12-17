@@ -2,9 +2,8 @@
 
 namespace App\Policies\KnowledgeCafe\Library;
 
-use Modules\User\Entities\User;
-use App\Models\KnowledgeCafe\Library\Book;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Modules\User\Entities\User;
 
 class BookPolicy
 {
@@ -13,11 +12,11 @@ class BookPolicy
     /**
      * Determine whether the user can view the book.
      *
-     * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     * @param \Modules\User\Entities\User $user
+     *
      * @return mixed
      */
-    public function view(User $user, Book $book)
+    public function view(User $user)
     {
         return $user->hasPermissionTo('library_books.view');
     }
@@ -25,7 +24,8 @@ class BookPolicy
     /**
      * Determine whether the user can create books.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param \Modules\User\Entities\User $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -36,11 +36,11 @@ class BookPolicy
     /**
      * Determine whether the user can update the book.
      *
-     * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     * @param \Modules\User\Entities\User $user
+     *
      * @return mixed
      */
-    public function update(User $user, Book $book)
+    public function update(User $user)
     {
         return $user->hasPermissionTo('library_books.update');
     }
@@ -48,11 +48,11 @@ class BookPolicy
     /**
      * Determine whether the user can delete the book.
      *
-     * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     * @param \Modules\User\Entities\User $user
+     *
      * @return mixed
      */
-    public function delete(User $user, Book $book)
+    public function delete(User $user)
     {
         return $user->hasPermissionTo('library_books.delete');
     }
@@ -60,7 +60,8 @@ class BookPolicy
     /**
      * Determine whether the user can list books.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param \Modules\User\Entities\User $user
+     *
      * @return mixed
      */
     public function list(User $user)

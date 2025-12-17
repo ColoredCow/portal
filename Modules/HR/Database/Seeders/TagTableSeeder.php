@@ -2,8 +2,8 @@
 
 namespace Modules\HR\Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Tag;
+use Illuminate\Database\Seeder;
 
 class TagTableSeeder extends Seeder
 {
@@ -34,7 +34,7 @@ class TagTableSeeder extends Seeder
                 Tag::updateOrCreate([
                     'slug' => $key,
                     'name' => $status,
-                    'background_color' => $colors[$key]
+                    'background_color' => $colors[$key],
                  ]);
             }
         }

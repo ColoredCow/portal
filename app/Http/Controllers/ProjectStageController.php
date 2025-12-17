@@ -12,7 +12,7 @@ class ProjectStageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\ProjectStageRequest  $request
+     * @param \App\Http\Requests\ProjectStageRequest $request
      */
     public function store(ProjectStageRequest $request)
     {
@@ -51,13 +51,13 @@ class ProjectStageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\ProjectStageRequest  $request
-     * @param  \App\Models\ProjectStage  $stage
+     * @param \App\Http\Requests\ProjectStageRequest $request
+     * @param \App\Models\ProjectStage               $stage
      */
     public function update(ProjectStageRequest $request, ProjectStage $stage)
     {
         $validated = $request->validated();
-        $updated = $stage->update([
+        $stage->update([
             'name' => $validated['name'],
             'type' => $validated['type'],
             'start_date' => $validated['start_date'] ? DateHelper::formatDateToSave($validated['start_date']) : null,

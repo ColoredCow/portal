@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Project\Contracts;
+namespace Modules\Project\Contract;
 
 interface ProjectServiceContract
 {

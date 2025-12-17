@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\DB;
 use Modules\Client\Entities\Client;
 use Modules\EffortTracking\Entities\Task;
 use Modules\Invoice\Entities\Invoice;
-use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Services\InvoiceService;
 use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
@@ -20,7 +19,11 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class Project extends Model implements Auditable
 {
-    use HasFactory, HasTags, Filters, SoftDeletes, \OwenIt\Auditing\Auditable;
+    use HasFactory;
+    use HasTags;
+    use Filters;
+    use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'projects';
 
@@ -28,10 +31,7 @@ class Project extends Model implements Auditable
 
     protected $dates = ['start_date', 'end_date'];
 
-    protected static function newFactory()
-    {
-        return new ProjectFactory();
-    }
+    protected $appends = ['velocity', 'current_hours_for_month', 'velocity_color_class'];
 
     public function scopeIsAMC($query, $isAmc)
     {
@@ -56,6 +56,11 @@ class Project extends Model implements Auditable
         return $this->hasMany(ProjectRepository::class);
     }
 
+    public function invoiceTerms()
+    {
+        return $this->hasMany(ProjectInvoiceTerm::class);
+    }
+
     public function resourceRequirement()
     {
         return $this->hasMany(ProjectResourceRequirement::class);
@@ -77,7 +82,7 @@ class Project extends Model implements Auditable
         $deployedCount = $this->getDeployedCountForDesignation($designation);
         $toBeDeployedCount = $resourceRequirementCount - $deployedCount;
 
-        return ($toBeDeployedCount > 0) ? $toBeDeployedCount : (($toBeDeployedCount < 0) ? $toBeDeployedCount : '0');
+        return $toBeDeployedCount > 0 ? $toBeDeployedCount : ($toBeDeployedCount < 0 ? $toBeDeployedCount : '0');
     }
 
     public function getTotalToBeDeployedCount()
@@ -109,6 +114,11 @@ class Project extends Model implements Auditable
     public function getTeamMembers()
     {
         return $this->hasMany(ProjectTeamMember::class)->whereNULL('ended_on');
+    }
+
+    public function getKeyAccountManagerAttribute()
+    {
+        return $this->client->keyAccountManager;
     }
 
     public function getTeamMembersGroupedByEngagement()
@@ -168,19 +178,66 @@ class Project extends Model implements Auditable
         $startDate = $startDate ?? $this->client->month_start_date;
         $endDate = $endDate ?? $this->client->month_end_date;
 
-        return $this->getExpectedHoursInMonthAttribute($startDate, $endDate) ? round($this->getHoursBookedForMonth($monthToSubtract, $startDate, $endDate) / ($this->getExpectedHoursInMonthAttribute($startDate, $endDate)), 2) : 0;
+        return $this->getExpectedHoursInMonthAttribute($startDate, $endDate) ? round($this->getHoursBookedForMonth($monthToSubtract, $startDate, $endDate) / $this->getExpectedHoursInMonthAttribute($startDate, $endDate), 2) : 0;
     }
 
     public function getCurrentHoursForMonthAttribute()
     {
         $teamMembers = $this->getTeamMembers()->get();
-        $totalEffort = 0;
+        $actualEffort = 0;
 
         foreach ($teamMembers as $teamMember) {
-            $totalEffort += $teamMember->projectTeamMemberEffort->whereBetween('added_on', [$this->client->month_start_date->subday(), $this->client->month_end_date])->sum('actual_effort');
+            $actualEffort += $teamMember->projectTeamMemberEffort->whereBetween('added_on', [$this->client->month_start_date->subday(), $this->client->month_end_date])->sum('actual_effort');
+        }
+
+        return $actualEffort;
+    }
+
+    public function getTotalEffort()
+    {
+        $teamMembers = $this->getTeamMembers()->get();
+        $totalEffort = [];
+
+        foreach ($teamMembers as $teamMember) {
+            $totalEffort[] = $teamMember->projectTeamMemberEffort->whereBetween('added_on', [$this->client->month_start_date->subday(), $this->client->month_end_date])->sum('total_effort_in_effortsheet');
         }
 
         return $totalEffort;
+    }
+
+    public function getDailyTotalEffort()
+    {
+        $teamMEmbers = $this->getTeamMembers()->get();
+        $totalEffortPerDay = 0;
+
+        foreach ($teamMEmbers as $teamMember) {
+            $totalEffortPerDay += $teamMember->daily_expected_effort;
+        }
+
+        return $totalEffortPerDay;
+    }
+
+    public function getactualEffortOfTeamMember($id)
+    {
+        $teamMembers = new ProjectTeamMemberEffort();
+        $currentMonth = date('m');
+
+        $actualEffort = $teamMembers->where('project_team_member_id', $id)
+                                    ->whereMonth('added_on', $currentMonth)
+                                    ->sum('employee_actual_working_effort');
+
+        return $actualEffort;
+    }
+    public function getbillableEffortOfTeamMember($id)
+    {
+        $teamMembers = new ProjectTeamMemberEffort();
+        $currentMonth = date('m');
+
+        $billableEffort = $teamMembers->where('project_team_member_id', $id)
+                                    ->whereMonth('added_on', $currentMonth)
+                                    ->sum('actual_effort');
+
+        return $billableEffort;
     }
 
     public function getVelocityAttribute()
@@ -191,6 +248,7 @@ class Project extends Model implements Auditable
     public function getWorkingDaysList($startDate, $endDate)
     {
         $period = CarbonPeriod::create($startDate, $endDate);
+
         $dates = [];
         $weekend = ['Saturday', 'Sunday'];
         foreach ($period as $date) {
@@ -201,15 +259,20 @@ class Project extends Model implements Auditable
 
         return $dates;
     }
+
     public function getIsReadyToRenewAttribute()
     {
         $diff = optional($this->end_date)->diffInDays(today());
 
         if ($diff === null) {
             return true;
-        } elseif ($this->end_date <= today()) {
+        }
+
+        if ($this->end_date <= today()) {
             return true;
-        } elseif ($diff <= 30) {
+        }
+
+        if ($diff <= 30) {
             return false;
         }
 
@@ -309,7 +372,7 @@ class Project extends Model implements Auditable
         }
 
         foreach ($this->getTeamMembersGroupedByEngagement() as $groupedResources) {
-            $totalAmount += ($groupedResources->billing_engagement / 100) * $groupedResources->resource_count * $service_rate * $numberOfMonths;
+            $totalAmount += $groupedResources->billing_engagement / 100 * $groupedResources->resource_count * $service_rate * $numberOfMonths;
         }
 
         return round($totalAmount, 2);
@@ -325,8 +388,6 @@ class Project extends Model implements Auditable
         $meta = $this->meta()->where('key', $metaKey)->first();
         if ($meta) {
             return $meta->value;
-        } else {
-            return;
         }
     }
 
@@ -361,27 +422,9 @@ class Project extends Model implements Auditable
         });
     }
 
-    public function ledgerAccounts()
+    public function scopeBillable($query, $billable = true)
     {
-        return $this->hasMany(LedgerAccount::class);
-    }
-
-    public function ledgerAccountsOnlyCredit()
-    {
-        return $this->ledgerAccounts()->whereNotNull('credit');
-    }
-
-    public function ledgerAccountsOnlyDebit()
-    {
-        return $this->ledgerAccounts()->whereNotNull('debit');
-    }
-
-    public function getTotalLedgerAmount($quarter = null)
-    {
-        $amount = 0;
-        $amount += (optional($this->ledgerAccountsOnlyCredit()->quarter($quarter))->get()->sum('credit') - optional($this->ledgerAccountsOnlyDebit()->quarter($quarter))->get()->sum('debit'));
-
-        return $amount;
+        return $query->where('type', $billable ? '<>' : '=', 'non-billable');
     }
 
     public function hasCustomInvoiceTemplate()
@@ -398,5 +441,19 @@ class Project extends Model implements Auditable
     public function billingDetail()
     {
         return $this->hasOne(ProjectBillingDetail::class);
+    }
+
+    public function getVelocityColorClassAttribute()
+    {
+        $today = today(config('constants.timezone.indian'));
+        $billingDate = $this->client->billingDetails->billing_date;
+        $todayDate = (int) $today->format('j');
+
+        return $billingDate == $todayDate ? 'text-dark' : ($this->velocity >= 1 ? 'text-success' : 'text-danger');
+    }
+
+    protected static function newFactory()
+    {
+        return new ProjectFactory();
     }
 }

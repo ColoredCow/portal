@@ -66,7 +66,7 @@
                         <label for="title" class="fz-14 leading-none text-secondary mb-1">Status</label>
                         <select class="form-control" name="status" id="status" value="{{ old('status') }}">
                             @foreach (config('hr.opportunities-status') as $status => $label)
-                                <option value="{{ $status }}" {{ old('status') == $status ? 'selected' : '' }}>{{ $label }}</option>
+                                <option value="{{ $label }}" {{ old('status') == $status ? 'selected' : '' }}>{{ $status }}</option>
                             @endforeach
                         </select>
                     </div>

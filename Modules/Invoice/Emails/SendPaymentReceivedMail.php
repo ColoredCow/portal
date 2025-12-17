@@ -10,7 +10,8 @@ use Modules\Invoice\Entities\Invoice;
 
 class SendPaymentReceivedMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $month;
     public $year;
@@ -47,7 +48,7 @@ class SendPaymentReceivedMail extends Mailable
         if (! $subject) {
             $subject = Setting::where('module', 'invoice')->where('setting_key', 'received_invoice_payment_subject')->first();
             $subject = $subject ? $subject->setting_value : '';
-            $subject = str_replace($templateVariablesForSubject['project-name'], optional($this->invoice->project)->name ?: ($this->invoice->client->name . ' Projects'), $subject);
+            $subject = str_replace($templateVariablesForSubject['project-name'], optional($this->invoice->project)->name ?: $this->invoice->client->name . ' Projects', $subject);
             $subject = str_replace($templateVariablesForSubject['term'], $this->monthName, $subject);
             $subject = str_replace($templateVariablesForSubject['year'], $this->year, $subject);
         }

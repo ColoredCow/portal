@@ -2,7 +2,16 @@
 
 @section('content')
 <div class="container" id='show_slots'>
-    <div  class="justify-content-between d-flex mb-3">
+    <div  class="justify-content-between d-flex mb-22">
+        <form action="{{ route('userappointments.show') }}" method="POST">
+        @csrf
+            <div class="card-body">
+                <h5 class="max-interview-heading fz-22">Maximum interviews in a day:
+                    <input type="number" class="col-xs text-center outline-none h-26 w-50 rounded-12 quantity" id="quantity" name="max_interviews_per_day" min="0" max="15" value="{{ old ('max_interviews_per_day', Auth::user()->metaValue('max_interviews_per_day')) }}">
+                    <input type="submit" class="btn btn-primary h-28 w-55 mt-0 pt-0.5 mb-1" value="Save">
+                </h5>
+            </div>
+        </form>
         <div class="p-2">
             @if($user->id!=auth()->id())
              <a class="text-secondary" href="{{route("userappointmentslots.show",auth()->id())}}"><i class="fa fa-backward"></i> See Your Appointments</a>

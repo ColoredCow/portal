@@ -2,9 +2,9 @@
 
 namespace Modules\HR\Entities;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\HR\Database\Factories\HrApplicationMetaFactory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ApplicationMeta extends Model
 {

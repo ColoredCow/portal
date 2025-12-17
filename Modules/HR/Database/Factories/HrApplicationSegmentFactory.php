@@ -2,9 +2,9 @@
 
 namespace Modules\HR\Database\Factories;
 
-use Modules\HR\Entities\ApplicationEvaluationSegment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\HR\Entities\Application;
+use Modules\HR\Entities\ApplicationEvaluationSegment;
 use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Evaluation\Segment;
 

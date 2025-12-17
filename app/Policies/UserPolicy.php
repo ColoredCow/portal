@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use Modules\User\Entities\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Modules\User\Entities\User;
 
 class UserPolicy
 {

@@ -6,7 +6,20 @@ return [
         'sent' => 'Sent',
         'paid' => 'Paid',
         'pending' => 'Pending',
-        'disputed' => 'Disputed'
+        'disputed' => 'Disputed',
+    ],
+
+    'loan' => [
+        'status' => [
+            'active' => [
+                'label' => 'Active',
+                'slug' => 'active',
+            ],
+            'completed' => [
+                'label' => 'Completed',
+                'slug' => 'completed',
+            ],
+        ],
     ],
 
     'default-date-format' => 'd M Y',
@@ -14,19 +27,23 @@ return [
     'mail' => [
         'unpaid-invoice' => [
             'email' => env('INVOICE_UNPAID_LIST_EMAIL', 'finance@coloredcow.com'),
-            'name' => env('INVOICE_UNPAID_LIST_NAME', 'ColoredCow Finance')
+            'name' => env('INVOICE_UNPAID_LIST_NAME', 'ColoredCow Finance'),
         ],
         'send-invoice' => [
             'email' => env('INVOICE_UNPAID_LIST_EMAIL', 'finance@coloredcow.com'),
-            'name' => env('INVOICE_UNPAID_LIST_NAME', 'ColoredCow Finance')
+            'name' => env('INVOICE_UNPAID_LIST_NAME', 'ColoredCow Finance'),
+        ],
+        'finance-team' => [
+            'email' => env('FINANCE_TEAM_EMAIL', 'finance@coloredcow.com'),
+            'name' => env('FINANCE_TEAM_EMAIL_NAME', 'ColoredCow Finance'),
         ],
     ],
 
     'pending-invoice-mail' => [
         'pending-invoice' => [
             'email' => env('INVOICE_UNPAID_LIST_EMAIL', 'finance@coloredcow.com'),
-            'name' => env('INVOICE_UNPAID_LIST_NAME', 'ColoredCow Finance')
-        ]
+            'name' => env('INVOICE_UNPAID_LIST_NAME', 'ColoredCow Finance'),
+        ],
     ],
 
     'region' => [
@@ -38,18 +55,18 @@ return [
         'billing-state' => 'Haryana',
         'igst' => '18%',
         'cgst' => '9%',
-        'sgst' => '9%'
+        'sgst' => '9%',
     ],
 
     'financial-month-details' => [
         'financial_year_start_month' => '04',
-        'financial_year_end_month' => '03'
+        'financial_year_end_month' => '03',
     ],
 
     'tax-details' => [
         'igst' => 0.18,
         'cgst' => 0.09,
-        'sgst' => 0.09
+        'sgst' => 0.09,
     ],
 
     'finance-details' => [
@@ -60,29 +77,49 @@ return [
                     'key' => 'bank-transfer',
                     'value' => 'Bank Transfer',
                 ],
-            ]
+            ],
         ],
-        'bank-address' => env('BANK_ADDRESS', ''),
-        'swift-code' => env('SWIFT_CODE', ''),
-        'ifci-code' => env('IFCI_CODE', ''),
-        'account-number' => env('ACCOUNT_NUMBER', ''),
         'holder-name' => 'ColoredCow Consulting Pvt. Ltd.',
         'phone' => env('COLOREDCOW_PHONE', ''),
         'pan' => env('PAN_NUMBER', ''),
         'gstin' => env('GSTIN', ''),
         'cin-no' => env('CIN_NO', ''),
         'hsn-code' => env('HSN_CODE', ''),
-        'correspondent-bank' => env('CORRESPONDENT_BANK', ''),
-        'correspondent-bank-swift-code' => env('CORRESPONDENT_BANK_SWIFT_CODE', ''),
-        'beneficiary-bank-of-usd' => env('BENEFICIARY_BANK_OF_USD', ''),
+        'msme' => env('MSME', ''),
+        'indian' => [
+            'bank-address' => env('INDIAN_INVOICE_BANK_ADDRESS', ''),
+            'swift-code' => env('INDIAN_INVOICE_SWIFT_CODE', ''),
+            'ifci-code' => env('INDIAN_INVOICE_IFCI_CODE', ''),
+            'account-number' => env('INDIAN_INVOICE_ACCOUNT_NUMBER', ''),
+        ],
+        'international' => [
+            'transaction-method' => [
+                'label' => 'Transaction Method',
+                'value' => [
+                    'bank-transfer' => [
+                        'key' => 'bank-transfer',
+                        'value' => 'Bank Transfer',
+                    ],
+                ],
+            ],
+            'bank-address' => env('INTERNATIONAL_INVOICE_BANK_ADDRESS', ''),
+            'swift-code' => env('INTERNATIONAL_INVOICE_SWIFT_CODE', ''),
+            'ifci-code' => env('INTERNATIONAL_INVOICE_IFCI_CODE', ''),
+            'account-number' => env('INTERNATIONAL_INVOICE_ACCOUNT_NUMBER', ''),
+            'correspondent-bank' => env('CORRESPONDENT_BANK', ''),
+            'correspondent-bank-swift-code' => env('CORRESPONDENT_BANK_SWIFT_CODE', ''),
+            'notstro-account-number' => env('NOSTRO_ACCOUNT_NUMBER', ''),
+            'ad-code' => env('AD_CODE', ''),
+            'purpose-code' => env('PURPOSE_CODE', ''),
+            'beneficiary-bank-of-usd' => env('BENEFICIARY_BANK_OF_USD', ''),
+        ],
     ],
-
     'coloredcow-details' => [
         'name' => 'ColoredCow Consulting Pvt. Ltd.',
         'gurgaon' => [
             'address-line-1' => 'F-61, Suncity, Sector - 54',
-            'address-line-2' => 'Gurgaon, Haryana, 122003, India'
-        ]
+            'address-line-2' => 'Gurgaon, Haryana, 122003, India',
+        ],
     ],
 
     'templates' => [
@@ -138,16 +175,39 @@ return [
                         'invoice-number' => '|*invoice_number*|',
                         'currency' => '|*currency*|',
                         'amount' => '|*amount*|',
-                        'amount_paid' => '|*amount_paid*|'
+                        'amount_paid' => '|*amount_paid*|',
                     ],
                 ],
-            ]
+            ],
         ],
         'invoice' => [
             'clients' => [
-                env('CUSTOM_INVOICE_CLIENT_1', '') => 'custom-invoice-template-1'
+                env('CUSTOM_INVOICE_CLIENT_1', '') => 'custom-invoice-template-1',
             ],
-            'projects' => []
-        ]
+            'projects' => [],
+        ],
     ],
+
+    'bank_message_patterns' => [
+        'citi' => [
+            'key' => 'citi',
+            'value' => env('CITI_BANK_MESSAGE_PATTERN'),
+        ],
+        'axis' => [
+            'key' => 'axis',
+            'value' => env('AXIS_BANK_MESSAGE_PATTERN'),
+        ],
+    ],
+
+    'currency_initials' => [
+        'usd' => 'USD',
+        'eur' => 'EUR',
+        'swi' => 'SWI',
+    ],
+
+    'ca-email' => [
+        'name' => env('CA_NAME', 'ColoredCow CA'),
+        'email' => env('CA_EMAIL', 'finance@coloredcow.com'),
+    ],
+    'invoice-google-drive-folder-id' => env('INVOICE_GDRIVE_FOLDER_ID'),
 ];

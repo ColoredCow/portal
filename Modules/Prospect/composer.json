@@ -1,17 +1,15 @@
 {
-    "name": "coloredcow/prospect",
+    "name": "nwidart/prospect",
     "description": "",
     "authors": [
         {
-            "name": "Pankaj Agrawal",
-            "email": "pankaj@coloredcow.com"
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
         }
     ],
     "extra": {
         "laravel": {
-            "providers": [
-                "Modules\\Prospect\\Providers\\ProspectServiceProvider"
-            ],
+            "providers": [],
             "aliases": {
 
             }

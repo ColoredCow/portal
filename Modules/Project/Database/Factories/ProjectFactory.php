@@ -3,9 +3,9 @@
 namespace Modules\Project\Database\Factories;
 
 use Carbon\Carbon;
-use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\Client\Entities\Client;
+use Modules\Project\Entities\Project;
 
 class ProjectFactory extends Factory
 {
@@ -35,7 +35,7 @@ class ProjectFactory extends Factory
             'total_estimated_hours' => 1080,
             'monthly_estimated_hours' => 180,
             'start_date' => Carbon::today()->subDays(11),
-            'end_date' => Carbon::today()->addMonth()
+            'end_date' => Carbon::today()->addMonth(),
         ];
     }
 }

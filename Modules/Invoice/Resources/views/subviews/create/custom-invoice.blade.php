@@ -147,7 +147,11 @@
                         if (client.id == this.clientId) {
                             this.client = client;
                             this.currency = client.currency;
-                            this.projects = _.orderBy(client.projects, 'name', 'asc');
+                            this.projects = _.orderBy(
+                                client.projects.filter(project => project.type !== 'non-billable'),
+                                'name',
+                                'asc'
+                            );
                         }
                     }
                 },

@@ -21,6 +21,6 @@ class Tag extends Model
         $b = hexdec(substr($hexColor, 5, 2));
         $yiq = (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
 
-        return ($yiq >= 128) ? '#000000' : '#FFFFFF';
+        return $yiq >= 128 ? '#000000' : '#FFFFFF';
     }
 }

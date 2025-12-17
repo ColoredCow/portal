@@ -3,12 +3,15 @@
 namespace Modules\Client\Services;
 
 use App\Models\Country;
-use Modules\User\Entities\User;
+use Illuminate\Support\Facades\Storage;
+use Modules\Client\Contracts\ClientServiceContract;
 use Modules\Client\Entities\Client;
 use Modules\Client\Entities\ClientAddress;
 use Modules\Client\Entities\ClientBillingDetail;
 use Modules\Client\Entities\ClientContactPerson;
-use Modules\Client\Contracts\ClientServiceContract;
+use Modules\Client\Entities\ClientContract;
+use Modules\Client\Entities\ClientMeta;
+use Modules\User\Entities\User;
 
 class ClientService implements ClientServiceContract
 {
@@ -17,18 +20,21 @@ class ClientService implements ClientServiceContract
         $filters = [
             'status' => $data['status'] ?? 'active',
             'name' => $data['name'] ?? null,
+            'sort' => $data['sort'] ?? 'name',
+            'direction' => $data['direction'] ?? 'asc',
         ];
+
         $clients = Client::applyFilter($filters)
-            ->with([
-                'linkedAsPartner' => function ($subQuery) use ($filters) {
-                    return $subQuery->applyFilter($filters)->orderBy('name');
-                },
-                'linkedAsDepartment' => function ($subQuery) use ($filters) {
-                    return $subQuery->applyFilter($filters)->orderBy('name');
-                },
-            ])
-            ->orderBy('name')
-            ->get();
+        ->with([
+            'linkedAsPartner' => function ($subQuery) use ($filters) {
+                return $subQuery->applyFilter($filters)->orderBy($filters['sort'], $filters['direction']);
+            },
+            'linkedAsDepartment' => function ($subQuery) use ($filters) {
+                return $subQuery->applyFilter($filters)->orderBy($filters['sort'], $filters['direction']);
+            },
+        ])
+        ->orderBy($filters['sort'], $filters['direction'])
+        ->get();
         $count = $clients->count();
 
         $topLevel = $clients->filter(function ($value) {
@@ -43,7 +49,10 @@ class ClientService implements ClientServiceContract
             $clients = $clients->diff($client->linkedAsDepartment);
         }
 
-        return ['clients' => $clients, 'count' => $count];
+        $activeClientsCount = Client::where('status', 'active')->count();
+        $inactiveClientsCount = Client::where('status', 'inactive')->count();
+
+        return ['clients' => $clients, 'count' => $count, 'activeClientsCount' => $activeClientsCount, 'inactiveClientsCount' => $inactiveClientsCount];
     }
 
     public function create()
@@ -65,7 +74,7 @@ class ClientService implements ClientServiceContract
                 'channelPartners' => $this->getChannelPartners(),
                 'parentOrganisations' => $this->getParentOrganisations(),
                 'client' => $client,
-                'section' => $section ?: config('client.default-client-form-stage')
+                'section' => $section ?: config('client.default-client-form-stage'),
             ];
         }
 
@@ -82,7 +91,7 @@ class ClientService implements ClientServiceContract
                 'client' => $client,
                 'section' => $section,
                 'countries' => Country::all(),
-                'addresses' => $client->addresses
+                'addresses' => $client->addresses,
             ];
         }
 
@@ -91,8 +100,16 @@ class ClientService implements ClientServiceContract
                 'client' => $client,
                 'section' => $section,
                 'clientBillingAddress' => $this->getClientBillingAddress($client),
-                'keyAccountManagers' => $this->getKeyAccountManagers(),
+                'keyAccountManagers' => $this->getKeyAccountManagers()->whereNull('deleted_at')->sortBy('name'),
                 'clientBillingDetail' => $client->billingDetails,
+            ];
+        }
+
+        if ($section == 'contract') {
+            return [
+                'client' => $client,
+                'section' => $section,
+                'contract' => $client->clientContracts,
             ];
         }
 
@@ -129,6 +146,12 @@ class ClientService implements ClientServiceContract
 
             case 'billing-details':
                 $this->updateBillingDetails($data, $client);
+                $nextStage = route('client.edit', [$client, 'contract']);
+                break;
+
+            case 'contract':
+                $this->updateContract($data, $client);
+                $nextStage = route('client.edit', [$client, 'projects']);
                 break;
 
             case 'default':
@@ -137,7 +160,7 @@ class ClientService implements ClientServiceContract
         }
 
         return [
-            'route' => ($data['submit_action'] == 'next') ? $nextStage : $defaultRoute,
+            'route' => $data['submit_action'] == 'next' ? $nextStage : $defaultRoute,
         ];
     }
 
@@ -155,6 +178,7 @@ class ClientService implements ClientServiceContract
     {
         $data['status'] = 'active';
         $data['client_id'] = Client::max('client_id') + 1;
+        $data['is_billable'] = $data['is_billable'] ?? false;
 
         $newClient = Client::create($data);
         $clientAddress = new clientAddress();
@@ -165,10 +189,62 @@ class ClientService implements ClientServiceContract
         return $newClient;
     }
 
+    public function getChannelPartners()
+    {
+        return Client::where('is_channel_partner', true)->get();
+    }
+
+    public function getBillableClients($status = 'active')
+    {
+        return Client::billable()->status($status)->with('projects')->orderBy('name')->get();
+    }
+
+    public function getParentOrganisations()
+    {
+        return Client::where('has_departments', true)->get();
+    }
+
+    public function getClientBillingAddress($client)
+    {
+        $addresses = $client->addresses()->with('country')->get();
+        if ($addresses->isEmpty()) {
+            return;
+        }
+
+        $billingAddress = $addresses->where('type', 'billing-address')->first();
+        if ($billingAddress && $billingAddress->id) {
+            return $billingAddress;
+        }
+
+        return $addresses->first();
+    }
+
+    public function saveOrUpdateClientContract($data, $client)
+    {
+        if ($data['contract_file'] ?? null) {
+            $file = $data['contract_file'];
+            $folder = '/clientcontract/' . date('Y') . '/' . date('m');
+            $fileName = $file->getClientOriginalName();
+            $filePath = Storage::putFileAs($folder, $file, $fileName);
+            $start_date = $data['start_date'] ?? null;
+            $end_date = $data['end_date'] ?? null;
+
+            ClientContract::updateOrCreate(
+                ['client_id' => $client->id],
+                [
+                    'contract_file_path' => $filePath,
+                    'start_date' => $start_date,
+                    'end_date' => $end_date,
+                ],
+            );
+        }
+    }
+
     private function updateClientDetails($data, $client)
     {
         $data['is_channel_partner'] = $data['is_channel_partner'] ?? false;
         $data['has_departments'] = $data['has_departments'] ?? false;
+        $data['is_billable'] = $data['is_billable'] ?? false;
         $isDataUpdated = $client->update($data);
 
         if ($data['status'] ?? 'active' == 'inactive') {
@@ -243,33 +319,38 @@ class ClientService implements ClientServiceContract
     private function updateBillingDetails($data, $client)
     {
         $client->update(['key_account_manager_id' => $data['key_account_manager_id']]);
+
         ClientBillingDetail::updateOrCreate(['client_id' => $client->id], $data);
 
         return true;
     }
-
-    public function getChannelPartners()
+    private function updateContract($data, $client)
     {
-        return Client::where('is_channel_partner', true)->get();
-    }
+        $this->saveOrUpdateClientContract($data, $client);
 
-    public function getParentOrganisations()
-    {
-        return Client::where('has_departments', true)->get();
-    }
-
-    public function getClientBillingAddress($client)
-    {
-        $addresses = $client->addresses()->with('country')->get();
-        if ($addresses->isEmpty()) {
-            return;
+        if (isset($data['contract_level'])) {
+            ClientMeta::updateOrCreate(
+                [
+                    'key' => config('client.meta_keys.contract_level.key'),
+                    'client_id' => $client->id,
+                ],
+                [
+                    'value' => $data['contract_level'],
+                ]
+            );
+        } else {
+            $data['contract_level'] = 'project';
+            ClientMeta::updateOrCreate(
+                [
+                    'key' => config('client.meta_keys.contract_level.key'),
+                    'client_id' => $client->id,
+                ],
+                [
+                    'value' => 'project',
+                ]
+            );
         }
 
-        $billingAddress = $addresses->where('type', 'billing-address')->first();
-        if ($billingAddress && $billingAddress->id) {
-            return $billingAddress;
-        }
-
-        return $addresses->first();
+        return true;
     }
 }

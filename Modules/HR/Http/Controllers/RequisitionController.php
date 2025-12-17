@@ -2,17 +2,16 @@
 
 namespace Modules\HR\Http\Controllers;
 
-use Modules\HR\Services\RequisitionService;
-use Illuminate\Routing\Controller;
-use Illuminate\Http\Request;
-use Modules\HR\Entities\Employee;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Modules\HR\Entities\JobRequisition;
-use Illuminate\Support\Facades\Mail;
-use Modules\HR\Entities\HRRequisitionHiredBatchMembers;
-use Modules\HR\Emails\SendHiringMail;
-use Modules\HR\Entities\HRRequisitionHiredBatch;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Modules\HR\Entities\Employee;
+use Modules\HR\Entities\HRRequisitionHiredBatch;
+use Modules\HR\Entities\HRRequisitionHiredBatchMembers;
+use Modules\HR\Entities\JobRequisition;
+use Modules\HR\Jobs\SendHiringMailJob;
+use Modules\HR\Services\RequisitionService;
 
 class RequisitionController extends Controller
 {
@@ -44,15 +43,17 @@ class RequisitionController extends Controller
         $jobrequisition = $request->validate([
             'domain' => 'required|integer',
             'job' => 'required|integer',
+            'user_id' => 'required|integer',
         ]);
 
         JobRequisition::create([
             'domain_id' => $jobrequisition['domain'],
-            'job_id' => $jobrequisition['job']
+            'job_id' => $jobrequisition['job'],
+            'requested_by' => $jobrequisition['user_id'],
         ]);
 
         $jobHiring = null;
-        Mail::send(new sendHiringMail($jobHiring));
+        SendHiringMailJob::dispatch($jobHiring);
 
         return redirect()->back();
     }

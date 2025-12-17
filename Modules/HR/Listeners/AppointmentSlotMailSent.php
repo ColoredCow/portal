@@ -20,7 +20,7 @@ class AppointmentSlotMailSent
     /**
      * Handle the event.
      *
-     * @param  object  $event
+     * @param object $event
      */
     public function handle($event)
     {
@@ -37,7 +37,7 @@ class AppointmentSlotMailSent
             $applicationRound->scheduledPerson->notify(new RoundMailSentNotification($applicationRound));
         }
 
-        $applicationMeta = new ApplicationMeta;
+        $applicationMeta = new ApplicationMeta();
         $applicationMeta->hr_application_id = $applicationRound->application->id;
         $applicationMeta->key = config('constants.hr.application-meta.keys.custom-mail');
 
@@ -47,7 +47,7 @@ class AppointmentSlotMailSent
             'mail-subject' => $mailData['subject'],
             'mail-body' => $mailData['body'],
             'mail-sender' => $applicationRound->scheduledPerson->name,
-            'title' => "Email sent to schedule interview for {$applicationRound->round->name}"
+            'title' => "Email sent to schedule interview for {$applicationRound->round->name}",
         ]);
 
         $applicationMeta->save();

@@ -4,6 +4,7 @@ namespace Modules\Client\Http\Controllers;
 
 use Modules\Client\Contracts\ClientServiceContract;
 use Modules\Client\Entities\Client;
+use Modules\Client\Entities\ClientContract;
 use Modules\Client\Http\Requests\ClientFormsRequest;
 use Modules\Client\Http\Requests\ClientRequest;
 use Modules\Client\Rules\ClientNameExist;
@@ -39,6 +40,7 @@ class ClientController extends ModuleBaseController
 
     /**
      * Store a newly created resource in storage.
+     *
      * @param ClientRequest $request
      */
     public function store(ClientRequest $request)
@@ -47,14 +49,6 @@ class ClientController extends ModuleBaseController
         $client = $this->service->store($request->all());
 
         return redirect(route('client.edit', [$client, 'contact-persons']));
-    }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     */
-    public function show($id)
-    {
     }
 
     /**
@@ -69,6 +63,7 @@ class ClientController extends ModuleBaseController
 
     /**
      * Update the specified resource in storage.
+     *
      * @param ClientFormsRequest $request
      */
     public function update(ClientFormsRequest $request, Client $client)
@@ -83,5 +78,17 @@ class ClientController extends ModuleBaseController
         $data = $this->service->update($request->all(), $client);
 
         return redirect($data['route'])->with('success', 'Client has been created/updated successfully!');
+    }
+
+    public static function showPdf(ClientContract $contract)
+    {
+        $filePath = storage_path('app/' . $contract->contract_file_path);
+        $content = file_get_contents($filePath);
+        $contractFileName = pathinfo($contract->contract_file_path)['filename'];
+
+        return response($content)->withHeaders([
+            'content-type' => mime_content_type($filePath),
+            'contractFileName' => $contractFileName,
+        ]);
     }
 }

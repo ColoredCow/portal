@@ -32,7 +32,6 @@ class UniversityAliasController extends Controller
 
     public function destroy(UniversityAlias $alias)
     {
-        $university = $alias->university;
         $isDeleted = $alias->delete();
         $status = $isDeleted ? 'Alias deleted successfully!' : 'Something went wrong! Please try again';
 

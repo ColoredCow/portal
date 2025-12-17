@@ -2,17 +2,17 @@
 
 namespace Modules\HR\Providers;
 
-use Modules\HR\Entities\Job;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider;
 use Modules\HR\Entities\Employee;
-use Modules\HR\Entities\University;
 use Modules\HR\Entities\HrJobDesignation;
+use Modules\HR\Entities\Job;
 use Modules\HR\Entities\JobRequisition;
+use Modules\HR\Entities\University;
 use Modules\HR\Policies\EmployeePolicy;
-use Modules\HR\Policies\UniversityPolicy;
-use Modules\HR\Policies\Recruitment\JobPolicy;
 use Modules\HR\Policies\HrJobDesignationPolicy;
 use Modules\HR\Policies\JobRequisitionPolicy;
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider;
+use Modules\HR\Policies\Recruitment\JobPolicy;
+use Modules\HR\Policies\UniversityPolicy;
 
 class HRAuthServiceProvider extends AuthServiceProvider
 {

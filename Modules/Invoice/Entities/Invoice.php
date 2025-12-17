@@ -3,24 +3,26 @@
 namespace Modules\Invoice\Entities;
 
 use App\Traits\Encryptable;
-use Modules\Client\Entities\Client;
-use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
+use Modules\Client\Entities\Client;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
+use Modules\Project\Entities\Project;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class Invoice extends Model implements Auditable
 {
-    use Encryptable, SoftDeletes, \OwenIt\Auditing\Auditable;
+    use Encryptable;
+    use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
-    protected $fillable = ['client_id', 'project_id', 'status', 'billing_level', 'currency', 'amount', 'sent_on', 'due_on', 'receivable_date', 'gst', 'file_path', 'comments', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'conversion_rate', 'tds', 'tds_percentage', 'currency_transaction_charge', 'payment_at', 'invoice_number', 'reminder_mail_count', 'payment_confirmation_mail_sent', 'deleted_at', 'term_start_date', 'term_end_date'];
+    protected $fillable = ['client_id', 'project_id', 'status', 'billing_level', 'currency', 'amount', 'sent_on', 'due_on', 'receivable_date', 'gst', 'file_path', 'comments', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'conversion_rate', 'tds', 'tds_percentage', 'currency_transaction_charge', 'payment_at', 'invoice_number', 'reminder_mail_count', 'payment_confirmation_mail_sent', 'deleted_at', 'term_start_date', 'term_end_date', 'sent_conversion_rate'];
 
     protected $dates = ['sent_on', 'due_on', 'receivable_date', 'payment_at', 'term_start_date', 'term_end_date'];
 
     protected $encryptable = [
-        'amount', 'gst', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'tds'
+        'amount', 'gst', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'tds', 'sent_conversion_rate',
     ];
 
     public function scopeStatus($query, $status)
@@ -68,13 +70,20 @@ class Invoice extends Model implements Auditable
     {
         return $query->where($this->getTable() . '.client_id', $clientId);
     }
+
     public function scopeInvoiceInaYear($query, $invoiceYear)
     {
         if (! is_numeric($invoiceYear)) {
             return $query;
         }
 
-        return $query->whereBetween('sent_on', [($invoiceYear . '-' . config('invoice.financial-month-details.financial_year_start_month') . '-' . '01'), (($invoiceYear + 1) . '-' . config('invoice.financial-month-details.financial_year_end_month') . '-' . '31')]);
+        $FYStartMonth = config('invoice.financial-month-details.financial_year_start_month');
+        $FYEndMonth = config('invoice.financial-month-details.financial_year_end_month');
+
+        $startDate = "{$invoiceYear}-{$FYStartMonth}-01";
+        $endDate = ($invoiceYear + 1) . "-{$FYEndMonth}-31";
+
+        return $query->whereBetween('sent_on', [$startDate, $endDate]);
     }
 
     public function scopeSentBetween($query, $startDate, $endDate)
@@ -87,31 +96,39 @@ class Invoice extends Model implements Auditable
 
     public function scopeApplyFilters($query, $filters)
     {
-        if ($year = Arr::get($filters, 'year', '')) {
+        $year = Arr::get($filters, 'year', '');
+        $month = Arr::get($filters, 'month', '');
+        $status = Arr::get($filters, 'status', '');
+        $country = Arr::get($filters, 'country', '');
+        $region = Arr::get($filters, 'region', '');
+        $clientId = Arr::get($filters, 'client_id', '');
+        $invoiceYear = Arr::get($filters, 'invoiceYear', '');
+
+        if ($year) {
             $query = $query->year($year);
         }
 
-        if ($month = Arr::get($filters, 'month', '')) {
+        if ($month) {
             $query = $query->month($month);
         }
 
-        if ($status = Arr::get($filters, 'status', '')) {
+        if ($status) {
             $query = $query->status($status);
         }
 
-        if ($country = Arr::get($filters, 'country', '')) {
+        if ($country) {
             $query = $query->country($country);
         }
 
-        if ($country = Arr::get($filters, 'region', '')) {
-            $query = $query->region($country);
+        if ($region) {
+            $query = $query->region($region);
         }
 
-        if ($clientId = Arr::get($filters, 'client_id', '')) {
+        if ($clientId) {
             $query = $query->client($clientId);
         }
 
-        if ($invoiceYear = Arr::get($filters, 'invoiceYear', '')) {
+        if ($invoiceYear) {
             $query = $query->InvoiceInaYear($invoiceYear);
         }
 
@@ -157,6 +174,33 @@ class Invoice extends Model implements Auditable
         return trim(optional($country)->currency_symbol . $amount);
     }
 
+    public function invoiceAmountDifference()
+    {
+        $amountDifference = 0;
+        $lastInvoiceEndDate = $this->sent_on->subMonth()->endOfMonth();
+        $amount = (float) $this->amount;
+        if ($this->client->type == 'indian') {
+            $amount += (float) $this->gst;
+        }
+        $currentMonthAmount = $amount;
+        $lastMonthAmountDetail = self::where('sent_on', '<', $lastInvoiceEndDate)
+            ->where('client_id', $this->client_id)->where('project_id', $this->project_id)
+            ->orderBy('sent_on', 'DESC')
+            ->first();
+        $lastMonthAmount = $lastMonthAmountDetail ? (float) $lastMonthAmountDetail->amount : 0;
+        if ($this->client->type == 'indian') {
+            $lastMonthAmount = $lastMonthAmountDetail ? (float) $lastMonthAmountDetail->amount + (float) $lastMonthAmountDetail->gst : 0;
+        }
+        $amountDifference = $currentMonthAmount - $lastMonthAmount;
+        if ($lastMonthAmount != 0) {
+            $percentage = number_format($amountDifference / $lastMonthAmount * 100, 2);
+
+            return "{$amountDifference} ({$percentage}%)";
+        }
+
+        return $amountDifference;
+    }
+
     public function invoiceAmounts()
     {
         $amount = (int) $this->amount;
@@ -187,9 +231,9 @@ class Invoice extends Model implements Auditable
     {
         if (optional($this->currency) == config('constants.countries.india.currency')) {
             return $this->amount;
-        } else {
-            return $this->amount * $this->conversion_rate;
         }
+
+        return $this->amount * $this->conversion_rate;
     }
 
     public function getTotalAmountAttribute()
@@ -203,11 +247,31 @@ class Invoice extends Model implements Auditable
             return $this->getTotalAmountAttribute();
         }
 
-        if ($this->conversion_rate) {
-            return $this->getTotalAmountAttribute() * $this->conversion_rate;
+        if ($this->sent_conversion_rate) {
+            return $this->getTotalAmountAttribute() * ($this->sent_conversion_rate);
         }
 
-        return $this->getTotalAmountAttribute() * app(CurrencyServiceContract::class)->getCurrentRatesInINR();
+        if ($this->conversion_rate) {
+            return $this->getTotalAmountAttribute() * ($this->conversion_rate);
+        }
+
+        $conversionRate = app(CurrencyServiceContract::class)->getAllCurrentRatesInINR();
+        $initial = config('invoice.currency_initials');
+        switch (strtoupper($this->currency)) {
+            case $initial['usd']:
+                $totalAmount = $this->getTotalAmountAttribute() * round($conversionRate['USDINR'], 2);
+                break;
+
+            case $initial['eur']:
+                $totalAmount = $this->getTotalAmountAttribute() * round(($conversionRate['USDINR']) / ($conversionRate['USDEUR']), 2);
+                break;
+
+            case $initial['swi']:
+                $totalAmount = $this->getTotalAmountAttribute() * round(($conversionRate['USDINR']) / ($conversionRate['USDCHF']), 2);
+                break;
+        }
+
+        return $totalAmount;
     }
 
     public function getTermAttribute()
@@ -223,7 +287,7 @@ class Invoice extends Model implements Auditable
         }
         $monthDifference = $currentMonthNumber - $invoiceStartMonthNumber;
         if ($monthDifference < 0) {
-            $monthDifference = ($currentMonthNumber + 12) - $invoiceStartMonthNumber;
+            $monthDifference = $currentMonthNumber + 12 - $invoiceStartMonthNumber;
         }
         $termStartDate = $this->client->getMonthStartDateAttribute($monthDifference);
         $termEndDate = $this->client->getMonthEndDateAttribute($monthDifference);

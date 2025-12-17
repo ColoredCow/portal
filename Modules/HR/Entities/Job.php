@@ -2,17 +2,18 @@
 
 namespace Modules\HR\Entities;
 
+use App\Models\Resource;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\HR\Database\Factories\HrJobsFactory;
 use Modules\HR\Events\Recruitment\JobUpdated;
 use Modules\User\Entities\User;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\HR\Database\Factories\HrJobsFactory;
-use App\Models\Resource;
 
 class Job extends Model
 {
-    use SoftDeletes, HasFactory;
+    use SoftDeletes;
+    use HasFactory;
 
     protected $fillable = ['opportunity_id', 'title', 'type', 'domain', 'start_date', 'description', 'posted_by', 'link', 'end_date', 'status', 'facebook_post', 'instagram_post', 'twitter_post', 'linkedin_post', 'hr_resource_category_id', 'job_id'];
 
@@ -56,8 +57,9 @@ class Job extends Model
     /**
      * Custom update method that updates a job and fires specific events.
      *
-     * @param  array $attr      fillables to be updated
-     * @return bool|mixed    true if update is successful, error object if update fails
+     * @param array $attr fillables to be updated
+     *
+     * @return bool|mixed true if update is successful, error object if update fails
      */
     public function _update($attr)
     {

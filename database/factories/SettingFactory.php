@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Faker\Generator as Faker;
 use App\Models\Setting;
+use Faker\Generator as Faker;
 
 $factory->define(Setting::class, function (Faker $faker) {
     $modules = config('constants.modules');

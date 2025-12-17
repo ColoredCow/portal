@@ -62,7 +62,7 @@ class RolesTableSeeder extends Seeder
                'label'=> 'Support Staff',
                'guard_name' => 'web',
                'description' => 'Team members not involved in project billing, but act as support system to ColoredCow',
-            ]
+            ],
         ];
 
         foreach ($defaultRoles as $role) {

@@ -31,6 +31,6 @@ class ProjectStageBilling extends Model
 
     public function getAmountAttribute()
     {
-        return ($this->percentage * $this->projectStage->cost) / 100;
+        return $this->percentage * $this->projectStage->cost / 100;
     }
 }

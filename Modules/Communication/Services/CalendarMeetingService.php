@@ -3,28 +3,29 @@
 namespace Modules\Communication\Services;
 
 use Carbon\Carbon;
+use Exception;
 use Google_Client;
 use Google_Service_Calendar;
+use Google_Service_Calendar_ConferenceData;
 use Google_Service_Calendar_Event;
 use Illuminate\Support\Facades\Auth;
-use Google_Service_Calendar_ConferenceData;
-use Modules\Communication\Entities\CalendarMeeting;
 use Modules\Communication\Contracts\CalendarMeetingContract;
-use Exception;
+use Modules\Communication\Entities\CalendarMeeting;
 
 class CalendarMeetingService implements CalendarMeetingContract
 {
+    public $id;
+    public $calendarMeeting = null;
     protected $attendees = [];
     protected $summary;
     protected $startDateTime;
     protected $endDateTime;
     protected $hangoutLink;
     protected $service;
-    public $id;
     protected $isDetailsSet = false;
     protected $organizer = null;
-    public $calendarMeeting = null;
     protected $event;
+    protected $description;
 
     public function __construct($organizer = null, $details = [])
     {
@@ -47,6 +48,7 @@ class CalendarMeetingService implements CalendarMeetingContract
         $this->setAttendees($details['attendees']);
         $this->setStartDateTime($details['start']);
         $this->setEndDateTime($details['end']);
+        $this->setDescription($details['description']);
         $this->isDetailsSet = true;
     }
 
@@ -86,6 +88,7 @@ class CalendarMeetingService implements CalendarMeetingContract
             'attendees' => $this->attendees,
             'start' => $this->startDateTime,
             'end' => $this->endDateTime,
+            'description' => $this->description,
             'conferenceDataVersion' => 1,
         ]);
 
@@ -94,13 +97,13 @@ class CalendarMeetingService implements CalendarMeetingContract
                     'requestId' => md5(time()),  // @phpstan-ignore-line
                     'conferenceSolutionKey' => [
                         'type' => 'hangoutsMeet',
-                    ]
-                ]
+                    ],
+                ],
         ]));
 
         $options = [
             'sendNotifications' => true,
-            'conferenceDataVersion' => 1
+            'conferenceDataVersion' => 1,
         ];
 
         $event = $this->service->events->insert($calendarId, $event, $options);
@@ -123,6 +126,7 @@ class CalendarMeetingService implements CalendarMeetingContract
         $this->setHangoutLink($event->hangoutLink);
         $this->setStartDateTime($event->start->dateTime, $event->start->timeZone);
         $this->setEndDateTime($event->end->dateTime, $event->end->timeZone);
+        $this->setDescription($event->description);
         $this->id = $eventId;
     }
 
@@ -146,6 +150,16 @@ class CalendarMeetingService implements CalendarMeetingContract
         $this->summary = $summary;
     }
 
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    public function getDescription($description)
+    {
+        $this->description = $description;
+    }
+
     public function getAttendees()
     {
         $attendees = [];
@@ -165,44 +179,9 @@ class CalendarMeetingService implements CalendarMeetingContract
             }
 
             $this->attendees[] = [
-                'email' => $attendee
+                'email' => $attendee,
             ];
         }
-    }
-
-    /**
-     * Returns an array that is expected by the Google Calendar API.
-     * @param  string $dateTime
-     * @param  string $timeZone
-     *
-     * @return array
-     */
-    protected static function getCalendarDateTime($dateTime, $timeZone)
-    {
-        $timeZone = $timeZone ?? config('app.timezone');
-
-        return [
-            'dateTime' => Carbon::parse($dateTime)->format(config('constants.calendar_datetime_format')),
-            'timeZone' => $timeZone,
-        ];
-    }
-
-    /**
-     * Returns an array with formats expected by Portal modules.
-     *
-     * @param  mixed $eventDateTime
-     * @param  bool $withTimeZone    defines whether to return the calendar event timeZone or not
-     *
-     * @return array
-     */
-    protected static function getDateTime($eventDateTime, $withTimeZone)
-    {
-        $dateTime['dateTime'] = Carbon::parse($eventDateTime['dateTime'])->format(config('constants.datetime_format'));
-        if ($withTimeZone) {
-            $start['timeZone'] = $eventDateTime['timeZone'];
-        }
-
-        return $dateTime;
     }
 
     public function getStartDateTime($withTimeZone = false)
@@ -225,11 +204,6 @@ class CalendarMeetingService implements CalendarMeetingContract
         $this->endDateTime = self::getCalendarDateTime($dateTime, $timeZone);
     }
 
-    private function setEvent($event)
-    {
-        $this->event = $event;
-    }
-
     public function getEvent()
     {
         return $this->event;
@@ -237,7 +211,50 @@ class CalendarMeetingService implements CalendarMeetingContract
 
     public function getCalendarMeeting()
     {
-        return  $this->calendarMeeting;
+        return $this->calendarMeeting;
+    }
+
+    /**
+     * Returns an array that is expected by the Google Calendar API.
+     *
+     * @param string $dateTime
+     * @param string $timeZone
+     *
+     * @return array
+     */
+    protected static function getCalendarDateTime($dateTime, $timeZone)
+    {
+        $timeZone = $timeZone ?? config('app.timezone');
+
+        return [
+            'dateTime' => Carbon::parse($dateTime)->format(config('constants.calendar_datetime_format')),
+            'timeZone' => $timeZone,
+        ];
+    }
+
+    /**
+     * Returns an array with formats expected by Portal modules.
+     *
+     * @param mixed $eventDateTime
+     * @param bool  $withTimeZone  defines whether to return the calendar event timeZone or not
+     *
+     * @return array
+     */
+    protected static function getDateTime($eventDateTime, $withTimeZone)
+    {
+        $results = [];
+        $results['dateTime'] = Carbon::parse($eventDateTime['dateTime'])->format(config('constants.datetime_format'));
+
+        if ($withTimeZone) {
+            $results['timeZone'] = $eventDateTime['timeZone'];
+        }
+
+        return $results;
+    }
+
+    private function setEvent($event)
+    {
+        $this->event = $event;
     }
 
     private function addNewMeetingToDB()

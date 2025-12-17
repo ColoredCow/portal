@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use Nwidart\Modules\Facades\Module;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Nwidart\Modules\Facades\Module;
 
 class AppServiceProvider extends ServiceProvider
 {

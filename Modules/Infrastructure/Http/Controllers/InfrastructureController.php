@@ -3,16 +3,15 @@
 namespace Modules\Infrastructure\Http\Controllers;
 
 use Aws\Sdk;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
 use Modules\Infrastructure\Contracts\InfrastructureServiceContract;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class InfrastructureController extends Controller
 {
+    use AuthorizesRequests;
     protected $sdk;
     protected $service;
-
-    use AuthorizesRequests;
 
     public function __construct(InfrastructureServiceContract $service)
     {
@@ -41,28 +40,5 @@ class InfrastructureController extends Controller
         $this->authorize('Billingview', $this);
 
         return $this->service->getBillingDetails();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-    }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     */
-    public function show($id)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     */
-    public function edit($id)
-    {
     }
 }

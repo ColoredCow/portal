@@ -24,16 +24,6 @@ class ApplicationNoShow extends Command
     protected $description = 'Set application status to no-show if an application round is not conducted 2 hours after scheduled time';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
@@ -65,9 +55,9 @@ class ApplicationNoShow extends Command
                 $application = $applicationRound->application;
                 $job = $application->job;
 
-                $body = str_replace(config('constants.hr.template-variables.applicant-name'), $application->applicant->name, $body);
-                $body = str_replace(config('constants.hr.template-variables.interview-time'), $applicationRound->scheduled_date->format(config('constants.hr.interview-time-format')), $body);
-                $body = str_replace(config('constants.hr.template-variables.job-title'), "<a href='{$job->link}'>{$job->title}</a>", $body);
+                $formattedMailBody = str_replace(config('constants.hr.template-variables.applicant-name'), $application->applicant->name, $body);
+                $formattedMailBody = str_replace(config('constants.hr.template-variables.interview-time'), $applicationRound->scheduled_date->format(config('constants.hr.interview-time-format')), $formattedMailBody);
+                $formattedMailBody = str_replace(config('constants.hr.template-variables.job-title'), "<a href='{$job->link}'>{$job->title}</a>", $formattedMailBody);
 
                 if ($application->status != config('constants.hr.application-meta.keys.no-show')) {
                     $application->markNoShowReminded();
@@ -77,7 +67,7 @@ class ApplicationNoShow extends Command
                         'value' => json_encode([
                             'round' => $applicationRound->id,
                             'mail_subject' => $subject,
-                            'mail_body' => $body,
+                            'mail_body' => $formattedMailBody,
                         ]),
                     ]);
                 }

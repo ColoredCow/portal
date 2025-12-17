@@ -5,37 +5,34 @@ namespace Modules\Client\Entities;
 use App\Traits\Filters;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\User\Entities\User;
-use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Client\Database\Factories\ClientFactory;
-use Modules\Client\Entities\Traits\HasHierarchy;
 use Modules\Client\Entities\Scopes\ClientGlobalScope;
+use Modules\Client\Entities\Traits\HasHierarchy;
 use Modules\Invoice\Entities\Invoice;
-use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Services\InvoiceService;
+use Modules\Project\Entities\Project;
+use Modules\Prospect\Entities\Prospect;
+use Modules\User\Entities\User;
 
 class Client extends Model
 {
-    use HasHierarchy, HasFactory, Filters;
+    use HasHierarchy;
+    use HasFactory;
+    use Filters;
 
-    protected $fillable = ['name', 'key_account_manager_id', 'status', 'is_channel_partner', 'has_departments', 'channel_partner_id', 'parent_organisation_id', 'client_id'];
+    protected $fillable = ['name', 'key_account_manager_id', 'status', 'is_channel_partner', 'has_departments', 'channel_partner_id', 'parent_organisation_id', 'client_id', 'is_billable'];
 
     protected $appends = ['type', 'currency'];
-
-    protected static function booted()
-    {
-        static::addGlobalScope(new ClientGlobalScope);
-    }
-
-    protected static function newFactory()
-    {
-        return new ClientFactory();
-    }
 
     public function scopeStatus($query, $status)
     {
         return $query->where('status', $status);
+    }
+
+    public function scopeBillable($query)
+    {
+        return $query->where('is_billable', true);
     }
 
     public function keyAccountManager()
@@ -55,7 +52,7 @@ class Client extends Model
                 $join->on('project_meta.project_id', '=', 'projects.id');
                 $join->where([
                     'project_meta.key' => config('project.meta_keys.billing_level.key'),
-                    'project_meta.value' => config('project.meta_keys.billing_level.value.project.key')
+                    'project_meta.value' => config('project.meta_keys.billing_level.value.project.key'),
                 ]);
             });
     }
@@ -67,7 +64,7 @@ class Client extends Model
                 $join->on('project_meta.project_id', '=', 'projects.id');
                 $join->where([
                     'project_meta.key' => config('project.meta_keys.billing_level.key'),
-                    'project_meta.value' => config('project.meta_keys.billing_level.value.client.key')
+                    'project_meta.value' => config('project.meta_keys.billing_level.value.client.key'),
                 ]);
             });
     }
@@ -107,6 +104,23 @@ class Client extends Model
         return $this->hasOne(ClientBillingDetail::class)->withDefault();
     }
 
+    public function clientContracts()
+    {
+        return $this->hasMany(ClientContract::class);
+    }
+
+    public function meta()
+    {
+        return $this->hasMany(ClientMeta::class);
+    }
+
+    public function getMetaValue($metaKey)
+    {
+        $meta = $this->meta()->where('key', $metaKey)->first();
+        if ($meta) {
+            return $meta->value;
+        }
+    }
     public function getTypeAttribute()
     {
         $address = $this->addresses->first();
@@ -114,7 +128,7 @@ class Client extends Model
             return;
         }
 
-        return  $address->country_id == '1' ? 'indian' : 'international';
+        return $address->country_id == '1' ? 'indian' : 'international';
     }
 
     public function getCountryAttribute()
@@ -130,16 +144,16 @@ class Client extends Model
     public function getBillableAmountForTerm(int $monthsToSubtract, $projects, $periodStartDate = null, $periodEndDate = null)
     {
         $monthsToSubtract = $monthsToSubtract ?? 1;
-        $amount = $projects->sum(function ($project) use ($monthsToSubtract, $periodStartDate, $periodEndDate) {
+
+        return $projects->sum(function ($project) use ($monthsToSubtract, $periodStartDate, $periodEndDate) {
             return round($project->getBillableHoursForMonth($monthsToSubtract, $periodStartDate, $periodEndDate) * $this->billingDetails->service_rates, 2);
         });
-
-        return $amount;
     }
 
     public function getTaxAmountForTerm(int $monthsToSubtract, $projects, $periodStartDate = null, $periodEndDate = null)
     {
         $monthsToSubtract = $monthsToSubtract ?? 1;
+
         // Todo: Implement tax calculation correctly as per the IGST rules
         return round($this->getBillableAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) * ($this->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
     }
@@ -152,9 +166,8 @@ class Client extends Model
         return $this->getBillableAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) + $this->getTaxAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) + optional($this->billingDetails)->bank_charges;
     }
 
-    public function getAmountPaidForTerm(int $monthsToSubtract, $projects)
+    public function getAmountPaidForTerm()
     {
-        // This needs to be updated based on the requirements.
         return 0.00;
     }
 
@@ -272,7 +285,7 @@ class Client extends Model
         return today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->addMonthsNoOverflow()->startOfMonth()->addDays($billingDate - 2);
     }
 
-    public function TeamMembersEffortData()
+    public function teamMembersEffortData()
     {
         $startDate = $this->getMonthStartDateAttribute(1);
         $endDate = $this->getMonthEndDateAttribute(1);
@@ -289,7 +302,7 @@ class Client extends Model
             })->whereHas('project.meta', function ($query) {
                 return $query->where([
                     'key' => config('project.meta_keys.billing_level.key'),
-                    'value' => config('project.meta_keys.billing_level.value.client.key')
+                    'value' => config('project.meta_keys.billing_level.value.client.key'),
                 ]);
             })->get();
 
@@ -306,7 +319,7 @@ class Client extends Model
             }
             $data[$user->name] = [
                 'nickname' => $user->nickname,
-                'billableHours' => $billableHours
+                'billableHours' => $billableHours,
             ];
         }
 
@@ -338,32 +351,6 @@ class Client extends Model
         return substr_replace($bccEmails, '', -1);
     }
 
-    public function ledgerAccounts()
-    {
-        return $this->hasMany(LedgerAccount::class);
-    }
-
-    public function ledgerAccountsOnlyCredit()
-    {
-        return $this->hasMany(LedgerAccount::class)->whereNotNull('credit');
-    }
-
-    public function ledgerAccountsOnlyDebit()
-    {
-        return $this->hasMany(LedgerAccount::class)->whereNotNull('debit');
-    }
-
-    public function getClientProjectsTotalLedgerAmount($quarter = null)
-    {
-        $amount = 0;
-
-        foreach ($this->clientLevelBillingProjects as $project) {
-            $amount += $project->getTotalLedgerAmount($quarter);
-        }
-
-        return $amount;
-    }
-
     public function getResourceBasedTotalAmount()
     {
         $amount = 0;
@@ -384,5 +371,25 @@ class Client extends Model
         }
 
         return false;
+    }
+
+    public function prospect()
+    {
+        return $this->belongsTo(Prospect::class);
+    }
+
+    public function getClientsAttribute()
+    {
+        return $this->query()->orderBy('name')->get();
+    }
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new ClientGlobalScope());
+    }
+
+    protected static function newFactory()
+    {
+        return new ClientFactory();
     }
 }

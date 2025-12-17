@@ -21,14 +21,14 @@ class SendPaymentReceivedNotification extends Notification
         $this->projectAndClientName = $projectAndClientName;
     }
 
-    public function via($notifiable)
+    public function via()
     {
         return [
-            GoogleChatChannel::class
+            GoogleChatChannel::class,
         ];
     }
 
-    public function toGoogleChat($notifiable)
+    public function toGoogleChat()
     {
         return GoogleChatMessage::create()->mentionAll('', ' We have received the payment for ' .
         $this->projectAndClientName . ' successfully! ');

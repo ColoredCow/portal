@@ -40,7 +40,7 @@ class JobController extends Controller
         $jobs = Job::with([
             'applications' => function ($query) {
                 $query->isOpen()->get();
-            }
+            },
         ])
             ->latest()
             ->appends(Request::except('page'));
@@ -68,7 +68,7 @@ class JobController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  JobRequest  $request
+     * @param JobRequest $request
      */
     public function store(JobRequest $request)
     {
@@ -79,19 +79,21 @@ class JobController extends Controller
             'domain' => $validated['domain'],
             'description' => $validated['description'] ?? null, // null needed for backward compatibility
             'type' => $validated['type'],
+            'status' => $validated['status'],
             'start_date' => $validated['start_date'] ?? null,
             'end_date' => $validated['end_date'] ?? null,
             // 'resources_required' => $validated['resources_required'], // ToDo: Improve this logic to handle requisition in future, currently, its breaking the job opporunity publishing flow
         ]);
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities.edit', $opportunity->id) : route('recruitment.opportunities.edit', $opportunity->id);
 
-        return redirect($route)->with('status', "Successfully updated $opportunity->title!");
+        return redirect($route)->with('status', "Successfully updated {$opportunity->title}!");
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \Modules\HR\Entities\Job  $opportunity
+     * @param \Modules\HR\Entities\Job $opportunity
+     *
      * @return \Illuminate\View\View
      */
     public function edit(Job $opportunity)
@@ -108,8 +110,8 @@ class JobController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  JobRequest  $request
-     * @param  Job  $opportunity
+     * @param JobRequest $request
+     * @param Job        $opportunity
      */
     public function update(JobRequest $request, Job $opportunity)
     {
@@ -118,26 +120,26 @@ class JobController extends Controller
 
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities.edit', $opportunity->id) : route('recruitment.opportunities.edit', $opportunity->id);
 
-        return redirect($route)->with('status', "Successfully updated $opportunity->title!");
+        return redirect($route)->with('status', "Successfully updated {$opportunity->title}!");
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Modules\HR\Entities\Job  $opportunity
+     * @param \Modules\HR\Entities\Job $opportunity
      */
     public function destroy(Job $opportunity)
     {
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities') : route('recruitment.opportunities');
         $opportunity->delete();
 
-        return redirect($route)->with('status', "Successfully deleted $opportunity->title!");
+        return redirect($route)->with('status', "Successfully deleted {$opportunity->title}!");
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Modules\HR\Http\Requests\Recruitment\JobDomainRequest  $request
+     * @param \Modules\HR\Http\Requests\Recruitment\JobDomainRequest $request
      */
     public function storeJobdomain(JobDomainRequest $request)
     {
@@ -158,7 +160,7 @@ class JobController extends Controller
             ['hr_application_id' => $application->id],
             [
                 'key' => 'reasons_for_desired_resume',
-                'value' => $request->get('body')
+                'value' => $request->get('body'),
             ]
         );
     }
@@ -183,9 +185,9 @@ class JobController extends Controller
 
     public function unflagDesiredResume($id, $hrJobId)
     {
-        $application = Application::findorFail($id)
+        Application::findOrFail($id)
             ->update(['is_desired_resume' => false]);
-        $applicationmeta = ApplicationMeta::where('hr_application_id', '=', $id)
+        ApplicationMeta::where('hr_application_id', '=', $id)
             ->where('key', '=', 'reasons_for_desired_resume')
             ->delete();
 
@@ -214,7 +216,7 @@ class JobController extends Controller
 
         return view('hr.application.resume-table')->with([
             'applicationData' => $applicationData,
-            'title' => $jobData[0]->title
+            'title' => $jobData[0]->title,
         ]);
     }
 }

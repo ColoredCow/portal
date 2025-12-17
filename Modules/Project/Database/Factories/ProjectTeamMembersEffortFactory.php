@@ -4,7 +4,6 @@ namespace Modules\Project\Database\Factories;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Modules\Project\Entities\ProjectTeamMember;
 use Modules\Project\Entities\ProjectTeamMembersEffort;
 
 class ProjectTeamMembersEffortFactory extends Factory
@@ -29,7 +28,7 @@ class ProjectTeamMembersEffortFactory extends Factory
             },
             'actual_effort' => array_rand(config('project.designation')),
             'total_effort_in_effortsheet' => '8',
-            'added_on' => Carbon::today()->subDays(11)
+            'added_on' => Carbon::today()->subDays(11),
         ];
     }
 }

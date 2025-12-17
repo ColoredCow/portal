@@ -2,9 +2,9 @@
 
 namespace Modules\Project\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\TeamMemberDesignationRule;
 use App\Rules\TeamMemberRule;
+use Illuminate\Foundation\Http\FormRequest;
 
 class ProjectRequest extends FormRequest
 {
@@ -37,7 +37,7 @@ class ProjectRequest extends FormRequest
                     'project_manager' => 'nullable|string',
                     'effort_sheet_url' => 'nullable|active_url|max:191',
                     'google_chat_webhook_url' => 'nullable|url',
-                    'project_type' => 'required|string|in:monthly-billing,fixed-budget',
+                    'project_type' => 'required|string|in:monthly-billing,fixed-budget,non-billable',
                     'total_estimated_hours' => 'nullable|numeric|between:0,9999.99',
                     'monthly_estimated_hours' => 'nullable|numeric|between:0,9999.99',
                     'contract_file' => 'nullable|mimes:pdf',
@@ -45,6 +45,7 @@ class ProjectRequest extends FormRequest
                     'start_date' => 'nullable|date',
                     'end_date' => 'nullable|date',
                     'is_amc' => 'nullable',
+                    'send_mail_to_infra' => 'nullable',
                 ];
                 break;
 
@@ -52,10 +53,11 @@ class ProjectRequest extends FormRequest
                 $rules = [
                     'name' => 'required|string|unique:projects',
                     'client_id' => 'required|integer',
+                    'status' => 'required|string',
                     'project_manager' => 'nullable|string',
                     'effort_sheet_url' => 'nullable|active_url|max:191',
                     'google_chat_webhook_url' => 'nullable|url',
-                    'project_type' => 'required|string|in:monthly-billing,fixed-budget',
+                    'project_type' => 'required|string|in:monthly-billing,fixed-budget,non-billable',
                     'total_estimated_hours' => 'nullable|numeric|between:0,9999.99',
                     'monthly_estimated_hours' => 'nullable|numeric|between:0,9999.99',
                     'contract_file' => 'nullable|mimes:pdf',
@@ -63,6 +65,7 @@ class ProjectRequest extends FormRequest
                     'start_date' => 'nullable|date',
                     'end_date' => 'nullable|date',
                     'is_amc' => 'nullable',
+                    'send_mail_to_infra' => 'nullable',
                 ];
                 break;
 
@@ -72,7 +75,7 @@ class ProjectRequest extends FormRequest
                         'project_team_member' => ['array',
                         new TeamMemberDesignationRule(),
                         new TeamMemberRule(),
-                        ]
+                        ],
                     ];
                 }
                 break;

@@ -2,9 +2,9 @@
 
 namespace Modules\Payment\Http\Controllers;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Str;
 use Modules\Payment\Entities\PaymentConfiguration;
 
 class PaymentSettingController extends Controller
@@ -20,23 +20,8 @@ class PaymentSettingController extends Controller
     }
 
     /**
-     * Show the specified resource.
-     * @param int $id
-     */
-    public function show($id)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     */
-    public function edit($id)
-    {
-    }
-
-    /**
      * Update the specified resource in storage.
+     *
      * @param Request $request
      */
     public function update(Request $request)
@@ -46,7 +31,7 @@ class PaymentSettingController extends Controller
             $dataToFind = ['slug' => $setting];
             $dataToUpdate['label'] = Str::title($setting);
             $dataToUpdate['value'] = $value;
-            $salaryConfiguration = PaymentConfiguration::updateOrCreate($dataToFind, $dataToUpdate);
+            PaymentConfiguration::updateOrCreate($dataToFind, $dataToUpdate);
         }
 
         return redirect(route('payment-setting.index'));

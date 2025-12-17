@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <div class="mt-4">
+        <div class="py-4">
             <div class="d-flex justify-content-start row flex-wrap">
                 <div class="col-md-3">
                     <div class="card h-75 ">
@@ -38,14 +38,6 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card h-75 ">
-                        <a class="card-body no-transition" href="#">
-                            <h2 class="text-center">Yearly Invoice</h2><br>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
                     <div class="card h-75">
                         <a class="card-body no-transition" href="{{ route('reports.finance.revenue-by-client.index') }}">
                             <h2 class="text-center">Revenue by client</h2><br>
@@ -54,57 +46,25 @@
                 </div>
 
                 <div class="col-md-3">
-                    <div class="card h-75 bg-theme-gray-lighter">
-                        <a class="card-body text-decoration-none" href="#">
-                            <h2 class="text-center">New Business</h2><br>
+                    <div class="card h-75">
+                        <a class="card-body no-transition" href="{{ route('report.project.contracts.index') }}">
+                            <h2 class="text-center">Project Contract</h2><br>
                         </a>
                     </div>
                 </div>
 
                 <div class="col-md-3">
-                    <div class="card h-75 bg-theme-gray-lighter">
-                        <a class="card-body text-decoration-none" href="#">
-                            <h2 class="text-center">Pipeline</h2><br>
+                    <div class="card h-75">
+                        <a class="card-body no-transition" href="{{ route('reports.finance.monthly-sales-register.index') }}">
+                            <h2 class="text-center">Monthly Sales Register</h2><br>
                         </a>
                     </div>
                 </div>
 
                 <div class="col-md-3">
-                    <div class="card h-75 bg-theme-gray-lighter">
-                        <a class="card-body text-decoration-none" href="#">
+                    <div class="card h-75">
+                        <a class="card-body no-transition" href="{{ route('report.employees.profitibality',['staff_type'=>'Employee', 'status'=>'current']) }}">
                             <h2 class="text-center">Employees</h2><br>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card h-75 bg-theme-gray-lighter">
-                        <a class="card-body text-decoration-none" href="#">
-                            <h2 class="text-center">Investments</h2><br>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card h-75 bg-theme-gray-lighter">
-                        <a class="card-body text-decoration-none" href="#">
-                            <h2 class="text-center">Operational</h2><br>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card h-75 bg-theme-gray-lighter">
-                        <a class="card-body text-decoration-none" href="#">
-                            <h2 class="text-center">Competitor</h2><br>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card h-75 bg-theme-gray-lighter">
-                        <a class="card-body text-decoration-none" href="#">
-                            <h2 class="text-center">Cash reports</h2><br>
                         </a>
                     </div>
                 </div>

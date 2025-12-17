@@ -12,7 +12,7 @@ trait HasWebsiteUser
             return;
         }
 
-        $userProvider = new \Corcel\Laravel\Auth\AuthUserProvider;
+        $userProvider = new \Corcel\Laravel\Auth\AuthUserProvider();
 
         try {
             return $userProvider->retrieveByCredentials(['email' => $this->email]);

@@ -4,7 +4,9 @@ namespace Modules\HR\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Str;
 use Modules\HR\Entities\ApplicationRound;
+use Modules\HR\Entities\ApplicationRoundReview;
 use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\Evaluation\Parameter;
 use Modules\HR\Entities\Evaluation\ParameterOption;
@@ -12,14 +14,13 @@ use Modules\HR\Entities\Evaluation\Segment;
 use Modules\HR\Entities\Round;
 use Modules\HR\Http\Requests\EditEvaluationRequest;
 use Modules\HR\Http\Requests\ManageEvaluationRequest;
-use Modules\HR\Entities\ApplicationRoundReview;
 
 class EvaluationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
         $roundWithSegments = [];
         $rounds = Round::select('id', 'name')->get();
@@ -37,7 +38,7 @@ class EvaluationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function segmentParameters(Request $request, $segmentID)
+    public function segmentParameters($segmentID)
     {
         $segment = Segment::find($segmentID);
 
@@ -61,7 +62,7 @@ class EvaluationController extends Controller
     public function createSegment(ManageEvaluationRequest $request)
     {
         $segmentId = Round::select('*')->where('name', $request->rounds)->first()->id;
-        $segment = Segment::create([
+        Segment::create([
             'name' => $request->name,
             'round_id' => $segmentId,
         ]);
@@ -83,7 +84,7 @@ class EvaluationController extends Controller
         return redirect(route('hr.evaluation'));
     }
 
-    public function deleteSegment(Request $request, $segmentID)
+    public function deleteSegment($segmentID)
     {
         $segment = Segment::find($segmentID);
         $segment->delete();
@@ -97,7 +98,7 @@ class EvaluationController extends Controller
         $parameter = Parameter::create([
             'name' => $request->name,
             'marks' => $request->marks,
-            'slug' => \Str::slug($request->slug),
+            'slug' => Str::slug($request->slug),
             'segment_id' => $segment->id,
         ]);
 
@@ -329,7 +330,6 @@ class EvaluationController extends Controller
 
     private function getSegmentApplicationEvaluations($segmentApplicationEvaluations)
     {
-        $applicationEvaluations = [];
         $comments = null;
         // this for loop will run just once as the maximum size of $segmentApplicationEvaluations will be one.
         foreach ($segmentApplicationEvaluations as $segmentApplicationEvaluation) {

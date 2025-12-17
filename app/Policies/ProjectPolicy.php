@@ -2,9 +2,8 @@
 
 namespace App\Policies;
 
-use Modules\User\Entities\User;
-use App\Models\Project;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Modules\User\Entities\User;
 
 class ProjectPolicy
 {
@@ -13,11 +12,11 @@ class ProjectPolicy
     /**
      * Determine whether the user can view the project.
      *
-     * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Project  $project
+     * @param \Modules\User\Entities\User $user
+     *
      * @return mixed
      */
-    public function view(User $user, Project $project)
+    public function view(User $user)
     {
         return $user->hasPermissionTo('projects.view');
     }
@@ -25,7 +24,8 @@ class ProjectPolicy
     /**
      * Determine whether the user can create projects.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param \Modules\User\Entities\User $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -36,11 +36,11 @@ class ProjectPolicy
     /**
      * Determine whether the user can update the project.
      *
-     * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Project  $project
+     * @param \Modules\User\Entities\User $user
+     *
      * @return mixed
      */
-    public function update(User $user, Project $project)
+    public function update(User $user)
     {
         return $user->hasPermissionTo('projects.update');
     }
@@ -48,11 +48,11 @@ class ProjectPolicy
     /**
      * Determine whether the user can delete the project.
      *
-     * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Project  $project
+     * @param \Modules\User\Entities\User $user
+     *
      * @return mixed
      */
-    public function delete(User $user, Project $project)
+    public function delete(User $user)
     {
         return $user->hasPermissionTo('projects.delete');
     }
@@ -60,7 +60,8 @@ class ProjectPolicy
     /**
      * Determine whether the user can list projects.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param \Modules\User\Entities\User $user
+     *
      * @return mixed
      */
     public function list(User $user)

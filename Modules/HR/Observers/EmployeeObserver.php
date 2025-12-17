@@ -12,7 +12,7 @@ class EmployeeObserver
     /**
      * Handle to the employee "created" event.
      *
-     * @param  Employee  $employee
+     * @param  Employee $employee
      * @return void
      */
     public function created(Employee $employee)
@@ -21,7 +21,7 @@ class EmployeeObserver
             return;
         }
 
-        $gsuiteUserService = new GSuiteUserService;
+        $gsuiteUserService = new GSuiteUserService();
         $gsuiteUserService->fetch($employee->user->email);
 
         foreach ($gsuiteUserService->getUsers() as $gsuiteUser) {
@@ -32,22 +32,6 @@ class EmployeeObserver
             $employee->update([
                 'name' => $gsuiteUser->getName()->fullName,
                 'joined_on' => Carbon::parse($gsuiteUser->getCreationTime())->format(config('constants.date_format')),
-                'designation' => $gsuiteUser->getOrganizations()[0]['title'],
-            ]);
-        }
-    }
-
-    /**
-     * Handle the employee "updated" event.
-     *
-     * @param  Employee  $employee
-     * @return void
-     */
-    public function updated(Employee $employee)
-    {
-        if ($employee->user->name != $employee->name) {
-            $employee->user->update([
-                'name' => $employee->name,
             ]);
         }
     }

@@ -98,6 +98,8 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('settings')->namespace('Settings')->group(function () {
         Route::get('/', 'SettingController@index')->name('settings.index');
+        Route::get('/config-variables', 'ConfigurationController@index')->name('settings.config-variables');
+        Route::post('/config-variables', 'ConfigurationController@updateAll')->name('settings.update-config-variables');
 
         Route::prefix('permissions')->group(function () {
             Route::get('/', function () {
@@ -117,6 +119,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/nda-template', 'NDAAgreementController@index')->name('setting.agreement.nda');
         Route::get('/invoice-template', 'SettingController@invoiceTemplates')->name('setting.invoice');
         Route::post('/invoice-template', 'SettingController@updateInvoiceTemplates')->name('setting.invoice.update');
+        Route::prefix('bank-details')->group(function () {
+            Route::get('/', 'BankDetailController@index')->name('settings.bank-details');
+            Route::get('/create', 'BankDetailController@create')->name('bank-details.create');
+            Route::post('/', 'BankDetailController@store')->name('bank-details.store');
+            Route::post('/{bankDetail}', 'BankDetailController@update')->name('bank-details.update');
+        });
     });
 
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
@@ -152,9 +160,11 @@ Route::middleware('auth')->group(function () {
                 ->only(['index', 'store', 'update', 'destroy'])
                 ->names(['index' => 'books.category.index']);
 
-            Route::get('book-a-month', 'BookController@bookAMonthIndex')->name('book.book-a-month.index');
+            Route::get('book-a-month', 'BookController@bookAMonthIndex')
+            ->name('book.book-a-month.index');
         });
-        Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])->names(['index' => 'weeklydoses']);
+        Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])
+        ->names(['index' => 'weeklydoses']);
     });
 
     Route::resource('comments', 'CommentController')->only(['update', 'destroy']);

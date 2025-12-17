@@ -2,9 +2,9 @@
 
 namespace Modules\Client\Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
 use Modules\Client\Entities\Client;
-use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ClientFactory extends Factory
 {

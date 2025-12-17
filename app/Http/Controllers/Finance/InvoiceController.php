@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Finance;
 
-use App\Models\Client;
 use App\Helpers\DateHelper;
 use App\Helpers\FileHelper;
-use App\Models\Finance\Invoice;
-use Illuminate\Http\UploadedFile;
-use App\Models\ProjectStageBilling;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Response;
 use App\Http\Requests\Finance\InvoiceRequest;
+use App\Models\Client;
+use App\Models\Finance\Invoice;
+use App\Models\ProjectStageBilling;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
@@ -63,7 +63,8 @@ class InvoiceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Finance\InvoiceRequest  $request
+     * @param \App\Http\Requests\Finance\InvoiceRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(InvoiceRequest $request)
@@ -83,25 +84,21 @@ class InvoiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Finance\Invoice  $invoice
-     * @return \Illuminate\View\View
+     * @param \App\Models\Finance\Invoice $invoice
+     *
+     * @return void
      */
     public function edit(Invoice $invoice)
     {
-        $clients = Client::getInvoicableClients(collect($invoice->projectStageBillings)->pluck('id')->toArray());
-        $invoice->load('projectStageBillings', 'projectStageBillings.projectStage', 'projectStageBillings.projectStage.project');
-
-        return view('finance.invoice.edit')->with([
-            'invoice' => $invoice,
-            'clients' => $clients,
-        ]);
+        // Show the form for editing the specified resource.
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Finance\InvoiceRequest  $request
-     * @param  \App\Models\Finance\Invoice  $invoice
+     * @param \App\Http\Requests\Finance\InvoiceRequest $request
+     * @param \App\Models\Finance\Invoice               $invoice
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(InvoiceRequest $request, Invoice $invoice)
@@ -115,28 +112,13 @@ class InvoiceController extends Controller
     }
 
     /**
-     * Upload the invoice file.
-     *
-     * @param  \Illuminate\Http\UploadedFile  $file
-     * @return string    path of the uploaded file
-     */
-    protected static function upload(UploadedFile $file)
-    {
-        $fileName = $file->getClientOriginalName();
-        if ($fileName) {
-            return $file->storeAs(FileHelper::getCurrentStorageDirectory(), $fileName);
-        }
-
-        return $file->store(FileHelper::getCurrentStorageDirectory());
-    }
-
-    /**
      * Download the invoice file.
      *
-     * @param  string $year  uploaded year of the invoice file
-     * @param  string $month uploaded month of the invoice file
-     * @param  string $file  invoice file name
-     * @param  bool|bool $inline download/view invoice file
+     * @param string    $year   uploaded year of the invoice file
+     * @param string    $month  uploaded month of the invoice file
+     * @param string    $file   invoice file name
+     * @param bool|bool $inline download/view invoice file
+     *
      * @return mixed
      */
     public function download(string $year, string $month, string $file, bool $inline = true)
@@ -157,10 +139,28 @@ class InvoiceController extends Controller
     }
 
     /**
+     * Upload the invoice file.
+     *
+     * @param \Illuminate\Http\UploadedFile $file
+     *
+     * @return string path of the uploaded file
+     */
+    protected static function upload(UploadedFile $file)
+    {
+        $fileName = $file->getClientOriginalName();
+        if ($fileName) {
+            return $file->storeAs(FileHelper::getCurrentStorageDirectory(), $fileName);
+        }
+
+        return $file->store(FileHelper::getCurrentStorageDirectory());
+    }
+
+    /**
      * Prepare attributes to store or update the resource.
      *
-     * @param  array        $validated
-     * @param  bool|bool $uploadFile
+     * @param array     $validated
+     * @param bool|bool $uploadFile
+     *
      * @return array
      */
     protected static function prepareAttributes(array $validated, bool $uploadFile = false)
@@ -188,8 +188,9 @@ class InvoiceController extends Controller
     /**
      * Handles billings for the resource.
      *
-     * @param  array   $billings
-     * @param  Invoice $invoice
+     * @param array   $billings
+     * @param Invoice $invoice
+     *
      * @return void
      */
     protected static function handleBillings(array $billings, Invoice $invoice)

@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="mt-1">
-                        <button v-on:click="removeContactPerson(index)"  type="button" class="btn btn-sm text-danger"> remove </button>
+                        <button v-on:click="removeContactPerson(index)"  type="button" class="btn btn-sm btn-danger"> remove </button>
                     </div>
                     
                 </div>

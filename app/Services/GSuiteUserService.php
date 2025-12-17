@@ -12,7 +12,7 @@ use Google_Service_Exception;
 
 class GSuiteUserService
 {
-    const USERLIMIT = 20;
+    public const USERLIMIT = 20;
     protected $name;
     protected $joinedOn;
     protected $designation;
@@ -46,8 +46,8 @@ class GSuiteUserService
 
     public function create($name, $email, $password, $params = [])
     {
-        $user = new Google_Service_Directory_User;
-        $userName = new Google_Service_Directory_UserName;
+        $user = new Google_Service_Directory_User();
+        $userName = new Google_Service_Directory_UserName();
 
         $userName->setGivenName($name['firstName']);
         $userName->setFamilyName($name['lastName']);

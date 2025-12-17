@@ -12,7 +12,8 @@ class CodeTrekApplicantPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param \Modules\User\Entities\User $user
+     *
      * @return mixed
      */
     public function viewAny(User $user)
@@ -23,7 +24,8 @@ class CodeTrekApplicantPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param \Modules\User\Entities\User $user
+     *
      * @return mixed
      */
     public function view(User $user)
@@ -34,7 +36,8 @@ class CodeTrekApplicantPolicy
     /**
      * Determine whether the user can create models.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param \Modules\User\Entities\User $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -45,7 +48,8 @@ class CodeTrekApplicantPolicy
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param \Modules\User\Entities\User $user
+     *
      * @return mixed
      */
     public function update(User $user)
@@ -56,7 +60,8 @@ class CodeTrekApplicantPolicy
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \Modules\User\Entities\User  $user
+     * @param \Modules\User\Entities\User $user
+     *
      * @return mixed
      */
     public function delete(User $user)

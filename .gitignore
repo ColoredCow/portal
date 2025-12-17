@@ -47,3 +47,11 @@ cypress/videos
 cypress/screenshots
 
 google_service_credentials.json
+
+.phpunit.result.cache
+.phpunit.result.cache/
+
+# Unit test / coverage reports
+coverage.xml
+codecov
+codecov/

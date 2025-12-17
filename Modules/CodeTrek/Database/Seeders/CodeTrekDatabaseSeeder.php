@@ -2,8 +2,8 @@
 
 namespace Modules\CodeTrek\Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Seeder;
 
 class CodeTrekDatabaseSeeder extends Seeder
 {
@@ -17,5 +17,6 @@ class CodeTrekDatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call(CodeTrekPermissionTableSeeder::class);
+        $this->call(CodeTrekApplicantRoundDetailsTableSeeder::class);
     }
 }

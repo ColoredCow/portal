@@ -2,8 +2,9 @@
 
 namespace Modules\User\Http\Controllers;
 
-use Modules\User\Entities\User;
+use Illuminate\Http\Request;
 use Modules\User\Contracts\UserServiceContract;
+use Modules\User\Entities\User;
 use Modules\User\Http\Requests\UpdateUserRolesRequest;
 
 class UserController extends ModuleBaseController
@@ -26,29 +27,6 @@ class UserController extends ModuleBaseController
         return view('user::index', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-    }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     */
-    public function show($id)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     */
-    public function edit($id)
-    {
-    }
-
     public function updateUserRoles(UpdateUserRolesRequest $request)
     {
         $validatedData = $request->validated();
@@ -58,12 +36,18 @@ class UserController extends ModuleBaseController
 
     /**
      * Remove the specified resource from storage.
+     *
      * @param User $user
-     * @return void
+     *
+     * @return mixed
      */
-    public function destroy(User $user)
+    public function destroy(Request $request, User $user)
     {
         $this->authorize('delete', $user);
-        $this->service->delete($user);
+        $this->service->delete($user, $request->all());
+        if (! $request->expectsJson()) {
+            // Redirecting in case of form request
+            return redirect()->back()->with(['success' => 'User Deleted Successfully.']);
+        }
     }
 }

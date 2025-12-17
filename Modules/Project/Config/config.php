@@ -5,7 +5,8 @@ return [
     'status' => [
         'active' => 'Active',
         'inactive' => 'Inactive',
-        'halted' => 'Halted'
+        'halted' => 'Halted',
+        'yet to start' => 'Yet to start',
     ],
     'designation' => [
         'project_manager' => 'Project Manager',
@@ -14,11 +15,13 @@ return [
         'tester' => 'Tester(QA)',
         'solution_architect' => 'Solution Architect',
         'customer_support' => 'Customer Support',
-        'consultant' => 'Consultant'
+        'consultant' => 'Consultant',
+        'business_analyst' => 'Business Analyst',
     ],
     'type' => [
         'monthly-billing' => 'Monthly Billing',
-        'fixed-budget' => 'Fixed Budget'
+        'fixed-budget' => 'Fixed Budget',
+        'non-billable' => 'Non Billable',
     ],
     'meta_keys' => [
         'billing_level' => [
@@ -31,12 +34,12 @@ return [
                 'project' => [
                     'key' => 'project',
                     'label' => 'Project level',
-                ]
-            ]
+                ],
+            ],
         ],
         'last_updated_at' => [
             'key' => 'last_updated_at',
             'value' => 'Last refreshed at',
-        ]
-    ]
+        ],
+    ],
 ];

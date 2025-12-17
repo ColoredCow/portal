@@ -10,22 +10,20 @@ class UniversityContactRequest extends FormRequest
     {
         $rules = [];
         if ($this->method() === 'POST') {
-            $rules = [
+            return [
                 'name'=>'required|string',
                 'email'=>'required|string',
                 'designation'=>'required|string',
                 'phone' => 'required | numeric | digits:10',
-                'hr_university_id'=>'required|exists:hr_universities,id'
+                'hr_university_id'=>'required|exists:hr_universities,id',
             ];
-
-            return $rules;
         }
         if ($this->method() === 'PUT') {
             $rules = [
                 'name'=>'required|string',
                 'email'=>'required|string',
                 'designation'=>'required|string',
-                'phone' => 'required | numeric | digits:10'
+                'phone' => 'required | numeric | digits:10',
             ];
         }
 

@@ -1,16 +1,10 @@
 <?php
 
 return [
-    'office_locations' => [
-        'gurgaon' => 'Gurgaon',
-        'tehri' => 'Tehri',
-        'ranchi' => 'Ranchi',
-        'dwarahat' => 'Dwarahat'
-    ],
     'gsuite' => [
         'service-account-impersonate' => env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'),
         'client-hd' => env('GOOGLE_CLIENT_HD', ''),
-        'config-path' => env('GOOGLE_APPLICATION_CREDENTIALS')
+        'config-path' => env('GOOGLE_APPLICATION_CREDENTIALS'),
     ],
     'google' => [
         'vision-api-key' => env('GOOGLE_VISION_API_KEY'),
@@ -69,7 +63,7 @@ return [
             'applicant-name' => '|*applicant_name*|',
             'interview-time' => '|*interview_time*|',
             'job-title' => '|*job_title*|',
-            'verification-link' => '|*verification_link*|'
+            'verification-link' => '|*verification_link*|',
         ],
 
         'default' => [
@@ -167,6 +161,33 @@ return [
                 'paid' => 'Paid',
             ],
         ],
+        'scheduled-invoice' => [
+            'status' => [
+                'sent' => [
+                    'label' => 'sent',
+                    'title' => 'Sent',
+                    'class' => 'badge badge-info',
+                ],
+                'yet-to-be-created' => [
+                    'label' => 'yet-to-be-created',
+                    'title' => 'Yet To Be Created',
+                    'class' => 'badge badge-warning',
+                ],
+                'paid' => [
+                    'label' => 'paid',
+                    'title' => 'Paid',
+                    'class' => 'badge badge-success',
+                ],
+                'overdue' => [
+                    'label' => 'overdue',
+                    'title' => 'Over Due',
+                    'class' => 'badge badge-danger',
+                ],
+            ],
+            'delivery-report-reminder-days' => 5,
+            'finance-team-invoice-reminder-days' => 3,
+            'email'=> 'finance@coloredcow.com',
+        ],
         'gst' => '18',
         'reports' => [
             'list-previous-months' => 6,
@@ -228,6 +249,7 @@ return [
     'google_application_credentials' => env('GOOGLE_APPLICATION_CREDENTIALS'),
 
     'website_url' => env('WEBSITE_URL', 'https://coloredcow.com'),
+    'analytics_dashboard_url' => env('ANALYTICS_DASHBOARD_URL', 'https://coloredcow.com'),
     'cube_js_url' => env('CUBE_JS_URL', 'http://localhost:4000/cubejs-api/v1'),
     'website_upload_dir' => env('WEBSITE_UPLOAD_DIR'),
     'timezone' => [
@@ -254,7 +276,7 @@ return [
         '16' => 'sixteen',
         '17' => 'seventeen',
         '18' => 'eighteen',
-        '19' =>'nineteen',
+        '19' => 'nineteen',
         '20' => 'twenty',
         '30' => 'thirty',
         '40' => 'forty',
@@ -262,6 +284,63 @@ return [
         '60' => 'sixty',
         '70' => 'seventy',
         '80' => 'eighty',
-        '90' => 'ninety'
-    ]
+        '90' => 'ninety',
+    ],
+    'campaign_tool_credentials' => [
+        'url' => env('CAMPAIGNS_TOOL_URL'),
+        'client_secret' => env('CAMPAIGNS_CLIENT_SECRET'),
+        'client_id' => env('CAMPAIGNS_CLIENT_ID'),
+    ],
+
+    'employee-reviewers' => [
+        'hr_id' => 'HR',
+        'mentor_id' => 'Mentor',
+        'manager_id' => 'Manager',
+    ],
+
+    'employee-review-status' => [
+        'self' => [
+            'pending' => 'Pending',
+            'in-progress' => 'In Progress',
+            'completed' => 'Completed',
+        ],
+        'mentor' => [
+            'pending' => 'Pending',
+            'in-progress' => 'In Progress',
+            'completed' => 'Completed',
+        ],
+        'hr' => [
+            'pending' => 'Pending',
+            'in-progress' => 'In Progress',
+            'completed' => 'Completed',
+        ],
+        'manager' => [
+            'pending' => 'Pending',
+            'in-progress' => 'In Progress',
+            'completed' => 'Completed',
+        ],
+    ],
+    'review-tags' => [
+        'pending' => [
+            'label' => 'pending',
+            'title' => 'Pending',
+            'class' => 'badge badge-danger',
+        ],
+        'in-progress' => [
+            'label' => 'in-progress',
+            'title' => 'In progress',
+            'class' => 'badge badge-warning',
+        ],
+        'completed' => [
+            'label' => 'completed ',
+            'title' => 'Completed ',
+            'class' => 'badge badge-success',
+        ],
+    ],
+    'module-settings' => [
+        'config-variable' => [
+            'employee_earning_threshold',
+            'contract_end_date_threshold',
+        ],
+    ],
 ];

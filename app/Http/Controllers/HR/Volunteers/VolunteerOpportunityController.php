@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\HR\Volunteers;
 
-use Modules\HR\Entities\Job;
 use Illuminate\Support\Facades\Request;
+use Modules\HR\Entities\Job;
 use Modules\HR\Http\Controllers\Recruitment\JobController;
 
 class VolunteerOpportunityController extends JobController

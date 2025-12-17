@@ -2,13 +2,19 @@
 
 namespace Modules\Invoice\Providers;
 
+use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
-use Modules\Invoice\Services\InvoiceService;
-use Modules\Invoice\Services\CurrencyService;
-use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
+use Modules\Invoice\Contracts\InvoiceServiceContract;
+use Modules\Invoice\Entities\EmployeeLoan;
+use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Entities\LoanInstallment;
+use Modules\Invoice\Observers\EmployeeLoanObserver;
+use Modules\Invoice\Observers\InvoiceObserver;
+use Modules\Invoice\Observers\LoanInstallmentObserver;
+use Modules\Invoice\Services\CurrencyService;
+use Modules\Invoice\Services\InvoiceService;
 
 class InvoiceServiceProvider extends ServiceProvider
 {
@@ -36,6 +42,7 @@ class InvoiceServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
         $this->registerCommands();
         $this->loadService();
+        $this->registerObservers();
     }
 
     /**
@@ -50,22 +57,6 @@ class InvoiceServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register config.
-     *
-     * @return void
-     */
-    protected function registerConfig()
-    {
-        $this->publishes([
-            module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
-        ], 'config');
-        $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'),
-            $this->moduleNameLower
-        );
-    }
-
-    /**
      * Register views.
      *
      * @return void
@@ -77,7 +68,7 @@ class InvoiceServiceProvider extends ServiceProvider
         $sourcePath = module_path($this->moduleName, 'Resources/views');
 
         $this->publishes([
-            $sourcePath => $viewPath
+            $sourcePath => $viewPath,
         ], ['views', $this->moduleNameLower . '-module-views']);
 
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
@@ -112,6 +103,32 @@ class InvoiceServiceProvider extends ServiceProvider
     }
 
     /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return [];
+    }
+
+    /**
+     * Register config.
+     *
+     * @return void
+     */
+    protected function registerConfig()
+    {
+        $this->publishes([
+            module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
+        ], 'config');
+        $this->mergeConfigFrom(
+            module_path($this->moduleName, 'Config/config.php'),
+            $this->moduleNameLower
+        );
+    }
+
+    /**
      * Register invoice specific console commands.
      *
      * @return void
@@ -121,17 +138,20 @@ class InvoiceServiceProvider extends ServiceProvider
         $this->commands([
             \Modules\Invoice\Console\SendUnpaidInvoiceList::class,
             \Modules\Invoice\Console\FixInvoiceAmountsCommand::class,
+            \Modules\Invoice\Console\SendUpcomingInvoiceReminder::class,
         ]);
     }
 
     /**
-     * Get the services provided by the provider.
+     * Register the observers for the module.
      *
-     * @return array
+     * @return void
      */
-    public function provides()
+    protected function registerObservers()
     {
-        return [];
+        Invoice::observe(InvoiceObserver::class);
+        EmployeeLoan::observe(EmployeeLoanObserver::class);
+        LoanInstallment::observe(LoanInstallmentObserver::class);
     }
 
     private function getPublishableViewPaths(): array

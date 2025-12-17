@@ -34,7 +34,7 @@ return [
             'marketing' => 'Marketing',
             'data-researcher' => 'Data Researcher',
             'people-operations' => 'People Operations',
-            'project-management' => 'Project Management'
+            'project-management' => 'Project Management',
         ],
         'designation' => [
             'project-manager' => 'Project Manager',
@@ -45,7 +45,7 @@ return [
             'solution-architect' => 'Solution Architect',
             'finance-lead' => 'Finance Lead',
             'quality-analyst' => 'Quality Analyst',
-            'chief-executive-officer' => 'Chief Executive Officer'
+            'chief-executive-officer' => 'Chief Executive Officer',
         ],
 
     ],
@@ -65,20 +65,26 @@ return [
     ],
 
     'opportunities-status' => [
-        'draft' => 'Draft',
-        'published' => 'Published',
-        'closed' => 'Closed',
-        'archived' => 'Archived',
-        'pending-review' => 'Pending Review',
+        'Draft' => 'draft',
+        'Published' => 'published',
+        // 'archived' => 'Archived',
+        'Closed' => 'draft',
+        'Pending Review' => 'pending-review',
     ],
 
     'opportunities-status-wp-mapping' => [
         // 'laravel-key' => 'wordpress-key'
         'published' => 'publish',
-        'archived' => 'archived',
         'draft' => 'draft',
+        // 'archived' => 'archived',
         'pending-review' => 'pending',
-        'closed' => 'closed'
+    ],
+
+    'slugs' => [
+        'job-form' => [
+            'key' => 'job_form_slug',
+            'value' => 'cc_career_apply_form',
+        ],
     ],
 
     'post-type' => [
@@ -96,7 +102,7 @@ return [
         'applicant-name' => '|*applicant_name*|',
         'interview-time' => '|*interview_time*|',
         'job-title' => '|*job_title*|',
-        'round-name' => '|*round_name*|'
+        'round-name' => '|*round_name*|',
     ],
 
     'default' => [
@@ -196,7 +202,7 @@ return [
         'other' => 'Other',
     ],
     'verified_application_date' =>[
-        'start_date' => '2022-07-06'
+        'start_date' => '2022-07-06',
     ],
     'non-verified-application-start-date' => '2022-07-06',
     'follow-up-attempts-threshold' => '2',

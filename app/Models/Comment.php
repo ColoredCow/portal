@@ -9,6 +9,7 @@ class Comment extends Model
 {
     protected $casts = [
         'created_at' => 'datetime: D d M @ h:i',
+        'updated_at' => 'datetime: D d M @ h:i',
     ];
 
     protected $with = ['user'];

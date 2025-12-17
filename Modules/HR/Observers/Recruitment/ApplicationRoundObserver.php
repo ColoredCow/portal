@@ -6,14 +6,13 @@ use App\Services\CalendarEventService;
 use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Events\ApplicationMovedToNewRound;
 use Modules\HR\Events\CustomMailTriggeredForApplication;
-use Modules\HR\Jobs\Recruitment\SendApplicationRoundScheduled;
 
 class ApplicationRoundObserver
 {
     /**
      * Listen to the ApplicationRound created event.
      *
-     * @param  \Modules\HR\Entities\ApplicationRound  $applicationRound
+     * @param  \Modules\HR\Entities\ApplicationRound $applicationRound
      * @return void
      */
     public function created(ApplicationRound $applicationRound)
@@ -34,18 +33,13 @@ class ApplicationRoundObserver
                 $data['mail_sender_name'] = $data['mail_sender_name'] ?? auth()->user()->name;
             }
             event(new ApplicationMovedToNewRound($applicationRound, $data));
-            // SendApplicationRoundScheduled::dispatch($applicationRound);
         }
-
-        // if (request()->get('create_calendar_event')) {
-        //     self::createCalendarEvent($applicationRound);
-        // }
     }
 
     /**
      * Listen to the ApplicationRound updated event.
      *
-     * @param  \Modules\HR\Entities\ApplicationRound  $applicationRound
+     * @param  \Modules\HR\Entities\ApplicationRound $applicationRound
      * @return void
      */
     public function updated(ApplicationRound $applicationRound)
@@ -66,14 +60,14 @@ class ApplicationRoundObserver
     /**
      * Create the calendar event for the application round instance.
      *
-     * @param  ApplicationRound $applicationRound
+     * @param ApplicationRound $applicationRound
      */
     public function createCalendarEvent(ApplicationRound $applicationRound)
     {
         $applicant = $applicationRound->application->applicant;
         $summary = request()->get('summary_calendar_event');
 
-        $event = new CalendarEventService;
+        $event = new CalendarEventService();
         $event->create([
             'summary' => $summary,
             'start' => $applicationRound->scheduled_date->format(config('constants.datetime_format')),

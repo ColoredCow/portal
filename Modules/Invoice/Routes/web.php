@@ -11,13 +11,24 @@
 |
 */
 
+Route::prefix('finance')->middleware('auth')->group(function () {
+    Route::resource('/employee-loan', 'EmployeeLoanController')
+        ->only(['index', 'edit', 'update', 'destroy', 'store'])
+        ->names([
+            'index' => 'employee-loan.index',
+            'edit' => 'employee-loan.edit',
+            'update' => 'employee-loan.update',
+            'destroy' => 'employee-loan.destroy',
+            'store' => 'employee-loan.store',
+        ]);
+    Route::get('/employee-loan/create', 'EmployeeLoanController@create')->name('employee-loan.create');
+});
+
 Route::prefix('invoice')->middleware('auth')->group(function () {
     Route::get('/', 'InvoiceController@index')->name('invoice.index');
     Route::get('/tax-report', 'InvoiceController@taxReport')->name('invoice.tax-report');
     Route::get('/tax-report-export', 'InvoiceController@taxReportExport')->name('invoice.tax-report-export');
     Route::get('/create', 'InvoiceController@create')->name('invoice.create');
-    Route::get('/create-custom-invoice', 'InvoiceController@createCustomInvoice')->name('invoice.create-custom-invoice');
-    Route::get('/preview-custom-invoice', 'InvoiceController@previewCustomInvoice')->name('invoice.preview-custom-invoice');
     Route::get('/dashboard', 'InvoiceController@dashboard')->name('invoice.dashboard');
     Route::post('/send-invoice-mail', 'InvoiceController@sendInvoice')->name('invoice.send-invoice-mail');
     Route::post('/', 'InvoiceController@store')->name('invoice.store');
@@ -32,8 +43,4 @@ Route::prefix('invoice')->middleware('auth')->group(function () {
     Route::get('/monthly-gst-tax-report-export', 'InvoiceController@monthlyGstTaxReportExport')->name('invoice.monthly-tax-report-export');
     Route::get('/{invoiceId}/{filename}', 'InvoiceController@getInvoiceFile')->name('invoice.get-file');
     Route::get('/yearly-invoice-report-export', 'InvoiceController@yearlyInvoiceReportExport')->name('invoice.yearly-report-export');
-});
-Route::middleware('auth')->group(function () {
-    Route::get('ledger-accounts', 'InvoiceController@ledgerAccountsIndex')->name('ledger-accounts.index');
-    Route::post('ledger-accounts', 'InvoiceController@storeLedgerAccountData')->name('ledger-accounts.store');
 });

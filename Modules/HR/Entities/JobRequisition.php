@@ -3,6 +3,7 @@
 namespace Modules\HR\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\User\Entities\User;
 
 class JobRequisition extends Model
 {
@@ -28,5 +29,10 @@ class JobRequisition extends Model
     public function hRRequisitionHiredBatchMembers()
     {
         return $this->hasmany(HRRequisitionHiredBatchMembers::class, 'batch_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'requested_by');
     }
 }

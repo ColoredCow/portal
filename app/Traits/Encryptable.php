@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use Crypt;
+use Illuminate\Support\Facades\Crypt;
 
 trait Encryptable
 {
@@ -12,11 +12,10 @@ trait Encryptable
 
         if (in_array($key, $this->encryptable)) {
             try {
-                $value = $this->decryptValue($value);
+                return $this->decryptValue($value);
             } catch (\Throwable $th) {
+                return $value;
             }
-
-            return $value;
         }
 
         return $value;

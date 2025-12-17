@@ -3,10 +3,10 @@
 namespace App\Services;
 
 use Carbon\Carbon;
+use Exception;
 use Google_Client;
 use Google_Service_Calendar;
 use Google_Service_Calendar_Event;
-use Exception;
 
 class CalendarEventService
 {
@@ -16,7 +16,8 @@ class CalendarEventService
     protected $endDateTime;
     protected $hangoutLink;
     protected $service;
-    public $id;
+    protected $id;
+    protected $description;
 
     public function __construct()
     {
@@ -37,15 +38,18 @@ class CalendarEventService
         $this->setAttendees($details['attendees']);
         $this->setStartDateTime($details['start']);
         $this->setEndDateTime($details['end']);
+        $this->setDescription($details['description']);
 
         $event = new Google_Service_Calendar_Event([
             'summary' => $this->summary,
             'attendees' => $this->attendees,
             'start' => $this->startDateTime,
             'end' => $this->endDateTime,
+            'description' => $this->description,
         ]);
+
         $optprm = [
-            'sendNotifications' => true
+            'sendNotifications' => true,
         ];
         $event = $this->service->events->insert($calendarId, $event, $optprm);
         $this->id = $event->id;
@@ -65,6 +69,7 @@ class CalendarEventService
         $this->setHangoutLink($event->hangoutLink);
         $this->setStartDateTime($event->start->dateTime, $event->start->timeZone);
         $this->setEndDateTime($event->end->dateTime, $event->end->timeZone);
+        $this->setDescription($event->description);
         $this->id = $eventId;
     }
 
@@ -88,6 +93,16 @@ class CalendarEventService
         $this->summary = $summary;
     }
 
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    public function getDescription($description)
+    {
+        $this->description = $description;
+    }
+
     public function getAttendees()
     {
         $attendees = [];
@@ -105,41 +120,6 @@ class CalendarEventService
                 'email' => $attendee,
             ];
         }
-    }
-
-    /**
-     * Returns an array that is expected by the Google Calendar API.
-     * @param  string $dateTime
-     * @param  string $timeZone
-     *
-     * @return array
-     */
-    protected static function getCalendarDateTime($dateTime, $timeZone)
-    {
-        $timeZone = $timeZone ?? config('app.timezone');
-
-        return [
-            'dateTime' => Carbon::parse($dateTime)->format(config('constants.calendar_datetime_format')),
-            'timeZone' => $timeZone,
-        ];
-    }
-
-    /**
-     * Returns an array with formats expected by Portal modules.
-     *
-     * @param  mixed $eventDateTime
-     * @param  bool $withTimeZone    defines whether to return the calendar event timeZone or not
-     *
-     * @return array
-     */
-    protected static function getDateTime($eventDateTime, $withTimeZone)
-    {
-        $dateTime['dateTime'] = Carbon::parse($eventDateTime['dateTime'])->format(config('constants.datetime_format'));
-        if ($withTimeZone) {
-            $start['timeZone'] = $eventDateTime['timeZone'];
-        }
-
-        return $dateTime;
     }
 
     public function getStartDateTime($withTimeZone = false)
@@ -160,5 +140,42 @@ class CalendarEventService
     public function setEndDateTime($dateTime, $timeZone = null)
     {
         $this->endDateTime = self::getCalendarDateTime($dateTime, $timeZone);
+    }
+
+    /**
+     * Returns an array that is expected by the Google Calendar API.
+     *
+     * @param string $dateTime
+     * @param string $timeZone
+     *
+     * @return array
+     */
+    protected static function getCalendarDateTime($dateTime, $timeZone)
+    {
+        $timeZone = $timeZone ?? config('app.timezone');
+
+        return [
+            'dateTime' => Carbon::parse($dateTime)->format(config('constants.calendar_datetime_format')),
+            'timeZone' => $timeZone,
+        ];
+    }
+
+    /**
+     * Returns an array with formats expected by Portal modules.
+     *
+     * @param mixed $eventDateTime
+     * @param bool  $withTimeZone  defines whether to return the calendar event timeZone or not
+     *
+     * @return array
+     */
+    protected static function getDateTime($eventDateTime, $withTimeZone)
+    {
+        $results = [];
+        $results['dateTime'] = Carbon::parse($eventDateTime['dateTime'])->format(config('constants.datetime_format'));
+        if ($withTimeZone) {
+            $results['timeZone'] = $eventDateTime['timeZone'];
+        }
+
+        return $results;
     }
 }

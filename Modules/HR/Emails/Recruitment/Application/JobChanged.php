@@ -10,7 +10,8 @@ use Modules\HR\Entities\ApplicationMeta;
 
 class JobChanged extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Application instance for which job has changed.
@@ -29,7 +30,7 @@ class JobChanged extends Mailable
     /**
      * Create a new message instance.
      *
-     * @param Application $application
+     * @param Application     $application
      * @param ApplicationMeta $changeJobMeta
      */
     public function __construct(Application $application, ApplicationMeta $changeJobMeta)

@@ -11,7 +11,8 @@ use Modules\Invoice\Entities\Invoice;
 
 class SendInvoiceMail extends Mailable
 {
-    use SerializesModels, Queueable;
+    use SerializesModels;
+    use Queueable;
 
     public $client;
     public $monthToSubtract;

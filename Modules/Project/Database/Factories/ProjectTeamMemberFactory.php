@@ -3,8 +3,8 @@
 namespace Modules\Project\Database\Factories;
 
 use Carbon\Carbon;
-use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectTeamMember;
 use Modules\User\Entities\User;
 
@@ -24,16 +24,16 @@ class ProjectTeamMemberFactory extends Factory
      */
     public function definition()
     {
+        $userId = User::factory()->create()->id;
+
         return [
             'project_id' => function () {
                 return Project::factory()->create()->id;
             },
-            'team_member_id' => function () {
-                return User::factory()->create()->id;
-            },
+            'team_member_id' => $userId,
             'designation' => array_rand(config('project.designation')),
             'daily_expected_effort' => '8',
-            'started_on' => Carbon::today()->subDays(10)
+            'started_on' => Carbon::today()->subDays(10),
         ];
     }
 }

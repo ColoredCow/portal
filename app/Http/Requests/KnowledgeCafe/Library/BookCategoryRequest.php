@@ -23,7 +23,7 @@ class BookCategoryRequest extends FormRequest
      */
     public function rules()
     {
-        return  [
+        return [
             'name' => 'filled|string',
         ];
     }

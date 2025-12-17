@@ -2,26 +2,32 @@
 
 namespace Modules\Project\Http\Controllers;
 
-use Illuminate\Routing\Controller;
-use Modules\Client\Entities\Client;
-use Modules\Project\Entities\Project;
-use Modules\Project\Rules\ProjectNameExist;
-use Modules\Project\Entities\ProjectContract;
-use Modules\Project\Http\Requests\ProjectRequest;
-use Modules\Project\Contracts\ProjectServiceContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Modules\Client\Entities\Client;
+use Modules\EffortTracking\Services\EffortTrackingService;
+use Modules\HR\Entities\HrJobDomain;
+use Modules\HR\Entities\Job;
+use Modules\Project\Contracts\ProjectServiceContract;
+use Modules\Project\Entities\Project;
+use Modules\Project\Entities\ProjectContract;
+use Modules\Project\Http\Requests\ProjectRequest;
+use Modules\Project\Rules\ProjectNameExist;
+use Modules\Project\Services\ProjectService;
 
 class ProjectController extends Controller
 {
     use AuthorizesRequests;
 
     protected $service;
+    protected $projectService;
 
-    public function __construct(ProjectServiceContract $service)
+    public function __construct(ProjectServiceContract $service, ProjectService $projectService)
     {
         $this->authorizeResource(Project::class);
         $this->service = $service;
+        $this->projectService = $projectService;
     }
 
     /**
@@ -39,13 +45,15 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $projectData = session('projectData', []);
         $clients = $this->service->getClients($status = 'all');
 
-        return view('project::create')->with('clients', $clients);
+        return view('project::create')->with(['clients' => $clients, 'projectData' => $projectData]);
     }
 
     /**
      * Store a newly created resource in storage.
+     *
      * @param ProjectRequest $request
      */
     public function store(ProjectRequest $request)
@@ -58,12 +66,15 @@ class ProjectController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @param Project $project
      */
-    public function show(Project $project)
+    public function show(Request $request, Project $project)
     {
-        $contract = ProjectContract::where('project_id', $project->id)->first();
-        $contractFilePath = $contract ? storage_path('app/' . $contract->contract_file_path) : null;
+        $contractData = $this->getContractData($project);
+        $contract = $contractData['contract'];
+        $contractFilePath = $contractData['contractFilePath'];
+        $contractName = $contractData['contractName'];
         $currentDate = today(config('constants.timezone.indian'));
 
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
@@ -71,18 +82,46 @@ class ProjectController extends Controller
         }
         $daysTillToday = count($project->getWorkingDaysList($project->client->month_start_date, $currentDate));
 
+        $effortTracking = new EffortTrackingService();
+        $isApprovedWorkPipelineExist = $effortTracking->getIsApprovedWorkPipelineExist($project->effort_sheet_url);
+
+        $getProjectHourDeatils = $this->service->getProjectApprovedPipelineHour($project);
+
+        $monthlyApprovedHour = $getProjectHourDeatils['monthlyApprovedHour'];
+        $totalEffort = $project->getTotalEffort();
+        $dailyEffort = $project->getDailyTotalEffort();
+        $totalExpectedHourInMonth = $getProjectHourDeatils['totalExpectedHourInMonth'];
+        $totalWeeklyEffort = $getProjectHourDeatils['totalWeeklyEffort'];
+        $remainingApprovedPipeline = $getProjectHourDeatils['remainingApprovedPipeline'];
+        $remainingExpectedEffort = $getProjectHourDeatils['remainingExpectedEffort'];
+        $weeklyHoursToCover = $getProjectHourDeatils['weeklyHoursToCover'];
+        $effortData = $effortTracking->show($request->all(), $project);
+
         return view('project::show', [
             'project' => $project,
             'contract' => $contract,
             'contractFilePath' => $contractFilePath,
+            'contractName' => $contractName,
             'daysTillToday' => $daysTillToday,
+            'isApprovedWorkPipelineExist' => $isApprovedWorkPipelineExist,
+            'totalExpectedHourInMonth' => $totalExpectedHourInMonth,
+            'monthlyApprovedHour' => $monthlyApprovedHour,
+            'totalWeeklyEffort' => $totalWeeklyEffort,
+            'remainingApprovedPipeline' => $remainingApprovedPipeline,
+            'remainingExpectedEffort' => $remainingExpectedEffort,
+            'weeklyHoursToCover' => $weeklyHoursToCover,
+            'effortData' => $effortData,
+            'totalEffort' => json_encode($totalEffort),
+            'dailyEffort' => $dailyEffort,
+            'stages' => $this->projectService->getProjectStages($project),
         ]);
     }
+
     public function destroy(ProjectRequest $request, Project $project)
     {
         $project->update(
             [
-                'reason_for_deletion' => $request['comment']
+                'reason_for_deletion' => $request['comment'],
             ]
         );
         $project->delete();
@@ -104,12 +143,16 @@ class ProjectController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @param Project $project
      */
     public function edit(Project $project)
     {
         $designations = $this->service->getDesignations();
         $designationKeys = array_keys($designations);
+        $contractData = $this->getContractData($project);
+        $contractName = $contractData['contractName'];
+        $invoiceTerms = $this->service->getInvoiceTerms($project);
 
         return view('project::edit', [
             'project' => $project,
@@ -120,11 +163,14 @@ class ProjectController extends Controller
             'designations' => $designations,
             'workingDaysInMonth' => $this->service->getWorkingDays($project),
             'designationKeys' => $designationKeys,
+            'contractName' => $contractName,
+            'invoiceTerms' => $invoiceTerms,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
+     *
      * @param ProjectRequest $request
      */
     public function update(ProjectRequest $request, Project $project)
@@ -148,10 +194,73 @@ class ProjectController extends Controller
 
     public function projectResource()
     {
-        $resourceData = $this->service->getProjectsWithTeamMemberRequirementData();
+        $resourceData = $this->service->getProjectsWithTeamMemberRequirementData(request()->all());
+        $domainName = HrJobDomain::all();
+        $jobName = Job::all();
 
         return view('project::resource-requirement', [
             'resourceData' => $resourceData,
+            'domainName' => $domainName,
+            'jobName' => $jobName,
         ]);
+    }
+
+    public function showDeliveryReport($invoiceId)
+    {
+        return $this->service->showDeliveryReport($invoiceId);
+    }
+
+    public function manageStage(Request $request)
+    {
+        $validatedData = $request->validate([
+            'project_id' => 'required|integer|exists:projects,id',
+            'newStages' => 'nullable|array',
+            'newStages.*.stage_name' => 'required|string',
+            'newStages.*.comments' => 'nullable|string',
+            'newStages.*.status' => 'nullable|string',
+            'newStages.*.expected_end_date' => 'required|date',
+            'deletedStages' => 'nullable|array',
+            'deletedStages.*' => 'required|integer|exists:project_new_stages,id',
+            'updatedStages' => 'nullable|array',
+            'updatedStages.*.id' => 'required|integer|exists:project_new_stages,id',
+        ]);
+
+        if (empty($validatedData['deletedStages']) && empty($validatedData['newStages']) && empty($validatedData['updatedStages'])) {
+            return response()->json([
+                'status' => 400,
+                'error' => 'No New Changes Detected',
+            ], 400);
+        }
+
+        if (! empty($validatedData['deletedStages'])) {
+            $this->projectService->removeStage($validatedData['deletedStages']);
+        }
+
+        if (! empty($validatedData['newStages'])) {
+            $this->projectService->storeStage($validatedData['newStages'], $validatedData['project_id']);
+        }
+
+        if (! empty($validatedData['updatedStages'])) {
+            $this->projectService->updateStage($validatedData['updatedStages']);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'success' => 'Stages managed successfully!',
+        ]);
+    }
+
+    // storing Contract related data here
+    private function getContractData(Project $project)
+    {
+        $contract = ProjectContract::where('project_id', $project->id)->first();
+        $contractFilePath = $contract ? storage_path('app/' . $contract->contract_file_path) : null;
+        $contractName = basename($contractFilePath);
+
+        return [
+            'contract' => $contract,
+            'contractFilePath' => $contractFilePath,
+            'contractName' => $contractName,
+        ];
     }
 }

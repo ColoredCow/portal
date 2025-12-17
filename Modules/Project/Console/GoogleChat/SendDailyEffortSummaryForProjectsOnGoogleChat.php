@@ -3,8 +3,8 @@
 namespace Modules\Project\Console\GoogleChat;
 
 use Illuminate\Console\Command;
-use Modules\Project\Entities\Project;
 use Illuminate\Support\Facades\Notification;
+use Modules\Project\Entities\Project;
 use Modules\Project\Notifications\GoogleChat\SendProjectSummary;
 
 class SendDailyEffortSummaryForProjectsOnGoogleChat extends Command
@@ -22,16 +22,6 @@ class SendDailyEffortSummaryForProjectsOnGoogleChat extends Command
      * @var string
      */
     protected $description = 'Creates a daily effort summary for every project and send it to their respective Google Chat channels.';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Execute the console command.

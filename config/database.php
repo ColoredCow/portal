@@ -52,16 +52,18 @@ return [
             'prefix' => '',
             'strict' => false,
             'engine' => null,
+            'encryption_key' => env('DB_ENCRYPTION_KEY_FOR_ANALYTICS', 'encryption_secret'),
         ],
 
         'testing' => [
             'driver' => 'mysql',
-            'host' => env('DB_TEST_HOST', 'localhost'),
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
             'database' => env('DB_TEST_DATABASE', 'portal_test'),
-            'username' => env('DB_TEST_USERNAME', 'root'),
-            'password' => env('DB_TEST_PASSWORD', ''),
-            'charset' => 'utf8',
-            'collation' => 'utf8_unicode_ci',
+            'username' => env('DB_TEST_USERNAME', 'mysql_test_user'),
+            'password' => env('DB_TEST_PASSWORD', 'root'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
             'strict' => false,
         ],
@@ -92,7 +94,7 @@ return [
 
         'wordpress' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', 'localhost'),
+            'host' => env('DB_WORDPRESS_HOST', 'localhost'),
             'port' => env('DB_PORT', '1433'),
             'database' => env('DB_WORDPRESS_DATABASE', ''),
             'username' => env('DB_WORDPRESS_USERNAME', 'forge'),
@@ -102,7 +104,7 @@ return [
             'prefix' => env('DB_WORDPRESS_PREFIX', 'wp_'),
             'strict' => false,
             'engine' => null,
-            'enabled' => env('WORDPRESS_ENABLED', false)
+            'enabled' => env('WORDPRESS_ENABLED', false),
         ],
     ],
 

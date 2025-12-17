@@ -9,7 +9,8 @@ use Modules\HR\Entities\ApplicationRound;
 
 class RoundReviewed extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * The ApplicationRound instance.

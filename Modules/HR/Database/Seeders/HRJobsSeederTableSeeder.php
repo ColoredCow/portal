@@ -2,10 +2,10 @@
 
 namespace Modules\HR\Database\Seeders;
 
-use Modules\HR\Entities\Job;
-use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
+use Modules\HR\Entities\Job;
 
 class HRJobsSeederTableSeeder extends Seeder
 {

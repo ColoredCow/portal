@@ -12,9 +12,10 @@ use Modules\HR\Notifications\Recruitment\ApplicationRoundScheduled;
 
 class SendApplicationRoundScheduled implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    protected $applicationRound;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * The number of seconds the job can run before timing out.
@@ -22,6 +23,8 @@ class SendApplicationRoundScheduled implements ShouldQueue
      * @var int
      */
     public $timeout = 120;
+
+    protected $applicationRound;
 
     /**
      * Create a new job instance.

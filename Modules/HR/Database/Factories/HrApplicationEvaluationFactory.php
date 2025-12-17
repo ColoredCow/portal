@@ -2,10 +2,10 @@
 
 namespace Modules\HR\Database\Factories;
 
-use Modules\HR\Entities\Evaluation\ApplicationEvaluation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationRound;
+use Modules\HR\Entities\Evaluation\ApplicationEvaluation;
 use Modules\HR\Entities\Evaluation\Parameter;
 use Modules\HR\Entities\Evaluation\ParameterOption;
 

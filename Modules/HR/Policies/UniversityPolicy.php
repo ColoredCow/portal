@@ -3,14 +3,13 @@
 namespace Modules\HR\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Modules\HR\Entities\University;
 use Modules\User\Entities\User;
 
 class UniversityPolicy
 {
     use HandlesAuthorization;
 
-    public function view(User $user, University $university)
+    public function view(User $user)
     {
         return $user->hasPermissionTo('hr_universities.view');
     }
@@ -20,12 +19,12 @@ class UniversityPolicy
         return $user->hasPermissionTo('hr_universities.create');
     }
 
-    public function update(User $user, University $university)
+    public function update(User $user)
     {
         return $user->hasPermissionTo('hr_universities.update');
     }
 
-    public function delete(User $user, University $university)
+    public function delete(User $user)
     {
         return $user->hasPermissionTo('hr_universities.delete');
     }

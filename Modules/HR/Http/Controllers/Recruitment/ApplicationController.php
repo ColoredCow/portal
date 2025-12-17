@@ -31,14 +31,13 @@ use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 abstract class ApplicationController extends Controller
 {
-    abstract public function getApplicationType();
-
     protected $service;
 
     public function __construct(ApplicationService $service)
     {
         $this->service = $service;
     }
+    abstract public function getApplicationType();
 
     public function markInterviewFinished(Request $request)
     {
@@ -86,20 +85,20 @@ abstract class ApplicationController extends Controller
             'roundFilters' => request()->get('roundFilters'),
         ];
         $loggedInUserId = auth()->id();
-        $applications = Application::join('hr_application_round', function ($join) {
+        $applications = Application::select('hr_applications.*')
+        ->join('hr_application_round', function ($join) {
             $join->on('hr_application_round.hr_application_id', '=', 'hr_applications.id')
                 ->where('hr_application_round.is_latest', true);
-        })->with(['applicant', 'job', 'tags', 'latestApplicationRound']);
-
-        $applications = $applications->whereHas('latestApplicationRound')
-            ->applyFilter($filters)
-            ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
-            ->orderByRaw('ISNULL(hr_application_round.scheduled_date) ASC')
-            ->orderByRaw('hr_application_round.scheduled_date ASC')
-            ->select('hr_applications.*')
-            ->latest()
-            ->paginate(config('constants.pagination_size'))
-            ->appends(request()->except('page'));
+        })
+        ->with(['applicant', 'job', 'tags', 'latestApplicationRound'])
+        ->whereHas('latestApplicationRound')
+        ->applyFilter($filters)
+        ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
+        ->orderByRaw('ISNULL(hr_application_round.scheduled_date) ASC')
+        ->orderByRaw('hr_application_round.scheduled_date ASC')
+        ->latest()
+        ->paginate(config('constants.pagination_size'))
+        ->appends(request()->except('page'));
         $countFilters = array_except($filters, ['status', 'round']);
         $attr = [
             'applications' => $applications,
@@ -119,7 +118,6 @@ abstract class ApplicationController extends Controller
         }
 
         $jobType = $this->getApplicationType();
-
         foreach ($hrRounds as $round) {
             $applicationCount = Application::query()->filterByJobType($jobType)
                 ->whereIn('hr_applications.status', ['in-progress', 'new', 'trial-program'])
@@ -141,33 +139,64 @@ abstract class ApplicationController extends Controller
         $attr['universities'] = University::all();
         $attr['tags'] = Tag::orderBy('name')->get();
         $attr['rounds'] = $hrRoundsCounts;
-        $attr['roundFilters'] = round::orderBy('name')->get();
+        $attr['roundFilters'] = Round::orderBy('name')->get();
         $attr['assignees'] = User::whereHas('roles', function ($query) {
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         })->orderby('name', 'asc')->get();
 
-        $attr['openApplicationsCountForJobs'] = [];
+        $openApplicationCountForJob = Application::whereIn('hr_job_id', $applications->pluck('hr_job_id'))
+            ->isOpen()
+            ->selectRaw('hr_job_id, COUNT(*) as count')
+            ->groupBy('hr_job_id')
+            ->get()
+            ->keyBy('hr_job_id')
+            ->toArray();
+
         foreach ($applications->items() as $application) {
-            $openApplicationCountForJob = Application::where('hr_job_id', $application->hr_job_id)->isOpen()->count();
-            $attr['openApplicationsCountForJobs'][$application->job->title] = $openApplicationCountForJob;
+            $attr['openApplicationsCountForJobs'][$application->job->title] = $openApplicationCountForJob[$application->hr_job_id]['count'] ?? 0;
         }
 
         $attr['applicantId'] = [];
-        $applications = Application::get('hr_applicant_id');
-        foreach ($applications as $application) {
-            $applicantID = ApplicantMeta::where('hr_applicant_id', $application->hr_applicant_id)->first();
-            if ($applicantID) {
-                $attr['applicantId'] = $applicantID;
-            }
+        $applications = Application::pluck('hr_applicant_id');
+        $applicantData = ApplicantMeta::whereIn('hr_applicant_id', $applications)->get();
+
+        foreach ($applicantData as $data) {
+            $attr['applicantId'][$data->hr_applicant_id] = $data;
         }
 
         return view('hr.application.index')->with($attr);
     }
 
     /**
+     * Display a listing of current date's interviews.
+     */
+    public function interviewsIndex(Request $request)
+    {
+        $today = today()->toDateString();
+        $applicationService = new ApplicationService();
+
+        $parsedData = $request->query();
+        $searchCategory = $parsedData['searchValue'] ?? null;
+        $selectedJob = $parsedData['jobValue'] ?? null;
+        $selectedOpportunity = $parsedData['opportunityValue'] ?? null;
+        $selectedRound = $parsedData['roundValue'] ?? null;
+        $allInterviews = $parsedData['dateValue'] ?? null;
+
+        $data = $applicationService->getApplicationsForDate($today, $allInterviews, $searchCategory, $selectedJob, $selectedOpportunity, $selectedRound);
+
+        if ($request->query()) {
+            return [
+                'status' => 200, 'html' => view('hr::application.today-interviews')->with($data)->render(),
+            ];
+        }
+
+        return view('hr::application.secondary-index')->with($data);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
-     * @param  string  $id
+     * @param string $id
      */
     public function edit($id)
     {
@@ -204,7 +233,7 @@ abstract class ApplicationController extends Controller
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],
-            'type' => config("constants.hr.opportunities.$job->type.type"),
+            'type' => config("constants.hr.opportunities.{$job->type}.type"),
             'universities' => University::orderBy('name')->get(),
         ];
 
@@ -250,7 +279,7 @@ abstract class ApplicationController extends Controller
         $job = $application->job;
         $applicant = $application->applicant;
         $pdf = Pdf::loadView('hr.application.draft-joining-letter', compact('applicant', 'job', 'offer_letter_body'));
-        $fileName = FileHelper::getOfferLetterFileName($pdf, $applicant);
+        $fileName = FileHelper::getOfferLetterFileName($applicant, $pdf);
         $directory = 'app/public/' . config('constants.hr.offer-letters-dir');
         if (! is_dir(storage_path($directory)) && ! file_exists(storage_path($directory))) {
             mkdir(storage_path($directory), 0, true);
@@ -259,7 +288,7 @@ abstract class ApplicationController extends Controller
         $pdf->save($fullPath);
     }
 
-    public static function getOfferLetter(Application $application, Request $request)
+    public static function getOfferLetter(Application $application)
     {
         $pdf = FileHelper::generateOfferLetter($application, true);
 
@@ -272,7 +301,8 @@ abstract class ApplicationController extends Controller
      * Update the specified resource.
      *
      * @param ApplicationRequest $request
-     * @param int $id
+     * @param int                $id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ApplicationRequest $request, int $id)

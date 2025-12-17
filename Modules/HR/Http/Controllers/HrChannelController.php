@@ -16,14 +16,14 @@ class HrChannelController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'=>'required'
+            'name'=>'required',
         ]);
 
         $name = $request->input('name');
         HrChannel::updateOrCreate([
-            'name'=>$name
+            'name'=>$name,
         ], [
-            'name'=>$name
+            'name'=>$name,
         ]);
 
         return redirect()->back();

@@ -2,12 +2,12 @@
 @section('content')
 
 <div class="container" id="update_details">
-    <div  class="card-body">
+    <div class="card-body">
         <form action="{{route('codetrek.update', $applicant)}}" method="POST" id='updateForm' enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="codetrek" value="applicant->id">
             <div class="card-body">
-                <h4 class="mb-3 font-weight-bold">Edit Applicant information</h4>
+                <h4 class="mb-3 font-weight-bold">Edit Applicant Information</h4>
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -69,6 +69,28 @@
                                 @for ($i=$endYear; $i>=1990; $i--)
                                 <option value="{{$i}}" {{ $applicant->graduation_year == $i ? 'selected' : '' }}>{{$i}} </option>
                                 @endfor
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group  col-md-5">
+                            <label for="mentor" class="field-required">Assign Mentor</label>
+                            <select name="mentorId" id="mentorId" class="form-control" required>
+                                <option value="">Select Mentor Name</option>
+                                @foreach($mentors as $mentor)
+                                    @if ($mentor->name )
+                                        <option value="{{ $mentor->id }}"{{ $applicant->mentor_id == $mentor->id ? 'selected' : '' }}>{{ $mentor->name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group offset-md-1 col-md-5">
+                            <label for="domain" class="field-required">Domain Name</label>
+                            <select name="domain" id="domain" class="form-control" required>
+                                <option value="">Select Domain Name</option>
+                                @foreach (config('codetrek.domain') as $key => $domain)
+                                    <option value="{{ $domain["slug"] }}" {{ $applicant->domain_name == $domain["slug"] ? 'selected' : '' }}>{{ $domain['label'] }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

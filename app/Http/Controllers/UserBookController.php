@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Auth;
+use Modules\User\Entities\User;
 
 class UserBookController extends Controller
 {

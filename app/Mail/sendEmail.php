@@ -7,11 +7,12 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class sendEmail extends Mailable implements ShouldQueue
+class SendEmail extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
-    public $applications;
+    protected $applications;
 
     /**
      * Create a new message instance.
@@ -25,7 +26,6 @@ class sendEmail extends Mailable implements ShouldQueue
 
     /**
      * Build the message.
-     *
      *
      * @return $this
      */

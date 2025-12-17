@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\KnowledgeCafe\Library;
 
-use App\Models\KnowledgeCafe\Library\BookCategory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\KnowledgeCafe\Library\BookCategoryRequest;
+use App\Models\KnowledgeCafe\Library\Book;
+use App\Models\KnowledgeCafe\Library\BookCategory;
 
 class BookCategoryController extends Controller
 {
@@ -21,15 +22,22 @@ class BookCategoryController extends Controller
     public function index()
     {
         $categories = BookCategory::withCount('books')->orderBy('name')->get();
+        $books = Book::all();
+        $wishlistedBooksCount = auth()->user()->booksInWishlist->count();
+        $booksBorrowedCount = auth()->user()->booksBorrower->count();
 
-        return view('knowledgecafe.library.categories.index')
-        ->with('categories', $this->formatCategoryData($categories));
+        return view('knowledgecafe.library.categories.index', [
+            'books' => $books,
+            'categories' => $this->formatCategoryData($categories),
+            'wishlistedBooksCount' => $wishlistedBooksCount,
+            'booksBorrowedCount' => $booksBorrowedCount,
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     *  @return void
+     * @return void
      */
     public function create()
     {
@@ -39,7 +47,7 @@ class BookCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  BookCategoryRequest  $request
+     * @param BookCategoryRequest $request
      */
     public function store(BookCategoryRequest $request)
     {
@@ -49,8 +57,8 @@ class BookCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  BookCategoryRequest  $request
-     * @param  BookCategory  $bookCategory
+     * @param BookCategoryRequest $request
+     * @param BookCategory        $bookCategory
      */
     public function update(BookCategoryRequest $request, BookCategory $bookCategory)
     {
@@ -62,7 +70,7 @@ class BookCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
+     * @param \App\Models\KnowledgeCafe\Library\BookCategory $bookCategory
      */
     public function destroy(BookCategory $bookCategory)
     {
@@ -79,7 +87,7 @@ class BookCategoryController extends Controller
             $data[] = [
                 'id' => $category->id,
                 'name' =>  $category->name,
-                'assign_books_count' => $category->books_count
+                'assign_books_count' => $category->books_count,
             ];
         }
 

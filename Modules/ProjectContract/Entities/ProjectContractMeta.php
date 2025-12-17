@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProjectContractMeta extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
     protected $table = 'project_contract_meta';
 
@@ -21,7 +22,7 @@ class ProjectContractMeta extends Model
         'contract_date_for_signing',
         'contract_date_for_effective',
         'contract_expiry_date',
-        'attributes'
+        'attributes',
     ];
 
     protected $guarded = [];

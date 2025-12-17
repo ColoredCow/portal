@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Modules\HR\Http\Controllers\EmployeeController;
 
 Route::prefix('report')->group(function () {
     Route::get('/', 'ReportController@index');
@@ -18,7 +19,8 @@ Route::prefix('report')->group(function () {
     Route::get('/show/{id}', 'ReportController@show')->name('report.show');
     Route::get('/delete/{id}', 'ReportController@delete')->name('report.delete');
     Route::post('/update/{id}', 'ReportController@update')->name('report.update');
-    Route::get('/get-fte-report/{user}', 'UserReportController@getFteData')->name('reports.fte.get-report-data');
+    Route::get('/get-fte-report/{userId}', 'UserReportController@getFteData')->name('reports.fte.get-report-data');
+    Route::get('get-codetrek-report', 'CodeTrekController@getApplicantData')->name('reports.codetrek.get-report-data');
 
     Route::prefix('finance')->group(function () {
         Route::get('dashboard', 'FinanceReportController@dashboard')->name('reports.finance.dashboard');
@@ -36,5 +38,16 @@ Route::prefix('report')->group(function () {
             Route::get('/detailed', 'ClientRevenueReportController@detailed')->name('reports.finance.revenue-by-client.detailed');
             Route::get('client-revenue-report-export', 'ClientRevenueReportController@clientRevenueReportExport')->name('reports.finance.client-revenue.report.export');
         });
+
+        Route::prefix('employee')->group(function () {
+            Route::get('/profitibality', [EmployeeController::class, 'index'])->name('report.employees.profitibality');
+        });
+
+        Route::prefix('monthly-sales-register')->group(function () {
+            Route::get('/', 'MonthlySalesRegisterController@index')->name('reports.finance.monthly-sales-register.index');
+            Route::get('/export', 'MonthlySalesRegisterController@exportReport')->name('reports.finance.monthly-sales-register.export');
+        });
+
+        Route::get('/project-contract-list', 'ContractReportController@index')->name('report.project.contracts.index');
     });
 });

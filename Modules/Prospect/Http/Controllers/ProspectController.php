@@ -2,100 +2,154 @@
 
 namespace Modules\Prospect\Http\Controllers;
 
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Storage;
+use Modules\Client\Entities\Client;
+use Modules\Client\Entities\Country;
 use Modules\Prospect\Entities\Prospect;
-use Modules\Prospect\Entities\ProspectDocument;
-use Modules\Prospect\Contracts\ProspectServiceContract;
+use Modules\Prospect\Http\Requests\ProspectRequest;
+use Modules\Prospect\Services\ProspectService;
+use Modules\User\Entities\User;
 
 class ProspectController extends Controller
 {
     protected $service;
 
-    public function __construct(ProspectServiceContract $service)
+    public function __construct(ProspectService $service)
     {
         $this->service = $service;
     }
 
     /**
      * Display a listing of the resource.
+     * @return Renderable
      */
     public function index()
     {
-        return view('prospect::index', $this->service->index());
+        $requestData = request()->all();
+        $data = $this->service->index($requestData);
+
+        return view('prospect::index', $data);
     }
 
     /**
      * Show the form for creating a new resource.
+     * @return Renderable
      */
     public function create()
     {
-        return view('prospect::create', $this->service->create());
+        $countries = Country::all();
+        $users = User::orderBy('name')->get();
+        $clients = Client::orderBy('name')->get();
+
+        return view('prospect::create', [
+            'users' => $users,
+            'countries' => $countries,
+            'clients' => $clients,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
-     * @param Request $request
+     * @param \Modules\Prospect\Http\Requests\ProspectRequest $request
      */
-    public function store(Request $request)
+    public function store(ProspectRequest $request)
     {
-        $prospect = $this->service->store($request->all());
+        $validated = $request->validated();
+        $this->service->store($validated);
 
-        return redirect(route('prospect.edit', [$prospect, 'contact-persons']));
+        return redirect()->route('prospect.index')->with('status', 'Prospect created successfully!');
     }
 
     /**
      * Show the specified resource.
      * @param int $id
      */
-    public function show($id, $section = null)
+    public function show($id)
     {
-        return redirect(route('prospect.edit', [$id, 'overview']));
+        $prospect = Prospect::with(['comments', 'insights'])->find($id);
+        $countries = Country::all();
+        $currencySymbols = $countries->pluck('currency_symbol', 'currency');
 
-        // return view('prospect::show', $this->service->show($id, $section));
+        return view('prospect::subviews.show', [
+            'prospect' => $prospect,
+            'currencySymbols' => $currencySymbols,
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
-     * @param Prospect $prospect
+     * @param  int        $id
+     * @return Renderable
      */
-    public function edit(Prospect $prospect, $section = null)
+    public function edit($id)
     {
-        return view('prospect::edit', $this->service->edit($prospect, $section));
+        $prospect = Prospect::with(['comments'])->find($id);
+        $countries = Country::all();
+        $users = User::orderBy('name')->get();
+        $clients = Client::orderBy('name')->get();
+
+        return view('prospect::edit', [
+            'prospect' => $prospect,
+            'users' => $users,
+            'countries' => $countries,
+            'clients' => $clients,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
+     * @param Request  $request
+     * @param Prospect $prospect
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Prospect $prospect)
     {
-        $data = $this->service->update($request->all(), $id);
+        $data = $this->service->update($request, $prospect);
+        if ($request->input('action') === 'update_create_project') {
+            $totalEstimatedHours = $this->getTotalEstimatedHoursForProject($prospect);
+            $projectData = [
+                'name'                  => $prospect->project_name,
+                'client_id'             => $prospect->client_id,
+                'status'                => 'active',
+                'total_estimated_hours' => $totalEstimatedHours ?? null,
+            ];
 
-        return redirect($data['route'])->with('status', 'Prospect created/updated successfully!');
-    }
+            return redirect()->route('project.create')->with('projectData', $projectData);
+        }
 
-    public function newProgressStage(Request $request)
-    {
-        return $this->service->addNewProgressStage($request->all());
-    }
-
-    public function openDocument(Request $request, $documentID)
-    {
-        $prospectDocument = ProspectDocument::find($documentID);
-
-        return Storage::download($prospectDocument->file_path);
+        return $data;
     }
 
     /**
-     * soft delete prospect.
+     * Remove the specified resource from storage.
+     * @param int $id
      */
-    public function delete($id)
+    public function commentUpdate(Request $request, $id)
     {
-        Prospect::find($id)->delete();
+        $validated = $request->validate([
+            'prospect_comment' => 'required',
+        ]);
+        $this->service->commentUpdate($validated, $id);
 
-        return redirect()->back();
+        return redirect()->route('prospect.show', $id)->with('status', 'Comment updated successfully!');
+    }
+
+    public function insightsUpdate(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'insight_learning' => 'required',
+        ]);
+        $this->service->insightsUpdate($validated, $id);
+
+        return redirect()->route('prospect.show', $id)->with('status', 'Prospect Insights updated successfully!');
+    }
+
+    public function getTotalEstimatedHoursForProject($prospectData)
+    {
+        $projectBudget = $prospectData->budget;
+        $clientServiceRates = Client::find($prospectData->client_id)->billingDetails->service_rates;
+
+        return $clientServiceRates ? $projectBudget / $clientServiceRates : '';
     }
 }

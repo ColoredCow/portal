@@ -36,7 +36,7 @@ return [
            // 'logout' => 'https://local.coloredcow.dev/wp/wp-login.php?saml_sls',
             'logout' => '',
             'certificate' => '',
-            'query_params' => ''
+            'query_params' => '',
         ],
 
         'aHR0cHM6Ly91YXQuY29sb3JlZGNvdy5jb20vd3Avd3AtbG9naW4ucGhwP3NhbWxfYWNz' => [
@@ -44,7 +44,7 @@ return [
             //'logout' => 'https://uat.coloredcow.com/wp/wp-login.php?saml_sls',
             'logout' => '',
             'certificate' => '',
-            'query_params' => ''
+            'query_params' => '',
         ],
 
         'aHR0cHM6Ly9jb2xvcmVkY293LmNvbS93cC93cC1sb2dpbi5waHA/c2FtbF9hY3M=' => [
@@ -52,13 +52,13 @@ return [
             //'logout' => 'https://local.coloredcow.dev/wp/wp-login.php?saml_sls',
             'logout' => '',
             'certificate' => '',
-            'query_params' => ''
-        ]
+            'query_params' => '',
+        ],
     ],
 
     // If you need to redirect after SLO depending on SLO initiator
     // key is beginning of HTTP_REFERER value from SERVER, value is redirect path
     'sp_slo_redirects' => [
         // 'https://example.com' => 'https://example.com',
-    ]
+    ],
 ];

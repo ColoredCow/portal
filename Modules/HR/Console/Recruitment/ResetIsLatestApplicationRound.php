@@ -23,16 +23,6 @@ class ResetIsLatestApplicationRound extends Command
     protected $description = 'Reset application round is latest fields for all the applications';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed

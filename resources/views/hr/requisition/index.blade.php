@@ -40,6 +40,7 @@
             <th>Domain</th>
             <th>Job Title</th>
             <th>Date</th>
+            <th>Requested By</th>
             <th>Action</th>
         </tr>
         @foreach ($requisitions as $requisition)
@@ -48,11 +49,13 @@
                 {{ $requisition->hrJobDomain->domain}}
             </td>
             <td>
-                {{$requisition->job->title}}     
-                    
+                {{$requisition->job->title}}                       
             </td>
             <td>
                 <span {{ $requisition->id }}>{{$requisition->created_at}}</span>
+            </td>
+            <td>   
+                {{ $requisition->user->name }}
             </td>
             <td>
                 <input class="check-input status" type="checkbox" data-id="{{ $requisition->id }}">

@@ -4,8 +4,8 @@ namespace Modules\Project\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
-use Modules\Project\Services\ProjectService;
 use Modules\Project\Emails\ZeroExpectedHourInProjectMail;
+use Modules\Project\Services\ProjectService;
 
 class ZeroExpectedHourInProject extends Command
 {
@@ -22,16 +22,6 @@ class ZeroExpectedHourInProject extends Command
      * @var string
      */
     protected $description = 'Send projects to the project team member when the project expected efforts are zero.';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Execute the console command.

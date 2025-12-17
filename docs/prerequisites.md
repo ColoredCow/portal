@@ -14,8 +14,10 @@ git --version
 ### 2. PHP, MySQL, Apache:running:
 Portal uses PHP v8.2. You can install it using one of the following ways:
 
+#### If you are a Window's user we would suggest you to use WAMP over XAMPP for portal as it is easier to control/change the version of PHP, MySQL, and Apache
+
 1. XAMPP (Windows and Linux)
-    - If you prefer using XAMPP, you can download the full stack with right PHP version from [this link](https://www.apachefriends.org/download.html)
+    - If you prefer using XAMPP, you can download the full stack with right PHP version from [this link](https://www.apachefriends.org/download.html). 
     - If you already have XAMPP installed for Windows, refer [this link](https://stackoverflow.com/questions/45790160/is-there-way-to-use-two-php-versions-in-xampp) for switching to the correct PHP version.
     - If you already have XAMPP installed for Ubuntu, refer [this link](http://www.facweb.iitkgp.ac.in/dashboard/docs/use-different-php-version.html)for switching to the correct PHP version.
 
@@ -50,7 +52,7 @@ Before you start building PHP connection to MySQL database you need to know what
 
 3. At the top click databases.
 
-4. In the new window, name your database as per your need, we are naming it “portal”. Now select Collation as utf8_general_ci. Now click on Create and your database will be created.
+4. In the new window, name your database as per your need, we are naming it “portal”. Now select Collation as utf8_general_ci. Now click on Create and your database will be created. Check out [this link](https://www.youtube.com/watch?v=k9yJR_ZJbvI&ab_channel=1BestCsharpblog) and skip to 0:21.
 
 5. The newly created database will be empty now, as there are no tables in it.
 
@@ -107,18 +109,23 @@ composer --version
 # Composer version 2.1.6 2021-08-19 17:11:08
 ```
 
+In case your composer version is different, run this command to change the version 
+```sh
+composer self-update 2.1.6
+```
+
 ### 6. Nodejs :running:
 For (Windows, Ubuntu, macOS)
-- [Nodejs v15](https://nodejs.org/download/release/v15.14.0/).
+- [Nodejs v18](https://nodejs.org/download/release/v18.16.0/).
 Download and install the file with .msi extension if on windows. After you've successfully installed, you can verify the installation using:
 ```sh
 npm -v
 # output should be something like
-# 6.14.15
+# 9.5.1
 
 node -v
 #output should be somthing like
-#v14.17.6
+#v18.16.0
 ```
 
 ### 7. Code Formatter :butterfly:

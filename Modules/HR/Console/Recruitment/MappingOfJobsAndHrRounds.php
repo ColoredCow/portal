@@ -24,16 +24,6 @@ class MappingOfJobsAndHrRounds extends Command
     protected $description = 'This will map all the jobs with the hrRounds. This has to be run whenever new HR Rounds are added.';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return void
