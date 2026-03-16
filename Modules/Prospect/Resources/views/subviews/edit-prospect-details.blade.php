@@ -58,7 +58,7 @@
                     <div class="form-group col-md-5">
                         <label for="proposal_sent_date">Proposal Sent Date</label>
                         <input type="date" class="form-control" name="proposal_sent_date" id="proposal_sent_date"
-                            value="{{ $prospect->proposal_sent_date }}">
+                            value="{{ $prospect->proposal_sent_date ? $prospect->proposal_sent_date->format('Y-m-d') : '' }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="domain">{{ __('Domain') }}</label>
