@@ -258,7 +258,7 @@ class Invoice extends Model implements Auditable
         $conversionRate = app(CurrencyServiceContract::class)->getAllCurrentRatesInINR();
 
         if (! $conversionRate) {
-            return null;
+            return;
         }
 
         $initial = config('invoice.currency_initials');
