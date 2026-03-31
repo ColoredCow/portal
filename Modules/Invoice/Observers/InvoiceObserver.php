@@ -21,18 +21,20 @@ class InvoiceObserver
         $conversionRate = $conversionRates->getAllCurrentRatesInINR();
         $initial = config('invoice.currency_initials');
 
-        switch (strtoupper($invoice->client->country->currency)) {
-            case $initial['usd']:
-                $invoice->sent_conversion_rate = $conversionRate['USDINR'];
-                break;
+        if ($conversionRate) {
+            switch (strtoupper($invoice->client->country->currency)) {
+                case $initial['usd']:
+                    $invoice->sent_conversion_rate = $conversionRate['USDINR'];
+                    break;
 
-            case $initial['eur']:
-                $invoice->sent_conversion_rate = round(($conversionRate['USDINR']) / ($conversionRate['USDEUR']), 2);
-                break;
+                case $initial['eur']:
+                    $invoice->sent_conversion_rate = round(($conversionRate['USDINR']) / ($conversionRate['USDEUR']), 2);
+                    break;
 
-            case $initial['swi']:
-                $invoice->sent_conversion_rate = round(($conversionRate['USDINR']) / ($conversionRate['USDCHF']), 2);
-                break;
+                case $initial['swi']:
+                    $invoice->sent_conversion_rate = round(($conversionRate['USDINR']) / ($conversionRate['USDCHF']), 2);
+                    break;
+            }
         }
 
         $invoice->save();
