@@ -256,6 +256,11 @@ class Invoice extends Model implements Auditable
         }
 
         $conversionRate = app(CurrencyServiceContract::class)->getAllCurrentRatesInINR();
+
+        if (! $conversionRate) {
+            return null;
+        }
+
         $initial = config('invoice.currency_initials');
         switch (strtoupper($this->currency)) {
             case $initial['usd']:
