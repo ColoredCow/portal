@@ -3,7 +3,9 @@
 namespace Modules\Invoice\Services;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
 
 class CurrencyService implements CurrencyServiceContract
@@ -30,19 +32,37 @@ class CurrencyService implements CurrencyServiceContract
     public function getCurrentRatesInINR()
     {
         $seconds = 1 * 60 * 60 * 4;
+        $rate = Cache::get('current_usd_rates');
 
-        return Cache::remember('current_usd_rates', $seconds, function () {
-            return $this->fetchExchangeRateInINR();
-        });
+        if ($rate !== null) {
+            return $rate;
+        }
+
+        $rate = $this->fetchExchangeRateInINR();
+
+        if ($rate !== null) {
+            Cache::put('current_usd_rates', $rate, $seconds);
+        }
+
+        return $rate;
     }
 
     public function getAllCurrentRatesInINR()
     {
         $seconds = 1 * 60 * 60 * 4;
+        $rates = Cache::get('all_current_usd_rates');
 
-        return Cache::remember('all_current_usd_rates', $seconds, function () {
-            return $this->fetchAllExchangeRateInINR();
-        });
+        if ($rates !== null) {
+            return $rates;
+        }
+
+        $rates = $this->fetchAllExchangeRateInINR();
+
+        if ($rates !== null) {
+            Cache::put('all_current_usd_rates', $rates, $seconds);
+        }
+
+        return $rates;
     }
 
     private function fetchExchangeRateInINR()
@@ -51,16 +71,22 @@ class CurrencyService implements CurrencyServiceContract
             return round(config('services.currencylayer.default_rate'), 2);
         }
 
-        $response = $this->client->get('currency_data/live', [
-            'query' => [
-                'access_key' => config('services.currencylayer.access_key'),
-                'currencies' => 'INR',
-            ],
-        ]);
+        try {
+            $response = $this->client->get('currency_data/live', [
+                'query' => [
+                    'access_key' => config('services.currencylayer.access_key'),
+                    'currencies' => 'INR',
+                ],
+            ]);
 
-        $data = json_decode($response->getBody()->getContents(), true);
+            $data = json_decode($response->getBody()->getContents(), true);
 
-        return round($data['quotes']['USDINR'], 2);
+            return round($data['quotes']['USDINR'], 2);
+        } catch (RequestException $e) {
+            Log::warning('Currency API request failed in fetchExchangeRateInINR: ' . $e->getMessage());
+
+            return null;
+        }
     }
 
     private function fetchAllExchangeRateInINR()
@@ -69,14 +95,20 @@ class CurrencyService implements CurrencyServiceContract
             return round(config('services.currencylayer.default_rate'), 2);
         }
 
-        $response = $this->client->get('currency_data/live', [
-            'query' => [
-                'access_key' => config('services.currencylayer.access_key'),
-            ],
-        ]);
+        try {
+            $response = $this->client->get('currency_data/live', [
+                'query' => [
+                    'access_key' => config('services.currencylayer.access_key'),
+                ],
+            ]);
 
-        $data = json_decode($response->getBody()->getContents(), true);
+            $data = json_decode($response->getBody()->getContents(), true);
 
-        return $data['quotes'];
+            return $data['quotes'];
+        } catch (RequestException $e) {
+            Log::warning('Currency API request failed in fetchAllExchangeRateInINR: ' . $e->getMessage());
+
+            return null;
+        }
     }
 }
