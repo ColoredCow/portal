@@ -101,8 +101,10 @@ class InvoiceService implements InvoiceServiceContract
                 continue;
             }
 
-            $invoiceAmount = $currentRates * (int) $invoice->amount;
-            $totalAmount += $invoiceAmount;
+            if ($currentRates) {
+                $invoiceAmount = $currentRates * (int) $invoice->amount;
+                $totalAmount += $invoiceAmount;
+            }
         }
 
         return round($totalAmount, 2);
@@ -117,8 +119,10 @@ class InvoiceService implements InvoiceServiceContract
             $totalAmount += (int) $invoice->amount;
         }
 
-        $invoiceAmount = $currentRates * (int) $invoice->amount;
-        $totalAmount += $invoiceAmount;
+        if ($currentRates) {
+            $invoiceAmount = $currentRates * (int) $invoice->amount;
+            $totalAmount += $invoiceAmount;
+        }
 
         return round($totalAmount, 2);
     }
