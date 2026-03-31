@@ -85,7 +85,7 @@ class CurrencyService implements CurrencyServiceContract
         } catch (RequestException $e) {
             Log::warning('Currency API request failed in fetchExchangeRateInINR: ' . $e->getMessage());
 
-            return null;
+            return;
         }
     }
 
@@ -108,7 +108,7 @@ class CurrencyService implements CurrencyServiceContract
         } catch (RequestException $e) {
             Log::warning('Currency API request failed in fetchAllExchangeRateInINR: ' . $e->getMessage());
 
-            return null;
+            return;
         }
     }
 }
