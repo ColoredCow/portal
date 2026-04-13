@@ -1,5 +1,5 @@
 ## Deployment Guidelines :mag_right:
-Portal uses GitHub action to deploy the portal on staging server.
+Portal uses GitHub Actions to deploy the portal on staging server.
 
 ## Environment setup for auto deployment
 

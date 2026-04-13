@@ -18,7 +18,7 @@
     <tr>
       <td></td>
       <td>develop</td>
-      <td>Base branch should always be main </td>
+      <td>Integration branch for features, bugfixes, and documentation.</td>
     </tr>
     <tr>
       <td>Temporary</td>

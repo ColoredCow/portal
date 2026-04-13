@@ -4,7 +4,7 @@ When contributing to this repository, please first discuss the change you wish t
 
 1. Fork this repository. Read about [how to fork a repository](https://help.github.com/articles/fork-a-repo/).
 
-2. For every contribution, create a new branch. A branch name must follow the format `feature/{issueID}/{description}` or `bugfix/{issueID}/{description}`.
+2. For every contribution, create a new branch. A branch name must follow the format `feature/{issueID}/{description}`, `bugfix/{issueID}/{description}`, `hotfix/{description}`, or `doc/{description}`.
 
         > git branch feature/497/billing-calculation
 
