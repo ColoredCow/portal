@@ -1,7 +1,7 @@
 name: Staging Deployment
 on:
   push:
-    branches: [master]
+    branches: [develop]
 
 jobs:
   build:
@@ -33,7 +33,7 @@ jobs:
 
           echo "Pulling latest code"
           git checkout -f
-          git pull origin master
+          git pull origin develop
           php artisan migrate
 
           echo "Running composer"

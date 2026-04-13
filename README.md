@@ -2,7 +2,7 @@
 
 ![GitHub issues](https://img.shields.io/github/issues/coloredcow/portal)
 [![codecov](https://codecov.io/gh/ColoredCow/portal/graph/badge.svg?token=LO38hOYgBT)](https://codecov.io/gh/ColoredCow/portal)
-[![Coding Standards](https://github.com/coloredcow/portal/actions/workflows/coding-standards.yml/badge.svg?branch=master)](https://github.com/coloredcow/portal/actions/workflows/coding-standards.yml)
+[![Coding Standards](https://github.com/coloredcow/portal/actions/workflows/coding-standards.yml/badge.svg?branch=develop)](https://github.com/coloredcow/portal/actions/workflows/coding-standards.yml)
 [![Staging Deployment](https://github.com/ColoredCow/portal/actions/workflows/staging-deployment.yml/badge.svg)](https://github.com/ColoredCow/portal/actions/workflows/staging-deployment.yml)
 
 ### Introduction

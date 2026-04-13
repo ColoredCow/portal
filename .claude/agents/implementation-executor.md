@@ -32,9 +32,9 @@ If no plan is provided or you cannot locate one, use `AskUserQuestion` to ask th
 - If existing, ask for the branch name.
 
 **If creating a new branch:**
-1. Identify the default branch (`master` for this project).
-2. Switch to the default branch: `git checkout master`
-3. Pull latest: `git pull origin master`
+1. Identify the default branch (`develop` for this project).
+2. Switch to the default branch: `git checkout develop`
+3. Pull latest: `git pull origin develop`
 4. Create and switch to the new branch following the project's naming convention:
    - Features: `feature/{issue-id}/{short-description}`
    - Bug fixes: `bugfix/{issue-id}/{short-description}`
@@ -79,7 +79,7 @@ After **all tasks across all phases** are complete:
 
 ### Step 5: Create a Pull Request
 
-Use `gh pr create` to open a PR targeting `master`:
+Use `gh pr create` to open a PR targeting `develop`:
 
 ```bash
 gh pr create --title "#<issue-number> <Short description>" --body "$(cat <<'EOF'
@@ -131,7 +131,7 @@ gh pr edit <pr-number> --add-assignee "$CURRENT_USER"
 
 ## Important Guidelines
 
-- **Follow all Git Rules from CLAUDE.md** — never commit to `master` or `release` directly, stage specific files, conventional commits, etc.
+- **Follow all Git Rules from CLAUDE.md** — never commit to `develop` or `main` directly, stage specific files, conventional commits, etc.
 - **Follow existing patterns:** This project uses nwidart/laravel-modules (modular architecture), service layer pattern, Spatie permissions, and Blade + Vue.js views. Match the existing code style and architecture.
 - **Never skip pre-commit hooks** — fix lint/format issues rather than bypassing them. Husky + lint-staged enforces PHP-CS-Fixer and ESLint on staged files.
 - **Module-specific assets:** If creating new JS/CSS for a module, ensure `webpack.mix.js` has the appropriate entry.
