@@ -82,12 +82,12 @@ Uses **Spatie Laravel Permission** for role-based access control (RBAC). Authori
 
 ## Branch Naming Convention
 
-- `feature/{issue-id}/{description}` — New features (base: `master`)
-- `bugfix/{issue-id}/{description}` — Bug fixes (base: `master`)
-- `hotfix/{description}` — Urgent production fixes (base: `release`)
-- `doc/{description}` — Documentation changes (base: `master`)
+- `feature/{issue-id}/{description}` — New features (base: `develop`)
+- `bugfix/{issue-id}/{description}` — Bug fixes (base: `develop`)
+- `hotfix/{description}` — Urgent production fixes (base: `main`)
+- `doc/{description}` — Documentation changes (base: `develop`)
 
-Production branch is `release`. Development branch is `master`.
+Production branch is `main`. Development branch is `develop`.
 
 ## Naming Conventions
 
