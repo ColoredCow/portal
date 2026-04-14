@@ -12,33 +12,33 @@
   <tbody>
     <tr>
       <td>Code Flow</td>
-      <td>release</td>
+      <td>main</td>
       <td>This is the main branch for production.</td>
     </tr>
     <tr>
       <td></td>
-      <td>master</td>
-      <td>Base branch should always be release </td>
+      <td>develop</td>
+      <td>Integration branch for features, bugfixes, and documentation.</td>
     </tr>
     <tr>
       <td>Temporary</td>
       <td>feature</td>
-      <td>Base branch should always be master.</td>
+      <td>Base branch should always be develop.</td>
     </tr>
     <tr>
       <td></td>
       <td>bugfix</td>
-      <td>Base branch should always be master.</td>
+      <td>Base branch should always be develop.</td>
     </tr>
     <tr>
       <td></td>
       <td>hotfix</td>
-      <td>Base branch should be release.</td>
+      <td>Base branch should be main.</td>
     </tr>
     <tr>
       <td></td>
       <td>doc</td>
-      <td>Base branch should always be master.</td>
+      <td>Base branch should always be develop.</td>
     </tr>
   </tbody>
 </table>
@@ -53,11 +53,11 @@ In this convention, the branches are divided into two categories:
 ### Code Flow Branches
 These branches which we expect to be permanently available on the repository follow the flow of code changes starting from development until the production.
 
-#### 1. Master
-All new pull requests related to features and bug fixes shoulb be merged into this branch after code reviews. Resolving developer codes conflicts should be done as early as here.
+#### 1. Develop
+All new pull requests related to features and bug fixes should be merged into this branch after code reviews. Resolving developer code conflicts should be done as early as here.
 
-#### 2. Release
-This is the main branch for production. Nothing should be directly pushed into this branch except for the hot-fix errors and the master branch after the complete testing of the issues or bug fixes.
+#### 2. Main
+This is the main branch for production. Nothing should be directly pushed into this branch except for the hot-fix errors and the develop branch after the complete testing of the issues or bug fixes.
 
 ### Temporary Branches
 As the name implies, these are disposable branches that can be created and deleted by need of the developer or deployer.
@@ -82,7 +82,7 @@ Examples:
 - bugfix/21/mail-not-sending
 
 #### 3. Hot Fix
-If there is an issue in the release branch then it needs to be  fixed immediately, then that issue should be created as a Hotfix. The hotfix branch should be pulled from the release branch.
+If there is an issue in the main branch then it needs to be fixed immediately, then that issue should be created as a Hotfix. The hotfix branch should be pulled from the main branch.
 
 Examples:
 - hotfix/disable-endpoint-zero-day-exploit

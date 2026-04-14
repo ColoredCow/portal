@@ -5,7 +5,7 @@
 
 ## Working in the `portal` repo
 1. Push your local changes to Github.
-    * Once you have updated you master branch with the latest changes, you can follow these steps to create a new branch, make changes, and push it to GitHub.
+    * Once you have updated your develop branch with the latest changes, you can follow these steps to create a new branch, make changes, and push it to GitHub.
 
         ```sh
         git checkout -b branchname     # create a branch where you will commit your changes

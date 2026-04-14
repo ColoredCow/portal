@@ -180,7 +180,7 @@ This project uses Laravel Modules, so a basic understanding of the commands is r
 
 This project uses Cypress for automated testing, so a basic understanding of the writing test cases is recommended:
 
-- [Introduction to Cypress](https://github.com/ColoredCow/portal/blob/master/docs/testing.md)
+- [Introduction to Cypress](https://github.com/ColoredCow/portal/blob/develop/docs/testing.md)
 - [Writing Your First Test](https://docs.cypress.io/guides/getting-started/writing-your-first-test)
 - [Testing Your App](https://docs.cypress.io/guides/getting-started/testing-your-app#Step-1-Start-your-server)
 

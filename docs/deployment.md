@@ -1,10 +1,10 @@
 ## Deployment Guidelines :mag_right:
-Portal uses GitHub action to deploy the portal on staging server.
+Portal uses GitHub Actions to deploy the portal on staging server.
 
 ## Environment setup for auto deployment
 
 ### Staging Deployment setup
-Staging builds are configured using GitHub Actions. The file `.github/workflows/deploy-staging.yml` contains the commands to deploy the portal. Production builds happen when code is pushed to `master` branch.
+Staging builds are configured using GitHub Actions. The file `.github/workflows/staging-deployment.yml` contains the commands to deploy the portal. Staging builds happen when code is pushed to `develop` branch.
 
 To set up the deployment workflow, follow the steps below.
 
@@ -51,7 +51,7 @@ To set up the deployment workflow, follow the steps below.
 For more information, check out [staging-deployment.yml](../.github/workflows/staging-deployment.yml).
 
 ### Production Deployment setup
-Production builds are configured using GitHub Actions. The file `.github/workflows/deploy-staging.yml` contains the commands to deploy the portal. Production builds happen when new releases are published. For example `v1.1.2`.
+Production builds are configured using GitHub Actions. The file `.github/workflows/production-deployment.yml` contains the commands to deploy the portal. Production builds happen when code is pushed to `main` branch.
 
 To set up the production deployment workflow, follow the same steps as staging. Make sure to update the keys and environment variables accordingly.
 
@@ -64,16 +64,16 @@ For more information, check out [production-deployment.yml](../.github/workflows
 **Pre-requisites:**
 You need to have permission to deploy on the staging Environment. If you don't have the required access, please reach out to the Infra team for your deployment approval access
 
-1. Raise the PR against the `master` branch.
-2. Get the PR reviewed and merged into the `master` branch.
+1. Raise the PR against the `develop` branch.
+2. Get the PR reviewed and merged into the `develop` branch.
 3. Go to [Staging Deployment GitHub action](https://github.com/ColoredCow/portal/actions/workflows/staging-deployment.yml)
 4. Approve the deployment.
 
 ### Production Deployment
 **Pre-requisites:**
-You need to have permission to deploy on the staging Environment. If you don't have the required access, please reach out to the Infra team for your deployment approval access
+You need to have permission to deploy on the Production Environment. If you don't have the required access, please reach out to the Infra team for your deployment approval access
 
-1. Raise the PR against the `release` branch.
-2. Get the PR reviewed and merged into the `release` branch.
+1. Raise the PR against the `main` branch.
+2. Get the PR reviewed and merged into the `main` branch.
 3. Go to [Production Deployment GitHub action](https://github.com/ColoredCow/portal/actions/workflows/production-deployment.yml)
 4. Approve the deployment.
