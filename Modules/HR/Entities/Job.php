@@ -119,4 +119,14 @@ class Job extends Model
             'internship',
         ]);
     }
+
+    public function scopePublished($query)
+    {
+        return $query->where('status', 'published');
+    }
+
+    public function scopeOrderByTitle($query, $direction = 'asc')
+    {
+        return $query->orderBy('title', $direction);
+    }
 }
