@@ -73,7 +73,7 @@ class ApplicationService implements ApplicationServiceContract
                 ->count();
         }
 
-        $attr['jobs'] = Job::all();
+        $attr['jobs'] = Job::published()->orderByTitle()->get();
         $attr['tags'] = Tag::orderBy('name')->get();
 
         if (Module::has('User')) {
