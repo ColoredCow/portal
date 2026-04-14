@@ -32,8 +32,8 @@ If no plan is provided or you cannot locate one, use `AskUserQuestion` to ask th
 - If existing, ask for the branch name.
 
 **If creating a new branch:**
-1. Identify the default branch (`develop` for this project).
-2. Switch to the default branch: `git checkout develop`
+1. Identify the development branch (`develop` for this project).
+2. Switch to the development branch: `git checkout develop`
 3. Pull latest: `git pull origin develop`
 4. Create and switch to the new branch following the project's naming convention:
    - Features: `feature/{issue-id}/{short-description}`
