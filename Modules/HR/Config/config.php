@@ -68,7 +68,7 @@ return [
         'Draft' => 'draft',
         'Published' => 'published',
         // 'archived' => 'Archived',
-        'Closed' => 'draft',
+        'Closed' => 'closed',
         'Pending Review' => 'pending-review',
     ],
 
@@ -78,6 +78,7 @@ return [
         'draft' => 'draft',
         // 'archived' => 'archived',
         'pending-review' => 'pending',
+        'closed' => 'draft',
     ],
 
     'slugs' => [
