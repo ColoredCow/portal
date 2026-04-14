@@ -1,0 +1,26 @@
+name: Task
+description: Internal work item — technical debt, configuration, documentation
+title: "[Task] "
+labels: ["type : task", "status : new"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What needs to be done?
+      description: Clear description of the work.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: How do we know it's done?
+      description: Acceptance criteria — what does "complete" look like?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Related issues, technical notes, links.
+    validations:
+      required: false

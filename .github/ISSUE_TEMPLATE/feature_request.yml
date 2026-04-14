@@ -1,0 +1,52 @@
+name: Feature Request
+description: Suggest a new capability for the portal
+title: "[Feature] "
+labels: ["type : feature", "status : new"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the situation or pain point this addresses.
+      placeholder: "Employees have to manually track their leave balance because there's no dashboard for it."
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: What should the solution look like?
+      description: Describe how you imagine this working. Don't worry about technical details.
+      placeholder: "A simple dashboard page where employees can see their leave balance, pending requests, and approval history."
+    validations:
+      required: true
+  - type: dropdown
+    id: who-benefits
+    attributes:
+      label: Who benefits from this?
+      multiple: true
+      options:
+        - All Employees
+        - HR Team
+        - Finance Team
+        - Project Managers
+        - Admin Team
+        - Clients
+    validations:
+      required: true
+  - type: dropdown
+    id: urgency
+    attributes:
+      label: How urgently is this needed?
+      options:
+        - Immediately — people are asking for this now
+        - This quarter — important but not blocking
+        - Future — good to have, no rush
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: References, screenshots, examples from other tools.
+    validations:
+      required: false
