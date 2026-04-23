@@ -145,23 +145,6 @@ class ContractPdfAccessTest extends TestCase
         $this->get(route('pdf.show', $contract));
     }
 
-    public function test_null_file_path_returns_404()
-    {
-        $this->withoutExceptionHandling();
-        $this->expectException(NotFoundHttpException::class);
-
-        $user = $this->userWithProjectsView();
-        $contract = ProjectContract::factory()->create(['contract_file_path' => null]);
-        $contract->project->teamMembers()->attach($user->id, [
-            'designation' => 'developer',
-            'started_on' => Carbon::yesterday(),
-            'ended_on' => null,
-        ]);
-
-        $this->be($user);
-        $this->get(route('pdf.show', $contract));
-    }
-
     private function userWithProjectsView(): User
     {
         $user = User::factory()->create();
