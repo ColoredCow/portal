@@ -4,6 +4,7 @@ namespace Modules\Project\Tests\Feature;
 
 use Carbon\Carbon;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -12,7 +13,6 @@ use Modules\Project\Database\Seeders\ProjectPermissionsTableSeeder;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectContract;
 use Modules\User\Entities\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Tests\TestCase;
 

@@ -13,6 +13,16 @@ class ProjectContract extends Model
 
     protected $fillable = ['project_id', 'contract_file_path', 'uuid'];
 
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
+
     protected static function booted()
     {
         static::creating(function (ProjectContract $contract) {
@@ -22,18 +32,8 @@ class ProjectContract extends Model
         });
     }
 
-    public function getRouteKeyName()
-    {
-        return 'uuid';
-    }
-
     protected static function newFactory()
     {
         return ProjectContractFactory::new();
-    }
-
-    public function project()
-    {
-        return $this->belongsTo(Project::class);
     }
 }
