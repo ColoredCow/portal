@@ -3,6 +3,7 @@
 namespace Modules\Project\Tests\Feature;
 
 use Carbon\Carbon;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -36,13 +37,14 @@ class ContractPdfAccessTest extends TestCase
 
     public function test_authenticated_user_without_permission_is_forbidden()
     {
+        $this->withoutExceptionHandling();
+        $this->expectException(AuthorizationException::class);
+
         $user = User::factory()->create();
         $this->be($user);
         $contract = $this->contractWithFile();
 
-        $response = $this->get(route('pdf.show', $contract), ['Accept' => 'application/json']);
-
-        $response->assertForbidden();
+        $this->get(route('pdf.show', $contract));
     }
 
     public function test_active_team_member_with_permission_can_download_pdf()
