@@ -5,6 +5,8 @@ namespace Modules\Project\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Modules\Client\Entities\Client;
 use Modules\EffortTracking\Services\EffortTrackingService;
 use Modules\HR\Entities\HrJobDomain;
@@ -129,15 +131,24 @@ class ProjectController extends Controller
         return redirect()->back()->with('status', 'Project deleted successfully!');
     }
 
-    public static function showPdf(ProjectContract $contract)
+    public function showPdf(ProjectContract $contract)
     {
-        $filePath = storage_path('app/' . $contract->contract_file_path);
-        $content = file_get_contents($filePath);
-        $contractFileName = pathinfo($contract->contract_file_path)['filename'];
+        $this->authorize('view', $contract);
 
-        return response($content)->withHeaders([
-            'content-type' => mime_content_type($filePath),
-            'contractFileName' => $contractFileName,
+        $path = $contract->contract_file_path;
+        if (! $path || ! Storage::disk('local')->exists($path)) {
+            Log::warning('contract pdf missing', [
+                'contract_uuid' => $contract->uuid,
+                'user_id' => auth()->id(),
+                'path' => $path,
+            ]);
+            abort(404);
+        }
+
+        $filename = pathinfo($path, PATHINFO_BASENAME);
+
+        return Storage::disk('local')->response($path, $filename, [
+            'Content-Disposition' => 'inline; filename="' . $filename . '"',
         ]);
     }
 
