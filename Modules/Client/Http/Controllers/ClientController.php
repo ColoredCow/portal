@@ -107,8 +107,6 @@ class ClientController extends ModuleBaseController
 
         $filename = pathinfo($path, PATHINFO_BASENAME);
 
-        return Storage::disk('local')->response($path, $filename, [
-            'Content-Disposition' => 'inline; filename="' . $filename . '"',
-        ]);
+        return Storage::disk('local')->response($path, $filename);
     }
 }
