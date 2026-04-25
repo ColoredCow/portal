@@ -2,6 +2,7 @@
 
 namespace Modules\Project\Http\Controllers;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -14,6 +15,7 @@ use Modules\HR\Entities\Job;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectContract;
+use Modules\Project\Entities\ProjectInvoiceTerm;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Rules\ProjectNameExist;
 use Modules\Project\Services\ProjectService;
@@ -214,9 +216,31 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function showDeliveryReport($invoiceId)
+    public function showDeliveryReport(ProjectInvoiceTerm $invoice)
     {
-        return $this->service->showDeliveryReport($invoiceId);
+        try {
+            $this->authorize('view', $invoice);
+        } catch (AuthorizationException $e) {
+            Log::notice('delivery report access denied', [
+                'invoice_term_uuid' => $invoice->uuid,
+                'user_id' => auth()->id(),
+            ]);
+            throw $e;
+        }
+
+        $path = $invoice->delivery_report;
+        if (! $path || ! Storage::disk('local')->exists($path)) {
+            Log::warning('delivery report missing', [
+                'invoice_term_uuid' => $invoice->uuid,
+                'user_id' => auth()->id(),
+                'path' => $path,
+            ]);
+            abort(404);
+        }
+
+        $filename = pathinfo($path, PATHINFO_BASENAME);
+
+        return Storage::disk('local')->response($path, $filename);
     }
 
     public function manageStage(Request $request)
