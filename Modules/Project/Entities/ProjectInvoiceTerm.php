@@ -25,20 +25,6 @@ class ProjectInvoiceTerm extends Model
         return 'uuid';
     }
 
-    protected static function booted()
-    {
-        static::creating(function (ProjectInvoiceTerm $term) {
-            if (empty($term->uuid)) {
-                $term->uuid = (string) Str::uuid();
-            }
-        });
-    }
-
-    protected static function newFactory()
-    {
-        return ProjectInvoiceTermFactory::new();
-    }
-
     public function project()
     {
         return $this->belongsTo(Project::class);
@@ -57,5 +43,19 @@ class ProjectInvoiceTerm extends Model
     public function comment()
     {
         return $this->morphOne(Comment::class, 'commentable');
+    }
+
+    protected static function booted()
+    {
+        static::creating(function (ProjectInvoiceTerm $term) {
+            if (empty($term->uuid)) {
+                $term->uuid = (string) Str::uuid();
+            }
+        });
+    }
+
+    protected static function newFactory()
+    {
+        return ProjectInvoiceTermFactory::new();
     }
 }

@@ -23,6 +23,11 @@ class ClientContract extends Model
         return 'uuid';
     }
 
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+
     protected static function booted()
     {
         static::creating(function (ClientContract $contract) {
@@ -35,10 +40,5 @@ class ClientContract extends Model
     protected static function newFactory()
     {
         return ClientContractFactory::new();
-    }
-
-    public function client()
-    {
-        return $this->belongsTo(Client::class);
     }
 }
