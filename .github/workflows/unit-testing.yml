@@ -71,6 +71,7 @@ jobs:
         uses: codecov/codecov-action@v3
 
       - name: Coverage Report as Comment (Clover)
+        if: github.event_name == 'pull_request'
         uses: lucassabreu/comment-coverage-clover@main
         with:
           file: coverage.xml
