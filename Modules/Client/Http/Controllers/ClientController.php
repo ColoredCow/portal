@@ -2,6 +2,9 @@
 
 namespace Modules\Client\Http\Controllers;
 
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Modules\Client\Contracts\ClientServiceContract;
 use Modules\Client\Entities\Client;
 use Modules\Client\Entities\ClientContract;
@@ -80,15 +83,30 @@ class ClientController extends ModuleBaseController
         return redirect($data['route'])->with('success', 'Client has been created/updated successfully!');
     }
 
-    public static function showPdf(ClientContract $contract)
+    public function showPdf(ClientContract $contract)
     {
-        $filePath = storage_path('app/' . $contract->contract_file_path);
-        $content = file_get_contents($filePath);
-        $contractFileName = pathinfo($contract->contract_file_path)['filename'];
+        try {
+            $this->authorize('view', $contract);
+        } catch (AuthorizationException $e) {
+            Log::notice('client contract pdf access denied', [
+                'contract_uuid' => $contract->uuid,
+                'user_id' => auth()->id(),
+            ]);
+            throw $e;
+        }
 
-        return response($content)->withHeaders([
-            'content-type' => mime_content_type($filePath),
-            'contractFileName' => $contractFileName,
-        ]);
+        $path = $contract->contract_file_path;
+        if (! $path || ! Storage::disk('local')->exists($path)) {
+            Log::warning('client contract pdf missing', [
+                'contract_uuid' => $contract->uuid,
+                'user_id' => auth()->id(),
+                'path' => $path,
+            ]);
+            abort(404);
+        }
+
+        $filename = pathinfo($path, PATHINFO_BASENAME);
+
+        return Storage::disk('local')->response($path, $filename);
     }
 }

@@ -422,19 +422,6 @@ class ProjectService implements ProjectServiceContract
         }
     }
 
-    public function showDeliveryReport($invoiceId)
-    {
-        $invoiceTerm = ProjectInvoiceTerm::where('id', $invoiceId)->first();
-        $filePath = storage_path('app/' . $invoiceTerm->delivery_report);
-        $content = file_get_contents($filePath);
-        $deliveryReport = pathinfo($invoiceTerm->delivery_report)['filename'];
-
-        return response($content)->withHeaders([
-            'content-type' => mime_content_type($filePath),
-            'deliveryReport' => $deliveryReport,
-        ]);
-    }
-
     public function getPendingDeliveryReportInvoices()
     {
         $currentDate = Carbon::now();

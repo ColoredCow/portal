@@ -45,7 +45,7 @@
                         <div class="custom-file mb-3">
                             <input type="file" id="delivery_report" :name="`invoiceTerms[${index}][delivery_report]`" class="custom-file-input" @change="handleFileUpload($event, index)">
                             <label for="delivery_report" class="custom-file-label overflow-hidden">Upload Report</label> <div v-if="invoiceTerm.delivery_report" class="indicator" style="margin-top: 3px">
-                                <a :id="`delivery_report_${index}`" :href="getDeliveryReportUrl(invoiceTerm.id)" target="_blank">
+                                <a :id="`delivery_report_${index}`" :href="getDeliveryReportUrl(invoiceTerm.uuid)" target="_blank">
                                     <span class="mr-1 underline theme-info fz-16">@{{ getFileName(invoiceTerm.delivery_report) }}</span>
                                 </a>
                             </div>

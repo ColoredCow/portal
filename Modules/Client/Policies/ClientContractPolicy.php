@@ -1,0 +1,45 @@
+<?php
+
+namespace Modules\Client\Policies;
+
+use Illuminate\Auth\Access\HandlesAuthorization;
+use Modules\Client\Entities\ClientContract;
+use Modules\User\Entities\User;
+
+class ClientContractPolicy
+{
+    use HandlesAuthorization;
+
+    public function before($user)
+    {
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+    }
+
+    public function view(User $user, ClientContract $contract)
+    {
+        if (! $user->hasPermissionTo('clients.view')) {
+            return false;
+        }
+
+        if ($user->hasPermissionTo('finance_reports.view')) {
+            return true;
+        }
+
+        $client = $contract->client;
+        if (! $client) {
+            return false;
+        }
+
+        if ((int) $client->key_account_manager_id === (int) $user->id) {
+            return true;
+        }
+
+        return $client->projects()
+            ->whereHas('teamMembers', function ($query) use ($user) {
+                $query->where('users.id', $user->id);
+            })
+            ->exists();
+    }
+}
