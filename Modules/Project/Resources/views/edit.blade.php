@@ -291,8 +291,8 @@
                 getFileName(filePath) {
                     return filePath.split('\\').pop().split('/').pop();
                 },
-                getDeliveryReportUrl(invoiceTermId) {
-                    return `{{ route('delivery-report.show', ':id') }}`.replace(':id', invoiceTermId);
+                getDeliveryReportUrl(invoiceTermUuid) {
+                    return `{{ route('delivery-report.show', ':uuid') }}`.replace(':uuid', invoiceTermUuid);
                 },
                 toggleDelayReason(index){
                     const invoiceTermComment= this.invoiceTerms[index].comment

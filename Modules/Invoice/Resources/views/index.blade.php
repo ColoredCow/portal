@@ -395,7 +395,7 @@
                             <td>
                                 @if ($invoice->report_required)
                                     @if ($invoice->delivery_report)
-                                        <a id="delivery_report_{{ $index }}" href="{{ route('delivery-report.show', $invoice->id) }}" target="_blank">
+                                        <a id="delivery_report_{{ $index }}" href="{{ route('delivery-report.show', $invoice) }}" target="_blank">
                                             <span class="mr-1 underline theme-info fz-16">{{ basename($invoice->delivery_report) }}</span>
                                         </a>
                                     @else
