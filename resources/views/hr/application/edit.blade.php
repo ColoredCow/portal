@@ -459,7 +459,6 @@
                                                                         {{ config("constants.hr.status.$application->status.title") }}
                                                                     </div>
                                                                 @endif
-                                                                @include('hr.application.copy-for-ai-evaluation')
                                                             </div>
                                                         </div>
                                                         <div class="card-body">
@@ -968,7 +967,6 @@
                                                                         {{ config("constants.hr.status.$application->status.title") }}
                                                                     </div>
                                                                 @endif
-                                                                @include('hr.application.copy-for-ai-evaluation')
                                                             </div>
                                                         </div>
                                                         <div class="card-body">
