@@ -57,3 +57,6 @@ google_service_credentials.json
 coverage.xml
 codecov
 codecov/
+
+# superpowers planning artifacts (local only)
+/docs/superpowers/
