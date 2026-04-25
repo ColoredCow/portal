@@ -141,8 +141,8 @@ export default {
 		},
 
 		getWebsiteUserProfileUrl() {
-			return this.config.website_url
-                        + "/wp/wp-admin/user-edit.php"
+			return this.config.website_admin_url
+                        + "/user-edit.php"
                         + "?idp_referrer=" + window.location.href
                         + "&user_id=" + this.user.websiteUser.ID;
 
