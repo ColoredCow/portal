@@ -23,6 +23,10 @@ class ProjectInvoiceTermPolicy
             return false;
         }
 
+        if ($user->hasPermissionTo('finance_reports.view')) {
+            return true;
+        }
+
         $project = $term->project;
         if (! $project) {
             return false;

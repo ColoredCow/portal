@@ -10,6 +10,7 @@ use Modules\Client\Entities\ClientContract;
 use Modules\Client\Policies\ClientContractPolicy;
 use Modules\Project\Entities\Project;
 use Modules\User\Entities\User;
+use Spatie\Permission\Models\Permission;
 use Tests\TestCase;
 
 class ClientContractPolicyTest extends TestCase
@@ -37,9 +38,19 @@ class ClientContractPolicyTest extends TestCase
     public function test_denies_user_with_permission_but_no_relationship()
     {
         $user = $this->userWithClientsView();
-        $contract = ClientContract::factory()->create();
+        $contract = $this->unrelatedContract();
 
         $this->assertFalse($this->policy->view($user, $contract));
+    }
+
+    public function test_allows_user_with_finance_reports_view_permission()
+    {
+        $user = $this->userWithClientsView();
+        Permission::findOrCreate('finance_reports.view');
+        $user->givePermissionTo('finance_reports.view');
+        $contract = $this->unrelatedContract();
+
+        $this->assertTrue($this->policy->view($user->fresh(), $contract));
     }
 
     public function test_allows_active_team_member_on_any_of_clients_projects()
@@ -102,5 +113,14 @@ class ClientContractPolicyTest extends TestCase
         $user->givePermissionTo('clients.view');
 
         return $user;
+    }
+
+    private function unrelatedContract(): ClientContract
+    {
+        $client = Client::factory()->create([
+            'key_account_manager_id' => User::factory()->create()->id,
+        ]);
+
+        return ClientContract::factory()->create(['client_id' => $client->id]);
     }
 }

@@ -13,6 +13,7 @@ use Modules\Project\Database\Seeders\ProjectPermissionsTableSeeder;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectInvoiceTerm;
 use Modules\User\Entities\User;
+use Spatie\Permission\Models\Permission;
 use Tests\TestCase;
 
 class DeliveryReportAccessTest extends TestCase
@@ -53,9 +54,21 @@ class DeliveryReportAccessTest extends TestCase
 
         $user = $this->userWithProjectsView();
         $this->be($user);
-        $term = $this->termWithFile();
+        $term = $this->unrelatedTermWithFile();
 
         $this->get(route('delivery-report.show', $term));
+    }
+
+    public function test_user_with_finance_reports_view_permission_can_download()
+    {
+        $user = $this->userWithProjectsView();
+        Permission::findOrCreate('finance_reports.view');
+        $user->givePermissionTo('finance_reports.view');
+
+        $term = $this->unrelatedTermWithFile();
+
+        $this->be($user);
+        $this->get(route('delivery-report.show', $term))->assertOk();
     }
 
     public function test_active_team_member_can_download()
@@ -176,7 +189,7 @@ class DeliveryReportAccessTest extends TestCase
         $this->withoutExceptionHandling();
 
         $user = $this->userWithProjectsView();
-        $term = $this->termWithFile();
+        $term = $this->unrelatedTermWithFile();
 
         Log::spy();
         $this->be($user);
@@ -220,5 +233,20 @@ class DeliveryReportAccessTest extends TestCase
         $path = Storage::disk('local')->putFile('delivery_report', $file);
 
         return ProjectInvoiceTerm::factory()->create(['delivery_report' => $path]);
+    }
+
+    private function unrelatedTermWithFile(): ProjectInvoiceTerm
+    {
+        $client = Client::factory()->create([
+            'key_account_manager_id' => User::factory()->create()->id,
+        ]);
+        $project = Project::factory()->create(['client_id' => $client->id]);
+        $file = UploadedFile::fake()->create('report.pdf', 10, 'application/pdf');
+        $path = Storage::disk('local')->putFile('delivery_report', $file);
+
+        return ProjectInvoiceTerm::factory()->create([
+            'project_id' => $project->id,
+            'delivery_report' => $path,
+        ]);
     }
 }

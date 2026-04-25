@@ -13,6 +13,7 @@ use Modules\Client\Entities\Client;
 use Modules\Client\Entities\ClientContract;
 use Modules\Project\Entities\Project;
 use Modules\User\Entities\User;
+use Spatie\Permission\Models\Permission;
 use Tests\TestCase;
 
 class ClientContractPdfAccessTest extends TestCase
@@ -55,9 +56,21 @@ class ClientContractPdfAccessTest extends TestCase
 
         $user = $this->userWithClientsView();
         $this->be($user);
-        $contract = $this->contractWithFile();
+        $contract = $this->unrelatedContractWithFile();
 
         $this->get(route('client.pdf.show', $contract));
+    }
+
+    public function test_user_with_finance_reports_view_permission_can_download()
+    {
+        $user = $this->userWithClientsView();
+        Permission::findOrCreate('finance_reports.view');
+        $user->givePermissionTo('finance_reports.view');
+
+        $contract = $this->unrelatedContractWithFile();
+
+        $this->be($user);
+        $this->get(route('client.pdf.show', $contract))->assertOk();
     }
 
     public function test_active_team_member_on_clients_project_can_download()
@@ -185,7 +198,7 @@ class ClientContractPdfAccessTest extends TestCase
         $this->withoutExceptionHandling();
 
         $user = $this->userWithClientsView();
-        $contract = $this->contractWithFile();
+        $contract = $this->unrelatedContractWithFile();
 
         Log::spy();
         $this->be($user);
@@ -229,6 +242,20 @@ class ClientContractPdfAccessTest extends TestCase
         $path = Storage::disk('local')->putFile('client-contracts', $file);
 
         return ClientContract::factory()->create(['contract_file_path' => $path]);
+    }
+
+    private function unrelatedContractWithFile(): ClientContract
+    {
+        $client = Client::factory()->create([
+            'key_account_manager_id' => User::factory()->create()->id,
+        ]);
+        $file = UploadedFile::fake()->create('contract.pdf', 10, 'application/pdf');
+        $path = Storage::disk('local')->putFile('client-contracts', $file);
+
+        return ClientContract::factory()->create([
+            'client_id' => $client->id,
+            'contract_file_path' => $path,
+        ]);
     }
 
     /** @return array{ClientContract, Project} */

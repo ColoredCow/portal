@@ -23,6 +23,10 @@ class ClientContractPolicy
             return false;
         }
 
+        if ($user->hasPermissionTo('finance_reports.view')) {
+            return true;
+        }
+
         $client = $contract->client;
         if (! $client) {
             return false;

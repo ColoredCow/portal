@@ -10,6 +10,7 @@ use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectInvoiceTerm;
 use Modules\Project\Policies\ProjectInvoiceTermPolicy;
 use Modules\User\Entities\User;
+use Spatie\Permission\Models\Permission;
 use Tests\TestCase;
 
 class ProjectInvoiceTermPolicyTest extends TestCase
@@ -37,9 +38,19 @@ class ProjectInvoiceTermPolicyTest extends TestCase
     public function test_denies_user_with_permission_but_no_relationship()
     {
         $user = $this->userWithProjectsView();
-        $term = ProjectInvoiceTerm::factory()->create();
+        $term = $this->unrelatedTerm();
 
         $this->assertFalse($this->policy->view($user, $term));
+    }
+
+    public function test_allows_user_with_finance_reports_view_permission()
+    {
+        $user = $this->userWithProjectsView();
+        Permission::findOrCreate('finance_reports.view');
+        $user->givePermissionTo('finance_reports.view');
+        $term = $this->unrelatedTerm();
+
+        $this->assertTrue($this->policy->view($user->fresh(), $term));
     }
 
     public function test_allows_active_team_member()
@@ -99,5 +110,15 @@ class ProjectInvoiceTermPolicyTest extends TestCase
         $user->givePermissionTo('projects.view');
 
         return $user;
+    }
+
+    private function unrelatedTerm(): ProjectInvoiceTerm
+    {
+        $client = Client::factory()->create([
+            'key_account_manager_id' => User::factory()->create()->id,
+        ]);
+        $project = Project::factory()->create(['client_id' => $client->id]);
+
+        return ProjectInvoiceTerm::factory()->create(['project_id' => $project->id]);
     }
 }
