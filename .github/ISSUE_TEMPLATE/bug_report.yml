@@ -1,0 +1,80 @@
+name: Bug Report
+description: Report something that's broken or not working as expected
+title: "[Bug] "
+labels: ["type : bug", "status : new"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting this. Please fill in the details below so the team can investigate quickly.
+  - type: dropdown
+    id: module
+    attributes:
+      label: Which area of the portal?
+      options:
+        - HR
+        - Invoices
+        - Projects
+        - Clients
+        - Salary
+        - Effort Tracking
+        - CRM / Sales
+        - Communication
+        - User Management
+        - Authentication
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the issue clearly. Include what you expected vs what actually happened.
+      placeholder: "When I try to generate an invoice, the page shows a 500 error instead of the PDF."
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: How can the team recreate this issue?
+      placeholder: |
+        1. Login as admin
+        2. Go to Invoices
+        3. Click "Generate Invoice"
+        4. See error
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: How severe is this?
+      options:
+        - Critical — blocks core functionality for users
+        - High — workaround exists but it's painful
+        - Medium — annoying but doesn't block anyone
+        - Low — cosmetic or minor
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or screen recordings
+      description: Attach any visuals that help explain the issue.
+    validations:
+      required: false
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, OS, or any relevant environment details.
+      placeholder: "Chrome 120, macOS Sonoma"
+    validations:
+      required: false
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Any other information that might help — error logs, user details, timing.
+    validations:
+      required: false

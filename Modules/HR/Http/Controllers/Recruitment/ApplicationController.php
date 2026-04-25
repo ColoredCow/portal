@@ -135,7 +135,7 @@ abstract class ApplicationController extends Controller
                 ->count();
         }
 
-        $attr['jobs'] = Job::all();
+        $attr['jobs'] = Job::published()->orderByTitle()->get();
         $attr['universities'] = University::all();
         $attr['tags'] = Tag::orderBy('name')->get();
         $attr['rounds'] = $hrRoundsCounts;
