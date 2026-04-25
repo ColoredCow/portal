@@ -320,7 +320,7 @@
             <tbody>
                 @foreach ($project->projectContracts as $contract)
                     <tr>
-                        <td> <a href="{{ route('pdf.show', $contract->first()) }}"
+                        <td> <a href="{{ route('pdf.show', $contract) }}"
                                 target="_blank">{{ basename($contract->contract_file_path) }}</a></td>
                         <td>{{ optional($project->start_date)->format('d M Y') ?? '-' }}</td>
                         <td>{{ optional($project->end_date)->format('d M Y') ?? '-' }}</td>
