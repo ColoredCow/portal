@@ -31,6 +31,7 @@
                             @endif
                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#customApplicationMail">Send mail</button>
                             @include('hr.custom-application-mail-modal', ['application' => $application])
+                            @include('hr.application.copy-for-ai-evaluation')
                         </div>
                         <div class="text-right fz-14">
                             <span class="c-pointer btn-clipboard text-right" data-clipboard-text="{{ $application->getScheduleInterviewLink() }}" data-toggle="tooltip" title="Click to copy">
