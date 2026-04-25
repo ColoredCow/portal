@@ -10,6 +10,13 @@ class ClientContractPolicy
 {
     use HandlesAuthorization;
 
+    public function before($user)
+    {
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+    }
+
     public function view(User $user, ClientContract $contract)
     {
         if (! $user->hasPermissionTo('clients.view')) {
