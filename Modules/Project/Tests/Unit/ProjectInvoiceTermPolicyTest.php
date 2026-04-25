@@ -80,6 +80,19 @@ class ProjectInvoiceTermPolicyTest extends TestCase
         $this->assertTrue($this->policy->view($kam, $term));
     }
 
+    public function test_denies_when_project_relation_is_missing()
+    {
+        $user = $this->userWithProjectsView();
+        $project = Project::factory()->create();
+        $term = ProjectInvoiceTerm::factory()->create(['project_id' => $project->id]);
+
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        $project->delete();
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
+        $this->assertFalse($this->policy->view($user, $term->fresh()));
+    }
+
     private function userWithProjectsView(): User
     {
         $user = User::factory()->create();

@@ -28,7 +28,7 @@ class ProjectInvoiceTermPolicy
             return false;
         }
 
-        $isKAM = optional($project->client)->key_account_manager_id === $user->id;
+        $isKAM = (int) optional($project->client)->key_account_manager_id === (int) $user->id;
         if ($isKAM) {
             return true;
         }

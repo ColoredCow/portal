@@ -83,6 +83,19 @@ class ClientContractPolicyTest extends TestCase
         $this->assertTrue($this->policy->view($kam, $contract));
     }
 
+    public function test_denies_when_client_relation_is_missing()
+    {
+        $user = $this->userWithClientsView();
+        $client = Client::factory()->create();
+        $contract = ClientContract::factory()->create(['client_id' => $client->id]);
+
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        $client->delete();
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
+        $this->assertFalse($this->policy->view($user, $contract->fresh()));
+    }
+
     private function userWithClientsView(): User
     {
         $user = User::factory()->create();

@@ -203,6 +203,18 @@ class ClientContractPdfAccessTest extends TestCase
         });
     }
 
+    public function test_super_admin_can_download_without_relationship()
+    {
+        $superAdminRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'super-admin']);
+        $admin = User::factory()->create();
+        $admin->assignRole($superAdminRole);
+
+        $contract = $this->contractWithFile();
+
+        $this->be($admin);
+        $this->get(route('client.pdf.show', $contract))->assertOk();
+    }
+
     private function userWithClientsView(): User
     {
         $user = User::factory()->create();

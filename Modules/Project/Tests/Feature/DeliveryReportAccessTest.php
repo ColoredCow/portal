@@ -194,6 +194,18 @@ class DeliveryReportAccessTest extends TestCase
         });
     }
 
+    public function test_super_admin_can_download_without_relationship()
+    {
+        $superAdminRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'super-admin']);
+        $admin = User::factory()->create();
+        $admin->assignRole($superAdminRole);
+
+        $term = $this->termWithFile();
+
+        $this->be($admin);
+        $this->get(route('delivery-report.show', $term))->assertOk();
+    }
+
     private function userWithProjectsView(): User
     {
         $user = User::factory()->create();

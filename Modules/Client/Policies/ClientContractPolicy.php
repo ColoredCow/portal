@@ -28,7 +28,7 @@ class ClientContractPolicy
             return false;
         }
 
-        if ($client->key_account_manager_id === $user->id) {
+        if ((int) $client->key_account_manager_id === (int) $user->id) {
             return true;
         }
 
