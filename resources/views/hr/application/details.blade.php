@@ -9,9 +9,9 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-6">
-                        <div>Applicant Details</div>
+                        <div class="mb-2">Applicant Details</div>
                         @foreach ($application->tags as $tag)
-                            <div class="badge text-uppercase fz-xl-12 c-pointer" style="background-color: {{ $tag->background_color }};color: {{ $tag->text_color  }};" data-toggle="tooltip" data-placement="top" title="{{ $tag->description }}">
+                            <div class="badge text-uppercase fz-xl-12 c-pointer mr-1 mb-1" style="background-color: {{ $tag->background_color }};color: {{ $tag->text_color  }};" data-toggle="tooltip" data-placement="top" title="{{ $tag->description }}">
                                 @if ($tag->icon)
                                     {!! config("tags.icons.{$tag->icon}") !!}
                                 @endif
@@ -19,17 +19,17 @@
                             </div>
                         @endforeach
                         @if (!in_array($application->status, ['in-progress', 'new']))
-                            <div class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase card-status-highlight fz-12">
+                            <div class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase card-status-highlight fz-12 mr-1 mb-1">
                                 {{ config("constants.hr.status.$application->status.title") }}
                             </div>
                         @endif
                     </div>
                     <div class="col-6 text-right">
-                        <div class="mb-1">
+                        <div class="mb-1 d-flex justify-content-end align-items-center flex-wrap">
                             @if($application->latestApplicationRound->hr_round_id == 1)
-                                <a href="{{ route('applications.job.edit', $application->id) }}" class="btn btn-primary btn-sm" target="_self">Evaluate</a>
+                                <a href="{{ route('applications.job.edit', $application->id) }}" class="btn btn-primary btn-sm mr-2" target="_self">Evaluate</a>
                             @endif
-                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#customApplicationMail">Send mail</button>
+                            <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#customApplicationMail">Send mail</button>
                             @include('hr.custom-application-mail-modal', ['application' => $application])
                             @include('hr.application.copy-for-ai-evaluation')
                         </div>
