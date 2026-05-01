@@ -440,25 +440,27 @@
                                                 @if ($applicationRound->round->name == 'Resume Screening')
                                                     <div class="card-body border-0">
                                                         <div class="card-header border-0">
-                                                            <div class="d-flex justify-content-between">
-                                                                <div>Applicant Details</div>
-                                                                @foreach ($application->tags as $tag)
-                                                                    <div class="badge text-uppercase fz-xl-12 c-pointer"
-                                                                        style="background-color: {{ $tag->background_color }};color: {{ $tag->text_color }};"
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title="{{ $tag->description }}">
-                                                                        @if ($tag->icon)
-                                                                            {!! config("tags.icons.{$tag->icon}") !!}
-                                                                        @endif
-                                                                        {{ $tag->name }}
-                                                                    </div>
-                                                                @endforeach
-                                                                @if (!in_array($application->status, ['in-progress', 'new']))
-                                                                    <div
-                                                                        class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase card-status-highlight fz-12">
-                                                                        {{ config("constants.hr.status.$application->status.title") }}
-                                                                    </div>
-                                                                @endif
+                                                            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                                                <div class="d-flex align-items-center flex-wrap">
+                                                                    <div class="mr-2">Applicant Details</div>
+                                                                    @foreach ($application->tags as $tag)
+                                                                        <div class="badge text-uppercase fz-xl-12 c-pointer mr-2 align-self-center"
+                                                                            style="background-color: {{ $tag->background_color }};color: {{ $tag->text_color }};"
+                                                                            data-toggle="tooltip" data-placement="top"
+                                                                            title="{{ $tag->description }}">
+                                                                            @if ($tag->icon)
+                                                                                {!! config("tags.icons.{$tag->icon}") !!}
+                                                                            @endif
+                                                                            {{ $tag->name }}
+                                                                        </div>
+                                                                    @endforeach
+                                                                    @if (!in_array($application->status, ['in-progress', 'new']))
+                                                                        <div
+                                                                            class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase card-status-highlight fz-12 mr-2 align-self-center">
+                                                                            {{ config("constants.hr.status.$application->status.title") }}
+                                                                        </div>
+                                                                    @endif
+                                                                </div>
                                                                 @include('hr.application.copy-for-ai-evaluation')
                                                             </div>
                                                         </div>
@@ -949,25 +951,27 @@
                                                 @if ($applicationRound->round->name == 'Resume Screening')
                                                     <div class="card mb-2 border-0">
                                                         <div class="card-header border-0">
-                                                            <div class="d-flex justify-content-between">
-                                                                <div>Applicant Details</div>
-                                                                @foreach ($application->tags as $tag)
-                                                                    <div class="badge text-uppercase fz-xl-12 c-pointer"
-                                                                        style="background-color: {{ $tag->background_color }};color: {{ $tag->text_color }};"
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title="{{ $tag->description }}">
-                                                                        @if ($tag->icon)
-                                                                            {!! config("tags.icons.{$tag->icon}") !!}
-                                                                        @endif
-                                                                        {{ $tag->name }}
-                                                                    </div>
-                                                                @endforeach
-                                                                @if (!in_array($application->status, ['in-progress', 'new']))
-                                                                    <div
-                                                                        class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase card-status-highlight fz-12">
-                                                                        {{ config("constants.hr.status.$application->status.title") }}
-                                                                    </div>
-                                                                @endif
+                                                            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                                                <div class="d-flex align-items-center flex-wrap">
+                                                                    <div class="mr-2">Applicant Details</div>
+                                                                    @foreach ($application->tags as $tag)
+                                                                        <div class="badge text-uppercase fz-xl-12 c-pointer mr-2 align-self-center"
+                                                                            style="background-color: {{ $tag->background_color }};color: {{ $tag->text_color }};"
+                                                                            data-toggle="tooltip" data-placement="top"
+                                                                            title="{{ $tag->description }}">
+                                                                            @if ($tag->icon)
+                                                                                {!! config("tags.icons.{$tag->icon}") !!}
+                                                                            @endif
+                                                                            {{ $tag->name }}
+                                                                        </div>
+                                                                    @endforeach
+                                                                    @if (!in_array($application->status, ['in-progress', 'new']))
+                                                                        <div
+                                                                            class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase card-status-highlight fz-12 mr-2 align-self-center">
+                                                                            {{ config("constants.hr.status.$application->status.title") }}
+                                                                        </div>
+                                                                    @endif
+                                                                </div>
                                                                 @include('hr.application.copy-for-ai-evaluation')
                                                             </div>
                                                         </div>
