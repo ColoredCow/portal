@@ -604,7 +604,7 @@
                                                                     @foreach (json_decode($applicationFormDetails->value) as $field => $value)
                                                                         <div class="form-group col-md-12">
                                                                             <label
-                                                                                class="text-secondary fz-14 leading-none mb-0.16">{{ $field }}</label>
+                                                                                class="text-secondary fz-14 leading-none mb-0.16">{{ str_ireplace('eligbility', 'eligibility', $field) }}</label>
                                                                             <div>{{ $value }}</div>
                                                                             @if (!$application->marks && $application->latestApplicationRound->hr_round_id == 1)
                                                                                 <div class="mt-2 evaluation-score">
@@ -1126,7 +1126,7 @@
                                                                     @foreach (json_decode($applicationFormDetails->value) ?? [] as $field => $value)
                                                                         <div class="form-group col-md-12">
                                                                             <label
-                                                                                class="text-secondary fz-14 leading-none mb-0.16">{{ $field }}</label>
+                                                                                class="text-secondary fz-14 leading-none mb-0.16">{{ str_ireplace('eligbility', 'eligibility', $field) }}</label>
                                                                             <div>{{ $value }}</div>
                                                                             @if (!$application->marks && $application->latestApplicationRound->hr_round_id == 1)
                                                                                 <div class="mt-2 evaluation-score">

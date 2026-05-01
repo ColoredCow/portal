@@ -8,7 +8,7 @@
         if ($formFields) {
             foreach ($formFields as $label => $value) {
                 if (!empty($value)) {
-                    $clipboardLines[] = $label;
+                    $clipboardLines[] = str_ireplace('eligbility', 'eligibility', $label);
                     $clipboardLines[] = $value;
                 }
             }
@@ -20,6 +20,6 @@
 <span class="c-pointer btn-clipboard btn btn-outline-secondary btn-sm"
     data-clipboard-text="{{ $clipboardText }}"
     data-toggle="tooltip"
-    title="Click to copy candidate details for AI evaluation">
-    <i class="fa fa-clone mr-1"></i>Copy for AI evaluation
+    title="Copy candidate details for AI evaluation">
+    <i class="fa fa-clone"></i>
 </span>

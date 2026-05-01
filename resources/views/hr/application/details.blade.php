@@ -110,7 +110,7 @@
                     @if (isset($applicationFormDetails->value))
                         @foreach(json_decode($applicationFormDetails->value) as $field => $value)
                             <div class="form-group col-md-12">
-                                <label class="text-secondary fz-14 leading-none mb-0.16">{{ $field }}</label>
+                                <label class="text-secondary fz-14 leading-none mb-0.16">{{ str_ireplace('eligbility', 'eligibility', $field) }}</label>
                                 <div>{{ $value }}</div>
                             </div>
                         @endforeach
