@@ -8,7 +8,7 @@
         if ($formFields) {
             foreach ($formFields as $label => $value) {
                 if (!empty($value)) {
-                    $clipboardLines[] = str_ireplace('eligbility', 'eligibility', $label);
+                    $clipboardLines[] = $label;
                     $clipboardLines[] = $value;
                 }
             }
