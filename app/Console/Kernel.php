@@ -54,7 +54,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('application:send-interview-reminders')->dailyAt('08:00');
         $schedule->command('sync:effortsheet')->hourlyAt(25)->timezone(config('constants.timezone.indian'));
         $schedule->command('effort-summary:send')->weekdays()->timezone(config('constants.timezone.indian'))->at('21:00');
-        $schedule->command('hr:check-follow-ups')->daily();
+        // $schedule->command('hr:check-follow-ups')->daily();
         $schedule->command('hr:send-follow-up-mail')->dailyAt('08:00');
         $schedule->command('hr:message-for-email-verified')->dailyAt('7:00');
         $schedule->command('hr:send-job-expired-email-to-hr')->dailyAt('11:00');
