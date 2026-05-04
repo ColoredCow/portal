@@ -43,7 +43,7 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         ApplicantEmailVerified::class => [
-            AutoRespondApplicant::class,
+            // AutoRespondApplicant::class,
         ],
 
         JobUpdated::class => [
