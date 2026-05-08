@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Modules\HR\Database\Seeders\HrDesignationTableSeeder;
 use Modules\HR\Database\Seeders\HrDomainTableSeeder;
+use Modules\Report\Database\Seeders\ReportDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -26,6 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserDatabaseSeeder::class);
         $this->call(BooksPermissionsSeeder::class);
         $this->call(BookCategoriesTableSeeder::class);
+        $this->call(ReportDatabaseSeeder::class);
 
         return true;
     }
