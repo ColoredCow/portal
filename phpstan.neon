@@ -11,6 +11,7 @@ parameters:
         - Modules/Invoice/Entities/Invoice.php  # Ignore Error occurring due to Encryptable Trait
         - Modules/*/vendor/composer/ClassLoader.php
         - Modules/*/Database/Factories/*.php   # Ignore Error occurring due to Laravel factories
+        - Modules/*/Database/factories/*.php   # Ignore Error occurring due to Laravel factories (lowercase dir, case-sensitive on CI)
         - Modules/*/Database/Seeders/*.php   # Ignore Error occurring due to Laravel factories
         - Modules/*/Database/Seeders/*.php   # Ignore Error occurring due to Laravel factories
         - Modules/*/Tests/*.php   # Ignore Error occurring due to Laravel factories
