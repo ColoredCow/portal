@@ -62,4 +62,9 @@ class Prospect extends Model
     {
         return $this->hasMany(ProspectInsight::class);
     }
+
+    public function engagements()
+    {
+        return $this->hasMany(ProspectEngagement::class);
+    }
 }
