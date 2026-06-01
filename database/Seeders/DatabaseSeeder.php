@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Client\Database\Seeders\ClientDatabaseSeeder;
 use Modules\HR\Database\Seeders\HrDesignationTableSeeder;
 use Modules\HR\Database\Seeders\HrDomainTableSeeder;
+use Modules\Project\Database\Seeders\ProjectDatabaseSeeder;
 use Modules\Report\Database\Seeders\ReportDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -29,6 +31,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ProspectPermissionsSeeder::class);
         $this->call(BookCategoriesTableSeeder::class);
         $this->call(ReportDatabaseSeeder::class);
+        $this->call(ClientDatabaseSeeder::class);
+        $this->call(ProjectDatabaseSeeder::class);
 
         return true;
     }
