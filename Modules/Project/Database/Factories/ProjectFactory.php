@@ -24,7 +24,7 @@ class ProjectFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->catchPhrase,
             'client_id' => function () {
                 return Client::factory()->create()->id;
             },
