@@ -5,6 +5,7 @@ namespace Modules\EffortTracking\Services;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectMeta;
@@ -184,6 +185,10 @@ class EffortTrackingService
             $effortSheetUrl = $project->effort_sheet_url ?: $project->client->effort_sheet_url;
 
             if (! $effortSheetUrl) {
+                Log::warning('Effortsheet sync skipped: no effort sheet URL on project or client', [
+                    'project_id' => $project->id,
+                ]);
+
                 return false;
             }
 
@@ -192,6 +197,11 @@ class EffortTrackingService
             $isSyntaxMatching = preg_match('/.*[^-\w]([-\w]{25,})[^-\w]?.*/', $effortSheetUrl, $correctedEffortsheetUrl);
 
             if (! $isSyntaxMatching) {
+                Log::warning('Effortsheet sync failed: could not parse a sheet ID from the effort sheet URL', [
+                    'project_id' => $project->id,
+                    'effort_sheet_url' => $effortSheetUrl,
+                ]);
+
                 return false;
             }
 
@@ -242,6 +252,13 @@ class EffortTrackingService
                     break;
                 }
             } catch (Exception $e) {
+                Log::error('Effortsheet sync failed while scanning the sheet header columns', [
+                    'project_id' => $project->id,
+                    'sheet_id' => $sheetId,
+                    'exception' => $e->getMessage(),
+                    'at' => $e->getFile() . ':' . $e->getLine(),
+                ]);
+
                 return false;
             }
 
@@ -255,6 +272,20 @@ class EffortTrackingService
             $sheetIndexForEndDate = $this->getColumnIndex($sheetColumnsName['end_date'], $sheet[0]);
 
             if ($sheetIndexForTeamMemberName === false || $sheetIndexForTotalBillableEffort === false || $sheetIndexForStartDate === false || $sheetIndexForEndDate === false || $sheetIndexForTotalActualEffort === false) {
+                $missingColumns = array_keys(array_filter([
+                    'team_member_name' => $sheetIndexForTeamMemberName === false,
+                    'billable_effort' => $sheetIndexForTotalBillableEffort === false,
+                    'actual_effort' => $sheetIndexForTotalActualEffort === false,
+                    'start_date' => $sheetIndexForStartDate === false,
+                    'end_date' => $sheetIndexForEndDate === false,
+                ]));
+                Log::warning('Effortsheet sync failed: required column header(s) not found in the sheet', [
+                    'project_id' => $project->id,
+                    'missing_columns' => $missingColumns,
+                    'expected_column_names' => $sheetColumnsName,
+                    'headers_found' => $sheet[0] ?? [],
+                ]);
+
                 return false;
             }
 
@@ -272,6 +303,14 @@ class EffortTrackingService
                     ->range($range)
                     ->get();
             } catch (Exception $e) {
+                Log::error('Effortsheet sync failed while fetching team member rows from the sheet', [
+                    'project_id' => $project->id,
+                    'sheet_id' => $sheetId,
+                    'range' => $range,
+                    'exception' => $e->getMessage(),
+                    'at' => $e->getFile() . ':' . $e->getLine(),
+                ]);
+
                 return false;
             }
 
@@ -324,14 +363,36 @@ class EffortTrackingService
                                 ]
                             );
                         } catch (Exception $e) {
+                            Log::warning('Effortsheet sync: skipped updating effort for a user on a (sub)project', [
+                                'project_id' => $project->id,
+                                'sub_project' => $sheetProject['name'] ?? null,
+                                'user_nickname' => $userNickname ?? null,
+                                'exception' => $e->getMessage(),
+                                'at' => $e->getFile() . ':' . $e->getLine(),
+                            ]);
+
                             continue;
                         }
                     }
                 } catch (Exception $e) {
+                    Log::warning('Effortsheet sync: skipped a team member row', [
+                        'project_id' => $project->id,
+                        'user_nickname' => $userNickname ?? null,
+                        'exception' => $e->getMessage(),
+                        'at' => $e->getFile() . ':' . $e->getLine(),
+                    ]);
+
                     continue;
                 }
             }
         } catch (Exception $e) {
+            Log::error('Effortsheet sync failed', [
+                'project_id' => $project->id,
+                'exception' => $e->getMessage(),
+                'at' => $e->getFile() . ':' . $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
             return false;
         }
 
