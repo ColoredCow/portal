@@ -80,6 +80,13 @@ Uses **Spatie Laravel Permission** for role-based access control (RBAC). Authori
 - **owen-it/laravel-auditing** — Model change auditing
 - **Maatwebsite Excel** — Spreadsheet import/export
 
+## Shared database — `coloredcow-os-platform` (MCP service)
+
+A separate service, [`coloredcow-os-platform`](https://github.com/ColoredCow/coloredcow-os-platform), connects to **this same MySQL database** to expose portal data to Claude over MCP (reads + structured writes), authenticated via Google sign-in. It is decoupled from this codebase but shares the database, so two things matter when working here:
+
+- **`osp_*` tables belong to that service.** It creates and owns `osp_audits` and `osp_oauth_kv` (plus its own `django_migrations`) via its own migrations — Laravel does **not** manage them. Don't treat them as orphans or drop them; they're not part of any Laravel migration. (And never run `php artisan migrate:fresh` against a shared/production database — it would drop them along with everything else.)
+- **Flag schema changes to the shared tables.** That service reads/writes a fixed set of existing tables: `prospects`, `prospect_comments`, `prospect_insights`, `clients`, `projects`, `invoices`, `users`. If a migration here **renames, drops, or restructures columns** on any of those, note it in the PR so the platform's data models can be updated in lockstep — otherwise its read/write tools break silently. Additive changes (new columns) are safe.
+
 ## Branch Naming Convention
 
 - `feature/{issue-id}/{description}` — New features (base: `develop`)

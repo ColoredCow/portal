@@ -4,7 +4,6 @@ namespace Modules\Client\Database\Seeders;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
-use Modules\Client\Entities\Client;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -39,11 +38,6 @@ class ClientDatabaseSeeder extends Seeder
         $employeeRole = Role::where(['name' => 'employee'])->first();
         foreach ($clientsPermissions as $permission) {
             $employeeRole->givePermissionTo($permission);
-        }
-
-        // seed fake data
-        if (! app()->environment('production')) {
-            Client::factory()->count(10)->create();
         }
     }
 }

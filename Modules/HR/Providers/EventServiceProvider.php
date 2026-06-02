@@ -9,7 +9,6 @@ use Modules\HR\Events\Recruitment\JobUpdated;
 use Modules\HR\Listeners\Recruitment\ApplicantEmailVerification;
 use Modules\HR\Listeners\Recruitment\AutoRespondApplicant;
 use Modules\HR\Listeners\Recruitment\CreateFirstApplicationRound;
-use Modules\HR\Listeners\Recruitment\MoveResumeToWebsite;
 use Modules\HR\Listeners\Recruitment\UpdateJobRounds;
 
 class EventServiceProvider extends ServiceProvider
@@ -39,7 +38,6 @@ class EventServiceProvider extends ServiceProvider
         ApplicationCreated::class => [
             CreateFirstApplicationRound::class,
             ApplicantEmailVerification::class,
-            MoveResumeToWebsite::class,
         ],
 
         ApplicantEmailVerified::class => [

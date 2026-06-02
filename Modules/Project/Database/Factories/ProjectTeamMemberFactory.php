@@ -24,15 +24,12 @@ class ProjectTeamMemberFactory extends Factory
      */
     public function definition()
     {
-        $userId = User::factory()->create()->id;
-
         return [
-            'project_id' => function () {
-                return Project::factory()->create()->id;
-            },
-            'team_member_id' => $userId,
+            'project_id' => Project::factory(),
+            'team_member_id' => fn () => User::query()->inRandomOrder()->value('id')
+                ?? User::factory()->create()->id,
             'designation' => array_rand(config('project.designation')),
-            'daily_expected_effort' => '8',
+            'daily_expected_effort' => 8,
             'started_on' => Carbon::today()->subDays(10),
         ];
     }

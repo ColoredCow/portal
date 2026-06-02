@@ -24,7 +24,7 @@ use Modules\Project\Entities\ProjectResourceRequirement;
 use Modules\Project\Entities\ProjectStages;
 use Modules\Project\Entities\ProjectStagesListing;
 use Modules\Project\Entities\ProjectTeamMember;
-use Modules\Project\Entities\ProjectTeamMembersEffort;
+use Modules\Project\Entities\ProjectTeamMemberEffort;
 use Modules\Project\Exports\ProjectFTEExport;
 use Modules\User\Entities\User;
 
@@ -374,7 +374,7 @@ class ProjectService implements ProjectServiceContract
         if (is_int($monthlyApprovedHour) || is_float($monthlyApprovedHour)) {
             $remainingApprovedPipeline = $monthlyApprovedHour - $totalWeeklyExpectedEffort;
         }
-        $currentActualEffort = ProjectTeamMembersEffort::whereIn('project_team_member_id', function ($query) use ($project) {
+        $currentActualEffort = ProjectTeamMemberEffort::whereIn('project_team_member_id', function ($query) use ($project) {
             $query->select('id')
                 ->from('project_team_members')
                 ->where('project_id', $project->id)
