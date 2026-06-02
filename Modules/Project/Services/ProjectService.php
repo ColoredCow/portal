@@ -248,6 +248,26 @@ class ProjectService implements ProjectServiceContract
         return $projectsData;
     }
 
+    public function getMailForFixedBudgetProjectKeyAccountManagers()
+    {
+        $reminderDate = Carbon::today(config('constants.timezone.indian'))->addDays(5);
+        $projects = Project::whereType('fixed-budget')->whereStatus('active')->whereDate('end_date', $reminderDate)->get();
+        $keyAccountManagersDetails = [];
+        foreach ($projects as $project) {
+            $user = $project->client->keyAccountManager;
+            if ($user) {
+                $keyAccountManagersDetails[$user->id][] = [
+                    'project' => $project,
+                    'email' => $user->email,
+                    'end date' => $project->end_date,
+                    'name' => $user->name,
+                ];
+            }
+        }
+
+        return $keyAccountManagersDetails;
+    }
+
     public function getMailDetailsForZeroExpectedHours()
     {
         $zeroEffortProjectsIds = ProjectTeamMember::where('daily_expected_effort', 0)->pluck('project_id');
