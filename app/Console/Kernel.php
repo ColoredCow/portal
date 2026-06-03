@@ -10,7 +10,6 @@ use Modules\Invoice\Console\SendEmailForUploadedInvoices;
 use Modules\Invoice\Console\UploadToGDrive;
 use Modules\Project\Console\DeliveryReportReminder;
 use Modules\Project\Console\EndedProject;
-use Modules\Project\Console\FixedBudgetProject;
 use Modules\Project\Console\GoogleChat\NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat;
 use Modules\Project\Console\SendEffortSummaryCommand;
 use Modules\Project\Console\SyncEffortsheet;
@@ -31,7 +30,6 @@ class Kernel extends ConsoleKernel
         ZeroExpectedHourInProject::class,
         EndedProject::class,
         DeliveryReportReminder::class,
-        FixedBudgetProject::class,
         NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat::class,
         JobExpiredEmailToHr::class,
         SeedLoanInstallmentForMonth::class,
@@ -59,7 +57,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('hr:message-for-email-verified')->dailyAt('7:00');
         $schedule->command('hr:send-job-expired-email-to-hr')->dailyAt('11:00');
         $schedule->command('mapping-of-jobs-and-hr-rounds');
-        $schedule->command('project:fixed-budget-project');
         $schedule->command('project:send-pending-delivery-report-reminder')->dailyAt('11:00');
         $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');
         $schedule->command('invoice:send-upcoming-invoice-list')->dailyAt('11:00');
