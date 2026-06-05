@@ -2,7 +2,7 @@
 
 **Laravel 8 → 13, PHP 7.4 → 8.3, MySQL 5.7 → 8.0, Vue 2 → 3, Bootstrap 4 → 5, Laravel Mix → Vite**
 
-> Status: Draft for review · Owner: Engineering · Last updated: 2026-06-05
+> Status: Final · Owner: Engineering · Last updated: 2026-06-05
 >
 > 🗑️ **One-time-use document.** This plan exists solely to drive this upgrade. **Delete `docs/upgrade_plan.md` once the upgrade is complete and production is running the target stack** (Laravel 13 / PHP 8.3 / MySQL 8 / Vite). Before removing it, fold any lasting runbook content (OS / runtime / DB steps) into the permanent docs (`docs/deployment.md`, `docs/prerequisites.md`).
 >
