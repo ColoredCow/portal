@@ -4,6 +4,8 @@
 
 > Status: Draft for review · Owner: Engineering · Last updated: 2026-06-05
 >
+> 🗑️ **One-time-use document.** This plan exists solely to drive this upgrade. **Delete `docs/upgrade_plan.md` once the upgrade is complete and production is running the target stack** (Laravel 13 / PHP 8.3 / MySQL 8 / Vite). Before removing it, fold any lasting runbook content (OS / runtime / DB steps) into the permanent docs (`docs/deployment.md`, `docs/prerequisites.md`).
+>
 > ⚠️ **Accuracy & verification.** This plan is a point-in-time assessment compiled from an automated codebase audit and external research as of June 2026, and may not be fully accurate or complete. **The owner/executor must independently verify the current state of each area — installed versions, package compatibility, server configuration, and per-version breaking changes — at the time of the actual upgrade.** Treat every version number, package target, and finding here as a starting point to confirm, not a guarantee. Confirm exact compatible releases on Packagist/npm and re-check each Laravel upgrade guide when you begin each phase, because the ecosystem moves.
 
 ---
@@ -292,6 +294,8 @@ Because staging has proven the entire chain, production goes from Laravel 8 → 
 **Rollback**
 - **Code/runtime:** switch PHP-FPM back to 7.4 and check out the previous release tag (keep the prior release dir intact) — fast.
 - **Database:** if migrations ran, restore from the pre-cutover snapshot (step 2). Coordinate with the platform team — shared DB. Define a documented **point of no return** beyond which forward-fix is preferred.
+
+**Post-cutover cleanup.** Once production has run stably on the target stack for an agreed bake-in period, **delete this document (`docs/upgrade_plan.md`)** — it is one-time-use. Fold any lasting runbook content into the permanent docs first.
 
 ---
 
