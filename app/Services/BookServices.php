@@ -3,9 +3,7 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
-use Vision\Feature;
-use Vision\Request\Image\LocalImage;
-use Vision\Vision;
+use Illuminate\Support\Facades\Http;
 
 class BookServices
 {
@@ -49,18 +47,24 @@ class BookServices
     public static function getISBN($file)
     {
         $apiKey = config('constants.google.vision-api-key');
-        $vision = new Vision($apiKey, [new Feature(Feature::TEXT_DETECTION, 100)]);
-        $response = $vision->request(new LocalImage($file->path()));
-        $faces = $response->getTextAnnotations();
+
+        $response = Http::post('https://vision.googleapis.com/v1/images:annotate?key=' . $apiKey, [
+            'requests' => [[
+                'image' => ['content' => base64_encode(file_get_contents($file->path()))],
+                'features' => [['type' => 'TEXT_DETECTION', 'maxResults' => 100]],
+            ]],
+        ]);
+
+        $annotations = $response->json('responses.0.textAnnotations') ?? [];
         $description = '';
         $currentText = '';
 
-        foreach ($faces as $face) {
-            $faceDescription = $face->getDescription();
+        foreach ($annotations as $annotation) {
+            $text = $annotation['description'] ?? '';
             if (in_array(strtolower($currentText), ['isbn', 'sbn'])) {
-                $description = $faceDescription;
+                $description = $text;
             }
-            $currentText = $faceDescription;
+            $currentText = $text;
         }
 
         return str_replace('-', '', trim($description));
