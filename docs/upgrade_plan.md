@@ -2,11 +2,19 @@
 
 **Laravel 8 → 13, PHP 7.4 → 8.3, MySQL 5.7 → 8.0, Vue 2 → 3, Bootstrap 4 → 5, Laravel Mix → Vite**
 
-> Status: Final · Owner: Engineering · Last updated: 2026-06-05
+> Status: Final (verified against codebase & registries 2026-06-09) · Owner: Engineering · Last updated: 2026-06-09
 >
 > 🗑️ **One-time-use document.** This plan exists solely to drive this upgrade. **Delete `docs/upgrade_plan.md` once the upgrade is complete and production is running the target stack** (Laravel 13 / PHP 8.3 / MySQL 8 / Vite). Before removing it, fold any lasting runbook content (OS / runtime / DB steps) into the permanent docs (`docs/deployment.md`, `docs/prerequisites.md`).
 >
 > ⚠️ **Accuracy & verification.** This plan is a point-in-time assessment compiled from an automated codebase audit and external research as of June 2026, and may not be fully accurate or complete. **The owner/executor must independently verify the current state of each area — installed versions, package compatibility, server configuration, and per-version breaking changes — at the time of the actual upgrade.** Treat every version number, package target, and finding here as a starting point to confirm, not a guarantee. Confirm exact compatible releases on Packagist/npm and re-check each Laravel upgrade guide when you begin each phase, because the ecosystem moves.
+>
+> ✅ **Verification addendum — 2026-06-09 (codebase + Packagist/npm gate).** The §5 audit was re-checked against the working tree and the dependency registries. **All §5.1 versions confirmed accurate.** The following corrections are folded into this document:
+> - **🔴 `jordikroon/google-vision` blocks PHP 8 itself — not just L13.** Latest release is 1.8.2 (2019), pinned to PHP `^5.6 ‖ ^7.0`, with no Laravel dependency, pulling the abandoned `zendframework/zend-hydrator`. Composer will **not resolve** it on PHP 8.1, so it gates **Phase 1**, not a late phase. **Moved into Phase 0**: decouple/replace the OCR call in `app/Services/BookServices.php` with the official `google/cloud-vision` SDK (reachable via the existing `google/apiclient`).
+> - **🔴 `jgrossi/corcel` caps the ladder at Laravel 12.** Latest v9.0.0 supports `illuminate ^12` only — **no L13 release exists yet**. corcel is active in 4 files (`WebsiteUserService`, `RemoveUserFromWebsite`, `HasWebsiteUser` trait, HR `JobObserver`). **Phase 6 is gated** on a corcel L13 release, decoupling, or landing on **L12 as the interim target**. Decide before Phase 2 (see §1 caveat & Phase 6).
+> - **`codegreencreative/laravel-samlidp` is NOT removable** (the original §5.5 "no code refs / else remove" was wrong). It is an active SAML Identity Provider: `@samlidp` directive at `resources/views/auth/login.blade.php:13` plus `SAMLRequest` handling. v5.4.0 supports L13 — **reclassified to keep-and-bump**.
+> - **Factory work is smaller than stated:** only the **6** root `database/factories` files use old-style `$factory->define()`; **all module factories are already class-based** (so "~16 in modules / 22 total" no longer applies).
+> - **PDF consolidation is larger than stated:** Snappy/PDF is used across **Invoice, Salary, LegalDocument and HR** (+ `app/Helpers/FileHelper.php`), not just HR. `barryvdh/laravel-snappy` v1.0.5 is itself L13-ready, but the **wkhtmltopdf binary** still must go; `niklasravnsborg/laravel-pdf` is abandoned.
+> - **Cleared for L13 (bump only):** `nwidart/laravel-modules` 13.0.0 · `owen-it/laravel-auditing` 14.0.3 · `maatwebsite/excel` 3.1.69 · `revolution/laravel-google-sheets` 7.2.0 (its L13 line needs **PHP 8.3**; large 5.6→7.x jump). Frontend: `laue` confirmed **Vue-2-only & abandoned** (replace); `vue-toastification` has Vue-3 support only in `2.0.0-rc.5` (**no stable release yet**).
 
 ---
 
@@ -15,7 +23,7 @@
 The portal runs **Laravel 8.83.29** (final v8) on **PHP 7.4**, with a Vue 2.6 / Bootstrap 4 / Laravel Mix frontend, deployed by SSH to a self-managed Ubuntu server, against a **MySQL 5.7** database **shared with the `coloredcow-os-platform` service**. Every layer is end-of-life.
 
 - **Target end state:** Laravel **13.x** on **PHP 8.3**, MySQL **8.0**, Vue **3**, Bootstrap **5**, built with **Vite** on Node **24 LTS**.
-- **Why Laravel 13:** Laravel 11 is already EOL (Mar 2026) and 12 EOLs Feb 2027; **13 is supported through ~Mar 2028**. It is the only landing point with real runway. ([support policy](https://laravel.com/docs/13.x/releases) · [endoflife.date](https://endoflife.date/laravel))
+- **Why Laravel 13:** Laravel 11 is already EOL (Mar 2026) and 12 EOLs Feb 2027; **13 is supported through ~Mar 2028**. It is the only landing point with real runway. ([support policy](https://laravel.com/docs/13.x/releases) · [endoflife.date](https://endoflife.date/laravel)) ⚠️ **Caveat (verified 2026-06-09):** `jgrossi/corcel` currently tops out at Laravel **12** — reaching 13 depends on a corcel L13 release or decoupling its 4 call sites (see the verification addendum above & Phase 6). If neither is ready at Phase 6, **L12 is the interim landing point** (EOL Feb 2027) with 13 as a fast-follow.
 - **How we get there:** a **linear, phase-by-phase upgrade performed on staging** (one major Laravel version at a time, 8→9→10→11→12→13, plus OS/DB and frontend), then a **single all-at-once production cutover** once the full chain is proven green on staging. The phases are designed to be **AI-accelerated** — fast, gated steps rather than a slow crawl (see §2 → *Why incremental — even with AI*).
 
 ### How to use this document
@@ -99,18 +107,22 @@ Each phase closes with **two gates** — automated first, then manual.
 1. **Unify CI on one PHP version + bump actions.** Align `unit-testing.yml` (7.4), `integration-testing.yml` (8.2), `coding-standards.yml` (7.4) onto a single matrix; bump `shivammathur/setup-php`, `actions/checkout@v4`, `codecov-action@v4`.
 2. **Expand the test safety net** *(highest-leverage task in the whole plan)*. Today: ~114 PHPUnit methods (mostly `app/` + HR) and 1 Cypress spec — too thin for 18 modules. Add Feature tests for: Google OAuth login, invoice generation, salary/payment, effort-sheet sync, HR recruitment + PDF letters, prospect/client CRUD, role/permission gates.
 3. **Remove dead packages** (all confirmed unused): `laravelcollective/html` (+ the `Form`/`HTML` aliases at `config/app.php:197,200`), `consoletvs/charts` (+ its git `repositories` block in `composer.json`), `bordoni/phpass`.
-4. **Migrate factories to class-based** and drop `laravel/legacy-factories`. Convert the 22 old-style `$factory->define()` factories (6 in `database/factories`, ~16 in modules). Preserve `faker_locale => en_IN`. (Class factories work on Laravel 8, so this ships now.)
-5. **PDF stack decision.** Standardize on **one pure-PHP renderer** (DomPDF or mPDF) and **drop `wkhtmltopdf` + `h4cc/wkhtmltopdf-amd64` + Snappy** — the binary is archived, amd64-only, and won't survive the OS upgrade. Re-test HR offer-letter output (`app/Helpers/FileHelper.php`, `Modules/HR/.../ApplicationController.php`).
+4. **Migrate factories to class-based** and drop `laravel/legacy-factories`. Convert the **6** old-style `$factory->define()` factories in `database/factories` (`ApplicantFactory`, `BookFactory`, `ClientFactory`, `JobFactory`, `RoundFactory`, `SettingFactory`). **The module factories are already class-based** (verified 2026-06-09), so the original "~16 in modules / 22 total" no longer applies. Preserve `faker_locale => en_IN`. (Class factories work on Laravel 8, so this ships now.)
+5. **PDF stack decision.** Standardize on **one pure-PHP renderer** (DomPDF or mPDF) and **drop `wkhtmltopdf` + `h4cc/wkhtmltopdf-amd64` + Snappy** — the binary is archived, amd64-only, and won't survive the OS upgrade. ⚠️ **Bigger blast radius than first scoped (verified 2026-06-09):** PDF/Snappy is used across **Invoice** (`InvoiceService`, `InvoiceController`), **Salary** (`SalaryCalculationService`), **LegalDocument** (NDA template + mail-template controllers) and **HR** (`ApplicationController`), plus `app/Helpers/FileHelper.php`. Re-test generated output — invoices, payslips, NDAs, **and** offer/joining letters — across all four modules, not just HR. (`barryvdh/laravel-snappy` v1.0.5 is itself L13-ready, but the wkhtmltopdf binary is the problem; `niklasravnsborg/laravel-pdf` is abandoned.)
 6. **Prove the app on PHP 8.1 (code level).** Temporarily raise the `composer.json` platform pin and get the suite green on **8.1 in CI** while still on Laravel 8 — this separates "PHP problems" from "Laravel problems."
 7. **Add runtime pins:** `.nvmrc` (Node 24) and document target PHP in `composer.json` `config.platform`.
 8. **Seed a realistic staging DB** snapshot from production (respecting the shared `osp_*` tables); document the refresh procedure.
+9. **🔴 Decouple/replace `jordikroon/google-vision` (hard PHP-8 prerequisite).** Its latest release (1.8.2, 2019) is pinned to PHP `^5.6 ‖ ^7.0` and pulls the abandoned `zendframework/*`, so Composer cannot resolve it on PHP 8.1 — this blocks **Phase 1**, not just L13. Replace the OCR call in `app/Services/BookServices.php` with the official `google/cloud-vision` SDK (reachable via the existing `google/apiclient`), or remove the feature if unused. **Must land before Phase 1.**
+10. **🔴 Make the `jgrossi/corcel` target decision now.** corcel's latest (v9.0.0) supports Laravel **12**, not 13; it is active in 4 files (`WebsiteUserService`, `RemoveUserFromWebsite`, `HasWebsiteUser` trait, HR `JobObserver`). Decide up front whether Phase 6 waits for a corcel L13 release, decouples from corcel, or lands on **L12 as the interim target**. This determines whether the end state is "Laravel 13" or "Laravel 12 (13 fast-follow)" — see §1 caveat and Phase 6.
 
 **✅ Exit checklist**
 - [ ] Full PHPUnit suite green on **PHP 8.1**, Laravel 8.
 - [ ] Critical-flow Feature tests added per module; coverage not dropping.
 - [ ] `laravelcollective/html`, `consoletvs/charts`, `bordoni/phpass` removed; app boots.
-- [ ] All 22 factories class-based; `laravel/legacy-factories` removed.
-- [ ] PDF generation works through the chosen pure-PHP renderer; wkhtmltopdf gone.
+- [ ] All 6 root factories class-based; `laravel/legacy-factories` removed (module factories already class-based).
+- [ ] PDF generation works through the chosen pure-PHP renderer across Invoice/Salary/LegalDocument/HR; wkhtmltopdf gone.
+- [ ] `jordikroon/google-vision` replaced/decoupled; OCR works without a PHP-7-only dependency.
+- [ ] corcel target decision recorded (wait-for-L13 / decouple / interim-L12).
 - [ ] Staging DB seeded and refreshable.
 
 ---
@@ -217,6 +229,8 @@ Each phase closes with **two gates** — automated first, then manual.
 ### Phase 6 — Laravel 12 → 13 · Size: S–M · *switch active PHP → 8.3*
 
 **Goal:** Reach the target. ([L13 upgrade guide](https://laravel.com/docs/13.x/upgrade)) — consider driving this with [Laravel Boost](https://github.com/laravel/boost) `/upgrade-laravel-v13`.
+
+> 🔴 **Blocker — `jgrossi/corcel` has no Laravel 13 release** (latest v9.0.0 = `illuminate ^12`, verified 2026-06-09). This phase **cannot complete** while corcel remains a dependency on L13. Resolve via the Phase-0 decision: adopt a corcel L13 release when one ships, decouple the 4 corcel call sites, or hold the end state at **Laravel 12** until corcel ships L13. Do **not** start Phase 6 until this is settled.
 
 **Action items**
 1. **Switch staging active PHP to 8.3** (FPM/CLI/cron/supervisor) — L13 requires 8.3.
@@ -349,18 +363,18 @@ See §2 rule 3. The `coloredcow-os-platform` (Django) service shares this MySQL 
 |---|---|---|---|
 | `laravelcollective/html` | Abandoned, breaks at L11 | **Unused** — aliases at `config/app.php:197,200`, no provider, 0 Blade uses | Remove (P0) |
 | `fideloper/proxy` | Merged into framework at L9 | `app/Http/Middleware/TrustProxies.php:5`; `Kernel.php:21` | Re-point + remove (P2) |
-| `fzaninotto/faker` | Replaced by `fakerphp/faker` at L9 | 22 old-style factories | Replace (P0) |
-| `laravel/legacy-factories` | Bridge package | 6 + ~16 module factories | Convert + remove (P0) |
+| `fzaninotto/faker` | Replaced by `fakerphp/faker` at L9 | 6 root old-style factories (modules already class-based) | Replace (P0) |
+| `laravel/legacy-factories` | Bridge package | 6 `$factory->define()` files in `database/factories` (modules already class-based) | Convert + remove (P0) |
 | `facade/ignition` | Becomes `spatie/laravel-ignition` at L9 | dev-only, no custom config | Swap (P2) |
 | `h4cc/wkhtmltopdf-amd64` | Archived binary, amd64-only | OS binary behind Snappy | Remove (P0) |
 | `barryvdh/laravel-snappy` | Needs ^1 for L9+ | Provider `config/app.php:166`, `PDF` alias `:221` | Consolidate PDF (P0) |
-| `niklasravnsborg/laravel-pdf` | Verify L9+ | `app/Helpers/FileHelper.php:5,93`; HR letters | Consolidate (P0) |
+| `niklasravnsborg/laravel-pdf` | **Abandoned** (v4.1.0, 2021) | `app/Helpers/FileHelper.php:5,93`; HR letters | Consolidate (P0) |
 | `consoletvs/charts` | Abandoned (custom git repo) | No usage | Remove (P0) |
 | `bordoni/phpass` | `dev-main` pin | No usage | Remove (P0) |
-| `jgrossi/corcel` | Targets L8; WP coupling | 9 files (HR `JobObserver`, `WebsiteUserService`, …) | Test each phase (P2+) |
-| `revolution/laravel-google-sheets` | Verify per version | `EffortTracking/.../EffortTrackingService.php:14` | Verify each phase |
-| `codegreencreative/laravel-samlidp` | Verify | `samlidp` disk in `config/filesystems.php`; no code refs | Confirm in use, else remove |
-| `jordikroon/google-vision` | Verify Google-client compat | `app/Services/BookServices.php:5-7` (OCR) | Verify each phase |
+| `jgrossi/corcel` | **Max Laravel 12** (v9.0.0); WP coupling | Active in 4 files (HR `JobObserver`, `WebsiteUserService`, `RemoveUserFromWebsite`, `HasWebsiteUser` trait) | **Blocks L13 (P6)** — decide P0: wait / decouple / interim-L12 |
+| `revolution/laravel-google-sheets` | v7.2 = L13 (needs PHP 8.3) | `EffortTracking/.../EffortTrackingService.php:14`; `Project/Console/SyncEffortsheet.php` | Bump progressively (large 5.6→7.x jump) |
+| `codegreencreative/laravel-samlidp` | **Active**; v5.4.0 supports L13 | `@samlidp` directive in `resources/views/auth/login.blade.php:13` + `SAMLRequest` handling; `samlidp` disk in `config/filesystems.php` | **Keep & bump** to ^5.4 (NOT removable) |
+| `jordikroon/google-vision` | **Abandoned (2019), PHP `^5.6‖^7.0` only** — blocks PHP 8 | `app/Services/BookServices.php` (OCR) | **Replace/decouple in P0** (→ `google/cloud-vision`) before Phase 1 |
 
 ### 5.6 What the audit cleared (low risk)
 
@@ -406,17 +420,17 @@ See §2 rule 3. The `coloredcow-os-platform` (Django) service shares this MySQL 
 | laravel/legacy-factories | 1.1 | **remove** | P0 |
 | nwidart/laravel-modules | 7.4 | **^13.0** | bump each phase (version parity) |
 | spatie/laravel-permission | 3.18 | ^6.x | ^5 (P2) → ^6 (P3) |
-| owen-it/laravel-auditing | 13.6 | ^14.x (verify) | P2 / P4 |
+| owen-it/laravel-auditing | 13.6 | ^14.0.3 (L13; v13.7.x covers L9–L11) | P2 / P4 |
 | maatwebsite/excel | 3.1.61 | ^3.1.69+ | supports L13; patch bump |
 | nesbot/carbon | 2.72 | ^3.x | P4 |
 | barryvdh/laravel-snappy | 0.4.7 | ^1.x **or remove** | P0 decision |
 | niklasravnsborg/laravel-pdf | 4.1 | upgrade **or consolidate** | P0 decision |
 | h4cc/wkhtmltopdf-amd64 | 0.12 | **remove** | P0 |
 | sentry/sentry-laravel | 4.13 | latest (verify L13) | per phase |
-| jgrossi/corcel | 5.0 | verify per Laravel | **test each phase** |
-| revolution/laravel-google-sheets | 5.6 | verify per Laravel | per phase |
-| codegreencreative/laravel-samlidp | 5.0 | verify **or remove** | confirm SAML usage |
-| jordikroon/google-vision | 1.8 | verify | per phase |
+| jgrossi/corcel | 5.0 | **v9.0.0 = max L12; no L13 yet** | **blocks P6** — decide P0 (wait/decouple/interim-L12) |
+| revolution/laravel-google-sheets | 5.6 | **^7.2 (L13, needs PHP 8.3)** | bump progressively; large 5.6→7.x jump |
+| codegreencreative/laravel-samlidp | 5.0 | **^5.4 (L13)** | **keep & bump** — active SAML IdP, not removable |
+| jordikroon/google-vision | 1.8 | **remove/replace** (PHP-7-only, abandoned) | → `google/cloud-vision`, **P0** before PHP 8 |
 | google/apiclient | 2.10 | ^2.x | OK |
 | aws/aws-sdk-php | 3.121 | ^3.x | OK |
 | guzzlehttp/guzzle | 6.5 | ^7.x | P2 |
@@ -467,6 +481,8 @@ See §2 rule 3. The `coloredcow-os-platform` (Django) service shares this MySQL 
 | MySQL 8 `ONLY_FULL_GROUP_BY` / collation breaks queries | High | High | Test suite + report QA against MySQL 8 staging from Phase 1 |
 | Shared-DB coordination gap with platform team | Medium | High | Joint MySQL 8 validation; flag any shared-table schema change |
 | `jgrossi/corcel` (WordPress) incompatibility at L9+ | Medium | High | Test HR `JobObserver` + website-user sync each phase; budget a decouple fallback |
+| **`jgrossi/corcel` has no L13 release — caps the ladder at L12** | High | High | Decide in P0: wait for corcel L13 / decouple 4 call sites / hold end state at L12. Gates Phase 6 |
+| **`jordikroon/google-vision` PHP-7-only & abandoned — blocks PHP 8** | High | High | Replace with `google/cloud-vision` / decouple in **P0**, before the Phase 1 PHP-8.1 switch |
 | Sparse tests miss a regression | Medium | High | Phase 0 coverage expansion is a prerequisite, not optional |
 | PHPUnit major-version test-code migration underestimated | Medium | Medium | Treat as phase work: static data providers (P4), annotations → attributes (P6); see §2 |
 | Bootstrap 4→5 jQuery removal regressions (143 sites) | High | Medium | Dedicated Phase 7 + full visual QA of every interactive component |
@@ -503,7 +519,7 @@ See §2 rule 3. The `coloredcow-os-platform` (Django) service shares this MySQL 
 ## Appendix C — Codebase audit snapshot (2026-06-05)
 
 - 114 PHP files in `app/`; ~901 across 18 modules; 409 Blade templates; 29 Vue SFCs.
-- 22 old-style factories (6 in `database/factories`, ~16 in modules) + 30 class-based.
+- 6 old-style factories in `database/factories`; all module factories already class-based (corrected 2026-06-09 — original "22 / ~16 in modules" was inaccurate).
 - ~143 jQuery/Bootstrap-4 JS call sites; 19 `webpack.mix.js` files.
 - ~114 PHPUnit test methods across 24 files; 1 Cypress spec.
 - 27 Artisan commands; 14 scheduled tasks.
