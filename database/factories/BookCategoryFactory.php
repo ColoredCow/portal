@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Client;
+use App\Models\KnowledgeCafe\Library\BookCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ClientFactory extends Factory
+class BookCategoryFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Client::class;
+    protected $model = BookCategory::class;
 
     /**
      * Define the model's default state.
@@ -22,9 +22,7 @@ class ClientFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->company,
-            'is_active' => true,
-            'gst_num' => null,
+            'name' => $this->faker->sentence(10),
         ];
     }
 }
