@@ -2,20 +2,19 @@
 
 namespace Modules\User\Traits;
 
+use App\Models\WordPress\WpUser;
 use Illuminate\Support\Str;
 
 trait HasWebsiteUser
 {
     public function getWebsiteUserAttribute()
     {
-        if (! class_exists('Corcel\Laravel\Auth\AuthUserProvider') || ! config('database.connections.wordpress.enabled')) {
+        if (! config('database.connections.wordpress.enabled')) {
             return;
         }
 
-        $userProvider = new \Corcel\Laravel\Auth\AuthUserProvider();
-
         try {
-            return $userProvider->retrieveByCredentials(['email' => $this->email]);
+            return WpUser::with('meta')->where('user_email', $this->email)->first();
         } catch (\Throwable $th) {
             return;
         }
