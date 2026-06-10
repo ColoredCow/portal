@@ -7,6 +7,7 @@ use App\Models\Setting;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\HR\Contracts\ApplicationServiceContract;
 use Modules\HR\Entities\Applicant;
@@ -56,6 +57,16 @@ class ApplicantController extends Controller
     {
         $validated = $request->validated();
         $job_title = Job::where('opportunity_id', $validated['opportunity_id'])->first();
+
+        if (! $job_title) {
+            Log::warning('Applicant submission could not be matched to a job: no hr_jobs row found for the given opportunity_id.', [
+                'opportunity_id' => $validated['opportunity_id'] ?? null,
+            ]);
+
+            return response()->json([
+                'message' => 'We could not match your application to an open position. Please try again later or contact us.',
+            ], 422);
+        }
 
         $this->service->saveApplication($validated, $job_title->title);
 
