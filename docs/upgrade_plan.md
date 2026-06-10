@@ -366,9 +366,9 @@ See §2 rule 3. The `coloredcow-os-platform` (Django) service shares this MySQL 
 | `fzaninotto/faker` | Replaced by `fakerphp/faker` at L9 | 6 root old-style factories (modules already class-based) | Replace (P0) |
 | `laravel/legacy-factories` | Bridge package | 6 `$factory->define()` files in `database/factories` (modules already class-based) | Convert + remove (P0) |
 | `facade/ignition` | Becomes `spatie/laravel-ignition` at L9 | dev-only, no custom config | Swap (P2) |
-| `h4cc/wkhtmltopdf-amd64` | Archived binary, amd64-only | OS binary behind Snappy | Remove (P0) |
-| `barryvdh/laravel-snappy` | Needs ^1 for L9+ | Provider `config/app.php:166`, `PDF` alias `:221` | Consolidate PDF (P0) |
-| `niklasravnsborg/laravel-pdf` | **Abandoned** (v4.1.0, 2021) | `app/Helpers/FileHelper.php:5,93`; HR letters | Consolidate (P0) |
+| `h4cc/wkhtmltopdf-amd64` | Archived binary, amd64-only | OS binary behind Snappy — Invoice, Salary, LegalDocument, HR | Remove (P0) |
+| `barryvdh/laravel-snappy` | Needs ^1 for L9+ | Provider `config/app.php:166`, `PDF` alias `:221` — Invoice, Salary, LegalDocument, HR | Consolidate PDF (P0) |
+| `niklasravnsborg/laravel-pdf` | **Abandoned** (v4.1.0, 2021) | `app/Helpers/FileHelper.php:5,93`; Invoice, Salary, LegalDocument, HR letters | Consolidate (P0) |
 | `consoletvs/charts` | Abandoned (custom git repo) | No usage | Remove (P0) |
 | `bordoni/phpass` | `dev-main` pin | No usage | Remove (P0) |
 | `jgrossi/corcel` | **Max Laravel 12** (v9.0.0); WP coupling | Active in 4 files (HR `JobObserver`, `WebsiteUserService`, `RemoveUserFromWebsite`, `HasWebsiteUser` trait) | **Blocks L13 (P6)** — decide P0: wait / decouple / interim-L12 |
