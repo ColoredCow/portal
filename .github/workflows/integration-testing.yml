@@ -57,6 +57,11 @@ jobs:
           php artisan db:seed --env=testing
           php artisan module:seed --env=testing
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+
       - name: Compile assets
         run: |
           export NODE_OPTIONS=--openssl-legacy-provider
