@@ -52,7 +52,7 @@ class JobObserver
             $savedPost->post_title = $job->title;
             $savedPost->post_content = $job->description;
             $savedPost->post_type = config('hr.post-type.career');
-            $savedPost->post_status = $job->status ? config('hr.opportunities-status-wp-mapping')[$job->status] : 'draft';
+            $savedPost->post_status = $job->status ? (config('hr.opportunities-status-wp-mapping')[$job->status] ?? 'draft') : 'draft';
             $savedPost->post_name = str_replace(' ', '-', strtolower($job->title));
             $savedPost->save();
             $term = WpTerm::select('term_id')->where('name', $job->domain)->first();
