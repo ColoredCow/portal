@@ -13,6 +13,8 @@ class WpOption extends Model
 
     protected $primaryKey = 'option_id';
 
+    // WordPress serializes some option values (e.g. arrays). siteurl is a plain string
+    // and works here as-is. If reused for other options, add unserialize() as needed.
     public static function get(string $key, $default = null)
     {
         $option = static::where('option_name', $key)->first();

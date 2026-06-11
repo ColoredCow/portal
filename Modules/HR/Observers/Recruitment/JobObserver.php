@@ -22,13 +22,16 @@ class JobObserver
         $post->post_content = $job->description;
         $post->post_type = config('hr.post-type.career');
         $post->post_name = str_replace(' ', '-', strtolower($job->title));
-        $post->post_status = config('hr.opportunities-status-wp-mapping')[$job->status];
+        $post->post_status = config('hr.opportunities-status-wp-mapping')[$job->status] ?? 'draft';
         $post->save();
         $post->saveMeta('hr_id', $job->id);
         $post->saveMeta(config('hr.slugs.job-form.key'), config('hr.slugs.job-form.value'));
         $savedPost = WpPost::hasMeta('hr_id', $job->id)->first();
+        if (! $savedPost) {
+            return;
+        }
         $term = WpTerm::select('term_id')->where('name', $job->domain)->first();
-        if ($term && $savedPost) {
+        if ($term) {
             $relation = new WpTermRelationship();
             $relation->object_id = $savedPost->ID;
             $relation->term_taxonomy_id = $term->term_id;

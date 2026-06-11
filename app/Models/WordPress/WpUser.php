@@ -13,6 +13,8 @@ class WpUser extends Model
 
     protected $primaryKey = 'ID';
 
+    protected $hidden = ['user_pass', 'user_activation_key', 'meta'];
+
     public function meta()
     {
         return $this->hasMany(WpUserMeta::class, 'user_id', 'ID');

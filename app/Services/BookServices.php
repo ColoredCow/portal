@@ -48,12 +48,18 @@ class BookServices
     {
         $apiKey = config('constants.google.vision-api-key');
 
-        $response = Http::post('https://vision.googleapis.com/v1/images:annotate?key=' . $apiKey, [
+        $response = Http::timeout(5)->post('https://vision.googleapis.com/v1/images:annotate?key=' . $apiKey, [
             'requests' => [[
                 'image' => ['content' => base64_encode(file_get_contents($file->path()))],
                 'features' => [['type' => 'TEXT_DETECTION', 'maxResults' => 100]],
             ]],
         ]);
+
+        if ($response->failed()) {
+            \Log::warning('Google Vision API error', ['status' => $response->status(), 'body' => $response->body()]);
+
+            return '';
+        }
 
         $annotations = $response->json('responses.0.textAnnotations') ?? [];
         $description = '';

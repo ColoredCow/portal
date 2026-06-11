@@ -12,4 +12,6 @@ class WpPostMeta extends Model
     protected $table = 'postmeta';
 
     protected $primaryKey = 'meta_id';
+
+    protected $fillable = ['post_id', 'meta_key', 'meta_value'];
 }

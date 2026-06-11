@@ -10,7 +10,7 @@ class WebsiteUserService
 
     public function __construct()
     {
-        if (config('database.connections.wordpress.enabled')) {
+        if (config('database.connections.wordpress.enabled') && auth()->check()) {
             $this->user = WpUser::with('meta')->where('user_email', auth()->user()->email)->first();
         }
     }
