@@ -34,13 +34,13 @@ jobs:
           php-version: "8.2"
 
       - name: Setup cypress-testing
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
       - name: Install Dependencies
-        run: composer install
+        run: composer install --no-interaction
 
       - name: Generate key
         run: php artisan key:generate
@@ -56,6 +56,11 @@ jobs:
         run: |
           php artisan db:seed
           php artisan module:seed
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
 
       - name: Compile assets
         run: |
