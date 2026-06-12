@@ -56,9 +56,9 @@ class ApplicantController extends Controller
     public function store(ApplicantRequest $request)
     {
         $validated = $request->validated();
-        $job_title = Job::where('opportunity_id', $validated['opportunity_id'])->first();
+        $job = Job::where('opportunity_id', $validated['opportunity_id'])->first();
 
-        if (! $job_title) {
+        if (! $job) {
             Log::warning('Applicant submission could not be matched to a job: no hr_jobs row found for the given opportunity_id.', [
                 'opportunity_id' => $validated['opportunity_id'] ?? null,
             ]);
@@ -74,7 +74,7 @@ class ApplicantController extends Controller
             return redirect()->back()->withInput()->withErrors(['opportunity_id' => $message]);
         }
 
-        $this->service->saveApplication($validated, $job_title->title);
+        $this->service->saveApplication($validated, $job->title);
 
         return redirect(route('applications.job.index'));
     }
