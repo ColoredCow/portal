@@ -63,9 +63,15 @@ class ApplicantController extends Controller
                 'opportunity_id' => $validated['opportunity_id'] ?? null,
             ]);
 
-            return response()->json([
-                'message' => 'We could not match your application to an open position. Please try again later or contact us.',
-            ], 422);
+            $message = 'We could not match your application to an open position. Please try again later or contact us.';
+
+            // The website hits this as an API route (api/hr/applicants) and consumes JSON;
+            // the portal's own browser form posts to the web route and expects a redirect.
+            if ($request->is('api/*')) {
+                return response()->json(['message' => $message], 422);
+            }
+
+            return redirect()->back()->withInput()->withErrors(['opportunity_id' => $message]);
         }
 
         $this->service->saveApplication($validated, $job_title->title);
