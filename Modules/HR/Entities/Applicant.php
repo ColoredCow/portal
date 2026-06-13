@@ -37,8 +37,25 @@ class Applicant extends Model
             'linkedin' => $attr['linkedin'] ?? null,
         ]);
 
-        $jobId = $attr['hr_job_id'] ?? Job::where('opportunity_id', $attr['opportunity_id'])->first()->id;
-        $hr_channel_id = $attr['hr_channel_id'] ?? HrChannel::select('id')->where('name', 'Website')->first()->id;
+        $hrJobId = $attr['hr_job_id'] ?? null;
+        $job = $hrJobId ? null : Job::where('opportunity_id', $attr['opportunity_id'] ?? null)->first();
+        $jobId = $hrJobId ?? ($job ? $job->id : null);
+
+        // hr_applications.hr_job_id is NOT NULL with a FK to hr_jobs, so a null here
+        // would surface as an opaque integrity-constraint 500. Fail fast with a clear
+        // message instead. The website path is already shielded by the controller's
+        // 422 guard; this protects direct/internal callers and race conditions.
+        if (! $jobId) {
+            throw new \InvalidArgumentException(
+                'Cannot create application: no job matched the provided hr_job_id/opportunity_id ('
+                . ($attr['opportunity_id'] ?? 'null') . ').'
+            );
+        }
+
+        // hr_channel_id is nullable, so a missing "Website" channel is acceptable —
+        // just avoid dereferencing ->id on null.
+        $websiteChannel = HrChannel::select('id')->where('name', 'Website')->first();
+        $hr_channel_id = $attr['hr_channel_id'] ?? optional($websiteChannel)->id;
         $application = Application::_create([
             'hr_job_id' => $jobId,
             'hr_applicant_id' => $applicant->id,

@@ -7,6 +7,7 @@ use App\Models\Setting;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\HR\Contracts\ApplicationServiceContract;
 use Modules\HR\Entities\Applicant;
@@ -55,9 +56,25 @@ class ApplicantController extends Controller
     public function store(ApplicantRequest $request)
     {
         $validated = $request->validated();
-        $job_title = Job::where('opportunity_id', $validated['opportunity_id'])->first();
+        $job = Job::where('opportunity_id', $validated['opportunity_id'])->first();
 
-        $this->service->saveApplication($validated, $job_title->title);
+        if (! $job) {
+            Log::warning('Applicant submission could not be matched to a job: no hr_jobs row found for the given opportunity_id.', [
+                'opportunity_id' => $validated['opportunity_id'] ?? null,
+            ]);
+
+            $message = 'We could not match your application to an open position. Please try again later or contact us.';
+
+            // The website hits this as an API route (api/hr/applicants) and consumes JSON;
+            // the portal's own browser form posts to the web route and expects a redirect.
+            if ($request->is('api/*')) {
+                return response()->json(['message' => $message], 422);
+            }
+
+            return redirect()->back()->withInput()->withErrors(['opportunity_id' => $message]);
+        }
+
+        $this->service->saveApplication($validated, $job->title);
 
         return redirect(route('applications.job.index'));
     }

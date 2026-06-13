@@ -6,6 +6,7 @@ use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Module;
 use Modules\HR\Contracts\ApplicationServiceContract;
 use Modules\HR\Entities\Applicant;
@@ -85,14 +86,17 @@ class ApplicationService implements ApplicationServiceContract
 
     public function saveApplication($data, $subscriptionLists)
     {
+        $data['name'] = $data['first_name'] . ' ' . $data['last_name'];
+        Applicant::_create($data);
+
         try {
             $this->addSubscriberToCampaigns($data, $subscriptionLists);
         } catch (\Exception $e) {
-            return redirect(route('applications.job.index'))->with('error', 'Error occurred while sending data to Campaign');
+            Log::warning('Failed to add applicant to campaign; application was saved.', [
+                'email' => $data['email'] ?? null,
+                'error' => $e->getMessage(),
+            ]);
         }
-
-        $data['name'] = $data['first_name'] . ' ' . $data['last_name'];
-        Applicant::_create($data);
 
         return true;
     }
