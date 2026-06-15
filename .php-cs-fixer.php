@@ -122,9 +122,7 @@ $rules = [
     'trim_array_spaces' => true,
     'type_declaration_spaces' => true,
     'unary_operator_spaces' => true,
-    'visibility_required' => [
-        'elements' => ['method', 'property'],
-    ],
+    'modifier_keywords' => true,
     'whitespace_after_comma_in_array' => true,
 ];
 
