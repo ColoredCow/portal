@@ -45,21 +45,31 @@ class InvoiceDatabaseSeeder extends Seeder
             return;
         }
 
+        // Single source of truth for the demo's one foreign-currency client: the
+        // first client by id. Both the address backfill (which drives the symbol the
+        // UI shows) and the invoice rows (which set invoices.currency) key off this
+        // same id, so a USD invoice always renders a USD symbol.
+        $firstClient = DB::table('clients')->orderBy('id')->first();
+        if (! $firstClient) {
+            return; // no clients to attach demo finance data to
+        }
+        $usdClientId = (int) $firstClient->id;
+
         // The invoice UI derives an amount's currency symbol from the client's
         // address country (Client::getCountryAttribute), NOT from invoices.currency.
         // Base client seeding creates no addresses, so demo amounts render with no
         // currency. Backfill a billing address per client. This is idempotent and
         // runs before the invoices guard below, so re-running the seeder also fixes
         // a database that was seeded before this was added.
-        $this->seedClientAddresses();
+        $this->seedClientAddresses($usdClientId);
 
         if (DB::table('invoices')->exists()) {
             return;
         }
 
-        DB::transaction(function () {
+        DB::transaction(function () use ($usdClientId) {
             $this->seedCurrencyRates();
-            $this->seedInvoices();
+            $this->seedInvoices($usdClientId);
         });
     }
 
@@ -99,7 +109,7 @@ class InvoiceDatabaseSeeder extends Seeder
      * any client that already has an address, so it is safe to re-run and never
      * overwrites real local data.
      */
-    private function seedClientAddresses(): void
+    private function seedClientAddresses(int $usdClientId): void
     {
         $india = DB::table('countries')->where('currency', 'INR')->orderBy('id')->first();
         $usd = DB::table('countries')->where('currency', 'USD')->orderBy('id')->first();
@@ -107,13 +117,7 @@ class InvoiceDatabaseSeeder extends Seeder
             return; // countries not seeded on this database — nothing safe to map to
         }
 
-        $clients = DB::table('clients')->orderBy('id')->get();
-        if ($clients->isEmpty()) {
-            return;
-        }
-        $usdClientId = (int) $clients->first()->id;
-
-        foreach ($clients as $client) {
+        foreach (DB::table('clients')->orderBy('id')->get() as $client) {
             // Idempotent: never touch a client that already has an address.
             if (DB::table('client_addresses')->where('client_id', $client->id)->exists()) {
                 continue;
@@ -146,7 +150,7 @@ class InvoiceDatabaseSeeder extends Seeder
         DB::table('currency_avg_rate')->insert($rows);
     }
 
-    private function seedInvoices(): void
+    private function seedInvoices(int $usdClientId): void
     {
         $clients = DB::table('clients')->orderBy('id')->get();
         $projects = DB::table('projects')->orderBy('id')->get();
@@ -161,8 +165,9 @@ class InvoiceDatabaseSeeder extends Seeder
             ->groupBy('m.project_id')
             ->pluck('hours', 'm.project_id');
 
-        // Deterministic roles for the planted edge cases.
-        $usdClientId = (int) $clients->first()->id;                 // one foreign-currency client
+        // Deterministic roles for the planted edge cases. $usdClientId is passed in
+        // (computed once in run()) so these invoices and the address backfill agree
+        // on which client bills in a foreign currency.
         $leakerProjectId = (int) $projects->first()->id;            // a fixed-budget leaker
         $clientLevelClientId = (int) ($clients->count() > 1 ? $clients->values()->get(1)->id : $usdClientId);
 
