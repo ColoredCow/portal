@@ -202,7 +202,7 @@ class InvoiceDatabaseSeeder extends Seeder
      * of a consumer's INR normalization:
      *   seq % 3 == 0 -> per-invoice sent_conversion_rate (encrypted)
      *   seq % 3 == 1 -> decimal conversion_rate (plain)
-     *   seq % 3 == 2 -> neither (forces the currency_avg_rate fallback)
+     *   seq % 3 == 2 -> neither (forces the currency_avg_rate fallback).
      */
     private function invoiceRow(int $seq, $clientId, $projectId, float $amountInr, bool $isUsd, array $overrides, bool $encrypt = true): array
     {
