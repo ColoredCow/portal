@@ -44,6 +44,15 @@ class InvoiceDatabaseSeeder extends Seeder
         if (app()->environment('production')) {
             return;
         }
+
+        // The invoice UI derives an amount's currency symbol from the client's
+        // address country (Client::getCountryAttribute), NOT from invoices.currency.
+        // Base client seeding creates no addresses, so demo amounts render with no
+        // currency. Backfill a billing address per client. This is idempotent and
+        // runs before the invoices guard below, so re-running the seeder also fixes
+        // a database that was seeded before this was added.
+        $this->seedClientAddresses();
+
         if (DB::table('invoices')->exists()) {
             return;
         }
@@ -79,6 +88,43 @@ class InvoiceDatabaseSeeder extends Seeder
                 continue;
             }
             $role->givePermissionTo($permissions);
+        }
+    }
+
+    /**
+     * Give every client a billing address whose country fixes the currency the UI
+     * shows for its invoices — the symbol comes from client -> address -> country,
+     * not from invoices.currency. The first client (the demo's designated foreign-
+     * currency client) maps to a USD country; the rest map to India (INR). Skips
+     * any client that already has an address, so it is safe to re-run and never
+     * overwrites real local data.
+     */
+    private function seedClientAddresses(): void
+    {
+        $india = DB::table('countries')->where('currency', 'INR')->orderBy('id')->first();
+        $usd = DB::table('countries')->where('currency', 'USD')->orderBy('id')->first();
+        if (! $india || ! $usd) {
+            return; // countries not seeded on this database — nothing safe to map to
+        }
+
+        $clients = DB::table('clients')->orderBy('id')->get();
+        if ($clients->isEmpty()) {
+            return;
+        }
+        $usdClientId = (int) $clients->first()->id;
+
+        foreach ($clients as $client) {
+            // Idempotent: never touch a client that already has an address.
+            if (DB::table('client_addresses')->where('client_id', $client->id)->exists()) {
+                continue;
+            }
+            DB::table('client_addresses')->insert([
+                'client_id' => $client->id,
+                'country_id' => ((int) $client->id === $usdClientId) ? $usd->id : $india->id,
+                'type' => 'billing-address',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
         }
     }
 
