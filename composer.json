@@ -14,7 +14,7 @@
     }
   ],
   "require": {
-    "php": "^8.0",
+    "php": "^8.1",
     "ext-gd": "*",
     "aws/aws-sdk-php": "^3.121",
     "barryvdh/laravel-snappy": "^0.4.7",
@@ -60,9 +60,6 @@
     "sort-packages": true,
     "platform": {
       "php": "8.1"
-    },
-    "audit": {
-      "block-insecure": false
     },
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
