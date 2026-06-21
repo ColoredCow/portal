@@ -1,0 +1,406 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method Modules\\\\AppointmentSlots\\\\Services\\\\AppointmentSlotsService\\:\\:createCalendarEvent\\(\\) is unused\\.$#"
+			count: 1
+			path: Modules/AppointmentSlots/Services/AppointmentSlotsService.php
+
+		-
+			message: "#^Relation 'projectTeamMembers' is not found in Modules\\\\User\\\\Entities\\\\User model\\.$#"
+			count: 1
+			path: Modules/Client/Entities/Client.php
+
+		-
+			message: "#^Variable \\$monthsToSubtract on left side of \\?\\? always exists and is not nullable\\.$#"
+			count: 3
+			path: Modules/Client/Entities/Client.php
+
+		-
+			message: "#^Relation 'linkedAsDepartment' is not found in Modules\\\\Client\\\\Entities\\\\Client model\\.$#"
+			count: 1
+			path: Modules/Client/Services/ClientService.php
+
+		-
+			message: "#^Relation 'linkedAsPartner' is not found in Modules\\\\Client\\\\Entities\\\\Client model\\.$#"
+			count: 1
+			path: Modules/Client/Services/ClientService.php
+
+		-
+			message: "#^Relation 'projects' is not found in Modules\\\\Client\\\\Entities\\\\Client model\\.$#"
+			count: 2
+			path: Modules/Client/Services/ClientService.php
+
+		-
+			message: "#^Relation 'mentor' is not found in Modules\\\\CodeTrek\\\\Entities\\\\CodeTrekApplicant model\\.$#"
+			count: 1
+			path: Modules/CodeTrek/Services/CodeTrekService.php
+
+		-
+			message: "#^Variable \\$timeZone on left side of \\?\\? always exists and is not nullable\\.$#"
+			count: 1
+			path: Modules/Communication/Services/CalendarMeetingService.php
+
+		-
+			message: "#^Relation 'projectTeamMembers' is not found in Modules\\\\User\\\\Entities\\\\User model\\.$#"
+			count: 1
+			path: Modules/EffortTracking/Services/EffortTrackingService.php
+
+		-
+			message: "#^Relation 'application' is not found in Modules\\\\HR\\\\Entities\\\\ApplicationRound model\\.$#"
+			count: 2
+			path: Modules/HR/Console/Recruitment/ApplicationNoShow.php
+
+		-
+			message: "#^Relation 'round' is not found in Modules\\\\HR\\\\Entities\\\\ApplicationRound model\\.$#"
+			count: 1
+			path: Modules/HR/Console/Recruitment/ApplicationNoShow.php
+
+		-
+			message: "#^Relation 'applicationRounds' is not found in Modules\\\\HR\\\\Entities\\\\Application model\\.$#"
+			count: 1
+			path: Modules/HR/Console/Recruitment/MarkApplicationForFollowUp.php
+
+		-
+			message: "#^Relation 'latestApplicationRound' is not found in Modules\\\\HR\\\\Entities\\\\Application model\\.$#"
+			count: 1
+			path: Modules/HR/Console/Recruitment/MarkApplicationForFollowUp.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<int,Modules\\\\HR\\\\Entities\\\\Application\\>\\:\\:reject\\(\\) expects bool\\|\\(callable\\(Modules\\\\HR\\\\Entities\\\\Application, int\\)\\: bool\\)\\|Modules\\\\HR\\\\Entities\\\\Application, Closure\\(mixed\\)\\: Modules\\\\HR\\\\Entities\\\\Application given\\.$#"
+			count: 1
+			path: Modules/HR/Console/Recruitment/SendFollowUpThresholdMail.php
+
+		-
+			message: "#^Relation 'application' is not found in Modules\\\\HR\\\\Entities\\\\ApplicationRound model\\.$#"
+			count: 1
+			path: Modules/HR/Entities/ApplicationRound.php
+
+		-
+			message: "#^Relation 'parent' is not found in Modules\\\\HR\\\\Entities\\\\Evaluation\\\\Parameter model\\.$#"
+			count: 1
+			path: Modules/HR/Entities/Evaluation/Parameter.php
+
+		-
+			message: "#^Relation 'parentOption' is not found in Modules\\\\HR\\\\Entities\\\\Evaluation\\\\Parameter model\\.$#"
+			count: 1
+			path: Modules/HR/Entities/Evaluation/Parameter.php
+
+		-
+			message: "#^Relation 'segment' is not found in Modules\\\\HR\\\\Entities\\\\Evaluation\\\\Parameter model\\.$#"
+			count: 2
+			path: Modules/HR/Entities/Evaluation/Parameter.php
+
+		-
+			message: "#^Relation 'user' is not found in Modules\\\\HR\\\\Entities\\\\Employee model\\.$#"
+			count: 1
+			path: Modules/HR/Http/Controllers/EmployeeController.php
+
+		-
+			message: "#^Relation 'parameters' is not found in Modules\\\\HR\\\\Entities\\\\Evaluation\\\\Segment model\\.$#"
+			count: 1
+			path: Modules/HR/Http/Controllers/EvaluationController.php
+
+		-
+			message: "#^Relation 'applicant' is not found in Modules\\\\HR\\\\Entities\\\\Application model\\.$#"
+			count: 1
+			path: Modules/HR/Http/Controllers/Recruitment/ApplicationController.php
+
+		-
+			message: "#^Relation 'job' is not found in Modules\\\\HR\\\\Entities\\\\Application model\\.$#"
+			count: 1
+			path: Modules/HR/Http/Controllers/Recruitment/ApplicationController.php
+
+		-
+			message: "#^Relation 'latestApplicationRound' is not found in Modules\\\\HR\\\\Entities\\\\Application model\\.$#"
+			count: 4
+			path: Modules/HR/Http/Controllers/Recruitment/ApplicationController.php
+
+		-
+			message: "#^Relation 'tags' is not found in Modules\\\\HR\\\\Entities\\\\Application model\\.$#"
+			count: 1
+			path: Modules/HR/Http/Controllers/Recruitment/ApplicationController.php
+
+		-
+			message: "#^Relation 'applications' is not found in Modules\\\\HR\\\\Entities\\\\Job model\\.$#"
+			count: 1
+			path: Modules/HR/Http/Controllers/Recruitment/JobController.php
+
+		-
+			message: "#^Relation 'applications' is not found in Modules\\\\HR\\\\Entities\\\\Job model\\.$#"
+			count: 1
+			path: Modules/HR/Http/Controllers/Recruitment/RecruitmentOpportunityController.php
+
+		-
+			message: "#^Relation 'employee' is not found in Modules\\\\User\\\\Entities\\\\User model\\.$#"
+			count: 1
+			path: Modules/HR/Observers/EmployeeObserver.php
+
+		-
+			message: "#^Relation 'applicant' is not found in Modules\\\\HR\\\\Entities\\\\Application model\\.$#"
+			count: 1
+			path: Modules/HR/Services/ApplicationService.php
+
+		-
+			message: "#^Relation 'application' is not found in Modules\\\\HR\\\\Entities\\\\ApplicationRound model\\.$#"
+			count: 1
+			path: Modules/HR/Services/ApplicationService.php
+
+		-
+			message: "#^Relation 'job' is not found in Modules\\\\HR\\\\Entities\\\\Application model\\.$#"
+			count: 1
+			path: Modules/HR/Services/ApplicationService.php
+
+		-
+			message: "#^Relation 'latestApplicationRound' is not found in Modules\\\\HR\\\\Entities\\\\Application model\\.$#"
+			count: 4
+			path: Modules/HR/Services/ApplicationService.php
+
+		-
+			message: "#^Relation 'tags' is not found in Modules\\\\HR\\\\Entities\\\\Application model\\.$#"
+			count: 1
+			path: Modules/HR/Services/ApplicationService.php
+
+		-
+			message: "#^Relation 'hrJobDomain' is not found in Modules\\\\HR\\\\Entities\\\\JobRequisition model\\.$#"
+			count: 2
+			path: Modules/HR/Services/RequisitionService.php
+
+		-
+			message: "#^Relation 'universityContacts' is not found in Modules\\\\HR\\\\Entities\\\\University model\\.$#"
+			count: 1
+			path: Modules/HR/Services/UniversityService.php
+
+		-
+			message: "#^Variable \\$invoices on left side of \\?\\? always exists and is not nullable\\.$#"
+			count: 1
+			path: Modules/Invoice/Console/FixInvoiceAmountsCommand.php
+
+		-
+			message: "#^Relation 'employee' is not found in Modules\\\\Invoice\\\\Entities\\\\EmployeeLoan model\\.$#"
+			count: 1
+			path: Modules/Invoice/Console/SeedLoanInstallmentForMonth.php
+
+		-
+			message: "#^Relation 'employee' is not found in Modules\\\\Invoice\\\\Entities\\\\EmployeeLoan model\\.$#"
+			count: 1
+			path: Modules/Invoice/Services/EmployeeLoanService.php
+
+		-
+			message: "#^Relation 'user' is not found in Modules\\\\HR\\\\Entities\\\\Employee model\\.$#"
+			count: 1
+			path: Modules/Invoice/Services/EmployeeLoanService.php
+
+		-
+			message: "#^Relation 'client' is not found in Modules\\\\Invoice\\\\Entities\\\\Invoice model\\.$#"
+			count: 3
+			path: Modules/Invoice/Services/InvoiceService.php
+
+		-
+			message: "#^Relation 'meta' is not found in Modules\\\\Project\\\\Entities\\\\Project model\\.$#"
+			count: 1
+			path: Modules/Invoice/Services/InvoiceService.php
+
+		-
+			message: "#^Relation 'project' is not found in Modules\\\\Invoice\\\\Entities\\\\Invoice model\\.$#"
+			count: 1
+			path: Modules/Invoice/Services/InvoiceService.php
+
+		-
+			message: "#^Relation 'project' is not found in Modules\\\\Project\\\\Entities\\\\ProjectInvoiceTerm model\\.$#"
+			count: 2
+			path: Modules/Invoice/Services/InvoiceService.php
+
+		-
+			message: "#^Relation 'teamMembers' is not found in Modules\\\\Project\\\\Entities\\\\Project model\\.$#"
+			count: 1
+			path: Modules/Project/Console/GoogleChat/NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat.php
+
+		-
+			message: "#^Relation 'getTeamMembers' is not found in Modules\\\\Project\\\\Entities\\\\Project model\\.$#"
+			count: 1
+			path: Modules/Project/Console/GoogleChat/RemindProjectMembersToUpdateEffortOnGoogleChat.php
+
+		-
+			message: "#^Relation 'teamMembers' is not found in Modules\\\\Project\\\\Entities\\\\Project model\\.$#"
+			count: 1
+			path: Modules/Project/Console/GoogleChat/RemindProjectMembersToUpdateEffortOnGoogleChat.php
+
+		-
+			message: "#^Relation 'getTeamMembers' is not found in Modules\\\\Project\\\\Entities\\\\Project model\\.$#"
+			count: 2
+			path: Modules/Project/Console/GoogleChat/SendDailyEffortSummaryForProjectsOnGoogleChat.php
+
+		-
+			message: "#^Binary operation \"\\+\" between non\\-falsy\\-string and 1 results in an error\\.$#"
+			count: 1
+			path: Modules/Project/Services/ProjectService.php
+
+		-
+			message: "#^Relation 'client' is not found in Modules\\\\Project\\\\Entities\\\\Project model\\.$#"
+			count: 1
+			path: Modules/Project/Services/ProjectService.php
+
+		-
+			message: "#^Relation 'comment' is not found in Modules\\\\Project\\\\Entities\\\\ProjectInvoiceTerm model\\.$#"
+			count: 1
+			path: Modules/Project/Services/ProjectService.php
+
+		-
+			message: "#^Relation 'project' is not found in Modules\\\\Project\\\\Entities\\\\ProjectInvoiceTerm model\\.$#"
+			count: 1
+			path: Modules/Project/Services/ProjectService.php
+
+		-
+			message: "#^Relation 'projects' is not found in Modules\\\\Client\\\\Entities\\\\Client model\\.$#"
+			count: 2
+			path: Modules/Project/Services/ProjectService.php
+
+		-
+			message: "#^Relation 'teamMembers' is not found in Modules\\\\Project\\\\Entities\\\\Project model\\.$#"
+			count: 1
+			path: Modules/Project/Services/ProjectService.php
+
+		-
+			message: "#^Relation 'contractReviewers' is not found in Modules\\\\ProjectContract\\\\Entities\\\\Contract model\\.$#"
+			count: 1
+			path: Modules/ProjectContract/Services/ProjectContractService.php
+
+		-
+			message: "#^Relation 'internalReviewers' is not found in Modules\\\\ProjectContract\\\\Entities\\\\Contract model\\.$#"
+			count: 3
+			path: Modules/ProjectContract/Services/ProjectContractService.php
+
+		-
+			message: "#^Relation 'user' is not found in Modules\\\\ProjectContract\\\\Entities\\\\Contract model\\.$#"
+			count: 1
+			path: Modules/ProjectContract/Services/ProjectContractService.php
+
+		-
+			message: "#^Relation 'comments' is not found in Modules\\\\Prospect\\\\Entities\\\\Prospect model\\.$#"
+			count: 2
+			path: Modules/Prospect/Http/Controllers/ProspectController.php
+
+		-
+			message: "#^Relation 'insights' is not found in Modules\\\\Prospect\\\\Entities\\\\Prospect model\\.$#"
+			count: 1
+			path: Modules/Prospect/Http/Controllers/ProspectController.php
+
+		-
+			message: "#^Relation 'clientContracts' is not found in Modules\\\\Client\\\\Entities\\\\Client model\\.$#"
+			count: 1
+			path: Modules/Report/Services/Finance/ContractReportService.php
+
+		-
+			message: "#^Relation 'meta' is not found in Modules\\\\Client\\\\Entities\\\\Client model\\.$#"
+			count: 1
+			path: Modules/Report/Services/Finance/ContractReportService.php
+
+		-
+			message: "#^Relation 'projects' is not found in Modules\\\\Client\\\\Entities\\\\Client model\\.$#"
+			count: 1
+			path: Modules/Report/Services/Finance/ContractReportService.php
+
+		-
+			message: "#^Relation 'client' is not found in Modules\\\\Invoice\\\\Entities\\\\Invoice model\\.$#"
+			count: 2
+			path: Modules/Report/Services/Finance/RevenueReportService.php
+
+		-
+			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
+			count: 1
+			path: Modules/Salary/Entities/EmployeeSalary.php
+
+		-
+			message: "#^Relation 'meta' is not found in App\\\\Models\\\\WordPress\\\\WpUser model\\.$#"
+			count: 1
+			path: Modules/User/Entities/User.php
+
+		-
+			message: "#^Variable \\$invoices on left side of \\?\\? always exists and is not nullable\\.$#"
+			count: 2
+			path: app/Console/Commands/FakeProdDataCommand.php
+
+		-
+			message: "#^Relation 'projects' is not found in App\\\\Models\\\\Client model\\.$#"
+			count: 1
+			path: app/Http/Controllers/ClientController.php
+
+		-
+			message: "#^Relation 'Job' is not found in Modules\\\\HR\\\\Entities\\\\Application model\\.$#"
+			count: 1
+			path: app/Http/Controllers/HR/Applications/VolunteerApplicationController.php
+
+		-
+			message: "#^Relation 'applicant' is not found in Modules\\\\HR\\\\Entities\\\\Application model\\.$#"
+			count: 1
+			path: app/Http/Controllers/HR/Applications/VolunteerApplicationController.php
+
+		-
+			message: "#^Relation 'job' is not found in Modules\\\\HR\\\\Entities\\\\Application model\\.$#"
+			count: 1
+			path: app/Http/Controllers/HR/Applications/VolunteerApplicationController.php
+
+		-
+			message: "#^Relation 'applications' is not found in Modules\\\\HR\\\\Entities\\\\Job model\\.$#"
+			count: 1
+			path: app/Http/Controllers/HR/Volunteers/VolunteerOpportunityController.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\KnowledgeCafe\\\\Library\\\\Book\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, App\\\\Models\\\\KnowledgeCafe\\\\Library\\\\Book\\>\\:\\:\\$readers\\.$#"
+			count: 1
+			path: app/Http/Controllers/KnowledgeCafe/Library/BookController.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<string,Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, App\\\\Models\\\\KnowledgeCafe\\\\Library\\\\BookAMonth\\>\\>\\:\\:transform\\(\\) expects callable\\(Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, App\\\\Models\\\\KnowledgeCafe\\\\Library\\\\BookAMonth\\>, string\\)\\: Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, App\\\\Models\\\\KnowledgeCafe\\\\Library\\\\BookAMonth\\>, Closure\\(mixed\\)\\: Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<string, Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, App\\\\Models\\\\KnowledgeCafe\\\\Library\\\\BookAMonth\\>\\> given\\.$#"
+			count: 1
+			path: app/Http/Controllers/KnowledgeCafe/Library/BookController.php
+
+		-
+			message: "#^Parameter \\#2 \\$preserveKeys of method Illuminate\\\\Support\\\\Collection\\<int,App\\\\Models\\\\KnowledgeCafe\\\\Library\\\\BookAMonth\\>\\:\\:groupBy\\(\\) expects bool, string given\\.$#"
+			count: 1
+			path: app/Http/Controllers/KnowledgeCafe/Library/BookController.php
+
+		-
+			message: "#^Relation 'books' is not found in App\\\\Models\\\\KnowledgeCafe\\\\Library\\\\BookCategory model\\.$#"
+			count: 1
+			path: app/Http/Controllers/KnowledgeCafe/Library/BookController.php
+
+		-
+			message: "#^Relation 'categories' is not found in App\\\\Models\\\\KnowledgeCafe\\\\Library\\\\Book model\\.$#"
+			count: 1
+			path: app/Http/Controllers/KnowledgeCafe/Library/BookController.php
+
+		-
+			message: "#^Relation 'employee' is not found in Modules\\\\User\\\\Entities\\\\User model\\.$#"
+			count: 1
+			path: app/Http/Controllers/UserController.php
+
+		-
+			message: "#^Relation 'projects' is not found in App\\\\Models\\\\Client model\\.$#"
+			count: 2
+			path: app/Models/Client.php
+
+		-
+			message: "#^Relation 'payments' is not found in App\\\\Models\\\\Finance\\\\Invoice model\\.$#"
+			count: 2
+			path: app/Models/Finance/Invoice.php
+
+		-
+			message: "#^Relation 'wishers' is not found in App\\\\Models\\\\KnowledgeCafe\\\\Library\\\\Book model\\.$#"
+			count: 1
+			path: app/Models/KnowledgeCafe/Library/Book.php
+
+		-
+			message: "#^Variable \\$timeZone on left side of \\?\\? always exists and is not nullable\\.$#"
+			count: 1
+			path: app/Services/CalendarEventService.php
+
+		-
+			message: "#^Relation 'user' is not found in Modules\\\\HR\\\\Entities\\\\Employee model\\.$#"
+			count: 3
+			path: app/Services/EmployeeService.php
+
+		-
+			message: "#^Relation 'meta' is not found in App\\\\Models\\\\WordPress\\\\WpUser model\\.$#"
+			count: 1
+			path: app/Services/WebsiteUserService.php
