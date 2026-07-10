@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Database\DBAL\TimestampType;
+use Doctrine\DBAL\Types\Type;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -31,6 +33,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        if (Type::hasType('timestamp')) {
+            Type::overrideType('timestamp', TimestampType::class);
+        } else {
+            Type::addType('timestamp', TimestampType::class);
+        }
     }
 
     public function setupEnvForOldPackages()
