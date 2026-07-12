@@ -1,7 +1,5 @@
 <?php
 
-use App\Database\DBAL\TimestampType;
-
 return [
     /*
     |--------------------------------------------------------------------------
@@ -143,9 +141,4 @@ return [
         ],
     ],
 
-    'dbal' => [
-        'types' => [
-            'timestamp' => TimestampType::class,
-        ],
-    ],
 ];
