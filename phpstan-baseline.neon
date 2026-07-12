@@ -1,6 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Cannot call method format\\(\\) on string\\.$#"
+			count: 2
+			path: Modules/AppointmentSlots/Services/AppointmentSlotsService.php
+
+		-
 			message: "#^Method Modules\\\\AppointmentSlots\\\\Services\\\\AppointmentSlotsService\\:\\:createCalendarEvent\\(\\) is unused\\.$#"
 			count: 1
 			path: Modules/AppointmentSlots/Services/AppointmentSlotsService.php
@@ -46,6 +51,11 @@ parameters:
 			path: Modules/EffortTracking/Services/EffortTrackingService.php
 
 		-
+			message: "#^Cannot call method format\\(\\) on string\\.$#"
+			count: 1
+			path: Modules/HR/Console/Recruitment/ApplicationNoShow.php
+
+		-
 			message: "#^Relation 'application' is not found in Modules\\\\HR\\\\Entities\\\\ApplicationRound model\\.$#"
 			count: 2
 			path: Modules/HR/Console/Recruitment/ApplicationNoShow.php
@@ -71,9 +81,24 @@ parameters:
 			path: Modules/HR/Console/Recruitment/SendFollowUpThresholdMail.php
 
 		-
+			message: "#^Cannot call method format\\(\\) on string\\.$#"
+			count: 1
+			path: Modules/HR/Emails/Recruitment/Applicant/ScheduledInterviewReminder.php
+
+		-
 			message: "#^Relation 'application' is not found in Modules\\\\HR\\\\Entities\\\\ApplicationRound model\\.$#"
 			count: 1
 			path: Modules/HR/Entities/ApplicationRound.php
+
+		-
+			message: "#^Cannot call method diff\\(\\) on string\\.$#"
+			count: 1
+			path: Modules/HR/Entities/Employee.php
+
+		-
+			message: "#^Cannot call method diffForHumans\\(\\) on string\\.$#"
+			count: 1
+			path: Modules/HR/Entities/Employee.php
 
 		-
 			message: "#^Relation 'parent' is not found in Modules\\\\HR\\\\Entities\\\\Evaluation\\\\Parameter model\\.$#"
@@ -101,6 +126,11 @@ parameters:
 			path: Modules/HR/Http/Controllers/EvaluationController.php
 
 		-
+			message: "#^Cannot call method format\\(\\) on string\\.$#"
+			count: 1
+			path: Modules/HR/Http/Controllers/Recruitment/ApplicationController.php
+
+		-
 			message: "#^Relation 'applicant' is not found in Modules\\\\HR\\\\Entities\\\\Application model\\.$#"
 			count: 1
 			path: Modules/HR/Http/Controllers/Recruitment/ApplicationController.php
@@ -121,6 +151,11 @@ parameters:
 			path: Modules/HR/Http/Controllers/Recruitment/ApplicationController.php
 
 		-
+			message: "#^Cannot call method format\\(\\) on string\\.$#"
+			count: 1
+			path: Modules/HR/Http/Controllers/Recruitment/ApplicationRoundController.php
+
+		-
 			message: "#^Relation 'applications' is not found in Modules\\\\HR\\\\Entities\\\\Job model\\.$#"
 			count: 1
 			path: Modules/HR/Http/Controllers/Recruitment/JobController.php
@@ -134,6 +169,11 @@ parameters:
 			message: "#^Relation 'employee' is not found in Modules\\\\User\\\\Entities\\\\User model\\.$#"
 			count: 1
 			path: Modules/HR/Observers/EmployeeObserver.php
+
+		-
+			message: "#^Cannot call method format\\(\\) on string\\.$#"
+			count: 1
+			path: Modules/HR/Observers/Recruitment/ApplicationRoundObserver.php
 
 		-
 			message: "#^Relation 'applicant' is not found in Modules\\\\HR\\\\Entities\\\\Application model\\.$#"
@@ -181,6 +221,26 @@ parameters:
 			path: Modules/Invoice/Console/SeedLoanInstallmentForMonth.php
 
 		-
+			message: "#^Cannot call method format\\(\\) on string\\.$#"
+			count: 1
+			path: Modules/Invoice/Console/UploadToGDrive.php
+
+		-
+			message: "#^Parameter \\#1 \\$date of method Modules\\\\Invoice\\\\Console\\\\UploadToGDrive\\:\\:getFinancialYear\\(\\) expects Carbon\\\\Carbon, string given\\.$#"
+			count: 1
+			path: Modules/Invoice/Console/UploadToGDrive.php
+
+		-
+			message: "#^Cannot call method subMonth\\(\\) on string\\.$#"
+			count: 2
+			path: Modules/Invoice/Emails/SendPaymentReceivedMail.php
+
+		-
+			message: "#^Cannot call method subMonth\\(\\) on string\\.$#"
+			count: 2
+			path: Modules/Invoice/Emails/SendPendingInvoiceMail.php
+
+		-
 			message: "#^Relation 'employee' is not found in Modules\\\\Invoice\\\\Entities\\\\EmployeeLoan model\\.$#"
 			count: 1
 			path: Modules/Invoice/Services/EmployeeLoanService.php
@@ -189,6 +249,16 @@ parameters:
 			message: "#^Relation 'user' is not found in Modules\\\\HR\\\\Entities\\\\Employee model\\.$#"
 			count: 1
 			path: Modules/Invoice/Services/EmployeeLoanService.php
+
+		-
+			message: "#^Cannot call method format\\(\\) on string\\.$#"
+			count: 2
+			path: Modules/Invoice/Services/InvoiceService.php
+
+		-
+			message: "#^Cannot call method subMonth\\(\\) on string\\.$#"
+			count: 1
+			path: Modules/Invoice/Services/InvoiceService.php
 
 		-
 			message: "#^Relation 'client' is not found in Modules\\\\Invoice\\\\Entities\\\\Invoice model\\.$#"
@@ -284,6 +354,11 @@ parameters:
 			message: "#^Relation 'insights' is not found in Modules\\\\Prospect\\\\Entities\\\\Prospect model\\.$#"
 			count: 1
 			path: Modules/Prospect/Http/Controllers/ProspectController.php
+
+		-
+			message: "#^Cannot call method format\\(\\) on string\\.$#"
+			count: 1
+			path: Modules/Report/Services/Finance/ClientRevenueReportService.php
 
 		-
 			message: "#^Relation 'clientContracts' is not found in Modules\\\\Client\\\\Entities\\\\Client model\\.$#"
