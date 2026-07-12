@@ -1,32 +1,17 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class RenameRoundNameColumnOfCodetrekApplicantRoundDetailsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
-        Schema::table('codetrek_applicant_round_details', function (Blueprint $table) {
-            $table->renameColumn('round_name', 'latest_round_name');
-        });
+        DB::statement("ALTER TABLE `codetrek_applicant_round_details` CHANGE `round_name` `latest_round_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'level-1'");
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::table('codetrek_applicant_round_details', function (Blueprint $table) {
-            $table->renameColumn('latest_round_name', 'round_name');
-        });
+        DB::statement("ALTER TABLE `codetrek_applicant_round_details` CHANGE `latest_round_name` `round_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'level-1'");
     }
 }
