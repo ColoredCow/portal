@@ -19,7 +19,14 @@ class Invoice extends Model implements Auditable
 
     protected $fillable = ['client_id', 'project_id', 'status', 'billing_level', 'currency', 'amount', 'sent_on', 'due_on', 'receivable_date', 'gst', 'file_path', 'comments', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'conversion_rate', 'tds', 'tds_percentage', 'currency_transaction_charge', 'payment_at', 'invoice_number', 'reminder_mail_count', 'payment_confirmation_mail_sent', 'deleted_at', 'term_start_date', 'term_end_date', 'sent_conversion_rate'];
 
-    protected $dates = ['sent_on', 'due_on', 'receivable_date', 'payment_at', 'term_start_date', 'term_end_date'];
+    protected $casts = [
+        'sent_on' => 'datetime',
+        'due_on' => 'datetime',
+        'receivable_date' => 'datetime',
+        'payment_at' => 'datetime',
+        'term_start_date' => 'datetime',
+        'term_end_date' => 'datetime',
+    ];
 
     protected $encryptable = [
         'amount', 'gst', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'tds', 'sent_conversion_rate',

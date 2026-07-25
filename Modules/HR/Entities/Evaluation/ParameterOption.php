@@ -13,8 +13,6 @@ class ParameterOption extends Model
 
     protected $table = 'hr_evaluation_parameter_options';
 
-    protected $dates = ['deleted_at'];
-
     public function evaluationParameter()
     {
         return $this->belongsTo(Parameter::class, 'evaluation_id');

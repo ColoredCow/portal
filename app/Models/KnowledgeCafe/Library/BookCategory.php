@@ -13,7 +13,6 @@ class BookCategory extends Model
     use SoftDeletes;
 
     protected $table = 'book_categories';
-    protected $dates = ['deleted_at'];
 
     protected $fillable = ['name'];
 

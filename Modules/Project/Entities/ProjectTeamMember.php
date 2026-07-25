@@ -13,11 +13,9 @@ class ProjectTeamMember extends Model
 
     protected $guarded = [];
 
-    protected $dates = [
-        'started_on',
-        'ended_on',
-        'created_at',
-        'updated_at',
+    protected $casts = [
+        'started_on' => 'datetime',
+        'ended_on' => 'datetime',
     ];
 
     public function user()

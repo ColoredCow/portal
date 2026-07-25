@@ -14,8 +14,6 @@ class Parameter extends Model
 
     protected $table = 'hr_evaluation_parameters';
 
-    protected $dates = ['deleted_at'];
-
     public function rounds()
     {
         return $this->belongsToMany(Round::class, 'hr_round_evaluation', 'evaluation_id', 'round_id');

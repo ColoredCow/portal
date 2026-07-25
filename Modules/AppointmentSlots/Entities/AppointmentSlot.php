@@ -10,9 +10,9 @@ class AppointmentSlot extends Model
     use SoftDeletes;
     protected $fillable = ['start_time', 'end_time', 'user_id', 'recurrence'];
 
-    protected $dates = [
-        'start_time',
-        'end_time',
+    protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
     ];
 
     public function scopeUser($query, $user_id)

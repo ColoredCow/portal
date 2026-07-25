@@ -12,7 +12,7 @@ class EmployeeLoan extends Model
 
     protected $table = 'employees_loan';
     protected $guarded = [];
-    protected $dates = ['start_date', 'end_date', 'created_at', 'updated_at'];
+    protected $casts = ['start_date' => 'datetime', 'end_date' => 'datetime'];
     protected $encryptable = ['total_amount', 'monthly_deduction'];
 
     public function employee()
