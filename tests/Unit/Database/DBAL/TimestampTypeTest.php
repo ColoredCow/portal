@@ -7,11 +7,31 @@ use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Platforms\MariaDb1043Platform;
 use Doctrine\DBAL\Platforms\MariaDb110700Platform;
 use Doctrine\DBAL\Platforms\SqlitePlatform;
+use Doctrine\DBAL\Types\Type;
 use Illuminate\Database\DBAL\TimestampType as BaseTimestampType;
 use Tests\TestCase;
 
 class TimestampTypeTest extends TestCase
 {
+    /**
+     * The override is only wired up by the `dbal.types` entry in
+     * config/database.php. Nothing else registers it, so if that import gets
+     * pointed back at the framework class (an easy merge-conflict resolution,
+     * since that is what the base branch has) this class becomes dead code and
+     * every other test here would still pass.
+     *
+     * @test
+     */
+    public function it_is_registered_as_the_doctrine_timestamp_type()
+    {
+        // Resolving a connection is what runs
+        // DatabaseManager::registerConfiguredDoctrineTypes(). The PDO stays
+        // lazy, so this touches no database.
+        $this->app['db']->connection();
+
+        $this->assertInstanceOf(TimestampType::class, Type::getType('timestamp'));
+    }
+
     /** @test */
     public function it_declares_a_mariadb_timestamp_using_mysql_syntax()
     {
