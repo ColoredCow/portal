@@ -11,12 +11,10 @@ class Invoice extends Model
 
     protected $table = 'invoices_old';
 
-    protected $dates = [
-        'sent_on',
-        'due_on',
-        'created_at',
-        'updated_at',
-        'deleted_at',
+    protected $casts = [
+        'sent_on' => 'datetime',
+        'due_on' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     protected $appends = ['project', 'client'];

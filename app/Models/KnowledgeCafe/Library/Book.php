@@ -16,7 +16,6 @@ class Book extends Model
 
     protected $table = 'library_books';
     protected $fillable = ['title', 'author', 'isbn', 'thumbnail', 'readable_link', 'self_link', 'number_of_copies', 'on_kindle'];
-    protected $dates = ['deleted_at'];
 
     public function categories()
     {
