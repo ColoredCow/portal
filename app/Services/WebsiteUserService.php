@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use Corcel\Laravel\Auth\AuthUserProvider;
+use App\Models\WordPress\WpUser;
 
 class WebsiteUserService
 {
@@ -10,9 +10,8 @@ class WebsiteUserService
 
     public function __construct()
     {
-        if (config('database.connections.wordpress.enabled')) {
-            $userProvider = new AuthUserProvider();
-            $this->user = $userProvider->retrieveByCredentials(['email' => auth()->user()->email]);
+        if (config('database.connections.wordpress.enabled') && auth()->check()) {
+            $this->user = WpUser::with('meta')->where('user_email', auth()->user()->email)->first();
         }
     }
 

@@ -3,12 +3,15 @@
 namespace App\Models\KnowledgeCafe\Library;
 
 use App\Models\Comment;
+use Database\Factories\BookFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\User\Entities\User;
 
 class Book extends Model
 {
+    use HasFactory;
     use SoftDeletes;
 
     protected $table = 'library_books';
@@ -173,5 +176,10 @@ class Book extends Model
     public function bookAMonths()
     {
         return $this->hasMany(BookAMonth::class, 'library_book_id');
+    }
+
+    protected static function newFactory()
+    {
+        return BookFactory::new();
     }
 }

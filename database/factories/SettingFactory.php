@@ -3,14 +3,30 @@
 namespace Database\Factories;
 
 use App\Models\Setting;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Setting::class, function (Faker $faker) {
-    $modules = config('constants.modules');
+class SettingFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Setting::class;
 
-    return [
-        'module' => $modules[array_rand($modules)],
-        'setting_key' => $faker->slug,
-        'setting_value' => $faker->sentence,
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $modules = config('constants.modules');
+
+        return [
+            'module' => $modules[array_rand($modules)],
+            'setting_key' => $this->faker->slug,
+            'setting_value' => $this->faker->sentence,
+        ];
+    }
+}
