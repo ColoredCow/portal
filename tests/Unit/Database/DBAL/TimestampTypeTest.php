@@ -5,6 +5,7 @@ namespace Tests\Unit\Database\DBAL;
 use App\Database\DBAL\TimestampType;
 use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Platforms\MariaDb1043Platform;
+use Doctrine\DBAL\Platforms\MariaDb110700Platform;
 use Doctrine\DBAL\Platforms\SqlitePlatform;
 use Illuminate\Database\DBAL\TimestampType as BaseTimestampType;
 use Tests\TestCase;
@@ -33,11 +34,22 @@ class TimestampTypeTest extends TestCase
         $this->assertSame('TIMESTAMP(3)', $declaration);
     }
 
+    /** @test */
+    public function it_declares_a_mariadb_11_7_timestamp_using_mysql_syntax()
+    {
+        $declaration = (new TimestampType())->getSQLDeclaration(
+            ['precision' => 0, 'notnull' => false],
+            new MariaDb110700Platform()
+        );
+
+        $this->assertSame('TIMESTAMP NULL', $declaration);
+    }
+
     /**
      * Guards the reason this class exists: without the override, MariaDB 10.4.3
      * to 10.5.1 falls through Illuminate's platform match and throws. If a later
-     * Laravel release adds MariaDb1043Platform to that match, this test fails and
-     * the override can be deleted.
+     * Laravel release adds MariaDb1043Platform to that match, this test fails.
+     * The override can only be deleted once the 11.7 case below passes too.
      *
      * @test
      */
@@ -49,6 +61,18 @@ class TimestampTypeTest extends TestCase
         (new BaseTimestampType())->getSQLDeclaration(
             ['precision' => 0, 'notnull' => false],
             new MariaDb1043Platform()
+        );
+    }
+
+    /** @test */
+    public function the_framework_type_it_extends_still_rejects_mariadb_11_7()
+    {
+        $this->expectException(DBALException::class);
+        $this->expectExceptionMessage('Invalid platform: MariaDb110700Platform');
+
+        (new BaseTimestampType())->getSQLDeclaration(
+            ['precision' => 0, 'notnull' => false],
+            new MariaDb110700Platform()
         );
     }
 

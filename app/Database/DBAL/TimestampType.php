@@ -7,24 +7,27 @@ use Doctrine\DBAL\Platforms\MariaDb1043Platform;
 use Illuminate\Database\DBAL\TimestampType as BaseTimestampType;
 
 /**
- * Fills a MariaDB 10.4 gap in Laravel's `timestamp` Doctrine type.
+ * Fills two MariaDB gaps in Laravel's `timestamp` Doctrine type.
  *
  * Illuminate's TimestampType switches on `get_class($platform)`, so it matches
  * the exact class and never a subclass. Its list covers MariaDBPlatform and the
- * 10.2.7 / 10.5.2 / 10.6 / 10.10 platforms but omits MariaDb1043Platform, which
- * doctrine/dbal 3.10+ selects for MariaDB 10.4.3 up to 10.5.1. On those servers
- * the match falls through to `default` and throws
- * "Invalid platform: MariaDb1043Platform", so any migration calling `->change()`
- * on a timestamp column fails. MariaDB takes MySQL syntax here, so we send it to
- * the MySQL declaration.
+ * 10.2.7 / 10.5.2 / 10.6 / 10.10 platforms, but omits both MariaDb1043Platform
+ * (which doctrine/dbal 3.10+ selects for MariaDB 10.4.3 up to 10.5.1) and
+ * MariaDb110700Platform (MariaDB 11.7 and up). On those servers the match falls
+ * through to `default` and throws "Invalid platform: ...", so any migration
+ * calling `->change()` on a timestamp column fails. MariaDB takes MySQL syntax
+ * here, so we send it to the MySQL declaration.
+ *
+ * One `instanceof` covers both, because MariaDb1043Platform is the base of
+ * dbal's whole newer MariaDB line:
+ * 11.7 -> 10.10 -> 10.6 -> 10.5.2 -> 10.4.3. Testing the base class also
+ * catches the versions the parent matched exactly, and the parent sent those to
+ * this same declaration, so nothing changes for them. Note this is why a second
+ * `instanceof MariaDb110700Platform` check is unreachable, and why phpstan
+ * flagged one as always-false in 95791049b.
  *
  * Registered as the `timestamp` type through `database.dbal.types` in
  * config/database.php.
- *
- * MariaDb1043Platform is also the base of dbal's newer MariaDB classes
- * (10.10 -> 10.6 -> 10.5.2 -> 10.4.3), so this `instanceof` catches those too.
- * The parent already routed them to the same declaration, so nothing changes
- * for them.
  *
  * Needed only while we are on Laravel 10. Laravel 11 drops doctrine/dbal for
  * schema changes and deletes the base class, so this goes away in that phase.
