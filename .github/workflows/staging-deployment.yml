@@ -37,7 +37,7 @@ jobs:
           php artisan migrate
 
           echo "Running composer"
-          composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader
+          composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader --no-dev
           composer dump-autoload
 
           echo "Running npm"
