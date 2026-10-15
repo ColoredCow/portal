@@ -3,6 +3,11 @@
     $clipboardLines[] = 'Candidate to evaluate:';
     $clipboardLines[] = $applicant->name . ', applied on ' . $application->created_at->format(config('constants.display_date_format'));
 
+    $appliedForJobTitle = optional($application->job)->title;
+    if (!empty($appliedForJobTitle)) {
+        $clipboardLines[] = 'Applied for: ' . $appliedForJobTitle;
+    }
+
     if (!empty($applicant->graduation_year)) {
         $clipboardLines[] = 'Graduation Year: ' . $applicant->graduation_year;
     }
