@@ -3,9 +3,9 @@ name: Unit testing
 # Controls when the action will run.
 on:
   push:
-    branches: [develop]
+    branches: [develop, upgrade/laravel-13]
   pull_request:
-    branches: [develop]
+    branches: [develop, upgrade/laravel-13]
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -15,7 +15,7 @@ jobs:
 
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:8.0
         env:
           MYSQL_USER: mysql_test_user
           MYSQL_PASSWORD: root
@@ -28,19 +28,19 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # cypress setup
-      - name: Setup PHP v7.4
+      - name: Setup PHP v8.1
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "7.4"
+          php-version: "8.1"
 
       - name: Setup unit-testing
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
       - name: Install Dependencies
-        run: composer install
+        run: composer install --no-interaction
 
       - name: Generate key
         run: php artisan key:generate
@@ -57,6 +57,11 @@ jobs:
           php artisan db:seed --env=testing
           php artisan module:seed --env=testing
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+
       - name: Compile assets
         run: |
           export NODE_OPTIONS=--openssl-legacy-provider
@@ -68,7 +73,7 @@ jobs:
           vendor/bin/phpunit --coverage-clover coverage.xml
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
 
       - name: Coverage Report as Comment (Clover)
         if: github.event_name == 'pull_request'

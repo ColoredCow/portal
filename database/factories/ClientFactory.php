@@ -3,12 +3,28 @@
 namespace Database\Factories;
 
 use App\Models\Client;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Client::class, function (Faker $faker) {
-    return [
-        'name' => $faker->company,
-        'is_active' => true,
-        'gst_num' => null,
-    ];
-});
+class ClientFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Client::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->company,
+            'is_active' => true,
+            'gst_num' => null,
+        ];
+    }
+}

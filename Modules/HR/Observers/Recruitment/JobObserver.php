@@ -2,90 +2,72 @@
 
 namespace Modules\HR\Observers\Recruitment;
 
-use Corcel\Model\Option as Option;
-use Corcel\Model\Post as Corcel;
-use Corcel\Model\Term as Term;
-use Corcel\Model\TermRelationship as TermRelationship;
+use App\Models\WordPress\WpOption;
+use App\Models\WordPress\WpPost;
+use App\Models\WordPress\WpTerm;
+use App\Models\WordPress\WpTermRelationship;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\Round;
 
 class JobObserver
 {
-    /**
-     * Listen to the Job create event.
-     *
-     * @param  \Modules\HR\Entities\Job $job
-     * @return void
-     */
     public function created(Job $job)
     {
         if (! config('database.connections.wordpress.enabled')) {
             return;
         }
         $job->rounds()->attach(Round::pluck('id')->toArray());
-        $job_status = $job->status;
-        $corcel = new Corcel();
-        $corcel->post_title = $job->title;
-        $corcel->post_content = $job->description;
-        $corcel->post_type = config('hr.post-type.career');
-        $corcel->post_name = str_replace(' ', '-', strtolower($job->title));
-        $corcel->post_status = config('hr.opportunities-status-wp-mapping')[$job_status];
-        $corcel->save();
-        $corcel->saveMeta('hr_id', $job->id);
-        $corcel->saveMeta(config('hr.slugs.job-form.key'), config('hr.slugs.job-form.value'));
-        $post = $corcel->hasMeta('hr_id', $job->id)->first();
-        $term = Term::select('term_id')->where(['name' => $job->domain])->first();
+        $post = new WpPost();
+        $post->post_title = $job->title;
+        $post->post_content = $job->description;
+        $post->post_type = config('hr.post-type.career');
+        $post->post_name = str_replace(' ', '-', strtolower($job->title));
+        $post->post_status = config('hr.opportunities-status-wp-mapping')[$job->status] ?? 'draft';
+        $post->save();
+        $post->saveMeta('hr_id', $job->id);
+        $post->saveMeta(config('hr.slugs.job-form.key'), config('hr.slugs.job-form.value'));
+        $savedPost = WpPost::hasMeta('hr_id', $job->id)->first();
+        if (! $savedPost) {
+            return;
+        }
+        $term = WpTerm::select('term_id')->where('name', $job->domain)->first();
         if ($term) {
-            $relation = new TermRelationship();
-            $relation->object_id = $post->ID;
+            $relation = new WpTermRelationship();
+            $relation->object_id = $savedPost->ID;
             $relation->term_taxonomy_id = $term->term_id;
             $relation->save();
         }
-        $job->opportunity_id = $post->ID;
-        $job->link = Option::get('siteurl') . $post->post_type . '/' . $post->post_name . '/';
+        $job->opportunity_id = $savedPost->ID;
+        $job->link = WpOption::get('siteurl') . $savedPost->post_type . '/' . $savedPost->post_name . '/';
         $job->save();
     }
 
-    /**
-     * Listen to the Job update event.
-     *
-     * @param  \Modules\HR\Entities\Job $job
-     * @return void
-     */
     public function updated(Job $job)
     {
         if (! config('database.connections.wordpress.enabled')) {
             return;
         }
-        $corcel = new Corcel();
-        $job_status = $job->status;
-        $post = $corcel->hasMeta('hr_id', $job->id)->first();
-        if ($post) {
-            $corcel = $corcel->find($post->ID);
-            $corcel->post_title = $job->title;
-            $corcel->post_content = $job->description;
-            $corcel->post_type = config('hr.post-type.career');
-            $corcel->post_status = $job->status ? (config('hr.opportunities-status-wp-mapping')[$job_status]) : 'draft';
-            $corcel->post_name = str_replace(' ', '-', strtolower($job->title));
-            $corcel->update();
-            $term = Term::select('term_id')->where(['name' => $job->domain])->first();
+        $savedPost = WpPost::hasMeta('hr_id', $job->id)->first();
+        if ($savedPost) {
+            $savedPost->post_title = $job->title;
+            $savedPost->post_content = $job->description;
+            $savedPost->post_type = config('hr.post-type.career');
+            $savedPost->post_status = $job->status ? (config('hr.opportunities-status-wp-mapping')[$job->status] ?? 'draft') : 'draft';
+            $savedPost->post_name = str_replace(' ', '-', strtolower($job->title));
+            $savedPost->save();
+            $term = WpTerm::select('term_id')->where('name', $job->domain)->first();
             if ($term) {
-                $relation = TermRelationship::where(['object_id' => $post->ID])->update(['term_taxonomy_id' => $term->term_id]);
+                WpTermRelationship::where('object_id', $savedPost->ID)
+                    ->update(['term_taxonomy_id' => $term->term_id]);
             }
         }
     }
 
-    /**
-     * Listen to the Job delete event.
-     *
-     * @param  \Modules\HR\Entities\Job $job
-     * @return void
-     */
     public function deleted(Job $job)
     {
         if (! config('database.connections.wordpress.enabled')) {
             return;
         }
-        Corcel::where(['post_type' => 'career', 'post_title' => $job['title']])->delete();
+        WpPost::where('post_type', 'career')->where('post_title', $job->title)->delete();
     }
 }
