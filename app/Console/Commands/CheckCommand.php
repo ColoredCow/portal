@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Nwidart\Modules\Facades\Module;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
@@ -97,12 +96,17 @@ class CheckCommand extends Command
 
     private function getEsCommands()
     {
-        // Modules/*/Resources/assets/js/  wild card does not work with Process so
-        // we had to expend the files based on modules
-        $moduleNames = collect(array_keys(Module::all()));
-        $moduleJsFiles = $moduleNames->map(function ($moduleName) {
-            return "Modules/{$moduleName}/Resources/assets/js/";
-        })->toArray();
+        // Process does not expand wildcards, and eslint fails when a path argument
+        // matches no files. nwidart lower-cases Module::all() keys on Laravel 11,
+        // which no longer match the studly-cased module directories on a
+        // case-sensitive filesystem, so derive the asset dirs from disk to keep
+        // the real casing.
+        $moduleJsFiles = collect(glob(base_path('Modules/*/Resources/assets/js'), GLOB_ONLYDIR))
+            ->map(function ($dir) {
+                return ltrim(str_replace(base_path(), '', $dir), DIRECTORY_SEPARATOR) . '/';
+            })
+            ->values()
+            ->toArray();
 
         $esCheckCommand = array_merge(['./node_modules/.bin/eslint', 'resources/js/'], $moduleJsFiles, ['--ext', '.js,.vue']);
 

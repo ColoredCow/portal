@@ -55,7 +55,7 @@ jobs:
       - name: Run seeders
         run: |
           php artisan db:seed --env=testing
-          php artisan module:seed --env=testing
+          php artisan module:seed --all --env=testing
 
       - name: Setup Node
         uses: actions/setup-node@v4
