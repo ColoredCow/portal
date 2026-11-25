@@ -295,7 +295,7 @@ class Application extends Model
     public function scopeRejected($query)
     {
         return $query->where('status', config('hr.status.rejected.label'))
-        ->orderBy('updated_at', 'DESC');
+        ->orderBy('updated_at', 'desc');
     }
 
     /**
@@ -304,19 +304,19 @@ class Application extends Model
     public function scopeClosed($query)
     {
         return $query->where('status', config('hr.status.rejected.label'))
-        ->orderBy('updated_at', 'DESC');
+        ->orderBy('updated_at', 'desc');
     }
 
     public function scopeApproved($query)
     {
         return $query->where('status', config('hr.status.approved.label'))
-        ->orderBy('updated_at', 'DESC');
+        ->orderBy('updated_at', 'desc');
     }
 
     public function scopeOnboarded($query)
     {
         return $query->where('status', config('hr.status.onboarded.label'))
-        ->orderBy('updated_at', 'DESC');
+        ->orderBy('updated_at', 'desc');
     }
 
     /**
@@ -344,7 +344,7 @@ class Application extends Model
     public function scopeOnHold($query)
     {
         return $query->where('status', config('hr.status.on-hold.label'))
-        ->orderBy('updated_at', 'DESC');
+        ->orderBy('updated_at', 'desc');
     }
 
     /**
@@ -356,7 +356,7 @@ class Application extends Model
             config('hr.status.no-show.label'),
             config('hr.status.no-show-reminded.label'),
         ])
-        ->orderBy('updated_at', 'DESC');
+        ->orderBy('updated_at', 'desc');
     }
 
     /**
@@ -365,7 +365,7 @@ class Application extends Model
     public function scopeSentForApproval($query)
     {
         return $query->where('status', config('hr.status.sent-for-approval.label'))
-        ->orderBy('updated_at', 'DESC');
+        ->orderBy('updated_at', 'desc');
     }
 
     /**

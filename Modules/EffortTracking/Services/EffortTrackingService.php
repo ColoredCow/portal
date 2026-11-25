@@ -434,7 +434,7 @@ class EffortTrackingService
         }
         $latestProjectTeamMemberEffort = $projectTeamMember->projectTeamMemberEffort()
             ->where('added_on', '<', $forDate)
-            ->orderBy('added_on', 'DESC')->first();
+            ->orderBy('added_on', 'desc')->first();
 
         $billableEffort = $effortData['sheet_user'][$effortData['sheet_project']['sheetIndex']];
         $actualBillableEffort = $effortData['sheet_user'][$effortData['sheet_project']['actualEffortIndex']];

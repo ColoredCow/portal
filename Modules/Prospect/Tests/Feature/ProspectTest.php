@@ -3,20 +3,22 @@
 namespace Modules\Prospect\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+
 use Modules\User\Entities\User;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ProspectTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_redirects_guests_to_login()
     {
         $this->get(route('prospect.index'))->assertRedirect(route('login'));
     }
 
-    /** @test */
+    #[Test]
     public function it_shows_the_prospect_list_to_authenticated_users()
     {
         $this->signIn();
@@ -24,7 +26,7 @@ class ProspectTest extends TestCase
         $this->get(route('prospect.index'))->assertSuccessful();
     }
 
-    /** @test */
+    #[Test]
     public function it_creates_a_new_prospect_and_redirects_to_the_index()
     {
         $user = User::factory()->create();

@@ -3,17 +3,19 @@
 namespace Tests\Unit;
 
 use App\Models\Client;
+
 use App\Models\KnowledgeCafe\Library\Book;
 use App\Models\KnowledgeCafe\Library\BookCategory;
 use App\Models\Setting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class RootFactoriesTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function setting_factory_creates_a_persisted_setting()
     {
         $setting = Setting::factory()->create();
@@ -22,7 +24,7 @@ class RootFactoriesTest extends TestCase
         $this->assertNotEmpty($setting->module);
     }
 
-    /** @test */
+    #[Test]
     public function book_factory_creates_a_persisted_book()
     {
         $book = Book::factory()->create();
@@ -31,7 +33,7 @@ class RootFactoriesTest extends TestCase
         $this->assertNotEmpty($book->isbn);
     }
 
-    /** @test */
+    #[Test]
     public function book_category_factory_creates_a_persisted_category()
     {
         $category = BookCategory::factory()->create();
@@ -40,7 +42,7 @@ class RootFactoriesTest extends TestCase
         $this->assertNotEmpty($category->name);
     }
 
-    /** @test */
+    #[Test]
     public function client_factory_creates_a_persisted_client()
     {
         $client = Client::factory()->create();
