@@ -192,7 +192,7 @@ class Invoice extends Model implements Auditable
         $currentMonthAmount = $amount;
         $lastMonthAmountDetail = self::where('sent_on', '<', $lastInvoiceEndDate)
             ->where('client_id', $this->client_id)->where('project_id', $this->project_id)
-            ->orderBy('sent_on', 'DESC')
+            ->orderBy('sent_on', 'desc')
             ->first();
         $lastMonthAmount = $lastMonthAmountDetail ? (float) $lastMonthAmountDetail->amount : 0;
         if ($this->client->type == 'indian') {

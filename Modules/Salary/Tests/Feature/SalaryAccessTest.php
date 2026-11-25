@@ -3,7 +3,9 @@
 namespace Modules\Salary\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+
 use Modules\User\Entities\User;
+use PHPUnit\Framework\Attributes\Test;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\PermissionRegistrar;
 use Tests\TestCase;
@@ -18,13 +20,13 @@ class SalaryAccessTest extends TestCase
         app(PermissionRegistrar::class)->forgetCachedPermissions();
     }
 
-    /** @test */
+    #[Test]
     public function it_redirects_guests_to_login()
     {
         $this->get(route('salary.index'))->assertRedirect(route('login'));
     }
 
-    /** @test */
+    #[Test]
     public function it_forbids_users_without_salary_view_permission()
     {
         Permission::create(['name' => 'employee_salary.view', 'guard_name' => 'web']);
@@ -33,7 +35,7 @@ class SalaryAccessTest extends TestCase
         $this->get(route('salary.index'))->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function it_allows_users_with_salary_view_permission_to_access_the_salary_list()
     {
         $permission = Permission::create(['name' => 'employee_salary.view', 'guard_name' => 'web']);

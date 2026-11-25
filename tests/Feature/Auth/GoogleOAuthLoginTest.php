@@ -3,15 +3,17 @@
 namespace Tests\Feature\Auth;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+
 use Laravel\Socialite\Facades\Socialite;
 use Modules\User\Entities\User;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class GoogleOAuthLoginTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_redirects_to_google_when_initiating_oauth()
     {
         $provider = \Mockery::mock(\Laravel\Socialite\Contracts\Provider::class);
@@ -24,7 +26,7 @@ class GoogleOAuthLoginTest extends TestCase
         $this->get('/auth/google')->assertRedirect();
     }
 
-    /** @test */
+    #[Test]
     public function it_logs_in_an_existing_user_via_google_callback()
     {
         $user = User::factory()->create([
@@ -38,7 +40,7 @@ class GoogleOAuthLoginTest extends TestCase
         $this->assertAuthenticatedAs($user);
     }
 
-    /** @test */
+    #[Test]
     public function it_redirects_a_soft_deleted_user_back_to_login()
     {
         $user = User::factory()->create(['email' => 'deleted@coloredcow.in']);
@@ -51,7 +53,7 @@ class GoogleOAuthLoginTest extends TestCase
         $this->assertGuest();
     }
 
-    /** @test */
+    #[Test]
     public function it_creates_a_new_user_on_first_google_login_and_redirects_to_home()
     {
         \Spatie\Permission\Models\Role::create(['name' => 'book-manager', 'guard_name' => 'web']);

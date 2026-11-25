@@ -3,13 +3,15 @@
 namespace Tests\Unit;
 
 use App\Services\BookServices;
+
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class BookServicesTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_extracts_the_isbn_from_the_vision_text_detection_response()
     {
         Http::fake([
@@ -31,7 +33,7 @@ class BookServicesTest extends TestCase
         $this->assertSame('9783161484100', $isbn);
     }
 
-    /** @test */
+    #[Test]
     public function it_posts_a_text_detection_request_to_the_google_vision_rest_endpoint()
     {
         Http::fake([

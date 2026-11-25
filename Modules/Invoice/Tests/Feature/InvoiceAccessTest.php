@@ -3,7 +3,9 @@
 namespace Modules\Invoice\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+
 use Modules\User\Entities\User;
+use PHPUnit\Framework\Attributes\Test;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\PermissionRegistrar;
 use Tests\TestCase;
@@ -18,13 +20,13 @@ class InvoiceAccessTest extends TestCase
         app(PermissionRegistrar::class)->forgetCachedPermissions();
     }
 
-    /** @test */
+    #[Test]
     public function it_redirects_guests_to_login()
     {
         $this->get(route('invoice.index'))->assertRedirect(route('login'));
     }
 
-    /** @test */
+    #[Test]
     public function it_forbids_users_without_the_invoice_view_permission()
     {
         Permission::create(['name' => 'finance_invoices.view', 'guard_name' => 'web']);
@@ -33,7 +35,7 @@ class InvoiceAccessTest extends TestCase
         $this->get(route('invoice.index'))->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function it_allows_users_with_invoice_view_permission_to_access_the_invoice_list()
     {
         $permission = Permission::create(['name' => 'finance_invoices.view', 'guard_name' => 'web']);
