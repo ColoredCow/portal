@@ -17,8 +17,6 @@ class Segment extends Model
 
     protected $table = 'hr_evaluation_segments';
 
-    protected $dates = ['deleted_at'];
-
     public function round()
     {
         return $this->belongsTo(Round::class);

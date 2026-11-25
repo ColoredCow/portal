@@ -12,7 +12,7 @@ class EmployeeSalary extends Model
 
     protected $fillable = ['employee_id', 'monthly_gross_salary', 'commencement_date', 'tds', 'salary_type', 'monthly_fee'];
 
-    protected $dates = ['commencement_date'];
+    protected $casts = ['commencement_date' => 'datetime'];
 
     protected $encryptable = ['monthly_gross_salary', 'tds', 'monthly_fee'];
 

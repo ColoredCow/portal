@@ -29,7 +29,7 @@ class Project extends Model implements Auditable
 
     protected $guarded = [];
 
-    protected $dates = ['start_date', 'end_date'];
+    protected $casts = ['start_date' => 'datetime', 'end_date' => 'datetime'];
 
     protected $appends = ['velocity', 'current_hours_for_month', 'velocity_color_class'];
 

@@ -11,7 +11,7 @@ class LoanInstallment extends Model
 
     protected $table = 'loan_installments';
     protected $guarded = [];
-    protected $dates = ['installment_date', 'created_at', 'updated_at'];
+    protected $casts = ['installment_date' => 'datetime'];
     protected $encryptable = ['installment_amount', 'remaining_amount'];
 
     public function loan()

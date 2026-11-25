@@ -16,7 +16,7 @@ class Employee extends Model
 
     protected $guarded = [];
 
-    protected $dates = ['joined_on', 'termination_date'];
+    protected $casts = ['joined_on' => 'datetime', 'termination_date' => 'datetime'];
 
     public function user()
     {
