@@ -14,6 +14,6 @@
         @yield('content')
 
         {{-- Laravel Mix - JS File --}}
-        {{-- <script src="{{ mix('js/modulechecklist.js') }}"></script> --}}
+        {{-- @vite(['Modules/ModuleChecklist/Resources/assets/js/app.js']) --}}
     </body>
 </html>

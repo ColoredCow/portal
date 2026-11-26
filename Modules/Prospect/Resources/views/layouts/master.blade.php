@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('js_scripts')
-    <script src="{{ mix('js/prospect.js') }}"></script>
+    @vite(['Modules/Prospect/Resources/assets/js/app.js'])
 @endsection
 
 @section('css_scripts')
-    <link href="{{ mix('/css/prospect.css') }}" rel="stylesheet">
+    @vite(['Modules/Prospect/Resources/assets/sass/app.scss'])
 @endsection

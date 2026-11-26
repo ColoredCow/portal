@@ -21,10 +21,10 @@
 @endsection
 
 @section('css_scripts')
-    <link href="{{ mix('/css/salesautomation.css') }}" rel="stylesheet">
+    @vite(['Modules/SalesAutomation/Resources/assets/sass/app.scss'])
 @endsection
 
 @section('js_scripts')
-    <script src="{{ mix('/js/salesautomation.js') }}"></script>
+    @vite(['Modules/SalesAutomation/Resources/assets/js/app.js'])
 @endsection
 

@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('js_scripts')
-<script src="{{ mix('js/codetrek.js') }}"></script>
+@vite(['Modules/CodeTrek/Resources/assets/js/app.js'])
 @endsection
 @section('css_scripts')
-<link href="{{ mix('css/codetrek.css') }}" rel="stylesheet">
+@vite(['Modules/CodeTrek/Resources/assets/sass/app.scss'])
 @endsection
 <input type="hidden" id="get_report_data_url" value={{ route('reports.codetrek.get-report-data') }}>

@@ -2,10 +2,10 @@
 
 @section('css_scripts')
 <link href="/lib/fullcalendar/lib/main.min.css" rel="stylesheet">
-<link href="{{ mix('/css/appointmentslots.css') }}" rel="stylesheet">
+@vite(['Modules/AppointmentSlots/Resources/assets/sass/app.scss'])
 @endsection
 
 @section('js_scripts')
-<script src="{{ mix('/js/appointmentslots.js') }}" defer></script>
+@vite(['Modules/AppointmentSlots/Resources/assets/js/app.js'])
 <script type="text/javascript" src="/lib/fullcalendar/lib/main.min.js"></script>
 @endsection
