@@ -4,23 +4,41 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require("./bootstrap");
-
+import "./bootstrap";
 import "jquery-ui/ui/widgets/datepicker.js";
 import ImageCompressor from "image-compressor.js";
-var clipboard = new ClipboardJS(".btn-clipboard");
+import ClipboardJS from "clipboard";
 import Chart from "chart.js/auto";
-
-window.Vue = require("vue");
-
+import Vue from "vue";
 import { Laue } from "laue";
-Vue.use(Laue);
-
-// vue toast registration
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import moment from "moment";
-import Vue from "vue";
+import "./../../Modules/User/Resources/assets/js/vueComponents.js";
+import "./../../Modules/Salary/Resources/assets/js/vueComponents.js";
+import ProjectStageComponent from "./components/ProjectStageComponent.vue";
+import ProjectStageBillingComponent from "./components/ProjectStageBillingComponent.vue";
+import ApplicantRoundActionComponent from "./components/HR/ApplicantRoundActionComponent.vue";
+import ProjectDetailsComponent from "./components/ProjectDetailsComponent.vue";
+import BooksCommentsComponent from "./components/Book/BooksCommentsComponent.vue";
+import EffortReport from "./components/Project/Report.vue";
+import CommentItem from "./components/CommentItem.vue";
+import UserDashboardReadBooks from "./components/Dashboard/UserDashboardReadBooks.vue";
+import UserDashboardWishlistBooks from "./components/Dashboard/UserDashboardWishlistBooks.vue";
+import UserDashboardProjects from "./components/Dashboard/UserDashboardProjects.vue";
+import UserDashboardLibrary from "./components/Dashboard/UserDashboardLibrary.vue";
+import EmployeeProfitabilityList from "./components/Dashboard/EmployeeProfitabilityList.vue";
+import UserDashboardInfrastructure from "./components/Dashboard/UserDashboardInfrastructure.vue";
+import UserDashboardInvoice from "./components/Dashboard/UserDashboardInvoice.vue";
+import JobApplicationComponent from "./components/HR/JobApplicationComponent.vue";
+
+window.Vue = Vue;
+
+var clipboard = new ClipboardJS(".btn-clipboard");
+
+Vue.use(Laue);
+
+// vue toast registration
 const options = {
 	timeout: 2000,
 };
@@ -38,67 +56,21 @@ Vue.use(Toast, options);
 /**
  *  Module Vue Components
  */
-require("./../../Modules/User/Resources/assets/js/vueComponents.js");
-require("./../../Modules/Salary/Resources/assets/js/vueComponents.js");
-// require("./../../Modules/Prospect/Resources/assets/js/vueComponents.js");
-
-Vue.component(
-	"project-stage-component",
-	require("./components/ProjectStageComponent.vue").default
-);
-Vue.component(
-	"project-stage-billing-component",
-	require("./components/ProjectStageBillingComponent.vue").default
-);
-Vue.component(
-	"applicant-round-action-component",
-	require("./components/HR/ApplicantRoundActionComponent.vue").default
-);
-Vue.component(
-	"project-details-component",
-	require("./components/ProjectDetailsComponent.vue").default
-);
-Vue.component(
-	"books-comments-component",
-	require("./components/Book/BooksCommentsComponent.vue").default
-);
-Vue.component(
-	"effort-component",
-	require("./components/Project/Report.vue").default
-);
-Vue.component("comment", require("./components/CommentItem.vue").default);
-Vue.component(
-	"user-dashboard-read-books",
-	require("./components/Dashboard/UserDashboardReadBooks.vue").default
-);
-Vue.component(
-	"user-dashboard-wishlist-books",
-	require("./components/Dashboard/UserDashboardWishlistBooks.vue").default
-);
-Vue.component(
-	"user-dashboard-projects",
-	require("./components/Dashboard/UserDashboardProjects.vue").default
-);
-Vue.component(
-	"user-dashboard-library",
-	require("./components/Dashboard/UserDashboardLibrary.vue").default
-);
-Vue.component(
-	"employee-profitability-list",
-	require("./components/Dashboard/EmployeeProfitabilityList.vue").default
-);
-Vue.component(
-	"user-dashboard-infrastructure",
-	require("./components/Dashboard/UserDashboardInfrastructure.vue").default
-);
-Vue.component(
-	"user-dashboard-invoice",
-	require("./components/Dashboard/UserDashboardInvoice.vue").default
-);
-Vue.component(
-	"job-application-component",
-	require("./components/HR/JobApplicationComponent.vue").default
-);
+Vue.component("project-stage-component", ProjectStageComponent);
+Vue.component("project-stage-billing-component", ProjectStageBillingComponent);
+Vue.component("applicant-round-action-component", ApplicantRoundActionComponent);
+Vue.component("project-details-component", ProjectDetailsComponent);
+Vue.component("books-comments-component", BooksCommentsComponent);
+Vue.component("effort-component", EffortReport);
+Vue.component("comment", CommentItem);
+Vue.component("user-dashboard-read-books", UserDashboardReadBooks);
+Vue.component("user-dashboard-wishlist-books", UserDashboardWishlistBooks);
+Vue.component("user-dashboard-projects", UserDashboardProjects);
+Vue.component("user-dashboard-library", UserDashboardLibrary);
+Vue.component("employee-profitability-list", EmployeeProfitabilityList);
+Vue.component("user-dashboard-infrastructure", UserDashboardInfrastructure);
+Vue.component("user-dashboard-invoice", UserDashboardInvoice);
+Vue.component("job-application-component", JobApplicationComponent);
 
 if (Vue) {
 	Vue.filter("str_limit", function(value, size) {
@@ -1381,8 +1353,8 @@ if (document.getElementById("user_roles_table")) {
 	});
 }
 
-require("./finance/invoice");
-require("./finance/payment");
+import("./finance/invoice");
+import("./finance/payment");
 
 /*
  * HR Module JS code start

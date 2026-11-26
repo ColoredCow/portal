@@ -41,7 +41,7 @@ jobs:
 
           echo "Running npm"
           npm install
-          npm run production
+          npm run build
 
           echo "Optimizing Laravel app"
           php artisan config:cache

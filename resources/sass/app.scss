@@ -5,12 +5,12 @@
 @import "variables";
 @import "fonts";
 // Bootstrap
-@import "~bootstrap/scss/bootstrap";
+@import "bootstrap/scss/bootstrap";
 @import "bootstrap-datepicker";
 @import "utilities";
 
 // $flagsImagePath: '~intl-tel-input/build/img/';
-// @import '~intl-tel-input/src/css/intlTelInput';
+// @import 'intl-tel-input/src/css/intlTelInput';
 
 body {
   -webkit-font-smoothing: antialiased;
@@ -859,7 +859,7 @@ span.total-chart-count {
 @import "media/md";
 @import "media/xl";
 // Bootstrap
-// @import '~bootstrap/scss/bootstrap';
+// @import 'bootstrap/scss/bootstrap';
 // @import 'utilities';
 
 #applicant-sidebar {

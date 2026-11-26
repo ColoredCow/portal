@@ -64,9 +64,8 @@ jobs:
 
       - name: Compile assets
         run: |
-          export NODE_OPTIONS=--openssl-legacy-provider
           npm install
-          npm run dev
+          npm run build
 
       - name: Run local server
         run: |

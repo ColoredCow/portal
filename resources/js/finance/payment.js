@@ -1,4 +1,7 @@
-Vue.component("payment", require("../components/Finance/Payment.vue").default);
+import Vue from "vue";
+import Payment from "../components/Finance/Payment.vue";
+
+Vue.component("payment", Payment);
 
 if (document.getElementById("form_payment")) {
 	const projectContainer = new Vue({

@@ -14,6 +14,6 @@
         @yield('content')
 
         {{-- Laravel Mix - JS File --}}
-        {{-- <script src="{{ mix('js/communication.js') }}"></script> --}}
+        {{-- @vite(['Modules/Communication/Resources/assets/js/app.js']) --}}
     </body>
 </html>

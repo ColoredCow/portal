@@ -1,2 +1,6 @@
-Vue.component("salary-breakdown", require("./components/SalaryBreakdown.vue").default);
-Vue.component("gross-calculation-section", require("./components/GrossCalculationSection.vue").default);
+import Vue from "vue";
+import SalaryBreakdown from "./components/SalaryBreakdown.vue";
+import GrossCalculationSection from "./components/GrossCalculationSection.vue";
+
+Vue.component("salary-breakdown", SalaryBreakdown);
+Vue.component("gross-calculation-section", GrossCalculationSection);
