@@ -125,14 +125,21 @@
     @yield('vue_scripts')
 
     <script>
-        @yield('inline_js')
+        // app.js is bundled by Vite as a deferred module, so it runs before the
+        // DOMContentLoaded event but after inline scripts are parsed. Run page
+        // inline JS on DOMContentLoaded so window.Vue / window.$ are ready.
+        document.addEventListener('DOMContentLoaded', function () {
+            @yield('inline_js')
+        });
     </script>
 
     <script type="text/javascript">
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+        document.addEventListener('DOMContentLoaded', function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
         });
     </script>
 </body>
