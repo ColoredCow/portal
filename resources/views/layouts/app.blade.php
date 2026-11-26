@@ -15,7 +15,7 @@
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    @vite(['resources/sass/app.scss'])
     @yield('css_scripts')
 
     <!-- Reports -->
@@ -119,20 +119,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
     <script src="{{ asset('src/tinymce/js/tinymce/tinymce.min.js') }}"></script>
-    <script src="{{ mix('js/app.js') }}"></script>
+    @vite(['resources/js/app.js'])
 
     @yield('js_scripts')
     @yield('vue_scripts')
 
     <script>
-        @yield('inline_js')
+        // app.js is bundled by Vite as a deferred module, so it runs before the
+        // DOMContentLoaded event but after inline scripts are parsed. Run page
+        // inline JS on DOMContentLoaded so window.Vue / window.$ are ready.
+        document.addEventListener('DOMContentLoaded', function () {
+            @yield('inline_js')
+        });
     </script>
 
     <script type="text/javascript">
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+        document.addEventListener('DOMContentLoaded', function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
         });
     </script>
 </body>

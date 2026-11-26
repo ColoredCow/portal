@@ -3,22 +3,31 @@
 namespace Database\Factories;
 
 use App\Models\KnowledgeCafe\Library\Book;
-use App\Models\KnowledgeCafe\Library\BookCategory;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Book::class, function (Faker $faker) {
-    return [
-        'title' => $faker->sentence(12),
-        'author' => $faker->name,
-        'isbn' => $faker->ean13,
-        'thumbnail' => $faker->imageUrl(),
-        'readable_link' => $faker->url,
-        'number_of_copies' => $faker->numberBetween(1, 10),
-    ];
-});
+class BookFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Book::class;
 
-$factory->define(BookCategory::class, function (Faker $faker) {
-    return [
-        'name' => $faker->sentence(10),
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'title' => $this->faker->sentence(12),
+            'author' => $this->faker->name,
+            'isbn' => $this->faker->ean13,
+            'thumbnail' => $this->faker->imageUrl(),
+            'readable_link' => $this->faker->url,
+            'number_of_copies' => $this->faker->numberBetween(1, 10),
+        ];
+    }
+}

@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('css_scripts')
-	<link href="{{ mix('/css/hr.css') }}" rel="stylesheet">
+	@vite(['Modules/HR/Resources/assets/sass/app.scss'])
 @endsection
 
 @section('js_scripts')
-	<script src="{{ mix('/js/hr.js') }}"></script>
+	@vite(['Modules/HR/Resources/assets/js/app.js'])
 @endsection
 

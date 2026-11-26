@@ -1,11 +1,11 @@
-name: Integration testing
+﻿name: Integration testing
 
 # Controls when the action will run.
 on:
   push:
-    branches: [develop]
+    branches: [develop, upgrade/laravel-13]
   pull_request:
-    branches: [develop]
+    branches: [develop, upgrade/laravel-13]
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -15,7 +15,7 @@ jobs:
 
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:8.0
         env:
           MYSQL_USER: homestead
           MYSQL_PASSWORD: secret
@@ -28,19 +28,19 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # cypress setup
-      - name: Setup PHP v8.2
+      - name: Setup PHP 8.4
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.2"
+          php-version: "8.4"
 
       - name: Setup cypress-testing
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
       - name: Install Dependencies
-        run: composer install
+        run: composer install --no-interaction
 
       - name: Generate key
         run: php artisan key:generate
@@ -55,13 +55,17 @@ jobs:
       - name: Run seeders
         run: |
           php artisan db:seed
-          php artisan module:seed
+          php artisan module:seed --all
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
 
       - name: Compile assets
         run: |
-          export NODE_OPTIONS=--openssl-legacy-provider
           npm install
-          npm run dev
+          npm run build
 
       - name: Run local server
         run: |

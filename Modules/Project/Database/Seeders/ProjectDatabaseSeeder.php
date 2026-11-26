@@ -13,10 +13,10 @@ use Modules\User\Entities\User;
 
 class ProjectDatabaseSeeder extends Seeder
 {
-    const CLIENTS = 5;
-    const PROJECTS_PER_CLIENT = 2;
-    const MEMBERS_PER_PROJECT = 3;
-    const WORKDAYS = 10;
+    public const CLIENTS = 5;
+    public const PROJECTS_PER_CLIENT = 2;
+    public const MEMBERS_PER_PROJECT = 3;
+    public const WORKDAYS = 10;
 
     /**
      * Run the database seeds.

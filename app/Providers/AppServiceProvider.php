@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Illuminate\Auth\Middleware\Authenticate;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -19,6 +21,11 @@ class AppServiceProvider extends ServiceProvider
         $this->setupEnvForOldPackages();
         Schema::defaultStringLength(191);
         Paginator::useBootstrap();
+
+        // Laravel 13 dropped the implicit redirect to route('login') for
+        // unauthenticated web requests (it now returns 401). Restore it; JSON
+        // requests still get 401 because the handler checks that first.
+        Authenticate::redirectUsing(fn (Request $request) => route('login'));
         Module::macro('checkStatus', function ($moduleName) {
             return Module::has($moduleName) && Module::isEnabled($moduleName);
         });

@@ -1,0 +1,859 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method Modules\\AppointmentSlots\\Services\\AppointmentSlotsService\:\:createCalendarEvent\(\) is unused\.$#'
+			identifier: method.unused
+			count: 1
+			path: Modules/AppointmentSlots/Services/AppointmentSlotsService.php
+
+		-
+			message: '#^Parameter \#1 \$value of function collect contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: Modules/Client/Entities/Client.php
+
+		-
+			message: '#^Relation ''projectTeamMembers'' is not found in Modules\\User\\Entities\\User model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Client/Entities/Client.php
+
+		-
+			message: '#^Variable \$monthsToSubtract on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.variable
+			count: 3
+			path: Modules/Client/Entities/Client.php
+
+		-
+			message: '#^Offset 0 on non\-empty\-list\<string\> on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: Modules/Client/Entities/ClientContactPerson.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Relations\\Relation\<\*, \*, \*\>\:\:applyFilter\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: Modules/Client/Services/ClientService.php
+
+		-
+			message: '#^Loose comparison using \=\= between ''active'' and ''inactive'' will always evaluate to false\.$#'
+			identifier: equal.alwaysFalse
+			count: 1
+			path: Modules/Client/Services/ClientService.php
+
+		-
+			message: '#^Relation ''linkedAsDepartment'' is not found in Modules\\Client\\Entities\\Client model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Client/Services/ClientService.php
+
+		-
+			message: '#^Relation ''linkedAsPartner'' is not found in Modules\\Client\\Entities\\Client model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Client/Services/ClientService.php
+
+		-
+			message: '#^Relation ''projects'' is not found in Modules\\Client\\Entities\\Client model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: Modules/Client/Services/ClientService.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between Carbon\\Carbon and null will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: Modules/CodeTrek/Entities/CodeTrekApplicant.php
+
+		-
+			message: '#^Relation ''mentor'' is not found in Modules\\CodeTrek\\Entities\\CodeTrekApplicant model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/CodeTrek/Services/CodeTrekService.php
+
+		-
+			message: '#^Variable \$timeZone on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.variable
+			count: 1
+			path: Modules/Communication/Services/CalendarMeetingService.php
+
+		-
+			message: '#^Variable \$teamMember might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: Modules/EffortTracking/Resources/views/show.blade.php
+
+		-
+			message: '#^Relation ''projectTeamMembers'' is not found in Modules\\User\\Entities\\User model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/EffortTracking/Services/EffortTrackingService.php
+
+		-
+			message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
+			identifier: larastan.noEnvCallsOutsideOfConfig
+			count: 6
+			path: Modules/HR/Config/config.php
+
+		-
+			message: '#^Relation ''application'' is not found in Modules\\HR\\Entities\\ApplicationRound model\.$#'
+			identifier: larastan.relationExistence
+			count: 3
+			path: Modules/HR/Console/Recruitment/ApplicationNoShow.php
+
+		-
+			message: '#^Relation ''round'' is not found in Modules\\HR\\Entities\\ApplicationRound model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Console/Recruitment/ApplicationNoShow.php
+
+		-
+			message: '#^Relation ''applicationRounds'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Console/Recruitment/MarkApplicationForFollowUp.php
+
+		-
+			message: '#^Relation ''latestApplicationRound'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Console/Recruitment/MarkApplicationForFollowUp.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,Modules\\HR\\Entities\\Application\>\:\:reject\(\) expects bool\|\(callable\(Modules\\HR\\Entities\\Application, int\)\: bool\)\|Modules\\HR\\Entities\\Application, Closure\(mixed\)\: Modules\\HR\\Entities\\Application given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Modules/HR/Console/Recruitment/SendFollowUpThresholdMail.php
+
+		-
+			message: '#^Relation ''applicant'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Emails/Recruitment/Application/CustomApplicationMail.php
+
+		-
+			message: '#^Relation ''job'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Emails/Recruitment/Application/CustomApplicationMail.php
+
+		-
+			message: '#^Relation ''applications'' is not found in Modules\\HR\\Entities\\Applicant model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Entities/Applicant.php
+
+		-
+			message: '#^Relation ''applicationRounds'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: Modules/HR/Entities/Application.php
+
+		-
+			message: '#^Relation ''application'' is not found in Modules\\HR\\Entities\\ApplicationMeta model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: Modules/HR/Entities/ApplicationMeta.php
+
+		-
+			message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
+			identifier: larastan.noEnvCallsOutsideOfConfig
+			count: 1
+			path: Modules/HR/Entities/ApplicationRound.php
+
+		-
+			message: '#^Relation ''application'' is not found in Modules\\HR\\Entities\\ApplicationRound model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: Modules/HR/Entities/ApplicationRound.php
+
+		-
+			message: '#^Relation ''round'' is not found in Modules\\HR\\Entities\\ApplicationRound model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Entities/ApplicationRound.php
+
+		-
+			message: '#^Relation ''options'' is not found in Modules\\HR\\Entities\\Evaluation\\Parameter model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Entities/Evaluation/Parameter.php
+
+		-
+			message: '#^Relation ''parent'' is not found in Modules\\HR\\Entities\\Evaluation\\Parameter model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Entities/Evaluation/Parameter.php
+
+		-
+			message: '#^Relation ''parentOption'' is not found in Modules\\HR\\Entities\\Evaluation\\Parameter model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Entities/Evaluation/Parameter.php
+
+		-
+			message: '#^Relation ''segment'' is not found in Modules\\HR\\Entities\\Evaluation\\Parameter model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: Modules/HR/Entities/Evaluation/Parameter.php
+
+		-
+			message: '#^Relation ''user'' is not found in Modules\\HR\\Entities\\Employee model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Http/Controllers/EmployeeController.php
+
+		-
+			message: '#^Relation ''applicationEvaluations'' is not found in Modules\\HR\\Entities\\Evaluation\\Segment model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Http/Controllers/EvaluationController.php
+
+		-
+			message: '#^Relation ''parameters'' is not found in Modules\\HR\\Entities\\Evaluation\\Segment model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Http/Controllers/EvaluationController.php
+
+		-
+			message: '#^Relation ''round'' is not found in Modules\\HR\\Entities\\Evaluation\\Segment model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Http/Controllers/EvaluationController.php
+
+		-
+			message: '#^Relation ''applicant'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 3
+			path: Modules/HR/Http/Controllers/Recruitment/ApplicationController.php
+
+		-
+			message: '#^Relation ''applicationMeta'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Http/Controllers/Recruitment/ApplicationController.php
+
+		-
+			message: '#^Relation ''applicationRounds'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Http/Controllers/Recruitment/ApplicationController.php
+
+		-
+			message: '#^Relation ''evaluations'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Http/Controllers/Recruitment/ApplicationController.php
+
+		-
+			message: '#^Relation ''job'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: Modules/HR/Http/Controllers/Recruitment/ApplicationController.php
+
+		-
+			message: '#^Relation ''latestApplicationRound'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 4
+			path: Modules/HR/Http/Controllers/Recruitment/ApplicationController.php
+
+		-
+			message: '#^Relation ''round'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Http/Controllers/Recruitment/ApplicationController.php
+
+		-
+			message: '#^Relation ''tags'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: Modules/HR/Http/Controllers/Recruitment/ApplicationController.php
+
+		-
+			message: '#^Relation ''application'' is not found in Modules\\HR\\Entities\\ApplicationRound model\.$#'
+			identifier: larastan.relationExistence
+			count: 6
+			path: Modules/HR/Http/Controllers/Recruitment/ApplicationRoundController.php
+
+		-
+			message: '#^Relation ''round'' is not found in Modules\\HR\\Entities\\ApplicationRound model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Http/Controllers/Recruitment/ApplicationRoundController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Relations\\Relation\<\*, \*, \*\>\:\:isOpen\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Modules/HR/Http/Controllers/Recruitment/JobController.php
+
+		-
+			message: '#^Relation ''applications'' is not found in Modules\\HR\\Entities\\Job model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Http/Controllers/Recruitment/JobController.php
+
+		-
+			message: '#^Relation ''postedBy'' is not found in Modules\\HR\\Entities\\Job model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Http/Controllers/Recruitment/JobController.php
+
+		-
+			message: '#^Relation ''applications'' is not found in Modules\\HR\\Entities\\Job model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: Modules/HR/Http/Controllers/Recruitment/RecruitmentOpportunityController.php
+
+		-
+			message: '#^Relation ''jobRequisition'' is not found in Modules\\HR\\Entities\\Job model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Http/Controllers/Recruitment/RecruitmentOpportunityController.php
+
+		-
+			message: '#^Relation ''employee'' is not found in Modules\\User\\Entities\\User model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Observers/EmployeeObserver.php
+
+		-
+			message: '#^Relation ''application'' is not found in Modules\\HR\\Entities\\ApplicationRound model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: Modules/HR/Observers/Recruitment/ApplicationRoundObserver.php
+
+		-
+			message: '#^Relation ''scheduledPerson'' is not found in Modules\\HR\\Entities\\ApplicationRound model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: Modules/HR/Observers/Recruitment/ApplicationRoundObserver.php
+
+		-
+			message: '#^Variable \$todayApplications might not be defined\.$#'
+			identifier: variable.undefined
+			count: 2
+			path: Modules/HR/Resources/views/application/secondary-index.blade.php
+
+		-
+			message: '#^Variable \$todayInterviews might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: Modules/HR/Resources/views/application/secondary-index.blade.php
+
+		-
+			message: '#^Variable \$todayInterviews might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: Modules/HR/Resources/views/application/today-interviews.blade.php
+
+		-
+			message: '#^Variable \$parameter might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: Modules/HR/Resources/views/evaluation/evaluation-form/resume-screening/parameter.blade.php
+
+		-
+			message: '#^Loose comparison using \=\= between 0 and 0 will always evaluate to true\.$#'
+			identifier: equal.alwaysTrue
+			count: 1
+			path: Modules/HR/Resources/views/evaluation/index.blade.php
+
+		-
+			message: '#^Relation ''applicant'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Services/ApplicationService.php
+
+		-
+			message: '#^Relation ''application'' is not found in Modules\\HR\\Entities\\ApplicationRound model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: Modules/HR/Services/ApplicationService.php
+
+		-
+			message: '#^Relation ''calendarMeeting'' is not found in Modules\\HR\\Entities\\ApplicationRound model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Services/ApplicationService.php
+
+		-
+			message: '#^Relation ''job'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Services/ApplicationService.php
+
+		-
+			message: '#^Relation ''latestApplicationRound'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 4
+			path: Modules/HR/Services/ApplicationService.php
+
+		-
+			message: '#^Relation ''round'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Services/ApplicationService.php
+
+		-
+			message: '#^Relation ''round'' is not found in Modules\\HR\\Entities\\ApplicationRound model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Services/ApplicationService.php
+
+		-
+			message: '#^Relation ''scheduledPerson'' is not found in Modules\\HR\\Entities\\ApplicationRound model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Services/ApplicationService.php
+
+		-
+			message: '#^Relation ''tags'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Services/ApplicationService.php
+
+		-
+			message: '#^Relation ''batches'' is not found in Modules\\HR\\Entities\\JobRequisition model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Services/RequisitionService.php
+
+		-
+			message: '#^Relation ''hrJobDomain'' is not found in Modules\\HR\\Entities\\JobRequisition model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: Modules/HR/Services/RequisitionService.php
+
+		-
+			message: '#^Relation ''job'' is not found in Modules\\HR\\Entities\\JobRequisition model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: Modules/HR/Services/RequisitionService.php
+
+		-
+			message: '#^Relation ''universityContacts'' is not found in Modules\\HR\\Entities\\University model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/HR/Services/UniversityService.php
+
+		-
+			message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
+			identifier: larastan.noEnvCallsOutsideOfConfig
+			count: 2
+			path: Modules/Infrastructure/Config/config.php
+
+		-
+			message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
+			identifier: larastan.noEnvCallsOutsideOfConfig
+			count: 34
+			path: Modules/Invoice/Config/config.php
+
+		-
+			message: '#^Variable \$invoices on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.variable
+			count: 1
+			path: Modules/Invoice/Console/FixInvoiceAmountsCommand.php
+
+		-
+			message: '#^Relation ''employee'' is not found in Modules\\Invoice\\Entities\\EmployeeLoan model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Invoice/Console/SeedLoanInstallmentForMonth.php
+
+		-
+			message: '#^Relation ''employee'' is not found in Modules\\Invoice\\Entities\\EmployeeLoan model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Invoice/Services/EmployeeLoanService.php
+
+		-
+			message: '#^Relation ''user'' is not found in Modules\\HR\\Entities\\Employee model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Invoice/Services/EmployeeLoanService.php
+
+		-
+			message: '#^Relation ''client'' is not found in Modules\\Invoice\\Entities\\Invoice model\.$#'
+			identifier: larastan.relationExistence
+			count: 5
+			path: Modules/Invoice/Services/InvoiceService.php
+
+		-
+			message: '#^Relation ''meta'' is not found in Modules\\Project\\Entities\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Invoice/Services/InvoiceService.php
+
+		-
+			message: '#^Relation ''project'' is not found in Modules\\Invoice\\Entities\\Invoice model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Invoice/Services/InvoiceService.php
+
+		-
+			message: '#^Relation ''project'' is not found in Modules\\Project\\Entities\\ProjectInvoiceTerm model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: Modules/Invoice/Services/InvoiceService.php
+
+		-
+			message: '#^Relation ''teamMembers'' is not found in Modules\\Project\\Entities\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Project/Console/GoogleChat/NotificationToProjectTeamMembersToUpdateEffortOnGoogleChat.php
+
+		-
+			message: '#^Relation ''getTeamMembers'' is not found in Modules\\Project\\Entities\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Project/Console/GoogleChat/RemindProjectMembersToUpdateEffortOnGoogleChat.php
+
+		-
+			message: '#^Relation ''teamMembers'' is not found in Modules\\Project\\Entities\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Project/Console/GoogleChat/RemindProjectMembersToUpdateEffortOnGoogleChat.php
+
+		-
+			message: '#^Relation ''getTeamMembers'' is not found in Modules\\Project\\Entities\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: Modules/Project/Console/GoogleChat/SendDailyEffortSummaryForProjectsOnGoogleChat.php
+
+		-
+			message: '#^Relation ''client'' is not found in Modules\\Project\\Entities\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Project/Services/ProjectService.php
+
+		-
+			message: '#^Relation ''comment'' is not found in Modules\\Project\\Entities\\ProjectInvoiceTerm model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Project/Services/ProjectService.php
+
+		-
+			message: '#^Relation ''getTeamMembers'' is not found in Modules\\Project\\Entities\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Project/Services/ProjectService.php
+
+		-
+			message: '#^Relation ''project'' is not found in Modules\\Project\\Entities\\ProjectInvoiceTerm model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Project/Services/ProjectService.php
+
+		-
+			message: '#^Relation ''projects'' is not found in Modules\\Client\\Entities\\Client model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: Modules/Project/Services/ProjectService.php
+
+		-
+			message: '#^Relation ''resourceRequirement'' is not found in Modules\\Project\\Entities\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Project/Services/ProjectService.php
+
+		-
+			message: '#^Relation ''teamMembers'' is not found in Modules\\Project\\Entities\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Project/Services/ProjectService.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between float\|null and 0 will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: Modules/Project/Services/ProjectService.php
+
+		-
+			message: '#^Relation ''contractReviewers'' is not found in Modules\\ProjectContract\\Entities\\Contract model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: Modules/ProjectContract/Services/ProjectContractService.php
+
+		-
+			message: '#^Relation ''internalReviewers'' is not found in Modules\\ProjectContract\\Entities\\Contract model\.$#'
+			identifier: larastan.relationExistence
+			count: 3
+			path: Modules/ProjectContract/Services/ProjectContractService.php
+
+		-
+			message: '#^Relation ''user'' is not found in Modules\\ProjectContract\\Entities\\Contract model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/ProjectContract/Services/ProjectContractService.php
+
+		-
+			message: '#^Relation ''comments'' is not found in Modules\\Prospect\\Entities\\Prospect model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: Modules/Prospect/Http/Controllers/ProspectController.php
+
+		-
+			message: '#^Relation ''insights'' is not found in Modules\\Prospect\\Entities\\Prospect model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Prospect/Http/Controllers/ProspectController.php
+
+		-
+			message: '#^Relation ''clientContracts'' is not found in Modules\\Client\\Entities\\Client model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Report/Services/Finance/ContractReportService.php
+
+		-
+			message: '#^Relation ''meta'' is not found in Modules\\Client\\Entities\\Client model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Report/Services/Finance/ContractReportService.php
+
+		-
+			message: '#^Relation ''projects'' is not found in Modules\\Client\\Entities\\Client model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/Report/Services/Finance/ContractReportService.php
+
+		-
+			message: '#^Relation ''client'' is not found in Modules\\Invoice\\Entities\\Invoice model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: Modules/Report/Services/Finance/RevenueReportService.php
+
+		-
+			message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
+			identifier: larastan.noEnvCallsOutsideOfConfig
+			count: 2
+			path: Modules/Salary/Config/config.php
+
+		-
+			message: '#^Call to function is_array\(\) with non\-empty\-array\<int\<0, max\>, non\-falsy\-string\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: Modules/Salary/Emails/SendAppraisalLetterMail.php
+
+		-
+			message: '#^Expression on left side of \?\? is not nullable\.$#'
+			identifier: nullCoalesce.expr
+			count: 1
+			path: Modules/Salary/Entities/EmployeeSalary.php
+
+		-
+			message: '#^Loose comparison using \=\= between mixed and null will always evaluate to false\.$#'
+			identifier: equal.alwaysFalse
+			count: 1
+			path: Modules/Salary/Http/Controllers/SalaryController.php
+
+		-
+			message: '#^Relation ''meta'' is not found in App\\Models\\WordPress\\WpUser model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/User/Entities/User.php
+
+		-
+			message: '#^Relation ''employee'' is not found in Modules\\User\\Entities\\User model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: Modules/User/Services/UserService.php
+
+		-
+			message: '#^Variable \$invoices on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.variable
+			count: 2
+			path: app/Console/Commands/FakeProdDataCommand.php
+
+		-
+			message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
+			identifier: larastan.noEnvCallsOutsideOfConfig
+			count: 1
+			path: app/Console/Kernel.php
+
+		-
+			message: '#^Relation ''projects'' is not found in App\\Models\\Client model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/ClientController.php
+
+		-
+			message: '#^Relation ''invoice'' is not found in App\\Models\\Finance\\Payment model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/Finance/PaymentController.php
+
+		-
+			message: '#^Relation ''mode'' is not found in App\\Models\\Finance\\Payment model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: app/Http/Controllers/Finance/PaymentController.php
+
+		-
+			message: '#^Relation ''Job'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/HR/Applications/VolunteerApplicationController.php
+
+		-
+			message: '#^Relation ''applicant'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/HR/Applications/VolunteerApplicationController.php
+
+		-
+			message: '#^Relation ''job'' is not found in Modules\\HR\\Entities\\Application model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/HR/Applications/VolunteerApplicationController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Relations\\Relation\<\*, \*, \*\>\:\:isOpen\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/HR/Volunteers/VolunteerOpportunityController.php
+
+		-
+			message: '#^Relation ''applications'' is not found in Modules\\HR\\Entities\\Job model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/HR/Volunteers/VolunteerOpportunityController.php
+
+		-
+			message: '#^Relation ''books'' is not found in App\\Models\\KnowledgeCafe\\Library\\BookCategory model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/KnowledgeCafe/Library/BookCategoryController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\KnowledgeCafe\\Library\\Book\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\KnowledgeCafe\\Library\\Book\>\:\:\$readers\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/KnowledgeCafe/Library/BookController.php
+
+		-
+			message: '#^Parameter \#2 \$preserveKeys of method Illuminate\\Support\\Collection\<int,App\\Models\\KnowledgeCafe\\Library\\BookAMonth\>\:\:groupBy\(\) expects bool, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/KnowledgeCafe/Library/BookController.php
+
+		-
+			message: '#^Relation ''books'' is not found in App\\Models\\KnowledgeCafe\\Library\\BookCategory model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/KnowledgeCafe/Library/BookController.php
+
+		-
+			message: '#^Relation ''categories'' is not found in App\\Models\\KnowledgeCafe\\Library\\Book model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/KnowledgeCafe/Library/BookController.php
+
+		-
+			message: '#^Relation ''employees'' is not found in App\\Models\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/ProjectController.php
+
+		-
+			message: '#^Relation ''stages'' is not found in App\\Models\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 6
+			path: app/Http/Controllers/ProjectController.php
+
+		-
+			message: '#^Relation ''employee'' is not found in Modules\\User\\Entities\\User model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/UserController.php
+
+		-
+			message: '#^Relation ''billings'' is not found in App\\Models\\Client model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Models/Client.php
+
+		-
+			message: '#^Relation ''invoice'' is not found in App\\Models\\Client model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Models/Client.php
+
+		-
+			message: '#^Relation ''projects'' is not found in App\\Models\\Client model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: app/Models/Client.php
+
+		-
+			message: '#^Relation ''stages'' is not found in App\\Models\\Client model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Models/Client.php
+
+		-
+			message: '#^Relation ''user'' is not found in App\\Models\\Comment model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Models/Comment.php
+
+		-
+			message: '#^Relation ''payments'' is not found in App\\Models\\Finance\\Invoice model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: app/Models/Finance/Invoice.php
+
+		-
+			message: '#^Relation ''borrowers'' is not found in App\\Models\\KnowledgeCafe\\Library\\Book model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Models/KnowledgeCafe/Library/Book.php
+
+		-
+			message: '#^Relation ''categories'' is not found in App\\Models\\KnowledgeCafe\\Library\\Book model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: app/Models/KnowledgeCafe/Library/Book.php
+
+		-
+			message: '#^Relation ''readers'' is not found in App\\Models\\KnowledgeCafe\\Library\\Book model\.$#'
+			identifier: larastan.relationExistence
+			count: 3
+			path: app/Models/KnowledgeCafe/Library/Book.php
+
+		-
+			message: '#^Relation ''wishers'' is not found in App\\Models\\KnowledgeCafe\\Library\\Book model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Models/KnowledgeCafe/Library/Book.php
+
+		-
+			message: '#^Relation ''client'' is not found in App\\Models\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: '#^Variable \$timeZone on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.variable
+			count: 1
+			path: app/Services/CalendarEventService.php
+
+		-
+			message: '#^Relation ''user'' is not found in Modules\\HR\\Entities\\Employee model\.$#'
+			identifier: larastan.relationExistence
+			count: 3
+			path: app/Services/EmployeeService.php
+
+		-
+			message: '#^Dead catch \- Google\\Service\\Exception is already caught above\.$#'
+			identifier: catch.alreadyCaught
+			count: 1
+			path: app/Services/GSuiteUserService.php
+
+		-
+			message: '#^Relation ''meta'' is not found in App\\Models\\WordPress\\WpUser model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Services/WebsiteUserService.php

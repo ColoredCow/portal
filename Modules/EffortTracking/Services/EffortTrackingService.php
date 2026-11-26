@@ -11,7 +11,7 @@ use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectTeamMemberEffort;
 use Modules\User\Entities\User;
-use Revolution\Google\Sheets\Sheets;
+use Revolution\Google\Sheets\Contracts\Factory as Sheets;
 
 class EffortTrackingService
 {
@@ -206,7 +206,7 @@ class EffortTrackingService
             }
 
             $sheetId = $correctedEffortsheetUrl[1];
-            $sheets = new Sheets();
+            $sheets = app(Sheets::class);
             $projectMembersCount = 0;
             $lastColumn = config('efforttracking.default_last_column_in_effort_sheet');
             $columnIndex = 6;
@@ -434,7 +434,7 @@ class EffortTrackingService
         }
         $latestProjectTeamMemberEffort = $projectTeamMember->projectTeamMemberEffort()
             ->where('added_on', '<', $forDate)
-            ->orderBy('added_on', 'DESC')->first();
+            ->orderBy('added_on', 'desc')->first();
 
         $billableEffort = $effortData['sheet_user'][$effortData['sheet_project']['sheetIndex']];
         $actualBillableEffort = $effortData['sheet_user'][$effortData['sheet_project']['actualEffortIndex']];
@@ -473,7 +473,7 @@ class EffortTrackingService
                 return false;
             }
 
-            $sheets = new Sheets();
+            $sheets = app(Sheets::class);
             $sheetId = $correctedEffortsheetUrl[1];
             $currentSheet = $sheets->spreadsheet($sheetId);
             $isApprovedWorkPipelineExist = $this->getIsApprovedWorkPipelineExistBySheet($currentSheet);

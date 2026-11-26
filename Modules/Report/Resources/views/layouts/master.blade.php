@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('js_scripts')
-<script src="{{ mix('js/report.js') }}"></script>
+@vite(['Modules/Report/Resources/assets/js/app.js'])
 @endsection
 @section('css_scripts')
 @endsection

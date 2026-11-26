@@ -40,7 +40,7 @@ class ReportsController extends Controller
             ->wheredate('created_at', '>=', $reportStartDate)
             ->wheredate('created_at', '<=', $reportEndDate)
             ->groupBy('date_created_at', 'month_created_at')
-            ->orderBy('date_created_at', 'ASC')
+            ->orderBy('date_created_at', 'asc')
             ->get();
         $data = [];
         $verifiedApplicationCount = $this->getVerifiedApplicationsCount();
@@ -69,7 +69,7 @@ class ReportsController extends Controller
         )
         ->where('created_at', '>', Carbon::now()->subDays(23))
         ->groupBy('date_created_at', 'month_created_at')
-        ->orderBy('date_created_at', 'ASC')
+        ->orderBy('date_created_at', 'asc')
         ->get();
 
         $data = [];

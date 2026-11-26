@@ -27,7 +27,11 @@ class ApplicationRound extends Model
 
     protected $table = 'hr_application_round';
 
-    protected $dates = ['scheduled_date', 'conducted_date', 'actual_end_time'];
+    protected $casts = [
+        'scheduled_date' => 'datetime',
+        'conducted_date' => 'datetime',
+        'actual_end_time' => 'datetime',
+    ];
 
     public function _update($attr)
     {

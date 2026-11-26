@@ -115,7 +115,6 @@ class Applicant extends Model
         }
 
         // Sort the timeline based on the date value in each subarray in the timeline.
-        /* @phpstan-ignore-next-line */
         array_multisort(array_map(function ($element) {
             return $element['date'];
         }, $timeline), SORT_ASC, $timeline);

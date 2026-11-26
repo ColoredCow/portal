@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('js_scripts')
-{{-- <script src="{{ mix('/js/user.js') }}" defer></script> --}}
+{{-- @vite(['Modules/User/Resources/assets/js/app.js']) --}}
 @endsection
 
 @section('css_scripts')
-{{-- <link href="{{ mix('/css/user.css') }}" rel="stylesheet"> --}}
+{{-- @vite(['Modules/User/Resources/assets/sass/app.scss']) --}}
 @endsection
