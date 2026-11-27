@@ -425,26 +425,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
        MAIL_FROM_NAME="${APP_NAME}"
        ```
 
-13. _(Optional)_ Setup pdf generator tool for automatic invoice creation:
-
-    1. Open site https://wkhtmltopdf.org/downloads.html and download wkhtmltopdf for window and install it
-
-    2. Open .env file and add the following
-
-       ```sh
-
-       For Windows:
-       PDF_BINARY='C://"Program Files"/wkhtmltopdf/bin/wkhtmltopdf.exe'
-
-       For Mac:
-       PDF_BINARY="/usr/local/bin/wkhtmltopdf"
-
-       ```
-
-    3. Run the following command in the terminal
-       ```sh
-       php artisan optimize
-       ```
+13. PDF generation needs no setup. The portal renders invoices, appraisal letters, offer letters and NDAs with mPDF. mPDF is a PHP library that Composer installs, so you do not need wkhtmltopdf or any other binary. Its settings live in `config/pdf.php`.
 
 14. _(Optional)_ Setup API Layer API Key for currency excahange rates:
 

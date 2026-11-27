@@ -3,10 +3,10 @@
 namespace App\Helpers;
 
 use App\Models\Setting;
+use App\Services\PdfService;
 use Illuminate\Support\Facades\Storage;
 use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Application;
-use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 class FileHelper
 {
@@ -53,10 +53,10 @@ class FileHelper
         $offer_letter_body = Setting::getOfferLetterTemplate()['body'];
         $job = $application->job;
         $applicant = $application->applicant;
-        $pdf = Pdf::loadView('hr.application.draft-joining-letter', compact('applicant', 'job', 'offer_letter_body'));
-        $fileName = self::getOfferLetterFileName($applicant, $pdf);
+        $pdf = app(PdfService::class)->loadView('hr.application.draft-joining-letter', compact('applicant', 'job', 'offer_letter_body'), 'letter');
+        $fileName = self::getOfferLetterFileName($applicant);
         if ($offerLetterPreview) {
-            return $pdf->stream($fileName);
+            return $pdf->inline($fileName);
         }
         $directory = 'app/public/' . config('constants.hr.offer-letters-dir');
         $fullPath = storage_path($directory . '/' . $fileName);

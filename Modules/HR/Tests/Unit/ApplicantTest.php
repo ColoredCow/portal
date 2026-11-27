@@ -2,10 +2,6 @@
 
 namespace Modules\HR\Tests\Unit;
 
-/*
- * @var \Illuminate\Database\Eloquent\Factory $factory
- */
-
 use Modules\HR\Entities\Applicant;
 use Tests\TestCase;
 

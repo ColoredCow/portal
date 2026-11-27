@@ -4,8 +4,8 @@ namespace Modules\Invoice\Services;
 
 use App\Models\Country;
 use App\Models\Setting;
+use App\Services\PdfService;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
@@ -619,7 +619,6 @@ class InvoiceService implements InvoiceServiceContract
         ]);
         $invoiceNumber = $data['invoiceNumber'];
         $data['invoiceNumber'] = $data['invoiceNumber'];
-        $pdf = App::make('snappy.pdf.wrapper');
         $template = config('invoice.templates.invoice.clients.' . optional($data['client'])->name) ?: 'invoice-template';
         $html = view('invoice::render.' . $template, $data)->render();
         $data['receivable_date'] = $dueOn;
@@ -658,7 +657,7 @@ class InvoiceService implements InvoiceServiceContract
         ]);
 
         $filePath = $this->getInvoiceFilePath($invoice) . '/' . $invoiceNumber . '.pdf';
-        $pdf->generateFromHtml($html, storage_path('app' . $filePath), [], true);
+        app(PdfService::class)->loadHtml($html)->save(storage_path('app' . $filePath));
         $invoice->update([
             'invoice_number' => $invoiceNumber,
             'file_path' => $filePath,

@@ -5,6 +5,7 @@ namespace Modules\HR\Http\Controllers\Recruitment;
 use App\Helpers\FileHelper;
 use App\Models\Setting;
 use App\Models\Tag;
+use App\Services\PdfService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
@@ -27,7 +28,6 @@ use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
 use Modules\HR\Http\Requests\TeamInteractionRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
-use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 abstract class ApplicationController extends Controller
 {
@@ -278,23 +278,15 @@ abstract class ApplicationController extends Controller
         $offer_letter_body = Setting::getOfferLetterTemplate()['body'];
         $job = $application->job;
         $applicant = $application->applicant;
-        $pdf = Pdf::loadView('hr.application.draft-joining-letter', compact('applicant', 'job', 'offer_letter_body'));
-        $fileName = FileHelper::getOfferLetterFileName($applicant, $pdf);
+        $pdf = app(PdfService::class)->loadView('hr.application.draft-joining-letter', compact('applicant', 'job', 'offer_letter_body'), 'letter');
+        $fileName = FileHelper::getOfferLetterFileName($applicant);
         $directory = 'app/public/' . config('constants.hr.offer-letters-dir');
-        if (! is_dir(storage_path($directory)) && ! file_exists(storage_path($directory))) {
-            mkdir(storage_path($directory), 0, true);
-        }
-        $fullPath = storage_path($directory . '/' . $fileName);
-        $pdf->save($fullPath);
+        $pdf->save(storage_path($directory . '/' . $fileName));
     }
 
     public static function getOfferLetter(Application $application)
     {
-        $pdf = FileHelper::generateOfferLetter($application, true);
-
-        return response()->json([
-            'pdf' => $pdf,
-        ]);
+        return FileHelper::generateOfferLetter($application, true);
     }
 
     /**
