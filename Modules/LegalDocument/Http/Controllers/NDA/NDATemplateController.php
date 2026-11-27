@@ -2,6 +2,7 @@
 
 namespace Modules\LegalDocument\Http\Controllers\NDA;
 
+use App\Services\PdfService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\LegalDocument\Entities\LegalDocumentTemplate;
@@ -74,9 +75,7 @@ class NDATemplateController extends Controller
         ];
 
         $finalData = array_merge($data, request()->all());
-        $pdf = app('snappy.pdf.wrapper');
-        $pdf->loadHTML($template->parse($finalData));
 
-        return $pdf->inline();
+        return app(PdfService::class)->loadHtml($template->parse($finalData))->inline();
     }
 }

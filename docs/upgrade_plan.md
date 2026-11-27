@@ -119,8 +119,8 @@ Each phase closes with **two gates** — automated first, then manual.
 - [ ] Full PHPUnit suite green on **PHP 8.1**, Laravel 8.
 - [ ] Critical-flow Feature tests added per module; coverage not dropping.
 - [ ] `laravelcollective/html`, `consoletvs/charts`, `bordoni/phpass` removed; app boots.
-- [ ] Root factories resolved — 3 converted to class-based (`Book`, `Client`, `Setting`), 3 dead ones deleted (`Applicant`, `Job`, `Round`); `laravel/legacy-factories` removed (module factories already class-based).
-- [ ] PDF generation works through the chosen pure-PHP renderer across Invoice/Salary/LegalDocument/HR; wkhtmltopdf gone.
+- [x] Root factories resolved — 3 converted to class-based (`Book`, `Client`, `Setting`), 3 dead ones deleted (`Applicant`, `Job`, `Round`); `laravel/legacy-factories` removed (module factories already class-based). *Package removed in Nov 2026, after the L13 upgrade.*
+- [ ] PDF generation works through the chosen pure-PHP renderer across Invoice/Salary/LegalDocument/HR; wkhtmltopdf gone. *Nov 2026: code done. mPDF renders every PDF through `App\Services\PdfService` (settings in `config/pdf.php`); Snappy, `h4cc/wkhtmltopdf-amd64` and `niklasravnsborg/laravel-pdf` are gone. Tick this box once someone checks real invoices, appraisal letters, offer letters and NDAs on a running instance.*
 - [ ] `jordikroon/google-vision` replaced/decoupled; OCR works without a PHP-7-only dependency.
 - [ ] corcel target decision recorded (wait-for-L13 / decouple / interim-L12).
 - [ ] Staging DB seeded and refreshable.

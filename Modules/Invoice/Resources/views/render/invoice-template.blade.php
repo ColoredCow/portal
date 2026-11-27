@@ -250,7 +250,8 @@
             border-color: #454d55;
             padding-top: 10px;
             padding-bottom: 10px;
-            padding-left: 10px
+            padding-left: 10px;
+            text-align: left;
         }
 
         .table thead th {

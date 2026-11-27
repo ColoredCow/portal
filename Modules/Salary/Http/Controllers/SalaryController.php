@@ -101,7 +101,7 @@ class SalaryController extends Controller
 
                 $appraisalData = $salaryService->appraisalLetterData($request, $employee);
                 $pdf = $salaryService->getAppraisalLetterPdf($appraisalData);
-                Mail::to($data['employeeEmail'])->send(new SendAppraisalLetterMail($data, $pdf->inline($data['employeeName'] . '_Appraisal Letter_' . $formattedCommencementDate . '.pdf'), $formattedCommencementDate));
+                Mail::to($data['employeeEmail'])->send(new SendAppraisalLetterMail($data, $pdf->output(), $formattedCommencementDate));
             }
 
             EmployeeSalary::create([

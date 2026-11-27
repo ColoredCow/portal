@@ -2,8 +2,8 @@
 
 namespace Modules\Salary\Services;
 
+use App\Services\PdfService;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\App;
 use Modules\HR\Entities\Employee;
 use Modules\Salary\Entities\EmployeeSalary;
 use Modules\Salary\Entities\SalaryConfiguration;
@@ -188,11 +188,6 @@ class SalaryCalculationService
 
     public function getAppraisalLetterPdf($data)
     {
-        $pdf = App::make('snappy.pdf.wrapper');
-        $template = 'appraisal-letter-template';
-        $html = view('salary::render.' . $template, compact('data'));
-        $pdf->loadHTML($html);
-
-        return $pdf;
+        return app(PdfService::class)->loadView('salary::render.appraisal-letter-template', compact('data'));
     }
 }

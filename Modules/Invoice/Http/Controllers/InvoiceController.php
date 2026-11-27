@@ -2,10 +2,10 @@
 
 namespace Modules\Invoice\Http\Controllers;
 
+use App\Services\PdfService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\App;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Invoice\Entities\Invoice;
 
@@ -100,14 +100,9 @@ class InvoiceController extends Controller
 
     public function showInvoicePdf($data)
     {
-        $data['invoiceNumber'] = $data['invoiceNumber'];
-        $pdf = App::make('snappy.pdf.wrapper');
-
         $template = config('invoice.templates.invoice.clients.' . optional($data['client'])->name) ?: 'invoice-template';
-        $html = view('invoice::render.' . $template, $data);
-        $pdf->loadHTML($html);
 
-        return $pdf;
+        return app(PdfService::class)->loadView('invoice::render.' . $template, $data);
     }
 
     /**

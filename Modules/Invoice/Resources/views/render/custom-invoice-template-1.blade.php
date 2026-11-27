@@ -22,7 +22,8 @@
             .text-left {
                 text-align: left;
             }
-            .font-weight-bold {
+            .font-weight-bold,
+            .font-weight-bold td {
                 font-weight: bold;
             }
             .w-100p {
@@ -79,64 +80,48 @@
         <div class="w-100p page">
             <table class="w-100p">
                 <tbody>
-                    <th>
-                        <img src="{{ public_path() . '/images/coloredcow.png' }}" alt="" align="right" height="50" width="250">
-                    </th>
+                    <tr>
+                        <th>
+                            <img src="{{ public_path() . '/images/coloredcow.png' }}" alt="" align="right" height="50" width="250">
+                        </th>
+                    </tr>
                 </tbody>
             </table>
             <div class="table-padding">
+                <h2 class="text-center underline font-weight-bold">INVOICE</h2>
                 <table class="w-100p">
                     <tbody>
                         <tr>
-                            <h2 class="text-center underline font-weight-bold">INVOICE</h2>
-                        </tr>
-                    </tbody>
-                </table>
-                <table>
-                    <tbody class="w-100p">
-                        <tr>
                             <td>Date</td>
-                            <td class="text-right" style="width: 100%;">Invoice No: {{ $invoiceNumber }}</td>
+                            <td class="text-right">Invoice No: {{ $invoiceNumber }}</td>
                         </tr>
                         <tr class="w-100p">
-                            <td> {{ today()->format('m/d/Y') }} </td>
+                            <td colspan="2"> {{ today()->format('m/d/Y') }} </td>
                         </tr>
                     </tbody>
                 </table>
                 <br>
                 <br>
-                <table>
-                    <tbody class="w-100p">
-                        <tr class="w-100p">
-                            <div class="font-weight-bold">Dasra</div>
-                            <div>{{ optional($client->addresses->first())->address }}</div>
-                            <div>{{ optional($client->addresses->first())->city . ', ' . optional($client->addresses->first())->state . ', ' . optional($client->addresses->first())->area_code }}</div>
-                        </tr>
-                    </tbody>
-                </table>
+                <div>
+                    <div class="font-weight-bold">Dasra</div>
+                    <div>{{ optional($client->addresses->first())->address }}</div>
+                    <div>{{ optional($client->addresses->first())->city . ', ' . optional($client->addresses->first())->state . ', ' . optional($client->addresses->first())->area_code }}</div>
+                </div>
                 <br>
                 <br>
-                <table>
-                    <tbody class="w-100p">
-                        <tr class="w-100p">
-                            <div class="font-weight-bold underline text-center">
-                                Re: Support and Development for {{ $client->name }} Projects
-                            </div>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="font-weight-bold underline text-center">
+                    Re: Support and Development for {{ $client->name }} Projects
+                </div>
                 <br>
-                <table>
+                <br>
+                <table class="w-100p">
                     <tbody class="w-100p">
                         <tr class="w-100p">
                             <td class="underline font-weight-bold" style="width: 84%;">Particulars</td>
                             <td class="underline font-weight-bold">Amount ({{ $client->country->currency }})</td>
                         </tr>
                         <tr>
-                            <br>
-                        </tr>
-                        <tr>
-                            <td>
+                            <td colspan="2">
                                 <div>
                                     Support and Development for below projects:
                                 </div>
@@ -157,7 +142,6 @@
                                     {{ $client->country->currency_symbol . ($project->getResourceBillableAmount()) }}
                                 </td>
                             </tr>
-                            <tr></tr>
                         @endforeach
                         <tr>
                             <td>
@@ -177,7 +161,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td colspan="2">
                                 <br>
                             </td>
                         </tr>
@@ -195,42 +179,38 @@
                     </tbody>
                 </table>
                 <p></p>
-                <table class="w-100p">
-                    <tbody>
-                        <td>
-                            <p>{{ __('Refer table below for Details') }}</p>
-                            <p><br></p>
-                            <p>{{ __('For Company ') . config('invoice.coloredcow-details.name') }}</p>
-                            <p>{{ 'Address: ' . config('invoice.coloredcow-details.gurgaon.address-line-1') . ', ' . config('invoice.coloredcow-details.gurgaon.address-line-2') }}</p>
-                            <p>{{ __('Bank Name: ') . config('invoice.finance-details.international.bank-address') }}</p>
-                            <p>{{ __('A/C No: ') . config('invoice.finance-details.international.account-number') }}</p>
-                            <p>{{ __('IFSC: ') . config('invoice.finance-details.international.ifci-code') }}</p>
-                            <p>{{ __('SWIFT Code: ') . config('invoice.finance-details.international.swift-code') }}</p>
-                            <p>{{ __('Correspondent Bank: ') . config('invoice.finance-details.international.correspondent-bank') }}</p>
-                            <p>{{ __('SWIFT Code: ') . config('invoice.finance-details.international.correspondent-bank-swift-code') }}</p>
-                            <p>{{ __('Beneficiary Bank of USD: ') . config('invoice.finance-details.international.beneficiary-bank-of-usd') }}</p>
-                            <p>{{ __('GSTIN: ') . config('invoice.finance-details.gstin') }}</p>
-                        </td>
-                    </tbody>
-                </table>
+                <div>
+                    <p>{{ __('Refer table below for Details') }}</p>
+                    <p><br></p>
+                    <p>{{ __('For Company ') . config('invoice.coloredcow-details.name') }}</p>
+                    <p>{{ 'Address: ' . config('invoice.coloredcow-details.gurgaon.address-line-1') . ', ' . config('invoice.coloredcow-details.gurgaon.address-line-2') }}</p>
+                    <p>{{ __('Bank Name: ') . config('invoice.finance-details.international.bank-address') }}</p>
+                    <p>{{ __('A/C No: ') . config('invoice.finance-details.international.account-number') }}</p>
+                    <p>{{ __('IFSC: ') . config('invoice.finance-details.international.ifci-code') }}</p>
+                    <p>{{ __('SWIFT Code: ') . config('invoice.finance-details.international.swift-code') }}</p>
+                    <p>{{ __('Correspondent Bank: ') . config('invoice.finance-details.international.correspondent-bank') }}</p>
+                    <p>{{ __('SWIFT Code: ') . config('invoice.finance-details.international.correspondent-bank-swift-code') }}</p>
+                    <p>{{ __('Beneficiary Bank of USD: ') . config('invoice.finance-details.international.beneficiary-bank-of-usd') }}</p>
+                    <p>{{ __('GSTIN: ') . config('invoice.finance-details.gstin') }}</p>
+                </div>
             </div>
         </div>
         <div class="w-100p">
             <table class="w-100p">
                 <tbody>
-                    <th>
-                        <img src="{{ public_path() . '/images/coloredcow.png' }}" alt="" align="right" height="50" width="250">
-                    </th>
+                    <tr>
+                        <th>
+                            <img src="{{ public_path() . '/images/coloredcow.png' }}" alt="" align="right" height="50" width="250">
+                        </th>
+                    </tr>
                 </tbody>
             </table>
             <div class="table-padding">
+                <p>
+                    <br>
+                </p>
                 <table class="w-100p">
                     <tbody>
-                        <tr>
-                            <p>
-                                <br>
-                            </p>
-                        </tr>
                         <tr>
                             <td class="font-weight-bold">
                                 {{ __('Invoice Breakdown') }}
