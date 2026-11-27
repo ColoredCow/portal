@@ -25,7 +25,6 @@
     "laravel-notification-channels/google-chat": "^4.0",
     "laravel/framework": "^13.0",
     "laravel/helpers": "^1.1",
-    "laravel/legacy-factories": "^1.1",
     "laravel/socialite": "^5.0.1",
     "laravel/tinker": "^3.0",
     "laravel/ui": "^4.0",
@@ -78,10 +77,7 @@
       "OfficeSuite\\": "OfficeSuite/",
       "Database\\Factories\\": "database/factories/",
       "Database\\Seeders\\": "database/Seeders/"
-    },
-    "files": [
-      "tests/utilities/functions.php"
-    ]
+    }
   },
   "autoload-dev": {
     "psr-4": {
