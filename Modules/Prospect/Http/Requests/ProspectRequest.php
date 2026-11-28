@@ -23,6 +23,7 @@ class ProspectRequest extends FormRequest
             'proposal_status' => 'nullable',
             'introductory_call' => 'nullable',
             'last_followup_date' => 'nullable|date',
+            'due_date' => 'nullable|date',
             'rfp_link' => 'nullable|url',
             'proposal_link' => 'nullable|url',
             'currency' => 'nullable',

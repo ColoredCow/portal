@@ -105,6 +105,9 @@ class ProspectController extends Controller
      */
     public function update(Request $request, Prospect $prospect)
     {
+        $request->validate([
+            'due_date' => 'nullable|date',
+        ]);
         $data = $this->service->update($request, $prospect);
         if ($request->input('action') === 'update_create_project') {
             $totalEstimatedHours = $this->getTotalEstimatedHoursForProject($prospect);
