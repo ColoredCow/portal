@@ -35,6 +35,7 @@ class ProspectService
         $prospect->proposal_status = $request->proposal_status;
         $prospect->introductory_call = $request->introductory_call;
         $prospect->last_followup_date = $request->last_followup_date;
+        $prospect->due_date = $request->due_date;
         $prospect->rfp_link = $request->rfp_link;
         $prospect->proposal_link = $request->proposal_link;
         $prospect->currency = $budget ? $request->currency : null;
@@ -100,6 +101,7 @@ class ProspectService
         $prospect->proposal_status = $validated['proposal_status'] ?? null;
         $prospect->introductory_call = $validated['introductory_call'] ?? null;
         $prospect->last_followup_date = $validated['last_followup_date'] ?? null;
+        $prospect->due_date = $validated['due_date'] ?? null;
         $prospect->rfp_link = $validated['rfp_link'] ?? null;
         $prospect->proposal_link = $validated['proposal_link'] ?? null;
         $prospect->client_id = $validated['client_id'] ?? null;

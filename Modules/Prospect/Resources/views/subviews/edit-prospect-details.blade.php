@@ -109,6 +109,13 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-5">
+                        <label for="due_date">{{ __('Due Date') }}</label>
+                        <input type="date" class="form-control" name="due_date" id="due_date"
+                            value="{{ $prospect->due_date ? $prospect->due_date->format('Y-m-d') : '' }}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
                         <label for="rfp_link">{{ __('RFP Link') }}</label>
                         <input type="url" class="form-control" name="rfp_link" id="rfp_link"
                             placeholder="Enter RFP URL" value="{{ $prospect->rfp_link }}">

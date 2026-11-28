@@ -14,6 +14,7 @@ class Prospect extends Model
 
     protected $casts = [
         'proposal_sent_date' => 'datetime:Y-m-d',
+        'due_date' => 'date:Y-m-d',
     ];
 
     public function pocUser()

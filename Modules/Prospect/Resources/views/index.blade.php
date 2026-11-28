@@ -78,6 +78,11 @@
                             <td class="w-15p">
                                 <span
                                     class="">{{ config('prospect.status')[$prospect->proposal_status] ?? '-' }}</span>
+                                @if ($prospect->due_date && $prospect->proposal_status !== 'proposal-sent')
+                                    <div class="fz-14 {{ $prospect->due_date->lt(today()) ? 'text-danger' : 'text-secondary' }}">
+                                        Due: {{ $prospect->getFormattedDate($prospect->due_date) }}
+                                    </div>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
